@@ -1,0 +1,22 @@
+{
+  "zonas": [
+    {
+      "id": "reserva",
+      "nombre": "La reserva",
+      "bloque": "Animales",
+      "resumen": "Los animales y el sitio donde pueden vivir."
+    },
+    {
+      "id": "invernadero",
+      "nombre": "El invernadero",
+      "bloque": "Plantas",
+      "resumen": "Las plantas, la semilla y lo que necesitan para brotar."
+    },
+    {
+      "id": "cuerpo",
+      "nombre": "Dentro de mí",
+      "bloque": "Cuerpo humano",
+      "resumen": "El cuerpo, los sentidos y cómo empieza una vida."
+    }
+  ]
+}

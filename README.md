@@ -1,41 +1,106 @@
 # NaturalMente
 
-App para niños de primaria, en español, sobre animales, plantas y el cuerpo humano. Se juega en cualquier orden. Si la respuesta no encaja, el juego explica qué pasa, no dice solo que está mal.
+App de animales, plantas y cuerpo humano para niños de primaria. Un código en Flutter, para Android y para iOS. No hay servidor ni cuentas.
 
-Se hace en **Flutter**: un código para Android e iOS. No hay servidor ni cuentas. La entrega de diciembre es la app **publicada** en las dos tiendas, no un prototipo.
+Si no has visto el proyecto, lee primero [docs/contexto.md](docs/contexto.md). Ahí está la asignatura, el material de ciencias y lo que va a hacer la app. Las carpetas y el reparto están en [docs/organizacion.md](docs/organizacion.md).
 
-El plan completo está en [docs/plan.md](docs/plan.md). Este archivo solo dice por dónde se entra.
+Lo que hay ahora es poco a propósito: el mapa con los tres sitios y el juego del camello. Sirve para comprobar que Flutter, el catálogo y los tests van. El resto se añade en las mismas carpetas.
 
-## Decisiones que ya no se discuten
+## Qué hay que tener instalado
 
-- Flutter, no otra tecnología.
-- Tres bloques igual de importantes: animales, plantas y cuerpo humano.
-- La Tierra y el universo no salen. La tierra del suelo, la de una maceta, sí.
-- Materia, energía y fuerzas no son un bloque. Como mucho, una frase dentro de otro juego.
-- El curso (1º-2º, 3º-4º, 5º-6º) es una etiqueta. Nadie se queda sin poder abrir una actividad.
-- La reproducción humana entra, dentro del cuerpo, con lenguaje de primaria.
-- No es una app de un solo colegio. Tiene que servir a cualquier niño de primaria en España.
-- No se copia el libro de la editorial. Las guías solo nos dicen qué temas existen.
-- Somos cinco. No hay tutoría intermedia. La fecha es diciembre de 2026.
+No hay que arrancar ninguna base de datos ni ningún backend. Solo Flutter y, según dónde la quieras ver, Chrome o un emulador de Android.
 
-## Quién hace qué
+1. Git.
+2. Flutter del canal stable (en el ordenador donde se montó el repo está en `C:\Users\usuario\flutter`; cada uno puede instalarlo en otra ruta). La guía está en https://docs.flutter.dev/install/windows
+3. La carpeta `bin` de Flutter en el PATH del usuario. En PowerShell, para la sesión actual:
 
-| Persona | Se ocupa de | Primera tarea, esta semana |
-| --- | --- | --- |
-| David | Pantallas, aspecto y animación | Proponer colores y un personaje original, sin copiar el libro |
-| Iván | Reglas de los juegos y frases de las pistas | Revisar los tres juegos principales en `docs/plan.md` y anotar si falta alguno |
-| Alejandro | Proyecto Flutter, Android, iOS y tiendas | Crear el proyecto Flutter en este repo y empezar las cuentas de Google Play y Apple |
-| Alfredo | Fichas y textos | Completar la lista de [content/cobertura.md](content/cobertura.md) con títulos propios |
-| Diego | Pruebas | Leer la lista de pruebas del plan y dejarla como guion cuando exista el proyecto |
-
-Unas 70 horas cada uno hasta el 7 de diciembre. El reparto semana a semana está en el plan.
-
-## Cuando exista el proyecto Flutter
-
-```bash
-flutter pub get
-flutter test
-flutter run
+```powershell
+$env:Path = "C:\Users\usuario\flutter\bin;" + $env:Path
 ```
 
-Android de prueba: `flutter build apk`. Para la tienda: `flutter build appbundle`. iOS: `flutter build ipa`, y hace falta un Mac.
+Cambia la ruta si el SDK está en otro sitio. Para dejarlo fijo, añádela en Variables de entorno de Windows, en Path del usuario, y abre una terminal nueva.
+
+4. Chrome, si vas a verla en el navegador.
+5. Android SDK, si vas a emulador o APK. Android Studio lo instala. La ruta habitual es `%LOCALAPPDATA%\Android\Sdk`.
+
+Comprueba que no falta nada:
+
+```powershell
+flutter doctor
+```
+
+La primera vez en Android hace falta aceptar licencias:
+
+```powershell
+flutter doctor --android-licenses
+```
+
+iOS no se compila en Windows. Hace falta un Mac con Xcode. En este repo la carpeta `ios/` ya está, para abrirla allí.
+
+## Comandos de cada día
+
+Desde la carpeta del repositorio:
+
+```powershell
+flutter pub get
+flutter analyze
+flutter test
+```
+
+`pub get` baja lo que pone `pubspec.yaml`. Hay que lanzarlo al clonar y cuando cambie ese archivo. `analyze` mira el estilo. `test` ejecuta `test/reglas` y `test/ui` sin abrir la app en un móvil.
+
+Verla en Chrome (no se publica; es para trabajar):
+
+```powershell
+flutter run -d chrome
+```
+
+Con la app en marcha, en esa terminal: `r` recarga cambios de código, `R` la reinicia, `q` la cierra. Un cambio en `pubspec.yaml` no entra con `r`: para y vuelve a lanzar.
+
+Ver emuladores y dispositivos:
+
+```powershell
+flutter emulators
+flutter devices
+flutter emulators --launch vuestro_emulador
+flutter run -d android
+```
+
+El nombre del emulador lo dice `flutter emulators`.
+
+APK para pasar al móvil por cable o por archivo:
+
+```powershell
+flutter build apk
+```
+
+Sale en `build\app\outputs\flutter-apk\app-release.apk`.
+
+Lo que se sube a Google Play no es el APK, es el app bundle:
+
+```powershell
+flutter build appbundle
+```
+
+En un Mac, para la App Store:
+
+```powershell
+flutter build ipa
+```
+
+## Dónde se toca cada cosa
+
+| Carpeta | Para qué | Quién |
+| --- | --- | --- |
+| `lib/ui/` | Pantallas | David |
+| `lib/reglas/` | Frases y aciertos, sin widgets | Iván |
+| `lib/datos/` y `lib/modelo/` | Leer el catálogo | Quien añada un campo, de acuerdo con Alfredo |
+| `content/` | Textos. `catalog.json` lo lee la app | Alfredo |
+| `assets/imagenes/` y `assets/icono/` | Dibujos, cuando existan | David |
+| `test/` | Pruebas | Diego |
+| `android/` e `ios/` | Identificador, icono, firma | Alejandro |
+| `web/` | Solo Chrome | No se publica |
+| `docs/contexto.md` | Asignatura, ciencias y decisiones | Todos, si cambia el acuerdo |
+| `docs/organizacion.md` | Carpetas, personas y fechas | Todos, si cambia el acuerdo |
+
+El identificador es `com.naturalmente.naturalmente`. El nombre en el móvil es NaturalMente.

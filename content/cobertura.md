@@ -1,10 +1,10 @@
 # Cobertura de temas
 
-Lista de trabajo de Alfredo. Cada fila es un tema que la app tiene que poder enseñar, con palabras nuestras. La columna «Curso» es la etiqueta que veremos en la actividad, no un cierre.
+Lista de Alfredo para todo el proyecto. Cada fila es un tema que la app tiene que poder contar con palabras nuestras. La columna «Curso» es la etiqueta de la actividad, no un cierre. El porqué de cada tema está en `docs/contexto.md`.
 
-Cuando exista `catalog.json`, aquí se apunta el id de la ficha o del juego. Hasta entonces basta el título nuestro.
+Cuando la ficha exista en `catalog.json`, se rellena el id. Hasta entonces basta el título nuestro.
 
-No se copia una frase de las guías. Si un tema es de la Tierra o del universo, no está en esta lista a propósito.
+No se copia una frase de las guías. Lo de Tierra y universo no está aquí a propósito.
 
 ## Animales — La reserva
 

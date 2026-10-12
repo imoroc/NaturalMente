@@ -1,4 +1,4 @@
-# Flutter. El proyecto todavía no está creado: esto evita subir basura el día que se cree.
+# No subir basura de compilación ni claves.
 
 .dart_tool/
 .flutter-plugins

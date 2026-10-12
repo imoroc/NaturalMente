@@ -1,6 +1,6 @@
 ---
 name: Tarea
-about: Una pieza de NaturalMente que se puede terminar en una semana
+about: Algo que se puede cerrar sin cambiar de carpeta a mitad
 title: ""
 labels: ""
 assignees: ""
@@ -8,13 +8,8 @@ assignees: ""
 
 ## Qué hay que hacer
 
-## Hecho cuando
+## Cómo se sabe que está
 
-- [ ] Encaja con `docs/plan.md`
-- [ ] El texto es nuestro
-- [ ] Si hay un fallo, la frase hace pensar
-- [ ] Se ve el curso orientativo y la actividad no está cerrada
+## Parte
 
-## Zona
-
-Animales, plantas, cuerpo, o ninguna (proyecto, tiendas, pruebas).
+Pantallas, reglas, fichas, Android/iOS, o pruebas.

@@ -1,12 +1,12 @@
 # Contexto
 
-Esto lo escribimos para no tener que contarnos el proyecto cada vez que alguien se pone. Si faltas a una conversación, con este archivo y con `docs/organizacion.md` llegas al día.
+Esto lo escribimos para no tener que contarnos el proyecto cada vez que alguien se pone. Con este archivo y con `docs/organizacion.md` te pones al día.
 
-Los PDF y los Word del profesor no están en el repositorio. Están en la carpeta SMOV, al lado de `naturalmente`. No se suben: son material de la editorial. Aquí está resumido con nuestras palabras lo que hace falta para trabajar.
+Los PDF y los Word del profesor no están en el repositorio. Aquí está resumido con nuestras palabras lo que hace falta para trabajar.
 
 ## Qué estamos haciendo
 
-NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de primaria, en español, sobre animales, plantas y el cuerpo humano. Cualquier niño de España, no solo los de un colegio.
+NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de primaria, en español, sobre animales, plantas y el cuerpo humano.
 
 Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base de código, en Flutter. No hay servidor ni registro. Si el niño se equivoca, el juego le explica qué pasa. No le pone un cartel de error.
 
@@ -14,9 +14,9 @@ El curso (1º-2º, 3º-4º, 5º-6º) se dice antes de cada actividad, como orien
 
 ## Cómo llegamos aquí
 
-Al principio se habló de Flask por un lío de nombres. La asignatura es Flutter y el trabajo es Flutter. Tierra y universo se quedaron fuera, aunque en algún momento se habían comentado. El cuerpo humano es un bloque grande, al mismo nivel que animales y plantas. Materia, energía y fuerzas salen en el libro, pero en la app solo como una frase suelta dentro de otro juego, y solo si nos da tiempo. La reproducción sí entra, porque es parte del cuerpo. La tutoría intermedia ya no se hace. La entrega de diciembre sí.
+El trabajo usa Flutter. El cuerpo humano es un bloque grande, al mismo nivel que animales y plantas. Materia, energía y fuerzas salen en el libro, pero en la app solo como una frase suelta dentro de otro juego, y solo si nos da tiempo. La reproducción sí entra, porque es parte del cuerpo. La entrega es en diciembre.
 
-El producto no está cerrado al milímetro. Lo que hay escrito aquí es lo que vamos a construir salvo que lo cambiemos en este archivo antes de hacer la pantalla.
+El producto no está cerrado al milímetro. Lo que hay escrito aquí es lo que vamos a construir.
 
 ## La asignatura
 
@@ -38,7 +38,7 @@ En diseño, el tema recuerda que iOS se apoya en las guías de Apple y Android e
 
 ### Tema 2. Flutter
 
-`Tema 2- Framewrok de Flutter.pdf`, 65 diapositivas. El nombre del archivo lleva una falta; el contenido es el framework.
+`Tema 2- Framewrok de Flutter.pdf`, 65 diapositivas. 
 
 Flutter pinta él mismo la interfaz, no usa los botones nativos de cada sistema. Por eso la misma pantalla vale en Android y en iOS. El motor de dibujo del que hablan las diapositivas nuevas es Impeller. El lenguaje es Dart. El ciclo rápido es el hot reload: cambias un texto o un color y se ve al momento. No recarga bien un cambio de `pubspec.yaml` ni pasar un widget de sin estado a con estado: ahí hace falta hot restart o parar y volver a lanzar.
 
@@ -62,9 +62,9 @@ Comandos que salen en las diapositivas y que usamos de verdad:
 - `flutter build ipa` genera la app de iOS. Hace falta un Mac con Xcode. En Windows no sale.
 - `flutter build web` existe. Nosotros la web no la publicamos. Sirve para abrir la app en Chrome mientras programamos.
 
-Para Play hay que firmar la versión release con una clave nuestra. La clave no se sube a git (está ignorada: `*.jks`, `android/key.properties`). El alta de la cuenta de Google se paga una vez. La de Apple, cada año, y a veces tardan días en activarla. Por eso Alejandro las pide ya, no en diciembre.
+Para Play hay que firmar la versión release con una clave nuestra. La clave no se sube a git (está ignorada: `*.jks`, `android/key.properties`). El alta de la cuenta de Google se paga una vez. La de Apple, cada año, y a veces tardan días en activarla.
 
-La revisión de la tienda puede tardar. El envío lo hacemos el lunes 7 de diciembre de 2026. Del 8 al 16 solo se toca si la rechazan. El día 6 es domingo y el 8 es festivo.
+La revisión de la tienda puede tardar.
 
 ### Tema 3. Dart
 
@@ -211,10 +211,9 @@ Dibujos: pocos colores, un personaje nuestro. Nada sacado del libro. Si usamos u
 
 ## Qué tiene que poder decir alguien que no ha abierto los PDF
 
-- La app es de animales, plantas y cuerpo, para primaria, en español, sin login.
+- La app es de animales, plantas y cuerpo, para primaria, en español.
 - El cuerpo incluye la reproducción, con cuatro pasos y sin detalles gráficos.
 - Tierra y universo no se mencionan. El suelo de la planta sí.
 - Materia, energía y fuerzas no son un mundo.
 - Flutter, Android e iOS, sin servidor.
-- Diciembre de 2026, enviada a las dos tiendas el 7 de diciembre.
-- Los archivos del profesor están en SMOV, no en git, y no se copian.
+- Diciembre de 2026.

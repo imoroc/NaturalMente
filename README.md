@@ -11,11 +11,11 @@ Lo que hay ahora es poco a propósito: el mapa con los tres sitios y el juego de
 No hay que arrancar ninguna base de datos ni ningún backend. Solo Flutter y, según dónde la quieras ver, Chrome o un emulador de Android.
 
 1. Git.
-2. Flutter del canal stable (en el ordenador donde se montó el repo está en `C:\Users\usuario\flutter`; cada uno puede instalarlo en otra ruta). La guía está en https://docs.flutter.dev/install/windows
+2. Flutter del canal stable (en el ordenador donde se montó el repo está en `C:\Users\'usuario'\flutter`; cada uno puede instalarlo en otra ruta). La guía está en https://docs.flutter.dev/install/windows
 3. La carpeta `bin` de Flutter en el PATH del usuario. En PowerShell, para la sesión actual:
 
 ```powershell
-$env:Path = "C:\Users\usuario\flutter\bin;" + $env:Path
+$env:Path = "C:\Users\'usuario'\flutter\bin;" + $env:Path
 ```
 
 Cambia la ruta si el SDK está en otro sitio. Para dejarlo fijo, añádela en Variables de entorno de Windows, en Path del usuario, y abre una terminal nueva.
@@ -62,11 +62,9 @@ Ver emuladores y dispositivos:
 ```powershell
 flutter emulators
 flutter devices
-flutter emulators --launch vuestro_emulador
+flutter emulators --launch 'vuestro_emulador'
 flutter run -d android
 ```
-
-El nombre del emulador lo dice `flutter emulators`.
 
 APK para pasar al móvil por cable o por archivo:
 
@@ -94,13 +92,13 @@ flutter build ipa
 | --- | --- | --- |
 | `lib/ui/` | Pantallas | David |
 | `lib/reglas/` | Frases y aciertos, sin widgets | Iván |
-| `lib/datos/` y `lib/modelo/` | Leer el catálogo | Quien añada un campo, de acuerdo con Alfredo |
+| `lib/datos/` y `lib/modelo/` | Leer el catálogo | Quien añada un campo | Alfredo |
 | `content/` | Textos. `catalog.json` lo lee la app | Alfredo |
 | `assets/imagenes/` y `assets/icono/` | Dibujos, cuando existan | David |
 | `test/` | Pruebas | Diego |
 | `android/` e `ios/` | Identificador, icono, firma | Alejandro |
 | `web/` | Solo Chrome | No se publica |
-| `docs/contexto.md` | Asignatura, ciencias y decisiones | Todos, si cambia el acuerdo |
-| `docs/organizacion.md` | Carpetas, personas y fechas | Todos, si cambia el acuerdo |
+| `docs/contexto.md` | Asignatura, ciencias y decisiones | Todos |
+| `docs/organizacion.md` | Carpetas, personas y fechas | Todos |
 
 El identificador es `com.naturalmente.naturalmente`. El nombre en el móvil es NaturalMente.

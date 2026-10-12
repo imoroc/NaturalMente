@@ -1,1 +1,3 @@
-Aquí irán los dibujos nuestros. Todavía no hay ninguno.
+Cuando haya un dibujo nuestro, se guarda como assets/imagenes/{id}.png
+y se declara en pubspec.yaml. Hasta entonces se usa la forma de respaldo
+con el mismo id (camello, delfin, pinguino, oso, corazon, pulmones, estomago).

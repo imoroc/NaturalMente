@@ -4,19 +4,298 @@
       "id": "reserva",
       "nombre": "La reserva",
       "bloque": "Animales",
-      "resumen": "Los animales y el sitio donde pueden vivir."
+      "resumen": "Lleva cada animal al sitio donde puede vivir."
     },
     {
       "id": "invernadero",
       "nombre": "El invernadero",
       "bloque": "Plantas",
-      "resumen": "Las plantas, la semilla y lo que necesitan para brotar."
+      "resumen": "Haz que una judía brote y mira qué necesita."
     },
     {
       "id": "cuerpo",
       "nombre": "Dentro de mí",
       "bloque": "Cuerpo humano",
-      "resumen": "El cuerpo, los sentidos y cómo empieza una vida."
+      "resumen": "Coloca cada pieza y ordena cómo empieza una vida."
+    }
+  ],
+  "fichas": [
+    {
+      "id": "camello",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "titulo": "Camello",
+      "frase": "Aguanta el calor y puede pasar días con poca agua.",
+      "curiosidad": "La joroba guarda grasa, no una bolsa de agua."
+    },
+    {
+      "id": "oso-pardo",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "titulo": "Oso pardo",
+      "frase": "Vive en bosques. El del hielo es el oso polar, que es otro.",
+      "curiosidad": "En invierno duerme mucho, pero no es el mismo sueño de todas las noches."
+    },
+    {
+      "id": "insectos",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "titulo": "Insectos",
+      "frase": "No tienen huesos. Abejas, hormigas y mariposas son insectos.",
+      "curiosidad": "Si desaparecen las abejas, a muchas plantas les cuesta hacer fruto."
+    },
+    {
+      "id": "raiz",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "titulo": "Raíz",
+      "frase": "Está bajo tierra y toma el agua del suelo.",
+      "curiosidad": "También sujeta la planta para que el viento no se la lleve."
+    },
+    {
+      "id": "hoja",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "titulo": "Hoja",
+      "frase": "Con la luz fabrica el alimento de la planta.",
+      "curiosidad": "Por eso una planta a oscuras se pone pálida y floja."
+    },
+    {
+      "id": "huerto",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "titulo": "Tierra de huerto",
+      "frase": "Guarda el agua mejor que la arena o las piedras.",
+      "curiosidad": "Una semilla en piedras no encuentra de qué agarrarse."
+    },
+    {
+      "id": "sentidos",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "titulo": "Los cinco sentidos",
+      "frase": "Ojos, oídos, nariz, lengua y piel nos avisan de lo que hay alrededor.",
+      "curiosidad": "La piel también nota el frío y el calor, no solo si algo pincha."
+    },
+    {
+      "id": "corazon-ficha",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "titulo": "Corazón",
+      "frase": "Está en el pecho y empuja la sangre sin parar.",
+      "curiosidad": "Cuando corres, late más deprisa porque los músculos piden más."
+    },
+    {
+      "id": "celula",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "titulo": "Célula",
+      "frase": "Es la parte viva más pequeña. El cuerpo está hecho de muchísimas.",
+      "curiosidad": "No se ve a simple vista. Hace falta una lupa muy fuerte."
+    },
+    {
+      "id": "una-vida",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "titulo": "Así empieza una vida",
+      "frase": "Se unen dos células muy pequeñas, el bebé crece dentro, nace y necesita cuidados.",
+      "curiosidad": "El cuerpo de cada persona es suyo."
+    }
+  ],
+  "actividades": [
+    {
+      "id": "hogar",
+      "zona": "reserva",
+      "tipo": "lugar",
+      "titulo": "Cada uno a su hogar",
+      "curso": "1º-2º",
+      "medalla": true,
+      "quien": "El animal dice",
+      "opciones": [
+        {"id": "desierto", "nombre": "Desierto"},
+        {"id": "mar", "nombre": "Mar"},
+        {"id": "polo", "nombre": "Polo"},
+        {"id": "bosque", "nombre": "Bosque"}
+      ],
+      "retos": [
+        {
+          "id": "camello",
+          "nombre": "El camello",
+          "pregunta": "El camello busca su sitio. ¿Dónde puede vivir?",
+          "respuesta": "desierto",
+          "pista": "Piensa en un sitio seco, con mucho sol y poca agua.",
+          "frases": {
+            "desierto": "Sí. En el desierto aguanto el calor y puedo pasar con poca agua.",
+            "mar": "El agua del mar es salada y yo estoy hecho para la arena y el sol.",
+            "polo": "¡Aquí paso mucho frío! Mi cuerpo aguanta mejor el calor.",
+            "bosque": "Hay sombra de más. Yo vivo donde el suelo es seco y abierto."
+          }
+        },
+        {
+          "id": "delfin",
+          "nombre": "El delfín",
+          "pregunta": "El delfín busca su sitio. ¿Dónde puede vivir?",
+          "respuesta": "mar",
+          "pista": "Vivo en el agua salada y subo a respirar.",
+          "frases": {
+            "mar": "El mar es mi hogar. Nado, y de vez en cuando saco el lomo a respirar.",
+            "desierto": "Sin agua no puedo nadar. Busca un sitio enorme y salado.",
+            "polo": "El hielo no es lo mío. Necesito el mar abierto.",
+            "bosque": "Entre árboles no nado. Mi sitio es el mar."
+          }
+        },
+        {
+          "id": "pinguino",
+          "nombre": "El pingüino emperador",
+          "pregunta": "El pingüino emperador busca su sitio. ¿Dónde puede vivir?",
+          "respuesta": "polo",
+          "pista": "Este pingüino sí vive en el hielo. No todos lo hacen.",
+          "frases": {
+            "polo": "En el hielo me abrigo con las plumas y con el grupo.",
+            "desierto": "Este calor no va conmigo. Vivo donde hace mucho frío.",
+            "mar": "Nado muy bien, pero mi casa en tierra es el hielo.",
+            "bosque": "Los árboles no son mi paisaje. Busca hielo."
+          }
+        },
+        {
+          "id": "oso",
+          "nombre": "El oso pardo",
+          "pregunta": "El oso pardo busca su sitio. ¿Dónde puede vivir?",
+          "respuesta": "bosque",
+          "pista": "Fíjate en el nombre: pardo, de bosque. El del hielo es otro oso.",
+          "frases": {
+            "bosque": "Sí. El oso pardo vive en bosques, con árboles y con frío.",
+            "desierto": "¡Qué calor! El oso pardo no vive en la arena.",
+            "mar": "No vivo en el mar. Necesito árboles.",
+            "polo": "En el hielo vive el oso polar. Yo soy pardo y mi sitio es el bosque."
+          }
+        }
+      ]
+    },
+    {
+      "id": "germinacion",
+      "zona": "invernadero",
+      "tipo": "controles",
+      "titulo": "Laboratorio de germinación",
+      "curso": "1º-2º",
+      "medalla": true,
+      "quien": "La judía dice",
+      "sujeto": "Semilla de judía",
+      "boton": "Avanzar tiempo",
+      "controles": [
+        {
+          "id": "agua",
+          "nombre": "Agua",
+          "opciones": [
+            {"id": "poca", "nombre": "Poca"},
+            {"id": "justa", "nombre": "Justa"},
+            {"id": "mucha", "nombre": "Mucha"}
+          ]
+        },
+        {
+          "id": "luz",
+          "nombre": "Luz",
+          "opciones": [
+            {"id": "poca", "nombre": "Poca"},
+            {"id": "justa", "nombre": "Justa"},
+            {"id": "mucha", "nombre": "Mucha"}
+          ]
+        },
+        {
+          "id": "suelo",
+          "nombre": "Suelo",
+          "opciones": [
+            {"id": "piedras", "nombre": "Piedras"},
+            {"id": "arena", "nombre": "Arena"},
+            {"id": "huerto", "nombre": "Tierra de huerto"}
+          ]
+        }
+      ],
+      "frases": {
+        "falta": "Elige agua, luz y suelo antes de avanzar el tiempo.",
+        "ahogada": "Con tanta agua me ahogo: la raíz también necesita aire.",
+        "seca": "Me falta agua. Las raíces la absorben del suelo y el tallo la reparte.",
+        "sinAgarre": "Entre piedras no encuentro tierra de la que sujetarme.",
+        "sedienta": "La arena deja escapar el agua enseguida. La tierra de huerto la guarda mejor.",
+        "palida": "Sin luz no puedo fabricar mi alimento, aunque tenga agua.",
+        "brote": "Agua justa, luz y tierra de huerto: la semilla despierta."
+      }
+    },
+    {
+      "id": "piezas",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "Cada pieza en su sitio",
+      "curso": "3º-4º",
+      "medalla": true,
+      "quien": "El cuerpo dice",
+      "opciones": [
+        {"id": "cabeza", "nombre": "Cabeza"},
+        {"id": "pecho", "nombre": "Pecho"},
+        {"id": "barriga", "nombre": "Barriga"}
+      ],
+      "retos": [
+        {
+          "id": "corazon",
+          "nombre": "El corazón",
+          "pregunta": "El corazón. ¿Dónde está?",
+          "respuesta": "pecho",
+          "pista": "Está en el pecho y empuja la sangre sin parar.",
+          "frases": {
+            "pecho": "Sí. El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
+            "cabeza": "En la cabeza está el cerebro. El corazón late más abajo, en el pecho.",
+            "barriga": "En la barriga trabaja el estómago. El corazón está más arriba."
+          }
+        },
+        {
+          "id": "pulmones",
+          "nombre": "Los pulmones",
+          "pregunta": "Los pulmones. ¿Dónde están?",
+          "respuesta": "pecho",
+          "pista": "Son dos y se llenan de aire en el pecho.",
+          "frases": {
+            "pecho": "Sí. Los pulmones están en el pecho y se hinchan cuando entra el aire.",
+            "cabeza": "Por la nariz entra el aire, pero quien lo guarda está en el pecho.",
+            "barriga": "La barriga no se llena de aire. Los pulmones están en el pecho."
+          }
+        },
+        {
+          "id": "estomago",
+          "nombre": "El estómago",
+          "pregunta": "El estómago. ¿Dónde está?",
+          "respuesta": "barriga",
+          "pista": "La comida baja hasta la barriga.",
+          "frases": {
+            "barriga": "Sí. El estómago está en la barriga y empieza a deshacer la comida.",
+            "cabeza": "La comida no se queda en la cabeza. Sigue hacia abajo.",
+            "pecho": "El pecho es del corazón y de los pulmones. El estómago está más abajo."
+          }
+        }
+      ]
+    },
+    {
+      "id": "vida",
+      "zona": "cuerpo",
+      "tipo": "orden",
+      "titulo": "Así empieza una vida",
+      "curso": "5º-6º",
+      "medalla": false,
+      "quien": "El cuerpo dice",
+      "intro": "Ordena los cuatro pasos. El cuerpo de cada persona es suyo.",
+      "boton": "Comprobar",
+      "pasos": [
+        {"id": "celulas", "nombre": "Se unen dos células"},
+        {"id": "utero", "nombre": "El bebé crece dentro"},
+        {"id": "nace", "nombre": "Nace"},
+        {"id": "cuidados", "nombre": "Hay que cuidarlo"}
+      ],
+      "respuesta": ["celulas", "utero", "nace", "cuidados"],
+      "frases": {
+        "incompleto": "Tienen que estar los cuatro pasos, cada uno una sola vez.",
+        "mal0": "Todavía no. Empieza por dos células tan pequeñas que no se ven.",
+        "mal1": "Esas células no se quedan sueltas. El bebé crece en un sitio protegido.",
+        "mal2": "Antes de los cuidados, el bebé tiene que nacer.",
+        "bien": "Sí. Se unen dos células, el bebé crece, nace y necesita cuidados."
+      }
     }
   ]
 }

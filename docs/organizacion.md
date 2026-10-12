@@ -64,11 +64,8 @@ Si nos atrasamos, se mantiene el mapa, las fichas justas, el hábitat, la germin
 
 ## Versión que hay ahora
 
-Sirve para ver que el circuito está bien antes de llenarlo.
+Los juegos salen de `content/catalog.json`. Una sola pantalla los pinta. Lo ya hecho se guarda en el teléfono.
 
-- Abre el mapa con La reserva, El invernadero y Dentro de mí.
-- En La reserva se puede jugar el camello. Polo responde con frío. A la segunda añade la pista del sitio seco.
-- Los otros dos sitios dicen que el juego todavía no está.
-- `flutter test` cubre la regla y que el mapa enseña los tres nombres.
-
-El invernadero, las piezas del cuerpo y la reproducción no están programados. Están descritos en `docs/contexto.md` y en la lista de Alfredo.
+- La reserva: se arrastra el animal a desierto, mar, polo o bosque.
+- El invernadero y el cuerpo usan esa misma pantalla, cada uno con su tipo de juego.
+- La medalla sigue ahí al cerrar y volver a abrir.

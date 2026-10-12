@@ -1,6 +1,6 @@
 # Organización
 
-Vale para todo el proyecto, no para una semana. Las carpetas no se renombran a mitad. Si hace falta una nueva, se añade aquí en el mismo cambio que la crea.
+Organización para todo el proyecto.
 
 Los ficheros de dentro crecerán. Muchos todavía no existen. La versión que hay ahora solo demuestra que arranca, que se ve el mapa y que una regla de juego se puede probar sola.
 
@@ -31,13 +31,9 @@ naturalmente/
 
 `lib/ui` es de David. `lib/reglas` es de Iván. `content/` es de Alfredo. `test/` es de Diego. `android/`, `ios/` y la publicación son de Alejandro. `lib/datos` y `lib/modelo` los toca quien necesite un campo nuevo, y se lo dice al dueño del contenido si cambia el JSON.
 
-No hay carpeta de servidor. No va a haberla.
-
 Identificador de la app: `com.naturalmente.naturalmente`. Nombre en el móvil: NaturalMente.
 
 ## Quién hace qué, de octubre a diciembre
-
-No nos turnamos el trabajo. Cada uno lleva lo suyo todo el tiempo y revisa las PR de su parte. Iván es quien le da al merge porque el repositorio está a su nombre.
 
 | Persona | Durante todo el proyecto | Horas |
 | --- | --- | --- |
@@ -47,7 +43,6 @@ No nos turnamos el trabajo. Cada uno lleva lo suyo todo el tiempo y revisa las P
 | Alfredo | Fichas, `catalog.json`, que no falte un tema de `content/cobertura.md` ni sobre uno prohibido | unas 70 |
 | Diego | `flutter test`, el guion en un teléfono real, y la pasada de antes de enviar | unas 70 |
 
-Esas 70 son de octubre a la entrega, no de una fase. Salen a unas 8 horas por semana hasta el 7 de diciembre, más revisar lo de los demás. La semana del 8 al 16 de diciembre no cuenta: solo si una tienda rechaza la app.
 
 ## Fechas
 
@@ -63,7 +58,7 @@ No es un cambio de rol. Es cuándo tiene que estar lista cada parte, para no lle
 | 23 nov | APK instalado en un Android. Compilado al menos una vez en un Mac |
 | 27 nov | Textos y reglas quietos. A partir de aquí solo fallos |
 | 7 dic | Enviada a Play y a App Store |
-| 8–16 dic | Arreglos si nos rechazan. El 8 es festivo |
+| 8–16 dic | Arreglos |
 
 Si nos atrasamos, se mantiene el mapa, las fichas justas, el hábitat, la germinación, las piezas, «Así empieza una vida», la medalla y el envío. Se deja para otra versión lo demás: más animales, etiquetas de alimentos, sonidos, esqueleto, animaciones que no expliquen nada, y las tres frases de energía y palanca.
 

@@ -1,6 +1,6 @@
 # Contexto
 
-Esto lo escribimos para no tener que contarnos el proyecto cada vez que alguien se pone. Con este archivo y con `docs/organizacion.md` te pones al día.
+Esto lo escribimos para no tener que contarnos el proyecto cada vez que alguien se pone. Con este archivo, con `docs/organizacion.md` y con `docs/decisiones.md` te pones al día. Si algo de aquí choca con `docs/decisiones.md`, manda decisiones.
 
 Los PDF y los Word del profesor no están en el repositorio. Aquí está resumido con nuestras palabras lo que hace falta para trabajar.
 
@@ -10,11 +10,11 @@ NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de pri
 
 Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base de código, en Flutter. No hay servidor ni registro. Si el niño se equivoca, el juego le explica qué pasa. No le pone un cartel de error.
 
-El curso (1º-2º, 3º-4º, 5º-6º) se dice antes de cada actividad, como orientación. No cierra nada: se puede abrir todo.
+Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
 ## Cómo llegamos aquí
 
-El trabajo usa Flutter. El cuerpo humano es un bloque grande, al mismo nivel que animales y plantas. Materia, energía y fuerzas salen en el libro, pero en la app solo como una frase suelta dentro de otro juego, y solo si nos da tiempo. La reproducción sí entra, porque es parte del cuerpo. La entrega es en diciembre.
+El trabajo usa Flutter. El cuerpo humano es un bloque grande, al mismo nivel que animales y plantas. El MVP es animales, plantas, seres vivos y cuerpo humano. Materia, energía, fuerzas y máquinas salen en el libro y quedan como ampliación, solo si nos da tiempo después del MVP. La reproducción sí entra, porque es parte del cuerpo. La entrega es en diciembre.
 
 El producto no está cerrado al milímetro. Lo que hay escrito aquí es lo que vamos a construir.
 
@@ -83,7 +83,7 @@ Lo que hay que tener fresco para no pelearse con el código:
 
 Lo pasó el colegio a través del profesor. Es Ciencias de la Naturaleza de editorial SM, pensado para Castilla y León, de 1º a 6º. Cada unidad se llama situación de aprendizaje y dura entre 8 y 13 sesiones. Casi todas acaban en un reto (un mural, un experimento, una exposición). Esos retos nos dieron ideas de juego. No copiamos sus enunciados ni sus dibujos.
 
-En la app el curso del libro no ata a nadie. La etiqueta que pongamos es la dificultad que nos parece a nosotros.
+En la app el curso del libro no ata a nadie. Sirve para decidir a qué nivel (Fácil, Medio o Difícil) va cada pregunta.
 
 Hay dos tipos de archivo:
 
@@ -143,7 +143,7 @@ En «El bienestar» la guía habla de niños de 4º. El resto de PDF van en la m
 | Rodeados de cambios | 9 | Dar otra vida a materiales | Propiedades, calor, mezclas, sustancias |
 | Fuerzas y máquinas | 8 | Inventar una máquina y hacer la maqueta | Fuerzas, estructuras, máquinas simples y compuestas, seguridad, inventos |
 
-A la app, de 4º, le importa sobre todo el bienestar: comida, descanso, emociones. Ecosistemas alimenta las fichas de animales y plantas. Fuerzas y materiales no son una zona. Como mucho, más adelante, una frase de que un brazo se mueve parecido a una palanca.
+A la app, de 4º, le importa sobre todo el bienestar: comida, descanso, emociones. Ecosistemas alimenta las fichas de animales y plantas. Fuerzas y materiales no entran en el MVP. Quedan para la ampliación si da tiempo.
 
 ### 5º. Guías, código `212122D`
 
@@ -178,7 +178,7 @@ La materia de 6º (volar, densidad) no entra.
 
 Queda dicho para que nadie lo rehaga dentro de dos meses: planeta, universo, Luna, Sol, estrellas, relieve, rocas, volcanes, terremotos, polos que se derriten como tema, electricidad, máquinas, fuerzas como bloque. La tierra de una maceta sí, porque es el suelo de la planta.
 
-Si más adelante sobra tiempo, solo tres frases, y ninguna es obligatoria para la medalla:
+Materia, energía, fuerzas y máquinas son la ampliación si sobra tiempo tras el MVP (ver `docs/decisiones.md`). Lo mínimo serían estas tres frases, y ninguna es obligatoria para la medalla:
 
 - La luz es energía que la planta usa para fabricar su alimento.
 - El agua es materia que la raíz toma del suelo.
@@ -194,7 +194,7 @@ Al abrir se ve un mapa con tres sitios. El orden lo elige el niño.
 | El invernadero | Plantas | La planta |
 | Dentro de mí | Cuerpo | El cuerpo |
 
-En cada sitio habrá fichas (nombre, una frase, una curiosidad, curso orientativo) y juegos. Ahora mismo solo está el mapa y un juego, el del camello, para comprobar que el circuito funciona: pantalla, regla y test. El resto se añade en esas mismas carpetas.
+En cada sitio habrá fichas (nombre, una frase, una curiosidad, nivel) y juegos con selector de nivel. También habrá juegos generales que mezclan bloques. Ahora mismo solo está el mapa y un juego, el del camello, para comprobar que el circuito funciona: pantalla, regla y test. El resto se añade en esas mismas carpetas.
 
 Juegos que tienen que estar para diciembre:
 
@@ -214,6 +214,7 @@ Dibujos: pocos colores, un personaje nuestro. Nada sacado del libro. Si usamos u
 - La app es de animales, plantas y cuerpo, para primaria, en español.
 - El cuerpo incluye la reproducción, con cuatro pasos y sin detalles gráficos.
 - Tierra y universo no se mencionan. El suelo de la planta sí.
-- Materia, energía y fuerzas no son un mundo.
+- Materia, energía y fuerzas no entran en el MVP. Son ampliación si da tiempo.
+- Cada juego tiene selector de nivel: Fácil, Medio y Difícil.
 - Flutter, Android e iOS, sin servidor.
 - Diciembre de 2026.

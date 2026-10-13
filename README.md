@@ -2,7 +2,7 @@
 
 App de animales, plantas y cuerpo humano para niños de primaria. Un código en Flutter, para Android y para iOS. No hay servidor ni cuentas.
 
-Si no has visto el proyecto, lee primero [docs/contexto.md](docs/contexto.md). Ahí está la asignatura, el material de ciencias y lo que va a hacer la app. Las carpetas y el reparto están en [docs/organizacion.md](docs/organizacion.md).
+Si no has visto el proyecto, lee primero [docs/contexto.md](docs/contexto.md). Ahí está la asignatura, el material de ciencias y lo que va a hacer la app. Las carpetas y el reparto están en [docs/organizacion.md](docs/organizacion.md). Las decisiones de alcance (MVP, niveles de dificultad, qué queda fuera) están en [docs/decisiones.md](docs/decisiones.md). Las ideas de juegos, por zona y nivel, están en [docs/juegos.md](docs/juegos.md).
 
 Lo que hay ahora es poco a propósito: el mapa con los tres sitios y el juego del camello. Sirve para comprobar que Flutter, el catálogo y los tests van. El resto se añade en las mismas carpetas.
 
@@ -100,5 +100,7 @@ flutter build ipa
 | `web/` | Solo Chrome | No se publica |
 | `docs/contexto.md` | Asignatura, ciencias y decisiones | Todos |
 | `docs/organizacion.md` | Carpetas, personas y fechas | Todos |
+| `docs/decisiones.md` | Decisiones de alcance, con fecha | Todos |
+| `docs/juegos.md` | Banco de ideas de juegos, con prioridad y niveles | Todos |
 
 El identificador es `com.naturalmente.naturalmente`. El nombre en el móvil es NaturalMente.

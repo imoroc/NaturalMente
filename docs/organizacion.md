@@ -27,6 +27,8 @@ naturalmente/
   docs/
     contexto.md    de qué va, la asignatura y el material de ciencias
     organizacion.md
+    decisiones.md  decisiones de alcance, con fecha
+    juegos.md      banco de ideas de juegos por zona y nivel
 ```
 
 `lib/ui` es de David. `lib/reglas` es de Iván. `content/` es de Alfredo. `test/` es de Diego. `android/`, `ios/` y la publicación son de Alejandro. `lib/datos` y `lib/modelo` los toca quien necesite un campo nuevo, y se lo dice al dueño del contenido si cambia el JSON.

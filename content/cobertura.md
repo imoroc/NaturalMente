@@ -1,6 +1,6 @@
 # Cobertura de temas
 
-Lista de Alfredo para todo el proyecto. Cada fila es un tema que la app tiene que poder contar con palabras nuestras. La columna «Curso» es la etiqueta de la actividad, no un cierre. El porqué de cada tema está en `docs/contexto.md`.
+Lista de Alfredo para todo el proyecto. Cada fila es un tema que la app tiene que poder contar con palabras nuestras. La columna «Curso» dice a qué nivel va el tema: 1º-2º es Fácil, 3º-4º es Medio y 5º-6º es Difícil. No es un cierre. El porqué de cada tema está en `docs/contexto.md`.
 
 Cuando la ficha exista en `catalog.json`, se rellena el id. Hasta entonces basta el título nuestro.
 
@@ -61,4 +61,4 @@ Los juegos principales de la zona son «Cada pieza en su sitio» y «Así empiez
 
 ## Fuera de la app
 
-No crear ficha, aunque la guía del colegio lo tenga: planeta Tierra, universo, Luna, Sol, estrellas, relieve, rocas, volcanes, terremotos. Tampoco un bloque de máquinas, electricidad, calor o fuerzas. Como mucho, las tres frases sueltas del plan, y solo si el 27 de noviembre sobra tiempo.
+No crear ficha, aunque la guía del colegio lo tenga: planeta Tierra, universo, Luna, Sol, estrellas, relieve, rocas, volcanes, terremotos. Máquinas, electricidad, calor y fuerzas no entran en el MVP. Son ampliación, y solo si sobra tiempo cuando el MVP esté terminado (ver `docs/decisiones.md`).

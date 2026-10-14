@@ -6,6 +6,7 @@ class Ficha {
     required this.titulo,
     required this.frase,
     required this.curiosidad,
+    this.juego = '',
   });
 
   final String id;
@@ -14,6 +15,7 @@ class Ficha {
   final String titulo;
   final String frase;
   final String curiosidad;
+  final String juego;
 
   factory Ficha.desdeMapa(Map<String, dynamic> mapa) {
     return Ficha(
@@ -23,6 +25,8 @@ class Ficha {
       titulo: mapa['titulo'] as String,
       frase: mapa['frase'] as String,
       curiosidad: mapa['curiosidad'] as String,
+      juego: (mapa['juego'] as String?) ?? '',
     );
   }
 }
+

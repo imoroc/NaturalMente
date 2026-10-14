@@ -5,7 +5,7 @@ Estado: implementación completada; revisión en dispositivos pendiente.
 Rama de continuación: `david/herbario-desmontable`.
 Rama de revisión en GitHub: `david/mejora-visual-herbario` (publicada mediante la conexión de GitHub; Git local no tenía credenciales de escritura).
 PR funcional: https://github.com/imoroc/NaturalMente/pull/3 (integrada en `main`).
-La mejora visual se entrega en una PR de continuación, desde la misma rama.
+PR de mejora visual: https://github.com/imoroc/NaturalMente/pull/4 (en borrador).
 
 ## Objetivo y punto de partida
 

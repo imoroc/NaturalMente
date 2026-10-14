@@ -64,9 +64,43 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E3A2C)),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF2ECC71),
+                primary: const Color(0xFF1F8A4C),
+                secondary: const Color(0xFFFF9F1C),
+                surface: const Color(0xFFFFFDF7),
+              ),
               useMaterial3: true,
-              scaffoldBackgroundColor: const Color(0xFFF6F1E6),
+              scaffoldBackgroundColor: const Color(0xFFF7F4EB),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Color(0xFFF7F4EB),
+                foregroundColor: Color(0xFF1D3528),
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                titleTextStyle: TextStyle(
+                  color: Color(0xFF1D3528),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              textTheme: const TextTheme(
+                headlineMedium: TextStyle(
+                  color: Color(0xFF1D3528),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 26,
+                  letterSpacing: -0.5,
+                ),
+                titleLarge: TextStyle(
+                  color: Color(0xFF1D3528),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 19,
+                ),
+                bodyMedium: TextStyle(
+                  color: Color(0xFF344E41),
+                  fontSize: 15,
+                  height: 1.3,
+                ),
+              ),
             ),
             home: const MapaPage(),
           ),

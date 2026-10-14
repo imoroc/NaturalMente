@@ -23,3 +23,6 @@ flutter:
   uses-material-design: true
   assets:
     - content/catalog.json
+    - assets/imagenes/
+    - assets/icono/
+

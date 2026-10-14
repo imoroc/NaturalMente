@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
+import 'package:naturalmente/ui/estilos_juego.dart';
 
 // Las coordenadas pertenecen al dibujo, las respuestas viven en las reglas.
 const _centros = <String, Offset>{
@@ -16,12 +18,18 @@ class PlantaHerbario extends StatelessWidget {
     required this.seleccionada,
     required this.onColocar,
     required this.onConsultar,
+    this.ultimoDestino,
+    this.falloColocacion = false,
+    this.consultables = const {},
     super.key,
   });
 
   final Map<String, String> nombres;
   final Set<String> colocadas;
   final String? seleccionada;
+  final String? ultimoDestino;
+  final bool falloColocacion;
+  final Set<String> consultables;
   final void Function(String pieza, String destino) onColocar;
   final ValueChanged<String> onConsultar;
 
@@ -42,10 +50,10 @@ class PlantaHerbario extends StatelessWidget {
               ),
               for (final entrada in nombres.entries)
                 Positioned(
-                  left: _centros[entrada.key]!.dx * ancho - 38,
-                  top: _centros[entrada.key]!.dy * alto - 32,
-                  width: 76,
-                  height: 64,
+                  left: _centros[entrada.key]!.dx * ancho - 28,
+                  top: _centros[entrada.key]!.dy * alto - 28,
+                  width: 56,
+                  height: 56,
                   child: DragTarget<String>(
                     onWillAcceptWithDetails: (datos) =>
                         nombres.containsKey(datos.data) &&
@@ -54,53 +62,89 @@ class PlantaHerbario extends StatelessWidget {
                         onColocar(datos.data, entrada.key),
                     builder: (context, candidatos, rechazados) {
                       final colocada = colocadas.contains(entrada.key);
+                      final consultable = consultables.contains(entrada.key);
+                      final fallo =
+                          ultimoDestino == entrada.key && falloColocacion;
+                      final encima = candidatos.isNotEmpty;
+                      final color = fallo
+                          ? EstilosJuego.fallo
+                          : colocada || encima
+                          ? EstilosJuego.acierto
+                          : seleccionada != null
+                          ? Theme.of(context).colorScheme.primary
+                          : EstilosJuego.borde;
+                      final estado = colocada
+                          ? (fallo ? 'Colocada. Prueba otro sitio' : 'Colocada')
+                          : fallo
+                          ? 'Prueba otro sitio'
+                          : encima
+                          ? 'Suelta aquí'
+                          : seleccionada != null
+                          ? 'Disponible para colocar'
+                          : 'Elige una pieza';
                       return Semantics(
-                        label: colocada
-                            ? '${entrada.value} colocada. Abrir ficha'
-                            : 'Zona ${entrada.value}',
+                        label:
+                            'Zona ${entrada.value}. $estado${consultable ? ". Abrir ficha" : ""}',
                         button: true,
                         child: Tooltip(
-                          message: colocada
+                          message: consultable
                               ? 'Consultar ${entrada.value.toLowerCase()}'
-                              : 'Colocar aquí',
-                          child: Material(
-                            color: colocada
-                                ? const Color(0xFFE5F4EA)
-                                : Colors.white.withValues(alpha: .85),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: BorderSide(
-                                width: candidatos.isNotEmpty ? 3 : 1,
-                                color: colocada || candidatos.isNotEmpty
-                                    ? const Color(0xFF28643C)
-                                    : const Color(0xFF8C927F),
-                              ),
-                            ),
-                            child: InkWell(
-                              key: Key('destino-${entrada.key}'),
-                              borderRadius: BorderRadius.circular(16),
-                              onTap: () {
-                                final pieza = seleccionada;
-                                if (pieza != null) {
-                                  onColocar(pieza, entrada.key);
-                                } else if (colocada) {
-                                  onConsultar(entrada.key);
-                                }
-                              },
-                              child: Center(
-                                child: ExcludeSemantics(
-                                  child: colocada
-                                      ? Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconoParte(
-                                              id: entrada.key,
-                                              size: 24,
-                                            ),
-                                            const Icon(Icons.check, size: 18),
-                                          ],
-                                        )
-                                      : const Icon(Icons.add, size: 28),
+                              : estado,
+                          child: TarjetaJuego(
+                            radio: 22,
+                            fondo: colocada
+                                ? const Color(0xFFE5F4EA).withValues(alpha: .8)
+                                : Colors.white.withValues(alpha: .6),
+                            borde: color,
+                            destacada: encima || fallo,
+                            claveAccion: Key('destino-${entrada.key}'),
+                            onTap: () {
+                              final pieza = seleccionada;
+                              if (pieza != null) {
+                                onColocar(pieza, entrada.key);
+                              } else if (colocada) {
+                                onConsultar(entrada.key);
+                              }
+                            },
+                            child: Center(
+                              child: ExcludeSemantics(
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    if (colocada)
+                                      const Icon(
+                                        Icons.check_circle_rounded,
+                                        color: Color(0xFF1F8A4C),
+                                        size: 24,
+                                      )
+                                    else if (fallo)
+                                      const Icon(
+                                        Icons.replay_rounded,
+                                        color: Color(0xFF9A5200),
+                                        size: 24,
+                                      )
+                                    else if (encima)
+                                      const Icon(
+                                        Icons.arrow_downward_rounded,
+                                        size: 24,
+                                      )
+                                    else
+                                      const Icon(
+                                        Icons.add,
+                                        size: 24,
+                                        color: Color(0xFF344E41),
+                                      ),
+                                    if (colocada && fallo)
+                                      const Positioned(
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Icon(
+                                          Icons.replay_rounded,
+                                          size: 18,
+                                          color: Color(0xFF9A5200),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -219,6 +263,10 @@ class _PlantaPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.clipRRect(
+      RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(24)),
+    );
     final fondo = Paint()..color = const Color(0xFFE9F3E2);
     canvas.drawRRect(
       RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(24)),
@@ -263,6 +311,7 @@ class _PlantaPainter extends CustomPainter {
       _pintarParte(canvas, entrada.key);
       canvas.restore();
     }
+    canvas.restore();
   }
 
   @override

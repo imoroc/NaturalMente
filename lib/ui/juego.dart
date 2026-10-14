@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
+import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/reglas/resolver.dart';
@@ -59,7 +61,8 @@ class _JuegoPageState extends State<JuegoPage> {
               ? (_reto < actividad.retos.length - 1 ? 'Siguiente' : 'Volver')
               : null,
           onSoltar: _soltar,
-          onPie: _resultado?.acierto == true && _reto < actividad.retos.length - 1
+          onPie:
+              _resultado?.acierto == true && _reto < actividad.retos.length - 1
               ? _siguiente
               : _volver,
         ),
@@ -68,7 +71,8 @@ class _JuegoPageState extends State<JuegoPage> {
           valores: _valores,
           resultado: _resultado,
           frase: _fraseControles(),
-          onElegir: (control, opcion) => setState(() => _valores[control] = opcion),
+          onElegir: (control, opcion) =>
+              setState(() => _valores[control] = opcion),
           onAvanzar: _avanzar,
           onOtraVez: _resultado?.estado == 'brote' ? _otraVez : null,
         ),
@@ -327,61 +331,43 @@ class _Sitio extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorFondo = _colorSitio(opcion.id);
     final colorBorde = elegido
-        ? (acierto ? const Color(0xFF2ECC71) : const Color(0xFFFF9F1C))
+        ? (acierto ? EstilosJuego.acierto : EstilosJuego.fallo)
         : _bordeSitio(opcion.id);
 
     return DragTarget<String>(
       onAcceptWithDetails: (_) => onElegir(),
       builder: (context, candidatos, _) {
         final encima = candidatos.isNotEmpty;
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          decoration: BoxDecoration(
-            color: colorFondo,
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: encima ? const Color(0xFF2ECC71) : colorBorde,
-              width: encima || elegido ? 3.5 : 2.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: colorBorde.withValues(alpha: 0.55),
-                offset: const Offset(0, 4),
-                blurRadius: 0,
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              key: Key('sitio-${opcion.id}'),
-              borderRadius: BorderRadius.circular(20),
-              onTap: onElegir,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (elegido)
-                        _Miniatura(id: criatura, tamano: 48)
-                      else
-                        IconoSitio(id: opcion.id),
-                      const SizedBox(height: 6),
-                      Text(
-                        opcion.nombre,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 16,
-                          color: Color(0xFF1E293B),
-                        ),
-                      ),
-                    ],
+        return TarjetaJuego(
+          fondo: colorFondo,
+          borde: encima ? EstilosJuego.acierto : colorBorde,
+          sombra: colorBorde.withValues(alpha: .55),
+          destacada: encima || elegido,
+          claveAccion: Key('sitio-${opcion.id}'),
+          onTap: onElegir,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (elegido)
+                    _Miniatura(id: criatura, tamano: 48)
+                  else
+                    IconoSitio(id: opcion.id),
+                  const SizedBox(height: 6),
+                  Text(
+                    opcion.nombre,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      color: Color(0xFF1E293B),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -454,10 +440,8 @@ class _Controles extends StatelessWidget {
                             nombre: control.opciones[i].nombre,
                             elegido:
                                 valores[control.id] == control.opciones[i].id,
-                            onTap: () => onElegir(
-                              control.id,
-                              control.opciones[i].id,
-                            ),
+                            onTap: () =>
+                                onElegir(control.id, control.opciones[i].id),
                           ),
                         ),
                       ],
@@ -657,7 +641,10 @@ class _Miniatura extends StatelessWidget {
     return SizedBox(
       width: tamano,
       height: tamano,
-      child: FittedBox(fit: BoxFit.contain, child: Criatura(id: id)),
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Criatura(id: id),
+      ),
     );
   }
 }

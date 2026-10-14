@@ -25,7 +25,10 @@ class Catalogo {
   }
 
   static Future<Catalogo> cargar() async {
-    final texto = await rootBundle.loadString('content/catalog.json');
+    final datos = await rootBundle.load('content/catalog.json');
+    final texto = utf8.decode(
+      datos.buffer.asUint8List(datos.offsetInBytes, datos.lengthInBytes),
+    );
     return desdeTexto(texto);
   }
 

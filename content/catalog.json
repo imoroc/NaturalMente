@@ -24,105 +24,199 @@
       "id": "camello",
       "zona": "reserva",
       "curso": "1º-2º",
+      "juego": "Cada uno a su hogar",
       "titulo": "Camello",
-      "frase": "Aguanta el calor y puede pasar días con poca agua.",
-      "curiosidad": "La joroba guarda grasa, no una bolsa de agua."
+      "frase": "Aguanta el calor del desierto y puede pasar varios días con muy poca agua.",
+      "curiosidad": "Su joroba guarda reservas de grasa para tener energía, no una bolsa de agua."
     },
     {
-      "id": "oso-pardo",
+      "id": "delfin",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Cada uno a su hogar",
+      "titulo": "Delfín",
+      "frase": "Es un mamífero marino que vive en grupo en el mar y sube a respirar aire.",
+      "curiosidad": "Respira por un orificio en lo alto de la cabeza llamado espiráculo y se orienta con sonidos."
+    },
+    {
+      "id": "pinguino",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Cada uno a su hogar",
+      "titulo": "Pingüino emperador",
+      "frase": "Es un ave que no vuela, nada genial con sus aletas y vive en el hielo del polo.",
+      "curiosidad": "Para resguardarse del viento helado, los pingüinos se juntan en corro y se turnan en el centro."
+    },
+    {
+      "id": "oso",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Cada uno a su hogar",
+      "titulo": "Oso pardo",
+      "frase": "Vive en bosques de montaña. El del hielo ártico es el oso polar, que es otro.",
+      "curiosidad": "En otoño come frutos y raíces sin parar para descansar resguardado en su osera en invierno."
+    },
+    {
+      "id": "rana",
       "zona": "reserva",
       "curso": "3º-4º",
-      "titulo": "Oso pardo",
-      "frase": "Vive en bosques. El del hielo es el oso polar, que es otro.",
-      "curiosidad": "En invierno duerme mucho, pero no es el mismo sueño de todas las noches."
+      "juego": "Cada uno a su hogar",
+      "titulo": "Rana",
+      "frase": "Es un anfibio: necesita agua dulce cerca para mantener su piel siempre húmeda.",
+      "curiosidad": "De pequeña nace en el agua como renacuajo con cola y al crecer le salen las patas."
+    },
+    {
+      "id": "tucan",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "Cada uno a su hogar",
+      "titulo": "Tucán",
+      "frase": "Vive en las copas de la selva húmeda y se alimenta sobre todo de frutas tropicales.",
+      "curiosidad": "Su pico es muy grande y vistoso, pero por dentro tiene huecos de aire y pesa muy poco."
     },
     {
       "id": "insectos",
       "zona": "reserva",
-      "curso": "3º-4º",
+      "curso": "5º-6º",
+      "juego": "Cada uno a su hogar",
       "titulo": "Insectos",
-      "frase": "No tienen huesos. Abejas, hormigas y mariposas son insectos.",
-      "curiosidad": "Si desaparecen las abejas, a muchas plantas les cuesta hacer fruto."
+      "frase": "Son animales invertebrados: no tienen huesos. Abejas, hormigas y mariposas son insectos.",
+      "curiosidad": "Al viajar de flor en flor, las abejas llevan el polen y ayudan a que salgan los frutos."
     },
     {
-      "id": "raiz",
+      "id": "semilla",
       "zona": "invernadero",
       "curso": "1º-2º",
-      "titulo": "Raíz",
-      "frase": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
-      "curiosidad": "Algunas raíces, como la zanahoria, guardan reservas de alimento."
-    },
-    {
-      "id": "hoja",
-      "zona": "invernadero",
-      "curso": "3º-4º",
-      "titulo": "Hoja",
-      "frase": "La hoja fabrica alimento para la planta utilizando la luz.",
-      "curiosidad": "Hay hojas muy anchas y otras finas, como las agujas del pino."
+      "juego": "Laboratorio de germinación",
+      "titulo": "Semilla de judía",
+      "frase": "Guarda dentro una plantita en miniatura esperando agua, aire y buena tierra para despertar.",
+      "curiosidad": "Lo primero que asoma al germinar la semilla es una pequeña raíz que busca sujetarse al suelo."
     },
     {
       "id": "huerto",
       "zona": "invernadero",
       "curso": "3º-4º",
+      "juego": "Laboratorio de germinación",
       "titulo": "Tierra de huerto",
-      "frase": "Guarda el agua mejor que la arena o las piedras.",
-      "curiosidad": "Una semilla en piedras no encuentra de qué agarrarse."
+      "frase": "Guarda la humedad y las sales minerales mucho mejor que la arena o las piedras.",
+      "curiosidad": "Entre piedras sueltas la raíz no encuentra tierra esponjosa ni agua retenida donde agarrarse."
     },
     {
-      "id": "sentidos",
-      "zona": "cuerpo",
+      "id": "raiz",
+      "zona": "invernadero",
       "curso": "1º-2º",
-      "titulo": "Los cinco sentidos",
-      "frase": "Ojos, oídos, nariz, lengua y piel nos avisan de lo que hay alrededor.",
-      "curiosidad": "La piel también nota el frío y el calor, no solo si algo pincha."
-    },
-    {
-      "id": "corazon-ficha",
-      "zona": "cuerpo",
-      "curso": "3º-4º",
-      "titulo": "Corazón",
-      "frase": "Está en el pecho y empuja la sangre sin parar.",
-      "curiosidad": "Cuando corres, late más deprisa porque los músculos piden más."
-    },
-    {
-      "id": "celula",
-      "zona": "cuerpo",
-      "curso": "5º-6º",
-      "titulo": "Célula",
-      "frase": "Es la parte viva más pequeña. El cuerpo está hecho de muchísimas.",
-      "curiosidad": "No se ve a simple vista. Hace falta una lupa muy fuerte."
-    },
-    {
-      "id": "una-vida",
-      "zona": "cuerpo",
-      "curso": "5º-6º",
-      "titulo": "Así empieza una vida",
-      "frase": "Se unen dos células muy pequeñas, el bebé crece dentro, nace y necesita cuidados.",
-      "curiosidad": "El cuerpo de cada persona es suyo."
+      "juego": "Herbario desmontable",
+      "titulo": "Raíz",
+      "frase": "La raíz toma agua y sales minerales del suelo y sujeta la planta con firmeza.",
+      "curiosidad": "Algunas raíces, como la zanahoria o el rábano, se engrosan porque guardan reservas de alimento."
     },
     {
       "id": "tallo",
       "zona": "invernadero",
-      "curso": "3º-4º",
+      "curso": "1º-2º",
+      "juego": "Herbario desmontable",
       "titulo": "Tallo",
       "frase": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
-      "curiosidad": "El tronco de un árbol es un tallo que crece y se vuelve leñoso."
+      "curiosidad": "El tronco de un árbol es en realidad un tallo que ha crecido mucho y se ha vuelto leñoso."
+    },
+    {
+      "id": "hoja",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Herbario desmontable",
+      "titulo": "Hoja",
+      "frase": "La hoja fabrica el alimento para toda la planta utilizando la luz, el agua y el aire.",
+      "curiosidad": "Hay hojas muy anchas y otras finas como agujas, como las que tienen los pinos."
     },
     {
       "id": "flor",
       "zona": "invernadero",
       "curso": "3º-4º",
+      "juego": "Herbario desmontable",
       "titulo": "Flor",
       "frase": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
-      "curiosidad": "Muchas flores atraen a insectos que transportan el polen."
+      "curiosidad": "Con sus colores y aromas, muchas flores atraen a insectos que transportan el polen."
     },
     {
       "id": "fruto",
       "zona": "invernadero",
-      "curso": "3º-4º",
+      "curso": "5º-6º",
+      "juego": "Herbario desmontable",
       "titulo": "Fruto",
-      "frase": "El fruto protege las semillas y ayuda a que lleguen a otros lugares.",
-      "curiosidad": "Un tomate es un fruto: dentro puedes encontrar sus semillas."
+      "frase": "El fruto protege las semillas en su interior y ayuda a que lleguen a otros lugares.",
+      "curiosidad": "Un tomate o una manzana son frutos: si los abres con cuidado verás sus semillas dentro."
+    },
+    {
+      "id": "corazon",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Corazón",
+      "frase": "Está protegido en el pecho y empuja la sangre sin parar por todo el cuerpo.",
+      "curiosidad": "Cuando corres o saltas, late más deprisa porque tus músculos piden más oxígeno."
+    },
+    {
+      "id": "pulmones",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Pulmones",
+      "frase": "Son dos órganos esponjosos del pecho que toman el oxígeno del aire que respiramos.",
+      "curiosidad": "Al tomar aire por la nariz, el pecho se ensancha porque los pulmones se hinchan como dos globos suaves."
+    },
+    {
+      "id": "estomago",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Estómago",
+      "frase": "Trabaja en la barriga mezclando y deshaciendo los alimentos que tragamos.",
+      "curiosidad": "Gracias a la digestión, los alimentos se transforman en nutrientes muy pequeños que pasan a la sangre."
+    },
+    {
+      "id": "cerebro",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Cerebro",
+      "frase": "Está protegido dentro del cráneo, interpreta lo que captan los sentidos y dirige el cuerpo.",
+      "curiosidad": "Incluso mientras duermes por la noche, tu cerebro sigue trabajando y crea los sueños."
+    },
+    {
+      "id": "esqueleto",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Músculos y huesos",
+      "frase": "Los huesos sostienen el cuerpo y los músculos tiran de ellos para doblar brazos y piernas.",
+      "curiosidad": "Donde se juntan dos huesos móviles hay una articulación: un hueso y un músculo pueden mover el brazo de un modo parecido a una palanca."
+    },
+    {
+      "id": "sentidos",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Cada pieza en su sitio",
+      "titulo": "Los cinco sentidos",
+      "frase": "Ojos, oídos, nariz, lengua y piel nos avisan de todo lo que ocurre alrededor.",
+      "curiosidad": "La piel es el órgano del tacto y nota también el frío, el calor y las cosquillas."
+    },
+    {
+      "id": "una-vida",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Así empieza una vida",
+      "titulo": "Así empieza una vida",
+      "frase": "Se unen dos células muy pequeñas, el bebé crece en el útero, nace y necesita muchos cuidados.",
+      "curiosidad": "El cuerpo de cada persona es suyo y merece siempre respeto y cuidado."
+    },
+    {
+      "id": "celula",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Así empieza una vida",
+      "titulo": "Célula",
+      "frase": "Es la parte viva más pequeña que existe. Todo nuestro cuerpo está formado por millones.",
+      "curiosidad": "Es tan diminuta que no se ve a simple vista: hace falta mirar por un microscopio."
     }
   ],
   "actividades": [
@@ -131,9 +225,10 @@
       "zona": "reserva",
       "tipo": "lugar",
       "titulo": "Cada uno a su hogar",
-      "curso": "1º-2º",
+      "curso": "1º-6º, según el nivel",
       "medalla": true,
-      "quien": "El animal dice",
+      "quien": "Natu dice",
+      "intro": "Arrastra cada animal a su hábitat o toca directamente su paisaje.",
       "opciones": [
         {
           "id": "desierto",
@@ -156,54 +251,720 @@
         {
           "id": "camello",
           "nombre": "El camello",
-          "pregunta": "El camello busca su sitio. ¿Dónde puede vivir?",
+          "pregunta": "¿En qué lugar puede vivir el camello?",
           "respuesta": "desierto",
           "pista": "Piensa en un sitio seco, con mucho sol y poca agua.",
+          "curiosidad": "Su joroba almacena grasa para obtener energía, no una bolsa de agua.",
           "frases": {
-            "desierto": "Sí. En el desierto aguanto el calor y puedo pasar con poca agua.",
-            "mar": "El agua del mar es salada y yo estoy hecho para la arena y el sol.",
-            "polo": "¡Aquí paso mucho frío! Mi cuerpo aguanta mejor el calor.",
-            "bosque": "Hay sombra de más. Yo vivo donde el suelo es seco y abierto."
+            "desierto": "¡Eso es! En el desierto el camello aguanta el calor y puede pasar días con poca agua.",
+            "mar": "El agua del mar es salada y el camello camina por la arena seca.",
+            "polo": "¡En el polo hace demasiado frío para el camello! Su cuerpo está preparado para el calor.",
+            "bosque": "En el bosque hay demasiada humedad y árboles. El camello vive en terrenos secos y abiertos."
           }
         },
         {
           "id": "delfin",
           "nombre": "El delfín",
-          "pregunta": "El delfín busca su sitio. ¿Dónde puede vivir?",
+          "pregunta": "¿Dónde vive y nada el delfín?",
           "respuesta": "mar",
-          "pista": "Vivo en el agua salada y subo a respirar.",
+          "pista": "Busca un lugar enorme de agua salada donde pueda nadar y subir a respirar.",
+          "curiosidad": "El delfín no es un pez: es un mamífero marino y respira aire por un orificio en lo alto de la cabeza.",
           "frases": {
-            "mar": "El mar es mi hogar. Nado, y de vez en cuando saco el lomo a respirar.",
-            "desierto": "Sin agua no puedo nadar. Busca un sitio enorme y salado.",
-            "polo": "El hielo no es lo mío. Necesito el mar abierto.",
-            "bosque": "Entre árboles no nado. Mi sitio es el mar."
+            "mar": "¡Muy bien! El mar es el hogar del delfín: nada en grupo y sube a la superficie a respirar.",
+            "desierto": "En el desierto no hay agua para nadar. El delfín necesita un lugar grande y salado.",
+            "polo": "Sobre el hielo no puede desplazarse. El delfín necesita el mar abierto para nadar.",
+            "bosque": "Entre los árboles no se puede nadar. El hogar del delfín es el mar."
           }
         },
         {
           "id": "pinguino",
           "nombre": "El pingüino emperador",
-          "pregunta": "El pingüino emperador busca su sitio. ¿Dónde puede vivir?",
+          "pregunta": "¿Dónde tiene su hogar el pingüino emperador?",
           "respuesta": "polo",
-          "pista": "Este pingüino sí vive en el hielo. No todos lo hacen.",
+          "pista": "Este pingüino vive rodeado de hielo y nieve, aunque no todos los pingüinos viven allí.",
+          "curiosidad": "Para protegerse del viento helado, los pingüinos emperador se juntan en grupo y se turnan para estar en el centro.",
           "frases": {
-            "polo": "En el hielo me abrigo con las plumas y con el grupo.",
-            "desierto": "Este calor no va conmigo. Vivo donde hace mucho frío.",
-            "mar": "Nado muy bien, pero mi casa en tierra es el hielo.",
-            "bosque": "Los árboles no son mi paisaje. Busca hielo."
+            "polo": "¡Genial! En el hielo del polo se abriga con sus plumas tupidas y el calor del grupo.",
+            "desierto": "Con tanto calor lo pasaría fatal. El pingüino emperador vive donde hace mucho frío.",
+            "mar": "Nada genial para pescar en el mar, pero descansa y cría a sus polluelos sobre el hielo del polo.",
+            "bosque": "Los árboles del bosque no son su paisaje. Busca las grandes placas de hielo."
           }
         },
         {
           "id": "oso",
           "nombre": "El oso pardo",
-          "pregunta": "El oso pardo busca su sitio. ¿Dónde puede vivir?",
+          "pregunta": "¿En qué paisaje vive el oso pardo?",
           "respuesta": "bosque",
-          "pista": "Fíjate en el nombre: pardo, de bosque. El del hielo es otro oso.",
+          "pista": "Fíjate bien en su pelaje marrón: es el oso pardo de montaña y bosque, distinto del oso polar.",
+          "curiosidad": "En otoño come frutos secos, bayas y raíces sin parar para guardar reservas antes de pasar el invierno en su osera.",
           "frases": {
-            "bosque": "Sí. El oso pardo vive en bosques, con árboles y con frío.",
-            "desierto": "¡Qué calor! El oso pardo no vive en la arena.",
-            "mar": "No vivo en el mar. Necesito árboles.",
-            "polo": "En el hielo vive el oso polar. Yo soy pardo y mi sitio es el bosque."
+            "bosque": "¡Así es! El oso pardo vive en bosques con árboles, arroyos y refugios entre las montañas.",
+            "desierto": "¡Demasiado sol y arena! El oso pardo necesita sombra, árboles y agua fresca.",
+            "mar": "El oso pardo no vive en el mar; camina entre los árboles del bosque.",
+            "polo": "En el hielo vive el oso polar, que tiene el pelo blanco. El oso pardo vive en el bosque."
           }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Explora 4 paisajes y lleva a cada animal a su hogar.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "desierto",
+              "nombre": "Desierto"
+            },
+            {
+              "id": "mar",
+              "nombre": "Mar"
+            },
+            {
+              "id": "polo",
+              "nombre": "Polo"
+            },
+            {
+              "id": "bosque",
+              "nombre": "Bosque"
+            }
+          ],
+          "retos": [
+            {
+              "id": "camello",
+              "nombre": "El camello",
+              "pregunta": "¿En qué lugar puede vivir el camello?",
+              "respuesta": "desierto",
+              "pista": "Piensa en un sitio seco, con mucho sol y poca agua.",
+              "curiosidad": "Su joroba almacena grasa para obtener energía, no una bolsa de agua.",
+              "frases": {
+                "desierto": "¡Eso es! En el desierto el camello aguanta el calor y puede pasar días con poca agua.",
+                "mar": "El agua del mar es salada y el camello camina por la arena seca.",
+                "polo": "¡En el polo hace demasiado frío para el camello! Su cuerpo está preparado para el calor.",
+                "bosque": "En el bosque hay demasiada humedad y árboles. El camello vive en terrenos secos y abiertos."
+              }
+            },
+            {
+              "id": "delfin",
+              "nombre": "El delfín",
+              "pregunta": "¿Dónde vive y nada el delfín?",
+              "respuesta": "mar",
+              "pista": "Busca un lugar enorme de agua salada donde pueda nadar y subir a respirar.",
+              "curiosidad": "El delfín no es un pez: es un mamífero marino y respira aire por un orificio en lo alto de la cabeza.",
+              "frases": {
+                "mar": "¡Muy bien! El mar es el hogar del delfín: nada en grupo y sube a la superficie a respirar.",
+                "desierto": "En el desierto no hay agua para nadar. El delfín necesita un lugar grande y salado.",
+                "polo": "Sobre el hielo no puede desplazarse. El delfín necesita el mar abierto para nadar.",
+                "bosque": "Entre los árboles no se puede nadar. El hogar del delfín es el mar."
+              }
+            },
+            {
+              "id": "pinguino",
+              "nombre": "El pingüino emperador",
+              "pregunta": "¿Dónde tiene su hogar el pingüino emperador?",
+              "respuesta": "polo",
+              "pista": "Este pingüino vive rodeado de hielo y nieve, aunque no todos los pingüinos viven allí.",
+              "curiosidad": "Para protegerse del viento helado, los pingüinos emperador se juntan en grupo y se turnan para estar en el centro.",
+              "frases": {
+                "polo": "¡Genial! En el hielo del polo se abriga con sus plumas tupidas y el calor del grupo.",
+                "desierto": "Con tanto calor lo pasaría fatal. El pingüino emperador vive donde hace mucho frío.",
+                "mar": "Nada genial para pescar en el mar, pero descansa y cría a sus polluelos sobre el hielo del polo.",
+                "bosque": "Los árboles del bosque no son su paisaje. Busca las grandes placas de hielo."
+              }
+            },
+            {
+              "id": "oso",
+              "nombre": "El oso pardo",
+              "pregunta": "¿En qué paisaje vive el oso pardo?",
+              "respuesta": "bosque",
+              "pista": "Fíjate bien en su pelaje marrón: es el oso pardo de montaña y bosque, distinto del oso polar.",
+              "curiosidad": "En otoño come frutos secos, bayas y raíces sin parar para guardar reservas antes de pasar el invierno en su osera.",
+              "frases": {
+                "bosque": "¡Así es! El oso pardo vive en bosques con árboles, arroyos y refugios entre las montañas.",
+                "desierto": "¡Demasiado sol y arena! El oso pardo necesita sombra, árboles y agua fresca.",
+                "mar": "El oso pardo no vive en el mar; camina entre los árboles del bosque.",
+                "polo": "En el hielo vive el oso polar, que tiene el pelo blanco. El oso pardo vive en el bosque."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Explora 6 hábitats y descubre cómo se adapta el cuerpo de cada animal.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "desierto",
+              "nombre": "Desierto"
+            },
+            {
+              "id": "mar",
+              "nombre": "Mar"
+            },
+            {
+              "id": "polo",
+              "nombre": "Polo"
+            },
+            {
+              "id": "bosque",
+              "nombre": "Bosque"
+            },
+            {
+              "id": "selva",
+              "nombre": "Selva"
+            },
+            {
+              "id": "rio",
+              "nombre": "Río y charca"
+            }
+          ],
+          "retos": [
+            {
+              "id": "camello",
+              "nombre": "El camello",
+              "pregunta": "¿En cuál de estos seis hábitats vive el camello?",
+              "respuesta": "desierto",
+              "pista": "Piensa en un sitio seco, con mucho sol y poca agua.",
+              "curiosidad": "Sus largas pestañas dobles y sus fosas nasales que se cierran impiden que le entre arena cuando sopla el viento.",
+              "frases": {
+                "desierto": "¡Muy bien! El desierto es su hábitat. Ahora descubre cómo se adapta a él.",
+                "mar": "El agua salada del mar no es para el camello; camina sobre la arena seca.",
+                "polo": "¡En el polo hace demasiado frío para el camello! Necesita un clima cálido y árido.",
+                "bosque": "El bosque tiene demasiada vegetación y humedad para el camello.",
+                "selva": "La selva es muy húmeda y cerrada; el camello vive en espacios áridos y despejados.",
+                "rio": "Aunque bebe agua cuando encuentra un oasis, no vive dentro del río."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo ayuda su cuerpo al camello a vivir en el desierto?",
+                "opciones": [
+                  {
+                    "id": "joroba",
+                    "nombre": "Guarda grasa en la joroba y tiene patas anchas para no hundirse en la arena"
+                  },
+                  {
+                    "id": "branquias",
+                    "nombre": "Respira bajo el agua gracias a unas branquias ocultas"
+                  },
+                  {
+                    "id": "hielo",
+                    "nombre": "Tiene plumas impermeables para deslizarse por el hielo"
+                  }
+                ],
+                "respuesta": "joroba",
+                "frases": {
+                  "joroba": "¡Exacto! La grasa de su joroba le da energía cuando escasea la comida y sus patas anchas pisan firme sobre la arena.",
+                  "branquias": "Las branquias son propias de los peces acuáticos; el camello es un mamífero terrestre y respira por pulmones.",
+                  "hielo": "El camello tiene pelo, no plumas, y sus patas están hechas para la arena cálida."
+                }
+              }
+            },
+            {
+              "id": "delfin",
+              "nombre": "El delfín",
+              "pregunta": "¿Cuál de estos hábitats es el hogar del delfín?",
+              "respuesta": "mar",
+              "pista": "Es un mamífero acuático de aguas saladas abiertas.",
+              "curiosidad": "Para orientarse y encontrar bancos de peces en aguas oscuras, emite chasquidos y escucha el eco que rebota.",
+              "frases": {
+                "mar": "¡Genial! El delfín vive en el mar. Veamos cómo está adaptado al agua.",
+                "desierto": "En el desierto no hay agua para nadar.",
+                "polo": "Sobre las placas de hielo no puede moverse; necesita aguas abiertas.",
+                "bosque": "Entre los árboles del bosque no puede nadar.",
+                "selva": "Entre las ramas de la selva no puede vivir un animal marino.",
+                "rio": "Este delfín oceánico necesita la amplitud del mar salado, no una charca pequeña."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué adaptación tiene el delfín para vivir en el mar siendo un mamífero?",
+                "opciones": [
+                  {
+                    "id": "escamas",
+                    "nombre": "Tiene escamas duras y respira sin salir nunca a la superficie"
+                  },
+                  {
+                    "id": "espiraculo",
+                    "nombre": "Tiene aletas para nadar y un orificio arriba para salir a respirar aire"
+                  },
+                  {
+                    "id": "patas",
+                    "nombre": "Tiene cuatro patas con pezuñas para caminar por el fondo"
+                  }
+                ],
+                "respuesta": "espiraculo",
+                "frases": {
+                  "espiraculo": "¡Muy bien! Como es un mamífero marino, tiene pulmones y sube a tomar aire por su espiráculo.",
+                  "escamas": "Los peces tienen escamas y branquias, pero el delfín tiene piel lisa y pulmones.",
+                  "patas": "El delfín no tiene patas; su cuerpo hidrodinámico y sus aletas le permiten deslizarse por el agua."
+                }
+              }
+            },
+            {
+              "id": "pinguino",
+              "nombre": "El pingüino emperador",
+              "pregunta": "¿Dónde vive y cría el pingüino emperador?",
+              "respuesta": "polo",
+              "pista": "Es un ave que no vuela y habita en las costas heladas más frías.",
+              "curiosidad": "Sus alas se han transformado en aletas rígidas y planas que funcionan como remos bajo el agua helada.",
+              "frases": {
+                "polo": "¡Así se hace! Vive en el hielo polar. Ahora mira cómo soporta tanto frío.",
+                "desierto": "El calor del desierto sería insoportable para su grueso abrigo natural.",
+                "mar": "Entra al mar a buscar alimento, pero su colonia y su hogar están sobre el hielo del polo.",
+                "bosque": "El pingüino emperador no vive entre árboles ni montañas boscosas.",
+                "selva": "El clima cálido y húmedo de la selva no encaja con su abrigo polar.",
+                "rio": "No habita en charcas ni ríos de agua dulce; vive en las costas heladas del polo."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo consigue el pingüino emperador no congelarse en el polo?",
+                "opciones": [
+                  {
+                    "id": "arena",
+                    "nombre": "Se entierra bajo la arena caliente cuando baja la temperatura"
+                  },
+                  {
+                    "id": "hojas",
+                    "nombre": "Construye un nido cerrado con hojas grandes de la selva"
+                  },
+                  {
+                    "id": "plumas",
+                    "nombre": "Tiene plumas muy juntas, una capa de grasa bajo la piel y se agrupa con otros"
+                  }
+                ],
+                "respuesta": "plumas",
+                "frases": {
+                  "plumas": "¡Eso es! Sus plumas impermeables, su grasa corporal y el calor del grupo lo protegen del frío extremo.",
+                  "arena": "En su hábitat hay hielo y nieve, no dunas de arena caliente.",
+                  "hojas": "En el hielo antártico no crecen árboles con hojas grandes."
+                }
+              }
+            },
+            {
+              "id": "oso",
+              "nombre": "El oso pardo",
+              "pregunta": "¿En qué hábitat encuentra alimento y refugio el oso pardo?",
+              "respuesta": "bosque",
+              "pista": "Camina entre robles, hayas y arroyos de montaña.",
+              "curiosidad": "Aunque es muy grande, tiene un olfato extraordinario que le permite oler frutos o miel a gran distancia.",
+              "frases": {
+                "bosque": "¡Muy bien! El bosque templado es su hogar. Veamos cómo pasa allí las estaciones.",
+                "desierto": "En el desierto no encontraría las bayas, bellotas ni arroyos que necesita.",
+                "mar": "El oso pardo es terrestre; no vive nadando en el mar abierto.",
+                "polo": "En el hielo polar vive el oso polar; el oso pardo habita en los bosques.",
+                "selva": "El oso pardo vive en bosques templados de montaña, no en la selva tropical.",
+                "rio": "Se acerca a los ríos a pescar, pero su hogar y su refugio están en el bosque."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué hace el oso pardo cuando llega el invierno al bosque y escasea la comida?",
+                "opciones": [
+                  {
+                    "id": "vuela",
+                    "nombre": "Despliega unas alas ocultas y vuela hasta el desierto"
+                  },
+                  {
+                    "id": "osera",
+                    "nombre": "Descansa protegido en su osera gastando las reservas que acumuló en otoño"
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Se sumerge en el fondo del mar hasta que vuelve la primavera"
+                  }
+                ],
+                "respuesta": "osera",
+                "frases": {
+                  "osera": "¡Exacto! Su pelaje espeso lo abriga y en invierno permanece resguardado en su cueva u osera.",
+                  "vuela": "El oso pardo es un mamífero pesado sin alas; no puede volar.",
+                  "agua": "Respira aire con pulmones y vive en tierra firme, así que no puede pasar el invierno bajo el agua."
+                }
+              }
+            },
+            {
+              "id": "rana",
+              "nombre": "La rana",
+              "pregunta": "¿Dónde vive la rana para mantener su piel siempre húmeda?",
+              "respuesta": "rio",
+              "pista": "Es un anfibio y necesita agua dulce tranquila con juncos y nenúfares.",
+              "curiosidad": "Las ranas no solo respiran con sus pulmones: también absorben oxígeno a través de su piel húmeda.",
+              "frases": {
+                "rio": "¡Genial! El río y las charcas de agua dulce son su hogar. Ahora responde a su reto.",
+                "desierto": "En el aire tan seco del desierto su piel fina se secaría enseguida.",
+                "mar": "La sal del mar daña la piel permeable de los anfibios; necesita agua dulce.",
+                "polo": "Como su cuerpo depende del calor exterior, en el hielo del polo no podría vivir.",
+                "bosque": "Aunque busca sombra, depende directamente de las charcas y orillas del río para poner sus huevos.",
+                "selva": "Esta rana de charca busca las orillas de ríos y lagunas con nenúfares."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo se desplaza y vive la rana entre la charca y la orilla?",
+                "opciones": [
+                  {
+                    "id": "patas",
+                    "nombre": "Tiene piel húmeda y patas traseras largas y fuertes para saltar y nadar"
+                  },
+                  {
+                    "id": "pelaje",
+                    "nombre": "Tiene un pelaje muy grueso de lana para no mojarse nunca"
+                  },
+                  {
+                    "id": "pico",
+                    "nombre": "Usa un pico largo de ave para partir nueces en lo alto de los pinos"
+                  }
+                ],
+                "respuesta": "patas",
+                "frases": {
+                  "patas": "¡Muy bien! Sus patas traseras musculosas impulsan grandes saltos en la orilla y brazadas en el agua.",
+                  "pelaje": "Los anfibios tienen la piel desnuda y húmeda, sin pelo ni plumas.",
+                  "pico": "Las ranas no tienen pico; atrapan pequeños insectos con su lengua rápida y pegajosa."
+                }
+              }
+            },
+            {
+              "id": "tucan",
+              "nombre": "El tucán",
+              "pregunta": "¿En qué lugar cálido y lleno de árboles altos vive el tucán?",
+              "respuesta": "selva",
+              "pista": "Busca un lugar húmedo, cálido todo el año y repleto de lianas y frutas tropicales.",
+              "curiosidad": "Para dormir, el tucán gira la cabeza, apoya el pico sobre la espalda y se tapa con la cola como una bola de plumas.",
+              "frases": {
+                "selva": "¡Fantástico! La selva tropical es el hogar del tucán. Descubre para qué usa su pico.",
+                "desierto": "En el desierto no hay los grandes árboles frutales que necesita el tucán.",
+                "mar": "El tucán es un ave arborícola; no nada ni pesca en el mar.",
+                "polo": "El tucán necesita calor tropical todo el año; no soporta el hielo del polo.",
+                "bosque": "Más que un bosque frío de invierno, el tucán vive en la selva cálida y lluviosa.",
+                "rio": "No vive en el agua de la charca, sino en lo alto de las copas de la selva."
+              },
+              "adaptacion": {
+                "enunciado": "¿Para qué le sirve al tucán su pico tan largo y ligero en la selva?",
+                "opciones": [
+                  {
+                    "id": "fruta",
+                    "nombre": "Para alcanzar frutas en ramas finas y ayudar a regular su calor corporal"
+                  },
+                  {
+                    "id": "excavar",
+                    "nombre": "Para excavar túneles profundos debajo del hielo polar"
+                  },
+                  {
+                    "id": "bucear",
+                    "nombre": "Para respirar como un tubo de buceo en el fondo del océano"
+                  }
+                ],
+                "respuesta": "fruta",
+                "frases": {
+                  "fruta": "¡Exacto! Aunque parece pesado, su pico es muy ligero y le permite coger frutos sin que las ramas finas se doblen.",
+                  "excavar": "Su pico es ligero como una esponja dura; no sirve para picar hielo ni roca.",
+                  "bucear": "El tucán vuela y salta entre las ramas de los árboles, no bucea en el océano."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Analiza las pistas de los 6 ecosistemas y supera las preguntas científicas.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "desierto",
+              "nombre": "Desierto"
+            },
+            {
+              "id": "mar",
+              "nombre": "Mar"
+            },
+            {
+              "id": "polo",
+              "nombre": "Polo"
+            },
+            {
+              "id": "bosque",
+              "nombre": "Bosque"
+            },
+            {
+              "id": "selva",
+              "nombre": "Selva"
+            },
+            {
+              "id": "rio",
+              "nombre": "Río y charca"
+            }
+          ],
+          "retos": [
+            {
+              "id": "camello",
+              "nombre": "El camello",
+              "pregunta": "Mamífero herbívoro con reservas de lípidos en el dorso y pestañas dobles. ¿Cuál es su ecosistema?",
+              "respuesta": "desierto",
+              "pista": "Piensa en un sitio seco, con mucho sol y poca agua.",
+              "curiosidad": "Puede perder mucha más proporción de agua corporal que otros mamíferos sin ponerse enfermo y recuperarla bebiendo en pocos minutos.",
+              "frases": {
+                "desierto": "¡Bien visto! Habita en ecosistemas áridos como el desierto. Responde ahora la cuestión científica.",
+                "mar": "Es un mamífero terrestre adaptado a la aridez, no al medio marino.",
+                "polo": "¡En el polo hace demasiado frío! Sus adaptaciones responden a la escasez de agua en climas áridos.",
+                "bosque": "En el bosque templado abundan la humedad y el arbolado; este mamífero es propio de zonas áridas.",
+                "selva": "La selva tiene precipitaciones constantes, justo lo contrario del medio árido al que está adaptado.",
+                "rio": "No es un vertebrado ripario; está adaptado a recorrer grandes extensiones secas."
+              },
+              "adaptacion": {
+                "enunciado": "Desde el punto de vista de la nutrición y el medio, ¿qué afirmación sobre el camello es cierta?",
+                "opciones": [
+                  {
+                    "id": "herbivoro",
+                    "nombre": "Es un mamífero vertebrado y herbívoro que transforma la grasa de su joroba en energía"
+                  },
+                  {
+                    "id": "invertebrado",
+                    "nombre": "Es un animal invertebrado que fabrica su propio alimento con la luz del sol"
+                  },
+                  {
+                    "id": "oviparo",
+                    "nombre": "Es un reptil ovíparo que guarda litros de agua líquida dentro de la joroba"
+                  }
+                ],
+                "respuesta": "herbivoro",
+                "frases": {
+                  "herbivoro": "¡Excelente! Como mamífero vertebrado y herbívoro, se alimenta de plantas resistentes a la sequía y almacena grasa en su joroba.",
+                  "invertebrado": "El camello tiene esqueleto interno con columna vertebral y, como todos los animales, necesita alimentarse de otros seres vivos.",
+                  "oviparo": "Es un mamífero vivíparo, no un reptil, y su joroba contiene tejido graso, no agua suelta."
+                }
+              }
+            },
+            {
+              "id": "delfin",
+              "nombre": "El delfín",
+              "pregunta": "Vertebrado vivíparo de piel lisa, con pulmones y ecolocalización. ¿Cuál es su ecosistema?",
+              "respuesta": "mar",
+              "pista": "Aunque tiene forma hidrodinámica parecida a un pez, es un mamífero marino.",
+              "curiosidad": "Sus crías nacen del vientre materno dentro del agua y se alimentan de leche materna durante sus primeros meses.",
+              "frases": {
+                "mar": "¡Exacto! Su ecosistema es el medio marino. Ahora demuestra por qué no lo confundimos con un pez.",
+                "desierto": "Un cetáceo con aletas necesita el medio acuático marino para vivir.",
+                "polo": "No vive sobre el hielo continental; se desplaza nadando por el mar abierto.",
+                "bosque": "Es un mamífero estrictamente acuático, no forestal.",
+                "selva": "No habita en el dosel arbóreo de la selva.",
+                "rio": "El delfín mular habita mares y océanos de agua salada."
+              },
+              "adaptacion": {
+                "enunciado": "¿En qué se diferencia científicamente el delfín de los peces con los que comparte el mar?",
+                "opciones": [
+                  {
+                    "id": "mamifero",
+                    "nombre": "Es un mamífero: respira aire con pulmones, es vivíparo y amamanta a sus crías"
+                  },
+                  {
+                    "id": "branquias",
+                    "nombre": "Respira el oxígeno disuelto en el agua mediante branquias y pone huevos sin cáscara"
+                  },
+                  {
+                    "id": "anfibio",
+                    "nombre": "Es un anfibio que nace como renacuajo y de adulto sale a vivir al bosque"
+                  }
+                ],
+                "respuesta": "mamifero",
+                "frases": {
+                  "mamifero": "¡Brillante! Aunque vive en el mar y tiene aletas, pertenece al grupo de los mamíferos por sus pulmones y su reproducción vivípara.",
+                  "branquias": "Esas características pertenecen a la mayoría de los peces, no a los mamíferos marinos como el delfín.",
+                  "anfibio": "El delfín pasa toda su vida en el mar y no sufre metamorfosis como los anfibios."
+                }
+              }
+            },
+            {
+              "id": "pinguino",
+              "nombre": "El pingüino emperador",
+              "pregunta": "Ave marina ovípara no voladora con densa capa de grasa subcutánea. ¿Dónde forma sus colonias?",
+              "respuesta": "polo",
+              "pista": "Sus alas actúan como aletas para bucear bajo aguas heladas y cría sobre el hielo antártico.",
+              "curiosidad": "El padre incuba el único huevo sobre sus patas, tapándolo con un pliegue de piel emplumada durante el invierno polar.",
+              "frases": {
+                "polo": "¡Muy bien! Cría en las plataformas de hielo polar. Vamos con su pregunta de clasificación.",
+                "desierto": "Su espeso aislamiento térmico le impediría regular su temperatura en un desierto cálido.",
+                "mar": "Aunque se alimenta en el océano, necesita la superficie helada del polo para incubar sus huevos y mudar el plumaje.",
+                "bosque": "No anida en árboles ni habita ecosistemas forestales.",
+                "selva": "Sus adaptaciones térmicas están hechas para el frío polar, no para el trópico.",
+                "rio": "Es un ave marina polar, no de riberas ni charcas dulces."
+              },
+              "adaptacion": {
+                "enunciado": "¿A qué grupo de vertebrados pertenece el pingüino emperador aunque no vuele y nade tan bien?",
+                "opciones": [
+                  {
+                    "id": "ave",
+                    "nombre": "Al grupo de las aves: tiene pico, el cuerpo cubierto de plumas y se reproduce por huevos"
+                  },
+                  {
+                    "id": "pez",
+                    "nombre": "Al grupo de los peces, porque pasa mucho tiempo nadando y comiendo en el agua"
+                  },
+                  {
+                    "id": "mamifero",
+                    "nombre": "Al grupo de los mamíferos, porque tiene pelo corto y es vivíparo"
+                  }
+                ],
+                "respuesta": "ave",
+                "frases": {
+                  "ave": "¡Exacto! Tener plumas, pico córneo y ser ovíparo lo sitúa en el grupo de las aves, con alas adaptadas al buceo.",
+                  "pez": "Nadar muy bien no lo convierte en pez: tiene pulmones, plumas y mantiene caliente su cuerpo.",
+                  "mamifero": "Lo que recubre su cuerpo no es pelo sino un plumaje muy corto y tupido, y nace de un huevo."
+                }
+              }
+            },
+            {
+              "id": "oso",
+              "nombre": "El oso pardo",
+              "pregunta": "Mamífero omnívoro plantígrado de pelaje castaño que pasa el invierno en una osera. ¿Cuál es su ecosistema?",
+              "respuesta": "bosque",
+              "pista": "No lo confundas con el oso polar: este vive entre árboles caducifolios y coníferas de montaña.",
+              "curiosidad": "Al comer frutos carnosos y caminar kilómetros por el bosque, dispersa las semillas y ayuda a que nazcan nuevos árboles.",
+              "frases": {
+                "bosque": "¡Estupendo! Habita en los bosques templados y de montaña. Resuelve ahora su reto ecológico.",
+                "desierto": "Necesita abundante vegetación, frutos forestales y agua fresca.",
+                "mar": "Es un mamífero terrestre de interior y montaña.",
+                "polo": "El del hielo ártico es el oso polar, que es carnívoro; el oso pardo habita los bosques.",
+                "selva": "El oso pardo está adaptado a bosques con estaciones marcadas e inviernos fríos, no a la selva ecuatorial.",
+                "rio": "Acude a los ríos a pescar, pero su ecosistema completo es el bosque de montaña."
+              },
+              "adaptacion": {
+                "enunciado": "El oso pardo come bayas, bellotas, raíces, miel, insectos y peces. ¿Cómo clasificamos su alimentación?",
+                "opciones": [
+                  {
+                    "id": "omnivoro",
+                    "nombre": "Es omnívoro, porque se alimenta tanto de plantas y frutos como de otros animales"
+                  },
+                  {
+                    "id": "herbivoro",
+                    "nombre": "Es herbívoro estricto, porque únicamente puede digerir hojas verdes"
+                  },
+                  {
+                    "id": "descomponedor",
+                    "nombre": "Es un hongo descomponedor que transforma las hojas secas en humus"
+                  }
+                ],
+                "respuesta": "omnivoro",
+                "frases": {
+                  "omnivoro": "¡Muy bien! Su dieta variada de origen vegetal y animal es propia de un mamífero omnívoro y le permite aprovechar cada estación del bosque.",
+                  "herbivoro": "Aunque come muchos frutos y raíces, también captura peces e insectos, por lo que su dieta es omnívora.",
+                  "descomponedor": "El oso es un animal consumidor dentro del ecosistema del bosque, no un hongo descomponedor."
+                }
+              }
+            },
+            {
+              "id": "rana",
+              "nombre": "La rana",
+              "pregunta": "Vertebrado ovíparo de piel desnuda que nace con branquias en el agua y desarrolla pulmones al crecer. ¿Dónde vive?",
+              "respuesta": "rio",
+              "pista": "Su ciclo vital empieza en el agua dulce como renacuajo y de adulta vive entre el agua y la orilla.",
+              "curiosidad": "Al alimentarse de mosquitos y otros pequeños invertebrados, las ranas ayudan a mantener el equilibrio del ecosistema de la charca.",
+              "frases": {
+                "rio": "¡Eso es! Vive en ríos de corriente suave y charcas de agua dulce. Vamos con su pregunta científica.",
+                "desierto": "Necesita agua dulce para poner sus huevos gelatinosos sin cáscara y mantener húmeda su piel.",
+                "mar": "El agua salada deshidrataría su piel permeable y sus puestas de huevos.",
+                "polo": "No puede regular por sí sola su temperatura en el hielo polar.",
+                "bosque": "Depende directamente del medio acuático dulce para reproducirse y completar su desarrollo.",
+                "selva": "Esta rana común habita las riberas de ríos y charcas con plantas acuáticas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo se llama el proceso de cambio por el que el renacuajo pierde la cola, desarrolla patas y pasa a respirar con pulmones y por la piel?",
+                "opciones": [
+                  {
+                    "id": "metamorfosis",
+                    "nombre": "Metamorfosis, característica del grupo de los anfibios"
+                  },
+                  {
+                    "id": "fotosintesis",
+                    "nombre": "Fotosíntesis, con la que las hojas fabrican alimento usando la luz"
+                  },
+                  {
+                    "id": "polinizacion",
+                    "nombre": "Polinización, cuando el polen viaja de una flor a otra"
+                  }
+                ],
+                "respuesta": "metamorfosis",
+                "frases": {
+                  "metamorfosis": "¡Excelente! Los anfibios como la rana experimentan la metamorfosis para pasar de la vida acuática del renacuajo a la vida adulta.",
+                  "fotosintesis": "La fotosíntesis la realizan las plantas para fabricar su alimento, aunque la piel de la rana sea verde para camuflarse.",
+                  "polinizacion": "La polinización forma parte de la reproducción de las plantas con flor."
+                }
+              }
+            },
+            {
+              "id": "tucan",
+              "nombre": "El tucán",
+              "pregunta": "Ave arborícola frugívora con dos dedos hacia delante y dos hacia atrás para agarrarse a las ramas. ¿Cuál es su ecosistema?",
+              "respuesta": "selva",
+              "pista": "Habita en el ecosistema terrestre con mayor biodiversidad, lluvias abundantes y temperaturas cálidas todo el año.",
+              "curiosidad": "Cuando come frutos de la selva y vuela a otros árboles, devuelve las semillas intactas al suelo y ayuda a regenerar la selva.",
+              "frases": {
+                "selva": "¡Magnífico! Su ecosistema es la selva húmeda tropical. Responde la última pregunta científica.",
+                "desierto": "En un ecosistema árido no dispondría de árboles altos ni de frutos carnosos todo el año.",
+                "mar": "Sus patas están adaptadas para agarrarse a las ramas, no para nadar en el océano.",
+                "polo": "Es un ave propia de climas cálidos tropicales, no de regiones polares.",
+                "bosque": "Habita en la selva tropical húmeda, donde hay frutos durante todo el año.",
+                "rio": "Vive en las copas altas de los árboles de la selva, no dentro del agua."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué relación beneficiosa establece el tucán con los árboles de la selva al alimentarse de sus frutos?",
+                "opciones": [
+                  {
+                    "id": "semillas",
+                    "nombre": "El tucán obtiene alimento y, al volar a otras ramas, dispersa las semillas de las plantas"
+                  },
+                  {
+                    "id": "raices",
+                    "nombre": "El tucán absorbe agua del suelo por sus patas y se la entrega a las raíces"
+                  },
+                  {
+                    "id": "hibernacion",
+                    "nombre": "El tucán hace que todos los árboles de la selva pierdan las hojas bajo la nieve"
+                  }
+                ],
+                "respuesta": "semillas",
+                "frases": {
+                  "semillas": "¡Fenomenal! En los ecosistemas los seres vivos se relacionan: el tucán se alimenta del fruto y ayuda a la planta a llevar sus semillas lejos.",
+                  "raices": "Son las raíces de las plantas las que absorben el agua y las sales minerales del suelo.",
+                  "hibernacion": "En la selva tropical hace calor y llueve todo el año, por lo que la vegetación se mantiene siempre verde."
+                }
+              }
+            },
+            {
+              "id": "insectos",
+              "nombre": "La abeja y los insectos",
+              "pregunta": "Animal invertebrado con seis patas, dos antenas y alas que vuela de flor en flor en los claros arbolados. ¿Cuál es su ecosistema?",
+              "respuesta": "bosque",
+              "pista": "Busca el ecosistema terrestre con árboles, prados templados y muchas flores silvestres.",
+              "curiosidad": "Las abejas comunican a sus compañeras dónde hay flores haciendo una danza en forma de ocho dentro de la colmena.",
+              "frases": {
+                "bosque": "¡Muy bien! En los claros y praderas del bosque encuentra flores y árboles donde hacer su colmena. Vamos con su reto.",
+                "desierto": "En el desierto apenas hay flores con néctar durante el año para alimentar a toda una colmena.",
+                "mar": "Los insectos como la abeja respiran aire por tráqueas y no viven sumergidos en el mar.",
+                "polo": "En el hielo perpetuo del polo no crecen las plantas con flores que necesitan las abejas.",
+                "selva": "Esta abeja melífera habita sobre todo en bosques templados y praderas floridas.",
+                "rio": "Aunque bebe gotitas de agua en la orilla, no es un animal acuático de río: vive entre las flores del bosque."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué decimos que los insectos son animales invertebrados y qué papel cumplen en el ecosistema?",
+                "opciones": [
+                  {
+                    "id": "polen",
+                    "nombre": "No tienen esqueleto interno con columna vertebral y, al ir de flor en flor, transportan el polen"
+                  },
+                  {
+                    "id": "huesos",
+                    "nombre": "Tienen huesos muy pesados por dentro y respiran por branquias bajo el mar"
+                  },
+                  {
+                    "id": "viviparos",
+                    "nombre": "Son mamíferos con pelo espeso que invernan en cuevas heladas"
+                  }
+                ],
+                "respuesta": "polen",
+                "frases": {
+                  "polen": "¡Excelente! Los insectos son los invertebrados más numerosos y su labor polinizando las flores permite que se formen frutos y semillas.",
+                  "huesos": "Los insectos son invertebrados: carecen de columna vertebral y de huesos internos.",
+                  "viviparos": "Los insectos son ovíparos (nacen de huevos) y su cuerpo está protegido por una cubierta externa con seis patas."
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -212,9 +973,10 @@
       "zona": "invernadero",
       "tipo": "controles",
       "titulo": "Laboratorio de germinación",
-      "curso": "1º-2º",
+      "curso": "1º-6º, según el nivel",
       "medalla": true,
-      "quien": "La judía dice",
+      "quien": "Natu dice",
+      "intro": "Ajusta cuánta agua, cuánta luz y qué suelo necesita la semilla, y pulsa Avanzar tiempo.",
       "sujeto": "Semilla de judía",
       "boton": "Avanzar tiempo",
       "controles": [
@@ -275,22 +1037,89 @@
       ],
       "frases": {
         "falta": "Elige agua, luz y suelo antes de avanzar el tiempo.",
-        "ahogada": "Con tanta agua me ahogo: la raíz también necesita aire.",
-        "seca": "Me falta agua. Las raíces la absorben del suelo y el tallo la reparte.",
-        "sinAgarre": "Entre piedras no encuentro tierra de la que sujetarme.",
-        "sedienta": "La arena deja escapar el agua enseguida. La tierra de huerto la guarda mejor.",
-        "palida": "Sin luz no puedo fabricar mi alimento, aunque tenga agua.",
-        "brote": "Agua justa, luz y tierra de huerto: la semilla despierta."
-      }
+        "ahogada": "Con tanta agua la semilla se ahoga: la raíz también necesita aire en la tierra.",
+        "seca": "Con tan poca agua no puede despertar. El agua es materia que la raíz toma del suelo y el tallo reparte.",
+        "sinAgarre": "Entre piedras la raíz no encuentra tierra fértil a la que sujetarse.",
+        "sedienta": "La arena deja escapar el agua enseguida. La tierra de huerto guarda mejor la humedad.",
+        "palida": "Con tan poca luz las hojas se quedan pálidas: la luz es energía que la planta usa para fabricar su alimento.",
+        "brote": "¡Lo lograste! Con agua justa, buena luz y tierra de huerto, la semilla despierta y crece sana."
+      },
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Descubre qué agua, luz y suelo despiertan la semilla."
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Consigue el brote y descubre por qué importa el suelo.",
+          "preguntaFinal": {
+            "enunciado": "¿Por qué la semilla germina mejor en tierra de huerto que entre piedras o arena?",
+            "opciones": [
+              {
+                "id": "calor",
+                "nombre": "Porque las piedras congelan las hojas de la planta"
+              },
+              {
+                "id": "humedad",
+                "nombre": "Porque la tierra de huerto retiene la humedad justa y ofrece nutrientes a la raíz"
+              },
+              {
+                "id": "oscuridad",
+                "nombre": "Porque las semillas no necesitan agua cuando están en el huerto"
+              }
+            ],
+            "respuesta": "humedad",
+            "frases": {
+              "humedad": "¡Eso es! La tierra de huerto guarda el agua y las sales minerales que las raíces absorben para alimentar la planta.",
+              "calor": "El problema de las piedras no es el frío, sino que la raíz no encuentra tierra húmeda ni nutrientes donde sujetarse.",
+              "oscuridad": "Toda semilla necesita agua para despertar, también cuando está sembrada en tierra de huerto."
+            }
+          }
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Haz germinar la planta y resuelve el reto sobre cómo fabrica su alimento.",
+          "preguntaFinal": {
+            "enunciado": "Cuando el brote saca sus primeras hojas verdes, ¿para qué necesita recibir la luz?",
+            "opciones": [
+              {
+                "id": "semillas",
+                "nombre": "Para que las raíces salgan fuera de la tierra a caminar"
+              },
+              {
+                "id": "secar",
+                "nombre": "Para secar toda el agua del tallo y dejar la planta sin savia"
+              },
+              {
+                "id": "alimento",
+                "nombre": "Para fabricar su propio alimento en las hojas utilizando la luz, el agua y el aire"
+              }
+            ],
+            "respuesta": "alimento",
+            "frases": {
+              "alimento": "¡Excelente! La luz es energía que las hojas verdes usan junto con el agua y el aire para fabricar el alimento que necesita toda la planta.",
+              "semillas": "Las plantas viven fijas al suelo sujetas por la raíz; no se desplazan.",
+              "secar": "La planta necesita mantener su agua interna para transportar sustancias por el tallo."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "piezas",
       "zona": "cuerpo",
       "tipo": "lugar",
       "titulo": "Cada pieza en su sitio",
-      "curso": "3º-4º",
+      "curso": "1º-6º, según el nivel",
       "medalla": true,
-      "quien": "El cuerpo dice",
+      "quien": "Natu dice",
+      "intro": "Arrastra cada órgano a la parte del cuerpo donde trabaja o toca su tarjeta.",
       "opciones": [
         {
           "id": "cabeza",
@@ -309,38 +1138,566 @@
         {
           "id": "corazon",
           "nombre": "El corazón",
-          "pregunta": "El corazón. ¿Dónde está?",
+          "pregunta": "¿En qué parte del cuerpo late el corazón?",
           "respuesta": "pecho",
-          "pista": "Está en el pecho y empuja la sangre sin parar.",
+          "pista": "Está protegido en el pecho y empuja la sangre sin parar.",
+          "curiosidad": "Cuando corres o juegas, tu corazón late más deprisa para llevar más oxígeno a los músculos.",
           "frases": {
-            "pecho": "Sí. El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
+            "pecho": "¡Eso es! El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
             "cabeza": "En la cabeza está el cerebro. El corazón late más abajo, en el pecho.",
-            "barriga": "En la barriga trabaja el estómago. El corazón está más arriba."
+            "barriga": "En la barriga trabaja el estómago. El corazón está más arriba, en el pecho."
           }
         },
         {
           "id": "pulmones",
           "nombre": "Los pulmones",
-          "pregunta": "Los pulmones. ¿Dónde están?",
+          "pregunta": "¿Dónde están los pulmones para recibir el aire?",
           "respuesta": "pecho",
-          "pista": "Son dos y se llenan de aire en el pecho.",
+          "pista": "Son dos órganos esponjosos que se llenan de aire en el pecho.",
+          "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
           "frases": {
-            "pecho": "Sí. Los pulmones están en el pecho y se hinchan cuando entra el aire.",
-            "cabeza": "Por la nariz entra el aire, pero quien lo guarda está en el pecho.",
-            "barriga": "La barriga no se llena de aire. Los pulmones están en el pecho."
+            "pecho": "¡Muy bien! Los pulmones están en el pecho y se hinchan cada vez que entra el aire.",
+            "cabeza": "Por la nariz y la boca entra el aire, pero los pulmones lo reciben en el pecho.",
+            "barriga": "La barriga no guarda el aire que respiramos. Los pulmones están en el pecho."
           }
         },
         {
           "id": "estomago",
           "nombre": "El estómago",
-          "pregunta": "El estómago. ¿Dónde está?",
+          "pregunta": "¿Dónde trabaja el estómago cuando comemos?",
           "respuesta": "barriga",
-          "pista": "La comida baja hasta la barriga.",
+          "pista": "Cuando tragas un bocado, la comida baja hasta la barriga.",
+          "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
           "frases": {
-            "barriga": "Sí. El estómago está en la barriga y empieza a deshacer la comida.",
-            "cabeza": "La comida no se queda en la cabeza. Sigue hacia abajo.",
-            "pecho": "El pecho es del corazón y de los pulmones. El estómago está más abajo."
+            "barriga": "¡Genial! El estómago está en la barriga y se encarga de empezar a deshacer la comida.",
+            "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta la barriga.",
+            "pecho": "En el pecho están el corazón y los pulmones. El estómago trabaja más abajo, en la barriga."
           }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Tres partes del cuerpo y tres órganos principales.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "pecho",
+              "nombre": "Pecho"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Barriga"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "El corazón",
+              "pregunta": "¿En qué parte del cuerpo late el corazón?",
+              "respuesta": "pecho",
+              "pista": "Está protegido en el pecho y empuja la sangre sin parar.",
+              "curiosidad": "Cuando corres o juegas, tu corazón late más deprisa para llevar más oxígeno a los músculos.",
+              "frases": {
+                "pecho": "¡Eso es! El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
+                "cabeza": "En la cabeza está el cerebro. El corazón late más abajo, en el pecho.",
+                "barriga": "En la barriga trabaja el estómago. El corazón está más arriba, en el pecho."
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Los pulmones",
+              "pregunta": "¿Dónde están los pulmones para recibir el aire?",
+              "respuesta": "pecho",
+              "pista": "Son dos órganos esponjosos que se llenan de aire en el pecho.",
+              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+              "frases": {
+                "pecho": "¡Muy bien! Los pulmones están en el pecho y se hinchan cada vez que entra el aire.",
+                "cabeza": "Por la nariz y la boca entra el aire, pero los pulmones lo reciben en el pecho.",
+                "barriga": "La barriga no guarda el aire que respiramos. Los pulmones están en el pecho."
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "El estómago",
+              "pregunta": "¿Dónde trabaja el estómago cuando comemos?",
+              "respuesta": "barriga",
+              "pista": "Cuando tragas un bocado, la comida baja hasta la barriga.",
+              "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
+              "frases": {
+                "barriga": "¡Genial! El estómago está en la barriga y se encarga de empezar a deshacer la comida.",
+                "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta la barriga.",
+                "pecho": "En el pecho están el corazón y los pulmones. El estómago trabaja más abajo, en la barriga."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Cuatro zonas del cuerpo, cinco órganos y para qué sirven.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "pecho",
+              "nombre": "Pecho"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Barriga"
+            },
+            {
+              "id": "extremidades",
+              "nombre": "Brazos y piernas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "El corazón",
+              "pregunta": "¿En qué parte del cuerpo late el corazón?",
+              "respuesta": "pecho",
+              "pista": "Está protegido por las costillas en el pecho.",
+              "curiosidad": "Cuando corres o juegas, tu corazón late más deprisa para llevar más oxígeno a los músculos.",
+              "frases": {
+                "pecho": "¡Eso es! Está en el pecho. Ahora descubre cuál es su tarea.",
+                "cabeza": "En la cabeza está el cerebro. El corazón late en el pecho.",
+                "barriga": "En la barriga está el estómago. El corazón trabaja en el pecho.",
+                "extremidades": "La sangre llega a los brazos y las piernas, pero el corazón bombea desde el pecho."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cuál es la misión principal del corazón?",
+                "opciones": [
+                  {
+                    "id": "masticar",
+                    "nombre": "Triturar los alimentos sólidos que tomamos en la comida"
+                  },
+                  {
+                    "id": "sangre",
+                    "nombre": "Impulsar la sangre para que recorra todo el cuerpo sin descanso"
+                  },
+                  {
+                    "id": "oir",
+                    "nombre": "Escuchar los sonidos que llegan desde el exterior"
+                  }
+                ],
+                "respuesta": "sangre",
+                "frases": {
+                  "sangre": "¡Exacto! El corazón funciona como una bomba muscular que impulsa la sangre con cada latido.",
+                  "masticar": "De triturar la comida se encargan los dientes en la boca.",
+                  "oir": "Los sonidos los captamos con el sentido del oído."
+                }
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Los pulmones",
+              "pregunta": "¿Dónde están situados los pulmones?",
+              "respuesta": "pecho",
+              "pista": "Al tomar aire por la nariz notas cómo se ensancha tu pecho.",
+              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+              "frases": {
+                "pecho": "¡Muy bien! Están en el pecho. Vamos con su pregunta.",
+                "cabeza": "El aire entra por la nariz, pero baja hasta los pulmones en el pecho.",
+                "barriga": "En la barriga se digiere la comida; el aire va a los pulmones en el pecho.",
+                "extremidades": "Los brazos y las piernas se mueven con músculos y huesos; los pulmones están en el pecho."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué hacemos gracias a los pulmones?",
+                "opciones": [
+                  {
+                    "id": "pensar",
+                    "nombre": "Recordar canciones y aprender juegos nuevos"
+                  },
+                  {
+                    "id": "doblar",
+                    "nombre": "Doblar las rodillas y los codos al saltar"
+                  },
+                  {
+                    "id": "respirar",
+                    "nombre": "Tomar el oxígeno del aire que respiramos y expulsar el aire que ya no necesitamos"
+                  }
+                ],
+                "respuesta": "respirar",
+                "frases": {
+                  "respirar": "¡Muy bien! Los pulmones pasan a la sangre el oxígeno del aire cuando inspiramos.",
+                  "pensar": "De pensar, recordar y aprender se encarga el cerebro.",
+                  "doblar": "Para doblar rodillas y codos utilizamos las articulaciones y los músculos."
+                }
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "El estómago",
+              "pregunta": "¿En qué zona del cuerpo trabaja el estómago?",
+              "respuesta": "barriga",
+              "pista": "Está en la barriga, donde llega la comida después de tragarla.",
+              "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
+              "frases": {
+                "barriga": "¡Genial! Está en la barriga. Responde ahora para qué sirve.",
+                "cabeza": "En la cabeza masticamos con la boca, pero el estómago está en la barriga.",
+                "pecho": "La comida cruza el pecho por un tubo, pero se detiene a mezclarse en la barriga.",
+                "extremidades": "En los brazos y las piernas no digerimos la comida; el estómago está en la barriga."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué hace el estómago con los alimentos que comemos?",
+                "opciones": [
+                  {
+                    "id": "digerir",
+                    "nombre": "Los mezcla y los deshace en partes muy pequeñas para aprovechar sus nutrientes"
+                  },
+                  {
+                    "id": "respirar",
+                    "nombre": "Se hincha con el aire que entra por la nariz al respirar"
+                  },
+                  {
+                    "id": "ver",
+                    "nombre": "Distingue los colores y las formas de las cosas"
+                  }
+                ],
+                "respuesta": "digerir",
+                "frases": {
+                  "digerir": "¡Fantástico! El estómago forma parte de la digestión para transformar los alimentos en nutrientes.",
+                  "respirar": "Los órganos que se llenan de aire al respirar son los pulmones.",
+                  "ver": "Distinguimos los colores y las formas gracias al sentido de la vista."
+                }
+              }
+            },
+            {
+              "id": "cerebro",
+              "nombre": "El cerebro",
+              "pregunta": "¿Dónde está protegido el cerebro?",
+              "respuesta": "cabeza",
+              "pista": "Está dentro de la cabeza, resguardado por los huesos del cráneo.",
+              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
+              "frases": {
+                "cabeza": "¡Bravo! El cerebro está en la cabeza. Descubre ahora qué hace.",
+                "pecho": "En el pecho están el corazón y los pulmones. El cerebro está en la cabeza.",
+                "barriga": "En la barriga digerimos los alimentos. El cerebro dirige desde la cabeza.",
+                "extremidades": "Los brazos y las piernas obedecen las órdenes que les envía el cerebro desde la cabeza."
+              },
+              "adaptacion": {
+                "enunciado": "¿De qué se encarga el cerebro en nuestro cuerpo?",
+                "opciones": [
+                  {
+                    "id": "digerir",
+                    "nombre": "Mezcla la comida con jugos dentro de la barriga"
+                  },
+                  {
+                    "id": "dirigir",
+                    "nombre": "Recibe la información de los cinco sentidos, piensa y envía órdenes para movernos"
+                  },
+                  {
+                    "id": "bombear",
+                    "nombre": "Empuja la sangre con latidos desde el centro del pecho"
+                  }
+                ],
+                "respuesta": "dirigir",
+                "frases": {
+                  "dirigir": "¡Así es! El cerebro interpreta lo que captan los sentidos y coordina nuestros pensamientos y movimientos.",
+                  "digerir": "De mezclar la comida en la barriga se encarga el estómago.",
+                  "bombear": "El órgano que late en el pecho para impulsar la sangre es el corazón."
+                }
+              }
+            },
+            {
+              "id": "esqueleto",
+              "nombre": "Músculos y huesos",
+              "pregunta": "¿Qué partes movemos al correr, saltar o agarrar objetos con huesos y músculos?",
+              "respuesta": "extremidades",
+              "pista": "Son los brazos y las piernas, que se doblan gracias a las articulaciones.",
+              "curiosidad": "Los músculos tiran de los huesos como si fueran cuerdas elásticas para que podamos doblar codos y rodillas.",
+              "frases": {
+                "extremidades": "¡Estupendo! Con los brazos y las piernas nos desplazamos y agarramos cosas.",
+                "cabeza": "El cráneo protege el cerebro, pero para correr y agarrar usamos los brazos y las piernas.",
+                "pecho": "Las costillas protegen el pecho, pero corremos y saltamos con las extremidades.",
+                "barriga": "La barriga no tiene articulaciones para caminar o agarrar objetos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo logran los huesos y los músculos que podamos movernos?",
+                "opciones": [
+                  {
+                    "id": "aire",
+                    "nombre": "Los huesos se hinchan de aire como globos para hacernos flotar"
+                  },
+                  {
+                    "id": "sabores",
+                    "nombre": "Las rodillas detectan si un alimento es dulce o salado"
+                  },
+                  {
+                    "id": "equipo",
+                    "nombre": "Los huesos sostienen el cuerpo y los músculos tiran de ellos en las articulaciones"
+                  }
+                ],
+                "respuesta": "equipo",
+                "frases": {
+                  "equipo": "¡Muy bien! El esqueleto nos sostiene y los músculos se contraen y estiran para mover los huesos.",
+                  "aire": "Los que se llenan de aire al respirar son los pulmones, no los huesos.",
+                  "sabores": "Los sabores los notamos con la lengua gracias al sentido del gusto."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Identifica cada órgano por su función y relaciónalo con su aparato o sistema.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "pecho",
+              "nombre": "Pecho"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Barriga"
+            },
+            {
+              "id": "extremidades",
+              "nombre": "Brazos y piernas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "El corazón",
+              "pregunta": "Órgano muscular hueco que impulsa la sangre por los vasos sanguíneos. ¿Dónde se aloja?",
+              "respuesta": "pecho",
+              "pista": "Está en la cavidad torácica, en el pecho, entre los dos pulmones.",
+              "curiosidad": "Cuando corres o juegas, tu corazón late más deprisa para llevar más oxígeno a los músculos.",
+              "frases": {
+                "pecho": "¡Muy bien! Está en la caja torácica. Responde ahora la pregunta sobre su aparato.",
+                "cabeza": "En el cráneo se aloja el encéfalo; el corazón late en el pecho.",
+                "barriga": "En el abdomen están los órganos digestivos; el corazón está en el pecho.",
+                "extremidades": "Por las extremidades circulan arterias y venas, pero el corazón impulsa desde el pecho."
+              },
+              "adaptacion": {
+                "enunciado": "¿En qué aparato trabaja el corazón junto con las arterias y las venas?",
+                "opciones": [
+                  {
+                    "id": "circulatorio",
+                    "nombre": "En el aparato circulatorio, repartiendo oxígeno y nutrientes por todo el cuerpo"
+                  },
+                  {
+                    "id": "digestivo",
+                    "nombre": "En el aparato digestivo, transformando los alimentos en el estómago"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "En el aparato locomotor, uniendo los huesos de la rodilla"
+                  }
+                ],
+                "respuesta": "circulatorio",
+                "frases": {
+                  "circulatorio": "¡Excelente! El aparato circulatorio transporta nutrientes y oxígeno a todas las células gracias al impulso del corazón.",
+                  "digestivo": "El aparato digestivo obtiene los nutrientes de los alimentos, pero quien los reparte por la sangre es el circulatorio.",
+                  "locomotor": "El aparato locomotor está formado por los huesos, las articulaciones y los músculos."
+                }
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Los pulmones",
+              "pregunta": "Dos órganos esponjosos donde el oxígeno del aire pasa a la sangre. ¿Dónde se encuentran?",
+              "respuesta": "pecho",
+              "pista": "Se encuentran protegidos por las costillas en el pecho.",
+              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+              "frases": {
+                "pecho": "¡Exacto! Están en el pecho. Vamos con la pregunta científica.",
+                "cabeza": "Las fosas nasales están en la cabeza, pero los pulmones se sitúan en el pecho.",
+                "barriga": "Debajo de los pulmones está el diafragma, que los separa del abdomen.",
+                "extremidades": "Las extremidades reciben el oxígeno a través de la sangre, pero no alojan los pulmones."
+              },
+              "adaptacion": {
+                "enunciado": "¿A qué aparato pertenecen los pulmones y qué función cumplen en la nutrición?",
+                "opciones": [
+                  {
+                    "id": "respiratorio",
+                    "nombre": "Al aparato respiratorio: captan el oxígeno del aire y expulsan el dióxido de carbono"
+                  },
+                  {
+                    "id": "nervioso",
+                    "nombre": "Al sistema nervioso: transmiten impulsos desde la médula espinal"
+                  },
+                  {
+                    "id": "digestivo",
+                    "nombre": "Al aparato digestivo: mastican y ensalivan los alimentos"
+                  }
+                ],
+                "respuesta": "respiratorio",
+                "frases": {
+                  "respiratorio": "¡Fenomenal! En el aparato respiratorio se realiza el intercambio de gases para que nuestras células tengan oxígeno.",
+                  "nervioso": "El sistema nervioso coordina el cuerpo mediante el cerebro y los nervios.",
+                  "digestivo": "Masticar y ensalivar ocurre en la boca, al comienzo del aparato digestivo."
+                }
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "El estómago",
+              "pregunta": "Órgano en forma de bolsa que segrega jugos para descomponer los alimentos. ¿Dónde está?",
+              "respuesta": "barriga",
+              "pista": "Está situado en el abdomen, en la zona de la barriga.",
+              "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
+              "frases": {
+                "barriga": "¡Genial! Está en el abdomen. Resuelve ahora su pregunta.",
+                "cabeza": "La digestión empieza en la boca, pero el estómago está en la barriga.",
+                "pecho": "El esófago atraviesa el pecho, pero desemboca en el estómago dentro de la barriga.",
+                "extremidades": "Los nutrientes llegan a los músculos de brazos y piernas por la sangre tras la digestión."
+              },
+              "adaptacion": {
+                "enunciado": "¿Con qué aparato trabaja en equipo el aparato digestivo para que los nutrientes lleguen a todo el cuerpo?",
+                "opciones": [
+                  {
+                    "id": "equipo",
+                    "nombre": "Los nutrientes pasan a la sangre y el aparato circulatorio los reparte a todas las células"
+                  },
+                  {
+                    "id": "aislado",
+                    "nombre": "Los alimentos se quedan guardados para siempre dentro del estómago sin salir"
+                  },
+                  {
+                    "id": "oido",
+                    "nombre": "Los nutrientes viajan directamente por las orejas hasta el exterior"
+                  }
+                ],
+                "respuesta": "equipo",
+                "frases": {
+                  "equipo": "¡Bravo! Nuestros aparatos trabajan en equipo: el digestivo extrae los nutrientes y el circulatorio los reparte por la sangre.",
+                  "aislado": "Los nutrientes no se quedan quietos en el estómago: pasan a la sangre para alimentar todo el cuerpo.",
+                  "oido": "Las orejas forman parte del sentido del oído, no del transporte de nutrientes."
+                }
+              }
+            },
+            {
+              "id": "cerebro",
+              "nombre": "El cerebro",
+              "pregunta": "Órgano principal de la función de relación que interpreta los sentidos y elabora respuestas. ¿Dónde está?",
+              "respuesta": "cabeza",
+              "pista": "Está protegido dentro del cráneo, en la cabeza.",
+              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
+              "frases": {
+                "cabeza": "¡Eso es! Está en el interior del cráneo. Vamos con su reto.",
+                "pecho": "En el pecho están los órganos respiratorios y el corazón; el cerebro está en la cabeza.",
+                "barriga": "En la barriga se realiza la digestión; el cerebro dirige desde la cabeza.",
+                "extremidades": "A los brazos y piernas llegan los nervios, pero el cerebro está en la cabeza."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo coordina el sistema nervioso la función de relación cuando tocas algo o ves una pelota?",
+                "opciones": [
+                  {
+                    "id": "relacion",
+                    "nombre": "Los órganos de los sentidos envían la información por los nervios al cerebro y este manda la orden a los músculos"
+                  },
+                  {
+                    "id": "pulmon",
+                    "nombre": "Los ojos bombean sangre directamente hasta los talones sin pasar por los nervios"
+                  },
+                  {
+                    "id": "estomago",
+                    "nombre": "El estómago decide qué color tiene la pelota y mueve los huesos solo"
+                  }
+                ],
+                "respuesta": "relacion",
+                "frases": {
+                  "relacion": "¡Magnífico! Sentidos, sistema nervioso y aparato locomotor cooperan en la función de relación.",
+                  "pulmon": "Los ojos captan la luz; quien envía las señales al cerebro son los nervios.",
+                  "estomago": "El estómago participa en la nutrición, mientras que el cerebro dirige la función de relación."
+                }
+              }
+            },
+            {
+              "id": "esqueleto",
+              "nombre": "Músculos y huesos",
+              "pregunta": "Conjunto de huesos, articulaciones y músculos que ejecutan el desplazamiento y el agarre. ¿Dónde destaca?",
+              "respuesta": "extremidades",
+              "pista": "Permite que los brazos y las piernas se flexionen y extiendan.",
+              "curiosidad": "Un hueso y un músculo pueden mover el brazo de un modo parecido a una palanca gracias a articulaciones como el codo.",
+              "frases": {
+                "extremidades": "¡Estupendo! En los brazos y las piernas vemos en acción huesos, articulaciones y músculos.",
+                "cabeza": "Los huesos del cráneo son fijos para proteger el cerebro; las extremidades nos permiten desplazarnos.",
+                "pecho": "Las costillas protegen corazón y pulmones; las extremidades realizan la marcha y el agarre.",
+                "barriga": "En la barriga hay músculos abdominales, pero las articulaciones para caminar y agarrar están en las extremidades."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué aparato forman en conjunto el esqueleto y la musculatura?",
+                "opciones": [
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor, que ejecuta los movimientos ordenados por el sistema nervioso"
+                  },
+                  {
+                    "id": "respiratorio",
+                    "nombre": "El aparato respiratorio, que toma oxígeno del aire"
+                  },
+                  {
+                    "id": "digestivo",
+                    "nombre": "El aparato digestivo, que descompone los alimentos"
+                  }
+                ],
+                "respuesta": "locomotor",
+                "frases": {
+                  "locomotor": "¡Perfecto! El sistema óseo y el sistema muscular forman el aparato locomotor.",
+                  "respiratorio": "El aparato respiratorio se encarga de obtener oxígeno en los pulmones.",
+                  "digestivo": "El aparato digestivo transforma los alimentos para obtener nutrientes."
+                }
+              }
+            },
+            {
+              "id": "sentidos",
+              "nombre": "Los cinco sentidos",
+              "pregunta": "Conjunto de órganos receptores (vista, oído, olfato, gusto y tacto) donde se concentran ojos, oídos, nariz y lengua. ¿Dónde se agrupan la mayoría?",
+              "respuesta": "cabeza",
+              "pista": "Fíjate en dónde tenemos los ojos, los oídos, la nariz y la lengua.",
+              "curiosidad": "La piel es el órgano del sentido del tacto y cubre todo nuestro cuerpo, mientras que los otros cuatro sentidos están en la cabeza.",
+              "frases": {
+                "cabeza": "¡Muy bien! En la cabeza están los ojos, los oídos, la nariz y la lengua, muy cerca del cerebro. Vamos con su reto.",
+                "pecho": "Aunque la piel del pecho siente el tacto, los ojos, oídos, nariz y lengua están en la cabeza.",
+                "barriga": "En la barriga están los órganos digestivos; la mayoría de los órganos de los sentidos están en la cabeza.",
+                "extremidades": "Con las manos tocamos objetos gracias a la piel, pero cuatro de los cinco sentidos residen en la cabeza."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo viaja la información que captan los órganos de los sentidos hasta el cerebro?",
+                "opciones": [
+                  {
+                    "id": "nervios",
+                    "nombre": "Los receptores captan estímulos del exterior y envían señales por los nervios hasta el cerebro"
+                  },
+                  {
+                    "id": "huesos",
+                    "nombre": "Los sonidos y los colores viajan por el interior de los huesos hasta el estómago"
+                  },
+                  {
+                    "id": "aire",
+                    "nombre": "La luz entra por los pulmones y se mezcla con los alimentos"
+                  }
+                ],
+                "respuesta": "nervios",
+                "frases": {
+                  "nervios": "¡Sobresaliente! Los órganos de los sentidos tienen receptores que transforman la luz, el sonido o el tacto en señales que viajan por los nervios al cerebro.",
+                  "huesos": "Los huesos sostienen el cuerpo; quienes conducen los mensajes de los sentidos al cerebro son los nervios.",
+                  "aire": "Los pulmones reciben el aire que respiramos; la luz la captan los ojos y la envían por el nervio óptico al cerebro."
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -349,10 +1706,10 @@
       "zona": "cuerpo",
       "tipo": "orden",
       "titulo": "Así empieza una vida",
-      "curso": "5º-6º",
+      "curso": "1º-6º, según el nivel",
       "medalla": false,
-      "quien": "El cuerpo dice",
-      "intro": "Ordena los cuatro pasos. El cuerpo de cada persona es suyo.",
+      "quien": "Natu dice",
+      "intro": "Toca los pasos en orden del primero al último. Recuerda que el cuerpo de cada persona es suyo.",
       "boton": "Comprobar",
       "pasos": [
         {
@@ -380,11 +1737,77 @@
       ],
       "frases": {
         "incompleto": "Tienen que estar los cuatro pasos, cada uno una sola vez.",
-        "mal0": "Todavía no. Empieza por dos células tan pequeñas que no se ven.",
-        "mal1": "Esas células no se quedan sueltas. El bebé crece en un sitio protegido.",
-        "mal2": "Antes de los cuidados, el bebé tiene que nacer.",
-        "bien": "Sí. Se unen dos células, el bebé crece, nace y necesita cuidados."
-      }
+        "mal0": "Fíjate en el primer paso: todo empieza por dos células tan pequeñas que no se ven a simple vista.",
+        "mal1": "Después de unirse esas dos células, el bebé crece protegido dentro antes de salir al exterior.",
+        "mal2": "Antes de recibir los cuidados fuera, el bebé tiene que nacer.",
+        "bien": "¡Muy bien! Se unen dos células, el bebé crece dentro, nace y necesita muchos cuidados."
+      },
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Ordena los cuatro pasos desde el comienzo hasta los cuidados del bebé."
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Ordena las etapas y responde qué necesita el bebé al nacer.",
+          "preguntaFinal": {
+            "enunciado": "Como el ser humano es un mamífero vivíparo, ¿cómo empieza su desarrollo y qué necesita al nacer?",
+            "opciones": [
+              {
+                "id": "huevo",
+                "nombre": "Nace de un huevo con cáscara dura en un nido y busca comida solo el primer día"
+              },
+              {
+                "id": "viviparo",
+                "nombre": "Crece protegido dentro del vientre materno y al nacer necesita alimento, abrigo y muchos cuidados"
+              },
+              {
+                "id": "semilla",
+                "nombre": "Saca raíces en la tierra y fabrica su alimento con la luz del sol"
+              }
+            ],
+            "respuesta": "viviparo",
+            "frases": {
+              "viviparo": "¡Muy bien! Los seres humanos somos mamíferos vivíparos y durante la infancia necesitamos el cuidado y el cariño de nuestra familia.",
+              "huevo": "Nacer de un huevo con cáscara es propio de animales ovíparos como las aves, no del ser humano.",
+              "semilla": "Sacar raíces y fabricar alimento con la luz es propio de las plantas."
+            }
+          }
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Ordena el proceso completo y resuelve el reto sobre las células.",
+          "preguntaFinal": {
+            "enunciado": "El primer paso ocurre cuando se unen dos células muy pequeñas. ¿Qué es una célula?",
+            "opciones": [
+              {
+                "id": "hueso",
+                "nombre": "Es el hueso más largo que tenemos en las piernas para correr"
+              },
+              {
+                "id": "organo",
+                "nombre": "Es una bolsa grande del abdomen donde se mastica la comida"
+              },
+              {
+                "id": "unidad",
+                "nombre": "Es la parte viva más pequeña de la que están formados todos los seres vivos"
+              }
+            ],
+            "respuesta": "unidad",
+            "frases": {
+              "unidad": "¡Exacto! La célula es la unidad viva más pequeña; hace falta un microscopio para verla y nuestro cuerpo está formado por millones de ellas.",
+              "hueso": "Los huesos son órganos rígidos del esqueleto, formados a su vez por muchísimas células.",
+              "organo": "Una célula es microscópica; muchos millones de células juntas forman los tejidos y los órganos."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "herbario",
@@ -393,7 +1816,7 @@
       "titulo": "Herbario desmontable",
       "curso": "1º-6º, según el nivel",
       "medalla": false,
-      "quien": "La planta dice",
+      "quien": "Natu dice",
       "intro": "Cada parte de la planta tiene su sitio. Arrastra una pieza o tócala y después toca su destino.",
       "herbario": {
         "partes": [
@@ -405,7 +1828,7 @@
               "respuesta": "raiz",
               "pista": "Busca la parte de la planta que queda bajo el suelo.",
               "frases": {
-                "raiz": "Sí. La raíz toma agua y sales minerales del suelo y sujeta la planta.",
+                "raiz": "¡Eso es! La raíz toma agua y sales minerales del suelo y sujeta la planta.",
                 "tallo": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
                 "hoja": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
                 "flor": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
@@ -447,7 +1870,7 @@
               "pista": "Busca el eje que sube desde el suelo y sostiene las otras partes.",
               "frases": {
                 "raiz": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
-                "tallo": "Sí. El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
+                "tallo": "¡Muy bien! El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
                 "hoja": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
                 "flor": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
                 "fruto": "El tallo une la raíz con las partes de arriba; necesita estar en el centro."
@@ -489,7 +1912,7 @@
               "frases": {
                 "raiz": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
                 "tallo": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
-                "hoja": "Sí. La hoja fabrica alimento para la planta utilizando la luz.",
+                "hoja": "¡Genial! La hoja fabrica alimento para la planta utilizando la luz.",
                 "flor": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
                 "fruto": "La hoja sale a un lado del tallo, donde puede recibir la luz."
               }
@@ -531,7 +1954,7 @@
                 "raiz": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
                 "tallo": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
                 "hoja": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
-                "flor": "Sí. La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
+                "flor": "¡Así es! La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
                 "fruto": "La flor tiene pétalos y está sobre una ramita, por encima del suelo."
               }
             },
@@ -573,7 +1996,7 @@
                 "tallo": "El fruto cuelga de una ramita y guarda las semillas dentro.",
                 "hoja": "El fruto cuelga de una ramita y guarda las semillas dentro.",
                 "flor": "El fruto cuelga de una ramita y guarda las semillas dentro.",
-                "fruto": "Sí. El fruto protege las semillas y ayuda a que lleguen a otros lugares."
+                "fruto": "¡Estupendo! El fruto protege las semillas y ayuda a que lleguen a otros lugares."
               }
             },
             "funcion": "El fruto protege las semillas y ayuda a que lleguen a otros lugares.",

@@ -11,6 +11,53 @@ class Opcion {
   }
 }
 
+class PreguntaExtra {
+  const PreguntaExtra({
+    required this.enunciado,
+    required this.opciones,
+    required this.respuesta,
+    required this.frases,
+  });
+
+  final String enunciado;
+  final List<Opcion> opciones;
+  final String respuesta;
+  final Map<String, String> frases;
+
+  factory PreguntaExtra.desdeMapa(Map<String, dynamic> mapa) {
+    final pregunta = PreguntaExtra(
+      enunciado: mapa['enunciado'] as String? ?? '',
+      opciones: _opciones(mapa['opciones']),
+      respuesta: mapa['respuesta'] as String? ?? '',
+      frases: _frases(mapa['frases']),
+    );
+    pregunta.comprobar();
+    return pregunta;
+  }
+
+  void comprobar([String contexto = '']) {
+    if (enunciado.isEmpty) {
+      throw ArgumentError('La pregunta extra $contexto no tiene enunciado.');
+    }
+    if (opciones.length < 2) {
+      throw ArgumentError('La pregunta extra $contexto necesita opciones.');
+    }
+    final ids = opciones.map((o) => o.id).toSet();
+    if (!ids.contains(respuesta)) {
+      throw ArgumentError(
+        'La pregunta extra $contexto tiene una respuesta inválida.',
+      );
+    }
+    for (final id in ids) {
+      if ((frases[id] ?? '').isEmpty) {
+        throw ArgumentError(
+          'A la pregunta extra $contexto le falta la frase de $id.',
+        );
+      }
+    }
+  }
+}
+
 class Reto {
   const Reto({
     required this.id,
@@ -19,6 +66,8 @@ class Reto {
     required this.respuesta,
     required this.pista,
     required this.frases,
+    this.curiosidad = '',
+    this.adaptacion,
   });
 
   final String id;
@@ -27,6 +76,8 @@ class Reto {
   final String respuesta;
   final String pista;
   final Map<String, String> frases;
+  final String curiosidad;
+  final PreguntaExtra? adaptacion;
 
   factory Reto.desdeMapa(Map<String, dynamic> mapa) {
     return Reto(
@@ -36,6 +87,60 @@ class Reto {
       respuesta: mapa['respuesta'] as String,
       pista: mapa['pista'] as String,
       frases: _frases(mapa['frases']),
+      curiosidad: mapa['curiosidad'] as String? ?? '',
+      adaptacion: mapa['adaptacion'] == null
+          ? null
+          : PreguntaExtra.desdeMapa(
+              mapa['adaptacion'] as Map<String, dynamic>,
+            ),
+    );
+  }
+}
+
+class NivelLugar {
+  const NivelLugar({
+    required this.id,
+    required this.nombre,
+    required this.curso,
+    required this.resumen,
+    this.opciones = const [],
+    this.retos = const [],
+    this.controles = const [],
+    this.preguntaAdaptacion = false,
+    this.preguntaFinal,
+  });
+
+  final String id;
+  final String nombre;
+  final String curso;
+  final String resumen;
+  final List<Opcion> opciones;
+  final List<Reto> retos;
+  final List<Control> controles;
+  final bool preguntaAdaptacion;
+  final PreguntaExtra? preguntaFinal;
+
+  factory NivelLugar.desdeMapa(Map<String, dynamic> mapa) {
+    return NivelLugar(
+      id: mapa['id'] as String,
+      nombre: mapa['nombre'] as String,
+      curso: mapa['curso'] as String,
+      resumen: mapa['resumen'] as String? ?? '',
+      opciones: _opciones(mapa['opciones']),
+      retos: (mapa['retos'] as List? ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(Reto.desdeMapa)
+          .toList(),
+      controles: (mapa['controles'] as List? ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(Control.desdeMapa)
+          .toList(),
+      preguntaAdaptacion: mapa['preguntaAdaptacion'] as bool? ?? false,
+      preguntaFinal: mapa['preguntaFinal'] == null
+          ? null
+          : PreguntaExtra.desdeMapa(
+              mapa['preguntaFinal'] as Map<String, dynamic>,
+            ),
     );
   }
 }
@@ -78,6 +183,7 @@ class Actividad {
     required this.respuesta,
     required this.boton,
     required this.sujeto,
+    this.nivelesLugar = const [],
     this.herbario,
   });
 
@@ -97,6 +203,7 @@ class Actividad {
   final List<String> respuesta;
   final String boton;
   final String sujeto;
+  final List<NivelLugar> nivelesLugar;
   final Herbario? herbario;
 
   bool get tieneFrases {
@@ -116,7 +223,7 @@ class Actividad {
       titulo: mapa['titulo'] as String,
       curso: mapa['curso'] as String,
       medalla: mapa['medalla'] as bool? ?? false,
-      quien: mapa['quien'] as String? ?? 'Dice',
+      quien: mapa['quien'] as String? ?? 'Natu dice',
       intro: mapa['intro'] as String? ?? '',
       opciones: _opciones(mapa['opciones']),
       retos: (mapa['retos'] as List? ?? [])
@@ -132,6 +239,10 @@ class Actividad {
       respuesta: (mapa['respuesta'] as List? ?? []).cast<String>(),
       boton: mapa['boton'] as String? ?? 'Comprobar',
       sujeto: mapa['sujeto'] as String? ?? '',
+      nivelesLugar: (mapa['niveles'] as List? ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(NivelLugar.desdeMapa)
+          .toList(),
       herbario: mapa['herbario'] == null
           ? null
           : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
@@ -151,16 +262,19 @@ class Actividad {
       throw ArgumentError('La actividad $id no tiene frases.');
     }
     if (tipo == 'lugar') {
-      final ids = opciones.map((opcion) => opcion.id).toSet();
-      for (final reto in retos) {
-        if (!ids.contains(reto.respuesta)) {
-          throw ArgumentError(
-            'El reto ${reto.id} apunta a un sitio que no existe.',
-          );
+      _comprobarRetosLugar(opciones, retos);
+      for (final nivel in nivelesLugar) {
+        if (nivel.opciones.isEmpty || nivel.retos.isEmpty) {
+          throw ArgumentError('El nivel ${nivel.id} de $id está incompleto.');
         }
-        for (final id in ids) {
-          if (!reto.frases.containsKey(id)) {
-            throw ArgumentError('Al reto ${reto.id} le falta la frase de $id.');
+        _comprobarRetosLugar(nivel.opciones, nivel.retos);
+        if (nivel.preguntaAdaptacion) {
+          for (final reto in nivel.retos) {
+            if (reto.adaptacion == null) {
+              throw ArgumentError(
+                'Al reto ${reto.id} del nivel ${nivel.id} le falta la pregunta de adaptación.',
+              );
+            }
           }
         }
       }
@@ -187,6 +301,22 @@ class Actividad {
       for (var i = 0; i < respuesta.length - 1; i++) {
         if (!frases.containsKey('mal$i')) {
           throw ArgumentError('A $id le falta la frase mal$i.');
+        }
+      }
+    }
+  }
+
+  void _comprobarRetosLugar(List<Opcion> sitios, List<Reto> listaRetos) {
+    final ids = sitios.map((opcion) => opcion.id).toSet();
+    for (final reto in listaRetos) {
+      if (!ids.contains(reto.respuesta)) {
+        throw ArgumentError(
+          'El reto ${reto.id} apunta a un sitio que no existe.',
+        );
+      }
+      for (final id in ids) {
+        if (!reto.frases.containsKey(id)) {
+          throw ArgumentError('Al reto ${reto.id} le falta la frase de $id.');
         }
       }
     }

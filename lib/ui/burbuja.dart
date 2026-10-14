@@ -15,13 +15,35 @@ class Burbuja extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final esFeliz = gesto == 'feliz';
-    final colorFondo = esFeliz ? const Color(0xFFECFDF3) : const Color(0xFFFFF8EC);
-    final colorBorde = esFeliz ? const Color(0xFF2ECC71) : const Color(0xFFFFB703);
-    final colorSombra = esFeliz ? const Color(0xFF239E56) : const Color(0xFFD99000);
-    final colorTitulo = esFeliz ? const Color(0xFF157347) : const Color(0xFFB45309);
+    final (colorFondo, colorBorde, colorSombra, colorTitulo) = switch (gesto) {
+      'feliz' => (
+        const Color(0xFFECFDF3),
+        const Color(0xFF2ECC71),
+        const Color(0xFF239E56),
+        const Color(0xFF157347),
+      ),
+      'pista' => (
+        const Color(0xFFFFF7ED),
+        const Color(0xFFFB923C),
+        const Color(0xFFEA580C),
+        const Color(0xFFC2410C),
+      ),
+      'hola' => (
+        const Color(0xFFF2FBF6),
+        const Color(0xFF34D399),
+        const Color(0xFF059669),
+        const Color(0xFF0F766E),
+      ),
+      _ => (
+        const Color(0xFFFFF8EC),
+        const Color(0xFFFFB703),
+        const Color(0xFFD99000),
+        const Color(0xFFB45309),
+      ),
+    };
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -30,7 +52,7 @@ class Burbuja extends StatelessWidget {
         border: Border.all(color: colorBorde, width: 2.5),
         boxShadow: [
           BoxShadow(
-            color: colorSombra.withValues(alpha: 0.35),
+            color: colorSombra.withValues(alpha: 0.32),
             offset: const Offset(0, 4),
             blurRadius: 0,
           ),
@@ -39,7 +61,7 @@ class Burbuja extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          DibujoMascota(gesto: gesto, tamano: 48),
+          DibujoMascota(gesto: gesto, tamano: 46),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -50,7 +72,7 @@ class Burbuja extends StatelessWidget {
                   quien,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
-                    fontSize: 13,
+                    fontSize: 12.5,
                     color: colorTitulo,
                   ),
                 ),

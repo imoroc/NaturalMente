@@ -5,6 +5,7 @@ import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/herbario.dart';
 import 'package:naturalmente/reglas/herbario.dart';
+import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
@@ -25,12 +26,31 @@ class _HerbarioPageState extends State<HerbarioPage> {
   bool _guardando = false;
   bool _guardado = false;
   bool _falloGuardado = false;
+  List<String> _partesBandeja = const [];
+  final Map<String, List<Opcion>> _opcionesFuncion = {};
 
   Herbario get _herbario => widget.actividad.herbario!;
 
   void _empezar(NivelHerbario nivel) {
+    final opcionesPorParte = <String, List<Opcion>>{};
+    for (final id in nivel.partes) {
+      final pregunta = _herbario.parte(id).pregunta;
+      opcionesPorParte[id] = BarajadorOpciones.barajarConRespuesta<Opcion>(
+        clave: 'herbario-funcion-${nivel.id}-$id',
+        opciones: pregunta.opciones,
+        idDe: (o) => o.id,
+        respuestaCorrecta: pregunta.respuesta,
+      );
+    }
     setState(() {
       _partida = PartidaHerbario(herbario: _herbario, nivel: nivel);
+      _partesBandeja = BarajadorOpciones.barajarIds(
+        clave: 'herbario-bandeja-${nivel.id}',
+        ids: nivel.partes,
+      );
+      _opcionesFuncion
+        ..clear()
+        ..addAll(opcionesPorParte);
       _guardado = false;
       _falloGuardado = false;
     });
@@ -39,13 +59,20 @@ class _HerbarioPageState extends State<HerbarioPage> {
   void _colocar(String pieza, String destino) {
     final partida = _partida!;
     setState(() => partida.colocar(pieza, destino));
+    if (partida.puedeConsultar(destino)) {
+      Alcance.of(context).progreso.desbloquearFicha(destino);
+    }
     _mostrarPregunta();
     _guardarSiCompleta();
   }
 
   void _responder(String parte, String opcion) {
-    if (_partida!.preguntaActual != parte) return;
-    setState(() => _partida!.responder(opcion));
+    final partida = _partida!;
+    if (partida.preguntaActual != parte) return;
+    setState(() => partida.responder(opcion));
+    if (partida.puedeConsultar(parte)) {
+      Alcance.of(context).progreso.desbloquearFicha(parte);
+    }
     _mostrarPregunta();
     _guardarSiCompleta();
   }
@@ -157,50 +184,82 @@ class _HerbarioPageState extends State<HerbarioPage> {
 
   Widget _selector() {
     final progreso = Alcance.of(context).progreso;
+    final niveles = _herbario.niveles;
     return ListenableBuilder(
       listenable: progreso,
       builder: (context, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Elige un nivel',
-            style: Theme.of(context).textTheme.headlineSmall,
+          Burbuja(
+            quien: widget.actividad.quien,
+            frase:
+                'Elige un nivel. Puedes jugar a cualquiera y cambiar cuando quieras.',
+            gesto: 'hola',
           ),
-          const SizedBox(height: 8),
-          const Text('Puedes jugar a cualquiera y cambiar cuando quieras.'),
           const SizedBox(height: 16),
-          for (final nivel in _herbario.niveles) ...[
+          for (var i = 0; i < niveles.length; i++) ...[
             TarjetaJuego(
-              claveAccion: Key('nivel-${nivel.id}'),
-              borde: progreso.nivelHerbarioHecho(widget.actividad, nivel.id)
+              claveAccion: Key('nivel-${niveles[i].id}'),
+              borde: progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
                   ? EstilosJuego.acierto
                   : const Color(0xFF38BDF8),
-              sombra: progreso.nivelHerbarioHecho(widget.actividad, nivel.id)
+              sombra: progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
                   ? const Color(0xFF239E56)
                   : const Color(0xFF0284C7),
               radio: 20,
-              onTap: () => _empezar(nivel),
+              onTap: () => _empezar(niveles[i]),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      nivel.nombre,
-                      style: Theme.of(context).textTheme.titleLarge,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            niveles[i].nombre,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (var s = 0; s <= i; s++)
+                              Icon(
+                                Icons.star_rounded,
+                                size: 18,
+                                color: progreso.nivelHerbarioHecho(
+                                  widget.actividad,
+                                  niveles[i].id,
+                                )
+                                    ? const Color(0xFFF59E0B)
+                                    : const Color(0xFFCBD5E1),
+                              ),
+                          ],
+                        ),
+                      ],
                     ),
                     Text(
-                      'Pensado para ${nivel.curso}',
+                      'Pensado para ${niveles[i].curso}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      nivel.preguntaFunciones
+                      niveles[i].preguntaFunciones
                           ? 'Cinco rótulos y sus funciones'
-                          : '${nivel.partes.length == 3 ? 'Tres' : 'Cinco'} partes con dibujo',
+                          : '${niveles[i].partes.length == 3 ? 'Tres' : 'Cinco'} partes con dibujo',
                     ),
-                    if (progreso.nivelHerbarioHecho(widget.actividad, nivel.id))
-                      const Text('✓ Nivel superado'),
+                    if (progreso.nivelHerbarioHecho(
+                      widget.actividad,
+                      niveles[i].id,
+                    ))
+                      const Text(
+                        '✓ Nivel superado',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF15803D),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -236,11 +295,13 @@ class _HerbarioPageState extends State<HerbarioPage> {
           liveRegion: true,
           child: Text(
             'Partes colocadas: ${partida.colocadas.length} de ${nivel.partes.length}',
+            style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
         if (nivel.preguntaFunciones)
           Text(
             'Funciones descubiertas: ${partida.funcionesAcertadas} de ${nivel.partes.length}',
+            style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         const SizedBox(height: 8),
         LinearProgressIndicator(
@@ -281,13 +342,15 @@ class _HerbarioPageState extends State<HerbarioPage> {
             partida.seleccionada == null
                 ? 'Elige una pieza y toca su sitio, o arrástrala.'
                 : 'Seleccionada: ${_herbario.parte(partida.seleccionada!).nombre}. Toca su sitio.',
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final id in nivel.partes)
+              for (final id
+                  in _partesBandeja.isNotEmpty ? _partesBandeja : nivel.partes)
                 if (!partida.colocadas.contains(id))
                   _pieza(_herbario.parte(id), partida, ancho),
             ],
@@ -295,22 +358,21 @@ class _HerbarioPageState extends State<HerbarioPage> {
         ] else if (!partida.completa)
           const Text(
             'Las piezas están colocadas. Ahora descubre sus funciones.',
+            style: TextStyle(fontWeight: FontWeight.w700),
           ),
         Column(
           key: _pregunta,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (partida.resultado != null) ...[
-              const SizedBox(height: 12),
-              Semantics(
-                liveRegion: true,
-                child: Burbuja(
-                  quien: widget.actividad.quien,
-                  frase: partida.resultado!.frase,
-                  gesto: partida.resultado!.gesto,
-                ),
+            const SizedBox(height: 12),
+            Semantics(
+              liveRegion: true,
+              child: Burbuja(
+                quien: widget.actividad.quien,
+                frase: partida.resultado?.frase ?? widget.actividad.intro,
+                gesto: partida.resultado?.gesto ?? 'hola',
               ),
-            ],
+            ),
             if (idPregunta != null) ...[
               const SizedBox(height: 16),
               Text(
@@ -320,7 +382,8 @@ class _HerbarioPageState extends State<HerbarioPage> {
               ),
               const SizedBox(height: 8),
               for (final opcion
-                  in _herbario.parte(idPregunta).pregunta.opciones) ...[
+                  in _opcionesFuncion[idPregunta] ??
+                      _herbario.parte(idPregunta).pregunta.opciones) ...[
                 FilledButton.tonal(
                   key: Key('funcion-$idPregunta-${opcion.id}'),
                   style: EstilosJuego.respuesta,

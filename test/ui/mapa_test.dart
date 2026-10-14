@@ -17,62 +17,101 @@ void main() {
     await tester.pumpWidget(const NaturalmenteApp());
     await _hasta(tester, find.byKey(const Key('zona-reserva')));
 
-    await tester.tap(find.byKey(const Key('zona-reserva')));
-    await _esperar(tester);
-    await tester.tap(find.byKey(const Key('juego-hogar')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('zona-reserva'));
+    await _tocar(tester, const Key('juego-hogar'));
+    await _tocar(tester, const Key('nivel-facil'));
 
-    await tester.tap(find.byKey(const Key('sitio-polo')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('sitio-polo'));
     expect(find.textContaining('frío'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('sitio-polo')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('sitio-polo'));
     expect(find.textContaining('poca agua'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('sitio-desierto')));
-    await _esperar(tester);
-    expect(find.text('Siguiente'), findsOneWidget);
+    await _tocar(tester, const Key('sitio-desierto'));
+    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
 
     await _atras(tester);
     await _atras(tester);
+    expect(find.text('1/22', skipOffstage: false), findsNWidgets(2));
 
-    final invernadero = find.byKey(const Key('zona-invernadero'), skipOffstage: false);
-    await tester.ensureVisible(invernadero);
-    await tester.tap(invernadero);
-    await _esperar(tester);
-    await tester.tap(find.byKey(const Key('juego-germinacion')));
-    await _esperar(tester);
-    await tester.tap(find.byKey(const Key('avanzar')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('zona-invernadero'));
+    await _tocar(tester, const Key('juego-germinacion'));
+    await _tocar(tester, const Key('nivel-facil'));
+    await _tocar(tester, const Key('avanzar'));
     expect(find.textContaining('Falta elegir'), findsOneWidget);
-    expect(find.byKey(const Key('avanzar')), findsOneWidget);
+    expect(find.byKey(const Key('avanzar'), skipOffstage: false), findsOneWidget);
 
     await _atras(tester);
     await _atras(tester);
 
-    final cuerpo = find.byKey(const Key('zona-cuerpo'), skipOffstage: false);
-    await tester.ensureVisible(cuerpo);
-    await tester.tap(cuerpo);
-    await _esperar(tester);
-    final vida = find.byKey(const Key('juego-vida'), skipOffstage: false);
-    await tester.ensureVisible(vida);
-    await tester.tap(vida);
-    await _esperar(tester);
+    await _tocar(tester, const Key('zona-cuerpo'));
+    await _tocar(tester, const Key('juego-vida'));
+    await _tocar(tester, const Key('nivel-facil'));
 
-    await tester.tap(find.byKey(const Key('paso-nace')));
-    await _esperar(tester);
-    await tester.tap(find.byKey(const Key('paso-celulas')));
-    await _esperar(tester);
-    await tester.tap(find.byKey(const Key('hueco-0')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('paso-nace'));
+    await _tocar(tester, const Key('paso-celulas'));
+    await _tocar(tester, const Key('hueco-0'));
     expect(find.textContaining('1. Se unen dos células'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('comprobar')));
-    await _esperar(tester);
+    await _tocar(tester, const Key('comprobar'));
     expect(find.textContaining('cada uno una sola vez'), findsOneWidget);
-    expect(find.byKey(const Key('comprobar')), findsOneWidget);
+    expect(find.byKey(const Key('comprobar'), skipOffstage: false), findsOneWidget);
   });
+
+  testWidgets('la dificultad se elige antes de empezar y se puede cambiar de nivel', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(360, 700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(const NaturalmenteApp());
+    await _hasta(tester, find.byKey(const Key('zona-reserva')));
+
+    await _tocar(tester, const Key('tarjeta-album-principal'));
+    expect(find.textContaining('Todos ('), findsOneWidget);
+    await _atras(tester);
+
+    await _tocar(tester, const Key('zona-reserva'));
+    await _tocar(tester, const Key('juego-hogar'));
+
+    expect(find.byKey(const Key('nivel-facil')), findsOneWidget);
+    expect(find.byKey(const Key('nivel-medio')), findsOneWidget);
+    expect(find.byKey(const Key('nivel-dificil')), findsOneWidget);
+    expect(find.byKey(const Key('sitio-desierto')), findsNothing);
+
+    await _tocar(tester, const Key('nivel-facil'));
+
+    await _tocar(tester, const Key('sitio-desierto'));
+    expect(find.byKey(const Key('curiosidad-camello'), skipOffstage: false), findsOneWidget);
+
+    await _tocar(tester, const Key('curiosidad-camello'));
+    expect(find.text('CUADERNO DE NATU'), findsOneWidget);
+    expect(find.textContaining('grasa'), findsOneWidget);
+    await _tocar(tester, const Key('cerrar-curiosidad'));
+
+    await _tocar(tester, const Key('cambiar-nivel'));
+    expect(find.byKey(const Key('nivel-medio')), findsOneWidget);
+
+    await _tocar(tester, const Key('nivel-medio'));
+    expect(find.byKey(const Key('sitio-selva'), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key('sitio-rio'), skipOffstage: false), findsOneWidget);
+
+    await _tocar(tester, const Key('sitio-desierto'));
+    expect(
+      find.byKey(const Key('pregunta-adaptacion-camello'), skipOffstage: false),
+      findsOneWidget,
+    );
+    expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+
+    await _tocar(tester, const Key('adaptacion-camello-joroba'));
+    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
+  });
+}
+
+Future<void> _tocar(WidgetTester tester, Key key) async {
+  final finder = find.byKey(key, skipOffstage: false);
+  await tester.ensureVisible(finder);
+  await tester.pump();
+  await tester.tap(finder);
+  await _esperar(tester);
 }
 
 Future<void> _esperar(WidgetTester tester) async {

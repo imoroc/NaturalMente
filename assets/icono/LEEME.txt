@@ -1,1 +1,0 @@
-Aquí irá el icono de la tienda cuando lo tengamos. El que hay ahora es el de Flutter, en android/ e ios/.

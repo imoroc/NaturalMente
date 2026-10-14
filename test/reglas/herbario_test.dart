@@ -25,17 +25,35 @@ void main() {
     expect(juego.colocadas, isEmpty);
     expect(juego.seleccionada, 'raiz');
     expect(juego.resultado!.acierto, isFalse);
+    expect(juego.ultimoDestino, 'hoja');
+    expect(juego.falloColocacion, isTrue);
     expect(
       juego.resultado!.frase,
       isNot(contains(herbario.parte('raiz').reto.pista)),
     );
     juego.colocar('raiz', 'tallo');
     expect(juego.resultado!.frase, contains(herbario.parte('raiz').reto.pista));
+    expect(juego.ultimoDestino, 'tallo');
     juego.colocar('raiz', 'raiz');
     expect(juego.colocadas, {'raiz'});
     expect(juego.seleccionada, isNull);
     expect(juego.puedeConsultar('raiz'), isTrue);
+    expect(juego.falloColocacion, isFalse);
   });
+
+  test(
+    'seleccionar otra pieza limpia el fallo y una acción inválida lo conserva',
+    () {
+      final juego = partida('facil');
+      juego.colocar('raiz', 'hoja');
+      juego.colocar('raiz', 'inexistente');
+      expect(juego.ultimoDestino, 'hoja');
+      juego.seleccionar('tallo');
+      expect(juego.ultimoDestino, isNull);
+      expect(juego.falloColocacion, isFalse);
+      expect(juego.resultado, isNull);
+    },
+  );
 
   test('ignora piezas repetidas y elementos ajenos al nivel', () {
     final juego = partida('facil');
@@ -49,6 +67,7 @@ void main() {
     expect(juego.seleccionada, isNull);
     expect(juego.resultado!.acierto, isTrue);
     expect(juego.completa, isFalse);
+    expect(juego.progreso, 1 / 3);
   });
 
   test('Fácil termina con tres partes y Medio requiere las cinco', () {
@@ -79,11 +98,13 @@ void main() {
     }
     expect(juego.colocacionTerminada, isTrue);
     expect(juego.completa, isFalse);
+    expect(juego.progreso, .5);
     final primera = herbario.parte(juego.preguntaActual!);
     final incorrecta = primera.pregunta.opciones.firstWhere(
       (o) => o.id != primera.pregunta.respuesta,
     );
     juego.responder(incorrecta.id);
+    expect(juego.progreso, .5);
     expect(juego.resultado!.acierto, isFalse);
     expect(juego.funcionesAcertadas, 0);
     expect(juego.preguntaActual, primera.id);
@@ -94,6 +115,7 @@ void main() {
     }
     expect(juego.completa, isTrue);
     expect(juego.funcionesAcertadas, 5);
+    expect(juego.progreso, 1);
   });
 
   test('una partida nueva no conserva las piezas de la anterior', () {
@@ -102,6 +124,9 @@ void main() {
     final nueva = partida('facil');
     expect(nueva.colocadas, isEmpty);
     expect(nueva.resultado, isNull);
+    expect(nueva.ultimoDestino, isNull);
+    expect(nueva.falloColocacion, isFalse);
+    expect(nueva.progreso, 0);
     expect(nueva.completa, isFalse);
   });
 }

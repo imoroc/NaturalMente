@@ -29,9 +29,14 @@ class PartidaHerbario {
   final Map<String, int> _intentos = {};
   String? seleccionada;
   Resultado? resultado;
+  String? ultimoDestino;
+  bool falloColocacion = false;
 
   Set<String> get colocadas => Set.unmodifiable(_colocadas);
   int get funcionesAcertadas => _funciones.length;
+  double get progreso =>
+      (_colocadas.length + (nivel.preguntaFunciones ? _funciones.length : 0)) /
+      (nivel.partes.length * (nivel.preguntaFunciones ? 2 : 1));
   bool get colocacionTerminada => nivel.partes.every(_colocadas.contains);
   bool get completa =>
       colocacionTerminada &&
@@ -52,6 +57,8 @@ class PartidaHerbario {
     if (!nivel.partes.contains(id) || _colocadas.contains(id)) return;
     seleccionada = id;
     resultado = null;
+    ultimoDestino = null;
+    falloColocacion = false;
   }
 
   void colocar(String pieza, String destino) {
@@ -61,11 +68,13 @@ class PartidaHerbario {
       return;
     }
     final intento = (_intentos[pieza] ?? 0) + 1;
+    ultimoDestino = destino;
     resultado = resolverLugar(
       reto: herbario.parte(pieza).reto,
       eleccion: destino,
       intento: intento,
     );
+    falloColocacion = !resultado!.acierto;
     if (resultado!.acierto) {
       _colocadas.add(pieza);
       seleccionada = null;
@@ -88,6 +97,8 @@ class PartidaHerbario {
   void responder(String eleccion) {
     final id = preguntaActual;
     if (id == null) return;
+    ultimoDestino = null;
+    falloColocacion = false;
     resultado = resolverFuncion(parte: herbario.parte(id), eleccion: eleccion);
     if (resultado!.acierto) _funciones.add(id);
   }

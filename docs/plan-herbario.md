@@ -135,4 +135,4 @@ Pendientes: revisión del equipo, comprobación en Android real e iOS y lectura 
 
 ## Continuación: coherencia visual
 
-La siguiente tarea en esta rama es armonizar botones, tarjetas y estados con los otros juegos. El alcance, el orden de trabajo y los criterios de aceptación están en [plan-mejora-visual-herbario.md](plan-mejora-visual-herbario.md). Esa mejora todavía no está implementada.
+La siguiente tarea en esta rama es armonizar botones, tarjetas y estados con los otros juegos. El alcance, el orden de trabajo y los criterios de aceptación están en [plan-mejora-visual-herbario.md](plan-mejora-visual-herbario.md). La mejora visual está implementada: tarjetas compartidas, estados de destino, respuestas tonales y progreso de las dos fases. Su evidencia y comprobaciones manuales pendientes están en ese documento.

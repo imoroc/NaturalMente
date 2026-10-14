@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/main.dart';
 import 'package:naturalmente/ui/herbario.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
+import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -70,6 +73,18 @@ void main() {
     expect(find.byKey(const Key('nivel-dificil')), findsOneWidget);
   });
 
+  testWidgets('el selector de tarjetas se puede usar con teclado', (
+    tester,
+  ) async {
+    await abrir(tester);
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pumpAndSettle();
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    expect(find.text('Partes colocadas: 0 de 3'), findsOneWidget);
+    expect(find.byKey(const Key('pieza-raiz')), findsOneWidget);
+  });
+
   testWidgets('Fácil permite fallar, consultar, guardar y repetir', (
     tester,
   ) async {
@@ -81,9 +96,23 @@ void main() {
     await tocar(tester, 'pieza-raiz');
     await tocar(tester, 'destino-hoja');
     expect(find.textContaining('bajo el suelo'), findsOneWidget);
+    TarjetaJuego destino(String id) => tester.widget<TarjetaJuego>(
+      find
+          .ancestor(
+            of: find.byKey(Key('destino-$id')),
+            matching: find.byType(TarjetaJuego),
+          )
+          .first,
+    );
+    expect(destino('hoja').borde, EstilosJuego.fallo);
+    expect(find.byIcon(Icons.replay_rounded), findsOneWidget);
+    await tocar(tester, 'pieza-tallo');
+    expect(find.byIcon(Icons.replay_rounded), findsNothing);
+    await tocar(tester, 'pieza-raiz');
     await tocar(tester, 'destino-tallo');
     expect(find.textContaining('Busca la parte'), findsOneWidget);
     await tocar(tester, 'destino-raiz');
+    expect(destino('raiz').borde, EstilosJuego.acierto);
     await tocar(tester, 'ficha-raiz');
     expect(find.textContaining('zanahoria'), findsOneWidget);
     await tocar(tester, 'cerrar-ficha');
@@ -98,6 +127,15 @@ void main() {
     await tocar(tester, 'herbario-otra-vez');
     expect(find.text('Partes colocadas: 0 de 3'), findsOneWidget);
     expect(find.byKey(const Key('pieza-raiz')), findsOneWidget);
+    expect(find.byIcon(Icons.replay_rounded), findsNothing);
+    expect(
+      tester
+          .widget<LinearProgressIndicator>(
+            find.byKey(const Key('herbario-progreso')),
+          )
+          .value,
+      0,
+    );
     await tocar(tester, 'herbario-cambiar-nivel');
     expect(find.text('✓ Nivel superado'), findsOneWidget);
   });
@@ -137,6 +175,12 @@ void main() {
         await colocar(tester, parte.id);
       }
       expect(find.byKey(const Key('herbario-completo')), findsNothing);
+      double avance() => tester
+          .widget<LinearProgressIndicator>(
+            find.byKey(const Key('herbario-progreso')),
+          )
+          .value!;
+      expect(avance(), .5);
       expect(find.byKey(const Key('ficha-raiz')), findsNothing);
       expect(progreso.nivelHerbarioHecho(actividad, 'dificil'), isFalse);
       final raiz = herbario.parte('raiz');
@@ -144,11 +188,13 @@ void main() {
         (o) => o.id != raiz.pregunta.respuesta,
       );
       await tocar(tester, 'funcion-raiz-${mal.id}');
+      expect(avance(), .5);
       expect(find.byKey(const Key('pregunta-raiz')), findsOneWidget);
       for (final parte in herbario.partes) {
         await tocar(tester, 'funcion-${parte.id}-${parte.pregunta.respuesta}');
       }
       expect(find.byKey(const Key('herbario-completo')), findsOneWidget);
+      expect(avance(), 1);
       expect(progreso.nivelHerbarioHecho(actividad, 'dificil'), isTrue);
       await tocar(tester, 'herbario-cambiar-nivel');
       await tocar(tester, 'nivel-medio');
@@ -189,6 +235,23 @@ void main() {
       await colocar(tester, 'raiz');
       expect(tester.takeException(), isNull);
       await tocar(tester, 'ficha-raiz');
+      expect(tester.takeException(), isNull);
+      await tocar(tester, 'cerrar-ficha');
+      await tocar(tester, 'herbario-cambiar-nivel');
+      await tocar(tester, 'nivel-dificil');
+      final herbario = catalogo.actividades
+          .firstWhere((a) => a.id == 'herbario')
+          .herbario!;
+      for (final parte in herbario.partes) {
+        await colocar(tester, parte.id);
+        expect(tester.takeException(), isNull);
+      }
+      for (final parte in herbario.partes) {
+        await tocar(tester, 'funcion-${parte.id}-${parte.pregunta.respuesta}');
+        expect(tester.takeException(), isNull);
+      }
+      expect(find.byKey(const Key('herbario-completo')), findsOneWidget);
+      await tocar(tester, 'herbario-otra-vez');
       expect(tester.takeException(), isNull);
     });
   }

@@ -132,3 +132,7 @@ Comprobado con Flutter 3.47.7 y Dart 3.13.5:
 Se han incorporado los cambios de `main` que añaden Brote y la integración continua. Las burbujas del herbario usan sus gestos de acierto y pista.
 
 Pendientes: revisión del equipo, comprobación en Android real e iOS y lectura en voz alta de Fácil como trabajo general del producto. No había dispositivos Android conectados durante esta implementación. El SDK y las herramientas de navegador se prepararon fuera del repositorio; no se añadieron dependencias nuevas a la app.
+
+## Continuación: coherencia visual
+
+La siguiente tarea en esta rama es armonizar botones, tarjetas y estados con los otros juegos. El alcance, el orden de trabajo y los criterios de aceptación están en [plan-mejora-visual-herbario.md](plan-mejora-visual-herbario.md). Esa mejora todavía no está implementada.

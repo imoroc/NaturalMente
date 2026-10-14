@@ -1,6 +1,6 @@
 # Plan de implementación: Herbario desmontable
 
-Fecha: 14 de octubre de 2026. Estado: propuesta lista para implementar.
+Fecha: 14 de octubre de 2026. Estado: implementado y verificado; pendiente de revisión del equipo y prueba en dispositivos reales.
 
 Este plan desarrolla el juego MVP descrito en `docs/juegos.md`. Los niveles siguen `docs/decisiones.md`. No depende del reparto de roles: una persona puede completar la tarea y pedir revisión al equipo.
 
@@ -104,14 +104,31 @@ Estimación orientativa para una persona: entre 4 y 6 jornadas de trabajo efecti
 
 ## Criterios de aceptación final
 
-- [ ] Aparece en El invernadero y los tres niveles se pueden elegir libremente.
-- [ ] Fácil tiene tres partes; Medio y Difícil tienen cinco.
-- [ ] Todas las colocaciones se pueden hacer con arrastre y con toques.
-- [ ] Cada fallo explica qué pasa y permite continuar; la segunda equivocación de una pieza añade pista.
-- [ ] Las partes colocadas permiten consultar su contenido sin perder la partida.
-- [ ] Difícil necesita acertar las funciones además de colocar los rótulos.
-- [ ] La finalización persiste por nivel y se puede repetir desde cero.
-- [ ] Los juegos existentes, el progreso anterior y la medalla conservan su comportamiento.
-- [ ] La interfaz funciona con texto ampliado y en las pantallas revisadas.
-- [ ] Análisis, pruebas y revisión manual realizados, con resultados registrados en la PR.
-- [ ] Documentación y cobertura actualizadas; textos y dibujo propios.
+- [x] Aparece en El invernadero y los tres niveles se pueden elegir libremente.
+- [x] Fácil tiene tres partes; Medio y Difícil tienen cinco.
+- [x] Todas las colocaciones se pueden hacer con arrastre y con toques.
+- [x] Cada fallo explica qué pasa y permite continuar; la segunda equivocación de una pieza añade pista.
+- [x] Las partes colocadas permiten consultar su contenido sin perder la partida.
+- [x] Difícil necesita acertar las funciones además de colocar los rótulos.
+- [x] La finalización persiste por nivel y se puede repetir desde cero.
+- [x] Los juegos existentes, el progreso anterior y la medalla conservan su comportamiento.
+- [x] La interfaz funciona con texto ampliado y en las pantallas revisadas.
+- [x] Análisis, pruebas y revisión de las capturas del navegador realizados.
+- [ ] Revisión en Android real e iOS antes de integrar y publicar.
+- [x] Documentación y cobertura actualizadas; textos y dibujo propios.
+
+
+## Validación de la implementación
+
+Comprobado con Flutter 3.47.7 y Dart 3.13.5:
+
+- `flutter analyze`: sin incidencias.
+- `flutter test`: 23 pruebas superadas, incluidas las de las actividades anteriores.
+- `flutter build web --no-web-resources-cdn`: compilación correcta.
+- Recorrido en Chromium: completar los tres niveles, equivocarse, obtener la segunda pista y recuperar el nivel superado al recargar. Sin excepciones de JavaScript.
+- Capturas revisadas en móvil de 390 × 844 y tablet de 1024 × 768.
+- Pruebas de widgets en 320 × 568, 700 × 360 y 1024 × 768 con texto al doble de tamaño, incluida apertura de fichas, sin desbordamientos.
+
+Se han incorporado los cambios de `main` que añaden Brote y la integración continua. Las burbujas del herbario usan sus gestos de acierto y pista.
+
+Pendientes: revisión del equipo, comprobación en Android real e iOS y lectura en voz alta de Fácil como trabajo general del producto. No había dispositivos Android conectados durante esta implementación. El SDK y las herramientas de navegador se prepararon fuera del repositorio; no se añadieron dependencias nuevas a la app.

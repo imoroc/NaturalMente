@@ -110,7 +110,13 @@ class _HerbarioPageState extends State<HerbarioPage> {
   Widget build(BuildContext context) {
     final partida = _partida;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.actividad.titulo)),
+      appBar: AppBar(
+        title: Text(
+          widget.actividad.titulo,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
       body: SafeArea(
         top: false,
         child: LayoutBuilder(
@@ -246,6 +252,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
             child: Burbuja(
               quien: widget.actividad.quien,
               frase: partida.resultado!.frase,
+              gesto: partida.resultado!.gesto,
             ),
           ),
         ],
@@ -333,21 +340,24 @@ class _HerbarioPageState extends State<HerbarioPage> {
   Widget _pieza(PartePlanta parte, PartidaHerbario partida) {
     final seleccionada = partida.seleccionada == parte.id;
     final rotulo = partida.nivel.preguntaFunciones;
-    Widget contenido() => Padding(
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (!rotulo) ...[
-            IconoParte(id: parte.id, size: 32),
-            const SizedBox(width: 8),
+    Widget contenido() => ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 56),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!rotulo) ...[
+              IconoParte(id: parte.id, size: 32),
+              const SizedBox(width: 8),
+            ],
+            Text(parte.nombre),
+            if (seleccionada) ...[
+              const SizedBox(width: 8),
+              const Icon(Icons.check_circle, size: 20),
+            ],
           ],
-          Text(parte.nombre),
-          if (seleccionada) ...[
-            const SizedBox(width: 8),
-            const Icon(Icons.check_circle, size: 20),
-          ],
-        ],
+        ),
       ),
     );
     return Draggable<String>(

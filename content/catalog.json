@@ -401,7 +401,7 @@
             "reto": {
               "id": "raiz",
               "nombre": "Raíz",
-              "pregunta": "¿Dónde colocarías raíz?",
+              "pregunta": "¿Dónde colocarías la raíz?",
               "respuesta": "raiz",
               "pista": "Busca la parte de la planta que queda bajo el suelo.",
               "frases": {
@@ -415,7 +415,7 @@
             "funcion": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
             "curiosidad": "Algunas raíces, como la zanahoria, guardan reservas de alimento.",
             "preguntaFuncion": {
-              "enunciado": "¿Para qué sirve raíz?",
+              "enunciado": "¿Para qué sirve la raíz?",
               "opciones": [
                 {
                   "id": "agua",
@@ -433,8 +433,8 @@
               "respuesta": "agua",
               "frases": {
                 "agua": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
-                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace raíz.",
-                "alimento": "Esa tarea corresponde a hoja. Piensa en lo que hace raíz."
+                "sostener": "Esa tarea corresponde al tallo. Piensa en lo que hace la raíz.",
+                "alimento": "Esa tarea corresponde a la hoja. Piensa en lo que hace la raíz."
               }
             }
           },
@@ -442,7 +442,7 @@
             "reto": {
               "id": "tallo",
               "nombre": "Tallo",
-              "pregunta": "¿Dónde colocarías tallo?",
+              "pregunta": "¿Dónde colocarías el tallo?",
               "respuesta": "tallo",
               "pista": "Busca el eje que sube desde el suelo y sostiene las otras partes.",
               "frases": {
@@ -456,7 +456,7 @@
             "funcion": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
             "curiosidad": "El tronco de un árbol es un tallo que crece y se vuelve leñoso.",
             "preguntaFuncion": {
-              "enunciado": "¿Para qué sirve tallo?",
+              "enunciado": "¿Para qué sirve el tallo?",
               "opciones": [
                 {
                   "id": "agua",
@@ -473,8 +473,8 @@
               ],
               "respuesta": "sostener",
               "frases": {
-                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace tallo.",
-                "alimento": "Esa tarea corresponde a hoja. Piensa en lo que hace tallo.",
+                "agua": "Esa tarea corresponde a la raíz. Piensa en lo que hace el tallo.",
+                "alimento": "Esa tarea corresponde a la hoja. Piensa en lo que hace el tallo.",
                 "sostener": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta."
               }
             }
@@ -483,7 +483,7 @@
             "reto": {
               "id": "hoja",
               "nombre": "Hoja",
-              "pregunta": "¿Dónde colocarías hoja?",
+              "pregunta": "¿Dónde colocarías la hoja?",
               "respuesta": "hoja",
               "pista": "Busca la forma plana y verde que sale a un lado del tallo.",
               "frases": {
@@ -497,7 +497,7 @@
             "funcion": "La hoja fabrica alimento para la planta utilizando la luz.",
             "curiosidad": "Hay hojas muy anchas y otras finas, como las agujas del pino.",
             "preguntaFuncion": {
-              "enunciado": "¿Para qué sirve hoja?",
+              "enunciado": "¿Para qué sirve la hoja?",
               "opciones": [
                 {
                   "id": "sostener",
@@ -514,9 +514,9 @@
               ],
               "respuesta": "alimento",
               "frases": {
-                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace hoja.",
+                "sostener": "Esa tarea corresponde al tallo. Piensa en lo que hace la hoja.",
                 "alimento": "La hoja fabrica alimento para la planta utilizando la luz.",
-                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace hoja."
+                "agua": "Esa tarea corresponde a la raíz. Piensa en lo que hace la hoja."
               }
             }
           },
@@ -524,7 +524,7 @@
             "reto": {
               "id": "flor",
               "nombre": "Flor",
-              "pregunta": "¿Dónde colocarías flor?",
+              "pregunta": "¿Dónde colocarías la flor?",
               "respuesta": "flor",
               "pista": "Busca los pétalos en lo alto de la planta.",
               "frases": {
@@ -538,7 +538,7 @@
             "funcion": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
             "curiosidad": "Muchas flores atraen a insectos que transportan el polen.",
             "preguntaFuncion": {
-              "enunciado": "¿Para qué sirve flor?",
+              "enunciado": "¿Para qué sirve la flor?",
               "opciones": [
                 {
                   "id": "reproduccion",
@@ -556,8 +556,8 @@
               "respuesta": "reproduccion",
               "frases": {
                 "reproduccion": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
-                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace flor.",
-                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace flor."
+                "agua": "Esa tarea corresponde a la raíz. Piensa en lo que hace la flor.",
+                "sostener": "Esa tarea corresponde al tallo. Piensa en lo que hace la flor."
               }
             }
           },
@@ -565,7 +565,7 @@
             "reto": {
               "id": "fruto",
               "nombre": "Fruto",
-              "pregunta": "¿Dónde colocarías fruto?",
+              "pregunta": "¿Dónde colocarías el fruto?",
               "respuesta": "fruto",
               "pista": "Busca la forma redonda que protege las semillas.",
               "frases": {
@@ -579,7 +579,7 @@
             "funcion": "El fruto protege las semillas y ayuda a que lleguen a otros lugares.",
             "curiosidad": "Un tomate es un fruto: dentro puedes encontrar sus semillas.",
             "preguntaFuncion": {
-              "enunciado": "¿Para qué sirve fruto?",
+              "enunciado": "¿Para qué sirve el fruto?",
               "opciones": [
                 {
                   "id": "agua",
@@ -596,8 +596,8 @@
               ],
               "respuesta": "semillas",
               "frases": {
-                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace fruto.",
-                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace fruto.",
+                "agua": "Esa tarea corresponde a la raíz. Piensa en lo que hace el fruto.",
+                "sostener": "Esa tarea corresponde al tallo. Piensa en lo que hace el fruto.",
                 "semillas": "El fruto protege las semillas y ayuda a que lleguen a otros lugares."
               }
             }

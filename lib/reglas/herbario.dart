@@ -14,6 +14,7 @@ Resultado resolverFuncion({
     acierto: eleccion == pregunta.respuesta,
     frase: frase,
     estado: eleccion,
+    gesto: eleccion == pregunta.respuesta ? 'feliz' : 'pensando',
   );
 }
 
@@ -75,6 +76,7 @@ class PartidaHerbario {
           frase:
               'La pieza está en su sitio. Al terminar veremos para qué sirve.',
           estado: 'colocada',
+          gesto: 'feliz',
         );
       }
     } else {

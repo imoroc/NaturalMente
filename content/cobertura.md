@@ -28,7 +28,7 @@ El juego principal de la zona es «Cada uno a su hogar».
 
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
-| Partes de la planta | 1º-2º | | |
+| Partes de la planta | 1º-2º | Herbario desmontable: raíz, tallo y hoja; flor y fruto en Medio | herbario; raiz, tallo, hoja, flor, fruto |
 | Qué necesita para vivir | 1º-2º | Laboratorio de germinación | |
 | Árbol, arbusto y hierba | 1º-2º | | |
 | Cultivadas y silvestres | 3º-4º | | |

@@ -12,6 +12,8 @@ Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base 
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
+Ese es el comportamiento previsto para el producto completo. Actualmente el selector y las variantes están implementados en Herbario desmontable; los cuatro juegos anteriores solo muestran el curso orientativo.
+
 ## Cómo llegamos aquí
 
 El trabajo usa Flutter. El cuerpo humano es un bloque grande, al mismo nivel que animales y plantas. El MVP es animales, plantas, seres vivos y cuerpo humano. Materia, energía, fuerzas y máquinas salen en el libro y quedan como ampliación, solo si nos da tiempo después del MVP. La reproducción sí entra, porque es parte del cuerpo. La entrega es en diciembre.
@@ -194,7 +196,7 @@ Al abrir se ve un mapa con tres sitios. El orden lo elige el niño.
 | El invernadero | Plantas | La planta |
 | Dentro de mí | Cuerpo | El cuerpo |
 
-En cada sitio habrá fichas (nombre, una frase, una curiosidad, nivel) y juegos con selector de nivel. También habrá juegos generales que mezclan bloques. Ahora mismo solo está el mapa y un juego, el del camello, para comprobar que el circuito funciona: pantalla, regla y test. El resto se añade en esas mismas carpetas.
+En cada sitio hay fichas (nombre, una frase, una curiosidad, curso orientativo) y juegos. Actualmente funcionan los cuatro juegos obligatorios y Herbario desmontable, que añade selector de nivel, colocación sobre una planta y preguntas de función en Difícil. Los juegos generales que mezclan bloques siguen pendientes. El resto se añade en esas mismas carpetas.
 
 Juegos que tienen que estar para diciembre:
 

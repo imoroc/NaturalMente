@@ -4,7 +4,7 @@ App de animales, plantas y cuerpo humano para niños de primaria. Un código en 
 
 Si no has visto el proyecto, lee primero [docs/contexto.md](docs/contexto.md). Ahí está la asignatura, el material de ciencias y lo que va a hacer la app. Las carpetas y el reparto están en [docs/organizacion.md](docs/organizacion.md). Las decisiones de alcance (MVP, niveles de dificultad, qué queda fuera) están en [docs/decisiones.md](docs/decisiones.md). Las ideas de juegos, por zona y nivel, están en [docs/juegos.md](docs/juegos.md).
 
-Lo que hay ahora es poco a propósito: el mapa con los tres sitios y el juego del camello. Sirve para comprobar que Flutter, el catálogo y los tests van. El resto se añade en las mismas carpetas.
+Ya hay un mapa de tres zonas, trece fichas y cinco actividades: hábitat de animales, germinación, piezas del cuerpo, comienzo de una vida y Herbario desmontable. El progreso y la medalla se guardan en el dispositivo. Herbario tiene Fácil, Medio y Difícil; los otros juegos todavía muestran un curso orientativo sin selector. Su plan y el estado de validación están en [docs/plan-herbario.md](docs/plan-herbario.md).
 
 ## Qué hay que tener instalado
 
@@ -47,7 +47,7 @@ flutter analyze
 flutter test
 ```
 
-`pub get` baja lo que pone `pubspec.yaml`. Hay que lanzarlo al clonar y cuando cambie ese archivo. `analyze` mira el estilo. `test` ejecuta `test/reglas` y `test/ui` sin abrir la app en un móvil.
+`pub get` baja lo que pone `pubspec.yaml`. Hay que lanzarlo al clonar y cuando cambie ese archivo. `analyze` mira el estilo. `test` ejecuta las pruebas de datos, reglas y pantallas sin abrir la app en un móvil.
 
 Verla en Chrome (no se publica; es para trabajar):
 

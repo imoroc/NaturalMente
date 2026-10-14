@@ -2,7 +2,7 @@
 
 Organización para todo el proyecto.
 
-Los ficheros de dentro crecerán. Muchos todavía no existen. La versión que hay ahora solo demuestra que arranca, que se ve el mapa y que una regla de juego se puede probar sola.
+Los ficheros de dentro crecerán. La versión actual tiene tres zonas, fichas, cinco actividades y progreso local. Herbario desmontable incorpora los tres niveles; faltan las variantes de los otros juegos y el resto del contenido previsto.
 
 ## Carpetas
 
@@ -11,7 +11,7 @@ naturalmente/
   lib/
     ui/            pantallas
     reglas/        qué respuesta vale y qué frase se devuelve. Sin widgets
-    datos/         leer content/catalog.json y, más adelante, guardar la medalla en el teléfono
+    datos/         leer content/catalog.json y guardar el progreso en el teléfono
     modelo/        clases: zona, ficha, juego, curso orientativo
     main.dart      arranque
   content/         textos. catalog.json es el que lee la app. cobertura.md es la lista de temas
@@ -66,8 +66,12 @@ Si nos atrasamos, se mantiene el mapa, las fichas justas, el hábitat, la germin
 
 ## Versión que hay ahora
 
-Los juegos salen de `content/catalog.json`. Una sola pantalla los pinta. Lo ya hecho se guarda en el teléfono.
+Los juegos salen de `content/catalog.json`. Una pantalla compartida pinta ubicación, controles y ordenación. Herbario tiene su propia pantalla y dibujo. Lo ya hecho se guarda en el dispositivo.
 
 - La reserva: se arrastra el animal a desierto, mar, polo o bosque.
 - El invernadero y el cuerpo usan esa misma pantalla, cada uno con su tipo de juego.
 - La medalla sigue ahí al cerrar y volver a abrir.
+- Herbario desmontable: Fácil con raíz, tallo y hoja; Medio con cinco partes; Difícil con cinco rótulos y preguntas de función. Se puede arrastrar o jugar mediante toques, consultar las partes y repetir.
+- Herbario guarda qué niveles se han superado; completar cualquiera marca la actividad. No cambia los requisitos de la medalla. Salir de una partida incompleta la reinicia al volver.
+
+La implementación y sus comprobaciones se describen en `docs/plan-herbario.md`. Los roles orientan las revisiones y permiten coordinarse; cualquiera puede implementar una tarea.

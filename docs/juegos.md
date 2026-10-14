@@ -85,6 +85,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Herbario desmontable
 - **Prioridad**: MVP.
+- **Estado**: implementado con los tres niveles, arrastre y alternativa mediante toques. Las partes colocadas permiten consultar función y curiosidad; en Difícil se desbloquean al acertar su función. El progreso se guarda por nivel y no cuenta para la medalla. Ver `docs/plan-herbario.md` para validación y pendientes.
 - **Mecánica**: arrastrar las partes (raíz, tallo, hoja, flor, fruto) o sus rótulos sobre la silueta de una planta. Al acertar, se toca la parte y sale su ficha con una curiosidad: «La raíz toma el agua del suelo, como una pajita».
 - **Niveles**: Fácil, tres partes con dibujo. Medio, las cinco partes. Difícil, rótulos sin dibujo y una pregunta de para qué sirve cada parte.
 - **Si no acierta**: la parte explica dónde está. «Yo estoy bajo tierra, no en lo alto del tallo».

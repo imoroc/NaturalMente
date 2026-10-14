@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 
 class ZonaPage extends StatelessWidget {
@@ -61,7 +62,9 @@ class ZonaPage extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute<void>(
-                        builder: (_) => JuegoPage(actividad: actividad),
+                        builder: (_) => actividad.tipo == 'herbario'
+                            ? HerbarioPage(actividad: actividad)
+                            : JuegoPage(actividad: actividad),
                       ),
                     );
                   },
@@ -82,7 +85,10 @@ class ZonaPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: const Color(0xFFE2DEC9), width: 2),
+                    border: Border.all(
+                      color: const Color(0xFFE2DEC9),
+                      width: 2,
+                    ),
                   ),
                   child: ExpansionTile(
                     shape: const Border(),
@@ -156,8 +162,12 @@ class _BotonMision extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorBorde = hecha ? const Color(0xFF2ECC71) : const Color(0xFF38BDF8);
-    final colorSombra = hecha ? const Color(0xFF239E56) : const Color(0xFF0284C7);
+    final colorBorde = hecha
+        ? const Color(0xFF2ECC71)
+        : const Color(0xFF38BDF8);
+    final colorSombra = hecha
+        ? const Color(0xFF239E56)
+        : const Color(0xFF0284C7);
 
     return Container(
       decoration: BoxDecoration(
@@ -190,7 +200,9 @@ class _BotonMision extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    hecha ? Icons.check_circle_rounded : Icons.play_arrow_rounded,
+                    hecha
+                        ? Icons.check_circle_rounded
+                        : Icons.play_arrow_rounded,
                     color: colorSombra,
                     size: 28,
                   ),
@@ -217,6 +229,7 @@ class _BotonMision extends StatelessWidget {
                           color: Color(0xFF64748B),
                         ),
                       ),
+                      if (hecha) const Text('✓ Actividad superada'),
                     ],
                   ),
                 ),

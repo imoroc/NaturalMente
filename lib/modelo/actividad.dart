@@ -1,3 +1,5 @@
+import 'package:naturalmente/modelo/herbario.dart';
+
 class Opcion {
   const Opcion({required this.id, required this.nombre});
 
@@ -39,7 +41,11 @@ class Reto {
 }
 
 class Control {
-  const Control({required this.id, required this.nombre, required this.opciones});
+  const Control({
+    required this.id,
+    required this.nombre,
+    required this.opciones,
+  });
 
   final String id;
   final String nombre;
@@ -72,6 +78,7 @@ class Actividad {
     required this.respuesta,
     required this.boton,
     required this.sujeto,
+    this.herbario,
   });
 
   final String id;
@@ -90,8 +97,10 @@ class Actividad {
   final List<String> respuesta;
   final String boton;
   final String sujeto;
+  final Herbario? herbario;
 
   bool get tieneFrases {
+    if (tipo == 'herbario') return herbario != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
     }
@@ -123,6 +132,9 @@ class Actividad {
       respuesta: (mapa['respuesta'] as List? ?? []).cast<String>(),
       boton: mapa['boton'] as String? ?? 'Comprobar',
       sujeto: mapa['sujeto'] as String? ?? '',
+      herbario: mapa['herbario'] == null
+          ? null
+          : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
     );
     actividad._comprobar();
     return actividad;
@@ -132,7 +144,7 @@ class Actividad {
     if (curso.isEmpty) {
       throw ArgumentError('La actividad $id no tiene curso.');
     }
-    if (tipo != 'lugar' && tipo != 'controles' && tipo != 'orden') {
+    if (!const ['lugar', 'controles', 'orden', 'herbario'].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }
     if (!tieneFrases) {
@@ -142,7 +154,9 @@ class Actividad {
       final ids = opciones.map((opcion) => opcion.id).toSet();
       for (final reto in retos) {
         if (!ids.contains(reto.respuesta)) {
-          throw ArgumentError('El reto ${reto.id} apunta a un sitio que no existe.');
+          throw ArgumentError(
+            'El reto ${reto.id} apunta a un sitio que no existe.',
+          );
         }
         for (final id in ids) {
           if (!reto.frases.containsKey(id)) {
@@ -186,5 +200,7 @@ List<Opcion> _opciones(Object? valor) {
 
 Map<String, String> _frases(Object? valor) {
   if (valor is! Map) return const {};
-  return valor.map((clave, frase) => MapEntry(clave as String, frase as String));
+  return valor.map(
+    (clave, frase) => MapEntry(clave as String, frase as String),
+  );
 }

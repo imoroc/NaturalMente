@@ -20,7 +20,8 @@ class Progreso extends ChangeNotifier {
 
   bool hecho(String id) => _hechos.contains(id);
 
-  bool retoHecho(Actividad actividad, Reto reto) => hecho(_reto(actividad, reto));
+  bool retoHecho(Actividad actividad, Reto reto) =>
+      hecho(_reto(actividad, reto));
 
   bool actividadHecha(Actividad actividad) {
     if (actividad.tipo == 'lugar') {
@@ -42,9 +43,26 @@ class Progreso extends ChangeNotifier {
     return _marcar(actividad.id);
   }
 
+  bool nivelHerbarioHecho(Actividad actividad, String nivel) =>
+      hecho('${actividad.id}/$nivel/completo');
+
+  Future<void> marcarNivelHerbario(Actividad actividad, String nivel) async {
+    if (actividad.herbario?.niveles.any((n) => n.id == nivel) != true) {
+      throw ArgumentError('Ese nivel no existe en ${actividad.id}.');
+    }
+    await _marcar('${actividad.id}/$nivel/completo');
+    await marcarActividad(actividad);
+  }
+
   Future<void> _marcar(String id) async {
     if (!_hechos.add(id)) return;
-    await _prefs.setStringList(_clave, _hechos.toList());
+    try {
+      final guardado = await _prefs.setStringList(_clave, _hechos.toList());
+      if (!guardado) throw StateError('No se ha podido guardar el progreso.');
+    } catch (_) {
+      _hechos.remove(id);
+      rethrow;
+    }
     notifyListeners();
   }
 

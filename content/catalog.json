@@ -49,16 +49,16 @@
       "zona": "invernadero",
       "curso": "1º-2º",
       "titulo": "Raíz",
-      "frase": "Está bajo tierra y toma el agua del suelo.",
-      "curiosidad": "También sujeta la planta para que el viento no se la lleve."
+      "frase": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
+      "curiosidad": "Algunas raíces, como la zanahoria, guardan reservas de alimento."
     },
     {
       "id": "hoja",
       "zona": "invernadero",
       "curso": "3º-4º",
       "titulo": "Hoja",
-      "frase": "Con la luz fabrica el alimento de la planta.",
-      "curiosidad": "Por eso una planta a oscuras se pone pálida y floja."
+      "frase": "La hoja fabrica alimento para la planta utilizando la luz.",
+      "curiosidad": "Hay hojas muy anchas y otras finas, como las agujas del pino."
     },
     {
       "id": "huerto",
@@ -99,6 +99,30 @@
       "titulo": "Así empieza una vida",
       "frase": "Se unen dos células muy pequeñas, el bebé crece dentro, nace y necesita cuidados.",
       "curiosidad": "El cuerpo de cada persona es suyo."
+    },
+    {
+      "id": "tallo",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "titulo": "Tallo",
+      "frase": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
+      "curiosidad": "El tronco de un árbol es un tallo que crece y se vuelve leñoso."
+    },
+    {
+      "id": "flor",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "titulo": "Flor",
+      "frase": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
+      "curiosidad": "Muchas flores atraen a insectos que transportan el polen."
+    },
+    {
+      "id": "fruto",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "titulo": "Fruto",
+      "frase": "El fruto protege las semillas y ayuda a que lleguen a otros lugares.",
+      "curiosidad": "Un tomate es un fruto: dentro puedes encontrar sus semillas."
     }
   ],
   "actividades": [
@@ -111,10 +135,22 @@
       "medalla": true,
       "quien": "El animal dice",
       "opciones": [
-        {"id": "desierto", "nombre": "Desierto"},
-        {"id": "mar", "nombre": "Mar"},
-        {"id": "polo", "nombre": "Polo"},
-        {"id": "bosque", "nombre": "Bosque"}
+        {
+          "id": "desierto",
+          "nombre": "Desierto"
+        },
+        {
+          "id": "mar",
+          "nombre": "Mar"
+        },
+        {
+          "id": "polo",
+          "nombre": "Polo"
+        },
+        {
+          "id": "bosque",
+          "nombre": "Bosque"
+        }
       ],
       "retos": [
         {
@@ -186,27 +222,54 @@
           "id": "agua",
           "nombre": "Agua",
           "opciones": [
-            {"id": "poca", "nombre": "Poca"},
-            {"id": "justa", "nombre": "Justa"},
-            {"id": "mucha", "nombre": "Mucha"}
+            {
+              "id": "poca",
+              "nombre": "Poca"
+            },
+            {
+              "id": "justa",
+              "nombre": "Justa"
+            },
+            {
+              "id": "mucha",
+              "nombre": "Mucha"
+            }
           ]
         },
         {
           "id": "luz",
           "nombre": "Luz",
           "opciones": [
-            {"id": "poca", "nombre": "Poca"},
-            {"id": "justa", "nombre": "Justa"},
-            {"id": "mucha", "nombre": "Mucha"}
+            {
+              "id": "poca",
+              "nombre": "Poca"
+            },
+            {
+              "id": "justa",
+              "nombre": "Justa"
+            },
+            {
+              "id": "mucha",
+              "nombre": "Mucha"
+            }
           ]
         },
         {
           "id": "suelo",
           "nombre": "Suelo",
           "opciones": [
-            {"id": "piedras", "nombre": "Piedras"},
-            {"id": "arena", "nombre": "Arena"},
-            {"id": "huerto", "nombre": "Tierra de huerto"}
+            {
+              "id": "piedras",
+              "nombre": "Piedras"
+            },
+            {
+              "id": "arena",
+              "nombre": "Arena"
+            },
+            {
+              "id": "huerto",
+              "nombre": "Tierra de huerto"
+            }
           ]
         }
       ],
@@ -229,9 +292,18 @@
       "medalla": true,
       "quien": "El cuerpo dice",
       "opciones": [
-        {"id": "cabeza", "nombre": "Cabeza"},
-        {"id": "pecho", "nombre": "Pecho"},
-        {"id": "barriga", "nombre": "Barriga"}
+        {
+          "id": "cabeza",
+          "nombre": "Cabeza"
+        },
+        {
+          "id": "pecho",
+          "nombre": "Pecho"
+        },
+        {
+          "id": "barriga",
+          "nombre": "Barriga"
+        }
       ],
       "retos": [
         {
@@ -283,18 +355,293 @@
       "intro": "Ordena los cuatro pasos. El cuerpo de cada persona es suyo.",
       "boton": "Comprobar",
       "pasos": [
-        {"id": "celulas", "nombre": "Se unen dos células"},
-        {"id": "utero", "nombre": "El bebé crece dentro"},
-        {"id": "nace", "nombre": "Nace"},
-        {"id": "cuidados", "nombre": "Hay que cuidarlo"}
+        {
+          "id": "celulas",
+          "nombre": "Se unen dos células"
+        },
+        {
+          "id": "utero",
+          "nombre": "El bebé crece dentro"
+        },
+        {
+          "id": "nace",
+          "nombre": "Nace"
+        },
+        {
+          "id": "cuidados",
+          "nombre": "Hay que cuidarlo"
+        }
       ],
-      "respuesta": ["celulas", "utero", "nace", "cuidados"],
+      "respuesta": [
+        "celulas",
+        "utero",
+        "nace",
+        "cuidados"
+      ],
       "frases": {
         "incompleto": "Tienen que estar los cuatro pasos, cada uno una sola vez.",
         "mal0": "Todavía no. Empieza por dos células tan pequeñas que no se ven.",
         "mal1": "Esas células no se quedan sueltas. El bebé crece en un sitio protegido.",
         "mal2": "Antes de los cuidados, el bebé tiene que nacer.",
         "bien": "Sí. Se unen dos células, el bebé crece, nace y necesita cuidados."
+      }
+    },
+    {
+      "id": "herbario",
+      "zona": "invernadero",
+      "tipo": "herbario",
+      "titulo": "Herbario desmontable",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "La planta dice",
+      "intro": "Cada parte de la planta tiene su sitio. Arrastra una pieza o tócala y después toca su destino.",
+      "herbario": {
+        "partes": [
+          {
+            "reto": {
+              "id": "raiz",
+              "nombre": "Raíz",
+              "pregunta": "¿Dónde colocarías raíz?",
+              "respuesta": "raiz",
+              "pista": "Busca la parte de la planta que queda bajo el suelo.",
+              "frases": {
+                "raiz": "Sí. La raíz toma agua y sales minerales del suelo y sujeta la planta.",
+                "tallo": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
+                "hoja": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
+                "flor": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta.",
+                "fruto": "La raíz se extiende bajo el suelo; aquí no puede sujetar la planta."
+              }
+            },
+            "funcion": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
+            "curiosidad": "Algunas raíces, como la zanahoria, guardan reservas de alimento.",
+            "preguntaFuncion": {
+              "enunciado": "¿Para qué sirve raíz?",
+              "opciones": [
+                {
+                  "id": "agua",
+                  "nombre": "Tomar agua del suelo y sujetar la planta"
+                },
+                {
+                  "id": "sostener",
+                  "nombre": "Sostener partes de la planta y transportar sustancias"
+                },
+                {
+                  "id": "alimento",
+                  "nombre": "Fabricar alimento utilizando la luz"
+                }
+              ],
+              "respuesta": "agua",
+              "frases": {
+                "agua": "La raíz toma agua y sales minerales del suelo y sujeta la planta.",
+                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace raíz.",
+                "alimento": "Esa tarea corresponde a hoja. Piensa en lo que hace raíz."
+              }
+            }
+          },
+          {
+            "reto": {
+              "id": "tallo",
+              "nombre": "Tallo",
+              "pregunta": "¿Dónde colocarías tallo?",
+              "respuesta": "tallo",
+              "pista": "Busca el eje que sube desde el suelo y sostiene las otras partes.",
+              "frases": {
+                "raiz": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
+                "tallo": "Sí. El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
+                "hoja": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
+                "flor": "El tallo une la raíz con las partes de arriba; necesita estar en el centro.",
+                "fruto": "El tallo une la raíz con las partes de arriba; necesita estar en el centro."
+              }
+            },
+            "funcion": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta.",
+            "curiosidad": "El tronco de un árbol es un tallo que crece y se vuelve leñoso.",
+            "preguntaFuncion": {
+              "enunciado": "¿Para qué sirve tallo?",
+              "opciones": [
+                {
+                  "id": "agua",
+                  "nombre": "Tomar agua del suelo y sujetar la planta"
+                },
+                {
+                  "id": "alimento",
+                  "nombre": "Fabricar alimento utilizando la luz"
+                },
+                {
+                  "id": "sostener",
+                  "nombre": "Sostener partes de la planta y transportar sustancias"
+                }
+              ],
+              "respuesta": "sostener",
+              "frases": {
+                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace tallo.",
+                "alimento": "Esa tarea corresponde a hoja. Piensa en lo que hace tallo.",
+                "sostener": "El tallo sostiene las hojas, las flores y los frutos, y transporta sustancias por la planta."
+              }
+            }
+          },
+          {
+            "reto": {
+              "id": "hoja",
+              "nombre": "Hoja",
+              "pregunta": "¿Dónde colocarías hoja?",
+              "respuesta": "hoja",
+              "pista": "Busca la forma plana y verde que sale a un lado del tallo.",
+              "frases": {
+                "raiz": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
+                "tallo": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
+                "hoja": "Sí. La hoja fabrica alimento para la planta utilizando la luz.",
+                "flor": "La hoja sale a un lado del tallo, donde puede recibir la luz.",
+                "fruto": "La hoja sale a un lado del tallo, donde puede recibir la luz."
+              }
+            },
+            "funcion": "La hoja fabrica alimento para la planta utilizando la luz.",
+            "curiosidad": "Hay hojas muy anchas y otras finas, como las agujas del pino.",
+            "preguntaFuncion": {
+              "enunciado": "¿Para qué sirve hoja?",
+              "opciones": [
+                {
+                  "id": "sostener",
+                  "nombre": "Sostener partes de la planta y transportar sustancias"
+                },
+                {
+                  "id": "alimento",
+                  "nombre": "Fabricar alimento utilizando la luz"
+                },
+                {
+                  "id": "agua",
+                  "nombre": "Tomar agua del suelo y sujetar la planta"
+                }
+              ],
+              "respuesta": "alimento",
+              "frases": {
+                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace hoja.",
+                "alimento": "La hoja fabrica alimento para la planta utilizando la luz.",
+                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace hoja."
+              }
+            }
+          },
+          {
+            "reto": {
+              "id": "flor",
+              "nombre": "Flor",
+              "pregunta": "¿Dónde colocarías flor?",
+              "respuesta": "flor",
+              "pista": "Busca los pétalos en lo alto de la planta.",
+              "frases": {
+                "raiz": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
+                "tallo": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
+                "hoja": "La flor tiene pétalos y está sobre una ramita, por encima del suelo.",
+                "flor": "Sí. La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
+                "fruto": "La flor tiene pétalos y está sobre una ramita, por encima del suelo."
+              }
+            },
+            "funcion": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
+            "curiosidad": "Muchas flores atraen a insectos que transportan el polen.",
+            "preguntaFuncion": {
+              "enunciado": "¿Para qué sirve flor?",
+              "opciones": [
+                {
+                  "id": "reproduccion",
+                  "nombre": "Participar en la reproducción y dar lugar a frutos"
+                },
+                {
+                  "id": "agua",
+                  "nombre": "Tomar agua del suelo y sujetar la planta"
+                },
+                {
+                  "id": "sostener",
+                  "nombre": "Sostener partes de la planta y transportar sustancias"
+                }
+              ],
+              "respuesta": "reproduccion",
+              "frases": {
+                "reproduccion": "La flor participa en la reproducción de muchas plantas; de ella puede formarse un fruto.",
+                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace flor.",
+                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace flor."
+              }
+            }
+          },
+          {
+            "reto": {
+              "id": "fruto",
+              "nombre": "Fruto",
+              "pregunta": "¿Dónde colocarías fruto?",
+              "respuesta": "fruto",
+              "pista": "Busca la forma redonda que protege las semillas.",
+              "frases": {
+                "raiz": "El fruto cuelga de una ramita y guarda las semillas dentro.",
+                "tallo": "El fruto cuelga de una ramita y guarda las semillas dentro.",
+                "hoja": "El fruto cuelga de una ramita y guarda las semillas dentro.",
+                "flor": "El fruto cuelga de una ramita y guarda las semillas dentro.",
+                "fruto": "Sí. El fruto protege las semillas y ayuda a que lleguen a otros lugares."
+              }
+            },
+            "funcion": "El fruto protege las semillas y ayuda a que lleguen a otros lugares.",
+            "curiosidad": "Un tomate es un fruto: dentro puedes encontrar sus semillas.",
+            "preguntaFuncion": {
+              "enunciado": "¿Para qué sirve fruto?",
+              "opciones": [
+                {
+                  "id": "agua",
+                  "nombre": "Tomar agua del suelo y sujetar la planta"
+                },
+                {
+                  "id": "sostener",
+                  "nombre": "Sostener partes de la planta y transportar sustancias"
+                },
+                {
+                  "id": "semillas",
+                  "nombre": "Proteger las semillas y ayudar a dispersarlas"
+                }
+              ],
+              "respuesta": "semillas",
+              "frases": {
+                "agua": "Esa tarea corresponde a raíz. Piensa en lo que hace fruto.",
+                "sostener": "Esa tarea corresponde a tallo. Piensa en lo que hace fruto.",
+                "semillas": "El fruto protege las semillas y ayuda a que lleguen a otros lugares."
+              }
+            }
+          }
+        ],
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "partes": [
+              "raiz",
+              "tallo",
+              "hoja"
+            ],
+            "preguntaFunciones": false
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "partes": [
+              "raiz",
+              "tallo",
+              "hoja",
+              "flor",
+              "fruto"
+            ],
+            "preguntaFunciones": false
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "partes": [
+              "raiz",
+              "tallo",
+              "hoja",
+              "flor",
+              "fruto"
+            ],
+            "preguntaFunciones": true
+          }
+        ]
       }
     }
   ]

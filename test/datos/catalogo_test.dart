@@ -46,7 +46,9 @@ void main() {
     final segunda = resolverLugar(reto: camello, eleccion: 'polo', intento: 2);
     expect(primera.frase, contains('frío'));
     expect(primera.frase, isNot(contains('poca agua')));
+    expect(primera.gesto, 'pensando');
     expect(segunda.frase, contains('poca agua'));
+    expect(segunda.gesto, 'pista');
     expect(primera.acierto, isFalse);
   });
 
@@ -66,6 +68,7 @@ void main() {
     );
     expect(brote.acierto, isTrue);
     expect(brote.estado, 'brote');
+    expect(brote.gesto, 'feliz');
   });
 
   test('la vida no suelta el orden si faltan pasos', () {

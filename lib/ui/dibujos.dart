@@ -1,31 +1,50 @@
 import 'package:flutter/material.dart';
 
-// Dibujos nuestros, hechos con formas. No salen de ningún libro.
+// Componentes visuales de la app: medallas circulares/redondeadas para que
+// los stickers luzcan integrados sin bordes cuadrados, más paisajes vectoriales.
 
-class Escena extends StatelessWidget {
-  const Escena({required this.child, required this.cielo, required this.suelo, super.key});
+class DibujoMascota extends StatelessWidget {
+  const DibujoMascota({this.gesto = 'hola', this.tamano = 56, super.key});
 
-  final Widget child;
-  final Color cielo;
-  final Color suelo;
+  final String gesto;
+  final double tamano;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(18),
-      child: SizedBox(
-        height: 150,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Expanded(flex: 3, child: ColoredBox(color: cielo)),
-                Expanded(child: ColoredBox(color: suelo)),
-              ],
-            ),
-            Align(alignment: const Alignment(0, 0.15), child: child),
-          ],
+    final nombre = switch (gesto) {
+      'feliz' => 'brote_feliz',
+      'pista' => 'brote_pista',
+      'pensando' => 'brote_pensando',
+      _ => 'brote_hola',
+    };
+    final colorBorde = switch (gesto) {
+      'feliz' => const Color(0xFF2ECC71),
+      'pista' => const Color(0xFFFF9F1C),
+      'pensando' => const Color(0xFFFFB703),
+      _ => const Color(0xFF2ECC71),
+    };
+    return Container(
+      width: tamano,
+      height: tamano,
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: colorBorde, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: colorBorde.withValues(alpha: 0.28),
+            offset: const Offset(0, 3),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/imagenes/$nombre.png',
+          cacheWidth: 180,
+          fit: BoxFit.cover,
+          errorBuilder: (_, _, _) => const _BroteRespaldo(),
         ),
       ),
     );
@@ -39,7 +58,7 @@ class Criatura extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = switch (id) {
+    final respaldo = switch (id) {
       'delfin' => const _Delfin(),
       'pinguino' => const _Pinguino(),
       'oso' => const _Oso(),
@@ -48,43 +67,61 @@ class Criatura extends StatelessWidget {
       'corazon' => const _Corazon(),
       _ => const _Camello(),
     };
-    return SizedBox(width: 120, height: 84, child: Center(child: child));
+    return Container(
+      width: 88,
+      height: 88,
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xFFD0C9B8),
+            offset: Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Image.asset(
+          'assets/imagenes/$id.png',
+          cacheWidth: 240,
+          fit: BoxFit.contain,
+          errorBuilder: (_, _, _) => Center(child: respaldo),
+        ),
+      ),
+    );
   }
 }
 
-class DibujoAnimal extends StatelessWidget {
-  const DibujoAnimal({required this.id, super.key});
+class IconoSitio extends StatelessWidget {
+  const IconoSitio({required this.id, super.key});
 
   final String id;
 
   @override
   Widget build(BuildContext context) {
-    switch (id) {
-      case 'delfin':
-        return const Escena(
-          cielo: Color(0xFFB9DFF5),
-          suelo: Color(0xFF2E6B93),
-          child: _Delfin(),
-        );
-      case 'pinguino':
-        return const Escena(
-          cielo: Color(0xFFD7E7F2),
-          suelo: Color(0xFFF4F7FB),
-          child: _Pinguino(),
-        );
-      case 'oso':
-        return const Escena(
-          cielo: Color(0xFFC9E4C4),
-          suelo: Color(0xFF6B4A2B),
-          child: _Oso(),
-        );
-      default:
-        return const Escena(
-          cielo: Color(0xFFF3D7A1),
-          suelo: Color(0xFFE0B15A),
-          child: _Camello(),
-        );
-    }
+    final datos = switch (id) {
+      'desierto' => (Icons.wb_sunny_rounded, const Color(0xFFD97706)),
+      'mar' => (Icons.waves_rounded, const Color(0xFF0284C7)),
+      'polo' => (Icons.ac_unit_rounded, const Color(0xFF0369A1)),
+      'bosque' => (Icons.park_rounded, const Color(0xFF15803D)),
+      'cabeza' => (Icons.psychology_rounded, const Color(0xFF7C3AED)),
+      'pecho' => (Icons.favorite_rounded, const Color(0xFFE11D48)),
+      'barriga' => (Icons.restaurant_rounded, const Color(0xFFD97706)),
+      _ => (Icons.explore_rounded, const Color(0xFF15803D)),
+    };
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.75),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(datos.$1, color: datos.$2, size: 24),
+    );
   }
 }
 
@@ -95,11 +132,17 @@ class DibujoSemilla extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final archivo = switch (estado) {
+      'brote' => 'semilla_brote',
+      'palida' => 'semilla_palida',
+      'ahogada' => 'semilla_ahogada',
+      _ => 'semilla_seca',
+    };
     final altura = switch (estado) {
-      'brote' => 78.0,
-      'palida' => 58.0,
-      'ahogada' => 26.0,
-      _ => 14.0,
+      'brote' => 64.0,
+      'palida' => 48.0,
+      'ahogada' => 22.0,
+      _ => 12.0,
     };
     final color = switch (estado) {
       'brote' => const Color(0xFF2F7D32),
@@ -107,20 +150,43 @@ class DibujoSemilla extends StatelessWidget {
       'ahogada' => const Color(0xFF6E8F62),
       _ => const Color(0xFF8D6A43),
     };
-    final agua = estado == 'ahogada';
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        height: 150,
-        alignment: Alignment.bottomCenter,
-        color: agua ? const Color(0xFF8EC8E8) : const Color(0xFFE7F4EA),
-        child: Container(
-          width: 12,
-          height: altura,
-          margin: const EdgeInsets.only(bottom: 28),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(8),
+    final colorBorde = switch (estado) {
+      'brote' => const Color(0xFF2ECC71),
+      'ahogada' => const Color(0xFF38BDF8),
+      'palida' => const Color(0xFFFBBF24),
+      _ => const Color(0xFFD6CFC0),
+    };
+    return Container(
+      height: 112,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colorBorde, width: 2.5),
+        boxShadow: [
+          BoxShadow(
+            color: colorBorde.withValues(alpha: 0.35),
+            offset: const Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(17),
+        child: Image.asset(
+          'assets/imagenes/$archivo.png',
+          cacheWidth: 300,
+          fit: BoxFit.contain,
+          errorBuilder: (_, _, _) => Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: 12,
+              height: altura,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
           ),
         ),
       ),
@@ -128,22 +194,14 @@ class DibujoSemilla extends StatelessWidget {
   }
 }
 
-class DibujoPieza extends StatelessWidget {
-  const DibujoPieza({required this.id, super.key});
-
-  final String id;
+class _BroteRespaldo extends StatelessWidget {
+  const _BroteRespaldo();
 
   @override
   Widget build(BuildContext context) {
-    final child = switch (id) {
-      'pulmones' => const _DosFormas(color: Color(0xFFE38B8B)),
-      'estomago' => const _Bolsa(),
-      _ => const _Corazon(),
-    };
-    return Escena(
-      cielo: const Color(0xFFE7F4F8),
-      suelo: const Color(0xFFF6E7D8),
-      child: child,
+    return const ColoredBox(
+      color: Color(0xFF2ECC71),
+      child: Center(child: Icon(Icons.eco, color: Colors.white)),
     );
   }
 }
@@ -154,14 +212,13 @@ class _Camello extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 120,
-      height: 70,
+      width: 72,
+      height: 48,
       child: Stack(
         children: [
-          Positioned(left: 18, bottom: 8, child: _Ovalo(width: 78, height: 36, color: Color(0xFFC4843C))),
-          Positioned(left: 36, bottom: 28, child: _Ovalo(width: 28, height: 22, color: Color(0xFFA86B2C))),
-          Positioned(left: 78, bottom: 30, child: _Ovalo(width: 16, height: 28, color: Color(0xFFC4843C))),
-          Positioned(left: 86, bottom: 50, child: _Ovalo(width: 18, height: 14, color: Color(0xFFC4843C))),
+          Positioned(left: 8, bottom: 4, child: _Ovalo(width: 48, height: 22, color: Color(0xFFC4843C))),
+          Positioned(left: 20, bottom: 18, child: _Ovalo(width: 18, height: 14, color: Color(0xFFA86B2C))),
+          Positioned(left: 48, bottom: 18, child: _Ovalo(width: 10, height: 18, color: Color(0xFFC4843C))),
         ],
       ),
     );
@@ -173,7 +230,7 @@ class _Delfin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _Ovalo(width: 96, height: 28, color: Color(0xFF4F7C8A));
+    return const _Ovalo(width: 60, height: 20, color: Color(0xFF4F7C8A));
   }
 }
 
@@ -183,13 +240,13 @@ class _Pinguino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 40,
-      height: 70,
+      width: 32,
+      height: 50,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          _Ovalo(width: 36, height: 58, color: Color(0xFF1E2A32)),
-          Positioned(bottom: 10, child: _Ovalo(width: 18, height: 36, color: Color(0xFFF4F7FB))),
+          _Ovalo(width: 28, height: 44, color: Color(0xFF1E2A32)),
+          Positioned(bottom: 6, child: _Ovalo(width: 14, height: 26, color: Color(0xFFF4F7FB))),
         ],
       ),
     );
@@ -202,12 +259,12 @@ class _Oso extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 90,
-      height: 60,
+      width: 64,
+      height: 44,
       child: Stack(
         children: [
-          Positioned(left: 10, bottom: 0, child: _Ovalo(width: 64, height: 36, color: Color(0xFF7A4E2D))),
-          Positioned(left: 58, bottom: 22, child: _Ovalo(width: 26, height: 26, color: Color(0xFF7A4E2D))),
+          Positioned(left: 6, bottom: 0, child: _Ovalo(width: 44, height: 26, color: Color(0xFF7A4E2D))),
+          Positioned(left: 40, bottom: 16, child: _Ovalo(width: 18, height: 18, color: Color(0xFF7A4E2D))),
         ],
       ),
     );
@@ -219,7 +276,7 @@ class _Corazon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Icon(Icons.favorite, color: Color(0xFFC0392B), size: 72);
+    return const Icon(Icons.favorite, color: Color(0xFFC0392B), size: 48);
   }
 }
 
@@ -233,9 +290,9 @@ class _DosFormas extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _Ovalo(width: 36, height: 56, color: color),
-        const SizedBox(width: 8),
-        _Ovalo(width: 36, height: 56, color: color),
+        _Ovalo(width: 22, height: 38, color: color),
+        const SizedBox(width: 6),
+        _Ovalo(width: 22, height: 38, color: color),
       ],
     );
   }
@@ -246,7 +303,7 @@ class _Bolsa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _Ovalo(width: 54, height: 64, color: Color(0xFFE0A36A));
+    return const _Ovalo(width: 38, height: 44, color: Color(0xFFE0A36A));
   }
 }
 

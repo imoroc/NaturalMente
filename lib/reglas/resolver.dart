@@ -5,11 +5,13 @@ class Resultado {
     required this.acierto,
     required this.frase,
     required this.estado,
+    this.gesto = 'pensando',
   });
 
   final bool acierto;
   final String frase;
   final String estado;
+  final String gesto;
 }
 
 Resultado resolverLugar({
@@ -23,9 +25,19 @@ Resultado resolverLugar({
   }
   final acierto = eleccion == reto.respuesta;
   if (!acierto && intento >= 2) {
-    return Resultado(acierto: false, frase: '$frase ${reto.pista}', estado: eleccion);
+    return Resultado(
+      acierto: false,
+      frase: '$frase ${reto.pista}',
+      estado: eleccion,
+      gesto: 'pista',
+    );
   }
-  return Resultado(acierto: acierto, frase: frase, estado: eleccion);
+  return Resultado(
+    acierto: acierto,
+    frase: frase,
+    estado: eleccion,
+    gesto: acierto ? 'feliz' : 'pensando',
+  );
 }
 
 Resultado resolverControles({
@@ -40,7 +52,18 @@ Resultado resolverControles({
   if (frase == null) {
     throw ArgumentError('A ${actividad.id} le falta la frase de $estado.');
   }
-  return Resultado(acierto: estado == 'brote', frase: frase, estado: estado);
+  final acierto = estado == 'brote';
+  final gesto = switch (estado) {
+    'brote' => 'feliz',
+    'falta' => 'hola',
+    _ => 'pista',
+  };
+  return Resultado(
+    acierto: acierto,
+    frase: frase,
+    estado: estado,
+    gesto: gesto,
+  );
 }
 
 String _estadoSemilla(String? agua, String? luz, String? suelo) {
@@ -62,20 +85,39 @@ Resultado resolverOrden({
       orden.toSet().length == respuesta.length &&
       orden.toSet().containsAll(respuesta);
   if (!mismoContenido) {
+    final frase = actividad.frases['incompleto'];
+    if (frase == null) {
+      throw ArgumentError('A ${actividad.id} le falta la frase incompleto.');
+    }
     return Resultado(
       acierto: false,
-      frase: actividad.frases['incompleto']!,
+      frase: frase,
       estado: 'incompleto',
+      gesto: 'pensando',
     );
   }
   for (var i = 0; i < respuesta.length; i++) {
     if (orden[i] != respuesta[i]) {
+      final frase = actividad.frases['mal$i'];
+      if (frase == null) {
+        throw ArgumentError('A ${actividad.id} le falta la frase mal$i.');
+      }
       return Resultado(
         acierto: false,
-        frase: actividad.frases['mal$i']!,
+        frase: frase,
         estado: 'mal',
+        gesto: 'pista',
       );
     }
   }
-  return Resultado(acierto: true, frase: actividad.frases['bien']!, estado: 'bien');
+  final fraseBien = actividad.frases['bien'];
+  if (fraseBien == null) {
+    throw ArgumentError('A ${actividad.id} le falta la frase bien.');
+  }
+  return Resultado(
+    acierto: true,
+    frase: fraseBien,
+    estado: 'bien',
+    gesto: 'feliz',
+  );
 }

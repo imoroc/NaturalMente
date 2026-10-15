@@ -8,8 +8,6 @@ import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/main.dart';
 import 'package:naturalmente/ui/herbario.dart';
-import 'package:naturalmente/ui/componentes_juego.dart';
-import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -96,15 +94,10 @@ void main() {
     await tocar(tester, 'pieza-raiz');
     await tocar(tester, 'destino-hoja');
     expect(find.textContaining('bajo el suelo'), findsOneWidget);
-    TarjetaJuego destino(String id) => tester.widget<TarjetaJuego>(
-      find
-          .ancestor(
-            of: find.byKey(Key('destino-$id')),
-            matching: find.byType(TarjetaJuego),
-          )
-          .first,
+    expect(
+      find.bySemanticsLabel('Zona Hoja. Prueba otro sitio'),
+      findsOneWidget,
     );
-    expect(destino('hoja').borde, EstilosJuego.fallo);
     expect(find.byIcon(Icons.replay_rounded), findsOneWidget);
     await tocar(tester, 'pieza-tallo');
     expect(find.byIcon(Icons.replay_rounded), findsNothing);
@@ -112,7 +105,10 @@ void main() {
     await tocar(tester, 'destino-tallo');
     expect(find.textContaining('Busca la parte'), findsOneWidget);
     await tocar(tester, 'destino-raiz');
-    expect(destino('raiz').borde, EstilosJuego.acierto);
+    expect(
+      find.bySemanticsLabel('Zona Raíz. Colocada. Abrir ficha'),
+      findsOneWidget,
+    );
     await tocar(tester, 'ficha-raiz');
     expect(find.textContaining('zanahoria'), findsOneWidget);
     await tocar(tester, 'cerrar-ficha');
@@ -158,6 +154,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Partes colocadas: 1 de 5'), findsOneWidget);
     expect(find.byKey(const Key('pieza-flor')), findsNothing);
+  });
+
+  testWidgets('los huecos caben en móvil y no se pisan entre sí', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(320, 568));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await abrir(tester);
+    await tocar(tester, 'nivel-medio');
+    final zonas = [
+      for (final id in ['raiz', 'tallo', 'hoja', 'flor', 'fruto'])
+        tester.getRect(find.byKey(Key('destino-$id'))),
+    ];
+    for (var i = 0; i < zonas.length; i++) {
+      expect(zonas[i].width, greaterThanOrEqualTo(48));
+      expect(zonas[i].height, greaterThanOrEqualTo(48));
+      expect(zonas[i].left, greaterThanOrEqualTo(16));
+      expect(zonas[i].right, lessThanOrEqualTo(304));
+      for (var j = i + 1; j < zonas.length; j++) {
+        expect(zonas[i].overlaps(zonas[j]), isFalse);
+      }
+    }
   });
 
   testWidgets(

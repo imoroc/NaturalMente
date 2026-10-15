@@ -314,25 +314,22 @@ class _HerbarioPageState extends State<HerbarioPage> {
         ),
         const SizedBox(height: 16),
         Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: math.max(300, math.min(440, ancho)),
-              child: PlantaHerbario(
-                nombres: {
-                  for (final id in nivel.partes) id: _herbario.parte(id).nombre,
-                },
-                colocadas: partida.colocadas,
-                seleccionada: partida.seleccionada,
-                ultimoDestino: partida.ultimoDestino,
-                falloColocacion: partida.falloColocacion,
-                consultables: {
-                  for (final id in nivel.partes)
-                    if (partida.puedeConsultar(id)) id,
-                },
-                onColocar: _colocar,
-                onConsultar: _consultar,
-              ),
+          child: SizedBox(
+            width: math.min(440, ancho),
+            child: PlantaHerbario(
+              nombres: {
+                for (final id in nivel.partes) id: _herbario.parte(id).nombre,
+              },
+              colocadas: partida.colocadas,
+              seleccionada: partida.seleccionada,
+              ultimoDestino: partida.ultimoDestino,
+              falloColocacion: partida.falloColocacion,
+              consultables: {
+                for (final id in nivel.partes)
+                  if (partida.puedeConsultar(id)) id,
+              },
+              onColocar: _colocar,
+              onConsultar: _consultar,
             ),
           ),
         ),
@@ -483,7 +480,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
             child: Row(
               children: [
                 if (!rotulo) ...[
-                  IconoParte(id: parte.id, size: 32),
+                  IconoParte(id: parte.id, size: 48),
                   const SizedBox(width: 8),
                 ],
                 Expanded(
@@ -517,7 +514,33 @@ class _HerbarioPageState extends State<HerbarioPage> {
     );
     return Draggable<String>(
       data: parte.id,
-      feedback: Material(color: Colors.transparent, child: tarjeta()),
+      dragAnchorStrategy: rotulo
+          ? childDragAnchorStrategy
+          : pointerDragAnchorStrategy,
+      onDragStarted: () => setState(() => partida.seleccionar(parte.id)),
+      feedback: Material(
+        color: Colors.transparent,
+        child: rotulo
+            ? tarjeta()
+            : Transform.translate(
+                offset: const Offset(-64, -64),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .94),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x25344E41),
+                        blurRadius: 16,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: IconoParte(id: parte.id, size: 104),
+                ),
+              ),
+      ),
       childWhenDragging: Opacity(opacity: .35, child: tarjeta()),
       child: Semantics(
         selected: seleccionada,

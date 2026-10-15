@@ -27,3 +27,6 @@ ios/Pods/
 *.p8
 *.p12
 *.mobileprovision
+
+# Lanzador local para las quick actions de T3 Code.
+/run-android.local.sh

@@ -155,3 +155,16 @@ Flutter 3.47.7 y Dart 3.13.5, preparados fuera del repositorio:
 - Validar arrastre y lectura en Android real: `adb devices` no mostró dispositivos conectados.
 - Comprobar iOS en un equipo y dispositivo compatibles.
 - Revisar y aprobar la PR de continuación antes de integrar en `main`.
+
+## Revisión de la planta y del puzzle — 14 de octubre de 2026
+
+A petición de David, se revisó la ilustración para que las piezas montadas formen una planta más natural:
+
+- Dibujo vectorial propio inspirado en una tomatera: tallo curvo con ramificaciones, hojas dentadas con nervaduras, flor amarilla de cinco pétalos, fruto con cáliz y raíces que se afinan y ramifican bajo tierra.
+- Una misma ilustración proporciona las piezas, las siluetas de sus huecos y el dibujo montado. Se conserva el detalle al ampliar sin incorporar imágenes ni dependencias.
+- Los destinos dejan de ser tarjetas que ocultan el dibujo. Las zonas transparentes conservan toques, teclado, arrastre y fichas; las marcas pequeñas quedan junto a cada parte. Fallo y arrastre resaltan la silueta y muestran un icono.
+- Fondo suave y sección de suelo con textura estable. En Fácil, flor y fruto sirven de referencia; las tres piezas jugables siguen siendo raíz, tallo y hoja.
+- Piezas de la bandeja con dibujos mayores; durante el arrastre de Fácil/Medio aparece la pieza ampliada centrada en el puntero. Difícil conserva los rótulos.
+- El tablero se adapta al ancho disponible sin desplazamiento horizontal. A 320 píxeles, todos los destinos miden al menos 48 × 48 y sus áreas no se solapan.
+
+Validación: `flutter analyze` sin incidencias; 26 pruebas superadas, incluyendo la nueva comprobación de zonas táctiles y las existentes de arrastre, funciones, fichas, persistencia y texto ampliado. Compilación web correcta. Recorrido por toques de Medio hasta completar y guardar en la vista previa a 390 × 844 y a 1024 × 1100. Capturas de entrada y planta montada guardadas fuera del repositorio en `/home/david/.t3/userdata/browser-artifacts/`. La comprobación de arrastre corresponde a las pruebas de widgets; sigue pendiente comprobarlo en un dispositivo físico.

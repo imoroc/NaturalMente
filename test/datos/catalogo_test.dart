@@ -54,7 +54,7 @@ void main() {
     expect(primera.acierto, isFalse);
   });
 
-  test('la judía brota solo con agua justa, luz y tierra de huerto', () {
+  test('la judía progresa día a día por varios caminos (tierra, algodón, arena y oscuridad)', () {
     final juego = catalogo.actividades.firstWhere((a) => a.id == 'germinacion');
     expect(
       resolverControles(actividad: juego, valores: {'agua': 'mucha', 'luz': 'justa', 'suelo': 'huerto'}).estado,
@@ -70,7 +70,100 @@ void main() {
     );
     expect(brote.acierto, isTrue);
     expect(brote.estado, 'brote');
-    expect(brote.gesto, 'feliz');
+
+    final broteAlgodon = resolverControles(
+      actividad: juego,
+      valores: {'agua': 'justa', 'luz': 'justa', 'suelo': 'algodon'},
+    );
+    expect(broteAlgodon.acierto, isTrue);
+    expect(broteAlgodon.estado, 'broteAlgodon');
+
+    final facil = juego.nivelesLugar[0];
+    final medio = juego.nivelesLugar[1];
+    final dificil = juego.nivelesLugar[2];
+    expect(facil.controles.length, 3);
+    expect(medio.controles.length, 3);
+    expect(dificil.controles.length, 4);
+    expect(dificil.controles.last.id, 'temperatura');
+
+    // En arena: en Día 1 saca la raíz (pasa a etapa 2), pero en Día 3 se queda en etapa 2 (sedienta)
+    final arenaDia1 = resolverPasoGerminacion(
+      actividad: juego,
+      nivel: medio,
+      etapaActual: 1,
+      valores: {'agua': 'justa', 'luz': 'justa', 'suelo': 'arena'},
+    );
+    expect(arenaDia1.avanzaEtapa, isTrue);
+    expect(arenaDia1.etapaAlcanzada, 2);
+
+    final arenaDia3 = resolverPasoGerminacion(
+      actividad: juego,
+      nivel: medio,
+      etapaActual: 2,
+      valores: {'agua': 'justa', 'luz': 'justa', 'suelo': 'arena'},
+    );
+    expect(arenaDia3.avanzaEtapa, isFalse);
+    expect(arenaDia3.etapaAlcanzada, 2);
+    expect(arenaDia3.estado, 'sedienta');
+
+    // En algodón húmedo con sol: avanza Día 1 -> Día 3 -> Día 5 -> Día 7 (broteAlgodon)
+    final algodonDia7 = resolverPasoGerminacion(
+      actividad: juego,
+      nivel: facil,
+      etapaActual: 3,
+      valores: {'agua': 'justa', 'luz': 'justa', 'suelo': 'algodon'},
+    );
+    expect(algodonDia7.etapaAlcanzada, 4);
+    expect(algodonDia7.experimentoCompletado, isTrue);
+    expect(algodonDia7.estado, 'broteAlgodon');
+
+    expect(
+      resolverControles(
+        actividad: juego,
+        nivel: dificil,
+        valores: {'agua': 'justa', 'luz': 'justa', 'suelo': 'huerto'},
+      ).estado,
+      'falta',
+    );
+    expect(
+      resolverControles(
+        actividad: juego,
+        nivel: dificil,
+        valores: {
+          'agua': 'justa',
+          'luz': 'justa',
+          'suelo': 'huerto',
+          'temperatura': 'fria',
+        },
+      ).estado,
+      'helada',
+    );
+    expect(
+      resolverControles(
+        actividad: juego,
+        nivel: dificil,
+        valores: {
+          'agua': 'justa',
+          'luz': 'excesiva',
+          'suelo': 'huerto',
+          'temperatura': 'templada',
+        },
+      ).estado,
+      'achicharrada',
+    );
+    expect(
+      resolverControles(
+        actividad: juego,
+        nivel: dificil,
+        valores: {
+          'agua': 'justa',
+          'luz': 'justa',
+          'suelo': 'huerto',
+          'temperatura': 'templada',
+        },
+      ).acierto,
+      isTrue,
+    );
   });
 
   test('la vida no suelta el orden si faltan pasos', () {
@@ -157,30 +250,32 @@ void main() {
     }
   });
 
-  test('el álbum tiene 22 cromos y se desbloquean progresivamente en fácil, medio y difícil', () async {
-    expect(catalogo.fichas.length, 22);
+  test('el álbum tiene 24 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 24);
     expect(catalogo.fichasDe('reserva').length, 7);
-    expect(catalogo.fichasDe('invernadero').length, 7);
-    expect(catalogo.fichasDe('cuerpo').length, 8);
+    expect(catalogo.fichasDe('invernadero').length, 8);
+    expect(catalogo.fichasDe('cuerpo').length, 9);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
     final hogar = catalogo.actividades.firstWhere((a) => a.id == 'hogar');
     final herbario = catalogo.actividades.firstWhere((a) => a.id == 'herbario');
+    final germinacion = catalogo.actividades.firstWhere((a) => a.id == 'germinacion');
+    final vida = catalogo.actividades.firstWhere((a) => a.id == 'vida');
 
     expect(progreso.fichaDesbloqueada('camello'), isFalse);
     await progreso.marcarNivelLugar(hogar, 'facil');
     expect(progreso.fichaDesbloqueada('camello'), isTrue);
     expect(progreso.fichaDesbloqueada('rana'), isFalse);
-    expect(progreso.fichaDesbloqueada('insectos'), isFalse);
+    expect(progreso.fichaDesbloqueada('pulpo'), isFalse);
 
     await progreso.marcarNivelLugar(hogar, 'medio');
     expect(progreso.fichaDesbloqueada('rana'), isTrue);
     expect(progreso.fichaDesbloqueada('tucan'), isTrue);
-    expect(progreso.fichaDesbloqueada('insectos'), isFalse);
+    expect(progreso.fichaDesbloqueada('pulpo'), isFalse);
 
     await progreso.marcarNivelLugar(hogar, 'dificil');
-    expect(progreso.fichaDesbloqueada('insectos'), isTrue);
+    expect(progreso.fichaDesbloqueada('pulpo'), isTrue);
 
     await progreso.marcarNivelHerbario(herbario, 'facil');
     expect(progreso.fichaDesbloqueada('raiz'), isTrue);
@@ -193,6 +288,46 @@ void main() {
 
     await progreso.marcarNivelHerbario(herbario, 'dificil');
     expect(progreso.fichaDesbloqueada('fruto'), isTrue);
+
+    final piezas = catalogo.actividades.firstWhere((a) => a.id == 'piezas');
+
+    await progreso.marcarNivelLugar(germinacion, 'facil');
+    expect(progreso.fichaDesbloqueada('semilla'), isTrue);
+    expect(progreso.fichaDesbloqueada('huerto'), isFalse);
+    expect(progreso.fichaDesbloqueada('fotosintesis'), isFalse);
+
+    await progreso.marcarNivelLugar(germinacion, 'medio');
+    expect(progreso.fichaDesbloqueada('huerto'), isTrue);
+    expect(progreso.fichaDesbloqueada('fotosintesis'), isFalse);
+
+    await progreso.marcarNivelLugar(germinacion, 'dificil');
+    expect(progreso.fichaDesbloqueada('fotosintesis'), isTrue);
+
+    await progreso.marcarNivelLugar(piezas, 'facil');
+    expect(progreso.fichaDesbloqueada('corazon'), isTrue);
+    expect(progreso.fichaDesbloqueada('cerebro'), isTrue);
+    expect(progreso.fichaDesbloqueada('pulmones'), isFalse);
+    expect(progreso.fichaDesbloqueada('intestinos'), isFalse);
+
+    await progreso.marcarNivelLugar(piezas, 'medio');
+    expect(progreso.fichaDesbloqueada('pulmones'), isTrue);
+    expect(progreso.fichaDesbloqueada('esqueleto'), isTrue);
+    expect(progreso.fichaDesbloqueada('intestinos'), isFalse);
+
+    await progreso.marcarNivelLugar(piezas, 'dificil');
+    expect(progreso.fichaDesbloqueada('intestinos'), isTrue);
+
+    await progreso.marcarNivelLugar(vida, 'facil');
+    expect(progreso.fichaDesbloqueada('una-vida'), isTrue);
+    expect(progreso.fichaDesbloqueada('etapas-vida'), isFalse);
+    expect(progreso.fichaDesbloqueada('celula'), isFalse);
+
+    await progreso.marcarNivelLugar(vida, 'medio');
+    expect(progreso.fichaDesbloqueada('etapas-vida'), isTrue);
+    expect(progreso.fichaDesbloqueada('celula'), isFalse);
+
+    await progreso.marcarNivelLugar(vida, 'dificil');
+    expect(progreso.fichaDesbloqueada('celula'), isTrue);
   });
 
   test('ningún texto del catálogo usa palabras prohibidas ni temas fuera de alcance', () {

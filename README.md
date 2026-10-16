@@ -1,106 +1,229 @@
+<div align="center">
+
+<img src="assets/imagenes/brote_hola.png" alt="Natu, guía de NaturalMente" width="110" />
+
 # NaturalMente
 
-App de animales, plantas y cuerpo humano para niños de primaria. Un código en Flutter, para Android y para iOS. No hay servidor ni cuentas.
+**Ciencias de la Naturaleza interactivas para Educación Primaria (1.º a 6.º curso)**
 
-Si no has visto el proyecto, lee primero [docs/contexto.md](docs/contexto.md). Ahí está la asignatura, el material de ciencias y lo que va a hacer la app. Las carpetas y el reparto están en [docs/organizacion.md](docs/organizacion.md). Las decisiones de alcance (MVP, niveles de dificultad, qué queda fuera) están en [docs/decisiones.md](docs/decisiones.md). Las ideas de juegos, por zona y nivel, están en [docs/juegos.md](docs/juegos.md).
+[![Flutter](https://img.shields.io/badge/Flutter-Stable-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.13%2B-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![Plataformas](https://img.shields.io/badge/Plataformas-Android%20%7C%20iOS%20%7C%20Web-2E7D32)](#comandos-de-desarrollo-y-compilación)
+[![Modo](https://img.shields.io/badge/Arquitectura-100%25%20Offline%20%C2%B7%20Sin%20cuentas-15803D)](#arquitectura-del-proyecto)
 
-Ya hay un mapa de tres zonas, trece fichas y cinco actividades: hábitat de animales, germinación, piezas del cuerpo, comienzo de una vida y Herbario desmontable. El progreso y la medalla se guardan en el dispositivo. Herbario tiene Fácil, Medio y Difícil; los otros juegos todavía muestran un curso orientativo sin selector. Su plan y el estado de validación están en [docs/plan-herbario.md](docs/plan-herbario.md).
+<p align="center">
+  <img src="assets/imagenes/brote_feliz.png" alt="Natu feliz" width="64" />
+  <img src="assets/imagenes/camello.png" alt="Camello" width="64" />
+  <img src="assets/imagenes/delfin.png" alt="Delfín" width="64" />
+  <img src="assets/imagenes/pinguino.png" alt="Pingüino" width="64" />
+  <img src="assets/imagenes/oso.png" alt="Oso pardo" width="64" />
+  <img src="assets/imagenes/rana.png" alt="Rana" width="64" />
+  <img src="assets/imagenes/tucan.png" alt="Tucán" width="64" />
+  <img src="assets/imagenes/brote_pista.png" alt="Natu dando una pista" width="64" />
+</p>
 
-## Qué hay que tener instalado
+</div>
 
-No hay que arrancar ninguna base de datos ni ningún backend. Solo Flutter y, según dónde la quieras ver, Chrome o un emulador de Android.
+---
 
-1. Git.
-2. Flutter del canal stable (en el ordenador donde se montó el repo está en `C:\Users\'usuario'\flutter`; cada uno puede instalarlo en otra ruta). La guía está en https://docs.flutter.dev/install/windows
-3. La carpeta `bin` de Flutter en el PATH del usuario. En PowerShell, para la sesión actual:
+## Descripción general
 
-```powershell
-$env:Path = "C:\Users\'usuario'\flutter\bin;" + $env:Path
+**NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
+
+Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **5 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **15 misiones**) y coleccionan **24 cromos** con curiosidades científicas en su álbum personal.
+
+### Principios de diseño pedagógico y técnico
+
+- **Aprendizaje sin frustración**: cuando el alumno se equivoca, la app nunca utiliza palabras punitivas (*«error»*, *«incorrecto»*, *«has fallado»*, *«mal hecho»*). En el primer intento fallido ofrece una observación razonada sobre lo elegido; en el segundo intento aporta una pista directa para guiar hacia la respuesta.
+- **Progresión real por ciclo escolar**:
+  - **Fácil (1.º-2.º)**: identificación visual directa, vocabulario cercano y mecánicas accesibles.
+  - **Medio (3.º-4.º)**: ampliación de elementos y preguntas de comprensión tras resolver cada reto.
+  - **Difícil (5.º-6.º)**: vocabulario científico de tercer ciclo (vertebrados e invertebrados, fotosíntesis, aparatos y sistemas, cigoto y multiplicación celular) y retos de razonamiento.
+- **Catálogo desacoplado de la interfaz**: todo el contenido didáctico, pistas, curiosidades y preguntas reside en [`content/catalog.json`](content/catalog.json), separado de las reglas de evaluación (`lib/reglas/`) y de los componentes visuales (`lib/ui/`).
+- **Ilustración vectorial e interactividad propia**: escenarios, laboratorio de germinación, modelo anatómico con colocación por arrastre o toque (*drag & drop* + *tap*) y visor de etapas de la vida renderizados mediante `CustomPainter` en Flutter.
+
+---
+
+## Mundos, actividades y niveles
+
+| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (24) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :---: |
+| **La reserva**<br>*(Animales)* | **Cada uno a su hogar** (`hogar`) | Clasificación de animales en su hábitat y adaptaciones al medio | 4 hábitats y 4 animales (*camello, delfín, pingüino, oso*) | 6 hábitats (+ *selva, río*) y 6 animales (+ *rana, tucán*) con pregunta de adaptación | 6 ecosistemas y 7 animales (+ *pulpo*, invertebrado marino) con preguntas de clasificación científica | 7 |
+| **El invernadero**<br>*(Plantas)* | **Haz crecer la semilla** (`germinacion`) | Simulación experimental día a día (Días 1, 3, 5 y 7) en bote transparente | 3 variables (*sustrato, agua, luz*) hasta lograr el brote en tierra o algodón | Experimento de 4 etapas + pregunta final sobre el papel de las sales minerales del suelo | 4 variables (+ *temperatura en °C*) + pregunta científica sobre fotosíntesis y germinación | 3 |
+| **El invernadero**<br>*(Plantas)* | **Herbario desmontable** (`herbario`) | Montaje interactivo de las partes de la planta por arrastre o toque | 3 partes (*raíz, tallo, hoja*) sobre el modelo botánico | 5 partes (+ *flor, fruto*) con sus funciones y curiosidades | 5 partes + cuestionario sobre la función de cada órgano vegetal | 5 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **Cada pieza en su sitio** (`piezas`) | Atlas anatómico interactivo: arrastrar o tocar órganos hacia su cavidad | 3 órganos en 3 zonas: *cerebro* (Cabeza), *corazón* (Pecho) y *estómago* (Abdomen) | 5 piezas en 4 zonas (+ *pulmones* en Pecho y *músculos y huesos* en Extremidades) + reto de función | 6 piezas (+ *intestinos* en Abdomen) + preguntas sobre aparatos y sistemas del cuerpo humano | 6 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **Así empieza una vida** (`vida`) | Línea temporal interactiva con visor de subetapas y explicación biológica | 4 viñetas: *unión de dos células, crecimiento en el útero, nacimiento y cuidados* | 5 fases (*fecundación, embrión con latido, feto con cordón, nacimiento y bebé*) + pregunta vivíparos | 6 fases (*cigoto, multiplicación celular, tejidos y órganos, placenta, parto y crecimiento por etapas*) | 3 |
+
+---
+
+## Arquitectura del proyecto
+
+El proyecto separa estrictamente los **datos curriculares**, el **modelo de dominio**, las **reglas de negocio puras** (testeables sin necesidad de montar widgets) y la **capa de presentación**.
+
+```mermaid
+flowchart LR
+  subgraph Datos["1. Contenido y Persistencia"]
+    JSON["content/catalog.json"]
+    PREFS["SharedPreferences\n(Progreso local)"]
+  end
+
+  subgraph Dominio["2. Modelo y Acceso a Datos"]
+    CAT["lib/datos/catalogo.dart"]
+    PROG["lib/datos/progreso.dart"]
+    MOD["lib/modelo/\n(Zona, Actividad, Ficha, Herbario)"]
+  end
+
+  subgraph Reglas["3. Lógica Pura (Sin Widgets)"]
+    RES["lib/reglas/resolver.dart\n(Evaluación, pistas, barajado)"]
+  end
+
+  subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
+    MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 24 cromos)"]
+    ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
+    JUEGO["lib/ui/juego.dart · herbario.dart\n(5 juegos · 15 niveles)"]
+    DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
+  end
+
+  JSON --> CAT
+  PREFS <--> PROG
+  CAT --> MOD
+  MOD --> RES
+  MOD --> Interfaz
+  PROG --> Interfaz
+  RES --> JUEGO
+  DIB --> JUEGO
+  DIB --> MAPA
 ```
 
-Cambia la ruta si el SDK está en otro sitio. Para dejarlo fijo, añádela en Variables de entorno de Windows, en Path del usuario, y abre una terminal nueva.
+### Flujo de navegación y aprendizaje
 
-4. Chrome, si vas a verla en el navegador.
-5. Android SDK, si vas a emulador o APK. Android Studio lo instala. La ruta habitual es `%LOCALAPPDATA%\Android\Sdk`.
+```mermaid
+flowchart TD
+  A["Mapa principal (MapaPage)\nProgreso global · Estrellas (15) · Álbum (24 cromos)"] --> B["Pantalla de Mundo (ZonaPage)\nLa reserva · El invernadero · El cuerpo"]
+  A --> C["Álbum de Cromos\nFiltro por mundo · Estado bloqueado/desbloqueado · Curiosidades"]
+  B --> D["Selector de dificultad\nFácil (1.º-2.º) · Medio (3.º-4.º) · Difícil (5.º-6.º)"]
+  D --> E["Actividad interactiva\nArrastrar / Tocar / Experimentar / Ordenar"]
+  E -->|1.º fallo| F["Observación contextual razonada"]
+  E -->|2.º fallo| G["Pista pedagógica directa de Natu"]
+  F --> E
+  G --> E
+  E -->|Acierto| H["Pregunta de comprensión (Medio/Difícil)\ny Cuaderno de Natu"]
+  H --> I["Nivel superado\nSe guarda estrella y se desbloquean cromos del nivel"]
+  I --> C
+```
 
-Comprueba que no falta nada:
+---
+
+## Estructura de carpetas y responsabilidades
+
+| Ruta | Propósito | Responsable |
+| :--- | :--- | :--- |
+| [`lib/ui/`](lib/ui/) | Pantallas, navegación, animaciones e ilustraciones vectoriales (`CustomPainter`) | David |
+| [`lib/reglas/`](lib/reglas/) | Evaluación de respuestas, progresión de pistas y barajado sin repetir posición (sin widgets) | Iván |
+| [`lib/datos/`](lib/datos/) y [`lib/modelo/`](lib/modelo/) | Carga de `catalog.json`, modelos inmutables y persistencia local de estrellas y cromos | Alfredo / Equipo |
+| [`content/`](content/) | Catálogo de juegos, textos pedagógicos (`catalog.json`) y mapa de cobertura (`cobertura.md`) | Alfredo |
+| [`assets/imagenes/`](assets/imagenes/) y [`assets/icono/`](assets/icono/) | Ilustraciones de personajes (`Natu`, animales) e icono de la aplicación | David |
+| [`test/`](test/) | Pruebas unitarias de catálogo/reglas (`test/datos/`) y pruebas de integración de UI (`test/ui/`) | Diego |
+| [`android/`](android/) e [`ios/`](ios/) | Configuración nativa, identificador (`com.naturalmente.naturalmente`), iconos y firmas | Alejandro |
+| [`web/`](web/) | Soporte de ejecución local en Chrome durante el desarrollo | Equipo |
+| [`docs/`](docs/) | Documentación de contexto, organización, decisiones de alcance y diseño de juegos | Todos |
+
+### Documentación adicional en `docs/`
+
+- **[`docs/contexto.md`](docs/contexto.md)**: objetivos de la asignatura, adecuación curricular y criterios pedagógicos.
+- **[`docs/organizacion.md`](docs/organizacion.md)**: reparto detallado de tareas, estructura del proyecto e hitos del calendario.
+- **[`docs/decisiones.md`](docs/decisiones.md)**: registro de decisiones de alcance, niveles de dificultad y qué contenidos quedan fuera.
+- **[`docs/juegos.md`](docs/juegos.md)**: diseño detallado de las mecánicas de cada actividad por mundo y ciclo.
+- **[`docs/plan-herbario.md`](docs/plan-herbario.md)**: especificación técnica y validación de la actividad *Herbario desmontable*.
+
+---
+
+## Requisitos previos e instalación
+
+No es necesario configurar ninguna base de datos ni servidor externo. Basta con disponer de **Flutter** y, según dónde se quiera ejecutar, **Google Chrome** o el **SDK de Android**.
+
+1. **Git** instalado en el sistema.
+2. **Flutter SDK** (canal `stable`, con Dart `^3.13.5`). Guía oficial: [docs.flutter.dev/install](https://docs.flutter.dev/install).
+3. Añadir la carpeta `bin` de Flutter al `PATH` del usuario. En PowerShell para la sesión actual:
+
+   ```powershell
+   $env:Path = "C:\Users\TU_USUARIO\flutter\bin;" + $env:Path
+   ```
+
+4. **Google Chrome** (para depuración rápida en web) o **Android Studio / Android SDK** (para emulador Android o generación de APK/AAB). En macOS, **Xcode** para compilar en iOS.
+
+Verifica el entorno ejecutando:
 
 ```powershell
 flutter doctor
 ```
 
-La primera vez en Android hace falta aceptar licencias:
+Si es la primera vez que usas el SDK de Android en el equipo, acepta las licencias:
 
 ```powershell
 flutter doctor --android-licenses
 ```
 
-iOS no se compila en Windows. Hace falta un Mac con Xcode. En este repo la carpeta `ios/` ya está, para abrirla allí.
+---
 
-## Comandos de cada día
+## Comandos de desarrollo y compilación
 
-Desde la carpeta del repositorio:
+Desde la raíz del repositorio:
+
+### 1. Instalar dependencias, analizar código y ejecutar tests
 
 ```powershell
 flutter pub get
-flutter analyze
+dart analyze
 flutter test
 ```
 
-`pub get` baja lo que pone `pubspec.yaml`. Hay que lanzarlo al clonar y cuando cambie ese archivo. `analyze` mira el estilo. `test` ejecuta las pruebas de datos, reglas y pantallas sin abrir la app en un móvil.
+- `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
+- `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
+- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 5 juegos, barajador sin repetición, desbloqueo de los 24 cromos) y pruebas de widgets/flujos completos en pantalla.
 
-Verla en Chrome (no se publica; es para trabajar):
+### 2. Ejecutar la aplicación en local
+
+Para lanzarla rápidamente en **Chrome** durante el desarrollo:
 
 ```powershell
 flutter run -d chrome
 ```
 
-Con la app en marcha, en esa terminal: `r` recarga cambios de código, `R` la reinicia, `q` la cierra. Un cambio en `pubspec.yaml` no entra con `r`: para y vuelve a lanzar.
+*(Con la app en marcha: pulsa `r` para recarga rápida, `R` para reinicio completo y `q` para salir).*
 
-Ver emuladores y dispositivos:
+Para lanzarla en un **emulador de Android** o dispositivo conectado por USB:
 
 ```powershell
 flutter emulators
+flutter emulators --launch <id_emulador>
 flutter devices
-flutter emulators --launch 'vuestro_emulador'
 flutter run -d android
 ```
 
-APK para pasar al móvil por cable o por archivo:
+### 3. Generar paquetes de distribución (Release)
 
-```powershell
-flutter build apk
-```
+- **APK de Android** (para instalar directamente en un dispositivo o compartir el archivo):
 
-Sale en `build\app\outputs\flutter-apk\app-release.apk`.
+  ```powershell
+  flutter build apk
+  ```
+  *(Salida generada en `build/app/outputs/flutter-apk/app-release.apk`).*
 
-Lo que se sube a Google Play no es el APK, es el app bundle:
+- **Android App Bundle** (formato oficial para publicar en Google Play):
 
-```powershell
-flutter build appbundle
-```
+  ```powershell
+  flutter build appbundle
+  ```
 
-En un Mac, para la App Store:
+- **Archivo IPA para iOS** (requiere macOS con Xcode):
 
-```powershell
-flutter build ipa
-```
+  ```powershell
+  flutter build ipa
+  ```
 
-## Dónde se toca cada cosa
+---
 
-| Carpeta | Para qué | Quién |
-| --- | --- | --- |
-| `lib/ui/` | Pantallas | David |
-| `lib/reglas/` | Frases y aciertos, sin widgets | Iván |
-| `lib/datos/` y `lib/modelo/` | Leer el catálogo | Quien añada un campo | Alfredo |
-| `content/` | Textos. `catalog.json` lo lee la app | Alfredo |
-| `assets/imagenes/` y `assets/icono/` | Dibujos, cuando existan | David |
-| `test/` | Pruebas | Diego |
-| `android/` e `ios/` | Identificador, icono, firma | Alejandro |
-| `web/` | Solo Chrome | No se publica |
-| `docs/contexto.md` | Asignatura, ciencias y decisiones | Todos |
-| `docs/organizacion.md` | Carpetas, personas y fechas | Todos |
-| `docs/decisiones.md` | Decisiones de alcance, con fecha | Todos |
-| `docs/juegos.md` | Banco de ideas de juegos, con prioridad y niveles | Todos |
-
-El identificador es `com.naturalmente.naturalmente`. El nombre en el móvil es NaturalMente.
+<div align="center">
+  <sub>Identificador de paquete: <code>com.naturalmente.naturalmente</code> · Nombre de la aplicación: <strong>NaturalMente</strong></sub>
+</div>

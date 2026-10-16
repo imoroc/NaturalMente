@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/herbario.dart';
 import 'package:naturalmente/reglas/herbario.dart';
@@ -183,7 +184,11 @@ class _HerbarioPageState extends State<HerbarioPage> {
   }
 
   Widget _selector() {
-    final progreso = Alcance.of(context).progreso;
+    final alcance = Alcance.of(context);
+    final progreso = alcance.progreso;
+    final fichasCatalogo = {
+      for (final f in alcance.catalogo.fichas) f.id: f.titulo,
+    };
     final niveles = _herbario.niveles;
     return ListenableBuilder(
       listenable: progreso,
@@ -193,7 +198,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
           Burbuja(
             quien: widget.actividad.quien,
             frase:
-                'Elige un nivel. Puedes jugar a cualquiera y cambiar cuando quieras.',
+                'Elige un nivel. Cada dificultad desbloquea nuevos cromos de las partes de la planta.',
             gesto: 'hola',
           ),
           const SizedBox(height: 16),
@@ -249,10 +254,68 @@ class _HerbarioPageState extends State<HerbarioPage> {
                           ? 'Cinco rótulos y sus funciones'
                           : '${niveles[i].partes.length == 3 ? 'Tres' : 'Cinco'} partes con dibujo',
                     ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        for (final fichaId in Progreso.fichasDeNivel(
+                          widget.actividad.id,
+                          niveles[i].id,
+                        ))
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: progreso.fichaDesbloqueada(fichaId)
+                                  ? const Color(0xFFFEF3C7)
+                                  : const Color(0xFFF1F5F9),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                color: progreso.fichaDesbloqueada(fichaId)
+                                    ? const Color(0xFFF59E0B)
+                                    : const Color(0xFFCBD5E1),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  progreso.fichaDesbloqueada(fichaId)
+                                      ? Icons.auto_stories_rounded
+                                      : Icons.lock_outline_rounded,
+                                  size: 13,
+                                  color: progreso.fichaDesbloqueada(fichaId)
+                                      ? const Color(0xFFB45309)
+                                      : const Color(0xFF64748B),
+                                ),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    'Cromo: ${fichasCatalogo[fichaId] ?? fichaId}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w800,
+                                      color: progreso.fichaDesbloqueada(fichaId)
+                                          ? const Color(0xFF92400E)
+                                          : const Color(0xFF475569),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                     if (progreso.nivelHerbarioHecho(
                       widget.actividad,
                       niveles[i].id,
-                    ))
+                    )) ...[
+                      const SizedBox(height: 6),
                       const Text(
                         '✓ Nivel superado',
                         style: TextStyle(
@@ -260,6 +323,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                           color: Color(0xFF15803D),
                         ),
                       ),
+                    ],
                   ],
                 ),
               ),

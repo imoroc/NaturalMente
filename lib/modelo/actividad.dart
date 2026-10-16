@@ -103,9 +103,14 @@ class NivelLugar {
     required this.nombre,
     required this.curso,
     required this.resumen,
+    this.intro = '',
+    this.curiosidad = '',
     this.opciones = const [],
     this.retos = const [],
     this.controles = const [],
+    this.pasos = const [],
+    this.respuesta = const [],
+    this.frases = const {},
     this.preguntaAdaptacion = false,
     this.preguntaFinal,
   });
@@ -114,9 +119,14 @@ class NivelLugar {
   final String nombre;
   final String curso;
   final String resumen;
+  final String intro;
+  final String curiosidad;
   final List<Opcion> opciones;
   final List<Reto> retos;
   final List<Control> controles;
+  final List<Opcion> pasos;
+  final List<String> respuesta;
+  final Map<String, String> frases;
   final bool preguntaAdaptacion;
   final PreguntaExtra? preguntaFinal;
 
@@ -126,6 +136,8 @@ class NivelLugar {
       nombre: mapa['nombre'] as String,
       curso: mapa['curso'] as String,
       resumen: mapa['resumen'] as String? ?? '',
+      intro: mapa['intro'] as String? ?? '',
+      curiosidad: mapa['curiosidad'] as String? ?? '',
       opciones: _opciones(mapa['opciones']),
       retos: (mapa['retos'] as List? ?? [])
           .cast<Map<String, dynamic>>()
@@ -135,6 +147,9 @@ class NivelLugar {
           .cast<Map<String, dynamic>>()
           .map(Control.desdeMapa)
           .toList(),
+      pasos: _opciones(mapa['pasos']),
+      respuesta: (mapa['respuesta'] as List? ?? []).cast<String>(),
+      frases: _frases(mapa['frases']),
       preguntaAdaptacion: mapa['preguntaAdaptacion'] as bool? ?? false,
       preguntaFinal: mapa['preguntaFinal'] == null
           ? null
@@ -301,6 +316,29 @@ class Actividad {
       for (var i = 0; i < respuesta.length - 1; i++) {
         if (!frases.containsKey('mal$i')) {
           throw ArgumentError('A $id le falta la frase mal$i.');
+        }
+      }
+      for (final nivel in nivelesLugar) {
+        if (nivel.pasos.isNotEmpty || nivel.respuesta.isNotEmpty) {
+          if (nivel.pasos.length != nivel.respuesta.length) {
+            throw ArgumentError(
+              'El nivel ${nivel.id} de $id tiene distinto número de pasos y respuesta.',
+            );
+          }
+          final frasesNivel = {...frases, ...nivel.frases};
+          if (!frasesNivel.containsKey('incompleto') ||
+              !frasesNivel.containsKey('bien')) {
+            throw ArgumentError(
+              'Al nivel ${nivel.id} de $id le faltan frases del orden.',
+            );
+          }
+          for (var i = 0; i < nivel.respuesta.length - 1; i++) {
+            if (!frasesNivel.containsKey('mal$i')) {
+              throw ArgumentError(
+                'Al nivel ${nivel.id} de $id le falta la frase mal$i.',
+              );
+            }
+          }
         }
       }
     }

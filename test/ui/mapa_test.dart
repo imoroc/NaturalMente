@@ -32,14 +32,34 @@ void main() {
 
     await _atras(tester);
     await _atras(tester);
-    expect(find.text('1/22', skipOffstage: false), findsNWidgets(2));
+    expect(find.text('1/24', skipOffstage: false), findsNWidgets(2));
 
     await _tocar(tester, const Key('zona-invernadero'));
     await _tocar(tester, const Key('juego-germinacion'));
     await _tocar(tester, const Key('nivel-facil'));
     await _tocar(tester, const Key('avanzar'));
-    expect(find.textContaining('Falta elegir'), findsOneWidget);
+    expect(find.textContaining('Falta preparar'), findsOneWidget);
     expect(find.byKey(const Key('avanzar'), skipOffstage: false), findsOneWidget);
+
+    // Día 1 -> Día 3 (sale la primera raíz)
+    await _tocar(tester, const Key('control-suelo-algodon'));
+    await _tocar(tester, const Key('control-agua-justa'));
+    await _tocar(tester, const Key('control-luz-justa'));
+    await _tocar(tester, const Key('avanzar'));
+    expect(find.textContaining('Día 3'), findsWidgets);
+
+    // Día 3 -> Día 5 (la planta bebió agua; volvemos a regar para que suba el tallo)
+    await _tocar(tester, const Key('control-agua-justa'));
+    await _tocar(tester, const Key('avanzar'));
+    expect(find.textContaining('Día 5'), findsWidgets);
+
+    // Día 5 -> Día 7 (último riego para abrir las hojas verdes)
+    await _tocar(tester, const Key('control-agua-justa'));
+    await _tocar(tester, const Key('avanzar'));
+    expect(find.byKey(const Key('curiosidad-germinacion'), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key('etapa-germinacion-1'), skipOffstage: false), findsOneWidget);
+    await _tocar(tester, const Key('etapa-germinacion-1'));
+    expect(find.byKey(const Key('volver-controles'), skipOffstage: false), findsOneWidget);
 
     await _atras(tester);
     await _atras(tester);
@@ -56,6 +76,20 @@ void main() {
     await _tocar(tester, const Key('comprobar'));
     expect(find.textContaining('cada uno una sola vez'), findsOneWidget);
     expect(find.byKey(const Key('comprobar'), skipOffstage: false), findsOneWidget);
+
+    await _tocar(tester, const Key('paso-utero'));
+    await _tocar(tester, const Key('paso-nace'));
+    await _tocar(tester, const Key('paso-cuidados'));
+    await _tocar(tester, const Key('comprobar'));
+
+    expect(find.byKey(const Key('comprobar'), skipOffstage: false), findsNothing);
+    expect(find.byKey(const Key('volver-orden'), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key('otra-vez-orden'), skipOffstage: false), findsOneWidget);
+
+    await _tocar(tester, const Key('curiosidad-vida'));
+    expect(find.text('CUADERNO DE NATU'), findsOneWidget);
+    expect(find.textContaining('ombligo'), findsOneWidget);
+    await _tocar(tester, const Key('cerrar-curiosidad'));
   });
 
   testWidgets('la dificultad se elige antes de empezar y se puede cambiar de nivel', (tester) async {

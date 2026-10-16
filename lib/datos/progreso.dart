@@ -55,10 +55,10 @@ class Progreso extends ChangeNotifier {
   bool fichaDesbloqueada(String fichaId) {
     if (hecho('ficha/$fichaId')) return true;
     if (hecho('hogar/$fichaId') || hecho('piezas/$fichaId')) return true;
-    if (fichaId == 'insectos' && hecho('hogar/dificil/completo')) {
+    if (fichaId == 'pulpo' && hecho('hogar/dificil/completo')) {
       return true;
     }
-    if (fichaId == 'sentidos' && hecho('piezas/dificil/completo')) {
+    if (fichaId == 'intestinos' && hecho('piezas/dificil/completo')) {
       return true;
     }
     if (fichaId == 'semilla' &&
@@ -73,11 +73,18 @@ class Progreso extends ChangeNotifier {
             hecho('germinacion/dificil/completo'))) {
       return true;
     }
+    if (fichaId == 'fotosintesis' && hecho('germinacion/dificil/completo')) {
+      return true;
+    }
     if (fichaId == 'una-vida' &&
         (hecho('vida') ||
             hecho('vida/facil/completo') ||
             hecho('vida/medio/completo') ||
             hecho('vida/dificil/completo'))) {
+      return true;
+    }
+    if (fichaId == 'etapas-vida' &&
+        (hecho('vida/medio/completo') || hecho('vida/dificil/completo'))) {
       return true;
     }
     if (fichaId == 'celula' && hecho('vida/dificil/completo')) {
@@ -100,6 +107,27 @@ class Progreso extends ChangeNotifier {
     return false;
   }
 
+  static List<String> fichasDeNivel(String actividadId, String nivelId) {
+    return switch ((actividadId, nivelId)) {
+      ('hogar', 'facil') => const ['camello', 'delfin', 'pinguino', 'oso'],
+      ('hogar', 'medio') => const ['rana', 'tucan'],
+      ('hogar', 'dificil') => const ['pulpo'],
+      ('germinacion', 'facil') => const ['semilla'],
+      ('germinacion', 'medio') => const ['huerto'],
+      ('germinacion', 'dificil') => const ['fotosintesis'],
+      ('herbario', 'facil') => const ['raiz', 'tallo', 'hoja'],
+      ('herbario', 'medio') => const ['flor'],
+      ('herbario', 'dificil') => const ['fruto'],
+      ('piezas', 'facil') => const ['corazon', 'cerebro', 'estomago'],
+      ('piezas', 'medio') => const ['pulmones', 'esqueleto'],
+      ('piezas', 'dificil') => const ['intestinos'],
+      ('vida', 'facil') => const ['una-vida'],
+      ('vida', 'medio') => const ['etapas-vida'],
+      ('vida', 'dificil') => const ['celula'],
+      _ => const <String>[],
+    };
+  }
+
   static String pistaDesbloqueoFicha(String fichaId) {
     return switch (fichaId) {
       'camello' ||
@@ -110,12 +138,14 @@ class Progreso extends ChangeNotifier {
       'rana' ||
       'tucan' =>
         'Se consigue en «Cada uno a su hogar» a partir del nivel Medio (3º-4º).',
-      'insectos' =>
+      'pulpo' =>
         'Se consigue en «Cada uno a su hogar» en el nivel Difícil (5º-6º).',
       'semilla' =>
         'Se consigue en «Laboratorio de germinación» desde el nivel Fácil (1º-2º).',
       'huerto' =>
         'Se consigue en «Laboratorio de germinación» a partir del nivel Medio (3º-4º).',
+      'fotosintesis' =>
+        'Se consigue en «Laboratorio de germinación» en el nivel Difícil (5º-6º).',
       'raiz' ||
       'tallo' ||
       'hoja' =>
@@ -125,16 +155,18 @@ class Progreso extends ChangeNotifier {
       'fruto' =>
         'Se consigue en «Herbario desmontable» en el nivel Difícil (5º-6º).',
       'corazon' ||
-      'pulmones' ||
+      'cerebro' ||
       'estomago' =>
         'Se consigue en «Cada pieza en su sitio» desde el nivel Fácil (1º-2º).',
-      'cerebro' ||
+      'pulmones' ||
       'esqueleto' =>
         'Se consigue en «Cada pieza en su sitio» a partir del nivel Medio (3º-4º).',
-      'sentidos' =>
+      'intestinos' =>
         'Se consigue en «Cada pieza en su sitio» en el nivel Difícil (5º-6º).',
       'una-vida' =>
         'Se consigue en «Así empieza una vida» desde el nivel Fácil (1º-2º).',
+      'etapas-vida' =>
+        'Se consigue en «Así empieza una vida» a partir del nivel Medio (3º-4º).',
       'celula' =>
         'Se consigue en «Así empieza una vida» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
@@ -179,9 +211,15 @@ class Progreso extends ChangeNotifier {
       if (nivel == 'medio' || nivel == 'dificil') {
         await desbloquearFicha('huerto');
       }
+      if (nivel == 'dificil') {
+        await desbloquearFicha('fotosintesis');
+      }
     }
     if (actividad.id == 'vida') {
       await desbloquearFicha('una-vida');
+      if (nivel == 'medio' || nivel == 'dificil') {
+        await desbloquearFicha('etapas-vida');
+      }
       if (nivel == 'dificil') {
         await desbloquearFicha('celula');
       }

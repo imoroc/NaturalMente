@@ -75,13 +75,13 @@
       "curiosidad": "Su pico es muy grande y vistoso, pero por dentro tiene huecos de aire y pesa muy poco."
     },
     {
-      "id": "insectos",
+      "id": "pulpo",
       "zona": "reserva",
       "curso": "5º-6º",
       "juego": "Cada uno a su hogar",
-      "titulo": "Insectos",
-      "frase": "Son animales invertebrados: no tienen huesos. Abejas, hormigas y mariposas son insectos.",
-      "curiosidad": "Al viajar de flor en flor, las abejas llevan el polen y ayudan a que salgan los frutos."
+      "titulo": "Pulpo",
+      "frase": "Es un molusco invertebrado marino: no tiene huesos ni columna vertebral y posee ocho tentáculos con ventosas.",
+      "curiosidad": "Tiene tres corazones, cambia el color de su piel para camuflarse entre las rocas del mar y lanza tinta para escapar."
     },
     {
       "id": "semilla",
@@ -97,9 +97,18 @@
       "zona": "invernadero",
       "curso": "3º-4º",
       "juego": "Laboratorio de germinación",
-      "titulo": "Tierra de huerto",
+      "titulo": "Tierra de jardín",
       "frase": "Guarda la humedad y las sales minerales mucho mejor que la arena o las piedras.",
       "curiosidad": "Entre piedras sueltas la raíz no encuentra tierra esponjosa ni agua retenida donde agarrarse."
+    },
+    {
+      "id": "fotosintesis",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Laboratorio de germinación",
+      "titulo": "La fotosíntesis",
+      "frase": "Cuando el brote saca sus hojas verdes, usa la luz del sol, el agua y el aire para fabricar su propio alimento.",
+      "curiosidad": "Los primeros días bajo tierra la semilla crece a oscuras usando sus reservas, pero al abrir las hojas necesita luz."
     },
     {
       "id": "raiz",
@@ -156,13 +165,13 @@
       "curiosidad": "Cuando corres o saltas, late más deprisa porque tus músculos piden más oxígeno."
     },
     {
-      "id": "pulmones",
+      "id": "cerebro",
       "zona": "cuerpo",
       "curso": "1º-2º",
       "juego": "Cada pieza en su sitio",
-      "titulo": "Pulmones",
-      "frase": "Son dos órganos esponjosos del pecho que toman el oxígeno del aire que respiramos.",
-      "curiosidad": "Al tomar aire por la nariz, el pecho se ensancha porque los pulmones se hinchan como dos globos suaves."
+      "titulo": "Cerebro",
+      "frase": "Está protegido dentro del cráneo, interpreta lo que captan los sentidos y dirige el cuerpo.",
+      "curiosidad": "Incluso mientras duermes por la noche, tu cerebro sigue trabajando y crea los sueños."
     },
     {
       "id": "estomago",
@@ -170,17 +179,17 @@
       "curso": "1º-2º",
       "juego": "Cada pieza en su sitio",
       "titulo": "Estómago",
-      "frase": "Trabaja en la barriga mezclando y deshaciendo los alimentos que tragamos.",
+      "frase": "Trabaja en el abdomen mezclando y deshaciendo los alimentos que tragamos.",
       "curiosidad": "Gracias a la digestión, los alimentos se transforman en nutrientes muy pequeños que pasan a la sangre."
     },
     {
-      "id": "cerebro",
+      "id": "pulmones",
       "zona": "cuerpo",
       "curso": "3º-4º",
       "juego": "Cada pieza en su sitio",
-      "titulo": "Cerebro",
-      "frase": "Está protegido dentro del cráneo, interpreta lo que captan los sentidos y dirige el cuerpo.",
-      "curiosidad": "Incluso mientras duermes por la noche, tu cerebro sigue trabajando y crea los sueños."
+      "titulo": "Pulmones",
+      "frase": "Son dos órganos esponjosos del pecho que toman el oxígeno del aire que respiramos.",
+      "curiosidad": "Al tomar aire por la nariz, el pecho se ensancha porque los pulmones se hinchan como dos globos suaves."
     },
     {
       "id": "esqueleto",
@@ -188,17 +197,17 @@
       "curso": "3º-4º",
       "juego": "Cada pieza en su sitio",
       "titulo": "Músculos y huesos",
-      "frase": "Los huesos sostienen el cuerpo y los músculos tiran de ellos para doblar brazos y piernas.",
+      "frase": "Los huesos sostienen el cuerpo y los músculos tiran de ellos para mover las extremidades.",
       "curiosidad": "Donde se juntan dos huesos móviles hay una articulación: un hueso y un músculo pueden mover el brazo de un modo parecido a una palanca."
     },
     {
-      "id": "sentidos",
+      "id": "intestinos",
       "zona": "cuerpo",
       "curso": "5º-6º",
       "juego": "Cada pieza en su sitio",
-      "titulo": "Los cinco sentidos",
-      "frase": "Ojos, oídos, nariz, lengua y piel nos avisan de todo lo que ocurre alrededor.",
-      "curiosidad": "La piel es el órgano del tacto y nota también el frío, el calor y las cosquillas."
+      "titulo": "Intestinos",
+      "frase": "Están plegados en el abdomen a continuación del estómago y absorben los nutrientes y el agua de los alimentos.",
+      "curiosidad": "Si pudiéramos estirar el intestino delgado y el grueso, medirían varios metros, pero caben en el abdomen porque están muy bien doblados."
     },
     {
       "id": "una-vida",
@@ -208,6 +217,15 @@
       "titulo": "Así empieza una vida",
       "frase": "Se unen dos células muy pequeñas, el bebé crece en el útero, nace y necesita muchos cuidados.",
       "curiosidad": "El cuerpo de cada persona es suyo y merece siempre respeto y cuidado."
+    },
+    {
+      "id": "etapas-vida",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Así empieza una vida",
+      "titulo": "Etapas de la vida",
+      "frase": "Desde el nacimiento crecemos y cambiamos pasando por la infancia, la adolescencia, la edad adulta y la vejez.",
+      "curiosidad": "Durante la infancia aprendemos a caminar, hablar y jugar mientras nuestros huesos y músculos crecen."
     },
     {
       "id": "celula",
@@ -926,41 +944,41 @@
               }
             },
             {
-              "id": "insectos",
-              "nombre": "La abeja y los insectos",
-              "pregunta": "Animal invertebrado con seis patas, dos antenas y alas que vuela de flor en flor en los claros arbolados. ¿Cuál es su ecosistema?",
-              "respuesta": "bosque",
-              "pista": "Busca el ecosistema terrestre con árboles, prados templados y muchas flores silvestres.",
-              "curiosidad": "Las abejas comunican a sus compañeras dónde hay flores haciendo una danza en forma de ocho dentro de la colmena.",
+              "id": "pulpo",
+              "nombre": "El pulpo",
+              "pregunta": "Molusco invertebrado de cuerpo blando, con branquias y ocho tentáculos cubiertos de ventosas. ¿Cuál es su ecosistema?",
+              "respuesta": "mar",
+              "pista": "Se esconde entre las rocas del fondo marino, camufla su piel y respira el oxígeno del agua salada.",
+              "curiosidad": "Tiene tres corazones, cambia el color y la textura de su piel en segundos para camuflarse y lanza una nube de tinta para escapar.",
               "frases": {
-                "bosque": "¡Muy bien! En los claros y praderas del bosque encuentra flores y árboles donde hacer su colmena. Vamos con su reto.",
-                "desierto": "En el desierto apenas hay flores con néctar durante el año para alimentar a toda una colmena.",
-                "mar": "Los insectos como la abeja respiran aire por tráqueas y no viven sumergidos en el mar.",
-                "polo": "En el hielo perpetuo del polo no crecen las plantas con flores que necesitan las abejas.",
-                "selva": "Esta abeja melífera habita sobre todo en bosques templados y praderas floridas.",
-                "rio": "Aunque bebe gotitas de agua en la orilla, no es un animal acuático de río: vive entre las flores del bosque."
+                "mar": "¡Muy bien! El pulpo habita en los fondos rocosos del mar. Vamos con su reto de clasificación.",
+                "desierto": "Con su cuerpo blando y sus branquias necesita vivir sumergido en el agua salada del mar.",
+                "polo": "No vive sobre el hielo polar; se refugia entre las rocas y cuevas submarinas del mar.",
+                "bosque": "No es un animal terrestre forestal; es un molusco estrictamente marino.",
+                "selva": "No vive entre los árboles tropicales; se desplaza por el fondo del mar con sus tentáculos.",
+                "rio": "El pulpo es un invertebrado de agua salada, por lo que habita en el mar y no en ríos ni charcas."
               },
               "adaptacion": {
-                "enunciado": "¿Por qué decimos que los insectos son animales invertebrados y qué papel cumplen en el ecosistema?",
+                "enunciado": "¿Por qué clasificamos al pulpo dentro del grupo de los animales invertebrados?",
                 "opciones": [
                   {
-                    "id": "polen",
-                    "nombre": "No tienen esqueleto interno con columna vertebral y, al ir de flor en flor, transportan el polen"
+                    "id": "molusco",
+                    "nombre": "Porque carece de columna vertebral y de esqueleto interno con huesos: es un molusco de cuerpo blando"
                   },
                   {
                     "id": "huesos",
-                    "nombre": "Tienen huesos muy pesados por dentro y respiran por branquias bajo el mar"
+                    "nombre": "Porque tiene una columna vertebral muy larga y huesos duros dentro de cada tentáculo"
                   },
                   {
-                    "id": "viviparos",
-                    "nombre": "Son mamíferos con pelo espeso que invernan en cuevas heladas"
+                    "id": "mamifero",
+                    "nombre": "Porque es un mamífero vivíparo cubierto de pelo que respira aire con pulmones"
                   }
                 ],
-                "respuesta": "polen",
+                "respuesta": "molusco",
                 "frases": {
-                  "polen": "¡Excelente! Los insectos son los invertebrados más numerosos y su labor polinizando las flores permite que se formen frutos y semillas.",
-                  "huesos": "Los insectos son invertebrados: carecen de columna vertebral y de huesos internos.",
-                  "viviparos": "Los insectos son ovíparos (nacen de huevos) y su cuerpo está protegido por una cubierta externa con seis patas."
+                  "molusco": "¡Excelente! El pulpo es un molusco invertebrado: como no tiene huesos ni columna vertebral, puede colarse por grietas estrechísimas entre las rocas del mar.",
+                  "huesos": "Sus ocho tentáculos son pura musculatura flexible con ventosas y no tienen ningún hueso por dentro.",
+                  "mamifero": "El pulpo es un molusco ovíparo que respira por branquias bajo el mar, no un mamífero."
                 }
               }
             }
@@ -976,49 +994,13 @@
       "curso": "1º-6º, según el nivel",
       "medalla": true,
       "quien": "Natu dice",
-      "intro": "Ajusta cuánta agua, cuánta luz y qué suelo necesita la semilla, y pulsa Avanzar tiempo.",
+      "intro": "Prepara el bote de cultivo y cuida tu semilla día a día eligiendo la base, el riego y la luz de la ventana.",
       "sujeto": "Semilla de judía",
-      "boton": "Avanzar tiempo",
+      "boton": "Avanzar al siguiente día",
       "controles": [
         {
-          "id": "agua",
-          "nombre": "Agua",
-          "opciones": [
-            {
-              "id": "poca",
-              "nombre": "Poca"
-            },
-            {
-              "id": "justa",
-              "nombre": "Justa"
-            },
-            {
-              "id": "mucha",
-              "nombre": "Mucha"
-            }
-          ]
-        },
-        {
-          "id": "luz",
-          "nombre": "Luz",
-          "opciones": [
-            {
-              "id": "poca",
-              "nombre": "Poca"
-            },
-            {
-              "id": "justa",
-              "nombre": "Justa"
-            },
-            {
-              "id": "mucha",
-              "nombre": "Mucha"
-            }
-          ]
-        },
-        {
           "id": "suelo",
-          "nombre": "Suelo",
+          "nombre": "Base de la maceta",
           "opciones": [
             {
               "id": "piedras",
@@ -1029,54 +1011,233 @@
               "nombre": "Arena"
             },
             {
+              "id": "algodon",
+              "nombre": "Algodón"
+            },
+            {
               "id": "huerto",
-              "nombre": "Tierra de huerto"
+              "nombre": "Tierra de jardín"
+            }
+          ]
+        },
+        {
+          "id": "agua",
+          "nombre": "Riego",
+          "opciones": [
+            {
+              "id": "poca",
+              "nombre": "Sin regar"
+            },
+            {
+              "id": "justa",
+              "nombre": "Riego suave"
+            },
+            {
+              "id": "mucha",
+              "nombre": "Demasiada agua"
+            }
+          ]
+        },
+        {
+          "id": "luz",
+          "nombre": "Ventana del invernadero",
+          "opciones": [
+            {
+              "id": "poca",
+              "nombre": "Cortina cerrada"
+            },
+            {
+              "id": "justa",
+              "nombre": "Sol de ventana"
+            },
+            {
+              "id": "mucha",
+              "nombre": "Sol abrasador"
             }
           ]
         }
       ],
       "frases": {
-        "falta": "Elige agua, luz y suelo antes de avanzar el tiempo.",
-        "ahogada": "Con tanta agua la semilla se ahoga: la raíz también necesita aire en la tierra.",
-        "seca": "Con tan poca agua no puede despertar. El agua es materia que la raíz toma del suelo y el tallo reparte.",
-        "sinAgarre": "Entre piedras la raíz no encuentra tierra fértil a la que sujetarse.",
-        "sedienta": "La arena deja escapar el agua enseguida. La tierra de huerto guarda mejor la humedad.",
-        "palida": "Con tan poca luz las hojas se quedan pálidas: la luz es energía que la planta usa para fabricar su alimento.",
-        "brote": "¡Lo lograste! Con agua justa, buena luz y tierra de huerto, la semilla despierta y crece sana."
+        "falta": "Elige primero qué poner en la maceta y cuánta agua echar antes de pasar al siguiente día.",
+        "ahogada": "Hay demasiada agua en el bote y la semilla se queda sin aire para respirar. Elige un riego suave.",
+        "seca": "La maceta está seca y sin agua la planta no puede crecer hoy. ¡Elige un riego suave!",
+        "sinAgarre": "Entre las piedras duras el agua se escapa al fondo y la semilla no tiene una base húmeda donde sujetarse.",
+        "sedienta": "En la arena la semilla logró hincharse y sacar la raíz, pero el agua se escurre tan rápido que el tallo no puede subir.",
+        "helada": "A 4 °C hace tanto frío como dentro de una nevera y la planta detiene su crecimiento.",
+        "achicharrada": "Con un sol o calor tan fuerte el agua se evapora enseguida y la planta se marchita.",
+        "palida": "¡Llegó al Día 7! Creció alta usando el agua y las reservas de la semilla, pero sin sol salió amarilla. ¡Abre la cortina para que sus hojas se vuelvan verdes!",
+        "broteAlgodon": "¡Germinó muy bien en algodón húmedo! Con agua y sol ya tiene raíz, tallo y hojas verdes, lista para pasarla pronto a tierra.",
+        "brote": "¡Crecimiento completo! En tierra de jardín, con riego suave en cada etapa y sol en la ventana, tu planta ha crecido sana y fuerte."
       },
       "niveles": [
         {
           "id": "facil",
           "nombre": "Fácil",
           "curso": "1º-2º",
-          "resumen": "Descubre qué agua, luz y suelo despiertan la semilla."
+          "resumen": "Siembra tu semilla en algodón o en tierra de jardín y cuídala día a día con agua y luz del sol.",
+          "intro": "Elige algodón o tierra de jardín, dale un riego suave en cada etapa y abre la cortina para que reciba el sol.",
+          "curiosidad": "Dentro de cada semilla hay una plantita diminuta dormida con una reserva de alimento para sus primeros días.",
+          "controles": [
+            {
+              "id": "suelo",
+              "nombre": "Base de la maceta",
+              "opciones": [
+                {
+                  "id": "piedras",
+                  "nombre": "Piedras"
+                },
+                {
+                  "id": "algodon",
+                  "nombre": "Algodón"
+                },
+                {
+                  "id": "huerto",
+                  "nombre": "Tierra de jardín"
+                }
+              ]
+            },
+            {
+              "id": "agua",
+              "nombre": "Riego",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Sin regar"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Riego suave"
+                },
+                {
+                  "id": "mucha",
+                  "nombre": "Demasiada agua"
+                }
+              ]
+            },
+            {
+              "id": "luz",
+              "nombre": "Ventana",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Cortina cerrada"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Sol de ventana"
+                }
+              ]
+            }
+          ],
+          "frases": {
+            "falta": "Elige primero qué poner en la maceta y cuánta agua echar antes de pasar de día.",
+            "seca": "Hoy la maceta está seca y la planta tiene sed. ¡Elige «Riego suave» para que siga creciendo!",
+            "ahogada": "Si llenas el bote con demasiada agua, la semilla se queda sin aire. Elige «Riego suave».",
+            "sinAgarre": "Entre las piedras duras el agua se cae al fondo. Prueba con algodón o con tierra de jardín.",
+            "palida": "¡Ha crecido hasta el Día 7! Como tenía agua creció alta, pero con la cortina cerrada sus hojas salieron amarillas. ¡Elige «Sol de ventana» para que se pongan verdes!",
+            "broteAlgodon": "¡Genial! En algodón húmedo y con el sol de la ventana tu semilla ha sacado raíz, tallo y hojas verdes.",
+            "brote": "¡Bravo! En tierra de jardín, regándola en cada etapa y con el sol de la ventana, tu planta ha crecido fuerte y muy verde."
+          }
         },
         {
           "id": "medio",
           "nombre": "Medio",
           "curso": "3º-4º",
-          "resumen": "Consigue el brote y descubre por qué importa el suelo.",
+          "resumen": "Compara cómo retienen el agua las piedras, la arena, el algodón y la tierra de jardín en cada etapa.",
+          "intro": "Observa qué ocurre en el Día 1, Día 3, Día 5 y Día 7. ¡Recuerda que al crecer la planta bebe agua y necesita un nuevo riego suave!",
+          "curiosidad": "En arena húmeda una semilla puede hincharse el primer día, pero cuando sale la raíz el agua se escapa rápido y le faltan nutrientes.",
+          "controles": [
+            {
+              "id": "suelo",
+              "nombre": "Base de la maceta",
+              "opciones": [
+                {
+                  "id": "piedras",
+                  "nombre": "Piedras"
+                },
+                {
+                  "id": "arena",
+                  "nombre": "Arena"
+                },
+                {
+                  "id": "algodon",
+                  "nombre": "Algodón"
+                },
+                {
+                  "id": "huerto",
+                  "nombre": "Tierra de jardín"
+                }
+              ]
+            },
+            {
+              "id": "agua",
+              "nombre": "Riego",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Sin regar"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Riego suave"
+                },
+                {
+                  "id": "mucha",
+                  "nombre": "Demasiada agua"
+                }
+              ]
+            },
+            {
+              "id": "luz",
+              "nombre": "Ventana",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Cortina cerrada"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Sol de ventana"
+                },
+                {
+                  "id": "excesiva",
+                  "nombre": "Sol abrasador"
+                }
+              ]
+            }
+          ],
+          "frases": {
+            "falta": "Elige la base de la maceta, el riego y la luz de la ventana antes de avanzar de día.",
+            "ahogada": "Con demasiada agua se inundan los huecos de la tierra y la raíz no tiene aire para respirar. Elige «Riego suave».",
+            "seca": "La planta ha bebido el agua de la etapa anterior y hoy tiene sed. ¡Dale un «Riego suave» para que siga creciendo!",
+            "sinAgarre": "Entre las piedras el agua se escurre al instante y la semilla no puede empezar a germinar.",
+            "sedienta": "En la arena llegó a salir la primera raíz en el Día 3, pero la arena deja escapar el agua y el tallo no puede subir. Cambia a tierra de jardín o algodón.",
+            "achicharrada": "El sol abrasador calienta demasiado el bote y seca el brote. Elige «Sol de ventana».",
+            "palida": "¡Llegó al Día 7! Con agua y las reservas de la semilla el tallo creció largo a oscuras, pero sus hojas son amarillas porque necesitan la luz del sol.",
+            "broteAlgodon": "¡Muy bien! El algodón guardó la humedad en todas las etapas hasta abrir las hojas verdes. Para hacerse más grande, pronto necesitará tierra de jardín.",
+            "brote": "¡Estupendo! En tierra de jardín, con riego suave y sol de ventana, tu planta ha completado las 4 etapas llena de energía."
+          },
           "preguntaFinal": {
-            "enunciado": "¿Por qué la semilla germina mejor en tierra de huerto que entre piedras o arena?",
+            "enunciado": "¿Por qué una semilla puede germinar en algodón húmedo los primeros días, pero más adelante necesita tierra de jardín?",
             "opciones": [
               {
                 "id": "calor",
-                "nombre": "Porque las piedras congelan las hojas de la planta"
+                "nombre": "Porque el algodón congela las hojas cuando salen"
               },
               {
                 "id": "humedad",
-                "nombre": "Porque la tierra de huerto retiene la humedad justa y ofrece nutrientes a la raíz"
+                "nombre": "Porque al principio usa el agua del algodón y las reservas de la semilla, pero luego necesita las sales minerales de la tierra"
               },
               {
                 "id": "oscuridad",
-                "nombre": "Porque las semillas no necesitan agua cuando están en el huerto"
+                "nombre": "Porque en la tierra de jardín las plantas nunca necesitan agua"
               }
             ],
             "respuesta": "humedad",
             "frases": {
-              "humedad": "¡Eso es! La tierra de huerto guarda el agua y las sales minerales que las raíces absorben para alimentar la planta.",
-              "calor": "El problema de las piedras no es el frío, sino que la raíz no encuentra tierra húmeda ni nutrientes donde sujetarse.",
-              "oscuridad": "Toda semilla necesita agua para despertar, también cuando está sembrada en tierra de huerto."
+              "humedad": "¡Eso es! Para despertar le bastan el agua y las reservas de la semilla, pero cuando crece necesita las sales minerales de la tierra.",
+              "calor": "El algodón no enfría la planta; simplemente no tiene las sales minerales que sí hay en la tierra de jardín.",
+              "oscuridad": "Todas las plantas necesitan agua tanto en algodón como en tierra de jardín."
             }
           }
         },
@@ -1084,28 +1245,120 @@
           "id": "dificil",
           "nombre": "Difícil",
           "curso": "5º-6º",
-          "resumen": "Haz germinar la planta y resuelve el reto sobre cómo fabrica su alimento.",
+          "resumen": "Investiga cómo influyen el sustrato, el riego, la luz para la fotosíntesis y la temperatura en °C.",
+          "intro": "Guía el cultivo desde el Día 1 hasta el Día 7 ajustando la humedad en cada fase, la luz solar cuando salen las hojas y la temperatura del invernadero.",
+          "curiosidad": "Bajo tierra la semilla aún no hace la fotosíntesis y puede despertar a oscuras, pero en cuanto salen las hojas necesita luz para fabricar su alimento.",
+          "controles": [
+            {
+              "id": "suelo",
+              "nombre": "Base de la maceta",
+              "opciones": [
+                {
+                  "id": "piedras",
+                  "nombre": "Piedras"
+                },
+                {
+                  "id": "arena",
+                  "nombre": "Arena"
+                },
+                {
+                  "id": "algodon",
+                  "nombre": "Algodón"
+                },
+                {
+                  "id": "huerto",
+                  "nombre": "Tierra de jardín"
+                }
+              ]
+            },
+            {
+              "id": "agua",
+              "nombre": "Riego",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Sin regar"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Riego suave"
+                },
+                {
+                  "id": "mucha",
+                  "nombre": "Demasiada agua"
+                }
+              ]
+            },
+            {
+              "id": "luz",
+              "nombre": "Ventana",
+              "opciones": [
+                {
+                  "id": "poca",
+                  "nombre": "Cortina cerrada"
+                },
+                {
+                  "id": "justa",
+                  "nombre": "Sol de ventana"
+                },
+                {
+                  "id": "excesiva",
+                  "nombre": "Sol abrasador"
+                }
+              ]
+            },
+            {
+              "id": "temperatura",
+              "nombre": "Termostato",
+              "opciones": [
+                {
+                  "id": "fria",
+                  "nombre": "Frío (4 °C)"
+                },
+                {
+                  "id": "templada",
+                  "nombre": "Templado (20 °C)"
+                },
+                {
+                  "id": "calor",
+                  "nombre": "Calor (42 °C)"
+                }
+              ]
+            }
+          ],
+          "frases": {
+            "falta": "Elige la base, el riego, la luz y la temperatura antes de avanzar al siguiente día.",
+            "ahogada": "El exceso de agua inunda los huecos del suelo y deja a la raíz sin oxígeno para respirar. Elige «Riego suave».",
+            "seca": "Al crecer de una etapa a otra la planta absorbe el agua; dale hoy un «Riego suave» para que continúe.",
+            "sinAgarre": "Entre las piedras el agua se escapa al fondo y la raíz no encuentra una base húmeda.",
+            "sedienta": "En la arena la semilla logró sacar la primera raíz el Día 3, pero la arena filtra el agua demasiado rápido para que suba el tallo.",
+            "helada": "A 4 °C el frío detiene la germinación y la planta no puede avanzar de etapa. Pon el termostato a 20 °C.",
+            "achicharrada": "Con 42 °C o bajo un sol abrasador, el agua se evapora enseguida y el brote se seca.",
+            "palida": "¡Alcanzó el Día 7! Creció a oscuras consumiendo las reservas de la semilla, pero sin luz no pudo hacer la fotosíntesis y sus hojas salieron amarillas.",
+            "broteAlgodon": "¡Experimento completado en algodón! Con humedad constante, 20 °C y luz solar ha superado las 4 etapas de la germinación.",
+            "brote": "¡Experimento redondo en tierra de jardín! Con riego suave en cada etapa, 20 °C y luz solar para hacer la fotosíntesis, la planta creció sana y fuerte."
+          },
           "preguntaFinal": {
-            "enunciado": "Cuando el brote saca sus primeras hojas verdes, ¿para qué necesita recibir la luz?",
+            "enunciado": "Durante el Día 1 y el Día 3 la semilla puede germinar incluso con la cortina cerrada, pero en el Día 5 y 7 necesita sol. ¿Por qué?",
             "opciones": [
               {
                 "id": "semillas",
-                "nombre": "Para que las raíces salgan fuera de la tierra a caminar"
+                "nombre": "Porque las raíces solo salen cuando ven la luna por la ventana"
               },
               {
                 "id": "secar",
-                "nombre": "Para secar toda el agua del tallo y dejar la planta sin savia"
+                "nombre": "Porque el sol sirve para secar todas las hojas de la planta"
               },
               {
                 "id": "alimento",
-                "nombre": "Para fabricar su propio alimento en las hojas utilizando la luz, el agua y el aire"
+                "nombre": "Porque bajo tierra se alimenta de las reservas de la semilla, pero al sacar las hojas necesita luz para ponerse verde y fabricar su alimento"
               }
             ],
             "respuesta": "alimento",
             "frases": {
-              "alimento": "¡Excelente! La luz es energía que las hojas verdes usan junto con el agua y el aire para fabricar el alimento que necesita toda la planta.",
-              "semillas": "Las plantas viven fijas al suelo sujetas por la raíz; no se desplazan.",
-              "secar": "La planta necesita mantener su agua interna para transportar sustancias por el tallo."
+              "alimento": "¡Excelente! Mientras está bajo tierra usa las reservas de la semilla; cuando salen las hojas necesita la luz del sol para hacer la fotosíntesis.",
+              "semillas": "Las raíces crecen hacia abajo buscando humedad y no dependen de la luz para salir el primer día.",
+              "secar": "La luz del sol suave no seca las hojas: les da energía para hacer la fotosíntesis y fabricar su alimento."
             }
           }
         }
@@ -1131,7 +1384,7 @@
         },
         {
           "id": "barriga",
-          "nombre": "Barriga"
+          "nombre": "Abdomen"
         }
       ],
       "retos": [
@@ -1145,20 +1398,20 @@
           "frases": {
             "pecho": "¡Eso es! El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
             "cabeza": "En la cabeza está el cerebro. El corazón late más abajo, en el pecho.",
-            "barriga": "En la barriga trabaja el estómago. El corazón está más arriba, en el pecho."
+            "barriga": "En el abdomen trabaja el estómago. El corazón está más arriba, en el pecho."
           }
         },
         {
-          "id": "pulmones",
-          "nombre": "Los pulmones",
-          "pregunta": "¿Dónde están los pulmones para recibir el aire?",
-          "respuesta": "pecho",
-          "pista": "Son dos órganos esponjosos que se llenan de aire en el pecho.",
-          "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+          "id": "cerebro",
+          "nombre": "El cerebro",
+          "pregunta": "¿Dónde está protegido el cerebro?",
+          "respuesta": "cabeza",
+          "pista": "Está dentro de la cabeza, protegido por los huesos del cráneo.",
+          "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
           "frases": {
-            "pecho": "¡Muy bien! Los pulmones están en el pecho y se hinchan cada vez que entra el aire.",
-            "cabeza": "Por la nariz y la boca entra el aire, pero los pulmones lo reciben en el pecho.",
-            "barriga": "La barriga no guarda el aire que respiramos. Los pulmones están en el pecho."
+            "cabeza": "¡Muy bien! El cerebro está en la cabeza, protegido dentro del cráneo, y dirige todo el cuerpo.",
+            "pecho": "En el pecho late el corazón. El cerebro está arriba, en la cabeza.",
+            "barriga": "En el abdomen digerimos la comida. El cerebro piensa y dirige desde la cabeza."
           }
         },
         {
@@ -1166,12 +1419,12 @@
           "nombre": "El estómago",
           "pregunta": "¿Dónde trabaja el estómago cuando comemos?",
           "respuesta": "barriga",
-          "pista": "Cuando tragas un bocado, la comida baja hasta la barriga.",
+          "pista": "Cuando tragas un bocado, la comida baja hasta el abdomen.",
           "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
           "frases": {
-            "barriga": "¡Genial! El estómago está en la barriga y se encarga de empezar a deshacer la comida.",
-            "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta la barriga.",
-            "pecho": "En el pecho están el corazón y los pulmones. El estómago trabaja más abajo, en la barriga."
+            "barriga": "¡Genial! El estómago está en el abdomen y se encarga de empezar a deshacer la comida.",
+            "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta el abdomen.",
+            "pecho": "En el pecho está el corazón. El estómago trabaja más abajo, en el abdomen."
           }
         }
       ],
@@ -1193,7 +1446,7 @@
             },
             {
               "id": "barriga",
-              "nombre": "Barriga"
+              "nombre": "Abdomen"
             }
           ],
           "retos": [
@@ -1207,20 +1460,20 @@
               "frases": {
                 "pecho": "¡Eso es! El corazón está en el pecho y empuja la sangre por todo el cuerpo.",
                 "cabeza": "En la cabeza está el cerebro. El corazón late más abajo, en el pecho.",
-                "barriga": "En la barriga trabaja el estómago. El corazón está más arriba, en el pecho."
+                "barriga": "En el abdomen trabaja el estómago. El corazón está más arriba, en el pecho."
               }
             },
             {
-              "id": "pulmones",
-              "nombre": "Los pulmones",
-              "pregunta": "¿Dónde están los pulmones para recibir el aire?",
-              "respuesta": "pecho",
-              "pista": "Son dos órganos esponjosos que se llenan de aire en el pecho.",
-              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+              "id": "cerebro",
+              "nombre": "El cerebro",
+              "pregunta": "¿Dónde está protegido el cerebro?",
+              "respuesta": "cabeza",
+              "pista": "Está dentro de la cabeza, protegido por los huesos del cráneo.",
+              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
               "frases": {
-                "pecho": "¡Muy bien! Los pulmones están en el pecho y se hinchan cada vez que entra el aire.",
-                "cabeza": "Por la nariz y la boca entra el aire, pero los pulmones lo reciben en el pecho.",
-                "barriga": "La barriga no guarda el aire que respiramos. Los pulmones están en el pecho."
+                "cabeza": "¡Muy bien! El cerebro está en la cabeza, protegido dentro del cráneo, y dirige todo el cuerpo.",
+                "pecho": "En el pecho late el corazón. El cerebro está arriba, en la cabeza.",
+                "barriga": "En el abdomen digerimos la comida. El cerebro piensa y dirige desde la cabeza."
               }
             },
             {
@@ -1228,12 +1481,12 @@
               "nombre": "El estómago",
               "pregunta": "¿Dónde trabaja el estómago cuando comemos?",
               "respuesta": "barriga",
-              "pista": "Cuando tragas un bocado, la comida baja hasta la barriga.",
+              "pista": "Cuando tragas un bocado, la comida baja hasta el abdomen.",
               "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
               "frases": {
-                "barriga": "¡Genial! El estómago está en la barriga y se encarga de empezar a deshacer la comida.",
-                "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta la barriga.",
-                "pecho": "En el pecho están el corazón y los pulmones. El estómago trabaja más abajo, en la barriga."
+                "barriga": "¡Genial! El estómago está en el abdomen y se encarga de empezar a deshacer la comida.",
+                "cabeza": "En la boca masticamos la comida con los dientes, pero luego baja hasta el abdomen.",
+                "pecho": "En el pecho está el corazón. El estómago trabaja más abajo, en el abdomen."
               }
             }
           ]
@@ -1255,11 +1508,11 @@
             },
             {
               "id": "barriga",
-              "nombre": "Barriga"
+              "nombre": "Abdomen"
             },
             {
               "id": "extremidades",
-              "nombre": "Brazos y piernas"
+              "nombre": "Extremidades"
             }
           ],
           "retos": [
@@ -1273,8 +1526,8 @@
               "frases": {
                 "pecho": "¡Eso es! Está en el pecho. Ahora descubre cuál es su tarea.",
                 "cabeza": "En la cabeza está el cerebro. El corazón late en el pecho.",
-                "barriga": "En la barriga está el estómago. El corazón trabaja en el pecho.",
-                "extremidades": "La sangre llega a los brazos y las piernas, pero el corazón bombea desde el pecho."
+                "barriga": "En el abdomen está el estómago. El corazón trabaja en el pecho.",
+                "extremidades": "La sangre llega a las extremidades, pero el corazón bombea desde el pecho."
               },
               "adaptacion": {
                 "enunciado": "¿Cuál es la misión principal del corazón?",
@@ -1301,39 +1554,39 @@
               }
             },
             {
-              "id": "pulmones",
-              "nombre": "Los pulmones",
-              "pregunta": "¿Dónde están situados los pulmones?",
-              "respuesta": "pecho",
-              "pista": "Al tomar aire por la nariz notas cómo se ensancha tu pecho.",
-              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
+              "id": "cerebro",
+              "nombre": "El cerebro",
+              "pregunta": "¿Dónde está protegido el cerebro?",
+              "respuesta": "cabeza",
+              "pista": "Está dentro de la cabeza, resguardado por los huesos del cráneo.",
+              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
               "frases": {
-                "pecho": "¡Muy bien! Están en el pecho. Vamos con su pregunta.",
-                "cabeza": "El aire entra por la nariz, pero baja hasta los pulmones en el pecho.",
-                "barriga": "En la barriga se digiere la comida; el aire va a los pulmones en el pecho.",
-                "extremidades": "Los brazos y las piernas se mueven con músculos y huesos; los pulmones están en el pecho."
+                "cabeza": "¡Bravo! El cerebro está en la cabeza. Descubre ahora qué hace.",
+                "pecho": "En el pecho están el corazón y los pulmones. El cerebro está en la cabeza.",
+                "barriga": "En el abdomen digerimos los alimentos. El cerebro dirige desde la cabeza.",
+                "extremidades": "Las extremidades obedecen las órdenes que les envía el cerebro desde la cabeza."
               },
               "adaptacion": {
-                "enunciado": "¿Qué hacemos gracias a los pulmones?",
+                "enunciado": "¿De qué se encarga el cerebro en nuestro cuerpo?",
                 "opciones": [
                   {
-                    "id": "pensar",
-                    "nombre": "Recordar canciones y aprender juegos nuevos"
+                    "id": "digerir",
+                    "nombre": "Mezcla la comida con jugos dentro del abdomen"
                   },
                   {
-                    "id": "doblar",
-                    "nombre": "Doblar las rodillas y los codos al saltar"
+                    "id": "dirigir",
+                    "nombre": "Recibe la información de los sentidos, piensa y envía órdenes para movernos"
                   },
                   {
-                    "id": "respirar",
-                    "nombre": "Tomar el oxígeno del aire que respiramos y expulsar el aire que ya no necesitamos"
+                    "id": "bombear",
+                    "nombre": "Empuja la sangre con latidos desde el centro del pecho"
                   }
                 ],
-                "respuesta": "respirar",
+                "respuesta": "dirigir",
                 "frases": {
-                  "respirar": "¡Muy bien! Los pulmones pasan a la sangre el oxígeno del aire cuando inspiramos.",
-                  "pensar": "De pensar, recordar y aprender se encarga el cerebro.",
-                  "doblar": "Para doblar rodillas y codos utilizamos las articulaciones y los músculos."
+                  "dirigir": "¡Así es! El cerebro interpreta lo que captamos y coordina nuestros pensamientos y movimientos.",
+                  "digerir": "De mezclar la comida en el abdomen se encarga el estómago.",
+                  "bombear": "El órgano que late en el pecho para impulsar la sangre es el corazón."
                 }
               }
             },
@@ -1342,13 +1595,13 @@
               "nombre": "El estómago",
               "pregunta": "¿En qué zona del cuerpo trabaja el estómago?",
               "respuesta": "barriga",
-              "pista": "Está en la barriga, donde llega la comida después de tragarla.",
+              "pista": "Está en el abdomen, donde llega la comida después de tragarla.",
               "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
               "frases": {
-                "barriga": "¡Genial! Está en la barriga. Responde ahora para qué sirve.",
-                "cabeza": "En la cabeza masticamos con la boca, pero el estómago está en la barriga.",
-                "pecho": "La comida cruza el pecho por un tubo, pero se detiene a mezclarse en la barriga.",
-                "extremidades": "En los brazos y las piernas no digerimos la comida; el estómago está en la barriga."
+                "barriga": "¡Genial! Está en el abdomen. Responde ahora para qué sirve.",
+                "cabeza": "En la cabeza masticamos con la boca, pero el estómago está en el abdomen.",
+                "pecho": "La comida cruza el pecho por un tubo, pero se detiene a mezclarse en el abdomen.",
+                "extremidades": "En las extremidades no digerimos la comida; el estómago está en el abdomen."
               },
               "adaptacion": {
                 "enunciado": "¿Qué hace el estómago con los alimentos que comemos?",
@@ -1375,39 +1628,39 @@
               }
             },
             {
-              "id": "cerebro",
-              "nombre": "El cerebro",
-              "pregunta": "¿Dónde está protegido el cerebro?",
-              "respuesta": "cabeza",
-              "pista": "Está dentro de la cabeza, resguardado por los huesos del cráneo.",
-              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
+              "id": "pulmones",
+              "nombre": "Los pulmones",
+              "pregunta": "¿Dónde están situados los pulmones?",
+              "respuesta": "pecho",
+              "pista": "Al tomar aire por la nariz notas cómo se ensancha tu pecho.",
+              "curiosidad": "Al inspirar, el pecho se ensancha porque los pulmones se llenan de aire como dos globos suaves.",
               "frases": {
-                "cabeza": "¡Bravo! El cerebro está en la cabeza. Descubre ahora qué hace.",
-                "pecho": "En el pecho están el corazón y los pulmones. El cerebro está en la cabeza.",
-                "barriga": "En la barriga digerimos los alimentos. El cerebro dirige desde la cabeza.",
-                "extremidades": "Los brazos y las piernas obedecen las órdenes que les envía el cerebro desde la cabeza."
+                "pecho": "¡Muy bien! Están en el pecho. Vamos con su pregunta.",
+                "cabeza": "El aire entra por la nariz, pero baja hasta los pulmones en el pecho.",
+                "barriga": "En el abdomen se digiere la comida; el aire va a los pulmones en el pecho.",
+                "extremidades": "Las extremidades se mueven con músculos y huesos; los pulmones están en el pecho."
               },
               "adaptacion": {
-                "enunciado": "¿De qué se encarga el cerebro en nuestro cuerpo?",
+                "enunciado": "¿Qué hacemos gracias a los pulmones?",
                 "opciones": [
                   {
-                    "id": "digerir",
-                    "nombre": "Mezcla la comida con jugos dentro de la barriga"
+                    "id": "pensar",
+                    "nombre": "Recordar canciones y aprender juegos nuevos"
                   },
                   {
-                    "id": "dirigir",
-                    "nombre": "Recibe la información de los cinco sentidos, piensa y envía órdenes para movernos"
+                    "id": "doblar",
+                    "nombre": "Doblar las rodillas y los codos al saltar"
                   },
                   {
-                    "id": "bombear",
-                    "nombre": "Empuja la sangre con latidos desde el centro del pecho"
+                    "id": "respirar",
+                    "nombre": "Tomar el oxígeno del aire que respiramos y expulsar el aire que ya no necesitamos"
                   }
                 ],
-                "respuesta": "dirigir",
+                "respuesta": "respirar",
                 "frases": {
-                  "dirigir": "¡Así es! El cerebro interpreta lo que captan los sentidos y coordina nuestros pensamientos y movimientos.",
-                  "digerir": "De mezclar la comida en la barriga se encarga el estómago.",
-                  "bombear": "El órgano que late en el pecho para impulsar la sangre es el corazón."
+                  "respirar": "¡Muy bien! Los pulmones pasan a la sangre el oxígeno del aire cuando inspiramos.",
+                  "pensar": "De pensar, recordar y aprender se encarga el cerebro.",
+                  "doblar": "Para doblar rodillas y codos utilizamos las articulaciones y los músculos."
                 }
               }
             },
@@ -1416,13 +1669,13 @@
               "nombre": "Músculos y huesos",
               "pregunta": "¿Qué partes movemos al correr, saltar o agarrar objetos con huesos y músculos?",
               "respuesta": "extremidades",
-              "pista": "Son los brazos y las piernas, que se doblan gracias a las articulaciones.",
+              "pista": "Son las extremidades (brazos y piernas), que se doblan gracias a las articulaciones.",
               "curiosidad": "Los músculos tiran de los huesos como si fueran cuerdas elásticas para que podamos doblar codos y rodillas.",
               "frases": {
-                "extremidades": "¡Estupendo! Con los brazos y las piernas nos desplazamos y agarramos cosas.",
-                "cabeza": "El cráneo protege el cerebro, pero para correr y agarrar usamos los brazos y las piernas.",
+                "extremidades": "¡Estupendo! Con las extremidades nos desplazamos y agarramos cosas.",
+                "cabeza": "El cráneo protege el cerebro, pero para correr y agarrar usamos las extremidades.",
                 "pecho": "Las costillas protegen el pecho, pero corremos y saltamos con las extremidades.",
-                "barriga": "La barriga no tiene articulaciones para caminar o agarrar objetos."
+                "barriga": "El abdomen no tiene las articulaciones con las que caminamos o agarramos objetos."
               },
               "adaptacion": {
                 "enunciado": "¿Cómo logran los huesos y los músculos que podamos movernos?",
@@ -1467,11 +1720,11 @@
             },
             {
               "id": "barriga",
-              "nombre": "Barriga"
+              "nombre": "Abdomen"
             },
             {
               "id": "extremidades",
-              "nombre": "Brazos y piernas"
+              "nombre": "Extremidades"
             }
           ],
           "retos": [
@@ -1513,6 +1766,80 @@
               }
             },
             {
+              "id": "cerebro",
+              "nombre": "El cerebro",
+              "pregunta": "Órgano principal de la función de relación que interpreta los sentidos y elabora respuestas. ¿Dónde está?",
+              "respuesta": "cabeza",
+              "pista": "Está protegido dentro del cráneo, en la cabeza.",
+              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
+              "frases": {
+                "cabeza": "¡Eso es! Está en el interior del cráneo. Vamos con su reto.",
+                "pecho": "En el pecho están los órganos respiratorios y el corazón; el cerebro está en la cabeza.",
+                "barriga": "En el abdomen se realiza la digestión; el cerebro dirige desde la cabeza.",
+                "extremidades": "A las extremidades llegan los nervios, pero el cerebro está en la cabeza."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo coordina el sistema nervioso la función de relación cuando tocas algo o ves una pelota?",
+                "opciones": [
+                  {
+                    "id": "relacion",
+                    "nombre": "Los órganos de los sentidos envían la información por los nervios al cerebro y este manda la orden a los músculos"
+                  },
+                  {
+                    "id": "pulmon",
+                    "nombre": "Los ojos bombean sangre directamente hasta los talones sin pasar por los nervios"
+                  },
+                  {
+                    "id": "estomago",
+                    "nombre": "El estómago decide qué color tiene la pelota y mueve los huesos solo"
+                  }
+                ],
+                "respuesta": "relacion",
+                "frases": {
+                  "relacion": "¡Magnífico! Sentidos, sistema nervioso y aparato locomotor cooperan en la función de relación.",
+                  "pulmon": "Los ojos captan la luz; quien envía las señales al cerebro son los nervios.",
+                  "estomago": "El estómago participa en la nutrición, mientras que el cerebro dirige la función de relación."
+                }
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "El estómago",
+              "pregunta": "Órgano en forma de bolsa que segrega jugos para descomponer los alimentos. ¿Dónde está?",
+              "respuesta": "barriga",
+              "pista": "Está situado en la parte superior del abdomen.",
+              "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
+              "frases": {
+                "barriga": "¡Genial! Está en el abdomen. Resuelve ahora su pregunta.",
+                "cabeza": "La digestión empieza en la boca, pero el estómago está en el abdomen.",
+                "pecho": "El esófago atraviesa el pecho, pero desemboca en el estómago dentro del abdomen.",
+                "extremidades": "Los nutrientes llegan a los músculos de las extremidades por la sangre tras la digestión."
+              },
+              "adaptacion": {
+                "enunciado": "¿Con qué aparato trabaja en equipo el aparato digestivo para que los nutrientes lleguen a todo el cuerpo?",
+                "opciones": [
+                  {
+                    "id": "equipo",
+                    "nombre": "Los nutrientes pasan a la sangre y el aparato circulatorio los reparte a todas las células"
+                  },
+                  {
+                    "id": "aislado",
+                    "nombre": "Los alimentos se quedan guardados para siempre dentro del estómago sin salir"
+                  },
+                  {
+                    "id": "oido",
+                    "nombre": "Los nutrientes viajan directamente por las orejas hasta el exterior"
+                  }
+                ],
+                "respuesta": "equipo",
+                "frases": {
+                  "equipo": "¡Bravo! Nuestros aparatos trabajan en equipo: el digestivo extrae los nutrientes y el circulatorio los reparte por la sangre.",
+                  "aislado": "Los nutrientes no se quedan quietos en el estómago: pasan a la sangre para alimentar todo el cuerpo.",
+                  "oido": "Las orejas forman parte del sentido del oído, no del transporte de nutrientes."
+                }
+              }
+            },
+            {
               "id": "pulmones",
               "nombre": "Los pulmones",
               "pregunta": "Dos órganos esponjosos donde el oxígeno del aire pasa a la sangre. ¿Dónde se encuentran?",
@@ -1550,91 +1877,17 @@
               }
             },
             {
-              "id": "estomago",
-              "nombre": "El estómago",
-              "pregunta": "Órgano en forma de bolsa que segrega jugos para descomponer los alimentos. ¿Dónde está?",
-              "respuesta": "barriga",
-              "pista": "Está situado en el abdomen, en la zona de la barriga.",
-              "curiosidad": "El estómago mezcla y deshace los alimentos para que el cuerpo pueda aprovechar sus nutrientes.",
-              "frases": {
-                "barriga": "¡Genial! Está en el abdomen. Resuelve ahora su pregunta.",
-                "cabeza": "La digestión empieza en la boca, pero el estómago está en la barriga.",
-                "pecho": "El esófago atraviesa el pecho, pero desemboca en el estómago dentro de la barriga.",
-                "extremidades": "Los nutrientes llegan a los músculos de brazos y piernas por la sangre tras la digestión."
-              },
-              "adaptacion": {
-                "enunciado": "¿Con qué aparato trabaja en equipo el aparato digestivo para que los nutrientes lleguen a todo el cuerpo?",
-                "opciones": [
-                  {
-                    "id": "equipo",
-                    "nombre": "Los nutrientes pasan a la sangre y el aparato circulatorio los reparte a todas las células"
-                  },
-                  {
-                    "id": "aislado",
-                    "nombre": "Los alimentos se quedan guardados para siempre dentro del estómago sin salir"
-                  },
-                  {
-                    "id": "oido",
-                    "nombre": "Los nutrientes viajan directamente por las orejas hasta el exterior"
-                  }
-                ],
-                "respuesta": "equipo",
-                "frases": {
-                  "equipo": "¡Bravo! Nuestros aparatos trabajan en equipo: el digestivo extrae los nutrientes y el circulatorio los reparte por la sangre.",
-                  "aislado": "Los nutrientes no se quedan quietos en el estómago: pasan a la sangre para alimentar todo el cuerpo.",
-                  "oido": "Las orejas forman parte del sentido del oído, no del transporte de nutrientes."
-                }
-              }
-            },
-            {
-              "id": "cerebro",
-              "nombre": "El cerebro",
-              "pregunta": "Órgano principal de la función de relación que interpreta los sentidos y elabora respuestas. ¿Dónde está?",
-              "respuesta": "cabeza",
-              "pista": "Está protegido dentro del cráneo, en la cabeza.",
-              "curiosidad": "Aunque estés durmiendo por la noche, tu cerebro sigue activo y haciendo que sueñes.",
-              "frases": {
-                "cabeza": "¡Eso es! Está en el interior del cráneo. Vamos con su reto.",
-                "pecho": "En el pecho están los órganos respiratorios y el corazón; el cerebro está en la cabeza.",
-                "barriga": "En la barriga se realiza la digestión; el cerebro dirige desde la cabeza.",
-                "extremidades": "A los brazos y piernas llegan los nervios, pero el cerebro está en la cabeza."
-              },
-              "adaptacion": {
-                "enunciado": "¿Cómo coordina el sistema nervioso la función de relación cuando tocas algo o ves una pelota?",
-                "opciones": [
-                  {
-                    "id": "relacion",
-                    "nombre": "Los órganos de los sentidos envían la información por los nervios al cerebro y este manda la orden a los músculos"
-                  },
-                  {
-                    "id": "pulmon",
-                    "nombre": "Los ojos bombean sangre directamente hasta los talones sin pasar por los nervios"
-                  },
-                  {
-                    "id": "estomago",
-                    "nombre": "El estómago decide qué color tiene la pelota y mueve los huesos solo"
-                  }
-                ],
-                "respuesta": "relacion",
-                "frases": {
-                  "relacion": "¡Magnífico! Sentidos, sistema nervioso y aparato locomotor cooperan en la función de relación.",
-                  "pulmon": "Los ojos captan la luz; quien envía las señales al cerebro son los nervios.",
-                  "estomago": "El estómago participa en la nutrición, mientras que el cerebro dirige la función de relación."
-                }
-              }
-            },
-            {
               "id": "esqueleto",
               "nombre": "Músculos y huesos",
               "pregunta": "Conjunto de huesos, articulaciones y músculos que ejecutan el desplazamiento y el agarre. ¿Dónde destaca?",
               "respuesta": "extremidades",
-              "pista": "Permite que los brazos y las piernas se flexionen y extiendan.",
+              "pista": "Permite que las extremidades (brazos y piernas) se flexionen y extiendan.",
               "curiosidad": "Un hueso y un músculo pueden mover el brazo de un modo parecido a una palanca gracias a articulaciones como el codo.",
               "frases": {
-                "extremidades": "¡Estupendo! En los brazos y las piernas vemos en acción huesos, articulaciones y músculos.",
+                "extremidades": "¡Estupendo! En las extremidades vemos en acción huesos, articulaciones y músculos.",
                 "cabeza": "Los huesos del cráneo son fijos para proteger el cerebro; las extremidades nos permiten desplazarnos.",
                 "pecho": "Las costillas protegen corazón y pulmones; las extremidades realizan la marcha y el agarre.",
-                "barriga": "En la barriga hay músculos abdominales, pero las articulaciones para caminar y agarrar están en las extremidades."
+                "barriga": "En el abdomen hay músculos abdominales, pero las articulaciones para caminar y agarrar están en las extremidades."
               },
               "adaptacion": {
                 "enunciado": "¿Qué aparato forman en conjunto el esqueleto y la musculatura?",
@@ -1661,39 +1914,39 @@
               }
             },
             {
-              "id": "sentidos",
-              "nombre": "Los cinco sentidos",
-              "pregunta": "Conjunto de órganos receptores (vista, oído, olfato, gusto y tacto) donde se concentran ojos, oídos, nariz y lengua. ¿Dónde se agrupan la mayoría?",
-              "respuesta": "cabeza",
-              "pista": "Fíjate en dónde tenemos los ojos, los oídos, la nariz y la lengua.",
-              "curiosidad": "La piel es el órgano del sentido del tacto y cubre todo nuestro cuerpo, mientras que los otros cuatro sentidos están en la cabeza.",
+              "id": "intestinos",
+              "nombre": "Los intestinos",
+              "pregunta": "Conductos muy largos y plegados (intestino delgado y grueso) donde se absorben los nutrientes y el agua tras salir del estómago. ¿Dónde se alojan?",
+              "respuesta": "barriga",
+              "pista": "Están muy bien doblados ocupando gran parte del abdomen, justo debajo del estómago.",
+              "curiosidad": "El intestino delgado mide varios metros y tiene millones de pequeños pliegues para absorber los nutrientes y pasarlos a la sangre.",
               "frases": {
-                "cabeza": "¡Muy bien! En la cabeza están los ojos, los oídos, la nariz y la lengua, muy cerca del cerebro. Vamos con su reto.",
-                "pecho": "Aunque la piel del pecho siente el tacto, los ojos, oídos, nariz y lengua están en la cabeza.",
-                "barriga": "En la barriga están los órganos digestivos; la mayoría de los órganos de los sentidos están en la cabeza.",
-                "extremidades": "Con las manos tocamos objetos gracias a la piel, pero cuatro de los cinco sentidos residen en la cabeza."
+                "barriga": "¡Muy bien! Los intestinos se alojan plegados en el abdomen, debajo del estómago. Vamos con su reto.",
+                "cabeza": "En la cabeza empieza el tubo digestivo por la boca, pero los intestinos están en el abdomen.",
+                "pecho": "En el pecho están los pulmones y el corazón; los intestinos ocupan la cavidad del abdomen.",
+                "extremidades": "Las extremidades reciben por la sangre los nutrientes que antes han absorbido los intestinos en el abdomen."
               },
               "adaptacion": {
-                "enunciado": "¿Cómo viaja la información que captan los órganos de los sentidos hasta el cerebro?",
+                "enunciado": "¿Qué función fundamental cumplen el intestino delgado y el intestino grueso en el aparato digestivo?",
                 "opciones": [
                   {
-                    "id": "nervios",
-                    "nombre": "Los receptores captan estímulos del exterior y envían señales por los nervios hasta el cerebro"
+                    "id": "absorber",
+                    "nombre": "Absorber los nutrientes para pasarlos a la sangre y recuperar el agua antes de expulsar los restos que el cuerpo no necesita"
                   },
                   {
-                    "id": "huesos",
-                    "nombre": "Los sonidos y los colores viajan por el interior de los huesos hasta el estómago"
+                    "id": "inspirar",
+                    "nombre": "Hacer entrar el aire desde la nariz y separar el oxígeno en los alvéolos"
                   },
                   {
-                    "id": "aire",
-                    "nombre": "La luz entra por los pulmones y se mezcla con los alimentos"
+                    "id": "impulso",
+                    "nombre": "Enviar órdenes eléctricas por los nervios para doblar las articulaciones"
                   }
                 ],
-                "respuesta": "nervios",
+                "respuesta": "absorber",
                 "frases": {
-                  "nervios": "¡Sobresaliente! Los órganos de los sentidos tienen receptores que transforman la luz, el sonido o el tacto en señales que viajan por los nervios al cerebro.",
-                  "huesos": "Los huesos sostienen el cuerpo; quienes conducen los mensajes de los sentidos al cerebro son los nervios.",
-                  "aire": "Los pulmones reciben el aire que respiramos; la luz la captan los ojos y la envían por el nervio óptico al cerebro."
+                  "absorber": "¡Sobresaliente! En el intestino delgado los nutrientes pasan a la sangre y en el intestino grueso se absorbe el agua antes de eliminar los desechos.",
+                  "inspirar": "Captar el oxígeno del aire en los alvéolos es tarea de los pulmones en el aparato respiratorio.",
+                  "impulso": "Enviar órdenes por los nervios corresponde al cerebro y al sistema nervioso."
                 }
               }
             }
@@ -1747,34 +2000,75 @@
           "id": "facil",
           "nombre": "Fácil",
           "curso": "1º-2º",
-          "resumen": "Ordena los cuatro pasos desde el comienzo hasta los cuidados del bebé."
+          "resumen": "Ordena las cuatro viñetas ilustradas desde el comienzo hasta los cuidados del bebé.",
+          "intro": "Observa los dibujos y coloca en orden las 4 viñetas de la historia de un bebé, desde el inicio hasta los cuidados en familia.",
+          "curiosidad": "El ombligo que tenemos en el abdomen es la cicatriz del cordón por el que nos llegaba el alimento antes de nacer."
         },
         {
           "id": "medio",
           "nombre": "Medio",
           "curso": "3º-4º",
-          "resumen": "Ordena las etapas y responde qué necesita el bebé al nacer.",
+          "resumen": "Ordena las 5 fases desde la primera célula y el desarrollo en el útero hasta los primeros pasos del bebé.",
+          "intro": "Observa las escenas y ordena paso a paso cómo empieza nuestra vida en el útero materno, cómo nacemos y cómo crecemos en nuestros primeros años.",
+          "curiosidad": "Hacia el segundo mes el embrión mide como una habichuela y su corazón ya late; al nacer aún no tenemos dientes visibles y a los pocos meses salen los de leche.",
+          "pasos": [
+            {
+              "id": "celulas",
+              "nombre": "Fecundación: dos células forman una"
+            },
+            {
+              "id": "embrion",
+              "nombre": "Primeros meses: embrión con latido"
+            },
+            {
+              "id": "feto",
+              "nombre": "El feto crece con el cordón umbilical"
+            },
+            {
+              "id": "nace",
+              "nombre": "Nacimiento y primera respiración"
+            },
+            {
+              "id": "bebe",
+              "nombre": "Bebé: leche, dientes y primeros pasos"
+            }
+          ],
+          "respuesta": [
+            "celulas",
+            "embrion",
+            "feto",
+            "nace",
+            "bebe"
+          ],
+          "frases": {
+            "incompleto": "Tienen que estar las cinco fases del comienzo de la vida, cada una una sola vez.",
+            "mal0": "Piensa en el origen: todo comienza cuando dos células reproductoras se unen para formar la primera célula.",
+            "mal1": "Tras formarse la primera célula, en los primeros meses se desarrolla el embrión y empieza a latir su diminuto corazón.",
+            "mal2": "Después de ser embrión, a partir del tercer mes el feto crece y recibe alimento por el cordón umbilical antes de nacer.",
+            "mal3": "Antes de tomar leche en brazos y dar sus primeros pasos fuera, el bebé tiene que nacer y respirar aire.",
+            "bien": "¡Excelente! Has ordenado paso a paso cómo empieza una vida desde la primera célula hasta los primeros pasos."
+          },
           "preguntaFinal": {
-            "enunciado": "Como el ser humano es un mamífero vivíparo, ¿cómo empieza su desarrollo y qué necesita al nacer?",
+            "enunciado": "Durante los nueve meses en el útero materno y tras nacer, ¿cómo nos desarrollamos los seres humanos?",
             "opciones": [
               {
                 "id": "huevo",
-                "nombre": "Nace de un huevo con cáscara dura en un nido y busca comida solo el primer día"
+                "nombre": "Crecemos dentro de un huevo con cáscara dura fuera de la madre"
               },
               {
                 "id": "viviparo",
-                "nombre": "Crece protegido dentro del vientre materno y al nacer necesita alimento, abrigo y muchos cuidados"
+                "nombre": "Somos mamíferos vivíparos: nos formamos en el útero alimentados por el cordón umbilical y al nacer tomamos leche y vamos creciendo"
               },
               {
                 "id": "semilla",
-                "nombre": "Saca raíces en la tierra y fabrica su alimento con la luz del sol"
+                "nombre": "Hacemos metamorfosis con alas como las mariposas al salir del útero"
               }
             ],
             "respuesta": "viviparo",
             "frases": {
-              "viviparo": "¡Muy bien! Los seres humanos somos mamíferos vivíparos y durante la infancia necesitamos el cuidado y el cariño de nuestra familia.",
-              "huevo": "Nacer de un huevo con cáscara es propio de animales ovíparos como las aves, no del ser humano.",
-              "semilla": "Sacar raíces y fabricar alimento con la luz es propio de las plantas."
+              "viviparo": "¡Muy bien! Somos mamíferos vivíparos: pasamos de embrión a feto gracias al cordón umbilical y, tras nacer, crecemos por las etapas de la vida.",
+              "huevo": "Desarrollarse en un huevo con cáscara dura es propio de animales ovíparos como las aves o las tortugas.",
+              "semilla": "Los seres humanos no hacemos metamorfosis; nos formamos en el útero materno y crecemos poco a poco."
             }
           }
         },
@@ -1782,28 +2076,73 @@
           "id": "dificil",
           "nombre": "Difícil",
           "curso": "5º-6º",
-          "resumen": "Ordena el proceso completo y resuelve el reto sobre las células.",
+          "resumen": "Ordena las 6 fases desde el cigoto y su multiplicación celular hasta el crecimiento por las etapas de la vida.",
+          "intro": "Observa las tarjetas y ordena cómo 2 células se unen en 1 sola (el cigoto), cómo se multiplica para formar el embrión y el feto, y cómo crecemos tras nacer.",
+          "curiosidad": "Cuando el cigoto se divide no se deshace su unión: hace copias idénticas de sí mismo (de 1 célula salen 2, luego 4, 8, 16...) hasta formar billones de células.",
+          "pasos": [
+            {
+              "id": "celulas",
+              "nombre": "Fecundación: 2 células se unen en 1 (cigoto)"
+            },
+            {
+              "id": "division",
+              "nombre": "Multiplicación celular: de 1 a muchas copias"
+            },
+            {
+              "id": "tejidos",
+              "nombre": "Tejidos y primeros órganos (embrión)"
+            },
+            {
+              "id": "utero",
+              "nombre": "Feto con placenta y cordón umbilical"
+            },
+            {
+              "id": "nace",
+              "nombre": "Nacimiento y primera respiración"
+            },
+            {
+              "id": "organismo",
+              "nombre": "Crecimiento: infancia, adolescencia y madurez"
+            }
+          ],
+          "respuesta": [
+            "celulas",
+            "division",
+            "tejidos",
+            "utero",
+            "nace",
+            "organismo"
+          ],
+          "frases": {
+            "incompleto": "Tienen que estar las seis fases biológicas, cada una una sola vez.",
+            "mal0": "Fíjate en el origen microscópico: primero se unen 2 células reproductoras para formar 1 sola célula nueva (el cigoto).",
+            "mal1": "Una vez formada esa primera célula (cigoto), no se separa: empieza a multiplicarse haciendo copias (2, 4, 8 células).",
+            "mal2": "Al multiplicarse en muchas copias, las células se especializan y forman los tejidos y primeros órganos del embrión.",
+            "mal3": "Con los primeros órganos ya formados, el feto madura unido a la placenta por el cordón umbilical antes de nacer.",
+            "mal4": "Antes de crecer por la infancia, la adolescencia y la madurez, el bebé nace y llena de aire sus pulmones por primera vez.",
+            "bien": "¡Sobresaliente! De 2 células nace 1 cigoto, que se multiplica para formar tejidos y órganos, nace como bebé y crece a lo largo de la vida."
+          },
           "preguntaFinal": {
-            "enunciado": "El primer paso ocurre cuando se unen dos células muy pequeñas. ¿Qué es una célula?",
+            "enunciado": "Si todo empieza cuando 2 células se unen en 1 sola (el cigoto), ¿por qué luego hablamos de multiplicación o división celular?",
             "opciones": [
               {
                 "id": "hueso",
-                "nombre": "Es el hueso más largo que tenemos en las piernas para correr"
+                "nombre": "Porque las dos células iniciales se arrepienten y se vuelven a separar deshaciendo la unión"
               },
               {
                 "id": "organo",
-                "nombre": "Es una bolsa grande del abdomen donde se mastica la comida"
+                "nombre": "Porque una única célula gigante se hincha como un globo sin multiplicarse nunca"
               },
               {
                 "id": "unidad",
-                "nombre": "Es la parte viva más pequeña de la que están formados todos los seres vivos"
+                "nombre": "Porque esa primera célula nueva hace copias de sí misma (1 pasa a 2, 4, 8...) que se agrupan en tejidos, órganos y sistemas"
               }
             ],
             "respuesta": "unidad",
             "frases": {
-              "unidad": "¡Exacto! La célula es la unidad viva más pequeña; hace falta un microscopio para verla y nuestro cuerpo está formado por millones de ellas.",
-              "hueso": "Los huesos son órganos rígidos del esqueleto, formados a su vez por muchísimas células.",
-              "organo": "Una célula es microscópica; muchos millones de células juntas forman los tejidos y los órganos."
+              "unidad": "¡Exacto! Dividirse en biología significa multiplicarse: la primera célula se duplica una y otra vez para construir tejidos y órganos.",
+              "hueso": "La unión no se revierte: el cigoto es una célula nueva que se duplica para crear cada vez más células.",
+              "organo": "Las células son microscópicas; para formar el cuerpo necesitan multiplicarse en millones de copias."
             }
           }
         }

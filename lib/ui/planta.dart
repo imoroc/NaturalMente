@@ -1,3 +1,5 @@
+import 'package:naturalmente/idiomas/idioma.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -108,12 +110,14 @@ class PlantaHerbario extends StatelessWidget {
                         : 'Elige una pieza';
                     return Semantics(
                       label:
-                          'Zona ${entrada.value}. $estado${consultable ? ". Abrir ficha" : ""}',
+                          '${context.traducir('Zona ${entrada.value}')}. ${context.traducir(estado)}${consultable ? context.traducir('. Abrir ficha') : ""}',
                       button: true,
                       child: Tooltip(
-                        message: consultable
-                            ? 'Consultar ${entrada.value.toLowerCase()}'
-                            : estado,
+                        message: context.traducir(
+                          consultable
+                              ? 'Consultar ${entrada.value.toLowerCase()}'
+                              : estado,
+                        ),
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(

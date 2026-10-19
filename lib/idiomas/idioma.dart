@@ -17,8 +17,12 @@ class Idioma extends ChangeNotifier {
 
   static Future<Idioma> abrir() async {
     final preferencias = await SharedPreferences.getInstance();
-    final textos = jsonDecode(await rootBundle.loadString('content/en.json'))
-        as Map<String, dynamic>;
+    final datos = await rootBundle.load('content/en.json');
+    final textos = jsonDecode(
+      utf8.decode(
+        datos.buffer.asUint8List(datos.offsetInBytes, datos.lengthInBytes),
+      ),
+    ) as Map<String, dynamic>;
     return Idioma(preferencias, textos.cast<String, String>());
   }
 
@@ -39,13 +43,13 @@ class Idioma extends ChangeNotifier {
   String _traducir(String texto) {
     final exacta = traducciones[texto];
     if (exacta != null) return exacta;
-    // Los títulos del álbum usan las mismas traducciones en mayúsculas.
-    if (texto == texto.toUpperCase()) {
-      for (final entrada in traducciones.entries) {
-        if (entrada.key.toUpperCase() == texto) {
-          return entrada.value.toUpperCase();
-        }
-      }
+    final sinMayusculas = _minusculas[texto.toLowerCase()];
+    if (sinMayusculas != null) {
+      return texto == texto.toUpperCase()
+          ? sinMayusculas.toUpperCase()
+          : texto == texto.toLowerCase()
+          ? sinMayusculas.toLowerCase()
+          : sinMayusculas;
     }
     for (final plantilla in _plantillas) {
       final coincidencia = plantilla.$1.firstMatch(texto);
@@ -55,13 +59,25 @@ class Idioma extends ChangeNotifier {
         });
       }
     }
-    // Composiciones de etiquetas, listas y mensajes de respuesta con pista.
-    for (final separador in [' · ', '\n', ', ', '. ']) {
+    // Una respuesta y su pista siguen siendo dos textos del catálogo.
+    for (final entrada in traducciones.entries) {
+      if (texto.startsWith('${entrada.key} ') && entrada.key.endsWith('.')) {
+        return '${entrada.value} ${_traducir(texto.substring(entrada.key.length + 1))}';
+      }
+    }
+    final numerada = RegExp(r'^(\d+)\. (.+)$').firstMatch(texto);
+    if (numerada != null) {
+      return '${numerada[1]}. ${_traducir(numerada[2]!)}';
+    }
+    // Composiciones de etiquetas y listas.
+    for (final separador in [' · ', '\n', ', ']) {
       if (texto.contains(separador)) {
         final partes = texto.split(separador);
         final traducidas = partes.map(_traducir).toList();
-        if (List.generate(partes.length, (i) => partes[i] != traducidas[i])
-            .any((cambio) => cambio)) {
+        if (List.generate(
+          partes.length,
+          (i) => partes[i] != traducidas[i],
+        ).any((cambio) => cambio)) {
           return traducidas.join(separador);
         }
       }
@@ -69,11 +85,30 @@ class Idioma extends ChangeNotifier {
     return texto;
   }
 
-  late final List<(RegExp, String)> _plantillas = [
+  late final Map<String, String> _minusculas = {
     for (final entrada in traducciones.entries)
+      entrada.key.toLowerCase(): entrada.value,
+  };
+
+  // Las frases más concretas se prueban antes que sus prefijos con parámetros.
+  late final List<MapEntry<String, String>> _entradasPlantilla =
+      traducciones.entries
+          .where((e) => e.key.contains(RegExp(r'\{\d+\}')))
+          .toList()
+        ..sort(
+          (a, b) => b.key
+              .replaceAll(RegExp(r'\{\d+\}'), '')
+              .length
+              .compareTo(a.key.replaceAll(RegExp(r'\{\d+\}'), '').length),
+        );
+
+  late final List<(RegExp, String)> _plantillas = [
+    for (final entrada in _entradasPlantilla)
       if (entrada.key.contains(RegExp(r'\{\d+\}')))
         (
-          RegExp('^${entrada.key.split(RegExp(r'\{\d+\}')).map(RegExp.escape).join('(.*?)')}\$'),
+          RegExp(
+            '^${entrada.key.split(RegExp(r'\{\d+\}')).map(RegExp.escape).join('(.*?)')}\$',
+          ),
           entrada.value,
         ),
   ];
@@ -88,5 +123,6 @@ class IdiomaScope extends InheritedNotifier<Idioma> {
 }
 
 extension TraduccionContext on BuildContext {
-  String traducir(String texto) => IdiomaScope.of(this)?.traducir(texto) ?? texto;
+  String traducir(String texto) =>
+      IdiomaScope.of(this)?.traducir(texto) ?? texto;
 }

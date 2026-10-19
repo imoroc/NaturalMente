@@ -23,9 +23,15 @@ class SelectorIdioma extends StatelessWidget {
         onSelected: (codigo) async {
           final guardado = await idioma.elegir(codigo);
           if (!guardado && context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(context.traducir('No se ha podido guardar el idioma. Inténtalo de nuevo.')),
-            ));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  context.traducir(
+                    'No se ha podido guardar el idioma. Inténtalo de nuevo.',
+                  ),
+                ),
+              ),
+            );
           }
         },
         itemBuilder: (context) => [
@@ -48,11 +54,19 @@ class SelectorIdioma extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.translate_rounded, color: Color(0xFF15803D), size: 20),
+              const Icon(
+                Icons.translate_rounded,
+                color: Color(0xFF15803D),
+                size: 20,
+              ),
               const SizedBox(width: 6),
-              Text(idioma.codigo.toUpperCase(), style: const TextStyle(
-                color: Color(0xFF15803D), fontWeight: FontWeight.w900,
-              )),
+              Text(
+                idioma.codigo.toUpperCase(),
+                style: const TextStyle(
+                  color: Color(0xFF15803D),
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ],
           ),
         ),

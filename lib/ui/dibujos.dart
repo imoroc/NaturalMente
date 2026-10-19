@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/texto.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
@@ -537,7 +538,7 @@ class DibujoSemilla extends StatelessWidget {
                           Icon(icono, size: 15, color: colorTexto),
                           const SizedBox(width: 5),
                           Flexible(
-                            child: Text(
+                            child: Texto(
                               etiqueta,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -564,7 +565,7 @@ class DibujoSemilla extends StatelessWidget {
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(color: const Color(0xFF38BDF8)),
                       ),
-                      child: Text(
+                      child: Texto(
                         textoAgua,
                         style: const TextStyle(
                           fontSize: 11,
@@ -586,7 +587,7 @@ class DibujoSemilla extends StatelessWidget {
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(color: const Color(0xFF2DD4BF)),
                       ),
-                      child: Text(
+                      child: Texto(
                         textoTemp,
                         style: const TextStyle(
                           fontSize: 11,
@@ -1741,7 +1742,7 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                Texto(
                                   opcion.nombre,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -1753,7 +1754,7 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                                   ),
                                 ),
                                 if (organosZona.isNotEmpty)
-                                  Text(
+                                  Texto(
                                     zonaCompleta
                                         ? '¡Completa!'
                                         : '$colocadosEnZona/${organosZona.length} colocados',
@@ -2555,7 +2556,7 @@ class _EscenaVidaInteractivaState extends State<EscenaVidaInteractiva> {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
+                      child: Texto(
                         titulo,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -2593,7 +2594,7 @@ class _EscenaVidaInteractivaState extends State<EscenaVidaInteractiva> {
                   ],
                 ),
                 const SizedBox(height: 2),
-                Text(
+                Texto(
                   nota,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -2627,7 +2628,7 @@ class _EscenaVidaInteractivaState extends State<EscenaVidaInteractiva> {
                               color: const Color(0xFF38BDF8),
                             ),
                           ),
-                          child: Text(
+                          child: Texto(
                             subBotones[i],
                             style: TextStyle(
                               fontSize: 10,

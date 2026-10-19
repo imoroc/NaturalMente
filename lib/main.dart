@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
@@ -10,10 +11,11 @@ void main() {
 }
 
 class _Carga {
-  const _Carga(this.catalogo, this.progreso);
+  const _Carga(this.catalogo, this.progreso, this.idioma);
 
   final Catalogo catalogo;
   final Progreso progreso;
+  final Idioma idioma;
 }
 
 class NaturalmenteApp extends StatefulWidget {
@@ -29,7 +31,7 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
   Future<_Carga> _abrir() async {
     final catalogo = await Catalogo.cargar();
     final progreso = await Progreso.abrir();
-    return _Carga(catalogo, progreso);
+    return _Carga(catalogo, progreso, await Idioma.abrir());
   }
 
   @override
@@ -50,14 +52,18 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
           );
         }
         final carga = snapshot.data!;
-        return Alcance(
+        return IdiomaScope(
+          idioma: carga.idioma,
+          child: ListenableBuilder(
+            listenable: carga.idioma,
+            builder: (context, _) => Alcance(
           catalogo: carga.catalogo,
           progreso: carga.progreso,
           child: MaterialApp(
             title: 'NaturalMente',
             debugShowCheckedModeBanner: false,
-            locale: const Locale('es'),
-            supportedLocales: const [Locale('es')],
+            locale: carga.idioma.locale,
+            supportedLocales: const [Locale('es'), Locale('en')],
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
@@ -104,6 +110,8 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
             ),
             home: const MapaPage(),
           ),
+        ),
+        ),
         );
       },
     );

@@ -1,15 +1,15 @@
-import 'package:naturalmente/ui/selector_idioma.dart';
-import 'package:naturalmente/ui/texto.dart';
 import 'package:flutter/material.dart';
-import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
+import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class ZonaPage extends StatelessWidget {
   const ZonaPage({required this.zona, super.key});

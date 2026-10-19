@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/mapa.dart';
 
 void main() {
@@ -27,11 +27,14 @@ class NaturalmenteApp extends StatefulWidget {
 
 class _NaturalmenteAppState extends State<NaturalmenteApp> {
   late final Future<_Carga> _carga = _abrir();
+  Idioma? _idioma;
 
   Future<_Carga> _abrir() async {
+    final idioma = await Idioma.abrir();
+    _idioma = idioma;
     final catalogo = await Catalogo.cargar();
     final progreso = await Progreso.abrir();
-    return _Carga(catalogo, progreso, await Idioma.abrir());
+    return _Carga(catalogo, progreso, idioma);
   }
 
   @override
@@ -40,9 +43,14 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
       future: _carga,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const MaterialApp(
+          return MaterialApp(
             home: Scaffold(
-              body: Center(child: Text('No he podido abrir NaturalMente.')),
+              body: Center(
+                child: Text(
+                  _idioma?.traducir('No he podido abrir NaturalMente.') ??
+                      'No he podido abrir NaturalMente.',
+                ),
+              ),
             ),
           );
         }

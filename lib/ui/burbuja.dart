@@ -1,6 +1,6 @@
-import 'package:naturalmente/ui/texto.dart';
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class Burbuja extends StatelessWidget {
   const Burbuja({

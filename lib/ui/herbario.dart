@@ -1,12 +1,9 @@
-import 'package:naturalmente/idiomas/idioma.dart';
-import 'package:naturalmente/ui/selector_idioma.dart';
-import 'package:naturalmente/ui/texto.dart';
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/herbario.dart';
 import 'package:naturalmente/reglas/herbario.dart';
@@ -15,6 +12,8 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/ui/planta.dart';
+import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class HerbarioPage extends StatefulWidget {
   const HerbarioPage({required this.actividad, super.key});

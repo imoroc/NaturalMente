@@ -1,14 +1,14 @@
-import 'package:naturalmente/ui/selector_idioma.dart';
-import 'package:naturalmente/ui/texto.dart';
 import 'package:flutter/material.dart';
-import 'package:naturalmente/ui/componentes_juego.dart';
-import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class JuegoPage extends StatefulWidget {
   const JuegoPage({required this.actividad, super.key});
@@ -1600,8 +1600,10 @@ class _TableroCuerpoHerbario extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
                       const Texto(
                         'BANDEJA DE ÓRGANOS · ARRÁSTRALOS AL CUERPO',

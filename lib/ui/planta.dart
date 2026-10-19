@@ -1,9 +1,8 @@
-import 'package:naturalmente/idiomas/idioma.dart';
-
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 
 // Una sola ilustración: las piezas y sus huecos comparten trazos y escala.

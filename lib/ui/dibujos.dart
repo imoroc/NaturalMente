@@ -1,8 +1,9 @@
-import 'package:naturalmente/ui/texto.dart';
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/planta.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 // Componentes visuales de la app: medallas circulares/redondeadas para que
 // los stickers luzcan integrados sin bordes cuadrados, más paisajes vectoriales.
@@ -1758,6 +1759,8 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                                     zonaCompleta
                                         ? '¡Completa!'
                                         : '$colocadosEnZona/${organosZona.length} colocados',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 9.5,
                                       fontWeight: FontWeight.w800,

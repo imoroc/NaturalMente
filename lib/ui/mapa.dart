@@ -1,9 +1,9 @@
-import 'package:naturalmente/ui/selector_idioma.dart';
-import 'package:naturalmente/ui/texto.dart';
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
 
 class MapaPage extends StatelessWidget {

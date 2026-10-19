@@ -12,6 +12,7 @@ naturalmente/
     ui/            pantallas
     reglas/        qué respuesta vale y qué frase se devuelve. Sin widgets
     datos/         leer content/catalog.json y guardar el progreso en el teléfono
+    idiomas/       preferencia local y traducción de textos
     modelo/        clases: zona, ficha, juego, curso orientativo
     main.dart      arranque
   content/         textos. catalog.json es el que lee la app. cobertura.md es la lista de temas
@@ -75,3 +76,13 @@ Los juegos salen de `content/catalog.json`. Una pantalla compartida pinta ubicac
 - Herbario guarda qué niveles se han superado; completar cualquiera marca la actividad. No cambia los requisitos de la medalla. Salir de una partida incompleta la reinicia al volver.
 
 La implementación y sus comprobaciones se describen en `docs/plan-herbario.md`. Los roles orientan las revisiones y permiten coordinarse; cualquiera puede implementar una tarea.
+
+## Idiomas
+
+El selector ES/EN está en el mapa y en las barras de las pantallas. `lib/idiomas/idioma.dart` lee `content/en.json` y guarda la preferencia `idioma` mediante SharedPreferences, aparte del progreso. Español es el idioma inicial. No necesita conexión.
+
+`Texto` presenta los textos traducidos y conserva los estilos existentes. Las etiquetas de accesibilidad y ayudas usan `context.traducir`. El catálogo y las reglas conservan sus textos originales e identificadores: al cambiar de idioma se actualiza la presentación de las rutas abiertas sin reiniciar las partidas.
+
+Al añadir un texto visible, añade su traducción a `content/en.json`. Las claves son las frases originales completas; para textos variables se usan `{0}`, `{1}`, etc., en el mismo orden que los valores del original. Las frases más específicas se resuelven antes que sus prefijos. Los contadores, listas, títulos en mayúsculas y respuestas con pista se componen con las mismas traducciones. Los nombres de idioma se muestran siempre como Español y English.
+
+Comprobaciones: `flutter analyze`, `flutter test` y `flutter build web`. `test/datos/idioma_test.dart` comprueba la persistencia, las composiciones y la cobertura del catálogo; `test/ui/idioma_test.dart` recorre los cinco juegos, el álbum y los cambios de idioma durante una partida en tamaño móvil. La revisión final en teléfono o Chrome por Diego sigue formando parte de la revisión del equipo.

@@ -8,6 +8,7 @@ import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
+import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class ZonaPage extends StatelessWidget {
@@ -125,9 +126,15 @@ class ZonaPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
-                              builder: (_) => actividad.tipo == 'herbario'
-                                  ? HerbarioPage(actividad: actividad)
-                                  : JuegoPage(actividad: actividad),
+                              builder: (_) => switch (actividad.tipo) {
+                                'herbario' => HerbarioPage(
+                                  actividad: actividad,
+                                ),
+                                'nacimiento' => NacimientoPage(
+                                  actividad: actividad,
+                                ),
+                                _ => JuegoPage(actividad: actividad),
+                              },
                             ),
                           );
                         },

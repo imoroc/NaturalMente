@@ -1,4 +1,5 @@
 import 'package:naturalmente/modelo/herbario.dart';
+import 'package:naturalmente/modelo/nacimiento.dart';
 
 class Opcion {
   const Opcion({required this.id, required this.nombre});
@@ -200,6 +201,7 @@ class Actividad {
     required this.sujeto,
     this.nivelesLugar = const [],
     this.herbario,
+    this.nacimiento,
   });
 
   final String id;
@@ -220,9 +222,11 @@ class Actividad {
   final String sujeto;
   final List<NivelLugar> nivelesLugar;
   final Herbario? herbario;
+  final Nacimiento? nacimiento;
 
   bool get tieneFrases {
     if (tipo == 'herbario') return herbario != null;
+    if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
     }
@@ -261,6 +265,9 @@ class Actividad {
       herbario: mapa['herbario'] == null
           ? null
           : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
+      nacimiento: mapa['nacimiento'] == null
+          ? null
+          : Nacimiento.desdeMapa(mapa['nacimiento'] as Map<String, dynamic>),
     );
     actividad._comprobar();
     return actividad;
@@ -270,7 +277,13 @@ class Actividad {
     if (curso.isEmpty) {
       throw ArgumentError('La actividad $id no tiene curso.');
     }
-    if (!const ['lugar', 'controles', 'orden', 'herbario'].contains(tipo)) {
+    if (!const [
+      'lugar',
+      'controles',
+      'orden',
+      'herbario',
+      'nacimiento',
+    ].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }
     if (!tieneFrases) {

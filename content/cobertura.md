@@ -11,14 +11,14 @@ No se copia una frase de las guías. Lo de Tierra y universo no está aquí a pr
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
 | Cómo se desplazan | 1º-2º | | |
-| Cómo nacen y qué comen, muy simple | 1º-2º | | |
+| Cómo nacen y qué comen, muy simple | 1º-2º | ¿Huevo o barriga? (Fácil): cómo nacen | nacimiento; huevo |
 | Cuidar a los animales, plásticos | 1º-2º | | |
 | Mamíferos y aves | 1º-2º | | |
 | Peces, reptiles y anfibios | 3º-4º | | |
 | Invertebrados e insectos | 3º-4º | | |
 | Hábitat: desierto, mar, polo, bosque | 1º-2º | Cada uno a su hogar | |
 | Adaptaciones (frío, agua, comida) | 3º-4º | | |
-| Ciclo de vida | 3º-4º | | |
+| Ciclo de vida | 3º-4º | ¿Huevo o barriga? (Medio y Difícil): ciclos de la rana y la mariposa | nacimiento; renacuajo, mariposa |
 | Vertebrados e invertebrados con ejemplos | 5º-6º | | |
 | Especies del entorno y cuidado | 5º-6º | | |
 

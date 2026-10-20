@@ -104,6 +104,20 @@ class Progreso extends ChangeNotifier {
     if (fichaId == 'fruto' && hecho('herbario/dificil/completo')) {
       return true;
     }
+    if (fichaId == 'huevo' &&
+        (hecho('nacimiento/facil/completo') ||
+            hecho('nacimiento/medio/completo') ||
+            hecho('nacimiento/dificil/completo'))) {
+      return true;
+    }
+    if (fichaId == 'renacuajo' &&
+        (hecho('nacimiento/medio/completo') ||
+            hecho('nacimiento/dificil/completo'))) {
+      return true;
+    }
+    if (fichaId == 'mariposa' && hecho('nacimiento/dificil/completo')) {
+      return true;
+    }
     return false;
   }
 
@@ -124,6 +138,9 @@ class Progreso extends ChangeNotifier {
       ('vida', 'facil') => const ['una-vida'],
       ('vida', 'medio') => const ['etapas-vida'],
       ('vida', 'dificil') => const ['celula'],
+      ('nacimiento', 'facil') => const ['huevo'],
+      ('nacimiento', 'medio') => const ['renacuajo'],
+      ('nacimiento', 'dificil') => const ['mariposa'],
       _ => const <String>[],
     };
   }
@@ -169,6 +186,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Así empieza una vida» a partir del nivel Medio (3º-4º).',
       'celula' =>
         'Se consigue en «Así empieza una vida» en el nivel Difícil (5º-6º).',
+      'huevo' =>
+        'Se consigue en «¿Huevo o barriga?» desde el nivel Fácil (1º-2º).',
+      'renacuajo' =>
+        'Se consigue en «¿Huevo o barriga?» a partir del nivel Medio (3º-4º).',
+      'mariposa' =>
+        'Se consigue en «¿Huevo o barriga?» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -243,10 +266,33 @@ class Progreso extends ChangeNotifier {
     await marcarActividad(actividad);
   }
 
+  bool nivelNacimientoHecho(Actividad actividad, String nivel) =>
+      hecho('${actividad.id}/$nivel/completo');
+
+  Future<void> marcarNivelNacimiento(Actividad actividad, String nivel) async {
+    final niveles = actividad.nacimiento?.niveles ?? const [];
+    final indice = niveles.indexWhere((n) => n.id == nivel);
+    if (indice < 0) {
+      throw ArgumentError('Ese nivel no existe en ${actividad.id}.');
+    }
+    await _marcar('${actividad.id}/$nivel/completo');
+    // Cada nivel trae su cromo y los de los niveles anteriores.
+    for (final anterior in niveles.take(indice + 1)) {
+      for (final fichaId in fichasDeNivel(actividad.id, anterior.id)) {
+        await desbloquearFicha(fichaId);
+      }
+    }
+    await marcarActividad(actividad);
+  }
+
   int nivelesSuperadosDe(Actividad actividad) {
     if (actividad.tipo == 'herbario') {
       final niveles = actividad.herbario?.niveles ?? const [];
       return niveles.where((n) => nivelHerbarioHecho(actividad, n.id)).length;
+    }
+    if (actividad.tipo == 'nacimiento') {
+      final niveles = actividad.nacimiento?.niveles ?? const [];
+      return niveles.where((n) => nivelNacimientoHecho(actividad, n.id)).length;
     }
     if (actividad.nivelesLugar.isNotEmpty) {
       final superados = actividad.nivelesLugar
@@ -261,6 +307,9 @@ class Progreso extends ChangeNotifier {
   int maxNivelesDe(Actividad actividad) {
     if (actividad.tipo == 'herbario') {
       return actividad.herbario?.niveles.length ?? 1;
+    }
+    if (actividad.tipo == 'nacimiento') {
+      return actividad.nacimiento?.niveles.length ?? 1;
     }
     if (actividad.nivelesLugar.isNotEmpty) {
       return actividad.nivelesLugar.length;

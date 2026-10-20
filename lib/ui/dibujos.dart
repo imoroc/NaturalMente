@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
+import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -3304,6 +3305,9 @@ class IlustracionFicha extends StatelessWidget {
         _ => 'bebe',
       };
       return DibujoPasoVida(id: pasoId, tamano: alto);
+    }
+    if (id == 'huevo' || id == 'renacuajo' || id == 'mariposa') {
+      return DibujoNacimiento(id: id, tamano: alto);
     }
     final (icono, color, fondo) = switch (id) {
       'huerto' => (

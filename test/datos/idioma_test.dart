@@ -69,7 +69,14 @@ void main() {
     );
     final ingles =
         jsonDecode(File('content/en.json').readAsStringSync()) as Map;
-    const camposTecnicos = {'id', 'zona', 'tipo', 'respuesta', 'partes'};
+    const camposTecnicos = {
+      'id',
+      'zona',
+      'tipo',
+      'respuesta',
+      'partes',
+      'animales',
+    };
     void comprobar(Object? valor, [String campo = '']) {
       if (valor is Map) {
         for (final entrada in valor.entries) {

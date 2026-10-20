@@ -1,5 +1,9 @@
 import 'package:naturalmente/modelo/herbario.dart';
+
 import 'package:naturalmente/modelo/ecosistema.dart';
+
+import 'package:naturalmente/modelo/nacimiento.dart';
+
 
 class Opcion {
   const Opcion({required this.id, required this.nombre});
@@ -199,7 +203,11 @@ class Actividad {
     required this.sujeto,
     this.nivelesLugar = const [],
     this.herbario,
+
     this.ecosistema,
+
+    this.nacimiento,
+
   });
 
   final String id;
@@ -220,11 +228,16 @@ class Actividad {
   final String sujeto;
   final List<NivelLugar> nivelesLugar;
   final Herbario? herbario;
+
   final Ecosistema? ecosistema;
+
+  final Nacimiento? nacimiento;
+
 
   bool get tieneFrases {
     if (tipo == 'ecosistema') return ecosistema != null;
     if (tipo == 'herbario') return herbario != null;
+    if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
     }
@@ -266,6 +279,9 @@ class Actividad {
       herbario: mapa['herbario'] == null
           ? null
           : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
+      nacimiento: mapa['nacimiento'] == null
+          ? null
+          : Nacimiento.desdeMapa(mapa['nacimiento'] as Map<String, dynamic>),
     );
     actividad._comprobar();
     return actividad;
@@ -280,7 +296,11 @@ class Actividad {
       'controles',
       'orden',
       'herbario',
+
       'ecosistema',
+
+      'nacimiento',
+
     ].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }

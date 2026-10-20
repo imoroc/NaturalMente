@@ -60,8 +60,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### ¿Huevo o barriga?
 - **Prioridad**: MVP.
+- **Estado**: implementado (`nacimiento`) con los tres niveles, toque o arrastre, cromos por nivel (Huevo o barriga, Renacuajo y Mariposa) y textos en español e inglés. Modelo en `lib/modelo/nacimiento.dart`, reglas sin widgets en `lib/reglas/nacimiento.dart`, pantalla en `lib/ui/nacimiento.dart` y dibujos propios en `lib/ui/dibujos_nacimiento.dart`. No cuenta para la medalla.
 - **Mecánica**: Fácil, separar los animales que nacen de un huevo de los que nacen de la madre. Medio y Difícil, ordenar un ciclo de vida (rana: huevo, renacuajo, rana pequeña, adulta; mariposa: huevo, oruga, crisálida, mariposa).
-- **Si no acierta**: «Antes de tener patas, la rana vive en el agua como un pez».
+- **Niveles**: Fácil, seis animales de la reserva (pingüino, tucán y rana; camello, delfín y oso) en dos destinos. Medio, los ciclos de la rana y la mariposa en cuatro pasos y una pregunta de comprensión por ciclo. Difícil, la rana en cinco fases (puesta, renacuajo, patas, ranita y adulta) y la mariposa con larva, pupa y adulto, y una pregunta de razonamiento por ciclo (anfibio, en qué se parecen).
+- **Si no acierta**: «Antes de tener patas, la rana vive en el agua como un pez». En Fácil explica por qué ese animal no nace así y a la segunda da una pista; en los ciclos, la frase habla del primer paso que no encaja, el hueco se marca en naranja y a la segunda se añade la pista del ciclo.
 
 ### Picos y patas
 - **Prioridad**: Extra.

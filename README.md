@@ -30,7 +30,7 @@
 
 **NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
 
-Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **6 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **18 misiones**) y coleccionan **27 cromos** con curiosidades científicas en su álbum personal.
+Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **7 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **21 misiones**) y coleccionan **28 cromos** con curiosidades científicas en su álbum personal.
 
 ### Principios de diseño pedagógico y técnico
 
@@ -46,10 +46,11 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **6 juegos inte
 
 ## Mundos, actividades y niveles
 
-| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (27) |
+| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (28) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
 | **La reserva**<br>*(Animales)* | **Cada uno a su hogar** (`hogar`) | Clasificación de animales en su hábitat y adaptaciones al medio | 4 hábitats y 4 animales (*camello, delfín, pingüino, oso*) | 6 hábitats (+ *selva, río*) y 6 animales (+ *rana, tucán*) con pregunta de adaptación | 6 ecosistemas y 7 animales (+ *pulpo*, invertebrado marino) con preguntas de clasificación científica | 7 |
 | **La reserva**<br>*(Animales)* | **¿Huevo o barriga?** (`nacimiento`) | Separar animales por cómo nacen y ordenar ciclos de vida, por arrastre o toque | 6 animales al *huevo* o a la *barriga de su madre* (*pingüino, tucán, rana · camello, delfín, oso*) | Ciclos de la *rana* y la *mariposa* en 4 pasos + pregunta de comprensión por ciclo | Metamorfosis de la *rana* en 5 fases y de la *mariposa* (larva, pupa, adulto) + preguntas de razonamiento (anfibio, en qué se parecen) | 3 |
+| **La reserva**<br>*(Ecosistemas)* | **Monta el ecosistema** (`ecosistemas`) | Dar vida a un claro del bosque y descubrir conexiones | Hierba, conejo y zorro por arrastre o toque | Dos relaciones alimentarias con flechas explicadas | Dos predicciones y comparación antes/después | 1 |
 | **El invernadero**<br>*(Plantas)* | **Haz crecer la semilla** (`germinacion`) | Simulación experimental día a día (Días 1, 3, 5 y 7) en bote transparente | 3 variables (*sustrato, agua, luz*) hasta lograr el brote en tierra o algodón | Experimento de 4 etapas + pregunta final sobre el papel de las sales minerales del suelo | 4 variables (+ *temperatura en °C*) + pregunta científica sobre fotosíntesis y germinación | 3 |
 | **El invernadero**<br>*(Plantas)* | **Herbario desmontable** (`herbario`) | Montaje interactivo de las partes de la planta por arrastre o toque | 3 partes (*raíz, tallo, hoja*) sobre el modelo botánico | 5 partes (+ *flor, fruto*) con sus funciones y curiosidades | 5 partes + cuestionario sobre la función de cada órgano vegetal | 5 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Cada pieza en su sitio** (`piezas`) | Atlas anatómico interactivo: arrastrar o tocar órganos hacia su cavidad | 3 órganos en 3 zonas: *cerebro* (Cabeza), *corazón* (Pecho) y *estómago* (Abdomen) | 5 piezas en 4 zonas (+ *pulmones* en Pecho y *músculos y huesos* en Extremidades) + reto de función | 6 piezas (+ *intestinos* en Abdomen) + preguntas sobre aparatos y sistemas del cuerpo humano | 6 |
@@ -79,9 +80,9 @@ flowchart LR
   end
 
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
-    MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 27 cromos)"]
+    MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 28 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart\n(6 juegos · 18 niveles)"]
+    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart\n(7 juegos · 21 niveles)"]
     DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
   end
 
@@ -100,7 +101,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  A["Mapa principal (MapaPage)\nProgreso global · Estrellas (18) · Álbum (27 cromos)"] --> B["Pantalla de Mundo (ZonaPage)\nLa reserva · El invernadero · El cuerpo"]
+  A["Mapa principal (MapaPage)\nProgreso global · Estrellas (21) · Álbum (28 cromos)"] --> B["Pantalla de Mundo (ZonaPage)\nLa reserva · El invernadero · El cuerpo"]
   A --> C["Álbum de Cromos\nFiltro por mundo · Estado bloqueado/desbloqueado · Curiosidades"]
   B --> D["Selector de dificultad\nFácil (1.º-2.º) · Medio (3.º-4.º) · Difícil (5.º-6.º)"]
   D --> E["Actividad interactiva\nArrastrar / Tocar / Experimentar / Ordenar"]
@@ -181,7 +182,7 @@ flutter test
 
 - `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
 - `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
-- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 6 juegos, barajador sin repetición, desbloqueo de los 27 cromos) y pruebas de widgets/flujos completos en pantalla.
+- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 7 juegos, barajador sin repetición, desbloqueo de los 28 cromos) y pruebas de widgets/flujos completos en pantalla.
 
 ### 2. Ejecutar la aplicación en local
 
@@ -232,3 +233,7 @@ flutter run -d android
 ### Idioma de la app
 
 El botón ES/EN permite elegir **Español** o **English** solo en el mapa principal, debajo de la cabecera de NaturalMente y antes de «Mundos para explorar». Traduce también las fichas, las pistas, los juegos y el álbum. La elección se conserva al cerrar y volver a abrir, y se aplica a toda la app sin borrar el progreso. Español es el idioma inicial.
+
+### Monta el ecosistema
+
+Nueva misión de La reserva con ilustración vectorial propia, tres niveles y un cromo del bosque. Su [plan y validación](docs/plan-ecosistemas.md) describen el recorrido, las comprobaciones y los pendientes en dispositivos. Funciona en ambos idiomas y conserva los requisitos de la medalla.

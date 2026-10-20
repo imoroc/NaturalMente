@@ -187,11 +187,16 @@ void main() {
           actividad.herbario!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+
+      } else if (actividad.ecosistema != null) {
+        expect(actividad.ecosistema!.niveles.map((n) => n.id), ['facil', 'medio', 'dificil']);
+
       } else if (actividad.tipo == 'nacimiento') {
         expect(
           actividad.nacimiento!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+
       } else {
         expect(
           actividad.nivelesLugar.map((n) => n.id).toList(),
@@ -255,9 +260,15 @@ void main() {
     }
   });
 
-  test('el álbum tiene 27 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 27);
-    expect(catalogo.fichasDe('reserva').length, 10);
+
+
+
+
+
+  test('el álbum tiene 28 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 28);
+    expect(catalogo.fichasDe('reserva').length, 11);
+
     expect(catalogo.fichasDe('invernadero').length, 8);
     expect(catalogo.fichasDe('cuerpo').length, 9);
 
@@ -345,7 +356,7 @@ void main() {
     expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
 
     await progreso.marcarNivelNacimiento(nacimiento, 'dificil');
-    expect(progreso.fichaDesbloqueada('mariposa'), isTrue);
+    expect(progreso.fichaDesbloqueada('mariposa'), isTrue); final ecosistemas = catalogo.actividades.firstWhere((a) => a.id == 'ecosistemas'); await progreso.marcarNivelEcosistema(ecosistemas, 'facil'); expect(progreso.fichaDesbloqueada('claro-bosque'), isTrue);
     expect(
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,

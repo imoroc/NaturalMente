@@ -30,3 +30,4 @@ ios/Pods/
 
 # Lanzador local para las quick actions de T3 Code.
 /run-android.local.sh
+/lanzar.local.py

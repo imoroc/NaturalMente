@@ -119,7 +119,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ## Seres vivos y ecosistemas
 
-Dónde van estos juegos en el mapa está pendiente (ver `docs/decisiones.md`). Pueden repartirse entre La reserva y El invernadero o ir a un sitio nuevo.
+«Monta el ecosistema» se integra en La reserva. La ubicación de futuros juegos de este bloque se decidirá por actividad (ver `docs/decisiones.md`).
 
 ### ¿Vivo o no vivo?
 - **Prioridad**: MVP.
@@ -129,9 +129,12 @@ Dónde van estos juegos en el mapa está pendiente (ver `docs/decisiones.md`). P
 
 ### Monta el ecosistema
 - **Prioridad**: MVP.
-- **Mecánica**: una escena vacía (charca, bosque, pradera) que hay que poblar con seres vivos que encajen. Si falta algo, la escena lo avisa.
-- **Niveles**: Fácil, colocar animales y plantas en su escena. Medio, que no falte quien produce la comida. Difícil, quitar un ser vivo y ver qué les pasa a los demás.
-- **Si no acierta**: «Sin plantas en la charca, los renacuajos no tienen qué comer».
+- **Estado**: implementado en La reserva; plan, validación y pendientes en `docs/plan-ecosistemas.md`.
+- **Mecánica**: llenar un claro del bosque con hierba, conejo y zorro, mediante arrastre o toques. Una acción cada vez, explicada por Natu.
+- **Niveles**: Fácil, tres colocaciones; Medio, además dos relaciones de alimento; Difícil, además predecir qué cambia cuando hay menos hierba o menos conejos y comparar un ejemplo antes/después. Las flechas van del alimento a quien lo consume.
+- **Si no acierta**: observación contextual; en el segundo intento, pista y ayuda visual. Sin vidas ni tiempo límite.
+- **Progreso**: una estrella por nivel y el cromo «Un bosque conectado» al completar cualquiera. La medalla conserva sus requisitos.
+- **Presentación**: ilustraciones vectoriales propias, controles compartidos, animaciones breves y alternativa con movimiento reducido. Español e inglés, sin conexión.
 
 ### Cadena de comida
 - **Prioridad**: Extra.

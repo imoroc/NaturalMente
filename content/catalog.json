@@ -4,7 +4,7 @@
       "id": "reserva",
       "nombre": "La reserva",
       "bloque": "Animales",
-      "resumen": "Lleva cada animal al sitio donde puede vivir."
+      "resumen": "Descubre dónde viven los animales y cómo se conecta la vida del bosque."
     },
     {
       "id": "invernadero",
@@ -235,6 +235,15 @@
       "titulo": "Célula",
       "frase": "Es la parte viva más pequeña que existe. Todo nuestro cuerpo está formado por millones.",
       "curiosidad": "Es tan diminuta que no se ve a simple vista: hace falta mirar por un microscopio."
+    },
+    {
+      "id": "claro-bosque",
+      "zona": "reserva",
+      "curso": "1º-6º",
+      "juego": "Monta el ecosistema",
+      "titulo": "Un bosque conectado",
+      "frase": "Las plantas y los animales del bosque se relacionan entre sí y con el agua, el aire y el suelo.",
+      "curiosidad": "Una cadena alimentaria enseña solo un camino. En un bosque real hay muchas cadenas conectadas."
     }
   ],
   "actividades": [
@@ -2402,6 +2411,213 @@
               "fruto"
             ],
             "preguntaFunciones": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosistemas",
+      "zona": "reserva",
+      "tipo": "ecosistema",
+      "titulo": "Monta el ecosistema",
+      "curso": "1º-6º",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Un pequeño claro, muchas conexiones. ¡Vamos a darle vida!",
+      "ecosistema": {
+        "elementos": [
+          {
+            "id": "hierba",
+            "nombre": "Hierba",
+            "instruccion": "Pon la hierba en el claro.",
+            "explicacion": "La hierba es una planta. Con luz y agua puede fabricar su alimento.",
+            "pista": "Busca las hojas verdes junto al suelo.",
+            "observacion": "La hierba es una planta que crece junto al suelo. Busca sus hojas verdes."
+          },
+          {
+            "id": "conejo",
+            "nombre": "Conejo",
+            "instruccion": "Ahora busca un lugar para el conejo.",
+            "explicacion": "El conejo come hierba y otras plantas. Es un herbívoro.",
+            "pista": "El conejo tiene orejas largas. Busca su silueta en el centro.",
+            "observacion": "El conejo necesita espacio para moverse. Su lugar está entre la hierba y el zorro."
+          },
+          {
+            "id": "zorro",
+            "nombre": "Zorro",
+            "instruccion": "¡Falta el zorro! Ponlo en su lugar.",
+            "explicacion": "El zorro puede alimentarse de conejos. También come otros animales y frutos.",
+            "pista": "Busca la silueta con orejas puntiagudas y una cola grande.",
+            "observacion": "El zorro tiene una cola grande. Busca el lugar con su misma silueta."
+          }
+        ],
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Da vida al claro con tres seres vivos.",
+            "retos": []
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Descubre quién alimenta a quién.",
+            "retos": [
+              {
+                "id": "alimento-conejo",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "¿Qué alimento viene de una planta y come el conejo?",
+                "respuesta": "hierba",
+                "pista": "Fíjate en las hojas verdes del claro.",
+                "opciones": [
+                  {
+                    "id": "hierba",
+                    "nombre": "Hierba",
+                    "frase": "La hierba alimenta al conejo. La flecha va del alimento a quien lo come."
+                  },
+                  {
+                    "id": "zorro",
+                    "nombre": "Zorro",
+                    "frase": "El conejo come plantas. El zorro no es una planta."
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Agua",
+                    "frase": "El conejo necesita beber, pero el agua no es una planta."
+                  }
+                ]
+              },
+              {
+                "id": "alimento-zorro",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "¿Qué animal de este claro puede alimentar al zorro?",
+                "respuesta": "conejo",
+                "pista": "Busca al herbívoro de orejas largas.",
+                "opciones": [
+                  {
+                    "id": "conejo",
+                    "nombre": "Conejo",
+                    "frase": "El conejo puede alimentar al zorro. Esta cadena muestra una de las conexiones del bosque."
+                  },
+                  {
+                    "id": "hierba",
+                    "nombre": "Hierba",
+                    "frase": "La hierba alimenta al conejo. Aquí buscamos un animal."
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Agua",
+                    "frase": "El agua es necesaria para vivir, pero no es un animal."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Conecta y explora qué pasaría si algo cambia.",
+            "retos": [
+              {
+                "id": "alimento-conejo",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "¿Qué alimento viene de una planta y come el conejo?",
+                "respuesta": "hierba",
+                "pista": "Fíjate en las hojas verdes del claro.",
+                "opciones": [
+                  {
+                    "id": "hierba",
+                    "nombre": "Hierba",
+                    "frase": "La hierba alimenta al conejo. La flecha va del alimento a quien lo come."
+                  },
+                  {
+                    "id": "zorro",
+                    "nombre": "Zorro",
+                    "frase": "El conejo come plantas. El zorro no es una planta."
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Agua",
+                    "frase": "El conejo necesita beber, pero el agua no es una planta."
+                  }
+                ]
+              },
+              {
+                "id": "alimento-zorro",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "¿Qué animal de este claro puede alimentar al zorro?",
+                "respuesta": "conejo",
+                "pista": "Busca al herbívoro de orejas largas.",
+                "opciones": [
+                  {
+                    "id": "conejo",
+                    "nombre": "Conejo",
+                    "frase": "El conejo puede alimentar al zorro. Esta cadena muestra una de las conexiones del bosque."
+                  },
+                  {
+                    "id": "hierba",
+                    "nombre": "Hierba",
+                    "frase": "La hierba alimenta al conejo. Aquí buscamos un animal."
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Agua",
+                    "frase": "El agua es necesaria para vivir, pero no es un animal."
+                  }
+                ]
+              },
+              {
+                "id": "menos-hierba",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "Si hubiera menos hierba, ¿qué podría pasarle al conejo?",
+                "respuesta": "menos-comida",
+                "pista": "Sigue la flecha que sale de la hierba.",
+                "opciones": [
+                  {
+                    "id": "menos-comida",
+                    "nombre": "Tendría menos alimento",
+                    "frase": "Con menos hierba, el conejo tendría menos alimento disponible. Mira cómo cambia la escena."
+                  },
+                  {
+                    "id": "mas-comida",
+                    "nombre": "Tendría más alimento",
+                    "frase": "La hierba es su alimento. Si hay menos, no tiene más para comer."
+                  },
+                  {
+                    "id": "sin-relacion",
+                    "nombre": "No cambiaría nada",
+                    "frase": "El conejo depende de las plantas para alimentarse. Sí hay una conexión."
+                  }
+                ]
+              },
+              {
+                "id": "menos-conejos",
+                "bloque": "Seres vivos y ecosistemas",
+                "pregunta": "Si hubiera menos conejos, ¿qué cambiaría para el zorro?",
+                "respuesta": "menos-presas",
+                "pista": "Sigue la flecha que llega al zorro.",
+                "opciones": [
+                  {
+                    "id": "menos-presas",
+                    "nombre": "Tendría menos conejos para comer",
+                    "frase": "El zorro tendría menos conejos disponibles. Podría buscar otros alimentos: el bosque tiene más conexiones."
+                  },
+                  {
+                    "id": "mas-conejos",
+                    "nombre": "Encontraría más conejos",
+                    "frase": "Si hay menos conejos, no habría más conejos para encontrar."
+                  },
+                  {
+                    "id": "solo-hierba",
+                    "nombre": "Solo podría comer hierba",
+                    "frase": "El zorro también come otros animales y frutos. No depende solo de la hierba."
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

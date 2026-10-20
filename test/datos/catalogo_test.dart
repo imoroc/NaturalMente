@@ -187,6 +187,8 @@ void main() {
           actividad.herbario!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.ecosistema != null) {
+        expect(actividad.ecosistema!.niveles.map((n) => n.id), ['facil', 'medio', 'dificil']);
       } else {
         expect(
           actividad.nivelesLugar.map((n) => n.id).toList(),
@@ -250,9 +252,9 @@ void main() {
     }
   });
 
-  test('el álbum tiene 24 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 24);
-    expect(catalogo.fichasDe('reserva').length, 7);
+  test('el álbum tiene 25 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 25);
+    expect(catalogo.fichasDe('reserva').length, 8);
     expect(catalogo.fichasDe('invernadero').length, 8);
     expect(catalogo.fichasDe('cuerpo').length, 9);
 

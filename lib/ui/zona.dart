@@ -7,6 +7,8 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/herbario.dart';
+import 'package:naturalmente/ui/ecosistema.dart';
+import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -125,7 +127,9 @@ class ZonaPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
-                              builder: (_) => actividad.tipo == 'herbario'
+                              builder: (_) => actividad.tipo == 'ecosistema'
+                                  ? EcosistemaPage(actividad: actividad)
+                                  : actividad.tipo == 'herbario'
                                   ? HerbarioPage(actividad: actividad)
                                   : JuegoPage(actividad: actividad),
                             ),
@@ -229,11 +233,18 @@ class _BotonMision extends StatelessWidget {
                 color: colorBorde.withValues(alpha: 0.16),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(
-                hecha ? Icons.check_circle_rounded : Icons.play_arrow_rounded,
-                color: colorSombra,
-                size: 30,
-              ),
+              child: id == 'ecosistemas'
+                  ? const Padding(
+                      padding: EdgeInsets.all(2),
+                      child: DibujoEcosistema(elemento: 'zorro'),
+                    )
+                  : Icon(
+                      hecha
+                          ? Icons.check_circle_rounded
+                          : Icons.play_arrow_rounded,
+                      color: colorSombra,
+                      size: 30,
+                    ),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -286,14 +297,16 @@ class _BotonMision extends StatelessWidget {
                                     : const Color(0xFFCBD5E1),
                               ),
                             const SizedBox(width: 4),
-                            Texto(
-                              '$estrellas/$maxEstrellas niveles',
-                              style: TextStyle(
-                                fontSize: 11.5,
-                                fontWeight: FontWeight.w800,
-                                color: estrellas > 0
-                                    ? const Color(0xFF92400E)
-                                    : const Color(0xFF64748B),
+                            Flexible(
+                              child: Texto(
+                                '$estrellas/$maxEstrellas niveles',
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w800,
+                                  color: estrellas > 0
+                                      ? const Color(0xFF92400E)
+                                      : const Color(0xFF64748B),
+                                ),
                               ),
                             ),
                           ],
@@ -313,10 +326,7 @@ class _BotonMision extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: Color(0xFF94A3B8),
-            ),
+            const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
           ],
         ),
       ),
@@ -361,11 +371,8 @@ class TarjetaCromoFicha extends StatelessWidget {
         child: InkWell(
           key: Key('cromo-${ficha.id}'),
           borderRadius: BorderRadius.circular(18),
-          onTap: () => mostrarDetalleFicha(
-            context,
-            ficha,
-            desbloqueada: desbloqueada,
-          ),
+          onTap: () =>
+              mostrarDetalleFicha(context, ficha, desbloqueada: desbloqueada),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -732,8 +739,7 @@ class _AlbumPageState extends State<AlbumPage> {
                             _FiltroAlbumChip(
                               etiqueta: z.bloque,
                               activo: _filtroZona == z.id,
-                              alTocar: () =>
-                                  setState(() => _filtroZona = z.id),
+                              alTocar: () => setState(() => _filtroZona = z.id),
                             ),
                             const SizedBox(width: 8),
                           ],
@@ -792,5 +798,3 @@ class _FiltroAlbumChip extends StatelessWidget {
     );
   }
 }
-
-

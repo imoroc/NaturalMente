@@ -109,6 +109,7 @@ class Progreso extends ChangeNotifier {
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
     return switch ((actividadId, nivelId)) {
+      ('ecosistemas', _) => const ['claro-bosque'],
       ('hogar', 'facil') => const ['camello', 'delfin', 'pinguino', 'oso'],
       ('hogar', 'medio') => const ['rana', 'tucan'],
       ('hogar', 'dificil') => const ['pulpo'],
@@ -130,6 +131,8 @@ class Progreso extends ChangeNotifier {
 
   static String pistaDesbloqueoFicha(String fichaId) {
     return switch (fichaId) {
+      'claro-bosque' =>
+        'Se consigue en «Monta el ecosistema» al superar cualquier nivel.',
       'camello' ||
       'delfin' ||
       'pinguino' ||
@@ -243,7 +246,38 @@ class Progreso extends ChangeNotifier {
     await marcarActividad(actividad);
   }
 
+  String? get ultimoNivelEcosistema =>
+      _prefs.getString('ecosistemas/ultimo-nivel');
+
+  Future<bool> recordarNivelEcosistema(String nivel) async {
+    if (!const ['facil', 'medio', 'dificil'].contains(nivel)) {
+      return false;
+    }
+    try {
+      return await _prefs.setString('ecosistemas/ultimo-nivel', nivel);
+    } catch (_) {
+      return false;
+    }
+  }
+
+  bool nivelEcosistemaHecho(Actividad actividad, String nivel) =>
+      hecho('${actividad.id}/$nivel/completo');
+
+  Future<void> marcarNivelEcosistema(Actividad actividad, String nivel) async {
+    if (actividad.ecosistema?.niveles.any((n) => n.id == nivel) != true) {
+      throw ArgumentError('Ese nivel no existe en ${actividad.id}.');
+    }
+    await _marcar('${actividad.id}/$nivel/completo');
+    await desbloquearFicha('claro-bosque');
+    await _marcar(actividad.id);
+  }
+
   int nivelesSuperadosDe(Actividad actividad) {
+    if (actividad.ecosistema != null) {
+      return actividad.ecosistema!.niveles
+          .where((n) => nivelEcosistemaHecho(actividad, n.id))
+          .length;
+    }
     if (actividad.tipo == 'herbario') {
       final niveles = actividad.herbario?.niveles ?? const [];
       return niveles.where((n) => nivelHerbarioHecho(actividad, n.id)).length;
@@ -259,6 +293,9 @@ class Progreso extends ChangeNotifier {
   }
 
   int maxNivelesDe(Actividad actividad) {
+    if (actividad.ecosistema != null) {
+      return actividad.ecosistema!.niveles.length;
+    }
     if (actividad.tipo == 'herbario') {
       return actividad.herbario?.niveles.length ?? 1;
     }

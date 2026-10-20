@@ -1,4 +1,5 @@
 import 'package:naturalmente/modelo/herbario.dart';
+import 'package:naturalmente/modelo/ecosistema.dart';
 
 class Opcion {
   const Opcion({required this.id, required this.nombre});
@@ -90,9 +91,7 @@ class Reto {
       curiosidad: mapa['curiosidad'] as String? ?? '',
       adaptacion: mapa['adaptacion'] == null
           ? null
-          : PreguntaExtra.desdeMapa(
-              mapa['adaptacion'] as Map<String, dynamic>,
-            ),
+          : PreguntaExtra.desdeMapa(mapa['adaptacion'] as Map<String, dynamic>),
     );
   }
 }
@@ -200,6 +199,7 @@ class Actividad {
     required this.sujeto,
     this.nivelesLugar = const [],
     this.herbario,
+    this.ecosistema,
   });
 
   final String id;
@@ -220,8 +220,10 @@ class Actividad {
   final String sujeto;
   final List<NivelLugar> nivelesLugar;
   final Herbario? herbario;
+  final Ecosistema? ecosistema;
 
   bool get tieneFrases {
+    if (tipo == 'ecosistema') return ecosistema != null;
     if (tipo == 'herbario') return herbario != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
@@ -258,6 +260,9 @@ class Actividad {
           .cast<Map<String, dynamic>>()
           .map(NivelLugar.desdeMapa)
           .toList(),
+      ecosistema: mapa['ecosistema'] == null
+          ? null
+          : Ecosistema.desdeMapa(mapa['ecosistema'] as Map<String, dynamic>),
       herbario: mapa['herbario'] == null
           ? null
           : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
@@ -270,7 +275,13 @@ class Actividad {
     if (curso.isEmpty) {
       throw ArgumentError('La actividad $id no tiene curso.');
     }
-    if (!const ['lugar', 'controles', 'orden', 'herbario'].contains(tipo)) {
+    if (!const [
+      'lugar',
+      'controles',
+      'orden',
+      'herbario',
+      'ecosistema',
+    ].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }
     if (!tieneFrases) {

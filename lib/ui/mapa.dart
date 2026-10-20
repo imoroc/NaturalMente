@@ -534,12 +534,14 @@ class _ZonaTarjeta extends StatelessWidget {
                             color: estilo.acento,
                           ),
                           const SizedBox(width: 3),
-                          Texto(
-                            '$cromosZona/${fichasZona.length} cromos',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800,
-                              color: Color(0xFF334155),
+                          Flexible(
+                            child: Texto(
+                              '$cromosZona/${fichasZona.length} cromos',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF334155),
+                              ),
                             ),
                           ),
                         ],

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/planta.dart';
+import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 // Componentes visuales de la app: medallas circulares/redondeadas para que
@@ -3270,6 +3271,12 @@ class IlustracionFicha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (id == 'claro-bosque') {
+      return SizedBox(
+        width: alto * 1.3, height: alto,
+        child: const DibujoEcosistema(),
+      );
+    }
     if (_criaturasConPng.contains(id)) {
       return SizedBox(
         width: alto,

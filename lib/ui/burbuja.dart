@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class Burbuja extends StatelessWidget {
   const Burbuja({
@@ -68,7 +69,7 @@ class Burbuja extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                Texto(
                   quien,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
@@ -77,7 +78,7 @@ class Burbuja extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                Text(
+                Texto(
                   frase,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/herbario.dart';
 import 'package:naturalmente/reglas/herbario.dart';
@@ -11,6 +12,7 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/ui/planta.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class HerbarioPage extends StatefulWidget {
   const HerbarioPage({required this.actividad, super.key});
@@ -115,7 +117,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
     if (!partida.puedeConsultar(id)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Primero descubre para qué sirve esta parte.'),
+          content: Texto('Primero descubre para qué sirve esta parte.'),
         ),
       );
       return;
@@ -132,19 +134,19 @@ class _HerbarioPageState extends State<HerbarioPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              Texto(
                 parte.nombre,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 12),
-              Text(parte.funcion),
+              Texto(parte.funcion),
               const SizedBox(height: 12),
-              Text(parte.curiosidad),
+              Texto(parte.curiosidad),
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-ficha'),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Seguir jugando'),
+                child: const Texto('Seguir jugando'),
               ),
             ],
           ),
@@ -158,7 +160,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
     final partida = _partida;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: Texto(
           widget.actividad.titulo,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -197,18 +199,19 @@ class _HerbarioPageState extends State<HerbarioPage> {
         children: [
           Burbuja(
             quien: widget.actividad.quien,
-            frase:
-                'Elige un nivel. Cada dificultad desbloquea nuevos cromos de las partes de la planta.',
+            frase: 'Elige un nivel. Cada dificultad desbloquea nuevos cromos de las partes de la planta.',
             gesto: 'hola',
           ),
           const SizedBox(height: 16),
           for (var i = 0; i < niveles.length; i++) ...[
             TarjetaJuego(
               claveAccion: Key('nivel-${niveles[i].id}'),
-              borde: progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
+              borde:
+                  progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
                   ? EstilosJuego.acierto
                   : const Color(0xFF38BDF8),
-              sombra: progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
+              sombra:
+                  progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
                   ? const Color(0xFF239E56)
                   : const Color(0xFF0284C7),
               radio: 20,
@@ -221,7 +224,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
+                          child: Texto(
                             niveles[i].nombre,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
@@ -233,10 +236,11 @@ class _HerbarioPageState extends State<HerbarioPage> {
                               Icon(
                                 Icons.star_rounded,
                                 size: 18,
-                                color: progreso.nivelHerbarioHecho(
-                                  widget.actividad,
-                                  niveles[i].id,
-                                )
+                                color:
+                                    progreso.nivelHerbarioHecho(
+                                      widget.actividad,
+                                      niveles[i].id,
+                                    )
                                     ? const Color(0xFFF59E0B)
                                     : const Color(0xFFCBD5E1),
                               ),
@@ -244,12 +248,12 @@ class _HerbarioPageState extends State<HerbarioPage> {
                         ),
                       ],
                     ),
-                    Text(
+                    Texto(
                       'Pensado para ${niveles[i].curso}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    Texto(
                       niveles[i].preguntaFunciones
                           ? 'Cinco rótulos y sus funciones'
                           : '${niveles[i].partes.length == 3 ? 'Tres' : 'Cinco'} partes con dibujo',
@@ -293,7 +297,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
-                                  child: Text(
+                                  child: Texto(
                                     'Cromo: ${fichasCatalogo[fichaId] ?? fichaId}',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -316,7 +320,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                       niveles[i].id,
                     )) ...[
                       const SizedBox(height: 6),
-                      const Text(
+                      const Texto(
                         '✓ Nivel superado',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
@@ -341,12 +345,12 @@ class _HerbarioPageState extends State<HerbarioPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
+        Texto(
           '${nivel.nombre} · Pensado para ${nivel.curso}. Puedes jugarlo igual.',
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 8),
-        Text(
+        Texto(
           partida.colocacionTerminada
               ? (partida.completa
                     ? '¡Todas las partes descubiertas!'
@@ -357,13 +361,13 @@ class _HerbarioPageState extends State<HerbarioPage> {
         const SizedBox(height: 8),
         Semantics(
           liveRegion: true,
-          child: Text(
+          child: Texto(
             'Partes colocadas: ${partida.colocadas.length} de ${nivel.partes.length}',
             style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
         if (nivel.preguntaFunciones)
-          Text(
+          Texto(
             'Funciones descubiertas: ${partida.funcionesAcertadas} de ${nivel.partes.length}',
             style: const TextStyle(fontWeight: FontWeight.w800),
           ),
@@ -373,7 +377,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
           value: partida.progreso,
           minHeight: 10,
           borderRadius: BorderRadius.circular(10),
-          semanticsLabel: 'Progreso del herbario',
+          semanticsLabel: context.traducir('Progreso del herbario'),
           semanticsValue: '${(partida.progreso * 100).round()} %',
         ),
         const SizedBox(height: 16),
@@ -399,7 +403,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
         ),
         const SizedBox(height: 12),
         if (!partida.colocacionTerminada) ...[
-          Text(
+          Texto(
             partida.seleccionada == null
                 ? 'Elige una pieza y toca su sitio, o arrástrala.'
                 : 'Seleccionada: ${_herbario.parte(partida.seleccionada!).nombre}. Toca su sitio.',
@@ -417,7 +421,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
             ],
           ),
         ] else if (!partida.completa)
-          const Text(
+          const Texto(
             'Las piezas están colocadas. Ahora descubre sus funciones.',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -436,7 +440,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
             ),
             if (idPregunta != null) ...[
               const SizedBox(height: 16),
-              Text(
+              Texto(
                 _herbario.parte(idPregunta).pregunta.enunciado,
                 key: Key('pregunta-$idPregunta'),
                 style: Theme.of(context).textTheme.titleLarge,
@@ -449,7 +453,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                   key: Key('funcion-$idPregunta-${opcion.id}'),
                   style: EstilosJuego.respuesta,
                   onPressed: () => _responder(idPregunta, opcion.id),
-                  child: Text(opcion.nombre),
+                  child: Texto(opcion.nombre),
                 ),
                 const SizedBox(height: 8),
               ],
@@ -458,7 +462,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
         ),
         if (partida.colocadas.any(partida.puedeConsultar)) ...[
           const SizedBox(height: 12),
-          const Text('Consulta las partes que has descubierto:'),
+          const Texto('Consulta las partes que has descubierto:'),
           Wrap(
             spacing: 8,
             children: [
@@ -468,7 +472,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
                     key: Key('ficha-$id'),
                     onPressed: () => _consultar(id),
                     icon: const Icon(Icons.info_outline),
-                    label: Text(_herbario.parte(id).nombre),
+                    label: Texto(_herbario.parte(id).nombre),
                   ),
             ],
           ),
@@ -477,22 +481,22 @@ class _HerbarioPageState extends State<HerbarioPage> {
           const SizedBox(height: 16),
           Semantics(
             liveRegion: true,
-            child: Text(
+            child: Texto(
               '¡Has completado el herbario!',
               key: const Key('herbario-completo'),
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          if (_guardando) const Text('Guardando tu progreso…'),
+          if (_guardando) const Texto('Guardando tu progreso…'),
           if (_guardado)
-            const Text('Nivel superado y guardado en este dispositivo.'),
+            const Texto('Nivel superado y guardado en este dispositivo.'),
           if (_falloGuardado) ...[
-            const Text(
+            const Texto(
               'No he podido guardar tu progreso. Puedes intentarlo otra vez.',
             ),
             TextButton(
               onPressed: _guardarSiCompleta,
-              child: const Text('Guardar de nuevo'),
+              child: const Texto('Guardar de nuevo'),
             ),
           ],
           const SizedBox(height: 8),
@@ -500,7 +504,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
             key: const Key('herbario-otra-vez'),
             style: EstilosJuego.accion,
             onPressed: _guardando ? null : () => _empezar(nivel),
-            child: const Text('Otra vez'),
+            child: const Texto('Otra vez'),
           ),
         ],
         const SizedBox(height: 12),
@@ -508,11 +512,11 @@ class _HerbarioPageState extends State<HerbarioPage> {
           key: const Key('herbario-cambiar-nivel'),
           style: EstilosJuego.accion,
           onPressed: _guardando ? null : () => setState(() => _partida = null),
-          child: const Text('Cambiar nivel'),
+          child: const Texto('Cambiar nivel'),
         ),
         TextButton(
           onPressed: _guardando ? null : () => Navigator.of(context).pop(),
-          child: const Text('Volver al invernadero'),
+          child: const Texto('Volver al invernadero'),
         ),
       ],
     );
@@ -551,13 +555,13 @@ class _HerbarioPageState extends State<HerbarioPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      Texto(
                         parte.nombre,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w800),
                       ),
                       if (seleccionada)
-                        Text(
+                        Texto(
                           'Seleccionada',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
@@ -608,7 +612,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
       childWhenDragging: Opacity(opacity: .35, child: tarjeta()),
       child: Semantics(
         selected: seleccionada,
-        label: 'Pieza ${parte.nombre}',
+        label: context.traducir('Pieza ${parte.nombre}'),
         child: tarjeta(
           clave: Key('pieza-${parte.id}'),
           onTap: () => setState(() => partida.seleccionar(parte.id)),

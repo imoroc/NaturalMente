@@ -227,3 +227,7 @@ flutter run -d android
 <div align="center">
   <sub>Identificador de paquete: <code>com.naturalmente.naturalmente</code> · Nombre de la aplicación: <strong>NaturalMente</strong></sub>
 </div>
+
+### Idioma de la app
+
+El botón ES/EN permite elegir **Español** o **English** solo en el mapa principal, debajo de la cabecera de NaturalMente y antes de «Mundos para explorar». Traduce también las fichas, las pistas, los juegos y el álbum. La elección se conserva al cerrar y volver a abrir, y se aplica a toda la app sin borrar el progreso. Español es el idioma inicial.

@@ -6,7 +6,7 @@ Los PDF y los Word del profesor no están en el repositorio. Aquí está resumid
 
 ## Qué estamos haciendo
 
-NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de primaria, en español, sobre animales, plantas y el cuerpo humano.
+NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de primaria, en español e inglés, sobre animales, plantas y el cuerpo humano.
 
 Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base de código, en Flutter. No hay servidor ni registro. Si el niño se equivoca, el juego le explica qué pasa. No le pone un cartel de error.
 
@@ -213,7 +213,7 @@ Dibujos: pocos colores, un personaje nuestro. Nada sacado del libro. Si usamos u
 
 ## Qué tiene que poder decir alguien que no ha abierto los PDF
 
-- La app es de animales, plantas y cuerpo, para primaria, en español.
+- La app es de animales, plantas y cuerpo, para primaria, en español e inglés.
 - El cuerpo incluye la reproducción, con cuatro pasos y sin detalles gráficos.
 - Tierra y universo no se mencionan. El suelo de la planta sí.
 - Materia, energía y fuerzas no entran en el MVP. Son ampliación si da tiempo.

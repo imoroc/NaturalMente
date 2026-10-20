@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:naturalmente/ui/componentes_juego.dart';
-import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class JuegoPage extends StatefulWidget {
   const JuegoPage({required this.actividad, super.key});
@@ -208,7 +209,7 @@ class _JuegoPageState extends State<JuegoPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
+        title: Texto(
           enSelector ? actividad.titulo : _titulo(actividad),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -391,7 +392,7 @@ class _JuegoPageState extends State<JuegoPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
+                          child: Texto(
                             niveles[i].nombre,
                             style: const TextStyle(
                               fontWeight: FontWeight.w900,
@@ -418,10 +419,10 @@ class _JuegoPageState extends State<JuegoPage> {
                         ),
                       ],
                     ),
-                    Text('Pensado para ${niveles[i].curso}'),
+                    Texto('Pensado para ${niveles[i].curso}'),
                     if (niveles[i].resumen.isNotEmpty) ...[
                       const SizedBox(height: 4),
-                      Text(niveles[i].resumen),
+                      Texto(niveles[i].resumen),
                     ],
                     const SizedBox(height: 8),
                     Wrap(
@@ -462,7 +463,7 @@ class _JuegoPageState extends State<JuegoPage> {
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
-                                  child: Text(
+                                  child: Texto(
                                     'Cromo: ${fichasCatalogo[fichaId] ?? fichaId}',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -482,7 +483,7 @@ class _JuegoPageState extends State<JuegoPage> {
                     ),
                     if (progreso.nivelLugarHecho(widget.actividad, niveles[i].id)) ...[
                       const SizedBox(height: 6),
-                      const Text(
+                      const Texto(
                         '✓ Nivel superado',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
@@ -687,7 +688,7 @@ class _JuegoPageState extends State<JuegoPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        const Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
@@ -697,7 +698,7 @@ class _JuegoPageState extends State<JuegoPage> {
                           ),
                         ),
                         const SizedBox(height: 2),
-                        Text(
+                        Texto(
                           reto.nombre,
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
@@ -716,7 +717,7 @@ class _JuegoPageState extends State<JuegoPage> {
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('¡Qué interesante!'),
+                child: const Texto('¡Qué interesante!'),
               ),
             ],
           ),
@@ -762,7 +763,7 @@ class _JuegoPageState extends State<JuegoPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        const Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
@@ -772,7 +773,7 @@ class _JuegoPageState extends State<JuegoPage> {
                           ),
                         ),
                         const SizedBox(height: 2),
-                        Text(
+                        Texto(
                           tituloModal,
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
@@ -791,7 +792,7 @@ class _JuegoPageState extends State<JuegoPage> {
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('¡Qué interesante!'),
+                child: const Texto('¡Qué interesante!'),
               ),
             ],
           ),
@@ -944,7 +945,7 @@ class _CabeceraNivel extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Text(
+          child: Texto(
             texto,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -966,7 +967,7 @@ class _CabeceraNivel extends StatelessWidget {
             ),
             onPressed: onCambiarNivel,
             icon: const Icon(Icons.swap_horiz_rounded, size: 16),
-            label: const Text(
+            label: const Texto(
               'Cambiar nivel',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
             ),
@@ -1028,7 +1029,7 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                   color: const Color(0xFFDCFCE7),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
+                child: Texto(
                   etiquetaSuperior,
                   style: const TextStyle(
                     fontWeight: FontWeight.w900,
@@ -1039,7 +1040,7 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: Text(
+                child: Texto(
                   subtituloDerecho,
                   textAlign: TextAlign.right,
                   style: const TextStyle(
@@ -1052,7 +1053,7 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(
+          Texto(
             pregunta.enunciado,
             key: Key('pregunta-$prefijoKey'),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -1086,7 +1087,7 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                 ),
                 onPressed: () => onResponder(opcion.id),
-                child: Text(
+                child: Texto(
                   opcion.nombre,
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
@@ -1238,7 +1239,7 @@ class _Lugar extends StatelessWidget {
                               color: const Color(0xFFE0F2FE),
                               borderRadius: BorderRadius.circular(999),
                             ),
-                            child: Text(
+                            child: Texto(
                               '$etiquetaTipo ${indice + 1} de $total · ${reto.nombre}',
                               style: const TextStyle(
                                 fontSize: 11,
@@ -1248,7 +1249,7 @@ class _Lugar extends StatelessWidget {
                             ),
                           ),
                           if (pista != null && !retoCompleto)
-                            Text(
+                            Texto(
                               pista,
                               style: const TextStyle(
                                 fontSize: 11,
@@ -1259,7 +1260,7 @@ class _Lugar extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 2),
-                      Text(
+                      Texto(
                         reto.pregunta,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
@@ -1297,7 +1298,7 @@ class _Lugar extends StatelessWidget {
                                 ),
                                 SizedBox(width: 4),
                                 Flexible(
-                                  child: Text(
+                                  child: Texto(
                                     'Ver curiosidad',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -1427,7 +1428,7 @@ class _Lugar extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size.fromHeight(alturaBoton),
                     ),
-                    child: const Text('Otra vez'),
+                    child: const Texto('Otra vez'),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -1438,7 +1439,7 @@ class _Lugar extends StatelessWidget {
                     style: FilledButton.styleFrom(
                       minimumSize: Size.fromHeight(alturaBoton),
                     ),
-                    child: Text(pie!),
+                    child: Texto(pie!),
                   ),
                 ),
               ],
@@ -1450,7 +1451,7 @@ class _Lugar extends StatelessWidget {
             style: FilledButton.styleFrom(
               minimumSize: Size.fromHeight(alturaBoton),
             ),
-            child: Text(pie!),
+            child: Texto(pie!),
           );
         }
 
@@ -1597,10 +1598,12 @@ class _TableroCuerpoHerbario extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
-                      const Text(
+                      const Texto(
                         'BANDEJA DE ÓRGANOS · ARRÁSTRALOS AL CUERPO',
                         style: TextStyle(
                           fontSize: 9.5,
@@ -1609,7 +1612,7 @@ class _TableroCuerpoHerbario extends StatelessWidget {
                           color: Color(0xFF5C4B3B),
                         ),
                       ),
-                      Text(
+                      Texto(
                         '${organosColocados.length}/${retosNivel.length} en su sitio',
                         style: const TextStyle(
                           fontSize: 10,
@@ -1702,7 +1705,7 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
             children: [
               IconoOrgano(id: reto.id, size: 24),
               const SizedBox(width: 5),
-              Text(
+              Texto(
                 reto.nombre,
                 style: TextStyle(
                   fontSize: 11,
@@ -1761,7 +1764,7 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
             children: [
               IconoOrgano(id: reto.id, size: 40),
               const SizedBox(width: 6),
-              Text(
+              Texto(
                 reto.nombre,
                 style: const TextStyle(
                   fontSize: 12,
@@ -1846,7 +1849,7 @@ class _Sitio extends StatelessWidget {
                   else
                     IconoSitio(id: opcion.id),
                   const SizedBox(height: 5),
-                  Text(
+                  Texto(
                     opcion.nombre,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -1858,7 +1861,7 @@ class _Sitio extends StatelessWidget {
                   ),
                   if (subtitulo != null) ...[
                     const SizedBox(height: 2),
-                    Text(
+                    Texto(
                       subtitulo,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -2087,7 +2090,7 @@ class _Controles extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size.fromHeight(48),
                           ),
-                          label: const Text('Otra vez'),
+                          label: const Texto('Otra vez'),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -2099,7 +2102,7 @@ class _Controles extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             minimumSize: const Size.fromHeight(48),
                           ),
-                          label: const Text('Volver'),
+                          label: const Texto('Volver'),
                         ),
                       ),
                     ],
@@ -2112,7 +2115,7 @@ class _Controles extends StatelessWidget {
                     style: FilledButton.styleFrom(
                       minimumSize: const Size.fromHeight(52),
                     ),
-                    label: Text(
+                    label: Texto(
                       _textoBotonAvance(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -2162,7 +2165,7 @@ class _BarraProgreso extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Text(
+              child: Texto(
                 etiqueta,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -2174,7 +2177,7 @@ class _BarraProgreso extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Text(
+            Texto(
               '${(porcentaje * 100).round()}%',
               style: const TextStyle(
                 fontSize: 12,
@@ -2375,7 +2378,7 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                   : const Color(0xFFCBD5E1),
                             ),
                           ),
-                          child: Text(
+                          child: Texto(
                             _fasesGerminacion[i].$2,
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -2449,7 +2452,7 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                               color: Color(0xFFB91C1C),
                             ),
                             SizedBox(width: 3),
-                            Text(
+                            Texto(
                               'Empezar Día 1',
                               style: TextStyle(
                                 fontSize: 10.5,
@@ -2472,14 +2475,14 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          Texto(
                             '${widget.sujeto} · ${_fasesGerminacion[(_etapaVista - 1).clamp(0, 3)].$2}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.titleSmall
                                 ?.copyWith(fontWeight: FontWeight.w900),
                           ),
-                          Text(
+                          Texto(
                             arrastrandoEncima
                                 ? '¡Suelta aquí tu elección para aplicarla al bote!'
                                 : descripcionEtapa,
@@ -2506,7 +2509,7 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                           size: 16,
                           color: Color(0xFF15803D),
                         ),
-                        label: const Text('Ver curiosidad'),
+                        label: const Texto('Ver curiosidad'),
                         style: FilledButton.styleFrom(
                           backgroundColor: const Color(0xFFDCFCE7),
                           foregroundColor: const Color(0xFF14532D),
@@ -2548,7 +2551,7 @@ class _ChipEstadoBote extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
         border: Border.all(color: const Color(0xFFCBD5E1)),
       ),
-      child: Text(
+      child: Texto(
         texto,
         style: const TextStyle(
           fontSize: 11,
@@ -2856,7 +2859,7 @@ class _ContenedorEstacion extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    Texto(
                       titulo,
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
@@ -2864,7 +2867,7 @@ class _ContenedorEstacion extends StatelessWidget {
                         color: colorPrincipal,
                       ),
                     ),
-                    Text(
+                    Texto(
                       subtitulo,
                       style: const TextStyle(
                         fontSize: 11.5,
@@ -2910,7 +2913,7 @@ class _InsigniaHerramientaArrastre extends StatelessWidget {
         children: [
           Icon(accion.icono, size: 18, color: Colors.white),
           const SizedBox(width: 6),
-          Text(
+          Texto(
             accion.etiqueta,
             style: const TextStyle(
               color: Colors.white,
@@ -3003,7 +3006,7 @@ class _OpcionControl extends StatelessWidget {
                 color: elegido ? Colors.white : colorAcento,
               ),
               const SizedBox(height: 2),
-              Text(
+              Texto(
                 nombre,
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -3017,7 +3020,7 @@ class _OpcionControl extends StatelessWidget {
               ),
               if (subtitulo.isNotEmpty) ...[
                 const SizedBox(height: 1),
-                Text(
+                Texto(
                   subtitulo,
                   textAlign: TextAlign.center,
                   maxLines: 1,
@@ -3176,7 +3179,7 @@ class _OrdenState extends State<_Orden> {
                   DibujoPasoVida(id: pasoId, tamano: compacto ? 26 : 30),
                   SizedBox(width: compacto ? 4 : 6),
                   Expanded(
-                    child: Text(
+                    child: Texto(
                       '${i + 1}. ${nombre(pasoId)}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -3236,7 +3239,7 @@ class _OrdenState extends State<_Orden> {
                     shape: BoxShape.circle,
                     border: Border.all(color: const Color(0xFF94A3B8)),
                   ),
-                  child: Text(
+                  child: Texto(
                     '${i + 1}',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
@@ -3247,7 +3250,7 @@ class _OrdenState extends State<_Orden> {
                 ),
                 SizedBox(width: compacto ? 5 : 7),
                 Expanded(
-                  child: Text(
+                  child: Texto(
                     i == orden.length ? 'Siguiente' : 'Paso ${i + 1}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -3394,7 +3397,7 @@ class _OrdenState extends State<_Orden> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
+                              Texto(
                                 widget.baseCompletada
                                     ? '¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
                                     : '¡Las $totalPasos viñetas están colocadas! Pulsa «${actividad.boton}» o toca una viñeta si quieres cambiarla.',
@@ -3415,7 +3418,7 @@ class _OrdenState extends State<_Orden> {
                                     Icons.auto_awesome_rounded,
                                     size: 16,
                                   ),
-                                  label: const Text('Ver curiosidad'),
+                                  label: const Texto('Ver curiosidad'),
                                 ),
                               ],
                             ],
@@ -3485,7 +3488,7 @@ class _OrdenState extends State<_Orden> {
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),
                       ),
-                      child: const Text('Otra vez'),
+                      child: const Texto('Otra vez'),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -3496,7 +3499,7 @@ class _OrdenState extends State<_Orden> {
                       style: FilledButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),
                       ),
-                      child: const Text('Volver'),
+                      child: const Texto('Volver'),
                     ),
                   ),
                 ],
@@ -3508,7 +3511,7 @@ class _OrdenState extends State<_Orden> {
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),
                 ),
-                child: Text(actividad.boton),
+                child: Texto(actividad.boton),
               ),
           ],
         ],
@@ -3558,7 +3561,7 @@ class _TarjetaPasoVida extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    Texto(
                       paso.nombre,
                       style: const TextStyle(
                         fontWeight: FontWeight.w900,
@@ -3567,7 +3570,7 @@ class _TarjetaPasoVida extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Text(
+                    Texto(
                       explicacion,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

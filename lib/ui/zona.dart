@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
+import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class ZonaPage extends StatelessWidget {
   const ZonaPage({required this.zona, super.key});
@@ -25,7 +26,7 @@ class ZonaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(zona.nombre, maxLines: 1, overflow: TextOverflow.ellipsis),
+        title: Texto(zona.nombre, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
       body: ListenableBuilder(
         listenable: progreso,
@@ -66,7 +67,7 @@ class ZonaPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                Texto(
                                   zona.bloque.toUpperCase(),
                                   style: const TextStyle(
                                     fontSize: 11,
@@ -76,7 +77,7 @@ class ZonaPage extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 2),
-                                Text(
+                                Texto(
                                   zona.resumen,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w700,
@@ -100,7 +101,7 @@ class ZonaPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Expanded(
-                          child: Text(
+                          child: Texto(
                             'MISIONES DE LA ZONA',
                             style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
@@ -143,7 +144,7 @@ class ZonaPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Expanded(
-                          child: Text(
+                          child: Texto(
                             'ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
                             style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
@@ -156,7 +157,7 @@ class ZonaPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    const Texto(
                       'Juega a las misiones y supera niveles para desbloquear todas las fichas del cuaderno de Natu.',
                       style: TextStyle(
                         fontSize: 13,
@@ -239,7 +240,7 @@ class _BotonMision extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  Texto(
                     titulo,
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
@@ -248,7 +249,7 @@ class _BotonMision extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(
+                  Texto(
                     'Pensado para $curso',
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
@@ -285,7 +286,7 @@ class _BotonMision extends StatelessWidget {
                                     : const Color(0xFFCBD5E1),
                               ),
                             const SizedBox(width: 4),
-                            Text(
+                            Texto(
                               '$estrellas/$maxEstrellas niveles',
                               style: TextStyle(
                                 fontSize: 11.5,
@@ -299,7 +300,7 @@ class _BotonMision extends StatelessWidget {
                         ),
                       ),
                       if (hecha)
-                        const Text(
+                        const Texto(
                           '✓ Actividad superada',
                           style: TextStyle(
                             fontSize: 12,
@@ -403,7 +404,7 @@ class TarjetaCromoFicha extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: Text(
+                            child: Texto(
                               ficha.titulo,
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
@@ -425,7 +426,7 @@ class TarjetaCromoFicha extends StatelessWidget {
                                   : const Color(0xFFE2E8F0),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Text(
+                            child: Texto(
                               desbloqueada ? '¡Cromo!' : 'Por descubrir',
                               style: TextStyle(
                                 fontSize: 11,
@@ -439,7 +440,7 @@ class TarjetaCromoFicha extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 3),
-                      Text(
+                      Texto(
                         desbloqueada
                             ? ficha.frase
                             : Progreso.pistaDesbloqueoFicha(ficha.id),
@@ -524,7 +525,7 @@ void mostrarDetalleFicha(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      Texto(
                         desbloqueada
                             ? 'CROMO DESBLOQUEADO · ${ficha.curso.toUpperCase()}'
                             : 'CROMO POR DESCUBRIR · ${ficha.curso.toUpperCase()}',
@@ -538,7 +539,7 @@ void mostrarDetalleFicha(
                         ),
                       ),
                       const SizedBox(height: 2),
-                      Text(
+                      Texto(
                         ficha.titulo,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
@@ -565,7 +566,7 @@ void mostrarDetalleFicha(
                     ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child: Text(
+                      child: Texto(
                         ficha.frase,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
@@ -594,7 +595,7 @@ void mostrarDetalleFicha(
             FilledButton(
               key: const Key('cerrar-detalle-ficha'),
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(desbloqueada ? '¡Genial!' : '¡Voy a descubrirlo!'),
+              child: Texto(desbloqueada ? '¡Genial!' : '¡Voy a descubrirlo!'),
             ),
           ],
         ),
@@ -622,7 +623,7 @@ class _AlbumPageState extends State<AlbumPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text(
+        title: const Texto(
           'Álbum de cromos de Natu',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -673,7 +674,7 @@ class _AlbumPageState extends State<AlbumPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    Texto(
                                       'Cromos conseguidos: $desbloqueadasTotal de ${todas.length}',
                                       style: Theme.of(context)
                                           .textTheme
@@ -684,7 +685,7 @@ class _AlbumPageState extends State<AlbumPage> {
                                           ),
                                     ),
                                     const SizedBox(height: 4),
-                                    const Text(
+                                    const Texto(
                                       'Supera los niveles Fácil, Medio y Difícil de cada juego para completar toda la colección.',
                                       style: TextStyle(
                                         fontSize: 13,
@@ -772,7 +773,7 @@ class _FiltroAlbumChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: Text(
+      label: Texto(
         etiqueta,
         style: TextStyle(
           fontWeight: FontWeight.w800,

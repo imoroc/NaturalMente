@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
 
 class MapaPage extends StatelessWidget {
@@ -24,7 +26,12 @@ class MapaPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _CabeceraNatu(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 14),
+                      const Align(
+                        alignment: Alignment.centerRight,
+                        child: SelectorIdioma(),
+                      ),
+                      const SizedBox(height: 14),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Row(
@@ -36,7 +43,7 @@ class MapaPage extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Expanded(
-                              child: Text(
+                              child: Texto(
                                 'MUNDOS PARA EXPLORAR',
                                 style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
@@ -156,7 +163,7 @@ class _CabeceraNatu extends StatelessWidget {
                         color: const Color(0xFFDCFCE7),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(
+                      child: Texto(
                         rango,
                         style: const TextStyle(
                           fontSize: 10.5,
@@ -167,12 +174,12 @@ class _CabeceraNatu extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    Texto(
                       'NaturalMente',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 2),
-                    Text(
+                    Texto(
                       saludo,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
@@ -286,7 +293,7 @@ class _InsigniaResumen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                Texto(
                   valor,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -296,7 +303,7 @@ class _InsigniaResumen extends StatelessWidget {
                     color: Color(0xFF1E293B),
                   ),
                 ),
-                Text(
+                Texto(
                   etiqueta,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -402,7 +409,7 @@ class _ZonaTarjeta extends StatelessWidget {
                                     color: Colors.white.withValues(alpha: 0.9),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Text(
+                                  child: Texto(
                                     zona.bloque,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -428,7 +435,7 @@ class _ZonaTarjeta extends StatelessWidget {
                                       : Colors.white.withValues(alpha: 0.9),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Text(
+                                child: Texto(
                                   '$hechas/${actividades.length}',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
@@ -444,12 +451,12 @@ class _ZonaTarjeta extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 6),
-                          Text(
+                          Texto(
                             zona.nombre,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(height: 3),
-                          Text(
+                          Texto(
                             zona.resumen,
                             style: const TextStyle(
                               color: Color(0xFF334155),
@@ -512,7 +519,7 @@ class _ZonaTarjeta extends StatelessWidget {
                             color: Color(0xFFF59E0B),
                           ),
                           const SizedBox(width: 3),
-                          Text(
+                          Texto(
                             '$estrellasZona/$maxEstrellasZona',
                             style: const TextStyle(
                               fontSize: 12,
@@ -527,7 +534,7 @@ class _ZonaTarjeta extends StatelessWidget {
                             color: estilo.acento,
                           ),
                           const SizedBox(width: 3),
-                          Text(
+                          Texto(
                             '$cromosZona/${fichasZona.length} cromos',
                             style: const TextStyle(
                               fontSize: 12,
@@ -549,7 +556,7 @@ class _ZonaTarjeta extends StatelessWidget {
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
+                            Texto(
                               'Explorar',
                               style: TextStyle(
                                 color: Colors.white,
@@ -610,11 +617,11 @@ void _mostrarAlbumCompleto(BuildContext context) {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        Texto(
                           'Álbum de cromos de Natu',
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        Text(
+                        Texto(
                           'Has descubierto $desbloqueadas de $total cromos naturales.',
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
@@ -630,7 +637,7 @@ void _mostrarAlbumCompleto(BuildContext context) {
               for (final zona in alcance.catalogo.zonas) ...[
                 Padding(
                   padding: const EdgeInsets.only(top: 6, bottom: 8),
-                  child: Text(
+                  child: Texto(
                     '${zona.nombre.toUpperCase()} · ${zona.bloque.toUpperCase()}',
                     style: const TextStyle(
                       fontSize: 12,
@@ -792,7 +799,7 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(
+                              child: Texto(
                                 'Álbum de cromos de Natu',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -813,7 +820,7 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                                 color: const Color(0xFF7E22CE),
                                 borderRadius: BorderRadius.circular(999),
                               ),
-                              child: Text(
+                              child: Texto(
                                 '$desbloqueados/$total',
                                 style: const TextStyle(
                                   fontSize: 12,
@@ -825,7 +832,7 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 4),
-                        const Text(
+                        const Texto(
                           'Colecciona animales, plantas y órganos en Fácil, Medio y Difícil y lee sus curiosidades.',
                           style: TextStyle(
                             fontSize: 13,

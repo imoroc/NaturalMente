@@ -49,3 +49,9 @@ La reproducción hay que validarla con el colegio antes de publicarla.
 - El catálogo guarda ahora un `curso` por ficha y por actividad. Para el selector hará falta un campo de nivel en cada pregunta o reto. Lo cambia quien lo implemente, avisando a quien lleva `content/`.
 - Cómo encaja «seres vivos y ecosistemas» en el mapa: dentro de La reserva y El invernadero, o como sitio aparte.
 - Confirmar con el colegio el curso de las guías que no lo dicen.
+
+## 19 de octubre de 2026
+
+**Español e inglés en toda la app.** El idioma inicial es español y un botón ES/EN permite elegir Español o English desde el mapa y las pantallas de zona, juego y álbum. La elección se guarda en el dispositivo y se aplica también a los controles de Material. Cambiar de idioma conserva la partida abierta, las estrellas, los cromos y la medalla.
+
+Los textos originales siguen en español en el catálogo y en las reglas; sus traducciones propias se guardan en `content/en.json`. Se traducen al presentarlos, sin cambiar identificadores ni respuestas. Se mantiene el diseño de Natu y el tono de las pistas en ambos idiomas.

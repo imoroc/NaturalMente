@@ -205,19 +205,19 @@ void main() {
     final progreso = await Progreso.abrir();
     expect(progreso.nivelesSuperadosDe(actividad), 0);
     expect(progreso.maxNivelesDe(actividad), 3);
-    await progreso.marcarNivelNacimiento(actividad, 'medio');
+    await progreso.marcarNivelJuego(actividad, 'medio');
     final reabierto = await Progreso.abrir();
     expect(reabierto.hecho('hogar/camello'), isTrue);
     expect(reabierto.hecho('herbario/facil/completo'), isTrue);
-    expect(reabierto.nivelNacimientoHecho(actividad, 'medio'), isTrue);
-    expect(reabierto.nivelNacimientoHecho(actividad, 'facil'), isFalse);
+    expect(reabierto.nivelJuegoHecho(actividad, 'medio'), isTrue);
+    expect(reabierto.nivelJuegoHecho(actividad, 'facil'), isFalse);
     expect(reabierto.actividadHecha(actividad), isTrue);
     expect(reabierto.nivelesSuperadosDe(actividad), 1);
     expect(reabierto.fichaDesbloqueada('huevo'), isTrue);
     expect(reabierto.fichaDesbloqueada('renacuajo'), isTrue);
     expect(reabierto.fichaDesbloqueada('mariposa'), isFalse);
     await expectLater(
-      reabierto.marcarNivelNacimiento(actividad, 'inventado'),
+      reabierto.marcarNivelJuego(actividad, 'inventado'),
       throwsArgumentError,
     );
   });

@@ -192,6 +192,11 @@ void main() {
           actividad.nacimiento!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.tipo == 'viaje') {
+        expect(
+          actividad.viaje!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
       } else {
         expect(
           actividad.nivelesLugar.map((n) => n.id).toList(),
@@ -255,11 +260,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 27 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 27);
+  test('el álbum tiene 30 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 30);
     expect(catalogo.fichasDe('reserva').length, 10);
     expect(catalogo.fichasDe('invernadero').length, 8);
-    expect(catalogo.fichasDe('cuerpo').length, 9);
+    expect(catalogo.fichasDe('cuerpo').length, 12);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -335,17 +340,30 @@ void main() {
     expect(progreso.fichaDesbloqueada('celula'), isTrue);
 
     final nacimiento = catalogo.actividades.firstWhere((a) => a.id == 'nacimiento');
-    await progreso.marcarNivelNacimiento(nacimiento, 'facil');
+    await progreso.marcarNivelJuego(nacimiento, 'facil');
     expect(progreso.fichaDesbloqueada('huevo'), isTrue);
     expect(progreso.fichaDesbloqueada('renacuajo'), isFalse);
     expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
 
-    await progreso.marcarNivelNacimiento(nacimiento, 'medio');
+    await progreso.marcarNivelJuego(nacimiento, 'medio');
     expect(progreso.fichaDesbloqueada('renacuajo'), isTrue);
     expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
 
-    await progreso.marcarNivelNacimiento(nacimiento, 'dificil');
+    await progreso.marcarNivelJuego(nacimiento, 'dificil');
     expect(progreso.fichaDesbloqueada('mariposa'), isTrue);
+
+    final digestion = catalogo.actividades.firstWhere((a) => a.id == 'digestion');
+    await progreso.marcarNivelJuego(digestion, 'facil');
+    expect(progreso.fichaDesbloqueada('dientes'), isTrue);
+    expect(progreso.fichaDesbloqueada('aparato-digestivo'), isFalse);
+    expect(progreso.fichaDesbloqueada('nutrientes'), isFalse);
+
+    await progreso.marcarNivelJuego(digestion, 'medio');
+    expect(progreso.fichaDesbloqueada('aparato-digestivo'), isTrue);
+    expect(progreso.fichaDesbloqueada('nutrientes'), isFalse);
+
+    await progreso.marcarNivelJuego(digestion, 'dificil');
+    expect(progreso.fichaDesbloqueada('nutrientes'), isTrue);
     expect(
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,

@@ -16,7 +16,7 @@
       "id": "cuerpo",
       "nombre": "Dentro de mí",
       "bloque": "Cuerpo humano",
-      "resumen": "Coloca cada pieza y ordena cómo empieza una vida."
+      "resumen": "Coloca cada pieza, sigue el viaje de la comida y ordena cómo empieza una vida."
     }
   ],
   "fichas": [
@@ -235,6 +235,33 @@
       "titulo": "Intestinos",
       "frase": "Están plegados en el abdomen a continuación del estómago y absorben los nutrientes y el agua de los alimentos.",
       "curiosidad": "Si pudiéramos estirar el intestino delgado y el grueso, medirían varios metros, pero caben en el abdomen porque están muy bien doblados."
+    },
+    {
+      "id": "dientes",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "El viaje de la comida",
+      "titulo": "Dientes",
+      "frase": "Cortan y trituran la comida para que se pueda tragar; por eso hay que masticar bien.",
+      "curiosidad": "Primero tenemos 20 dientes de leche y, al crecer, salen hasta 32 dientes definitivos."
+    },
+    {
+      "id": "aparato-digestivo",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "El viaje de la comida",
+      "titulo": "Aparato digestivo",
+      "frase": "Boca, esófago, estómago e intestinos forman el camino que transforma la comida.",
+      "curiosidad": "La comida tarda más de un día en recorrer todo el aparato digestivo."
+    },
+    {
+      "id": "nutrientes",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "El viaje de la comida",
+      "titulo": "Nutrientes",
+      "frase": "Son las sustancias útiles de los alimentos: pasan a la sangre en el intestino delgado y llegan a todas las células.",
+      "curiosidad": "Proteínas, hidratos de carbono, grasas, vitaminas y minerales son nutrientes; cada uno ayuda al cuerpo de una manera."
     },
     {
       "id": "una-vida",
@@ -2361,6 +2388,293 @@
           ]
         }
       ]
+    },
+    {
+      "id": "digestion",
+      "zona": "cuerpo",
+      "tipo": "viaje",
+      "titulo": "El viaje de la comida",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Acompaña a un trozo de manzana en su viaje por el cuerpo.",
+      "viaje": {
+        "despistes": [
+          {
+            "id": "pulmones",
+            "nombre": "Pulmones",
+            "frase": "¡Por ahí entra el aire, no la comida! Los pulmones sirven para respirar."
+          },
+          {
+            "id": "corazon",
+            "nombre": "Corazón",
+            "frase": "El corazón bombea la sangre; la comida no pasa por dentro de él."
+          }
+        ],
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Lleva la manzana a la boca, mastícala bien y haz que llegue a la barriga.",
+            "intro": "¿Por dónde entra la comida? Toca su sitio en el cuerpo o arrastra la manzana hasta allí.",
+            "curiosidad": "Masticar despacio ayuda a la barriga: cuanto más pequeños son los trozos, más fácil es deshacerlos.",
+            "masticar": true,
+            "sinMasticar": "¡Todavía no me han masticado! Toca «Masticar» antes de tragarme.",
+            "atras": "Ya he pasado por ahí: la comida siempre viaja hacia delante, nunca hacia atrás.",
+            "despistes": [
+              "pulmones"
+            ],
+            "paradas": [
+              {
+                "id": "boca",
+                "nombre": "Boca",
+                "llegada": "¡Ñam! Estoy en la boca. Los dientes me cortan y me trituran: toca «Masticar».",
+                "pista": "La comida entra por el mismo sitio por el que hablas y sonríes.",
+                "salto": "¡Todavía no me han masticado! Primero tengo que entrar por la boca."
+              },
+              {
+                "id": "barriga",
+                "nombre": "Barriga",
+                "llegada": "¡Ya estoy en la barriga! Aquí el estómago me mezcla hasta dejarme como una papilla.",
+                "pista": "Después de tragar, la comida baja hasta la barriga."
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Recorre los 4 pasos del aparato digestivo sin despistarte con los pulmones ni el corazón, y responde para qué sirve el viaje.",
+            "intro": "Lleva la manzana por el aparato digestivo, parada a parada, en el orden correcto.",
+            "curiosidad": "Si estiráramos el intestino de un adulto, mediría más que un coche.",
+            "masticar": true,
+            "sinMasticar": "¡Todavía no me han masticado! Toca «Masticar» antes de tragarme.",
+            "atras": "Ya he pasado por ahí: la comida siempre viaja hacia delante, nunca hacia atrás.",
+            "despistes": [
+              "pulmones",
+              "corazon"
+            ],
+            "paradas": [
+              {
+                "id": "boca",
+                "nombre": "Boca",
+                "llegada": "Estoy en la boca. Los dientes me trituran y la saliva me ablanda: toca «Masticar».",
+                "pista": "Busca por dónde entra la comida en el cuerpo.",
+                "salto": "¡Todavía no me han masticado! El viaje empieza en la boca."
+              },
+              {
+                "id": "esofago",
+                "nombre": "Esófago",
+                "llegada": "Al tragar bajo por el esófago, un tubo que me empuja desde la garganta hasta el estómago.",
+                "pista": "Busca el tubo largo que baja por el cuello y el pecho.",
+                "salto": "No puedo saltar hasta ahí: primero tengo que bajar por el tubo que une la boca con el estómago."
+              },
+              {
+                "id": "estomago",
+                "nombre": "Estómago",
+                "llegada": "En el estómago me mezclan con jugos que me deshacen hasta dejarme como una papilla.",
+                "pista": "Busca la bolsa en forma de J que está debajo de las costillas.",
+                "salto": "Todavía estoy en trozos: antes del intestino, el estómago tiene que convertirme en papilla."
+              },
+              {
+                "id": "intestino",
+                "nombre": "Intestino",
+                "llegada": "En el intestino el cuerpo aprovecha lo bueno de la comida y lo que sobra sale fuera.",
+                "pista": "Busca el tubo largo y plegado que ocupa casi toda la barriga."
+              }
+            ],
+            "preguntaFinal": {
+              "enunciado": "¿Para qué sirve todo este viaje de la comida?",
+              "opciones": [
+                {
+                  "id": "energia",
+                  "nombre": "Para sacar de la comida lo que el cuerpo necesita para crecer y tener energía"
+                },
+                {
+                  "id": "aire",
+                  "nombre": "Para llevar aire a los pulmones"
+                },
+                {
+                  "id": "sangre",
+                  "nombre": "Para que el corazón tenga más espacio"
+                }
+              ],
+              "respuesta": "energia",
+              "frases": {
+                "energia": "¡Muy bien! El aparato digestivo transforma la comida para que el cuerpo aproveche sus nutrientes.",
+                "aire": "El aire entra por la nariz hasta los pulmones; la comida hace otro camino.",
+                "sangre": "El corazón no necesita espacio: la comida viaja para que el cuerpo la aproveche."
+              }
+            }
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Recorre las 5 partes del aparato digestivo, del bolo alimenticio a la absorción de nutrientes, y explica qué pasa en cada una.",
+            "intro": "Lleva el bocado por las cinco partes del aparato digestivo y explica qué ocurre en cada parada.",
+            "curiosidad": "La pared del intestino delgado está llena de pliegues diminutos, las vellosidades, que aumentan muchísimo la superficie para absorber nutrientes.",
+            "masticar": false,
+            "atras": "Ya he pasado por ahí: la comida siempre viaja hacia delante, nunca hacia atrás.",
+            "despistes": [
+              "pulmones",
+              "corazon"
+            ],
+            "paradas": [
+              {
+                "id": "boca",
+                "nombre": "Boca",
+                "llegada": "Primera parada: la boca. Aquí empieza la digestión.",
+                "pista": "La digestión empieza donde están los dientes y la lengua.",
+                "salto": "¡Todavía no me han masticado! La digestión empieza en la boca.",
+                "pregunta": {
+                  "enunciado": "¿Qué me pasa en la boca?",
+                  "opciones": [
+                    {
+                      "id": "masticar",
+                      "nombre": "Los dientes me trituran y la saliva empieza a deshacerme hasta formar una bola blanda"
+                    },
+                    {
+                      "id": "nutrientes",
+                      "nombre": "La sangre recoge mis nutrientes"
+                    },
+                    {
+                      "id": "heces",
+                      "nombre": "Me convierto en heces"
+                    }
+                  ],
+                  "respuesta": "masticar",
+                  "frases": {
+                    "masticar": "¡Exacto! Esa bola de comida masticada y ensalivada se llama bolo alimenticio.",
+                    "nutrientes": "Eso ocurre más adelante, en el intestino delgado.",
+                    "heces": "Eso pasa al final del viaje, en el intestino grueso."
+                  }
+                }
+              },
+              {
+                "id": "esofago",
+                "nombre": "Esófago",
+                "llegada": "Al tragar paso al esófago.",
+                "pista": "Busca el tubo que baja por el cuello por detrás del corazón.",
+                "salto": "No puedo saltar ahí: primero bajo por el esófago, el tubo que une la boca con el estómago.",
+                "pregunta": {
+                  "enunciado": "¿Cómo baja el bolo por el esófago?",
+                  "opciones": [
+                    {
+                      "id": "musculos",
+                      "nombre": "Sus músculos se contraen como una ola y lo empujan hacia el estómago"
+                    },
+                    {
+                      "id": "aire",
+                      "nombre": "Lo empuja el aire de los pulmones"
+                    },
+                    {
+                      "id": "cae",
+                      "nombre": "Cae solo, como por un tobogán, sin que nada lo empuje"
+                    }
+                  ],
+                  "respuesta": "musculos",
+                  "frases": {
+                    "musculos": "¡Muy bien! Esos movimientos en ola se llaman peristálticos: por eso podemos tragar incluso tumbados.",
+                    "aire": "El aire va por la tráquea, otro tubo distinto; el esófago empuja la comida con sus músculos.",
+                    "cae": "No es solo la gravedad: los músculos del esófago empujan el bolo y por eso tragamos aunque estemos tumbados."
+                  }
+                }
+              },
+              {
+                "id": "estomago",
+                "nombre": "Estómago",
+                "llegada": "Llego al estómago.",
+                "pista": "Busca la bolsa en forma de J que está bajo el diafragma.",
+                "salto": "Aún estoy entero: antes del intestino, el estómago me tiene que deshacer.",
+                "pregunta": {
+                  "enunciado": "¿Qué hace el estómago con el bolo?",
+                  "opciones": [
+                    {
+                      "id": "jugos",
+                      "nombre": "Lo mezcla con jugos gástricos ácidos y lo convierte en una papilla llamada quimo"
+                    },
+                    {
+                      "id": "absorbe",
+                      "nombre": "Absorbe el agua y forma las heces"
+                    },
+                    {
+                      "id": "tritura",
+                      "nombre": "Lo tritura con dientes"
+                    }
+                  ],
+                  "respuesta": "jugos",
+                  "frases": {
+                    "jugos": "¡Sobresaliente! El quimo pasa poco a poco al intestino delgado.",
+                    "absorbe": "Absorber casi toda el agua que queda es trabajo del intestino grueso.",
+                    "tritura": "El estómago no tiene dientes: mezcla y deshace la comida con sus músculos y sus jugos."
+                  }
+                }
+              },
+              {
+                "id": "intestino-delgado",
+                "nombre": "Intestino delgado",
+                "llegada": "Entro en el intestino delgado, un tubo larguísimo y plegado.",
+                "pista": "Busca el tubo fino y enrollado del centro de la barriga.",
+                "salto": "Todavía no puedo salir: en el intestino delgado el cuerpo aprovecha los nutrientes.",
+                "pregunta": {
+                  "enunciado": "¿Qué ocurre en el intestino delgado?",
+                  "opciones": [
+                    {
+                      "id": "absorcion",
+                      "nombre": "Los nutrientes pasan a la sangre, que los reparte por todo el cuerpo"
+                    },
+                    {
+                      "id": "respira",
+                      "nombre": "Se toma oxígeno del aire"
+                    },
+                    {
+                      "id": "saliva",
+                      "nombre": "Se fabrica la saliva"
+                    }
+                  ],
+                  "respuesta": "absorcion",
+                  "frases": {
+                    "absorcion": "¡Exacto! A esto se le llama absorción de nutrientes.",
+                    "respira": "El oxígeno entra por los pulmones, no por el intestino.",
+                    "saliva": "La saliva se fabrica en la boca, al principio del viaje."
+                  }
+                }
+              },
+              {
+                "id": "intestino-grueso",
+                "nombre": "Intestino grueso",
+                "llegada": "Lo que el cuerpo no ha aprovechado llega al intestino grueso.",
+                "pista": "Busca el tubo más ancho que rodea al intestino delgado como un marco.",
+                "pregunta": {
+                  "enunciado": "¿Qué pasa en el intestino grueso?",
+                  "opciones": [
+                    {
+                      "id": "agua",
+                      "nombre": "Se absorbe el agua que queda y los restos forman las heces, que salen por el ano"
+                    },
+                    {
+                      "id": "quimo",
+                      "nombre": "Se forma el quimo"
+                    },
+                    {
+                      "id": "dientes",
+                      "nombre": "Se trituran los alimentos"
+                    }
+                  ],
+                  "respuesta": "agua",
+                  "frases": {
+                    "agua": "¡Viaje completo! Boca, esófago, estómago, intestino delgado e intestino grueso: así funciona el aparato digestivo.",
+                    "quimo": "El quimo se forma antes, en el estómago.",
+                    "dientes": "Eso pasa en la boca, al principio del viaje."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "vida",

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
+import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -3301,6 +3302,22 @@ class IlustracionFicha extends StatelessWidget {
     }
     if (id == 'huevo' || id == 'renacuajo' || id == 'mariposa') {
       return DibujoNacimiento(id: id, tamano: alto);
+    }
+    if (id == 'dientes') return IconoParada(id: 'boca', tamano: alto);
+    if (id == 'aparato-digestivo') {
+      return IconoParada(id: 'aparato', tamano: alto);
+    }
+    if (id == 'nutrientes') {
+      return Container(
+        width: alto,
+        height: alto,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF7F0),
+          borderRadius: BorderRadius.circular(alto * .28),
+          border: Border.all(color: const Color(0xFFF5C59A), width: 2),
+        ),
+        child: DibujoBocado(estado: 'nutrientes', tamano: alto),
+      );
     }
     final (icono, color, fondo) = switch (id) {
       'huerto' => (

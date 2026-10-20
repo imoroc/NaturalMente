@@ -146,7 +146,7 @@ void main() {
       await tocar(tester, 'nido-${nacimiento.animal(id).respuesta}');
     }
     expect(find.byKey(const Key('nacimiento-completo')), findsOneWidget);
-    expect(progreso.nivelNacimientoHecho(actividad, 'facil'), isTrue);
+    expect(progreso.nivelJuegoHecho(actividad, 'facil'), isTrue);
     expect(progreso.fichaDesbloqueada('huevo'), isTrue);
     expect(progreso.fichaDesbloqueada('renacuajo'), isFalse);
     expect(progreso.medallaConseguida(catalogo.actividades), isFalse);
@@ -215,7 +215,7 @@ void main() {
 
     await tocar(tester, 'siguiente-ciclo');
     expect(find.text('Ciclo 2 de 2: La mariposa'), findsOneWidget);
-    expect(progreso.nivelNacimientoHecho(actividad, 'medio'), isFalse);
+    expect(progreso.nivelJuegoHecho(actividad, 'medio'), isFalse);
     await ordenarCiclo(tester, [
       'huevo-mariposa',
       'oruga',
@@ -224,7 +224,7 @@ void main() {
     ]);
     await tocar(tester, 'respuesta-mariposa-crecer');
     expect(find.byKey(const Key('nacimiento-completo')), findsOneWidget);
-    expect(progreso.nivelNacimientoHecho(actividad, 'medio'), isTrue);
+    expect(progreso.nivelJuegoHecho(actividad, 'medio'), isTrue);
     expect(progreso.fichaDesbloqueada('renacuajo'), isTrue);
     expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
   });

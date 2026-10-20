@@ -48,7 +48,7 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 | Higiene y hábitos | 1º-2º | | |
 | Un plato que cuida | 1º-2º | | |
 | Corazón, pulmones y estómago | 3º-4º | Cada pieza en su sitio | |
-| Camino de la comida | 3º-4º | | |
+| Camino de la comida | 3º-4º | El viaje de la comida | digestion; dientes, aparato-digestivo, nutrientes |
 | Descanso y movimiento | 3º-4º | | |
 | Emociones, en una ficha corta | 3º-4º | | |
 | La célula | 5º-6º | | |

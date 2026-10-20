@@ -6,6 +6,7 @@ import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/digestion.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
@@ -133,6 +134,7 @@ class ZonaPage extends StatelessWidget {
                                 'nacimiento' => NacimientoPage(
                                   actividad: actividad,
                                 ),
+                                'viaje' => ViajePage(actividad: actividad),
                                 _ => JuegoPage(actividad: actividad),
                               },
                             ),

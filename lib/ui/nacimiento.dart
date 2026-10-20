@@ -97,7 +97,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
       _falloGuardado = false;
     });
     try {
-      await progreso.marcarNivelNacimiento(widget.actividad, nivel.id);
+      await progreso.marcarNivelJuego(widget.actividad, nivel.id);
       if (mounted) setState(() => _guardado = true);
     } catch (_) {
       if (mounted) setState(() => _falloGuardado = true);
@@ -277,7 +277,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
             _tarjetaNivel(
               niveles[i],
               estrellas: i + 1,
-              hecho: progreso.nivelNacimientoHecho(
+              hecho: progreso.nivelJuegoHecho(
                 widget.actividad,
                 niveles[i].id,
               ),

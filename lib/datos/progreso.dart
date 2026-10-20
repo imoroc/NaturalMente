@@ -104,22 +104,24 @@ class Progreso extends ChangeNotifier {
     if (fichaId == 'fruto' && hecho('herbario/dificil/completo')) {
       return true;
     }
-    if (fichaId == 'huevo' &&
-        (hecho('nacimiento/facil/completo') ||
-            hecho('nacimiento/medio/completo') ||
-            hecho('nacimiento/dificil/completo'))) {
-      return true;
-    }
-    if (fichaId == 'renacuajo' &&
-        (hecho('nacimiento/medio/completo') ||
-            hecho('nacimiento/dificil/completo'))) {
-      return true;
-    }
-    if (fichaId == 'mariposa' && hecho('nacimiento/dificil/completo')) {
-      return true;
+    // En los juegos con un cromo por nivel, superar un nivel más alto
+    // también da los cromos de los anteriores.
+    for (final MapEntry(key: juego, value: niveles)
+        in _nivelesConCromo.entries) {
+      for (var i = 0; i < niveles.length; i++) {
+        if (fichasDeNivel(juego, niveles[i]).contains(fichaId) &&
+            niveles.skip(i).any((n) => hecho('$juego/$n/completo'))) {
+          return true;
+        }
+      }
     }
     return false;
   }
+
+  static const _nivelesConCromo = {
+    'nacimiento': ['facil', 'medio', 'dificil'],
+    'digestion': ['facil', 'medio', 'dificil'],
+  };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
     return switch ((actividadId, nivelId)) {
@@ -141,6 +143,9 @@ class Progreso extends ChangeNotifier {
       ('nacimiento', 'facil') => const ['huevo'],
       ('nacimiento', 'medio') => const ['renacuajo'],
       ('nacimiento', 'dificil') => const ['mariposa'],
+      ('digestion', 'facil') => const ['dientes'],
+      ('digestion', 'medio') => const ['aparato-digestivo'],
+      ('digestion', 'dificil') => const ['nutrientes'],
       _ => const <String>[],
     };
   }
@@ -192,6 +197,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «¿Huevo o barriga?» a partir del nivel Medio (3º-4º).',
       'mariposa' =>
         'Se consigue en «¿Huevo o barriga?» en el nivel Difícil (5º-6º).',
+      'dientes' =>
+        'Se consigue en «El viaje de la comida» desde el nivel Fácil (1º-2º).',
+      'aparato-digestivo' =>
+        'Se consigue en «El viaje de la comida» a partir del nivel Medio (3º-4º).',
+      'nutrientes' =>
+        'Se consigue en «El viaje de la comida» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -266,19 +277,28 @@ class Progreso extends ChangeNotifier {
     await marcarActividad(actividad);
   }
 
-  bool nivelNacimientoHecho(Actividad actividad, String nivel) =>
+  /// Niveles de los juegos con modelo propio y un cromo por nivel.
+  List<String> _nivelesJuego(Actividad actividad) => switch (actividad.tipo) {
+    'nacimiento' => [
+      for (final n in actividad.nacimiento?.niveles ?? const []) n.id,
+    ],
+    'viaje' => [for (final n in actividad.viaje?.niveles ?? const []) n.id],
+    _ => const [],
+  };
+
+  bool nivelJuegoHecho(Actividad actividad, String nivel) =>
       hecho('${actividad.id}/$nivel/completo');
 
-  Future<void> marcarNivelNacimiento(Actividad actividad, String nivel) async {
-    final niveles = actividad.nacimiento?.niveles ?? const [];
-    final indice = niveles.indexWhere((n) => n.id == nivel);
+  Future<void> marcarNivelJuego(Actividad actividad, String nivel) async {
+    final niveles = _nivelesJuego(actividad);
+    final indice = niveles.indexOf(nivel);
     if (indice < 0) {
       throw ArgumentError('Ese nivel no existe en ${actividad.id}.');
     }
     await _marcar('${actividad.id}/$nivel/completo');
     // Cada nivel trae su cromo y los de los niveles anteriores.
     for (final anterior in niveles.take(indice + 1)) {
-      for (final fichaId in fichasDeNivel(actividad.id, anterior.id)) {
+      for (final fichaId in fichasDeNivel(actividad.id, anterior)) {
         await desbloquearFicha(fichaId);
       }
     }
@@ -290,9 +310,10 @@ class Progreso extends ChangeNotifier {
       final niveles = actividad.herbario?.niveles ?? const [];
       return niveles.where((n) => nivelHerbarioHecho(actividad, n.id)).length;
     }
-    if (actividad.tipo == 'nacimiento') {
-      final niveles = actividad.nacimiento?.niveles ?? const [];
-      return niveles.where((n) => nivelNacimientoHecho(actividad, n.id)).length;
+    if (actividad.tipo == 'nacimiento' || actividad.tipo == 'viaje') {
+      return _nivelesJuego(
+        actividad,
+      ).where((n) => nivelJuegoHecho(actividad, n)).length;
     }
     if (actividad.nivelesLugar.isNotEmpty) {
       final superados = actividad.nivelesLugar
@@ -308,8 +329,9 @@ class Progreso extends ChangeNotifier {
     if (actividad.tipo == 'herbario') {
       return actividad.herbario?.niveles.length ?? 1;
     }
-    if (actividad.tipo == 'nacimiento') {
-      return actividad.nacimiento?.niveles.length ?? 1;
+    if (actividad.tipo == 'nacimiento' || actividad.tipo == 'viaje') {
+      final niveles = _nivelesJuego(actividad);
+      return niveles.isEmpty ? 1 : niveles.length;
     }
     if (actividad.nivelesLugar.isNotEmpty) {
       return actividad.nivelesLugar.length;

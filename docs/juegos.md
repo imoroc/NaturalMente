@@ -166,9 +166,10 @@ Dónde van estos juegos en el mapa está pendiente (ver `docs/decisiones.md`). P
 
 ### El viaje de la comida
 - **Prioridad**: MVP.
-- **Mecánica**: llevar un bocado por el aparato digestivo, en orden (boca, esófago, estómago, intestino).
-- **Niveles**: Fácil, solo boca y barriga. Medio, los cuatro pasos. Difícil, qué pasa en cada paso.
-- **Si no acierta**: el bocado se atasca y dice «Todavía no me han masticado».
+- **Estado**: implementado (`digestion`, tipo `viaje`) con los tres niveles, cromos por nivel (Dientes, Aparato digestivo y Nutrientes) y textos en español e inglés. Modelo en `lib/modelo/digestion.dart`, reglas sin widgets en `lib/reglas/digestion.dart`, pantalla en `lib/ui/digestion.dart` y dibujo propio del cuerpo en `lib/ui/dibujos_digestion.dart`. No cuenta para la medalla.
+- **Mecánica**: llevar un bocado por el aparato digestivo, en orden (boca, esófago, estómago, intestino). Se toca la parada en el dibujo o en su botón, o se arrastra la manzana. Las partes ya recorridas se iluminan y el bocado cambia: entero, masticado, papilla y nutrientes.
+- **Niveles**: Fácil, solo boca y barriga, con el pulmón como despiste y tres mordiscos para masticar antes de tragar. Medio, los cuatro pasos con pulmones y corazón como despistes, masticar y una pregunta final de para qué sirve el viaje. Difícil, cinco partes (intestino delgado y grueso por separado) y una pregunta de qué pasa en cada parada (bolo, movimientos del esófago, quimo, absorción y heces) antes de seguir.
+- **Si no acierta**: el bocado se atasca y dice «Todavía no me han masticado». Si se salta una parada explica cuál falta, si va a un despiste dice para qué sirve ese órgano, y a la segunda añade la pista de la parada.
 
 ### Los cinco sentidos
 - **Prioridad**: MVP.

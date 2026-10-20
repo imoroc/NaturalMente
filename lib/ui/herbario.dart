@@ -12,7 +12,6 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/ui/planta.dart';
-import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class HerbarioPage extends StatefulWidget {
@@ -161,7 +160,6 @@ class _HerbarioPageState extends State<HerbarioPage> {
     final partida = _partida;
     return Scaffold(
       appBar: AppBar(
-        actions: const [SelectorIdioma()],
         title: Texto(
           widget.actividad.titulo,
           maxLines: 1,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/main.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -14,6 +15,16 @@ void main() {
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await _abrir(tester);
     expect(find.text('La reserva'), findsOneWidget);
+    final selector = find.byKey(const Key('selector-idioma'));
+    expect(selector, findsOneWidget);
+    expect(
+      tester.getTopLeft(selector).dy,
+      greaterThan(tester.getBottomLeft(find.text('NaturalMente')).dy),
+    );
+    expect(
+      tester.getBottomLeft(selector).dy,
+      lessThan(tester.getTopLeft(find.text('MUNDOS PARA EXPLORAR')).dy),
+    );
     await _idioma(tester, 'en');
     expect(find.text('The reserve'), findsOneWidget);
     expect(find.text('WORLDS TO EXPLORE'), findsOneWidget);
@@ -24,6 +35,7 @@ void main() {
 
     await _tocar(tester, 'zona-reserva');
     expect(find.text('MISSIONS IN THIS AREA'), findsOneWidget);
+    expect(find.byKey(const Key('selector-idioma')), findsNothing);
     await _tocar(tester, 'juego-hogar');
     expect(find.text('Easy'), findsOneWidget);
     await _tocar(tester, 'nivel-facil');
@@ -33,12 +45,12 @@ void main() {
     expect(find.textContaining('Think of a dry place'), findsOneWidget);
     await _tocar(tester, 'sitio-desierto');
     expect(find.text('Next', skipOffstage: false), findsOneWidget);
-    await _idioma(tester, 'es');
+    await _idiomaEnPartida(tester, 'es');
     expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
     await _tocar(tester, 'curiosidad-camello');
     expect(find.text('CUADERNO DE NATU'), findsOneWidget);
     await _tocar(tester, 'cerrar-curiosidad');
-    await _idioma(tester, 'en');
+    await _idiomaEnPartida(tester, 'en');
     await _tocar(tester, 'curiosidad-camello');
     expect(find.text("NATU'S NOTEBOOK"), findsOneWidget);
     expect(find.textContaining('fat'), findsOneWidget);
@@ -47,6 +59,7 @@ void main() {
     await _atras(tester);
     await _tocar(tester, 'tarjeta-album-principal');
     expect(find.text("Natu's sticker album"), findsOneWidget);
+    expect(find.byKey(const Key('selector-idioma')), findsNothing);
     expect(find.textContaining('All ('), findsOneWidget);
     expect(find.text('Camel'), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -70,9 +83,9 @@ void main() {
     await _tocar(tester, 'control-luz-justa');
     await _tocar(tester, 'avanzar');
     expect(find.textContaining('Day 3'), findsWidgets);
-    await _idioma(tester, 'es');
+    await _idiomaEnPartida(tester, 'es');
     expect(find.textContaining('Día 3'), findsWidgets);
-    await _idioma(tester, 'en');
+    await _idiomaEnPartida(tester, 'en');
     expect(find.textContaining('Day 3'), findsWidgets);
     await _atras(tester);
     await _tocar(tester, 'juego-herbario');
@@ -80,9 +93,9 @@ void main() {
     expect(find.text('Root', skipOffstage: false), findsWidgets);
     await _tocar(tester, 'pieza-raiz');
     expect(find.text('Selected: Root. Tap its place.'), findsOneWidget);
-    await _idioma(tester, 'es');
+    await _idiomaEnPartida(tester, 'es');
     expect(find.text('Seleccionada: Raíz. Toca su sitio.'), findsOneWidget);
-    await _idioma(tester, 'en');
+    await _idiomaEnPartida(tester, 'en');
     await _tocar(tester, 'destino-raiz');
     expect(find.textContaining('The root takes water'), findsWidgets);
     await _atras(tester);
@@ -127,5 +140,12 @@ Future<void> _idioma(WidgetTester tester, String codigo) async {
 
 Future<void> _atras(WidgetTester tester) async {
   tester.state<NavigatorState>(find.byType(Navigator)).pop();
+  await tester.pumpAndSettle();
+}
+
+Future<void> _idiomaEnPartida(WidgetTester tester, String codigo) async {
+  expect(find.byKey(const Key('selector-idioma')), findsNothing);
+  final context = tester.element(find.byType(Scaffold).last);
+  await IdiomaScope.of(context)!.elegir(codigo);
   await tester.pumpAndSettle();
 }

@@ -25,13 +25,13 @@ class MapaPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      const _CabeceraNatu(),
+                      const SizedBox(height: 14),
                       const Align(
                         alignment: Alignment.centerRight,
                         child: SelectorIdioma(),
                       ),
-                      const SizedBox(height: 10),
-                      const _CabeceraNatu(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 14),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Row(

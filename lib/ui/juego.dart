@@ -7,7 +7,6 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
-import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class JuegoPage extends StatefulWidget {
@@ -209,7 +208,6 @@ class _JuegoPageState extends State<JuegoPage> {
     final hayMasRetos = _siguienteRetoPendiente() != null;
     return Scaffold(
       appBar: AppBar(
-        actions: const [SelectorIdioma()],
         centerTitle: false,
         title: Texto(
           enSelector ? actividad.titulo : _titulo(actividad),

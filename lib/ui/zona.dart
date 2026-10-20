@@ -8,7 +8,6 @@ import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
-import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class ZonaPage extends StatelessWidget {
@@ -26,7 +25,6 @@ class ZonaPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        actions: const [SelectorIdioma()],
         centerTitle: false,
         title: Texto(zona.nombre, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
@@ -624,7 +622,6 @@ class _AlbumPageState extends State<AlbumPage> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: const [SelectorIdioma()],
         centerTitle: false,
         title: const Texto(
           'Álbum de cromos de Natu',

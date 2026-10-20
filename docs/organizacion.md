@@ -79,7 +79,7 @@ La implementación y sus comprobaciones se describen en `docs/plan-herbario.md`.
 
 ## Idiomas
 
-El selector ES/EN está en el mapa y en las barras de las pantallas. `lib/idiomas/idioma.dart` lee `content/en.json` y guarda la preferencia `idioma` mediante SharedPreferences, aparte del progreso. Español es el idioma inicial. No necesita conexión.
+El selector ES/EN está solo en el mapa principal, debajo de la cabecera de NaturalMente y antes de «Mundos para explorar». `lib/idiomas/idioma.dart` lee `content/en.json` y guarda la preferencia `idioma` mediante SharedPreferences, aparte del progreso. Español es el idioma inicial. No necesita conexión.
 
 `Texto` presenta los textos traducidos y conserva los estilos existentes. Las etiquetas de accesibilidad y ayudas usan `context.traducir`. El catálogo y las reglas conservan sus textos originales e identificadores: al cambiar de idioma se actualiza la presentación de las rutas abiertas sin reiniciar las partidas.
 

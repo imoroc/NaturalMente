@@ -187,6 +187,11 @@ void main() {
           actividad.herbario!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.tipo == 'nacimiento') {
+        expect(
+          actividad.nacimiento!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
       } else {
         expect(
           actividad.nivelesLugar.map((n) => n.id).toList(),
@@ -250,9 +255,9 @@ void main() {
     }
   });
 
-  test('el álbum tiene 24 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 24);
-    expect(catalogo.fichasDe('reserva').length, 7);
+  test('el álbum tiene 27 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 27);
+    expect(catalogo.fichasDe('reserva').length, 10);
     expect(catalogo.fichasDe('invernadero').length, 8);
     expect(catalogo.fichasDe('cuerpo').length, 9);
 
@@ -328,6 +333,23 @@ void main() {
 
     await progreso.marcarNivelLugar(vida, 'dificil');
     expect(progreso.fichaDesbloqueada('celula'), isTrue);
+
+    final nacimiento = catalogo.actividades.firstWhere((a) => a.id == 'nacimiento');
+    await progreso.marcarNivelNacimiento(nacimiento, 'facil');
+    expect(progreso.fichaDesbloqueada('huevo'), isTrue);
+    expect(progreso.fichaDesbloqueada('renacuajo'), isFalse);
+    expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
+
+    await progreso.marcarNivelNacimiento(nacimiento, 'medio');
+    expect(progreso.fichaDesbloqueada('renacuajo'), isTrue);
+    expect(progreso.fichaDesbloqueada('mariposa'), isFalse);
+
+    await progreso.marcarNivelNacimiento(nacimiento, 'dificil');
+    expect(progreso.fichaDesbloqueada('mariposa'), isTrue);
+    expect(
+      catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
+      isTrue,
+    );
   });
 
   test('ningún texto del catálogo usa palabras prohibidas ni temas fuera de alcance', () {

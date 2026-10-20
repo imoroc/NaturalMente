@@ -4,7 +4,7 @@
       "id": "reserva",
       "nombre": "La reserva",
       "bloque": "Animales",
-      "resumen": "Lleva cada animal al sitio donde puede vivir."
+      "resumen": "Lleva cada animal a su hogar y descubre cómo nace."
     },
     {
       "id": "invernadero",
@@ -82,6 +82,33 @@
       "titulo": "Pulpo",
       "frase": "Es un molusco invertebrado marino: no tiene huesos ni columna vertebral y posee ocho tentáculos con ventosas.",
       "curiosidad": "Tiene tres corazones, cambia el color de su piel para camuflarse entre las rocas del mar y lanza tinta para escapar."
+    },
+    {
+      "id": "huevo",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "¿Huevo o barriga?",
+      "titulo": "Huevo o barriga",
+      "frase": "Las aves, los reptiles, los anfibios y casi todos los peces nacen de un huevo; casi todos los mamíferos crecen dentro de su madre.",
+      "curiosidad": "El huevo de avestruz es el más grande de todos: pesa tanto como unos veinte huevos de gallina."
+    },
+    {
+      "id": "renacuajo",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "¿Huevo o barriga?",
+      "titulo": "Renacuajo",
+      "frase": "Es la cría de la rana: vive en el agua, respira con branquias y nada moviendo la cola.",
+      "curiosidad": "La cola del renacuajo no se cae: su cuerpo la reabsorbe poco a poco mientras le crecen las patas."
+    },
+    {
+      "id": "mariposa",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "¿Huevo o barriga?",
+      "titulo": "Mariposa",
+      "frase": "Es un insecto que hace una metamorfosis completa: huevo, larva u oruga, pupa o crisálida y adulto.",
+      "curiosidad": "Muchas mariposas saborean con las patas: así saben si una hoja es buena para poner sus huevos."
     },
     {
       "id": "semilla",
@@ -985,6 +1012,387 @@
           ]
         }
       ]
+    },
+    {
+      "id": "nacimiento",
+      "zona": "reserva",
+      "tipo": "nacimiento",
+      "titulo": "¿Huevo o barriga?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Descubre cómo nace cada animal: de un huevo o de la barriga de su madre.",
+      "nacimiento": {
+        "nidos": [
+          {
+            "id": "huevo",
+            "nombre": "Huevo"
+          },
+          {
+            "id": "barriga",
+            "nombre": "Barriga de su madre"
+          }
+        ],
+        "animales": [
+          {
+            "id": "pinguino",
+            "nombre": "El pingüino emperador",
+            "pregunta": "¿Cómo nace el pingüino emperador?",
+            "respuesta": "huevo",
+            "pista": "Fíjate en sus plumas y en su pico: todas las aves nacen así.",
+            "curiosidad": "La madre pone un solo huevo y el padre lo calienta sobre sus patas durante todo el invierno.",
+            "frases": {
+              "huevo": "¡Eso es! La pingüina pone un huevo y el polluelo sale rompiendo la cáscara.",
+              "barriga": "El pingüino es un ave: tiene plumas y pico. Las aves no crecen dentro de la barriga de su madre."
+            }
+          },
+          {
+            "id": "camello",
+            "nombre": "El camello",
+            "pregunta": "¿Cómo nace el camello?",
+            "respuesta": "barriga",
+            "pista": "Piensa en un animal con pelo que, al nacer, toma la leche de su madre.",
+            "curiosidad": "La cría del camello nace sin joroba y, a las pocas horas, ya se pone de pie para caminar.",
+            "frases": {
+              "huevo": "El camello tiene pelo y da leche a su cría: no pone huevos.",
+              "barriga": "¡Así es! La cría del camello crece dentro de su madre y al nacer toma su leche."
+            }
+          },
+          {
+            "id": "rana",
+            "nombre": "La rana",
+            "pregunta": "¿Cómo nace la rana?",
+            "respuesta": "huevo",
+            "pista": "Busca en el agua de la charca: allí deja muchas bolitas blanditas.",
+            "curiosidad": "Una rana puede poner cientos de huevos de una vez, envueltos en una gelatina que los protege.",
+            "frases": {
+              "huevo": "¡Genial! La rana pone en el agua muchos huevos blanditos, sin cáscara dura.",
+              "barriga": "La rana no crece dentro de su madre: empieza su vida en el agua de la charca."
+            }
+          },
+          {
+            "id": "delfin",
+            "nombre": "El delfín",
+            "pregunta": "¿Cómo nace el delfín?",
+            "respuesta": "barriga",
+            "pista": "Aunque vive en el mar, respira aire y toma la leche de su madre, como tú.",
+            "curiosidad": "El delfín bebé nace con la cola por delante y su madre lo ayuda a subir a respirar.",
+            "frases": {
+              "huevo": "Vive en el mar, pero no es un pez: el delfín no nace de un huevo.",
+              "barriga": "¡Muy bien! El delfín es un mamífero: crece dentro de su madre y nace ya nadando."
+            }
+          },
+          {
+            "id": "tucan",
+            "nombre": "El tucán",
+            "pregunta": "¿Cómo nace el tucán?",
+            "respuesta": "huevo",
+            "pista": "Tiene plumas, pico y alas, como las gallinas.",
+            "curiosidad": "Los tucanes ponen sus huevos en el hueco de un árbol y los padres se turnan para darles calor.",
+            "frases": {
+              "huevo": "¡Muy bien! El tucán nace de un huevo que sus padres cuidan dentro de un árbol.",
+              "barriga": "El tucán es un ave con plumas y pico, y las aves nacen de otra manera."
+            }
+          },
+          {
+            "id": "oso",
+            "nombre": "El oso pardo",
+            "pregunta": "¿Cómo nace el oso pardo?",
+            "respuesta": "barriga",
+            "pista": "Es un animal con pelo: sus crías nacen y toman leche de su madre.",
+            "curiosidad": "Los oseznos nacen en invierno dentro de la osera, muy pequeños y casi sin pelo.",
+            "frases": {
+              "huevo": "Los osos tienen pelo y alimentan a sus crías con leche: no ponen huevos.",
+              "barriga": "¡Así se hace! Los oseznos crecen dentro de su madre y nacen en la osera durante el invierno."
+            }
+          }
+        ],
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Separa 6 animales: los que nacen de un huevo y los que crecen en la barriga de su madre.",
+            "intro": "Elige un animal y llévalo al huevo o a la barriga de su madre.",
+            "animales": [
+              "pinguino",
+              "camello",
+              "rana",
+              "delfin",
+              "tucan",
+              "oso"
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Ordena el ciclo de vida de la rana y de la mariposa y responde una pregunta de cada uno.",
+            "intro": "Ordena cómo cambia cada animal desde que sale del huevo hasta que es adulto.",
+            "ciclos": [
+              {
+                "id": "rana",
+                "nombre": "La rana",
+                "intro": "Ordena cómo crece la rana, desde el huevo hasta la rana adulta.",
+                "pista": "Fíjate en la cola: cuanto más larga es, más joven es el animal.",
+                "curiosidad": "El renacuajo respira con branquias, como los peces, y cuando crece aprende a respirar aire con pulmones.",
+                "pasos": [
+                  {
+                    "id": "huevos-rana",
+                    "nombre": "Huevos en el agua"
+                  },
+                  {
+                    "id": "renacuajo",
+                    "nombre": "Renacuajo con cola"
+                  },
+                  {
+                    "id": "ranita",
+                    "nombre": "Rana pequeña con patas"
+                  },
+                  {
+                    "id": "rana",
+                    "nombre": "Rana adulta"
+                  }
+                ],
+                "respuesta": [
+                  "huevos-rana",
+                  "renacuajo",
+                  "ranita",
+                  "rana"
+                ],
+                "frases": {
+                  "incompleto": "Faltan pasos: coloca los cuatro, cada uno una sola vez.",
+                  "mal0": "Todo empieza en el agua de la charca, con muchos huevos blanditos.",
+                  "mal1": "Antes de tener patas, la rana vive en el agua como un pez: es un renacuajo.",
+                  "mal2": "Primero le salen las patas y se le acorta la cola; después ya es una rana adulta.",
+                  "bien": "¡Muy bien! Huevo, renacuajo, rana pequeña y rana adulta. Ese gran cambio se llama metamorfosis."
+                },
+                "pregunta": {
+                  "enunciado": "¿Dónde vive el renacuajo cuando sale del huevo?",
+                  "opciones": [
+                    {
+                      "id": "agua",
+                      "nombre": "En el agua, nadando con su cola"
+                    },
+                    {
+                      "id": "arbol",
+                      "nombre": "En lo alto de un árbol"
+                    },
+                    {
+                      "id": "tierra",
+                      "nombre": "Bajo tierra, como un topo"
+                    }
+                  ],
+                  "respuesta": "agua",
+                  "frases": {
+                    "agua": "¡Exacto! El renacuajo nada en la charca y respira dentro del agua.",
+                    "arbol": "Todavía no tiene patas para trepar: nada en el agua con su cola.",
+                    "tierra": "Sin patas no puede cavar. El renacuajo vive en el agua de la charca."
+                  }
+                }
+              },
+              {
+                "id": "mariposa",
+                "nombre": "La mariposa",
+                "intro": "Ordena cómo crece la mariposa, desde el huevo hasta que vuela.",
+                "pista": "Piensa qué come hojas y qué tiene alas: primero come y crece, después vuela.",
+                "curiosidad": "La oruga come tanto que cambia de piel varias veces porque se le queda pequeña.",
+                "pasos": [
+                  {
+                    "id": "huevo-mariposa",
+                    "nombre": "Huevo en una hoja"
+                  },
+                  {
+                    "id": "oruga",
+                    "nombre": "Oruga comilona"
+                  },
+                  {
+                    "id": "crisalida",
+                    "nombre": "Crisálida quieta"
+                  },
+                  {
+                    "id": "mariposa",
+                    "nombre": "Mariposa con alas"
+                  }
+                ],
+                "respuesta": [
+                  "huevo-mariposa",
+                  "oruga",
+                  "crisalida",
+                  "mariposa"
+                ],
+                "frases": {
+                  "incompleto": "Faltan pasos: coloca los cuatro, cada uno una sola vez.",
+                  "mal0": "Todo empieza con un huevo diminuto pegado a una hoja.",
+                  "mal1": "Del huevo sale una oruga que come hojas sin parar.",
+                  "mal2": "Antes de volar, la oruga se encierra en una crisálida y allí cambia por dentro.",
+                  "bien": "¡Genial! Huevo, oruga, crisálida y mariposa: la mariposa también hace metamorfosis."
+                },
+                "pregunta": {
+                  "enunciado": "¿Para qué come tanto la oruga?",
+                  "opciones": [
+                    {
+                      "id": "crecer",
+                      "nombre": "Para crecer y guardar energía para su gran cambio"
+                    },
+                    {
+                      "id": "volar",
+                      "nombre": "Para poder volar enseguida"
+                    },
+                    {
+                      "id": "nadar",
+                      "nombre": "Para nadar mejor en la charca"
+                    }
+                  ],
+                  "respuesta": "crecer",
+                  "frases": {
+                    "crecer": "¡Muy bien! La oruga come y crece mucho antes de convertirse en crisálida.",
+                    "volar": "La oruga aún no tiene alas: primero come, crece y después cambia en la crisálida.",
+                    "nadar": "La oruga vive sobre las plantas, no en el agua: come hojas para crecer."
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Ordena la metamorfosis de la rana en 5 fases y la de la mariposa con su vocabulario científico, y razona en qué se parecen.",
+            "intro": "Ordena cada metamorfosis con su vocabulario científico y piensa en qué se parecen.",
+            "ciclos": [
+              {
+                "id": "rana-anfibio",
+                "nombre": "La rana, un anfibio",
+                "intro": "Ordena las cinco fases de la metamorfosis de la rana.",
+                "pista": "Sigue la respiración: primero branquias dentro del agua y al final pulmones y piel fuera de ella.",
+                "curiosidad": "La palabra anfibio significa «doble vida»: de cría vive en el agua y de adulta también en tierra.",
+                "pasos": [
+                  {
+                    "id": "huevos-rana",
+                    "nombre": "Puesta: huevos sin cáscara en el agua"
+                  },
+                  {
+                    "id": "renacuajo",
+                    "nombre": "Renacuajo: respira con branquias"
+                  },
+                  {
+                    "id": "patas",
+                    "nombre": "Aparecen las patas traseras y delanteras"
+                  },
+                  {
+                    "id": "ranita",
+                    "nombre": "Ranita: su cuerpo reabsorbe la cola"
+                  },
+                  {
+                    "id": "rana",
+                    "nombre": "Rana adulta: respira con pulmones y piel"
+                  }
+                ],
+                "respuesta": [
+                  "huevos-rana",
+                  "renacuajo",
+                  "patas",
+                  "ranita",
+                  "rana"
+                ],
+                "frases": {
+                  "incompleto": "Faltan fases: coloca las cinco, cada una una sola vez.",
+                  "mal0": "La metamorfosis empieza con la puesta: huevos protegidos por una gelatina en el agua.",
+                  "mal1": "Al salir del huevo, la larva es un renacuajo acuático que respira con branquias.",
+                  "mal2": "Antes de perder la cola, al renacuajo le crecen primero las patas traseras y luego las delanteras.",
+                  "mal3": "Con las cuatro patas formadas, el cuerpo reabsorbe la cola y aparece la ranita; después llega la adulta.",
+                  "bien": "¡Sobresaliente! Puesta, renacuajo, patas, ranita y adulta: la rana cambia de forma y de manera de respirar."
+                },
+                "pregunta": {
+                  "enunciado": "La rana es un anfibio. ¿Qué nos dice esa palabra?",
+                  "opciones": [
+                    {
+                      "id": "doble",
+                      "nombre": "Que tiene una doble vida: de renacuajo en el agua y de adulta también en tierra"
+                    },
+                    {
+                      "id": "mamifero",
+                      "nombre": "Que crece dentro de su madre y toma leche al nacer"
+                    },
+                    {
+                      "id": "plumas",
+                      "nombre": "Que tiene plumas impermeables para nadar"
+                    }
+                  ],
+                  "respuesta": "doble",
+                  "frases": {
+                    "doble": "¡Exacto! Anfibio significa «doble vida»: respira con branquias en el agua y, de adulta, con pulmones y piel.",
+                    "mamifero": "Eso es propio de los mamíferos vivíparos. La rana es ovípara: nace de un huevo en el agua.",
+                    "plumas": "Las plumas son de las aves. La rana tiene la piel desnuda y húmeda."
+                  }
+                }
+              },
+              {
+                "id": "mariposa-insecto",
+                "nombre": "La mariposa, un insecto",
+                "intro": "Ordena las cuatro fases de la metamorfosis completa de la mariposa.",
+                "pista": "La larva come, la pupa se transforma y el adulto vuela y pone huevos.",
+                "curiosidad": "Dentro de la pupa el cuerpo de la oruga se deshace casi por completo y se vuelve a construir como mariposa.",
+                "pasos": [
+                  {
+                    "id": "huevo-mariposa",
+                    "nombre": "Huevo puesto en la planta que comerá la larva"
+                  },
+                  {
+                    "id": "oruga",
+                    "nombre": "Larva (oruga): come y cambia de piel"
+                  },
+                  {
+                    "id": "crisalida",
+                    "nombre": "Pupa (crisálida): se transforma por dentro"
+                  },
+                  {
+                    "id": "mariposa",
+                    "nombre": "Adulto: alas, antenas y seis patas"
+                  }
+                ],
+                "respuesta": [
+                  "huevo-mariposa",
+                  "oruga",
+                  "crisalida",
+                  "mariposa"
+                ],
+                "frases": {
+                  "incompleto": "Faltan fases: coloca las cuatro, cada una una sola vez.",
+                  "mal0": "Empieza con el huevo: la mariposa lo pone justo en la planta que su larva podrá comer.",
+                  "mal1": "Del huevo nace la larva, la oruga, que come y muda de piel varias veces.",
+                  "mal2": "La larva se convierte en pupa antes de ser adulta: dentro de la crisálida su cuerpo se reorganiza.",
+                  "bien": "¡Excelente! Huevo, larva, pupa y adulto: es una metamorfosis completa, como la de las abejas o los escarabajos."
+                },
+                "pregunta": {
+                  "enunciado": "¿En qué se parecen la rana y la mariposa?",
+                  "opciones": [
+                    {
+                      "id": "metamorfosis",
+                      "nombre": "Las dos son ovíparas y cambian mucho de forma al crecer: hacen metamorfosis"
+                    },
+                    {
+                      "id": "vertebrados",
+                      "nombre": "Las dos son vertebrados con esqueleto de huesos"
+                    },
+                    {
+                      "id": "leche",
+                      "nombre": "Las dos alimentan a sus crías con leche"
+                    }
+                  ],
+                  "respuesta": "metamorfosis",
+                  "frases": {
+                    "metamorfosis": "¡Muy bien! Nacen de un huevo y sus crías no se parecen a sus padres hasta completar la metamorfosis.",
+                    "vertebrados": "La rana es un vertebrado, pero la mariposa es un insecto, un invertebrado sin huesos.",
+                    "leche": "Dar leche a las crías es propio de los mamíferos. Ni la rana ni la mariposa lo hacen."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "germinacion",

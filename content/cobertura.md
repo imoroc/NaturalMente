@@ -30,8 +30,8 @@ El juego principal de la zona es «Cada uno a su hogar».
 | --- | --- | --- | --- |
 | Partes de la planta | 1º-2º | Herbario desmontable: raíz, tallo y hoja; flor y fruto en Medio | herbario; raiz, tallo, hoja, flor, fruto |
 | Qué necesita para vivir | 1º-2º | Laboratorio de germinación | |
-| Árbol, arbusto y hierba | 1º-2º | | |
-| Cultivadas y silvestres | 3º-4º | | |
+| Árbol, arbusto y hierba | 1º-2º | Árbol, arbusto o hierba | plantas; encina, romero |
+| Cultivadas y silvestres | 3º-4º | Árbol, arbusto o hierba (Difícil) | plantas; trigo |
 | Huerto | 3º-4º | | |
 | La luz y el alimento de la planta | 3º-4º | | |
 | Hojas distintas | 3º-4º | | |

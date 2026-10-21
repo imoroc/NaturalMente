@@ -94,6 +94,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Árbol, arbusto o hierba
 - **Prioridad**: MVP.
+- **Estado**: implementado (`plantas`) en El invernadero con el motor de «Cada uno a su hogar» (tipo `lugar`): arrastrar o tocar el grupo, explicación y pista a la segunda, y en Difícil la pregunta de si es cultivada o silvestre. Plantas dibujadas en `lib/ui/dibujos_plantas.dart`. Cromos por nivel: Encina, Romero y Trigo. No cuenta para la medalla.
 - **Mecánica**: llegan plantas del entorno (encina, romero, césped, amapola, chopo) y se colocan en su grupo.
 - **Niveles**: Fácil, árbol o hierba. Medio, árbol, arbusto o hierba. Difícil, además, cultivada o silvestre.
 - **Si no acierta**: «El romero tiene muchos tallos leñosos desde abajo. Un árbol tiene un solo tronco».

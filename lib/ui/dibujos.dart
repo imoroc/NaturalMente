@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
+import 'package:naturalmente/ui/dibujos_plantas.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -96,6 +97,27 @@ class Criatura extends StatelessWidget {
       );
     }
 
+    if (plantasEntorno.contains(id)) {
+      return Container(
+        width: 88,
+        height: 88,
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF7FBF2),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD0C9B8),
+              offset: Offset(0, 4),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Center(child: DibujoPlanta(id: id, tamano: 72)),
+      );
+    }
+
     final respaldo = switch (id) {
       'delfin' => const _Delfin(),
       'pinguino' => const _Pinguino(),
@@ -169,6 +191,19 @@ class IconoSitio extends StatelessWidget {
         child: CustomPaint(
           painter: _PintorZonaCuerpo(zona: id),
         ),
+      );
+    }
+
+    if (plantasEntorno.contains(id)) {
+      return Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.9),
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(4),
+        child: DibujoPlanta(id: id, tamano: 40),
       );
     }
 
@@ -3310,6 +3345,7 @@ class IlustracionFicha extends StatelessWidget {
     if (id == 'huevo' || id == 'renacuajo' || id == 'mariposa') {
       return DibujoNacimiento(id: id, tamano: alto);
     }
+    if (plantasEntorno.contains(id)) return DibujoPlanta(id: id, tamano: alto);
     if (id == 'dientes') return IconoParada(id: 'boca', tamano: alto);
     if (id == 'aparato-digestivo') {
       return IconoParada(id: 'aparato', tamano: alto);

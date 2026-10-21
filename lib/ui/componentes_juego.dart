@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 
 /// Presentación compartida; la selección y validación pertenecen a cada juego.
@@ -43,7 +44,10 @@ class TarjetaJuego extends StatelessWidget {
               borderRadius: BorderRadius.circular(radio - 2),
               focusColor: Theme.of(context).colorScheme.primary
                   .withValues(alpha: .2),
-              onTap: onTap,
+              onTap: () {
+                context.sonidoToque();
+                onTap!();
+              },
               child: child,
             ),
     ),

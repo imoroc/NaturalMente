@@ -55,3 +55,11 @@ La reproducción hay que validarla con el colegio antes de publicarla.
 **Español e inglés en toda la app.** El idioma inicial es español y un botón ES/EN permite elegir Español o English desde el mapa y las pantallas de zona, juego y álbum. La elección se guarda en el dispositivo y se aplica también a los controles de Material. Cambiar de idioma conserva la partida abierta, las estrellas, los cromos y la medalla.
 
 Los textos originales siguen en español en el catálogo y en las reglas; sus traducciones propias se guardan en `content/en.json`. Se traducen al presentarlos, sin cambiar identificadores ni respuestas. Se mantiene el diseño de Natu y el tono de las pistas en ambos idiomas.
+
+## 20 de octubre de 2026
+
+**Monta el ecosistema va en La reserva.** Conecta animales y plantas mediante un claro del bosque y tres niveles; no añade una cuarta zona al mapa. Esta decisión resuelve la ubicación de esta actividad, no la de todo el bloque de seres vivos. Los demás juegos se decidirán al incorporarlos.
+
+**La cadena es un modelo sencillo.** Hierba → conejo → zorro muestra una de las conexiones del bosque. El zorro también consume otros animales y frutos. Los ejemplos antes/después de Difícil representan una posibilidad, no una predicción numérica ni una dieta exclusiva. El juego no muestra depredación explícita ni animales sufriendo.
+
+**Progreso de ecosistemas.** Cada nivel completo añade una estrella y desbloquea el mismo cromo del bosque, sin duplicarlo ni modificar los requisitos de la medalla. Se recuerda el último nivel; las partidas pendientes se conservan al pausar la app en memoria, pero empiezan de nuevo al cerrar el proceso.

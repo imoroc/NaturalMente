@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
+import 'package:naturalmente/ui/texto.dart';
 
 class SelectorIdioma extends StatelessWidget {
   const SelectorIdioma({super.key});
@@ -8,67 +9,218 @@ class SelectorIdioma extends StatelessWidget {
   Widget build(BuildContext context) {
     final idioma = IdiomaScope.of(context);
     if (idioma == null) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: PopupMenuButton<String>(
-        key: const Key('selector-idioma'),
-        tooltip: context.traducir('Elegir idioma'),
-        initialValue: idioma.codigo,
-        position: PopupMenuPosition.under,
-        color: const Color(0xFFFFFDF7),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-          side: const BorderSide(color: Color(0xFF2ECC71), width: 2),
-        ),
-        onSelected: (codigo) async {
-          final guardado = await idioma.elegir(codigo);
-          if (!guardado && context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  context.traducir(
-                    'No se ha podido guardar el idioma. Inténtalo de nuevo.',
-                  ),
+    final sonidoActivo = idioma.sonido;
+
+    return PopupMenuButton<String>(
+      key: const Key('selector-idioma'),
+      tooltip: context.traducir('Ajustes de sonido e idioma'),
+      position: PopupMenuPosition.under,
+      offset: const Offset(0, 8),
+      color: const Color(0xFFFFFDF7),
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(22),
+        side: const BorderSide(color: Color(0xFF2ECC71), width: 2.5),
+      ),
+      onOpened: () => context.sonidoToque(),
+      onSelected: (valor) async {
+        if (valor == 'sonido') {
+          await idioma.cambiarSonido(!idioma.sonido);
+          return;
+        }
+        final guardado = await idioma.elegir(valor);
+        if (!guardado && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                context.traducir(
+                  'No se ha podido guardar el idioma. Inténtalo de nuevo.',
                 ),
               ),
-            );
-          }
-        },
-        itemBuilder: (context) => [
-          for (final opcion in const [('es', 'Español'), ('en', 'English')])
-            CheckedPopupMenuItem<String>(
-              key: Key('idioma-${opcion.$1}'),
-              value: opcion.$1,
-              checked: idioma.codigo == opcion.$1,
-              child: Text(opcion.$2),
             ),
-        ],
-        child: Container(
-          constraints: const BoxConstraints(minWidth: 64, minHeight: 48),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            color: const Color(0xFFECFDF3),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFF2ECC71), width: 2),
-          ),
+          );
+        }
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 36,
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
-                Icons.translate_rounded,
+                Icons.tune_rounded,
+                size: 18,
                 color: Color(0xFF15803D),
-                size: 20,
               ),
-              const SizedBox(width: 6),
-              Text(
-                idioma.codigo.toUpperCase(),
+              const SizedBox(width: 8),
+              Texto(
+                'AJUSTES DE NATU',
                 style: const TextStyle(
-                  color: Color(0xFF15803D),
+                  fontSize: 11.5,
                   fontWeight: FontWeight.w900,
+                  letterSpacing: 0.6,
+                  color: Color(0xFF15803D),
                 ),
               ),
             ],
           ),
+        ),
+        PopupMenuItem<String>(
+          key: const Key('ajuste-sonido'),
+          value: 'sonido',
+          child: ListenableBuilder(
+            listenable: idioma,
+            builder: (context, _) {
+              final activo = idioma.sonido;
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: activo
+                      ? const Color(0xFFECFDF5)
+                      : const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: activo
+                        ? const Color(0xFF86EFAC)
+                        : const Color(0xFFCBD5E1),
+                    width: 1.5,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      activo
+                          ? Icons.volume_up_rounded
+                          : Icons.volume_off_rounded,
+                      size: 20,
+                      color: activo
+                          ? const Color(0xFF15803D)
+                          : const Color(0xFF64748B),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Texto(
+                        'Efectos de sonido',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13.5,
+                          color: Color(0xFF1E293B),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: activo
+                            ? const Color(0xFF16A34A)
+                            : const Color(0xFF94A3B8),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Texto(
+                        activo ? 'Activado' : 'Silenciado',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        const PopupMenuDivider(height: 12),
+        PopupMenuItem<String>(
+          enabled: false,
+          height: 28,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.translate_rounded,
+                size: 16,
+                color: Color(0xFF475569),
+              ),
+              const SizedBox(width: 6),
+              Texto(
+                'Elegir idioma',
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF475569),
+                ),
+              ),
+            ],
+          ),
+        ),
+        for (final opcion in const [('es', 'Español'), ('en', 'English')])
+          CheckedPopupMenuItem<String>(
+            key: Key('idioma-${opcion.$1}'),
+            value: opcion.$1,
+            checked: idioma.codigo == opcion.$1,
+            child: Text(
+              opcion.$2,
+              style: TextStyle(
+                fontWeight: idioma.codigo == opcion.$1
+                    ? FontWeight.w900
+                    : FontWeight.w700,
+                color: const Color(0xFF1E293B),
+              ),
+            ),
+          ),
+      ],
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 42),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: const Color(0xFFECFDF5),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFF2ECC71), width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFF86EFAC),
+              offset: Offset(0, 2),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.settings_rounded,
+              color: Color(0xFF15803D),
+              size: 18,
+            ),
+            const SizedBox(width: 5),
+            Icon(
+              sonidoActivo
+                  ? Icons.volume_up_rounded
+                  : Icons.volume_off_rounded,
+              color: sonidoActivo
+                  ? const Color(0xFF15803D)
+                  : const Color(0xFF64748B),
+              size: 16,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              idioma.codigo.toUpperCase(),
+              style: const TextStyle(
+                color: Color(0xFF15803D),
+                fontSize: 12.5,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
         ),
       ),
     );

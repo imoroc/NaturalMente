@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
@@ -627,6 +628,12 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      final terminaNivel = !_pideAdaptacion && _siguienteRetoPendiente() == null;
+      if (terminaNivel) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
       final progreso = Alcance.of(context).progreso;
       if (_nivelActual == null || _nivelActual!.id == 'facil') {
         await progreso.marcarReto(actividad, reto);
@@ -634,12 +641,12 @@ class _JuegoPageState extends State<JuegoPage> {
       if (!_pideAdaptacion) {
         await progreso.desbloquearFicha(reto.id);
       }
-      if (!_pideAdaptacion &&
-          _nivelActual != null &&
-          _siguienteRetoPendiente() == null) {
+      if (terminaNivel && _nivelActual != null) {
         await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
         await progreso.marcarActividad(actividad);
       }
+    } else {
+      context.sonidoPista();
     }
   }
 
@@ -657,12 +664,20 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      final terminaNivel = _siguienteRetoPendiente() == null;
+      if (terminaNivel) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
       final progreso = Alcance.of(context).progreso;
       await progreso.desbloquearFicha(reto.id);
-      if (_nivelActual != null && _siguienteRetoPendiente() == null) {
+      if (_nivelActual != null && terminaNivel) {
         await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
         await progreso.marcarActividad(actividad);
       }
+    } else {
+      context.sonidoPista();
     }
   }
 
@@ -853,6 +868,17 @@ class _JuegoPageState extends State<JuegoPage> {
         }
       }
     });
+    if (paso.experimentoCompletado) {
+      if (!pideFinal) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else if (paso.avanzaEtapa) {
+      context.sonidoAcierto();
+    } else {
+      context.sonidoPista();
+    }
     if (paso.experimentoCompletado && !pideFinal) {
       final progreso = Alcance.of(context).progreso;
       if (_nivelActual != null) {
@@ -892,6 +918,15 @@ class _JuegoPageState extends State<JuegoPage> {
         }
       }
     });
+    if (resultado.acierto) {
+      if (!pideFinal) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else {
+      context.sonidoPista();
+    }
     if (resultado.acierto && !pideFinal) {
       final progreso = Alcance.of(context).progreso;
       if (_nivelActual != null) {
@@ -917,11 +952,14 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      context.sonidoCelebracion();
       final progreso = Alcance.of(context).progreso;
       if (_nivelActual != null) {
         await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
       }
       await progreso.marcarActividad(actividad);
+    } else {
+      context.sonidoPista();
     }
   }
 }

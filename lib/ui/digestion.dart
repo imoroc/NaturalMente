@@ -73,7 +73,16 @@ class _ViajePageState extends State<ViajePage> {
   }
 
   void _cambiar(void Function(PartidaViaje partida) accion) {
+    final estabaCompleta = _partida?.completa ?? false;
     setState(() => accion(_partida!));
+    final partida = _partida!;
+    if (partida.completa && !estabaCompleta) {
+      context.sonidoCelebracion();
+    } else if (partida.resultado?.acierto == true) {
+      context.sonidoAcierto();
+    } else if (partida.resultado?.acierto == false) {
+      context.sonidoPista();
+    }
     _verPregunta();
     _guardarSiCompleta();
   }

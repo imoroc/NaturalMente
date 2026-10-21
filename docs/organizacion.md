@@ -2,7 +2,7 @@
 
 Organización para todo el proyecto.
 
-Los ficheros de dentro crecerán. La versión actual tiene tres zonas, fichas, cinco actividades y progreso local. Herbario desmontable incorpora los tres niveles; faltan las variantes de los otros juegos y el resto del contenido previsto.
+Los ficheros de dentro crecerán. La versión actual tiene tres zonas, 25 fichas, seis actividades y progreso local. Las seis actividades ofrecen los tres niveles. Monta el ecosistema está en La reserva y su implementación y validación se registran en `docs/plan-ecosistemas.md`.
 
 ## Carpetas
 

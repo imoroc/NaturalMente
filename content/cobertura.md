@@ -59,6 +59,14 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 
 Los juegos principales de la zona son «Cada pieza en su sitio» y «Así empieza una vida». Los dos hacen falta para la entrega. La medalla pide el primero; el segundo se entrega igual porque es parte del cuerpo, y Diego lo prueba siempre.
 
+## Seres vivos y ecosistemas — La reserva
+
+| Tema | Curso | Título nuestro | Id cuando exista |
+| --- | --- | --- | --- |
+| Relaciones entre plantas y animales | 1º-2º | Un bosque conectado | ecosistemas; claro-bosque |
+| Cadenas alimentarias y sentido de las flechas | 3º-4º | Monta el ecosistema | ecosistemas |
+| Cambios en la disponibilidad de alimento | 5º-6º | ¿Qué pasaría si hay menos…? | ecosistemas |
+
 ## Fuera de la app
 
 No crear ficha, aunque la guía del colegio lo tenga: planeta Tierra, universo, Luna, Sol, estrellas, relieve, rocas, volcanes, terremotos. Máquinas, electricidad, calor y fuerzas no entran en el MVP. Son ampliación, y solo si sobra tiempo cuando el MVP esté terminado (ver `docs/decisiones.md`).

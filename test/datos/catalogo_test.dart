@@ -187,6 +187,10 @@ void main() {
           actividad.herbario!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+
+      } else if (actividad.ecosistema != null) {
+        expect(actividad.ecosistema!.niveles.map((n) => n.id), ['facil', 'medio', 'dificil']);
+
       } else if (actividad.tipo == 'nacimiento') {
         expect(
           actividad.nacimiento!.niveles.map((n) => n.id).toList(),
@@ -260,9 +264,9 @@ void main() {
     }
   });
 
-  test('el álbum tiene 30 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 30);
-    expect(catalogo.fichasDe('reserva').length, 10);
+  test('el álbum tiene 31 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 31);
+    expect(catalogo.fichasDe('reserva').length, 11);
     expect(catalogo.fichasDe('invernadero').length, 8);
     expect(catalogo.fichasDe('cuerpo').length, 12);
 
@@ -364,6 +368,10 @@ void main() {
 
     await progreso.marcarNivelJuego(digestion, 'dificil');
     expect(progreso.fichaDesbloqueada('nutrientes'), isTrue);
+
+    final ecosistemas = catalogo.actividades.firstWhere((a) => a.id == 'ecosistemas');
+    await progreso.marcarNivelEcosistema(ecosistemas, 'facil');
+    expect(progreso.fichaDesbloqueada('claro-bosque'), isTrue);
     expect(
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,

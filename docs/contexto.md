@@ -12,7 +12,7 @@ Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base 
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
-Ese es el comportamiento previsto para el producto completo. Actualmente el selector y las variantes están implementados en Herbario desmontable; los cuatro juegos anteriores solo muestran el curso orientativo.
+Ese es el comportamiento previsto para el producto completo. Actualmente los seis juegos, incluido Monta el ecosistema, tienen selector y variantes para los tres niveles.
 
 ## Cómo llegamos aquí
 
@@ -196,7 +196,7 @@ Al abrir se ve un mapa con tres sitios. El orden lo elige el niño.
 | El invernadero | Plantas | La planta |
 | Dentro de mí | Cuerpo | El cuerpo |
 
-En cada sitio hay fichas (nombre, una frase, una curiosidad, curso orientativo) y juegos. Actualmente funcionan los cuatro juegos obligatorios y Herbario desmontable, que añade selector de nivel, colocación sobre una planta y preguntas de función en Difícil. Los juegos generales que mezclan bloques siguen pendientes. El resto se añade en esas mismas carpetas.
+En cada sitio hay fichas (nombre, una frase, una curiosidad, curso orientativo) y juegos. Actualmente funcionan los cuatro juegos obligatorios, Herbario desmontable y Monta el ecosistema. Este último conecta plantas y animales desde La reserva con un claro del bosque, relaciones alimentarias y experimentos guiados. Los juegos generales que mezclan bloques siguen pendientes. El resto se añade en esas mismas carpetas.
 
 Juegos que tienen que estar para diciembre:
 

@@ -70,6 +70,9 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
               child: MaterialApp(
                 title: 'NaturalMente',
                 debugShowCheckedModeBanner: false,
+                scrollBehavior: const MaterialScrollBehavior().copyWith(
+                  scrollbars: false,
+                ),
                 locale: carga.idioma.locale,
                 supportedLocales: const [Locale('es'), Locale('en')],
                 localizationsDelegates: const [

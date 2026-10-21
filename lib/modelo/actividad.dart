@@ -1,6 +1,10 @@
 import 'package:naturalmente/modelo/digestion.dart';
 import 'package:naturalmente/modelo/herbario.dart';
+
+import 'package:naturalmente/modelo/ecosistema.dart';
+
 import 'package:naturalmente/modelo/nacimiento.dart';
+
 
 class Opcion {
   const Opcion({required this.id, required this.nombre});
@@ -92,9 +96,7 @@ class Reto {
       curiosidad: mapa['curiosidad'] as String? ?? '',
       adaptacion: mapa['adaptacion'] == null
           ? null
-          : PreguntaExtra.desdeMapa(
-              mapa['adaptacion'] as Map<String, dynamic>,
-            ),
+          : PreguntaExtra.desdeMapa(mapa['adaptacion'] as Map<String, dynamic>),
     );
   }
 }
@@ -202,6 +204,9 @@ class Actividad {
     required this.sujeto,
     this.nivelesLugar = const [],
     this.herbario,
+
+    this.ecosistema,
+
     this.nacimiento,
     this.viaje,
   });
@@ -224,10 +229,15 @@ class Actividad {
   final String sujeto;
   final List<NivelLugar> nivelesLugar;
   final Herbario? herbario;
+
+  final Ecosistema? ecosistema;
+
   final Nacimiento? nacimiento;
   final Viaje? viaje;
 
+
   bool get tieneFrases {
+    if (tipo == 'ecosistema') return ecosistema != null;
     if (tipo == 'herbario') return herbario != null;
     if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'viaje') return viaje != null;
@@ -266,6 +276,9 @@ class Actividad {
           .cast<Map<String, dynamic>>()
           .map(NivelLugar.desdeMapa)
           .toList(),
+      ecosistema: mapa['ecosistema'] == null
+          ? null
+          : Ecosistema.desdeMapa(mapa['ecosistema'] as Map<String, dynamic>),
       herbario: mapa['herbario'] == null
           ? null
           : Herbario.desdeMapa(mapa['herbario'] as Map<String, dynamic>),
@@ -289,6 +302,9 @@ class Actividad {
       'controles',
       'orden',
       'herbario',
+
+      'ecosistema',
+
       'nacimiento',
       'viaje',
     ].contains(tipo)) {

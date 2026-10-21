@@ -18,13 +18,12 @@ void main() {
     final selector = find.byKey(const Key('selector-idioma'));
     expect(selector, findsOneWidget);
     expect(
-      tester.getTopLeft(selector).dy,
-      greaterThan(tester.getBottomLeft(find.text('NaturalMente')).dy),
-    );
-    expect(
       tester.getBottomLeft(selector).dy,
       lessThan(tester.getTopLeft(find.text('MUNDOS PARA EXPLORAR')).dy),
     );
+    await _tocar(tester, 'selector-idioma');
+    expect(find.text('Efectos de sonido'), findsOneWidget);
+    await _tocar(tester, 'ajuste-sonido');
     await _idioma(tester, 'en');
     expect(find.text('The reserve'), findsOneWidget);
     expect(find.text('WORLDS TO EXPLORE'), findsOneWidget);

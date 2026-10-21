@@ -7,15 +7,17 @@ class DibujoEcosistema extends StatelessWidget {
   const DibujoEcosistema({
     this.elemento,
     this.colocados = const {'hierba', 'conejo', 'zorro'},
+    this.cambio,
     super.key,
   });
   final String? elemento;
   final Set<String> colocados;
+  final String? cambio;
   @override
   Widget build(BuildContext context) => ExcludeSemantics(
     child: RepaintBoundary(
       child: CustomPaint(
-        painter: _ClaroPainter(elemento, colocados),
+        painter: _ClaroPainter(elemento, colocados, cambio),
         child: const SizedBox.expand(),
       ),
     ),
@@ -23,13 +25,16 @@ class DibujoEcosistema extends StatelessWidget {
 }
 
 class _ClaroPainter extends CustomPainter {
-  const _ClaroPainter(this.elemento, this.colocados);
+  const _ClaroPainter(this.elemento, this.colocados, this.cambio);
   final String? elemento;
   final Set<String> colocados;
+  final String? cambio;
   static const tinta = Color(0xFF354B35);
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
+    final menosHierba = cambio == 'menos-hierba';
+    final menosConejos = cambio == 'menos-conejos';
     if (elemento != null) {
       final escala = math.min(size.width / 130, size.height / 130);
       canvas.translate(
@@ -37,7 +42,12 @@ class _ClaroPainter extends CustomPainter {
         (size.height - 130 * escala) / 2,
       );
       canvas.scale(escala);
-      _animal(canvas, elemento!);
+      _animal(
+        canvas,
+        elemento!,
+        menosHierba: menosHierba,
+        menosConejos: menosConejos,
+      );
       return;
     }
     canvas.save();
@@ -51,10 +61,12 @@ class _ClaroPainter extends CustomPainter {
     canvas.drawRect(
       const Rect.fromLTWH(0, 0, 600, 360),
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFDAEEE0), Color(0xFFF6F1CD)],
+          colors: menosHierba
+              ? const [Color(0xFFEFE6C8), Color(0xFFF7E7B4)]
+              : const [Color(0xFFDAEEE0), Color(0xFFF6F1CD)],
         ).createShader(const Rect.fromLTWH(0, 0, 600, 360)),
     );
     // Luz entre los árboles: fondo quieto, sin distracciones animadas.
@@ -67,6 +79,17 @@ class _ClaroPainter extends CustomPainter {
         ..lineTo(175, 320)
         ..close(),
       const Color(0x26FFFEDE),
+    );
+    // Sol suave en lo alto del claro para indicar la fuente de energía de las plantas.
+    canvas.drawCircle(
+      const Offset(168, 46),
+      26,
+      Paint()..color = const Color(0x44FFE57F),
+    );
+    canvas.drawCircle(
+      const Offset(168, 46),
+      16,
+      Paint()..color = const Color(0x99FFD54F),
     );
     for (final t in [
       (35.0, 95.0, 1.0),
@@ -108,7 +131,7 @@ class _ClaroPainter extends CustomPainter {
         ..lineTo(600, 360)
         ..lineTo(0, 360)
         ..close(),
-      const Color(0xFFB4C98B),
+      menosHierba ? const Color(0xFFCBBF86) : const Color(0xFFB4C98B),
     );
     _path(
       canvas,
@@ -119,12 +142,22 @@ class _ClaroPainter extends CustomPainter {
         ..lineTo(600, 360)
         ..lineTo(0, 360)
         ..close(),
-      const Color(0xFFD6D9A4),
+      menosHierba ? const Color(0xFFDFCFA0) : const Color(0xFFD6D9A4),
     );
     _oval(
       canvas,
       const Rect.fromLTWH(88, 242, 450, 106),
-      const Color(0xFFE7DEAF),
+      menosHierba ? const Color(0xFFEDE0B8) : const Color(0xFFE7DEAF),
+    );
+    // Sendero ecológico sutil que conecta las 3 estaciones del claro.
+    _stroke(
+      canvas,
+      Path()
+        ..moveTo(170, 292)
+        ..quadraticBezierTo(245, 268, 315, 282)
+        ..quadraticBezierTo(395, 294, 475, 274),
+      const Color(0x558B7355),
+      4,
     );
     // Primer plano: troncos con ramificaciones y copas de silueta orgánica.
     for (final derecha in [false, true]) {
@@ -138,44 +171,40 @@ class _ClaroPainter extends CustomPainter {
         Path()
           ..moveTo(0, 310)
           ..lineTo(0, 0)
-          ..lineTo(65, 0)
-          ..cubicTo(47, 75, 50, 116, 57, 157)
-          ..lineTo(91, 126)
-          ..lineTo(104, 130)
-          ..lineTo(60, 184)
-          ..cubicTo(56, 226, 64, 270, 79, 307)
-          ..lineTo(49, 296)
-          ..lineTo(29, 316)
+          ..lineTo(44, 0)
+          ..cubicTo(39, 70, 56, 150, 48, 252)
+          ..quadraticBezierTo(63, 278, 86, 297)
+          ..quadraticBezierTo(44, 305, 0, 310)
           ..close(),
-        const Color(0xFF8C7653),
+        const Color(0xFF7B5B42),
+        borde: const Color(0xFF5F4531),
       );
       _stroke(
         canvas,
         Path()
-          ..moveTo(25, 30)
-          ..cubicTo(13, 126, 36, 216, 32, 281),
-        const Color(0xFFAD9468),
-        6,
-      );
-      _stroke(
-        canvas,
-        Path()
-          ..moveTo(45, 203)
-          ..quadraticBezierTo(43, 247, 56, 275),
-        const Color(0xFF6C6548),
+          ..moveTo(21, 56)
+          ..quadraticBezierTo(29, 132, 23, 250),
+        const Color(0xFF664B36),
         3,
+      );
+      _stroke(
+        canvas,
+        Path()
+          ..moveTo(39, 98)
+          ..quadraticBezierTo(79, 83, 111, 57),
+        const Color(0xFF6B4E39),
+        9,
       );
       _path(
         canvas,
         Path()
           ..moveTo(0, 0)
-          ..lineTo(203, 0)
-          ..cubicTo(201, 25, 184, 40, 154, 38)
-          ..cubicTo(151, 65, 121, 75, 99, 60)
-          ..cubicTo(74, 88, 45, 79, 36, 61)
-          ..cubicTo(12, 74, 0, 60, 0, 52)
+          ..lineTo(190, 0)
+          ..cubicTo(178, 43, 142, 57, 112, 48)
+          ..cubicTo(89, 77, 46, 68, 35, 52)
+          ..cubicTo(20, 70, 5, 62, 0, 68)
           ..close(),
-        const Color(0xFF658C5D),
+        const Color(0xFF678B56),
       );
       _path(
         canvas,
@@ -200,7 +229,7 @@ class _ClaroPainter extends CustomPainter {
         Path()
           ..moveTo(x, y)
           ..lineTo(x + 5, y - 2),
-        const Color(0xFFBBC58A),
+        menosHierba ? const Color(0xFFC8B88A) : const Color(0xFFBBC58A),
         2,
       );
     }
@@ -210,7 +239,12 @@ class _ClaroPainter extends CustomPainter {
       canvas.save();
       canvas.translate(r.left * 600, r.top * 360);
       canvas.scale(r.width * 600 / 130, r.height * 360 / 130);
-      _animal(canvas, id);
+      _animal(
+        canvas,
+        id,
+        menosHierba: menosHierba,
+        menosConejos: menosConejos,
+      );
       canvas.restore();
     }
     // Flores pequeñas, fuera de los destinos.
@@ -244,60 +278,86 @@ class _ClaroPainter extends CustomPainter {
     canvas.restore();
   }
 
-  void _animal(Canvas c, String id) {
+  void _animal(
+    Canvas c,
+    String id, {
+    bool menosHierba = false,
+    bool menosConejos = false,
+  }) {
     _oval(c, const Rect.fromLTWH(12, 111, 108, 12), const Color(0x244C6339));
     switch (id) {
       case 'hierba':
-        _hierba(c);
+        _hierba(c, seca: menosHierba);
       case 'conejo':
-        _conejo(c);
-      case 'zorro':
+        if (menosConejos) {
+          c.save();
+          c.translate(22, 18);
+          c.scale(0.72);
+          _conejo(c);
+          c.restore();
+        } else {
+          _conejo(c);
+        }
+      default:
         _zorro(c);
     }
   }
 
-  void _hierba(Canvas c) {
-    for (var i = 0; i < 11; i++) {
-      final x = 16.0 + i * 9, top = 35.0 + (i * 17 % 47);
+  void _hierba(Canvas c, {bool seca = false}) {
+    _path(
+      c,
+      Path()
+        ..moveTo(15, 113)
+        ..quadraticBezierTo(65, 101, 116, 113)
+        ..quadraticBezierTo(99, 122, 65, 121)
+        ..quadraticBezierTo(31, 122, 15, 113)
+        ..close(),
+      const Color(0xFF9C7B56),
+      borde: const Color(0xFF6C543A),
+    );
+    final hojas = [
+      (26.0, -24.0, 44.0, seca ? const Color(0xFFC2A353) : const Color(0xFF47783D)),
+      (36.0, -8.0, 62.0, const Color(0xFF639949)),
+      (49.0, -19.0, 58.0, seca ? const Color(0xFFCBB062) : const Color(0xFF4E8440)),
+      (61.0, 5.0, 74.0, const Color(0xFF79AE55)),
+      (73.0, -9.0, 63.0, seca ? const Color(0xFFC2A353) : const Color(0xFF568B43)),
+      (86.0, 16.0, 67.0, const Color(0xFF6EA34E)),
+      (98.0, 24.0, 48.0, seca ? const Color(0xFFCBB062) : const Color(0xFF4B7D3E)),
+    ];
+    for (var i = 0; i < hojas.length; i++) {
+      if (seca && i.isOdd) continue;
+      final b = hojas[i];
       _path(
         c,
         Path()
-          ..moveTo(x, 115)
-          ..quadraticBezierTo(x - 13, top + 22, x - 9, top)
-          ..quadraticBezierTo(x + 6, top + 19, x + 8, 113)
+          ..moveTo(b.$1 - 5, 113)
+          ..quadraticBezierTo(b.$1 + b.$2 * .45, 111 - b.$3 * .58, b.$1 + b.$2, 113 - b.$3)
+          ..quadraticBezierTo(b.$1 + b.$2 * .32 + 7, 113 - b.$3 * .48, b.$1 + 6, 113)
           ..close(),
-        i.isEven ? const Color(0xFF4E8B4A) : const Color(0xFF79A64D),
-      );
-      _path(
-        c,
-        Path()
-          ..moveTo(x, 115)
-          ..quadraticBezierTo(x + 4, top + 5, x + 22, top - 9)
-          ..quadraticBezierTo(x + 15, top + 32, x + 7, 115)
-          ..close(),
-        const Color(0xFF92B95A),
+        b.$4,
+        borde: tinta,
       );
     }
-    for (var i = 0; i < 3; i++) {
-      final x = 38.0 + i * 29;
-      _stroke(
-        c,
-        Path()
-          ..moveTo(x, 112)
-          ..quadraticBezierTo(x + 1, 77, x - 3, 46),
-        const Color(0xFF537C3B),
-        2,
-      );
-      _oval(c, Rect.fromLTWH(x - 7, 33, 7, 18), const Color(0xFFC2B56B));
+    if (!seca) {
+      for (final x in [44.0, 82.0]) {
+        _oval(c, Rect.fromLTWH(x - 6, 78, 7, 6), const Color(0xFF83B85D));
+        _oval(c, Rect.fromLTWH(x, 78, 7, 6), const Color(0xFF83B85D));
+        _oval(c, Rect.fromLTWH(x - 3, 73, 7, 6), const Color(0xFF98C96D));
+      }
     }
   }
 
   void _conejo(Canvas c) {
-    // Cola, cuerpo y patas traseras; la cara queda despejada.
     _oval(
       c,
-      const Rect.fromLTWH(91, 75, 25, 25),
-      const Color(0xFFF5F0DF),
+      const Rect.fromLTWH(92, 85, 22, 22),
+      const Color(0xFFF7F0DE),
+      borde: const Color(0xFF8C8169),
+    );
+    _oval(
+      c,
+      const Rect.fromLTWH(26, 98, 22, 16),
+      const Color(0xFFD5C7AA),
       borde: const Color(0xFFAE9F85),
     );
     _path(
@@ -613,6 +673,7 @@ class _ClaroPainter extends CustomPainter {
   @override
   bool shouldRepaint(_ClaroPainter old) =>
       old.elemento != elemento ||
+      old.cambio != cambio ||
       !old.colocados.containsAll(colocados) ||
       !colocados.containsAll(old.colocados);
 }

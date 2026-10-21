@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/selector_idioma.dart';
@@ -26,12 +27,7 @@ class MapaPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _CabeceraNatu(),
-                      const SizedBox(height: 14),
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: SelectorIdioma(),
-                      ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 18),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Row(
@@ -132,6 +128,49 @@ class _CabeceraNatu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            children: [
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 9,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDCFCE7),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.eco_rounded,
+                        size: 13,
+                        color: Color(0xFF15803D),
+                      ),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Texto(
+                          rango,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.6,
+                            color: Color(0xFF15803D),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const SelectorIdioma(),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -154,31 +193,11 @@ class _CabeceraNatu extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFDCFCE7),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Texto(
-                        rango,
-                        style: const TextStyle(
-                          fontSize: 10.5,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.6,
-                          color: Color(0xFF15803D),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
                     Texto(
                       'NaturalMente',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 3),
                     Texto(
                       saludo,
                       style: const TextStyle(
@@ -235,7 +254,10 @@ class _CabeceraNatu extends StatelessWidget {
                   child: InkWell(
                     key: const Key('abrir-album'),
                     borderRadius: BorderRadius.circular(12),
-                    onTap: () => _mostrarAlbumCompleto(context),
+                    onTap: () {
+                      context.sonidoToque();
+                      _mostrarAlbumCompleto(context);
+                    },
                     child: _InsigniaResumen(
                       icono: Icons.auto_stories_rounded,
                       colorIcono: const Color(0xFF0284C7),
@@ -350,6 +372,9 @@ class _ZonaTarjeta extends StatelessWidget {
         .length;
     final estilo = _estiloZona(zona.id);
     final muestras = _muestrasZona(zona.id);
+    final fraccionZona = maxEstrellasZona == 0
+        ? 0.0
+        : estrellasZona / maxEstrellasZona;
 
     return Container(
       decoration: BoxDecoration(
@@ -370,6 +395,7 @@ class _ZonaTarjeta extends StatelessWidget {
           key: Key('zona-${zona.id}'),
           borderRadius: BorderRadius.circular(24),
           onTap: () {
+            context.sonidoToque();
             Navigator.of(context).push(
               MaterialPageRoute<void>(builder: (_) => ZonaPage(zona: zona)),
             );
@@ -473,108 +499,132 @@ class _ZonaTarjeta extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
-                    vertical: 8,
+                    vertical: 9,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.85),
+                    color: Colors.white.withValues(alpha: 0.88),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: estilo.borde.withValues(alpha: 0.45),
                       width: 1.5,
                     ),
                   ),
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 8,
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.spaceBetween,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          for (final idMuestra in muestras) ...[
-                            Container(
-                              width: 34,
-                              height: 34,
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: estilo.borde.withValues(alpha: 0.5),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (final idMuestra in muestras) ...[
+                                Container(
+                                  width: 34,
+                                  height: 34,
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: estilo.borde.withValues(
+                                        alpha: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                  child: IlustracionFicha(
+                                    id: idMuestra,
+                                    alto: 26,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                              ],
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.star_rounded,
+                                size: 16,
+                                color: Color(0xFFF59E0B),
+                              ),
+                              const SizedBox(width: 3),
+                              Texto(
+                                '$estrellasZona/$maxEstrellasZona',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF334155),
                                 ),
                               ),
-                              child: IlustracionFicha(id: idMuestra, alto: 26),
+                              const SizedBox(width: 10),
+                              Icon(
+                                Icons.style_rounded,
+                                size: 15,
+                                color: estilo.acento,
+                              ),
+                              const SizedBox(width: 3),
+                              Flexible(
+                                child: Texto(
+                                  '$cromosZona/${fichasZona.length} cromos',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xFF334155),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 11,
+                              vertical: 6,
                             ),
-                            const SizedBox(width: 6),
-                          ],
+                            decoration: BoxDecoration(
+                              color: estilo.acento,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Texto(
+                                  'Explorar',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                SizedBox(width: 3),
+                                Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 15,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.star_rounded,
-                            size: 16,
-                            color: Color(0xFFF59E0B),
-                          ),
-                          const SizedBox(width: 3),
-                          Texto(
-                            '$estrellasZona/$maxEstrellasZona',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFF334155),
+                      if (estrellasZona > 0) ...[
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(999),
+                          child: LinearProgressIndicator(
+                            value: fraccionZona,
+                            minHeight: 6,
+                            backgroundColor: estilo.fondo,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              estilo.borde,
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Icon(
-                            Icons.style_rounded,
-                            size: 15,
-                            color: estilo.acento,
-                          ),
-                          const SizedBox(width: 3),
-                          Flexible(
-                            child: Texto(
-                              '$cromosZona/${fichasZona.length} cromos',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xFF334155),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
                         ),
-                        decoration: BoxDecoration(
-                          color: estilo.acento,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Texto(
-                              'Explorar',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(width: 2),
-                            Icon(
-                              Icons.arrow_forward_rounded,
-                              size: 15,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
@@ -755,6 +805,7 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
         key: const Key('tarjeta-album-principal'),
         borderRadius: BorderRadius.circular(24),
         onTap: () {
+          context.sonidoToque();
           Navigator.of(
             context,
           ).push(MaterialPageRoute<void>(builder: (_) => const AlbumPage()));
@@ -873,4 +924,3 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
     );
   }
 }
-

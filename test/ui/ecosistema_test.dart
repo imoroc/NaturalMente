@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:naturalmente/main.dart';
-import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
+import 'package:naturalmente/main.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +21,9 @@ void main() {
         addTearDown(() => t.binding.setSurfaceSize(null));
         await abrir(t);
         await tocar(t, 'nivel-$nivel');
+        expect(find.text('1 · Suelo al sol'), findsOneWidget);
+        expect(find.text('2 · Pradera'), findsOneWidget);
+        expect(find.text('3 · Árboles'), findsOneWidget);
         await tocar(t, 'eco-destino-hierba');
         expect(
           find.text('Primero toca un dibujo de la bandeja.'),
@@ -43,6 +46,10 @@ void main() {
         await t.pumpAndSettle();
         expect(find.byKey(const Key('eco-seguir')), findsOneWidget);
         await tocar(t, 'eco-seguir');
+        expect(
+          find.textContaining('Sus raíces sujetan la tierra húmeda'),
+          findsOneWidget,
+        );
         for (final id in ['conejo', 'zorro']) {
           await tocar(t, 'eco-pieza-$id');
           await tocar(t, 'eco-destino-$id');

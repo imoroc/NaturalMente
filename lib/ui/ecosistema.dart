@@ -26,9 +26,40 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   final Map<String, List<OpcionEcosistema>> _opciones = {};
   bool _guardando = false, _guardado = false, _falloGuardado = false;
   bool _permitirSalir = false;
+  bool _verAntes = false;
+  String? _inspeccionado;
   Ecosistema get _ecosistema => widget.actividad.ecosistema!;
   Duration _duracion(int ms) =>
       Duration(milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : ms);
+
+  static const _ordenBandeja = ['conejo', 'zorro', 'hierba'];
+
+  static String _puestoTitulo(String id) => switch (id) {
+    'hierba' => '1 · Suelo al sol',
+    'conejo' => '2 · Pradera',
+    _ => '3 · Árboles',
+  };
+
+  static String _rolCorto(String id) => switch (id) {
+    'hierba' => 'Planta',
+    'conejo' => 'Herbívoro',
+    _ => 'Cazador',
+  };
+
+  static IconData _iconoPuesto(String id) => switch (id) {
+    'hierba' => Icons.wb_sunny_rounded,
+    'conejo' => Icons.eco_rounded,
+    _ => Icons.forest_rounded,
+  };
+
+  static String _curiosidadElemento(String id) => switch (id) {
+    'hierba' =>
+      'Sus raíces sujetan la tierra húmeda y sirven de refugio a pequeños insectos del claro.',
+    'conejo' =>
+      'Si detecta peligro, golpea el suelo con sus patas traseras para avisar a los demás conejos.',
+    _ =>
+      'Además de cazar pequeños animales, en otoño también se alimenta de moras y frutos del bosque.',
+  };
 
   @override
   void dispose() {
@@ -52,6 +83,8 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       _guardando = false;
       _guardado = false;
       _falloGuardado = false;
+      _verAntes = false;
+      _inspeccionado = null;
     });
     // Una preferencia fallida no impide jugar ni altera las estrellas.
     Alcance.of(context).progreso.recordarNivelEcosistema(nivel.id);
@@ -75,12 +108,30 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   }
 
   void _colocar(String pieza, String destino) {
-    setState(() => _partida!.colocar(pieza, destino));
+    setState(() {
+      _partida!.colocar(pieza, destino);
+      if (_partida!.acierto == true) {
+        _inspeccionado = destino;
+      }
+    });
+    if (_partida!.acierto == true) {
+      context.sonidoAcierto();
+    } else {
+      context.sonidoPista();
+    }
   }
 
   void _seguir() {
-    setState(() => _partida!.seguir());
-    if (_partida!.completa) _guardar();
+    setState(() {
+      _verAntes = false;
+      _partida!.seguir();
+    });
+    if (_partida!.completa) {
+      context.sonidoCelebracion();
+      _guardar();
+    } else {
+      context.sonidoToque();
+    }
     _arriba();
   }
 
@@ -165,10 +216,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
               const SizedBox(height: 16),
               const SizedBox(height: 150, child: DibujoEcosistema()),
               const SizedBox(height: 16),
-              const Texto('1. Toca el dibujo que pide Natu.'),
+              const Texto(
+                '1. Lee la pista de Natu y elige el ser vivo en la bandeja.',
+              ),
               const SizedBox(height: 8),
               const Texto(
-                '2. Toca su silueta en el claro. También puedes arrastrarlo.',
+                '2. Toca su puesto en el claro (Suelo al sol, Pradera o Árboles) o arrástralo.',
               ),
               const SizedBox(height: 12),
               const Texto(
@@ -388,74 +441,224 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
     );
   }
 
-  Widget _escena(PartidaEcosistema p) => Column(
-    children: [
-      AspectRatio(
-        aspectRatio: 600 / 360,
-        child: LayoutBuilder(
-          builder: (context, constraints) => Stack(
-            children: [
-              Positioned.fill(child: const DibujoEcosistema(colocados: {})),
-              for (final elemento in _ecosistema.elementos)
-                _destino(p, elemento, constraints),
-            ],
-          ),
-        ),
-      ),
-      if (p.relaciones > 0 || p.completa && p.nivel.id != 'facil') ...[
-        const SizedBox(height: 10),
-        Semantics(
-          label: context.traducir(
-            p.relaciones > 1
-                ? 'La hierba alimenta al conejo y el conejo puede alimentar al zorro.'
-                : 'La hierba alimenta al conejo.',
-          ),
-          child: ExcludeSemantics(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+  Widget _escena(PartidaEcosistema p) {
+    final cambioVisual = p.cambio != null && !_verAntes ? p.cambio : null;
+    final mostrarCadena =
+        p.colocados.length >= 2 ||
+        p.relaciones > 0 ||
+        (p.completa && p.nivel.id != 'facil');
+    final elementoInspeccion = _inspeccionado != null &&
+            p.colocados.contains(_inspeccionado)
+        ? _ecosistema.elementos.firstWhere((e) => e.id == _inspeccionado)
+        : null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AspectRatio(
+          aspectRatio: 600 / 360,
+          child: LayoutBuilder(
+            builder: (context, constraints) => Stack(
               children: [
-                for (var i = 0; i < 3; i++) ...[
-                  SizedBox(
-                    width: 48,
-                    height: 48,
-                    child: DibujoEcosistema(
-                      elemento: _ecosistema.elementos[i].id,
-                    ),
+                Positioned.fill(
+                  child: DibujoEcosistema(
+                    colocados: const {},
+                    cambio: cambioVisual,
                   ),
-                  if (i < 2)
-                    TweenAnimationBuilder<double>(
-                      key: ValueKey('flecha-$i-${p.relaciones}'),
-                      tween: Tween(begin: 0, end: p.relaciones > i ? 1 : 0),
-                      duration: _duracion(420),
-                      builder: (_, value, child) =>
-                          Opacity(opacity: value, child: child),
-                      child: const Icon(
-                        Icons.arrow_forward_rounded,
-                        color: Color(0xFF1F8A4C),
-                      ),
-                    ),
-                ],
+                ),
+                for (final elemento in _ecosistema.elementos)
+                  _destino(p, elemento, constraints, cambioVisual),
               ],
             ),
           ),
         ),
-        const Texto(
-          'La flecha va del alimento a quien lo come.',
-          textAlign: TextAlign.center,
-        ),
+        if (mostrarCadena) ...[
+          const SizedBox(height: 10),
+          Semantics(
+            label: context.traducir(
+              p.relaciones > 1 || p.colocados.length == 3
+                  ? 'La hierba alimenta al conejo y el conejo puede alimentar al zorro.'
+                  : 'La hierba alimenta al conejo.',
+            ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF4F8EC),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: const Color(0xFFD5E3C3), width: 1.5),
+              ),
+              child: Column(
+                children: [
+                  ExcludeSemantics(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 4,
+                      runSpacing: 6,
+                      children: [
+                        for (var i = 0; i < 3; i++) ...[
+                          _eslabonCadena(p, _ecosistema.elementos[i]),
+                          if (i < 2)
+                            TweenAnimationBuilder<double>(
+                              key: ValueKey(
+                                'flecha-$i-${p.relaciones}-${p.colocados.length}',
+                              ),
+                              tween: Tween(
+                                begin: 0,
+                                end:
+                                    (p.relaciones > i ||
+                                        p.colocados.contains(
+                                          _ecosistema.elementos[i + 1].id,
+                                        ))
+                                    ? 1
+                                    : 0.25,
+                              ),
+                              duration: _duracion(420),
+                              builder: (_, value, child) =>
+                                  Opacity(opacity: value, child: child),
+                              child: Icon(
+                                Icons.arrow_forward_rounded,
+                                color: p.relaciones > i
+                                    ? const Color(0xFF15803D)
+                                    : const Color(0xFF65A30D),
+                              ),
+                            ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  const Texto(
+                    'La flecha va del alimento a quien lo come.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF3F6212),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        if (elementoInspeccion != null && !p.confirmado) ...[
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFFDF7),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFE2DEC9), width: 1.8),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  _iconoPuesto(elementoInspeccion.id),
+                  color: const Color(0xFF1F8A4C),
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Texto(
+                        '${elementoInspeccion.nombre} · ${_rolCorto(elementoInspeccion.id)}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13.5,
+                          color: Color(0xFF1B3022),
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Texto(
+                        _curiosidadElemento(elementoInspeccion.id),
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          height: 1.25,
+                          color: Color(0xFF334155),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
-    ],
-  );
+    );
+  }
+
+  Widget _eslabonCadena(PartidaEcosistema p, ElementoEcosistema e) {
+    final colocado = p.colocados.contains(e.id);
+    final activo = _inspeccionado == e.id;
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: colocado
+          ? () => setState(
+              () => _inspeccionado = _inspeccionado == e.id ? null : e.id,
+            )
+          : null,
+      child: AnimatedContainer(
+        duration: _duracion(180),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: colocado
+              ? (activo ? const Color(0xFFDCFCE7) : Colors.white)
+              : const Color(0xFFE2E8F0).withValues(alpha: 0.6),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: colocado
+                ? (activo ? const Color(0xFF15803D) : const Color(0xFF86EFAC))
+                : const Color(0xFFCBD5E1),
+            width: 1.5,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (colocado)
+              SizedBox(
+                width: 32,
+                height: 32,
+                child: DibujoEcosistema(elemento: e.id),
+              )
+            else
+              Icon(
+                _iconoPuesto(e.id),
+                size: 18,
+                color: const Color(0xFF64748B),
+              ),
+            const SizedBox(width: 6),
+            Texto(
+              colocado ? e.nombre : _rolCorto(e.id),
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                color: colocado
+                    ? const Color(0xFF1B3022)
+                    : const Color(0xFF64748B),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _destino(
     PartidaEcosistema p,
     ElementoEcosistema e,
     BoxConstraints constraints,
+    String? cambioVisual,
   ) {
     final r = zonaElemento(e.id);
     final colocado = p.colocados.contains(e.id);
     final fallido = p.ultimoDestino == e.id && p.acierto == false;
     final disponible = !p.confirmado && p.montando && !colocado;
+    final compacto = constraints.maxWidth < 380;
     return Positioned(
       left: r.left * constraints.maxWidth,
       top: r.top * constraints.maxHeight,
@@ -465,16 +668,15 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
         onWillAcceptWithDetails: (d) => disponible,
         onAcceptWithDetails: (d) => _colocar(d.data, e.id),
         builder: (context, candidatos, _) {
-          final destacado =
-              candidatos.isNotEmpty ||
-              fallido ||
-              (p.intentos > 1 && p.elementoActual?.id == e.id);
+          final pistaActiva = p.intentos > 1 && p.elementoActual?.id == e.id;
+          final destacado = candidatos.isNotEmpty || fallido || pistaActiva;
+          final esperandoToque = disponible && p.seleccion != null;
           return Semantics(
             label: context.traducir(
               colocado ? '${e.nombre}, colocado' : 'Lugar de ${e.nombre}',
             ),
-            button: disponible,
-            enabled: disponible,
+            button: disponible || colocado,
+            enabled: disponible || colocado,
             child: Material(
               color: Colors.transparent,
               child: InkWell(
@@ -491,6 +693,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
                           );
                         }
                       }
+                    : colocado
+                    ? () => setState(
+                        () => _inspeccionado = _inspeccionado == e.id
+                            ? null
+                            : e.id,
+                      )
                     : null,
                 child: AnimatedContainer(
                   duration: _duracion(160),
@@ -498,18 +706,90 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
                     borderRadius: BorderRadius.circular(20),
                     color: destacado
                         ? EstilosJuego.fallo.withValues(alpha: .18)
+                        : esperandoToque
+                        ? const Color(0xFFDCFCE7).withValues(alpha: .38)
                         : Colors.transparent,
                     border: destacado
                         ? Border.all(color: EstilosJuego.fallo, width: 3)
+                        : esperandoToque
+                        ? Border.all(
+                            color: const Color(0xFF1F8A4C),
+                            width: 2.2,
+                          )
                         : null,
                   ),
                   child: Stack(
                     children: [
                       if (!colocado)
-                        Positioned.fill(
-                          child: Opacity(
-                            opacity: .18,
-                            child: DibujoEcosistema(elemento: e.id),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.all(compacto ? 2 : 4),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: compacto ? 4 : 10,
+                              vertical: compacto ? 3 : 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFFFFFDF7,
+                              ).withValues(alpha: 0.92),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: fallido
+                                    ? const Color(0xFFB96517)
+                                    : const Color(0xFF1F8A4C),
+                                width: 1.8,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x22000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  _iconoPuesto(e.id),
+                                  size: compacto ? 15 : 24,
+                                  color: fallido
+                                      ? const Color(0xFFB96517)
+                                      : const Color(0xFF1F8A4C),
+                                ),
+                                const SizedBox(height: 2),
+                                Flexible(
+                                  child: Texto(
+                                    _puestoTitulo(e.id),
+                                    textAlign: TextAlign.center,
+                                    maxLines: compacto ? 1 : 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: compacto ? 9.5 : 11.5,
+                                      fontWeight: FontWeight.w900,
+                                      color: const Color(0xFF1B3022),
+                                      height: 1.05,
+                                    ),
+                                  ),
+                                ),
+                                if (!compacto) ...[
+                                  const SizedBox(height: 2),
+                                  Flexible(
+                                    child: Texto(
+                                      _rolCorto(e.id),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 10.5,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF475569),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
                           ),
                         ),
                       if (colocado)
@@ -521,27 +801,54 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
                             curve: Curves.easeOutCubic,
                             builder: (_, value, child) =>
                                 Transform.scale(scale: value, child: child),
-                            child: DibujoEcosistema(elemento: e.id),
+                            child: DibujoEcosistema(
+                              elemento: e.id,
+                              cambio: cambioVisual,
+                            ),
                           ),
                         ),
-                      if (disponible ||
-                          colocado && p.confirmado && p.ultimoDestino == e.id)
+                      if (colocado)
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFFFDF7),
-                              borderRadius: BorderRadius.circular(30),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 2,
                             ),
-                            padding: const EdgeInsets.all(2),
-                            child: Icon(
-                              colocado
-                                  ? Icons.check_circle_rounded
-                                  : Icons.add_circle_outline_rounded,
-                              color: fallido
-                                  ? const Color(0xFFB96517)
-                                  : const Color(0xFF1F8A4C),
-                              size: 22,
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFFFFFDF7,
+                              ).withValues(alpha: 0.94),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: const Color(0xFF1F8A4C),
+                                width: 1.4,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.check_circle_rounded,
+                                  color: Color(0xFF1F8A4C),
+                                  size: 14,
+                                ),
+                                if (!compacto) ...[
+                                  const SizedBox(width: 3),
+                                  Flexible(
+                                    child: Texto(
+                                      _rolCorto(e.id),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w800,
+                                        color: Color(0xFF1B3022),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
                         ),
@@ -554,6 +861,14 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
         },
       ),
     );
+  }
+
+  List<ElementoEcosistema> _elementosBandeja(PartidaEcosistema p) {
+    final porId = {for (final e in _ecosistema.elementos) e.id: e};
+    return [
+      for (final id in _ordenBandeja)
+        if (porId.containsKey(id) && !p.colocados.contains(id)) porId[id]!,
+    ];
   }
 
   Widget _controles(PartidaEcosistema p) => Column(
@@ -569,9 +884,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
             spacing: 10,
             runSpacing: 12,
             children: [
-              for (final e in _ecosistema.elementos.where(
-                (e) => !p.colocados.contains(e.id),
-              ))
+              for (final e in _elementosBandeja(p))
                 SizedBox(
                   width: MediaQuery.textScalerOf(context).scale(16) > 24
                       ? c.maxWidth
@@ -665,6 +978,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       decoration: BoxDecoration(
         color: const Color(0xFFEAF3DE),
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFBCD49B), width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -674,23 +988,36 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
-          for (final despues in [false, true]) ...[
-            Texto(despues ? 'Después: hay menos' : 'Antes: hay más'),
-            const SizedBox(height: 4),
-            ExcludeSemantics(
-              child: Wrap(
-                spacing: 8,
-                children: [
-                  for (var i = 0; i < (despues ? 1 : 3); i++)
-                    SizedBox(
-                      width: 56,
-                      height: 64,
-                      child: DibujoEcosistema(elemento: id),
-                    ),
-                ],
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              ChoiceChip(
+                label: const Texto('Después: hay menos'),
+                selected: !_verAntes,
+                onSelected: (_) => setState(() => _verAntes = false),
               ),
+              ChoiceChip(
+                label: const Texto('Antes: hay más'),
+                selected: _verAntes,
+                onSelected: (_) => setState(() => _verAntes = true),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ExcludeSemantics(
+            child: Wrap(
+              spacing: 8,
+              children: [
+                for (var i = 0; i < (_verAntes ? 3 : 1); i++)
+                  SizedBox(
+                    width: 56,
+                    height: 64,
+                    child: DibujoEcosistema(elemento: id),
+                  ),
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );

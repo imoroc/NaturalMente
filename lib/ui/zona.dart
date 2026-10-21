@@ -6,9 +6,8 @@ import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
-import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
-import 'package:naturalmente/ui/escena_ecosistema.dart';
+import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -128,15 +127,11 @@ class ZonaPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
-
-
-
-
-
-
-
                               builder: (_) => switch (actividad.tipo) {
-                                'ecosistema' => EcosistemaPage(actividad: actividad), 'herbario' => HerbarioPage(
+                                'ecosistema' => EcosistemaPage(
+                                  actividad: actividad,
+                                ),
+                                'herbario' => HerbarioPage(
                                   actividad: actividad,
                                 ),
                                 'nacimiento' => NacimientoPage(
@@ -144,7 +139,6 @@ class ZonaPage extends StatelessWidget {
                                 ),
                                 _ => JuegoPage(actividad: actividad),
                               },
-
                             ),
                           );
                         },
@@ -246,18 +240,13 @@ class _BotonMision extends StatelessWidget {
                 color: colorBorde.withValues(alpha: 0.16),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: id == 'ecosistemas'
-                  ? const Padding(
-                      padding: EdgeInsets.all(2),
-                      child: DibujoEcosistema(elemento: 'zorro'),
-                    )
-                  : Icon(
-                      hecha
-                          ? Icons.check_circle_rounded
-                          : Icons.play_arrow_rounded,
-                      color: colorSombra,
-                      size: 30,
-                    ),
+              child: Icon(
+                hecha
+                    ? Icons.check_circle_rounded
+                    : Icons.play_arrow_rounded,
+                color: colorSombra,
+                size: 30,
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(

@@ -2841,26 +2841,26 @@
           {
             "id": "hierba",
             "nombre": "Hierba",
-            "instruccion": "Pon la hierba en el claro.",
-            "explicacion": "La hierba es una planta. Con luz y agua puede fabricar su alimento.",
+            "instruccion": "¿Qué ser vivo necesita la luz del sol y el agua del suelo para fabricar su propio alimento?",
+            "explicacion": "La hierba es una planta productora: con luz del sol, agua y tierra fabrica su propio alimento.",
             "pista": "Busca las hojas verdes junto al suelo.",
-            "observacion": "La hierba es una planta que crece junto al suelo. Busca sus hojas verdes."
+            "observacion": "La hierba es la planta productora del claro: crece en el puesto 1 (Suelo al sol)."
           },
           {
             "id": "conejo",
             "nombre": "Conejo",
-            "instruccion": "Ahora busca un lugar para el conejo.",
-            "explicacion": "El conejo come hierba y otras plantas. Es un herbívoro.",
-            "pista": "El conejo tiene orejas largas. Busca su silueta en el centro.",
-            "observacion": "El conejo necesita espacio para moverse. Su lugar está entre la hierba y el zorro."
+            "instruccion": "Ahora buscamos un herbívoro: ¿qué animal de orejas largas se alimenta de las plantas de la pradera?",
+            "explicacion": "El conejo come hierba y otras plantas tiernas del claro: es un animal herbívoro.",
+            "pista": "Elige al herbívoro de orejas largas y llévalo a la pradera central.",
+            "observacion": "El conejo es herbívoro: su lugar es el puesto 2 (Pradera), junto a las plantas que come."
           },
           {
             "id": "zorro",
             "nombre": "Zorro",
-            "instruccion": "¡Falta el zorro! Ponlo en su lugar.",
-            "explicacion": "El zorro puede alimentarse de conejos. También come otros animales y frutos.",
-            "pista": "Busca la silueta con orejas puntiagudas y una cola grande.",
-            "observacion": "El zorro tiene una cola grande. Busca el lugar con su misma silueta."
+            "instruccion": "Para completar la cadena, ¿qué animal cazador vigila desde los árboles y puede alimentarse del conejo?",
+            "explicacion": "El zorro puede alimentarse de conejos y también come otros animales pequeños y frutos del bosque.",
+            "pista": "Elige al cazador de cola tupida y llévalo junto a los árboles.",
+            "observacion": "El zorro es un cazador del bosque: su lugar es el puesto 3 (Árboles), desde donde observa el claro."
           }
         ],
         "niveles": [

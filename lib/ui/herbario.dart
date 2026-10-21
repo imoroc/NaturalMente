@@ -62,6 +62,15 @@ class _HerbarioPageState extends State<HerbarioPage> {
   void _colocar(String pieza, String destino) {
     final partida = _partida!;
     setState(() => partida.colocar(pieza, destino));
+    if (partida.resultado?.acierto ?? false) {
+      if (partida.completa) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else {
+      context.sonidoPista();
+    }
     if (partida.puedeConsultar(destino)) {
       Alcance.of(context).progreso.desbloquearFicha(destino);
     }
@@ -73,6 +82,15 @@ class _HerbarioPageState extends State<HerbarioPage> {
     final partida = _partida!;
     if (partida.preguntaActual != parte) return;
     setState(() => partida.responder(opcion));
+    if (partida.resultado?.acierto ?? false) {
+      if (partida.completa) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else {
+      context.sonidoPista();
+    }
     if (partida.puedeConsultar(parte)) {
       Alcance.of(context).progreso.desbloquearFicha(parte);
     }

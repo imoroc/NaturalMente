@@ -123,6 +123,15 @@ class _NacimientoPageState extends State<NacimientoPage> {
 
   void _colocarAnimal(String animal, String nido) {
     setState(() => _clasificar!.colocar(animal, nido));
+    if (_clasificar!.resultado?.acierto ?? false) {
+      if (_completa) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else {
+      context.sonidoPista();
+    }
     _verPregunta();
     _guardarSiCompleta();
   }
@@ -131,6 +140,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
     final partida = _clasificar!;
     final elegido = partida.seleccionado;
     if (elegido == null) {
+      context.sonidoPista();
       setState(() {
         partida.resultado = const Resultado(
           acierto: false,
@@ -148,11 +158,25 @@ class _NacimientoPageState extends State<NacimientoPage> {
 
   void _comprobarCiclo() {
     setState(() => _ciclos!.comprobar());
+    if (_ciclos!.resultado?.acierto ?? false) {
+      context.sonidoAcierto();
+    } else {
+      context.sonidoPista();
+    }
     _verPregunta();
   }
 
   void _responder(String opcion) {
     setState(() => _ciclos!.responder(opcion));
+    if (_ciclos!.resultado?.acierto ?? false) {
+      if (_completa) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+    } else {
+      context.sonidoPista();
+    }
     _verPregunta();
     _guardarSiCompleta();
   }

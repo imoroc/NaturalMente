@@ -636,54 +636,67 @@ class _ViajePageState extends State<ViajePage> {
     final nombre = _nombre(nivel, id);
     return SizedBox(
       width: ancho,
-      child: Semantics(
-        button: true,
-        label: context.traducir('Parada: $nombre'),
-        child: TarjetaJuego(
-          claveAccion: Key('destino-$id'),
-          onTap: () => _cambiar((p) => p.mover(id)),
-          borde: fallo
-              ? EstilosJuego.fallo
-              : alcanzada
-              ? EstilosJuego.acierto
-              : EstilosJuego.borde,
-          fondo: aqui ? const Color(0xFFECFDF5) : Colors.white,
-          destacada: fallo || aqui,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 60),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                children: [
-                  IconoParada(id: id, tamano: 44),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Texto(
-                      nombre,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14,
-                        color: Color(0xFF0F172A),
+      child: DragTarget<String>(
+        onWillAcceptWithDetails: (details) => details.data == 'bocado',
+        onAcceptWithDetails: (_) => _cambiar((p) => p.mover(id)),
+        builder: (context, candidatos, _) {
+          final arrastrandoEncima = candidatos.isNotEmpty;
+          return Semantics(
+            button: true,
+            label: context.traducir('Parada: $nombre'),
+            child: TarjetaJuego(
+              claveAccion: Key('destino-$id'),
+              onTap: () => _cambiar((p) => p.mover(id)),
+              borde: arrastrandoEncima
+                  ? const Color(0xFF0EA5E9)
+                  : fallo
+                  ? EstilosJuego.fallo
+                  : alcanzada
+                  ? EstilosJuego.acierto
+                  : EstilosJuego.borde,
+              fondo: arrastrandoEncima
+                  ? const Color(0xFFE0F2FE)
+                  : aqui
+                  ? const Color(0xFFECFDF5)
+                  : Colors.white,
+              destacada: arrastrandoEncima || fallo || aqui,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 60),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      IconoParada(id: id, tamano: 44),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Texto(
+                          nombre,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14,
+                            color: Color(0xFF0F172A),
+                          ),
+                        ),
                       ),
-                    ),
+                      if (alcanzada)
+                        const Icon(
+                          Icons.check_circle_rounded,
+                          color: EstilosJuego.acierto,
+                          size: 20,
+                        )
+                      else if (fallo)
+                        const Icon(
+                          Icons.replay_rounded,
+                          color: EstilosJuego.fallo,
+                          size: 20,
+                        ),
+                    ],
                   ),
-                  if (alcanzada)
-                    const Icon(
-                      Icons.check_circle_rounded,
-                      color: EstilosJuego.acierto,
-                      size: 20,
-                    )
-                  else if (fallo)
-                    const Icon(
-                      Icons.replay_rounded,
-                      color: EstilosJuego.fallo,
-                      size: 20,
-                    ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

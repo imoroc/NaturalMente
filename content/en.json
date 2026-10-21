@@ -1446,5 +1446,19 @@
   "AJUSTES DE NATU": "NATU'S SETTINGS",
   "Efectos de sonido": "Sound effects",
   "Activado": "On",
-  "Silenciado": "Muted"
+  "Silenciado": "Muted",
+  "Música de fondo": "Background music",
+  "Vibración al tocar": "Touch vibration",
+  "Activada": "On",
+  "Desactivada": "Off",
+  "JUEGO INTERACTIVO": "INTERACTIVE GAME",
+  "Jugar": "Play",
+  "Toca para jugar": "Tap to play",
+  "Desbloquea todos los cromos jugando las misiones": "Unlock all stickers by playing the missions",
+  "Toca un cromo desbloqueado para leer sus curiosidades o supera misiones arriba para conseguir los que faltan.": "Tap an unlocked sticker to read its fun facts or complete missions above to get the missing ones.",
+  "✓ ¡Muy bien! · {0}": "✓ Great job! · {0}",
+  "✓ {0} en su sitio": "✓ {0} in place",
+  "HISTORIA PASO A PASO · TOCA O ARRASTRA EN ORDEN": "STEP-BY-STEP STORY · TAP OR DRAG IN ORDER",
+  "Pon aquí el {0}º": "Put step {0} here",
+  "✓ ¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.": "✓ Story of life completed! Tap any card or top tab to explore."
 }

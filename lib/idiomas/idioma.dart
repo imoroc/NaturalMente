@@ -6,20 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Preferencias locales de idioma y sonido independientes del progreso.
+/// Preferencias locales de idioma, efectos sonoros, música y vibración.
 class Idioma extends ChangeNotifier {
   Idioma(this._preferencias, this.traducciones)
     : _codigo = _preferencias.getString('idioma') == 'en' ? 'en' : 'es',
-      _sonido = _preferencias.getBool('sonido') ?? true;
+      _sonido = _preferencias.getBool('sonido') ?? true,
+      _musica = _preferencias.getBool('musica') ?? false,
+      _vibracion = _preferencias.getBool('vibracion') ?? true {
+    if (_musica) {
+      _SintetizadorMelodico.sincronizarMusica(true);
+    }
+  }
 
   final SharedPreferences _preferencias;
   final Map<String, String> traducciones;
   String _codigo;
   bool _sonido;
+  bool _musica;
+  bool _vibracion;
 
   String get codigo => _codigo;
   Locale get locale => Locale(_codigo);
   bool get sonido => _sonido;
+  bool get musica => _musica;
+  bool get vibracion => _vibracion;
 
   static Future<Idioma> abrir() async {
     final preferencias = await SharedPreferences.getInstance();
@@ -37,9 +47,7 @@ class Idioma extends ChangeNotifier {
     if (codigo == _codigo) return true;
     if (!await _preferencias.setString('idioma', codigo)) return false;
     _codigo = codigo;
-    if (_sonido) {
-      reproducirToque();
-    }
+    reproducirToque();
     notifyListeners();
     return true;
   }
@@ -55,31 +63,69 @@ class Idioma extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> cambiarMusica(bool activa) async {
+    if (activa == _musica) return true;
+    if (!await _preferencias.setBool('musica', activa)) return false;
+    _musica = activa;
+    _SintetizadorMelodico.sincronizarMusica(_musica);
+    if (_sonido) {
+      reproducirToque();
+    }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> cambiarVibracion(bool activa) async {
+    if (activa == _vibracion) return true;
+    if (!await _preferencias.setBool('vibracion', activa)) return false;
+    _vibracion = activa;
+    if (_vibracion) {
+      HapticFeedback.mediumImpact();
+    }
+    if (_sonido) {
+      reproducirToque();
+    }
+    notifyListeners();
+    return true;
+  }
+
   void reproducirToque() {
-    if (!_sonido) return;
-    _SintetizadorMelodico.reproducir(_EfectoSonoro.toque);
-    SystemSound.play(SystemSoundType.click);
-    HapticFeedback.selectionClick();
+    if (_sonido) {
+      _SintetizadorMelodico.reproducir(_EfectoSonoro.toque);
+      SystemSound.play(SystemSoundType.click);
+    }
+    if (_vibracion) {
+      HapticFeedback.selectionClick();
+    }
   }
 
   void reproducirAcierto() {
-    if (!_sonido) return;
-    _SintetizadorMelodico.reproducir(_EfectoSonoro.acierto);
-    SystemSound.play(SystemSoundType.click);
-    HapticFeedback.mediumImpact();
+    if (_sonido) {
+      _SintetizadorMelodico.reproducir(_EfectoSonoro.acierto);
+      SystemSound.play(SystemSoundType.click);
+    }
+    if (_vibracion) {
+      HapticFeedback.mediumImpact();
+    }
   }
 
   void reproducirPista() {
-    if (!_sonido) return;
-    _SintetizadorMelodico.reproducir(_EfectoSonoro.pista);
-    HapticFeedback.lightImpact();
+    if (_sonido) {
+      _SintetizadorMelodico.reproducir(_EfectoSonoro.pista);
+    }
+    if (_vibracion) {
+      HapticFeedback.lightImpact();
+    }
   }
 
   void reproducirCelebracion() {
-    if (!_sonido) return;
-    _SintetizadorMelodico.reproducir(_EfectoSonoro.celebracion);
-    SystemSound.play(SystemSoundType.click);
-    HapticFeedback.heavyImpact();
+    if (_sonido) {
+      _SintetizadorMelodico.reproducir(_EfectoSonoro.celebracion);
+      SystemSound.play(SystemSoundType.click);
+    }
+    if (_vibracion) {
+      HapticFeedback.heavyImpact();
+    }
   }
 
   String traducir(String texto) {
@@ -198,11 +244,12 @@ class _NotaMelodica {
 }
 
 /// Sintetizador PCM de 16 bits sin dependencias externas para efectos musicales
-/// cálidos estilo marimba/xilófono educativo.
+/// cálidos estilo marimba/xilófono educativo y melodía ambiental de fondo.
 class _SintetizadorMelodico {
   static const MethodChannel _canal = MethodChannel('naturalmente/audio');
   static const int _frecuenciaMuestreo = 22050;
   static final Map<_EfectoSonoro, Uint8List> _cache = {};
+  static Uint8List? _cacheMusica;
 
   static void reproducir(_EfectoSonoro efecto) {
     final pcm = _cache.putIfAbsent(efecto, () => _generarEfecto(efecto));
@@ -214,57 +261,78 @@ class _SintetizadorMelodico {
         .catchError((_) {});
   }
 
+  static void sincronizarMusica(bool activa) {
+    if (!activa) {
+      _canal.invokeMethod<void>('detenerMusicaPcm').catchError((_) {});
+      return;
+    }
+    final pcm = _cacheMusica ??= _generarBucleAmbiental();
+    _canal
+        .invokeMethod<void>('iniciarMusicaPcm', <String, Object>{
+          'pcm': pcm,
+          'sampleRate': _frecuenciaMuestreo,
+        })
+        .catchError((_) {});
+  }
+
   static Uint8List _generarEfecto(_EfectoSonoro efecto) {
     return switch (efecto) {
-      // Toque de madera cálido y breve al pulsar botones o piezas.
+      // Toque de madera cálido y satisfactorio al pulsar botones o piezas.
       _EfectoSonoro.toque => _sintetizarNotas(const [
-        _NotaMelodica(
-          frecuencia: 783.99, // Sol5
-          inicioSeg: 0.0,
-          duracionSeg: 0.055,
-          volumen: 0.24,
-          decaimiento: 34.0,
-        ),
-        _NotaMelodica(
-          frecuencia: 1174.66, // Re6 armónico suave
-          inicioSeg: 0.008,
-          duracionSeg: 0.045,
-          volumen: 0.14,
-          decaimiento: 40.0,
-        ),
-      ]),
-      // Doble nota ascendente brillante (Mi5 -> Si5) al acertar un paso.
-      _EfectoSonoro.acierto => _sintetizarNotas(const [
         _NotaMelodica(
           frecuencia: 659.25, // Mi5
           inicioSeg: 0.0,
-          duracionSeg: 0.12,
-          volumen: 0.42,
-          decaimiento: 14.0,
+          duracionSeg: 0.065,
+          volumen: 0.34,
+          decaimiento: 28.0,
         ),
         _NotaMelodica(
           frecuencia: 987.77, // Si5
-          inicioSeg: 0.085,
-          duracionSeg: 0.24,
-          volumen: 0.48,
-          decaimiento: 9.5,
+          inicioSeg: 0.014,
+          duracionSeg: 0.060,
+          volumen: 0.24,
+          decaimiento: 32.0,
         ),
       ]),
-      // Marimba suave y amable (Mi4 -> Do4) cuando Natu da una pista para pensar.
+      // Doble nota ascendente brillante estilo Duolingo (Re5 -> La5) al acertar un paso.
+      _EfectoSonoro.acierto => _sintetizarNotas(const [
+        _NotaMelodica(
+          frecuencia: 587.33, // Re5
+          inicioSeg: 0.0,
+          duracionSeg: 0.13,
+          volumen: 0.48,
+          decaimiento: 13.0,
+        ),
+        _NotaMelodica(
+          frecuencia: 880.00, // La5
+          inicioSeg: 0.085,
+          duracionSeg: 0.28,
+          volumen: 0.56,
+          decaimiento: 8.5,
+        ),
+        _NotaMelodica(
+          frecuencia: 1174.66, // Re6 brillo
+          inicioSeg: 0.090,
+          duracionSeg: 0.24,
+          volumen: 0.22,
+          decaimiento: 10.0,
+        ),
+      ]),
+      // Marimba suave y amable (Sol4 -> Mi4) cuando Natu da una pista para pensar.
       _EfectoSonoro.pista => _sintetizarNotas(const [
         _NotaMelodica(
           frecuencia: 392.00, // Sol4
           inicioSeg: 0.0,
-          duracionSeg: 0.11,
-          volumen: 0.30,
-          decaimiento: 16.0,
+          duracionSeg: 0.12,
+          volumen: 0.36,
+          decaimiento: 15.0,
         ),
         _NotaMelodica(
           frecuencia: 329.63, // Mi4
-          inicioSeg: 0.09,
-          duracionSeg: 0.18,
-          volumen: 0.28,
-          decaimiento: 13.0,
+          inicioSeg: 0.095,
+          duracionSeg: 0.20,
+          volumen: 0.34,
+          decaimiento: 12.0,
         ),
       ]),
       // Fanfarria alegre ascendente (Do5 -> Mi5 -> Sol5 -> Do6) al completar nivel o cromo.
@@ -272,33 +340,102 @@ class _SintetizadorMelodico {
         _NotaMelodica(
           frecuencia: 523.25, // Do5
           inicioSeg: 0.0,
-          duracionSeg: 0.12,
-          volumen: 0.40,
-          decaimiento: 14.0,
+          duracionSeg: 0.13,
+          volumen: 0.46,
+          decaimiento: 13.0,
         ),
         _NotaMelodica(
           frecuencia: 659.25, // Mi5
-          inicioSeg: 0.085,
-          duracionSeg: 0.12,
-          volumen: 0.42,
-          decaimiento: 14.0,
+          inicioSeg: 0.09,
+          duracionSeg: 0.13,
+          volumen: 0.48,
+          decaimiento: 13.0,
         ),
         _NotaMelodica(
           frecuencia: 783.99, // Sol5
-          inicioSeg: 0.17,
-          duracionSeg: 0.14,
-          volumen: 0.45,
-          decaimiento: 12.0,
+          inicioSeg: 0.18,
+          duracionSeg: 0.15,
+          volumen: 0.52,
+          decaimiento: 11.0,
         ),
         _NotaMelodica(
           frecuencia: 1046.50, // Do6
-          inicioSeg: 0.26,
-          duracionSeg: 0.36,
-          volumen: 0.52,
-          decaimiento: 7.0,
+          inicioSeg: 0.27,
+          duracionSeg: 0.42,
+          volumen: 0.60,
+          decaimiento: 6.5,
+        ),
+        _NotaMelodica(
+          frecuencia: 523.25, // Acorde base Do5
+          inicioSeg: 0.27,
+          duracionSeg: 0.40,
+          volumen: 0.24,
+          decaimiento: 7.5,
         ),
       ]),
     };
+  }
+
+  /// Genera un bucle pentatónico tranquilo de 8 segundos estilo cuaderno de naturaleza.
+  static Uint8List _generarBucleAmbiental() {
+    const paso = 0.5;
+    const secuencia = <double>[
+      261.63, // Do4
+      329.63, // Mi4
+      392.00, // Sol4
+      440.00, // La4
+      523.25, // Do5
+      392.00, // Sol4
+      329.63, // Mi4
+      392.00, // Sol4
+      293.66, // Re4
+      392.00, // Sol4
+      440.00, // La4
+      587.33, // Re5
+      523.25, // Do5
+      440.00, // La4
+      392.00, // Sol4
+      329.63, // Mi4
+    ];
+    final notas = <_NotaMelodica>[
+      for (var i = 0; i < secuencia.length; i++)
+        _NotaMelodica(
+          frecuencia: secuencia[i],
+          inicioSeg: i * paso,
+          duracionSeg: 0.48,
+          volumen: 0.09,
+          decaimiento: 5.5,
+        ),
+      const _NotaMelodica(
+        frecuencia: 130.81, // Do3
+        inicioSeg: 0.0,
+        duracionSeg: 1.9,
+        volumen: 0.06,
+        decaimiento: 1.8,
+      ),
+      const _NotaMelodica(
+        frecuencia: 196.00, // Sol3
+        inicioSeg: 2.0,
+        duracionSeg: 1.9,
+        volumen: 0.06,
+        decaimiento: 1.8,
+      ),
+      const _NotaMelodica(
+        frecuencia: 146.83, // Re3
+        inicioSeg: 4.0,
+        duracionSeg: 1.9,
+        volumen: 0.06,
+        decaimiento: 1.8,
+      ),
+      const _NotaMelodica(
+        frecuencia: 164.81, // Mi3
+        inicioSeg: 6.0,
+        duracionSeg: 1.9,
+        volumen: 0.06,
+        decaimiento: 1.8,
+      ),
+    ];
+    return _sintetizarNotas(notas);
   }
 
   static Uint8List _sintetizarNotas(List<_NotaMelodica> notas) {

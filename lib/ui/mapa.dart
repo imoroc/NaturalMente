@@ -128,12 +128,14 @@ class _CabeceraNatu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 9,
-                    vertical: 4,
+                    horizontal: 10,
+                    vertical: 5,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFDCFCE7),
@@ -144,7 +146,7 @@ class _CabeceraNatu extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.eco_rounded,
-                        size: 13,
+                        size: 14,
                         color: Color(0xFF15803D),
                       ),
                       const SizedBox(width: 5),
@@ -165,7 +167,7 @@ class _CabeceraNatu extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 10),
               const SelectorIdioma(),
             ],
           ),
@@ -260,8 +262,8 @@ class _CabeceraNatu extends StatelessWidget {
                     },
                     child: _InsigniaResumen(
                       icono: Icons.auto_stories_rounded,
-                      colorIcono: const Color(0xFF0284C7),
-                      colorFondo: const Color(0xFFF0F9FF),
+                      colorIcono: const Color(0xFFD97706),
+                      colorFondo: const Color(0xFFFFFBEB),
                       valor: '$cromos/$totalCromos',
                       etiqueta: 'Ver álbum',
                       destacado: true,
@@ -333,7 +335,7 @@ class _InsigniaResumen extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 11,
                     color: destacado
-                        ? const Color(0xFF0284C7)
+                        ? const Color(0xFFB45309)
                         : const Color(0xFF64748B),
                   ),
                 ),
@@ -795,129 +797,140 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
         .length;
     final fraccion = total == 0 ? 0.0 : desbloqueados / total;
 
-    return Material(
-      color: const Color(0xFFF5F3FF),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-        side: const BorderSide(color: Color(0xFFA855F7), width: 2.5),
-      ),
-      child: InkWell(
-        key: const Key('tarjeta-album-principal'),
-        borderRadius: BorderRadius.circular(24),
-        onTap: () {
-          context.sonidoToque();
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute<void>(builder: (_) => const AlbumPage()));
-        },
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0xFF9333EA),
-                offset: Offset(0, 4),
-                blurRadius: 0,
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFBEB),
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: const Color(0xFFF59E0B), width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xFFD97706),
+            offset: Offset(0, 5),
+            blurRadius: 0,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEDE9FE),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: const Color(0xFFC084FC),
-                        width: 2,
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const Key('tarjeta-album-principal'),
+          borderRadius: BorderRadius.circular(24),
+          onTap: () {
+            context.sonidoToque();
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute<void>(builder: (_) => const AlbumPage()));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 54,
+                      height: 54,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFEF3C7),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xFFF59E0B),
+                          width: 2,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.auto_stories_rounded,
+                        color: Color(0xFFB45309),
+                        size: 28,
                       ),
                     ),
-                    child: const Icon(
-                      Icons.auto_stories_rounded,
-                      color: Color(0xFF7E22CE),
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Texto(
-                                'Álbum de cromos de Natu',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleMedium
-                                    ?.copyWith(
-                                      color: const Color(0xFF4C1D95),
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 9,
-                                vertical: 3,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF7E22CE),
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                              child: Texto(
-                                '$desbloqueados/$total',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Texto(
+                                  'Álbum de cromos de Natu',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(
+                                        color: const Color(0xFF78350F),
+                                        fontWeight: FontWeight.w900,
+                                      ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        const Texto(
-                          'Colecciona animales, plantas y órganos en Fácil, Medio y Difícil y lee sus curiosidades.',
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 1.3,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF5B21B6),
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 9,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF15803D),
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: Texto(
+                                  '$desbloqueados/$total',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          const Texto(
+                            'Colecciona animales, plantas y órganos en Fácil, Medio y Difícil y lee sus curiosidades.',
+                            style: TextStyle(
+                              fontSize: 13,
+                              height: 1.3,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF92400E),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: Color(0xFFB45309),
+                      size: 28,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color: const Color(0xFFFCD34D),
+                      width: 1.5,
                     ),
                   ),
-                  const SizedBox(width: 6),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: Color(0xFF7E22CE),
-                    size: 28,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(999),
-                child: LinearProgressIndicator(
-                  value: fraccion,
-                  minHeight: 8,
-                  backgroundColor: Colors.white,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    Color(0xFF9333EA),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: LinearProgressIndicator(
+                      value: fraccion,
+                      minHeight: 9,
+                      backgroundColor: const Color(0xFFFEF3C7),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        Color(0xFF16A34A),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

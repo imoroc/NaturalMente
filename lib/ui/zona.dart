@@ -95,26 +95,58 @@ class ZonaPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.videogame_asset_rounded,
-                          size: 20,
-                          color: Color(0xFF15803D),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE0F2FE),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: const Color(0xFF7DD3FC),
+                          width: 1.5,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Texto(
-                            'MISIONES DE LA ZONA',
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(
-                                  color: const Color(0xFF334155),
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 0.6,
-                                ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.videogame_asset_rounded,
+                            size: 22,
+                            color: Color(0xFF0369A1),
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Texto(
+                              'MISIONES DE LA ZONA',
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(
+                                    color: const Color(0xFF0C4A6E),
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 0.6,
+                                  ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: const Texto(
+                              'Toca para jugar',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF0284C7),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
                     for (final actividad in actividades) ...[
@@ -148,44 +180,80 @@ class ZonaPage extends StatelessWidget {
                       const SizedBox(height: 12),
                     ],
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.auto_stories_rounded,
-                          size: 20,
-                          color: Color(0xFFD97706),
+                    Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFFBEB),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: const Color(0xFFF59E0B),
+                          width: 2.2,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Texto(
-                            'ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(
-                                  color: const Color(0xFF334155),
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 0.5,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFFEF3C7),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: const Color(0xFFFBBF24),
+                                  ),
                                 ),
+                                child: const Icon(
+                                  Icons.auto_stories_rounded,
+                                  size: 20,
+                                  color: Color(0xFFB45309),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Texto(
+                                      'ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge
+                                          ?.copyWith(
+                                            color: const Color(0xFF78350F),
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 0.4,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    const Texto(
+                                      'Juega a las misiones y supera niveles para desbloquear todas las fichas del cuaderno de Natu.',
+                                      style: TextStyle(
+                                        fontSize: 12.5,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF92400E),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    const Texto(
-                      'Juega a las misiones y supera niveles para desbloquear todas las fichas del cuaderno de Natu.',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF64748B),
+                          const SizedBox(height: 12),
+                          for (var i = 0; i < fichas.length; i++) ...[
+                            TarjetaCromoFicha(
+                              ficha: fichas[i],
+                              desbloqueada: progreso.fichaDesbloqueada(
+                                fichas[i].id,
+                              ),
+                            ),
+                            if (i < fichas.length - 1)
+                              const SizedBox(height: 10),
+                          ],
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    for (final ficha in fichas) ...[
-                      TarjetaCromoFicha(
-                        ficha: ficha,
-                        desbloqueada: progreso.fichaDesbloqueada(ficha.id),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
                   ],
                 ),
               ),
@@ -220,56 +288,77 @@ class _BotonMision extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorBorde = hecha
         ? const Color(0xFF2ECC71)
-        : const Color(0xFF38BDF8);
-    final colorSombra = hecha
-        ? const Color(0xFF239E56)
         : const Color(0xFF0284C7);
+    final colorSombra = hecha
+        ? const Color(0xFF15803D)
+        : const Color(0xFF0369A1);
 
     return TarjetaJuego(
       borde: colorBorde,
       sombra: colorSombra,
-      radio: 20,
+      radio: 22,
       claveAccion: Key('juego-$id'),
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 52,
+              height: 52,
               decoration: BoxDecoration(
-                color: colorBorde.withValues(alpha: 0.16),
+                color: hecha
+                    ? const Color(0xFFDCFCE7)
+                    : const Color(0xFFE0F2FE),
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: colorBorde.withValues(alpha: 0.5),
+                  width: 1.8,
+                ),
               ),
               child: Icon(
                 hecha
-                    ? Icons.check_circle_rounded
-                    : Icons.play_arrow_rounded,
+                    ? Icons.videogame_asset_rounded
+                    : Icons.sports_esports_rounded,
                 color: colorSombra,
-                size: 30,
+                size: 28,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: hecha
+                          ? const Color(0xFFDCFCE7)
+                          : const Color(0xFFE0F2FE),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Texto(
+                      'JUEGO INTERACTIVO · $curso',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 10.5,
+                        letterSpacing: 0.3,
+                        color: colorSombra,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
                   Texto(
                     titulo,
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16.5,
                       color: Color(0xFF1B3022),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Texto(
-                    'Pensado para $curso',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12.5,
-                      color: Color(0xFF64748B),
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -330,7 +419,33 @@ class _BotonMision extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: colorSombra,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Texto(
+                    'Jugar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(width: 2),
+                  Icon(
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -358,14 +473,14 @@ class TarjetaCromoFicha extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorFondo,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: colorBorde, width: 2.2),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: colorBorde, width: 2),
         boxShadow: [
           BoxShadow(
             color: desbloqueada
                 ? const Color(0xFFFDE68A)
                 : const Color(0xFFE2E8F0),
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 3),
             blurRadius: 0,
           ),
         ],
@@ -374,22 +489,22 @@ class TarjetaCromoFicha extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           key: Key('cromo-${ficha.id}'),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(16),
           onTap: () =>
               mostrarDetalleFicha(context, ficha, desbloqueada: desbloqueada),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(11),
             child: Row(
               children: [
                 Container(
-                  width: 60,
-                  height: 60,
-                  padding: const EdgeInsets.all(6),
+                  width: 58,
+                  height: 58,
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: desbloqueada
                         ? const Color(0xFFFFFBEB)
                         : const Color(0xFFE2E8F0),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: desbloqueada
                           ? const Color(0xFFFCD34D)
@@ -398,12 +513,12 @@ class TarjetaCromoFicha extends StatelessWidget {
                     ),
                   ),
                   child: desbloqueada
-                      ? IlustracionFicha(id: ficha.id, alto: 46)
+                      ? IlustracionFicha(id: ficha.id, alto: 44)
                       : const Center(
                           child: Icon(
                             Icons.lock_rounded,
                             color: Color(0xFF64748B),
-                            size: 26,
+                            size: 24,
                           ),
                         ),
                 ),
@@ -419,9 +534,9 @@ class TarjetaCromoFicha extends StatelessWidget {
                               ficha.titulo,
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
-                                fontSize: 15.5,
+                                fontSize: 15,
                                 color: desbloqueada
-                                    ? const Color(0xFF1B3022)
+                                    ? const Color(0xFF78350F)
                                     : const Color(0xFF475569),
                               ),
                             ),
@@ -433,17 +548,22 @@ class TarjetaCromoFicha extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: desbloqueada
-                                  ? const Color(0xFFDCFCE7)
+                                  ? const Color(0xFFFEF3C7)
                                   : const Color(0xFFE2E8F0),
                               borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: desbloqueada
+                                    ? const Color(0xFFF59E0B)
+                                    : const Color(0xFFCBD5E1),
+                              ),
                             ),
                             child: Texto(
                               desbloqueada ? '¡Cromo!' : 'Por descubrir',
                               style: TextStyle(
-                                fontSize: 11,
+                                fontSize: 10.5,
                                 fontWeight: FontWeight.w900,
                                 color: desbloqueada
-                                    ? const Color(0xFF15803D)
+                                    ? const Color(0xFFB45309)
                                     : const Color(0xFF475569),
                               ),
                             ),
@@ -458,7 +578,7 @@ class TarjetaCromoFicha extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 12.5,
+                          fontSize: 12.2,
                           fontWeight: FontWeight.w600,
                           color: desbloqueada
                               ? const Color(0xFF334155)
@@ -472,10 +592,10 @@ class TarjetaCromoFicha extends StatelessWidget {
                 const SizedBox(width: 6),
                 Icon(
                   desbloqueada
-                      ? Icons.auto_awesome_rounded
+                      ? Icons.menu_book_rounded
                       : Icons.info_outline_rounded,
                   color: desbloqueada
-                      ? const Color(0xFFF59E0B)
+                      ? const Color(0xFFD97706)
                       : const Color(0xFF94A3B8),
                   size: 20,
                 ),
@@ -662,12 +782,19 @@ class _AlbumPageState extends State<AlbumPage> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF5F3FF),
+                        color: const Color(0xFFFFFBEB),
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
-                          color: const Color(0xFFA855F7),
+                          color: const Color(0xFFF59E0B),
                           width: 2.5,
                         ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xFFD97706),
+                            offset: Offset(0, 4),
+                            blurRadius: 0,
+                          ),
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -691,7 +818,7 @@ class _AlbumPageState extends State<AlbumPage> {
                                           .textTheme
                                           .titleMedium
                                           ?.copyWith(
-                                            color: const Color(0xFF4C1D95),
+                                            color: const Color(0xFF78350F),
                                             fontWeight: FontWeight.w900,
                                           ),
                                     ),
@@ -701,8 +828,8 @@ class _AlbumPageState extends State<AlbumPage> {
                                       style: TextStyle(
                                         fontSize: 13,
                                         height: 1.3,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF5B21B6),
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF92400E),
                                       ),
                                     ),
                                   ],
@@ -711,16 +838,27 @@ class _AlbumPageState extends State<AlbumPage> {
                             ],
                           ),
                           const SizedBox(height: 12),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(999),
-                            child: LinearProgressIndicator(
-                              value: todas.isEmpty
-                                  ? 0
-                                  : desbloqueadasTotal / todas.length,
-                              minHeight: 8,
-                              backgroundColor: Colors.white,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color(0xFF9333EA),
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                color: const Color(0xFFFCD34D),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(999),
+                              child: LinearProgressIndicator(
+                                value: todas.isEmpty
+                                    ? 0
+                                    : desbloqueadasTotal / todas.length,
+                                minHeight: 9,
+                                backgroundColor: const Color(0xFFFEF3C7),
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF16A34A),
+                                ),
                               ),
                             ),
                           ),
@@ -787,15 +925,15 @@ class _FiltroAlbumChip extends StatelessWidget {
         etiqueta,
         style: TextStyle(
           fontWeight: FontWeight.w800,
-          color: activo ? Colors.white : const Color(0xFF4C1D95),
+          color: activo ? Colors.white : const Color(0xFF78350F),
         ),
       ),
       selected: activo,
-      selectedColor: const Color(0xFF7E22CE),
-      backgroundColor: const Color(0xFFF3E8FF),
+      selectedColor: const Color(0xFFD97706),
+      backgroundColor: const Color(0xFFFFFBEB),
       checkmarkColor: Colors.white,
       side: BorderSide(
-        color: activo ? const Color(0xFF6B21A8) : const Color(0xFFD8B4FE),
+        color: activo ? const Color(0xFFB45309) : const Color(0xFFFCD34D),
         width: 1.5,
       ),
       onSelected: (_) => alTocar(),

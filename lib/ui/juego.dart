@@ -29,6 +29,7 @@ class _JuegoPageState extends State<JuegoPage> {
   bool _lugarAcertado = false;
   bool _adaptacionAcertada = false;
   String? _adaptacionElegida;
+  Reto? _ultimoRetoCompletado;
   bool _baseCompletada = false;
   bool _preguntaFinalAcertada = false;
   String? _preguntaFinalElegida;
@@ -242,6 +243,7 @@ class _JuegoPageState extends State<JuegoPage> {
                     if (_lugarAcertado) retos[_reto].id,
                   },
                   reto: retos[_reto],
+                  ultimoRetoCompletado: _ultimoRetoCompletado,
                   preguntaAdaptacion: _adaptacionActualBarajada,
                   indice: _reto,
                   total: retos.length,
@@ -259,7 +261,11 @@ class _JuegoPageState extends State<JuegoPage> {
                   onSoltar: _soltar,
                   onSeleccionarReto: _seleccionarReto,
                   onResponderAdaptacion: _responderAdaptacion,
-                  onCuriosidad: () => _mostrarCuriosidad(retos[_reto]),
+                  onCuriosidad: () => _mostrarCuriosidad(
+                    _retoCompleto
+                        ? retos[_reto]
+                        : (_ultimoRetoCompletado ?? retos[_reto]),
+                  ),
                   onOtraVez: (_retoCompleto && !hayMasRetos)
                       ? () => _empezarNivel(_nivelIdx ?? 0)
                       : null,
@@ -318,6 +324,7 @@ class _JuegoPageState extends State<JuegoPage> {
                   pasosDisponibles: _pasosBarajados.isNotEmpty
                       ? _pasosBarajados
                       : _pasosActuales,
+                  respuestaCorrecta: _respuestaOrdenActual,
                   orden: _orden,
                   resultado: _resultado,
                   baseCompletada:
@@ -331,16 +338,34 @@ class _JuegoPageState extends State<JuegoPage> {
                   preguntaFinal: _preguntaFinalActualBarajada,
                   preguntaFinalElegida: _preguntaFinalElegida,
                   onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
-                  onAnadir: (id) => setState(() {
-                    if (!_orden.contains(id)) {
-                      _orden.add(id);
+                  onAnadir: (id) {
+                    context.sonidoToque();
+                    setState(() {
+                      if (!_orden.contains(id)) {
+                        _orden.add(id);
+                        _resultado = null;
+                      }
+                    });
+                  },
+                  onColocarEnHueco: (id, indice) {
+                    context.sonidoToque();
+                    setState(() {
+                      final posActual = _orden.indexOf(id);
+                      if (posActual >= 0) {
+                        _orden.removeAt(posActual);
+                      }
+                      final destino = indice.clamp(0, _orden.length);
+                      _orden.insert(destino, id);
                       _resultado = null;
-                    }
-                  }),
-                  onQuitar: (indice) => setState(() {
-                    _orden.removeAt(indice);
-                    _resultado = null;
-                  }),
+                    });
+                  },
+                  onQuitar: (indice) {
+                    context.sonidoToque();
+                    setState(() {
+                      _orden.removeAt(indice);
+                      _resultado = null;
+                    });
+                  },
                   onComprobar: _comprobar,
                   onResponderFinal: _responderPreguntaFinal,
                   onCuriosidad:
@@ -547,6 +572,7 @@ class _JuegoPageState extends State<JuegoPage> {
       _lugarAcertado = false;
       _adaptacionAcertada = false;
       _adaptacionElegida = null;
+      _ultimoRetoCompletado = null;
       _baseCompletada = false;
       _preguntaFinalAcertada = false;
       _preguntaFinalElegida = null;
@@ -568,6 +594,7 @@ class _JuegoPageState extends State<JuegoPage> {
       _lugarAcertado = false;
       _adaptacionAcertada = false;
       _adaptacionElegida = null;
+      _ultimoRetoCompletado = null;
       _baseCompletada = false;
       _preguntaFinalAcertada = false;
       _preguntaFinalElegida = null;
@@ -579,26 +606,54 @@ class _JuegoPageState extends State<JuegoPage> {
   }
 
   void _seleccionarReto(String retoId) {
-    if (_lugarAcertado) return;
+    if (_lugarAcertado && !_retoCompleto) return;
     final retos = _retosLugar;
     final idx = retos.indexWhere((r) => r.id == retoId);
     if (idx < 0 || idx == _reto || _retosResueltosNivel.contains(retoId)) {
       return;
     }
+    context.sonidoToque();
     setState(() {
       _reto = idx;
       _intento = 1;
       _resultado = null;
       _sitioElegido = null;
+      _lugarAcertado = false;
+      _adaptacionAcertada = false;
+      _adaptacionElegida = null;
       _prepararBarajadoReto();
     });
   }
 
   Future<void> _soltar(String sitio, {String? organoArrastrado}) async {
-    if (_lugarAcertado) return;
     final actividad = widget.actividad;
     final retos = _retosLugar;
-    if (organoArrastrado != null &&
+    if (_lugarAcertado) {
+      if (!_retoCompleto) return;
+      if (organoArrastrado != null &&
+          !_retosResueltosNivel.contains(organoArrastrado)) {
+        final idx = retos.indexWhere((r) => r.id == organoArrastrado);
+        if (idx >= 0) {
+          _reto = idx;
+          _intento = 1;
+          _lugarAcertado = false;
+          _adaptacionAcertada = false;
+          _adaptacionElegida = null;
+          _prepararBarajadoReto();
+        } else {
+          return;
+        }
+      } else {
+        final siguienteIdx = _siguienteRetoPendiente();
+        if (siguienteIdx == null) return;
+        _reto = siguienteIdx;
+        _intento = 1;
+        _lugarAcertado = false;
+        _adaptacionAcertada = false;
+        _adaptacionElegida = null;
+        _prepararBarajadoReto();
+      }
+    } else if (organoArrastrado != null &&
         organoArrastrado != retos[_reto].id &&
         !_retosResueltosNivel.contains(organoArrastrado)) {
       final idx = retos.indexWhere((r) => r.id == organoArrastrado);
@@ -614,6 +669,7 @@ class _JuegoPageState extends State<JuegoPage> {
       eleccion: sitio,
       intento: _intento,
     );
+    final esCuerpo = actividad.zona == 'cuerpo';
     setState(() {
       _sitioElegido = sitio;
       _resultado = resultado;
@@ -622,6 +678,17 @@ class _JuegoPageState extends State<JuegoPage> {
         if (!_pideAdaptacion) {
           _adaptacionAcertada = true;
           _retosResueltosNivel.add(reto.id);
+          _ultimoRetoCompletado = reto;
+          final siguienteIdx = _siguienteRetoPendiente();
+          if (esCuerpo && siguienteIdx != null) {
+            _reto = siguienteIdx;
+            _intento = 1;
+            _sitioElegido = null;
+            _lugarAcertado = false;
+            _adaptacionAcertada = false;
+            _adaptacionElegida = null;
+            _prepararBarajadoReto();
+          }
         }
       } else {
         _intento += 1;
@@ -655,12 +722,24 @@ class _JuegoPageState extends State<JuegoPage> {
     final actividad = widget.actividad;
     final reto = _retosLugar[_reto];
     final resultado = resolverAdaptacion(reto: reto, eleccion: eleccion);
+    final esCuerpo = actividad.zona == 'cuerpo';
     setState(() {
       _adaptacionElegida = eleccion;
       _resultado = resultado;
       if (resultado.acierto) {
         _adaptacionAcertada = true;
         _retosResueltosNivel.add(reto.id);
+        _ultimoRetoCompletado = reto;
+        final siguienteIdx = _siguienteRetoPendiente();
+        if (esCuerpo && siguienteIdx != null) {
+          _reto = siguienteIdx;
+          _intento = 1;
+          _sitioElegido = null;
+          _lugarAcertado = false;
+          _adaptacionAcertada = false;
+          _adaptacionElegida = null;
+          _prepararBarajadoReto();
+        }
       }
     });
     if (resultado.acierto) {
@@ -1151,6 +1230,7 @@ class _Lugar extends StatelessWidget {
     required this.retosNivel,
     required this.organosColocados,
     required this.reto,
+    this.ultimoRetoCompletado,
     required this.preguntaAdaptacion,
     required this.indice,
     required this.total,
@@ -1177,6 +1257,7 @@ class _Lugar extends StatelessWidget {
   final List<Reto> retosNivel;
   final Set<String> organosColocados;
   final Reto reto;
+  final Reto? ultimoRetoCompletado;
   final PreguntaExtra? preguntaAdaptacion;
   final int indice;
   final int total;
@@ -1221,16 +1302,27 @@ class _Lugar extends StatelessWidget {
         Widget cabeceraReto() {
           final pista = _pistaReto(reto.id);
           final etiquetaTipo = esCuerpo ? 'Pieza' : 'Reto';
-          return Container(
+          final retoCuriosidad = retoCompleto
+              ? reto
+              : (esCuerpo ? ultimoRetoCompletado : null);
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: retoCompleto ? const Color(0xFFF0FDF4) : Colors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFE2DEC9), width: 2.2),
-              boxShadow: const [
+              border: Border.all(
+                color: retoCompleto
+                    ? const Color(0xFF22C55E)
+                    : const Color(0xFFE2DEC9),
+                width: 2.2,
+              ),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0xFFD6CFC0),
-                  offset: Offset(0, 3),
+                  color: retoCompleto
+                      ? const Color(0xFF86EFAC)
+                      : const Color(0xFFD6CFC0),
+                  offset: const Offset(0, 3),
                   blurRadius: 0,
                 ),
               ],
@@ -1251,9 +1343,15 @@ class _Lugar extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF8FAFC),
+                      color: retoCompleto
+                          ? const Color(0xFFDCFCE7)
+                          : const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(
+                        color: retoCompleto
+                            ? const Color(0xFF4ADE80)
+                            : const Color(0xFFE2E8F0),
+                      ),
                     ),
                     child: _Miniatura(id: reto.id, tamano: 48),
                   ),
@@ -1274,18 +1372,45 @@ class _Lugar extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE0F2FE),
+                              color: retoCompleto
+                                  ? const Color(0xFFDCFCE7)
+                                  : const Color(0xFFE0F2FE),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Texto(
-                              '$etiquetaTipo ${indice + 1} de $total · ${reto.nombre}',
-                              style: const TextStyle(
+                              retoCompleto
+                                  ? '✓ ¡Muy bien! · ${reto.nombre}'
+                                  : '$etiquetaTipo ${indice + 1} de $total · ${reto.nombre}',
+                              style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF0369A1),
+                                color: retoCompleto
+                                    ? const Color(0xFF15803D)
+                                    : const Color(0xFF0369A1),
                               ),
                             ),
                           ),
+                          if (esCuerpo &&
+                              !retoCompleto &&
+                              ultimoRetoCompletado != null)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFDCFCE7),
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                              child: Texto(
+                                '✓ ${ultimoRetoCompletado!.nombre} en su sitio',
+                                style: const TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF15803D),
+                                ),
+                              ),
+                            ),
                           if (pista != null && !retoCompleto)
                             Texto(
                               pista,
@@ -1307,10 +1432,11 @@ class _Lugar extends StatelessWidget {
                               height: 1.15,
                             ),
                       ),
-                      if (retoCompleto && reto.curiosidad.isNotEmpty) ...[
+                      if (retoCuriosidad != null &&
+                          retoCuriosidad.curiosidad.isNotEmpty) ...[
                         const SizedBox(height: 5),
                         InkWell(
-                          key: Key('curiosidad-${reto.id}'),
+                          key: Key('curiosidad-${retoCuriosidad.id}'),
                           borderRadius: BorderRadius.circular(12),
                           onTap: onCuriosidad,
                           child: Container(
@@ -1383,6 +1509,7 @@ class _Lugar extends StatelessWidget {
               organoActual: reto.id,
               sitioElegido: sitioElegido,
               lugarAcertado: lugarAcertado,
+              bloqueado: lugarAcertado && !retoCompleto,
               onElegirSitio: onSoltar,
               onSeleccionarOrgano: onSeleccionarReto,
             );
@@ -1475,6 +1602,7 @@ class _Lugar extends StatelessWidget {
                     key: const Key('boton-pie-lugar'),
                     onPressed: onPie,
                     style: FilledButton.styleFrom(
+                      backgroundColor: const Color(0xFF16A34A),
                       minimumSize: Size.fromHeight(alturaBoton),
                     ),
                     child: Texto(pie!),
@@ -1483,13 +1611,15 @@ class _Lugar extends StatelessWidget {
               ],
             );
           }
-          return FilledButton(
+          return FilledButton.icon(
             key: const Key('boton-pie-lugar'),
             onPressed: onPie,
+            icon: const Icon(Icons.arrow_forward_rounded, size: 20),
             style: FilledButton.styleFrom(
+              backgroundColor: const Color(0xFF16A34A),
               minimumSize: Size.fromHeight(alturaBoton),
             ),
-            child: Texto(pie!),
+            label: Texto(pie!),
           );
         }
 
@@ -1575,6 +1705,7 @@ class _TableroCuerpoHerbario extends StatelessWidget {
     required this.organoActual,
     required this.sitioElegido,
     required this.lugarAcertado,
+    required this.bloqueado,
     required this.onElegirSitio,
     this.onSeleccionarOrgano,
   });
@@ -1585,6 +1716,7 @@ class _TableroCuerpoHerbario extends StatelessWidget {
   final String organoActual;
   final String? sitioElegido;
   final bool lugarAcertado;
+  final bool bloqueado;
   final void Function(String sitio, {String? organoArrastrado}) onElegirSitio;
   final ValueChanged<String>? onSeleccionarOrgano;
 
@@ -1619,7 +1751,7 @@ class _TableroCuerpoHerbario extends StatelessWidget {
                 zonaDestacada: sitioElegido,
                 aciertoZona: lugarAcertado,
                 opciones: opciones,
-                bloqueado: lugarAcertado,
+                bloqueado: bloqueado,
                 onColocarEnZona: (zonaId, {organoArrastrado}) =>
                     onElegirSitio(zonaId, organoArrastrado: organoArrastrado),
               ),
@@ -1671,7 +1803,7 @@ class _TableroCuerpoHerbario extends StatelessWidget {
                             reto: r,
                             colocado: organosColocados.contains(r.id),
                             activo: r.id == organoActual,
-                            bloqueado: lugarAcertado,
+                            bloqueado: bloqueado,
                             onTap: () => onSeleccionarOrgano?.call(r.id),
                           ),
                           const SizedBox(width: 6),
@@ -2409,28 +2541,46 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                 : const Color(0xFFF1F5F9),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color:
-                                  _fasesGerminacion[i].$1 <=
-                                      maxEtapaDesbloqueada
-                                  ? const Color(0xFF22C55E)
+                              color: _etapaVista == _fasesGerminacion[i].$1
+                                  ? const Color(0xFF166534)
+                                  : _fasesGerminacion[i].$1 <=
+                                        maxEtapaDesbloqueada
+                                  ? const Color(0xFF86EFAC)
                                   : const Color(0xFFCBD5E1),
                             ),
                           ),
-                          child: Texto(
-                            _fasesGerminacion[i].$2,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 10.5,
-                              fontWeight: FontWeight.w900,
-                              color: _etapaVista == _fasesGerminacion[i].$1
-                                  ? Colors.white
-                                  : _fasesGerminacion[i].$1 <=
-                                        maxEtapaDesbloqueada
-                                  ? const Color(0xFF14532D)
-                                  : const Color(0xFF94A3B8),
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (_fasesGerminacion[i].$1 >
+                                  maxEtapaDesbloqueada) ...[
+                                const Icon(
+                                  Icons.lock_outline_rounded,
+                                  size: 11,
+                                  color: Color(0xFF94A3B8),
+                                ),
+                                const SizedBox(width: 2),
+                              ],
+                              Flexible(
+                                child: Texto(
+                                  _fasesGerminacion[i].$2,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 10.5,
+                                    fontWeight: FontWeight.w900,
+                                    color:
+                                        _etapaVista == _fasesGerminacion[i].$1
+                                        ? Colors.white
+                                        : _fasesGerminacion[i].$1 <=
+                                              maxEtapaDesbloqueada
+                                        ? const Color(0xFF166534)
+                                        : const Color(0xFF94A3B8),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -2439,133 +2589,143 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                 ],
               ),
               const SizedBox(height: 8),
-              DibujoSemilla(
-                estado: widget.estado,
-                agua: widget.agua,
-                luz: widget.luz,
-                suelo: widget.suelo,
-                temperatura: widget.temperatura,
-                etapaGerminacion: _etapaVista,
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                alignment: WrapAlignment.spaceBetween,
-                crossAxisAlignment: WrapCrossAlignment.center,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _ChipEstadoBote(texto: _resumenSuelo()),
-                  _ChipEstadoBote(texto: _resumenAgua()),
-                  _ChipEstadoBote(texto: _resumenLuz()),
-                  if (widget.temperatura != null)
-                    _ChipEstadoBote(
-                      texto: switch (widget.temperatura) {
-                        'fria' => '❄️ 4 °C',
-                        'templada' => '🌤️ 20 °C',
-                        'calor' => '🔥 42 °C',
-                        _ => widget.temperatura!,
-                      },
+                  SizedBox(
+                    width: 122,
+                    height: 112,
+                    child: Maceta(
+                      estado: widget.estado,
+                      agua: widget.agua,
+                      luz: widget.luz,
+                      suelo: widget.suelo,
+                      temperatura: widget.temperatura,
+                      etapa: _etapaVista,
                     ),
-                  if (widget.onReiniciarBote != null)
-                    InkWell(
-                      key: const Key('reiniciar-bote'),
-                      borderRadius: BorderRadius.circular(999),
-                      onTap: widget.onReiniciarBote,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFEF2F2),
-                          borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: const Color(0xFFFCA5A5)),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Icon(
-                              Icons.restart_alt_rounded,
-                              size: 13,
-                              color: Color(0xFFB91C1C),
-                            ),
-                            SizedBox(width: 3),
-                            Texto(
-                              'Empezar Día 1',
-                              style: TextStyle(
-                                fontSize: 10.5,
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFFB91C1C),
+                            Expanded(
+                              child: Texto(
+                                widget.sujeto.isEmpty
+                                    ? 'Bote de germinación'
+                                    : 'Bote: ${widget.sujeto}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14,
+                                  color: Color(0xFF1B3022),
+                                ),
                               ),
                             ),
+                            if (widget.onReiniciarBote != null)
+                              InkWell(
+                                key: const Key('reiniciar-maceta'),
+                                borderRadius: BorderRadius.circular(8),
+                                onTap: widget.onReiniciarBote,
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.restart_alt_rounded,
+                                        size: 14,
+                                        color: Color(0xFF64748B),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Texto(
+                                        'Reiniciar',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w800,
+                                          color: Color(0xFF64748B),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Texto(
-                            '${widget.sujeto} · ${_fasesGerminacion[(_etapaVista - 1).clamp(0, 3)].$2}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(fontWeight: FontWeight.w900),
+                        const SizedBox(height: 3),
+                        Texto(
+                          descripcionEtapa,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
+                            color: Color(0xFF334155),
                           ),
-                          Texto(
-                            arrastrandoEncima
-                                ? '¡Suelta aquí tu elección para aplicarla al bote!'
-                                : descripcionEtapa,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: arrastrandoEncima
-                                  ? const Color(0xFF0369A1)
-                                  : widget.baseCompletada
-                                  ? const Color(0xFF15803D)
-                                  : const Color(0xFF475569),
+                        ),
+                        const SizedBox(height: 6),
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: [
+                            _InsigniaEstadoBote(texto: _resumenSuelo()),
+                            _InsigniaEstadoBote(texto: _resumenAgua()),
+                            _InsigniaEstadoBote(texto: _resumenLuz()),
+                          ],
+                        ),
+                        if (widget.onCuriosidad != null) ...[
+                          const SizedBox(height: 6),
+                          InkWell(
+                            key: const Key('curiosidad-germinacion'),
+                            borderRadius: BorderRadius.circular(10),
+                            onTap: widget.onCuriosidad,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFEF3C7),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: const Color(0xFFF59E0B),
+                                ),
+                              ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.auto_awesome_rounded,
+                                    size: 14,
+                                    color: Color(0xFFB45309),
+                                  ),
+                                  SizedBox(width: 4),
+                                  Flexible(
+                                    child: Texto(
+                                      'Ver curiosidad',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 11.5,
+                                        fontWeight: FontWeight.w900,
+                                        color: Color(0xFF92400E),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
-                      ),
+                      ],
                     ),
-                    if (widget.onCuriosidad != null) ...[
-                      const SizedBox(width: 8),
-                      FilledButton.tonalIcon(
-                        key: const Key('curiosidad-germinacion'),
-                        onPressed: widget.onCuriosidad,
-                        icon: const Icon(
-                          Icons.auto_stories_rounded,
-                          size: 16,
-                          color: Color(0xFF15803D),
-                        ),
-                        label: const Texto('Ver curiosidad'),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: const Color(0xFFDCFCE7),
-                          foregroundColor: const Color(0xFF14532D),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          minimumSize: const Size(0, 34),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          textStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -2575,26 +2735,26 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
   }
 }
 
-class _ChipEstadoBote extends StatelessWidget {
-  const _ChipEstadoBote({required this.texto});
+class _InsigniaEstadoBote extends StatelessWidget {
+  const _InsigniaEstadoBote({required this.texto});
 
   final String texto;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
         color: const Color(0xFFF8FAFC),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: const Color(0xFFCBD5E1)),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Texto(
         texto,
         style: const TextStyle(
-          fontSize: 11,
+          fontSize: 10.5,
           fontWeight: FontWeight.w800,
-          color: Color(0xFF334155),
+          color: Color(0xFF475569),
         ),
       ),
     );
@@ -3097,6 +3257,7 @@ class _Orden extends StatefulWidget {
     required this.curso,
     required this.pasosTotales,
     required this.pasosDisponibles,
+    required this.respuestaCorrecta,
     required this.orden,
     required this.resultado,
     required this.baseCompletada,
@@ -3105,6 +3266,7 @@ class _Orden extends StatefulWidget {
     required this.preguntaFinalElegida,
     required this.onSalirNivel,
     required this.onAnadir,
+    required this.onColocarEnHueco,
     required this.onQuitar,
     required this.onComprobar,
     required this.onResponderFinal,
@@ -3118,6 +3280,7 @@ class _Orden extends StatefulWidget {
   final String curso;
   final List<Opcion> pasosTotales;
   final List<Opcion> pasosDisponibles;
+  final List<String> respuestaCorrecta;
   final List<String> orden;
   final Resultado? resultado;
   final bool baseCompletada;
@@ -3126,6 +3289,7 @@ class _Orden extends StatefulWidget {
   final String? preguntaFinalElegida;
   final VoidCallback? onSalirNivel;
   final ValueChanged<String> onAnadir;
+  final void Function(String pasoId, int indice) onColocarEnHueco;
   final ValueChanged<int> onQuitar;
   final VoidCallback onComprobar;
   final ValueChanged<String> onResponderFinal;
@@ -3184,86 +3348,128 @@ class _OrdenState extends State<_Orden> {
     final etapaActiva =
         focoValido ?? (orden.isNotEmpty ? orden.last : etapaPorDefecto);
     final compacto = totalPasos > 4;
-    final altoCasilla = compacto ? 44.0 : 48.0;
+    final altoCasilla = compacto ? 46.0 : 50.0;
 
     Widget casillaHistoria(int i) {
       final ocupada = i < orden.length;
-      if (ocupada) {
-        final pasoId = orden[i];
-        return Material(
-          color: const Color(0xFFECFDF5),
-          borderRadius: BorderRadius.circular(13),
-          child: InkWell(
-            key: Key('hueco-$i'),
-            borderRadius: BorderRadius.circular(13),
-            onTap: () {
-              setState(() => _etapaFoco = pasoId);
-              if (!widget.baseCompletada) {
-                widget.onQuitar(i);
-              }
-            },
-            child: Container(
-              height: altoCasilla,
-              padding: EdgeInsets.symmetric(
-                horizontal: compacto ? 5 : 7,
-                vertical: 3,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-                border: Border.all(color: const Color(0xFF10B981), width: 1.8),
-              ),
-              child: Row(
-                children: [
-                  DibujoPasoVida(id: pasoId, tamano: compacto ? 26 : 30),
-                  SizedBox(width: compacto ? 4 : 6),
-                  Expanded(
-                    child: Texto(
-                      '${i + 1}. ${nombre(pasoId)}',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: compacto ? 10.2 : 11.2,
-                        fontWeight: FontWeight.w900,
-                        height: 1.08,
-                        color: const Color(0xFF065F46),
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    widget.baseCompletada
-                        ? Icons.check_circle_rounded
-                        : Icons.close_rounded,
-                    size: compacto ? 13 : 15,
-                    color: const Color(0xFF047857),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }
-
       return DragTarget<String>(
         onAcceptWithDetails: (details) {
           setState(() => _etapaFoco = details.data);
-          widget.onAnadir(details.data);
+          widget.onColocarEnHueco(details.data, i);
         },
         builder: (context, candidatos, _) {
           final encima = candidatos.isNotEmpty;
+          if (ocupada) {
+            final pasoId = orden[i];
+            final revisado = widget.resultado != null;
+            final enSitioCorrecto =
+                widget.baseCompletada ||
+                (revisado &&
+                    i < widget.respuestaCorrecta.length &&
+                    widget.respuestaCorrecta[i] == pasoId);
+            final mostrarPistaCambio = revisado && !enSitioCorrecto;
+            final colorFondo = encima
+                ? const Color(0xFFE0F2FE)
+                : mostrarPistaCambio
+                ? const Color(0xFFFEF3C7)
+                : const Color(0xFFECFDF5);
+            final colorBorde = encima
+                ? const Color(0xFF0284C7)
+                : mostrarPistaCambio
+                ? const Color(0xFFF59E0B)
+                : const Color(0xFF10B981);
+
+            final casilla = Material(
+              color: colorFondo,
+              borderRadius: BorderRadius.circular(13),
+              child: InkWell(
+                key: Key('hueco-$i'),
+                borderRadius: BorderRadius.circular(13),
+                onTap: () {
+                  setState(() => _etapaFoco = pasoId);
+                  if (!widget.baseCompletada) {
+                    widget.onQuitar(i);
+                  }
+                },
+                child: Container(
+                  height: altoCasilla,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: compacto ? 5 : 7,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(13),
+                    border: Border.all(color: colorBorde, width: 2),
+                  ),
+                  child: Row(
+                    children: [
+                      DibujoPasoVida(id: pasoId, tamano: compacto ? 26 : 30),
+                      SizedBox(width: compacto ? 4 : 6),
+                      Expanded(
+                        child: Texto(
+                          '${i + 1}. ${nombre(pasoId)}',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: compacto ? 10.2 : 11.2,
+                            fontWeight: FontWeight.w900,
+                            height: 1.08,
+                            color: mostrarPistaCambio
+                                ? const Color(0xFF92400E)
+                                : const Color(0xFF065F46),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        enSitioCorrecto
+                            ? Icons.check_circle_rounded
+                            : mostrarPistaCambio
+                            ? Icons.swap_horiz_rounded
+                            : Icons.close_rounded,
+                        size: compacto ? 14 : 16,
+                        color: mostrarPistaCambio
+                            ? const Color(0xFFD97706)
+                            : const Color(0xFF047857),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+
+            if (widget.baseCompletada) return casilla;
+            return Draggable<String>(
+              data: pasoId,
+              dragAnchorStrategy: pointerDragAnchorStrategy,
+              feedback: Material(
+                color: Colors.transparent,
+                child: DibujoPasoVida(id: pasoId, tamano: 52),
+              ),
+              childWhenDragging: Opacity(opacity: 0.4, child: casilla),
+              child: casilla,
+            );
+          }
+
+          final esSiguiente = i == orden.length;
           return Container(
+            key: Key('hueco-$i'),
             height: altoCasilla,
             padding: EdgeInsets.symmetric(
               horizontal: compacto ? 6 : 8,
               vertical: 3,
             ),
             decoration: BoxDecoration(
-              color: encima ? const Color(0xFFE0F2FE) : Colors.white,
+              color: encima
+                  ? const Color(0xFFE0F2FE)
+                  : esSiguiente
+                  ? const Color(0xFFF0F9FF)
+                  : Colors.white,
               borderRadius: BorderRadius.circular(13),
               border: Border.all(
-                color: encima
+                color: encima || esSiguiente
                     ? const Color(0xFF0284C7)
                     : const Color(0xFFCBD5E1),
-                width: 1.8,
+                width: esSiguiente ? 2 : 1.6,
               ),
             ),
             child: Row(
@@ -3273,29 +3479,32 @@ class _OrdenState extends State<_Orden> {
                   height: compacto ? 20 : 23,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: esSiguiente
+                        ? const Color(0xFF0284C7)
+                        : const Color(0xFFF1F5F9),
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF94A3B8)),
                   ),
                   child: Texto(
                     '${i + 1}',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: compacto ? 10.5 : 11.5,
-                      color: const Color(0xFF475569),
+                      color: esSiguiente
+                          ? Colors.white
+                          : const Color(0xFF475569),
                     ),
                   ),
                 ),
                 SizedBox(width: compacto ? 5 : 7),
                 Expanded(
                   child: Texto(
-                    i == orden.length ? 'Siguiente' : 'Paso ${i + 1}',
+                    esSiguiente ? 'Pon aquí el ${i + 1}º' : 'Paso ${i + 1}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: compacto ? 10.5 : 11.2,
                       fontWeight: FontWeight.w800,
-                      color: i == orden.length
+                      color: esSiguiente
                           ? const Color(0xFF0284C7)
                           : const Color(0xFF94A3B8),
                     ),
@@ -3308,17 +3517,27 @@ class _OrdenState extends State<_Orden> {
       );
     }
 
+    Widget flechaPaso() => const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 2),
+      child: Icon(
+        Icons.arrow_forward_rounded,
+        size: 13,
+        color: Color(0xFF64748B),
+      ),
+    );
+
     Widget muralPasos() {
+      Widget contenido;
       if (totalPasos == 5) {
-        return Column(
+        contenido = Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
                 Expanded(child: casillaHistoria(0)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(1)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(2)),
               ],
             ),
@@ -3326,23 +3545,22 @@ class _OrdenState extends State<_Orden> {
             Row(
               children: [
                 Expanded(child: casillaHistoria(3)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(4)),
               ],
             ),
           ],
         );
-      }
-      if (totalPasos >= 6) {
-        return Column(
+      } else if (totalPasos >= 6) {
+        contenido = Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
                 Expanded(child: casillaHistoria(0)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(1)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(2)),
               ],
             ),
@@ -3350,34 +3568,78 @@ class _OrdenState extends State<_Orden> {
             Row(
               children: [
                 Expanded(child: casillaHistoria(3)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(4)),
-                const SizedBox(width: 6),
+                flechaPaso(),
                 Expanded(child: casillaHistoria(5)),
               ],
             ),
           ],
         );
+      } else {
+        contenido = Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(child: casillaHistoria(0)),
+                flechaPaso(),
+                Expanded(child: casillaHistoria(1)),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(child: casillaHistoria(2)),
+                flechaPaso(),
+                Expanded(child: casillaHistoria(3)),
+              ],
+            ),
+          ],
+        );
       }
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Expanded(child: casillaHistoria(0)),
-              const SizedBox(width: 8),
-              Expanded(child: casillaHistoria(1)),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Expanded(child: casillaHistoria(2)),
-              const SizedBox(width: 8),
-              Expanded(child: casillaHistoria(3)),
-            ],
-          ),
-        ],
+
+      return Container(
+        padding: const EdgeInsets.fromLTRB(8, 6, 8, 7),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF8FAFC),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Flexible(
+                  child: Texto(
+                    'HISTORIA PASO A PASO · TOCA O ARRASTRA EN ORDEN',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 9.8,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.4,
+                      color: Color(0xFF0369A1),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Texto(
+                  '${orden.length}/$totalPasos',
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF15803D),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            contenido,
+          ],
+        ),
       );
     }
 
@@ -3423,7 +3685,9 @@ class _OrdenState extends State<_Orden> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: widget.baseCompletada
+                                ? const Color(0xFFF0FDF4)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
                               color: widget.baseCompletada
@@ -3437,7 +3701,7 @@ class _OrdenState extends State<_Orden> {
                             children: [
                               Texto(
                                 widget.baseCompletada
-                                    ? '¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
+                                    ? '✓ ¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
                                     : '¡Las $totalPasos viñetas están colocadas! Pulsa «${actividad.boton}» o toca una viñeta si quieres cambiarla.',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
@@ -3479,6 +3743,7 @@ class _OrdenState extends State<_Orden> {
                                 opacity: 0.4,
                                 child: _TarjetaPasoVida(
                                   paso: paso,
+                                  numeroDestino: orden.length + 1,
                                   explicacion: _explicacionPasoVida(
                                     paso.id,
                                     nivelActual?.id,
@@ -3492,6 +3757,7 @@ class _OrdenState extends State<_Orden> {
                               child: _TarjetaPasoVida(
                                 key: Key('paso-${paso.id}'),
                                 paso: paso,
+                                numeroDestino: orden.length + 1,
                                 explicacion: _explicacionPasoVida(
                                   paso.id,
                                   nivelActual?.id,
@@ -3535,6 +3801,7 @@ class _OrdenState extends State<_Orden> {
                       key: const Key('volver-orden'),
                       onPressed: widget.onVolver,
                       style: FilledButton.styleFrom(
+                        backgroundColor: const Color(0xFF16A34A),
                         minimumSize: const Size.fromHeight(48),
                       ),
                       child: const Texto('Volver'),
@@ -3562,11 +3829,13 @@ class _TarjetaPasoVida extends StatelessWidget {
   const _TarjetaPasoVida({
     super.key,
     required this.paso,
+    required this.numeroDestino,
     required this.explicacion,
     required this.onTap,
   });
 
   final Opcion paso;
+  final int numeroDestino;
   final String explicacion;
   final VoidCallback onTap;
 
@@ -3593,7 +3862,15 @@ class _TarjetaPasoVida extends StatelessWidget {
           ),
           child: Row(
             children: [
-              DibujoPasoVida(id: paso.id, tamano: 42),
+              Container(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0F9FF),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFBAE6FD)),
+                ),
+                child: DibujoPasoVida(id: paso.id, tamano: 42),
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -3623,10 +3900,31 @@ class _TarjetaPasoVida extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(
-                Icons.add_circle_rounded,
-                color: Color(0xFF0284C7),
-                size: 22,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE0F2FE),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.add_circle_rounded,
+                      color: Color(0xFF0284C7),
+                      size: 16,
+                    ),
+                    const SizedBox(width: 3),
+                    Texto(
+                      'Paso $numeroDestino',
+                      style: const TextStyle(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF0369A1),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -3650,6 +3948,41 @@ class _Miniatura extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.contain,
         child: Criatura(id: id),
+      ),
+    );
+  }
+}
+
+class Maceta extends StatelessWidget {
+  const Maceta({
+    required this.estado,
+    this.agua,
+    this.luz,
+    this.suelo,
+    this.temperatura,
+    this.etapa = 4,
+    super.key,
+  });
+
+  final String estado;
+  final String? agua;
+  final String? luz;
+  final String? suelo;
+  final String? temperatura;
+  final int etapa;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: DibujoSemilla(
+        estado: estado,
+        agua: agua,
+        luz: luz,
+        suelo: suelo,
+        temperatura: temperatura,
+        etapaGerminacion: etapa,
+        compacto: true,
       ),
     );
   }

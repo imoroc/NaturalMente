@@ -4,11 +4,7 @@
       "id": "reserva",
       "nombre": "La reserva",
       "bloque": "Animales",
-
       "resumen": "Descubre dónde viven los animales y cómo se conecta la vida del bosque."
-
-
-
     },
     {
       "id": "invernadero",
@@ -266,6 +262,33 @@
       "titulo": "Nutrientes",
       "frase": "Son las sustancias útiles de los alimentos: pasan a la sangre en el intestino delgado y llegan a todas las células.",
       "curiosidad": "Proteínas, hidratos de carbono, grasas, vitaminas y minerales son nutrientes; cada uno ayuda al cuerpo de una manera."
+    },
+    {
+      "id": "sentidos",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Los cinco sentidos",
+      "titulo": "Los cinco sentidos",
+      "frase": "Vista, oído, olfato, gusto y tacto nos dejan conocer lo que hay a nuestro alrededor.",
+      "curiosidad": "Cada sentido tiene su órgano: ojos, orejas, nariz, lengua y piel."
+    },
+    {
+      "id": "avisos",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Los cinco sentidos",
+      "titulo": "Los sentidos nos avisan",
+      "frase": "Los sentidos nos avisan de peligros, como el olor a quemado o una superficie que quema.",
+      "curiosidad": "Muchas señales de seguridad usan a la vez luces y sonidos para avisar a la vista y al oído."
+    },
+    {
+      "id": "reflejo",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Los cinco sentidos",
+      "titulo": "Acto reflejo",
+      "frase": "Es una respuesta muy rápida que da la médula espinal sin esperar al cerebro, como apartar la mano de algo que quema.",
+      "curiosidad": "Cuando el médico te da un golpecito en la rodilla y la pierna se mueve sola, está comprobando un acto reflejo."
     },
     {
       "id": "una-vida",
@@ -2688,6 +2711,565 @@
           }
         ]
       }
+    },
+    {
+      "id": "sentidos",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "Los cinco sentidos",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Lleva cada tarjeta a su sentido o toca directamente el sentido.",
+      "opciones": [
+        {
+          "id": "vista",
+          "nombre": "Vista"
+        },
+        {
+          "id": "oido",
+          "nombre": "Oído"
+        },
+        {
+          "id": "olfato",
+          "nombre": "Olfato"
+        },
+        {
+          "id": "gusto",
+          "nombre": "Gusto"
+        },
+        {
+          "id": "tacto",
+          "nombre": "Tacto"
+        }
+      ],
+      "retos": [
+        {
+          "id": "ojos",
+          "nombre": "Los ojos",
+          "pregunta": "¿A qué sentido ayudan los ojos?",
+          "respuesta": "vista",
+          "pista": "Ciérralos un momento: ¿qué dejas de hacer?",
+          "curiosidad": "Parpadeamos unas 15 veces por minuto para limpiar y mojar los ojos.",
+          "frases": {
+            "vista": "¡Eso es! Con los ojos vemos formas, colores y movimientos.",
+            "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirven los ojos?",
+            "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirven los ojos?",
+            "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirven los ojos?",
+            "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirven los ojos?"
+          }
+        },
+        {
+          "id": "orejas",
+          "nombre": "Las orejas",
+          "pregunta": "¿A qué sentido ayudan las orejas?",
+          "respuesta": "oido",
+          "pista": "Tápatelas con las manos: ¿qué notas que cambia?",
+          "curiosidad": "Dentro del oído están los huesos más pequeños de todo el cuerpo.",
+          "frases": {
+            "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirven las orejas?",
+            "oido": "¡Muy bien! Las orejas recogen los sonidos y el oído nos deja escucharlos.",
+            "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirven las orejas?",
+            "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirven las orejas?",
+            "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirven las orejas?"
+          }
+        },
+        {
+          "id": "nariz",
+          "nombre": "La nariz",
+          "pregunta": "¿A qué sentido ayuda la nariz?",
+          "respuesta": "olfato",
+          "pista": "Piensa en lo que haces cuando algo huele muy bien.",
+          "curiosidad": "Cuando estás resfriado la comida sabe menos porque el olfato ayuda mucho al gusto.",
+          "frases": {
+            "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la nariz?",
+            "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la nariz?",
+            "olfato": "¡Genial! Con la nariz olemos el pan recién hecho o las flores.",
+            "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirve la nariz?",
+            "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirve la nariz?"
+          }
+        },
+        {
+          "id": "lengua",
+          "nombre": "La lengua",
+          "pregunta": "¿A qué sentido ayuda la lengua?",
+          "respuesta": "gusto",
+          "pista": "Piensa en lo que notas cuando comes un caramelo.",
+          "curiosidad": "La lengua está cubierta de bultitos con miles de papilas gustativas.",
+          "frases": {
+            "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la lengua?",
+            "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la lengua?",
+            "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirve la lengua?",
+            "gusto": "¡Así es! La lengua nota si algo es dulce, salado, ácido o amargo.",
+            "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirve la lengua?"
+          }
+        },
+        {
+          "id": "piel",
+          "nombre": "La piel",
+          "pregunta": "¿A qué sentido ayuda la piel?",
+          "respuesta": "tacto",
+          "pista": "Toca algo suave y algo áspero: ¿con qué parte lo notas?",
+          "curiosidad": "La piel es el órgano más grande del cuerpo: nos cubre por completo.",
+          "frases": {
+            "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la piel?",
+            "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la piel?",
+            "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirve la piel?",
+            "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirve la piel?",
+            "tacto": "¡Correcto! Con la piel notamos el frío, el calor, lo suave y lo que pincha."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Une cada órgano con su sentido: ojos, orejas, nariz, lengua y piel.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "vista",
+              "nombre": "Vista"
+            },
+            {
+              "id": "oido",
+              "nombre": "Oído"
+            },
+            {
+              "id": "olfato",
+              "nombre": "Olfato"
+            },
+            {
+              "id": "gusto",
+              "nombre": "Gusto"
+            },
+            {
+              "id": "tacto",
+              "nombre": "Tacto"
+            }
+          ],
+          "retos": [
+            {
+              "id": "ojos",
+              "nombre": "Los ojos",
+              "pregunta": "¿A qué sentido ayudan los ojos?",
+              "respuesta": "vista",
+              "pista": "Ciérralos un momento: ¿qué dejas de hacer?",
+              "curiosidad": "Parpadeamos unas 15 veces por minuto para limpiar y mojar los ojos.",
+              "frases": {
+                "vista": "¡Eso es! Con los ojos vemos formas, colores y movimientos.",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirven los ojos?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirven los ojos?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirven los ojos?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirven los ojos?"
+              }
+            },
+            {
+              "id": "orejas",
+              "nombre": "Las orejas",
+              "pregunta": "¿A qué sentido ayudan las orejas?",
+              "respuesta": "oido",
+              "pista": "Tápatelas con las manos: ¿qué notas que cambia?",
+              "curiosidad": "Dentro del oído están los huesos más pequeños de todo el cuerpo.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirven las orejas?",
+                "oido": "¡Muy bien! Las orejas recogen los sonidos y el oído nos deja escucharlos.",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirven las orejas?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirven las orejas?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirven las orejas?"
+              }
+            },
+            {
+              "id": "nariz",
+              "nombre": "La nariz",
+              "pregunta": "¿A qué sentido ayuda la nariz?",
+              "respuesta": "olfato",
+              "pista": "Piensa en lo que haces cuando algo huele muy bien.",
+              "curiosidad": "Cuando estás resfriado la comida sabe menos porque el olfato ayuda mucho al gusto.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la nariz?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la nariz?",
+                "olfato": "¡Genial! Con la nariz olemos el pan recién hecho o las flores.",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirve la nariz?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirve la nariz?"
+              }
+            },
+            {
+              "id": "lengua",
+              "nombre": "La lengua",
+              "pregunta": "¿A qué sentido ayuda la lengua?",
+              "respuesta": "gusto",
+              "pista": "Piensa en lo que notas cuando comes un caramelo.",
+              "curiosidad": "La lengua está cubierta de bultitos con miles de papilas gustativas.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la lengua?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la lengua?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirve la lengua?",
+                "gusto": "¡Así es! La lengua nota si algo es dulce, salado, ácido o amargo.",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Para qué sirve la lengua?"
+              }
+            },
+            {
+              "id": "piel",
+              "nombre": "La piel",
+              "pregunta": "¿A qué sentido ayuda la piel?",
+              "respuesta": "tacto",
+              "pista": "Toca algo suave y algo áspero: ¿con qué parte lo notas?",
+              "curiosidad": "La piel es el órgano más grande del cuerpo: nos cubre por completo.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Para qué sirve la piel?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Para qué sirve la piel?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Para qué sirve la piel?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Para qué sirve la piel?",
+                "tacto": "¡Correcto! Con la piel notamos el frío, el calor, lo suave y lo que pincha."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Seis situaciones del día a día: ¿qué sentido te avisa?",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "vista",
+              "nombre": "Vista"
+            },
+            {
+              "id": "oido",
+              "nombre": "Oído"
+            },
+            {
+              "id": "olfato",
+              "nombre": "Olfato"
+            },
+            {
+              "id": "gusto",
+              "nombre": "Gusto"
+            },
+            {
+              "id": "tacto",
+              "nombre": "Tacto"
+            }
+          ],
+          "retos": [
+            {
+              "id": "humo",
+              "nombre": "Huele a quemado",
+              "pregunta": "¿Qué sentido te avisa? Huele a quemado.",
+              "respuesta": "olfato",
+              "pista": "El aviso entra por la nariz.",
+              "curiosidad": "Por eso hay detectores de humo en casas y colegios: hacen el trabajo de nuestro olfato mientras dormimos.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "¡Bien pensado! El olfato nos avisa del humo antes incluso de ver el fuego.",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              }
+            },
+            {
+              "id": "piscina",
+              "nombre": "El agua de la piscina está fría",
+              "pregunta": "¿Qué sentido te avisa? El agua de la piscina está fría.",
+              "respuesta": "tacto",
+              "pista": "Lo notarías aunque tuvieras los ojos cerrados: lo siente tu piel.",
+              "curiosidad": "La piel tiene sensores distintos para el frío, el calor, el dolor y la presión.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "¡Eso es! La piel nota la temperatura gracias al tacto."
+              }
+            },
+            {
+              "id": "timbre",
+              "nombre": "Suena el timbre del recreo",
+              "pregunta": "¿Qué sentido te avisa? Suena el timbre del recreo.",
+              "respuesta": "oido",
+              "pista": "Es un sonido: entra por las orejas.",
+              "curiosidad": "El sonido viaja por el aire en forma de ondas hasta nuestras orejas.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "¡Muy bien! El oído capta el sonido del timbre.",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              }
+            },
+            {
+              "id": "limon",
+              "nombre": "El limón sabe muy ácido",
+              "pregunta": "¿Qué sentido te avisa? El limón sabe muy ácido.",
+              "respuesta": "gusto",
+              "pista": "Lo notas cuando lo tienes en la boca.",
+              "curiosidad": "El sabor ácido del limón hace que la boca fabrique más saliva.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "¡Así es! El gusto nota si algo es ácido, dulce, salado o amargo.",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              }
+            },
+            {
+              "id": "semaforo",
+              "nombre": "El semáforo se pone en rojo",
+              "pregunta": "¿Qué sentido te avisa? El semáforo se pone en rojo.",
+              "respuesta": "vista",
+              "pista": "Es un color: lo captan los ojos.",
+              "curiosidad": "La luz roja está siempre arriba, para reconocerla aunque cueste distinguir los colores.",
+              "frases": {
+                "vista": "¡Genial! La vista nos deja ver el color del semáforo para cruzar seguros.",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              }
+            },
+            {
+              "id": "arena",
+              "nombre": "La arena de la playa quema los pies",
+              "pregunta": "¿Qué sentido te avisa? La arena de la playa quema los pies.",
+              "respuesta": "tacto",
+              "pista": "Lo notan los pies, que están cubiertos de piel.",
+              "curiosidad": "La planta del pie tiene la piel más gruesa del cuerpo, pero también es muy sensible.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "¡Correcto! La piel de los pies nota el calor gracias al tacto."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Cinco avisos y, en cada uno, cómo llega el mensaje al cerebro, qué son los receptores y qué es un acto reflejo.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "vista",
+              "nombre": "Vista"
+            },
+            {
+              "id": "oido",
+              "nombre": "Oído"
+            },
+            {
+              "id": "olfato",
+              "nombre": "Olfato"
+            },
+            {
+              "id": "gusto",
+              "nombre": "Gusto"
+            },
+            {
+              "id": "tacto",
+              "nombre": "Tacto"
+            }
+          ],
+          "retos": [
+            {
+              "id": "incendio",
+              "nombre": "Hueles el humo de un incendio",
+              "pregunta": "¿Qué sentido te avisa? Hueles el humo de un incendio.",
+              "respuesta": "olfato",
+              "pista": "Las sustancias del humo entran por la nariz al respirar.",
+              "curiosidad": "En lo alto de la nariz hay millones de células que reconocen los olores.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "¡Exacto! El olfato detecta en el aire las partículas del humo.",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué lleva el aviso del olor hasta el cerebro?",
+                "opciones": [
+                  {
+                    "id": "nervios",
+                    "nombre": "Los nervios, que llevan el mensaje de la nariz al cerebro como si fueran cables"
+                  },
+                  {
+                    "id": "sangre",
+                    "nombre": "La sangre, que lo lleva hasta los pulmones"
+                  },
+                  {
+                    "id": "aire",
+                    "nombre": "El propio aire, que sube directo al cerebro"
+                  }
+                ],
+                "respuesta": "nervios",
+                "frases": {
+                  "nervios": "¡Muy bien! Los nervios llevan el mensaje y el cerebro lo interpreta: ¡peligro, humo!",
+                  "sangre": "La sangre reparte oxígeno y nutrientes; los mensajes de los sentidos viajan por los nervios.",
+                  "aire": "El aire solo llega a la nariz y a los pulmones; el mensaje viaja por los nervios."
+                }
+              }
+            },
+            {
+              "id": "cazuela",
+              "nombre": "Tocas una cazuela muy caliente",
+              "pregunta": "¿Qué sentido te avisa? Tocas una cazuela muy caliente.",
+              "respuesta": "tacto",
+              "pista": "Lo nota la piel de la mano.",
+              "curiosidad": "Las yemas de los dedos son de las zonas de la piel con más receptores.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "¡Eso es! Los receptores de la piel notan el calor y el dolor."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué apartas la mano antes de pensarlo?",
+                "opciones": [
+                  {
+                    "id": "reflejo",
+                    "nombre": "Es un acto reflejo: la médula espinal ordena retirarla sin esperar al cerebro"
+                  },
+                  {
+                    "id": "cerebro",
+                    "nombre": "Porque el cerebro piensa mucho la respuesta"
+                  },
+                  {
+                    "id": "mano",
+                    "nombre": "Porque la mano decide sola"
+                  }
+                ],
+                "respuesta": "reflejo",
+                "frases": {
+                  "reflejo": "¡Sobresaliente! Los actos reflejos son muy rápidos y nos protegen del peligro.",
+                  "cerebro": "Si esperáramos a pensarlo nos quemaríamos: la orden la da la médula espinal, sin pensar.",
+                  "mano": "La mano no decide: obedece una orden que llega por los nervios desde la médula espinal."
+                }
+              }
+            },
+            {
+              "id": "nombre",
+              "nombre": "Oyes tu nombre en el patio",
+              "pregunta": "¿Qué sentido te avisa? Oyes tu nombre en el patio.",
+              "respuesta": "oido",
+              "pista": "Es un sonido que llega a tus orejas.",
+              "curiosidad": "Somos capaces de oír nuestro nombre aunque haya mucho ruido alrededor.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "¡Muy bien! El oído capta el sonido de tu nombre.",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Dónde se entiende que ese sonido es tu nombre?",
+                "opciones": [
+                  {
+                    "id": "cerebro",
+                    "nombre": "En el cerebro, que interpreta los mensajes que le llegan del oído"
+                  },
+                  {
+                    "id": "oreja",
+                    "nombre": "En la oreja, que es la que entiende las palabras"
+                  },
+                  {
+                    "id": "garganta",
+                    "nombre": "En la garganta"
+                  }
+                ],
+                "respuesta": "cerebro",
+                "frases": {
+                  "cerebro": "¡Exacto! El oído capta el sonido, pero es el cerebro quien lo reconoce.",
+                  "oreja": "La oreja solo recoge el sonido; entender las palabras es trabajo del cerebro.",
+                  "garganta": "La garganta sirve para hablar y tragar; el sonido se entiende en el cerebro."
+                }
+              }
+            },
+            {
+              "id": "verde",
+              "nombre": "Ves que el semáforo se pone verde",
+              "pregunta": "¿Qué sentido te avisa? Ves que el semáforo se pone verde.",
+              "respuesta": "vista",
+              "pista": "Es un color: entra por los ojos.",
+              "curiosidad": "La parte de color del ojo se llama iris y el círculo negro del centro, pupila.",
+              "frases": {
+                "vista": "¡Genial! La vista capta la luz y el color del semáforo.",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "El gusto usa la lengua para notar los sabores. ¿Qué parte de ti lo nota?",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo vemos el color verde del semáforo?",
+                "opciones": [
+                  {
+                    "id": "receptores",
+                    "nombre": "Los receptores del ojo captan la luz y el cerebro forma la imagen"
+                  },
+                  {
+                    "id": "solos",
+                    "nombre": "Los ojos ven solos, sin ayuda del cerebro"
+                  },
+                  {
+                    "id": "luz",
+                    "nombre": "Los ojos fabrican la luz verde"
+                  }
+                ],
+                "respuesta": "receptores",
+                "frases": {
+                  "receptores": "¡Muy bien! Los ojos reciben la luz y el cerebro construye lo que vemos.",
+                  "solos": "Sin el cerebro no veríamos: es él quien interpreta los mensajes de los ojos.",
+                  "luz": "La luz viene del semáforo; los ojos solo la reciben."
+                }
+              }
+            },
+            {
+              "id": "leche",
+              "nombre": "Notas que la leche está agria",
+              "pregunta": "¿Qué sentido te avisa? Notas que la leche está agria.",
+              "respuesta": "gusto",
+              "pista": "Lo notas al tenerla en la boca.",
+              "curiosidad": "El gusto y el olfato trabajan juntos: por eso también notamos el mal olor de la leche agria.",
+              "frases": {
+                "vista": "La vista usa los ojos para ver formas y colores. ¿Qué parte de ti lo nota?",
+                "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
+                "olfato": "El olfato usa la nariz para notar los olores. ¿Qué parte de ti lo nota?",
+                "gusto": "¡Eso es! El gusto, junto al olfato, nos avisa de que un alimento está estropeado.",
+                "tacto": "El tacto usa la piel para notar si algo está frío, caliente, suave o áspero. ¿Qué parte de ti lo nota?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué parte de la lengua detecta los sabores?",
+                "opciones": [
+                  {
+                    "id": "papilas",
+                    "nombre": "Las papilas gustativas"
+                  },
+                  {
+                    "id": "dientes",
+                    "nombre": "Los dientes"
+                  },
+                  {
+                    "id": "saliva",
+                    "nombre": "La saliva"
+                  }
+                ],
+                "respuesta": "papilas",
+                "frases": {
+                  "papilas": "¡Exacto! Las papilas gustativas tienen receptores que envían el sabor al cerebro.",
+                  "dientes": "Los dientes trituran la comida, pero no notan los sabores.",
+                  "saliva": "La saliva ablanda la comida y ayuda a que las papilas noten el sabor, pero no lo detecta."
+                }
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "vida",

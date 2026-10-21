@@ -669,7 +669,8 @@ class _JuegoPageState extends State<JuegoPage> {
       eleccion: sitio,
       intento: _intento,
     );
-    final esCuerpo = actividad.zona == 'cuerpo';
+    // El atlas del cuerpo es solo de «Cada pieza en su sitio».
+    final esCuerpo = actividad.id == 'piezas';
     setState(() {
       _sitioElegido = sitio;
       _resultado = resultado;
@@ -722,7 +723,8 @@ class _JuegoPageState extends State<JuegoPage> {
     final actividad = widget.actividad;
     final reto = _retosLugar[_reto];
     final resultado = resolverAdaptacion(reto: reto, eleccion: eleccion);
-    final esCuerpo = actividad.zona == 'cuerpo';
+    // El atlas del cuerpo es solo de «Cada pieza en su sitio».
+    final esCuerpo = actividad.id == 'piezas';
     setState(() {
       _adaptacionElegida = eleccion;
       _resultado = resultado;
@@ -1278,7 +1280,8 @@ class _Lugar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final esCuerpo = actividad.zona == 'cuerpo';
+    // El atlas del cuerpo es solo de «Cada pieza en su sitio».
+    final esCuerpo = actividad.id == 'piezas';
     final fraseInicial = actividad.intro.isNotEmpty
         ? actividad.intro
         : 'Arrastra cada figura a su lugar o toca directamente la tarjeta.';

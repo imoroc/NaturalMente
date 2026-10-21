@@ -176,6 +176,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Los cinco sentidos
 - **Prioridad**: MVP.
+- **Estado**: implementado (`sentidos`) en Dentro de mí con el motor de «Cada uno a su hogar» (tipo `lugar`). Fácil une ojos, orejas, nariz, lengua y piel con su sentido; Medio, seis situaciones de aviso; Difícil, cinco avisos con una pregunta sobre nervios, cerebro, receptores y actos reflejos. Dibujos en `lib/ui/dibujos_sentidos.dart`. Cromos por nivel: Los cinco sentidos, Los sentidos nos avisan y Acto reflejo. No cuenta para la medalla.
 - **Mecánica**: Fácil, unir el órgano con su sentido. Medio, situaciones («huele a quemado», «el agua está fría») en las que hay que elegir qué sentido avisa. Difícil, por qué el aviso llega al cerebro y qué es un reflejo.
 - **Si no acierta**: «Con los ojos cerrados también sabrías que el agua está fría. ¿Qué parte de ti lo nota?».
 

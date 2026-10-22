@@ -122,6 +122,7 @@ class Progreso extends ChangeNotifier {
     'nacimiento': ['facil', 'medio', 'dificil'],
     'digestion': ['facil', 'medio', 'dificil'],
     'sentidos': ['facil', 'medio', 'dificil'],
+    'habitos': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -148,6 +149,9 @@ class Progreso extends ChangeNotifier {
       ('digestion', 'facil') => const ['dientes'],
       ('digestion', 'medio') => const ['aparato-digestivo'],
       ('digestion', 'dificil') => const ['nutrientes'],
+      ('habitos', 'facil') => const ['higiene'],
+      ('habitos', 'medio') => const ['descanso'],
+      ('habitos', 'dificil') => const ['cuidar-sentidos'],
       ('plantas', 'facil') => const ['encina'],
       ('plantas', 'medio') => const ['romero'],
       ('plantas', 'dificil') => const ['trigo'],
@@ -213,6 +217,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «El viaje de la comida» a partir del nivel Medio (3º-4º).',
       'nutrientes' =>
         'Se consigue en «El viaje de la comida» en el nivel Difícil (5º-6º).',
+      'higiene' =>
+        'Se consigue en «¿Me cuida o no?» desde el nivel Fácil (1º-2º).',
+      'descanso' =>
+        'Se consigue en «¿Me cuida o no?» a partir del nivel Medio (3º-4º).',
+      'cuidar-sentidos' =>
+        'Se consigue en «¿Me cuida o no?» en el nivel Difícil (5º-6º).',
       'encina' =>
         'Se consigue en «Árbol, arbusto o hierba» desde el nivel Fácil (1º-2º).',
       'romero' =>

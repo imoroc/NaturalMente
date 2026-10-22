@@ -4,11 +4,14 @@ import 'package:naturalmente/modelo/actividad.dart';
 
 class BarajadorOpciones {
   static final Random _azar = Random();
-  static int? _ultimaPosCorrecta;
+  // La posición de la última respuesta correcta se recuerda por tipo de
+  // pregunta (lo que va antes del primer guion de la clave). Así la pregunta
+  // extra no depende de dónde cayó el sitio correcto y no se repite seguida.
+  static final Map<String, int> _ultimasPosCorrectas = {};
   static final Map<String, String> _ultimasFirmas = {};
 
   static void reiniciarMemoria() {
-    _ultimaPosCorrecta = null;
+    _ultimasPosCorrectas.clear();
     _ultimasFirmas.clear();
   }
 
@@ -21,6 +24,8 @@ class BarajadorOpciones {
   }) {
     if (opciones.length <= 1) return List<T>.from(opciones);
     final generador = azar ?? _azar;
+    final grupo = clave.split('-').first;
+    final ultimaPos = _ultimasPosCorrectas[grupo];
     final ultimaFirma = _ultimasFirmas[clave];
     List<T> mejor = List<T>.from(opciones)..shuffle(generador);
 
@@ -28,8 +33,7 @@ class BarajadorOpciones {
       final candidata = List<T>.from(opciones)..shuffle(generador);
       final pos = candidata.indexWhere((o) => idDe(o) == respuestaCorrecta);
       final firma = candidata.map(idDe).join(',');
-      final cambiaPosicion =
-          _ultimaPosCorrecta == null || pos != _ultimaPosCorrecta;
+      final cambiaPosicion = ultimaPos == null || pos != ultimaPos;
       final cambiaFirma = ultimaFirma == null || firma != ultimaFirma;
       if (cambiaPosicion && cambiaFirma) {
         mejor = candidata;
@@ -42,7 +46,7 @@ class BarajadorOpciones {
 
     final posElegida = mejor.indexWhere((o) => idDe(o) == respuestaCorrecta);
     if (posElegida >= 0) {
-      _ultimaPosCorrecta = posElegida;
+      _ultimasPosCorrectas[grupo] = posElegida;
     }
     _ultimasFirmas[clave] = mejor.map(idDe).join(',');
     return mejor;

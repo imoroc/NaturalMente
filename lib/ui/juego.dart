@@ -120,6 +120,8 @@ class _JuegoPageState extends State<JuegoPage> {
     );
   }
 
+  static const _sitiosFijos = {'habitos'};
+
   void _prepararBarajadoReto() {
     final retos = _retosLugar;
     if (retos.isEmpty || _reto >= retos.length) {
@@ -128,12 +130,16 @@ class _JuegoPageState extends State<JuegoPage> {
       return;
     }
     final retoActual = retos[_reto];
-    _sitiosBarajados = BarajadorOpciones.barajarConRespuesta<Opcion>(
-      clave: 'sitios-${widget.actividad.id}-${_nivelActual?.id ?? 'base'}-${retoActual.id}',
-      opciones: _opcionesLugar,
-      idDe: (o) => o.id,
-      respuestaCorrecta: retoActual.respuesta,
-    );
+    // En los juegos de clasificar, los grupos no se mueven entre retos:
+    // salen siempre en el orden del catálogo.
+    _sitiosBarajados = _sitiosFijos.contains(widget.actividad.id)
+        ? _opcionesLugar
+        : BarajadorOpciones.barajarConRespuesta<Opcion>(
+            clave: 'sitios-${widget.actividad.id}-${_nivelActual?.id ?? 'base'}-${retoActual.id}',
+            opciones: _opcionesLugar,
+            idDe: (o) => o.id,
+            respuestaCorrecta: retoActual.respuesta,
+          );
     final adaptacion = retoActual.adaptacion;
     _adaptacionOpcionesBarajadas = adaptacion == null
         ? const []
@@ -1139,21 +1145,23 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDCFCE7),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Texto(
-                  etiquetaSuperior,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 12,
-                    color: Color(0xFF15803D),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDCFCE7),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Texto(
+                    etiquetaSuperior,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                      color: Color(0xFF15803D),
+                    ),
                   ),
                 ),
               ),
@@ -4006,6 +4014,8 @@ String? _subtituloSitio(String id) => switch (id) {
   'pecho' => 'Protegido por las costillas',
   'barriga' => 'Estómago e intestinos',
   'extremidades' => 'Brazos y piernas en movimiento',
+  'me-cuida' => 'Me hace sentir bien',
+  'no-me-cuida' => 'Mejor cambiarlo',
   _ => null,
 };
 
@@ -4071,6 +4081,10 @@ Color _colorSitio(String id) {
       return const Color(0xFFFEF3C7);
     case 'extremidades':
       return const Color(0xFFE0F2FE);
+    case 'me-cuida':
+      return const Color(0xFFDCFCE7);
+    case 'no-me-cuida':
+      return const Color(0xFFFFEDD5);
     default:
       return const Color(0xFFF6F1E6);
   }
@@ -4104,6 +4118,10 @@ Color _bordeSitio(String id) {
       return const Color(0xFFFBBF24);
     case 'extremidades':
       return const Color(0xFF38BDF8);
+    case 'me-cuida':
+      return const Color(0xFF4ADE80);
+    case 'no-me-cuida':
+      return const Color(0xFFFB923C);
     default:
       return const Color(0xFFD6CFC0);
   }

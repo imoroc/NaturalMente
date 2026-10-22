@@ -45,11 +45,11 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 | --- | --- | --- | --- |
 | Partes grandes del cuerpo | 1º-2º | | |
 | Los cinco sentidos | 1º-2º | Los cinco sentidos | sentidos; sentidos, avisos |
-| Higiene y hábitos | 1º-2º | | |
+| Higiene y hábitos | 1º-2º | ¿Me cuida o no? (Fácil): manos, dientes, merienda y juego | habitos; higiene |
 | Un plato que cuida | 1º-2º | | |
 | Corazón, pulmones y estómago | 3º-4º | Cada pieza en su sitio | |
 | Camino de la comida | 3º-4º | El viaje de la comida | digestion; dientes, aparato-digestivo, nutrientes |
-| Descanso y movimiento | 3º-4º | | |
+| Descanso y movimiento | 3º-4º | ¿Me cuida o no? (Medio): sueño, pantallas, actividad física y calma | habitos; descanso |
 | Emociones, en una ficha corta | 3º-4º | | |
 | La célula | 5º-6º | | |
 | El cerebro y los sentidos | 5º-6º | Los cinco sentidos (Difícil) | sentidos; reflejo |

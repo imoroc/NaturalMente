@@ -264,11 +264,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 34 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 34);
+  test('el álbum tiene 37 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 37);
     expect(catalogo.fichasDe('reserva').length, 11);
     expect(catalogo.fichasDe('invernadero').length, 11);
-    expect(catalogo.fichasDe('cuerpo').length, 12);
+    expect(catalogo.fichasDe('cuerpo').length, 15);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -382,6 +382,13 @@ void main() {
     expect(progreso.fichaDesbloqueada('trigo'), isFalse);
     await progreso.marcarNivelLugar(plantas, 'dificil');
     expect(progreso.fichaDesbloqueada('trigo'), isTrue);
+    final sentidos = catalogo.actividades.firstWhere((a) => a.id == 'sentidos');
+    await progreso.marcarNivelLugar(sentidos, 'facil');
+    expect(progreso.fichaDesbloqueada('sentidos'), isTrue);
+    expect(progreso.fichaDesbloqueada('avisos'), isFalse);
+    await progreso.marcarNivelLugar(sentidos, 'dificil');
+    expect(progreso.fichaDesbloqueada('avisos'), isTrue);
+    expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
     expect(
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,

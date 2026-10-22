@@ -5,6 +5,7 @@ import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/dibujos_plantas.dart';
+import 'package:naturalmente/ui/dibujos_sentidos.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -118,6 +119,27 @@ class Criatura extends StatelessWidget {
       );
     }
 
+    if (idsSentidos.contains(id)) {
+      return Container(
+        width: 88,
+        height: 88,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD0C9B8),
+              offset: Offset(0, 4),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Center(child: DibujoSentido(id: id, tamano: 68)),
+      );
+    }
+
     final respaldo = switch (id) {
       'delfin' => const _Delfin(),
       'pinguino' => const _Pinguino(),
@@ -204,6 +226,19 @@ class IconoSitio extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(4),
         child: DibujoPlanta(id: id, tamano: 40),
+      );
+    }
+
+    if (idsSentidos.contains(id)) {
+      return Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.9),
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(5),
+        child: DibujoSentido(id: id, tamano: 38),
       );
     }
 
@@ -3346,6 +3381,19 @@ class IlustracionFicha extends StatelessWidget {
       return DibujoNacimiento(id: id, tamano: alto);
     }
     if (plantasEntorno.contains(id)) return DibujoPlanta(id: id, tamano: alto);
+    if (id == 'sentidos') {
+      return SizedBox.square(
+        dimension: alto,
+        child: Image.asset(
+          'assets/imagenes/sentidos.png',
+          cacheWidth: 240,
+          fit: BoxFit.contain,
+          errorBuilder: (_, _, _) => DibujoSentido(id: 'ojos', tamano: alto),
+        ),
+      );
+    }
+    if (id == 'avisos') return DibujoSentido(id: 'timbre', tamano: alto);
+    if (id == 'reflejo') return DibujoSentido(id: 'cazuela', tamano: alto);
     if (id == 'dientes') return IconoParada(id: 'boca', tamano: alto);
     if (id == 'aparato-digestivo') {
       return IconoParada(id: 'aparato', tamano: alto);

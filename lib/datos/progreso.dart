@@ -121,6 +121,7 @@ class Progreso extends ChangeNotifier {
   static const _nivelesConCromo = {
     'nacimiento': ['facil', 'medio', 'dificil'],
     'digestion': ['facil', 'medio', 'dificil'],
+    'sentidos': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -150,6 +151,9 @@ class Progreso extends ChangeNotifier {
       ('plantas', 'facil') => const ['encina'],
       ('plantas', 'medio') => const ['romero'],
       ('plantas', 'dificil') => const ['trigo'],
+      ('sentidos', 'facil') => const ['sentidos'],
+      ('sentidos', 'medio') => const ['avisos'],
+      ('sentidos', 'dificil') => const ['reflejo'],
       _ => const <String>[],
     };
   }
@@ -215,6 +219,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Árbol, arbusto o hierba» a partir del nivel Medio (3º-4º).',
       'trigo' =>
         'Se consigue en «Árbol, arbusto o hierba» en el nivel Difícil (5º-6º).',
+      'sentidos' =>
+        'Se consigue en «Los cinco sentidos» desde el nivel Fácil (1º-2º).',
+      'avisos' =>
+        'Se consigue en «Los cinco sentidos» a partir del nivel Medio (3º-4º).',
+      'reflejo' =>
+        'Se consigue en «Los cinco sentidos» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -249,8 +259,9 @@ class Progreso extends ChangeNotifier {
     if (actividad.id == 'hogar' && nivel == 'dificil') {
       await desbloquearFicha('insectos');
     }
-    if (actividad.id == 'piezas' && nivel == 'dificil') {
-      await desbloquearFicha('sentidos');
+    // Los juegos de «lugar» con un cromo propio por nivel (no por reto).
+    for (final fichaId in fichasDeNivel(actividad.id, nivel)) {
+      await desbloquearFicha(fichaId);
     }
     if (actividad.id == 'germinacion') {
       await desbloquearFicha('semilla');

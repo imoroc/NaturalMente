@@ -44,7 +44,7 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
 | Partes grandes del cuerpo | 1º-2º | | |
-| Los cinco sentidos | 1º-2º | | |
+| Los cinco sentidos | 1º-2º | Los cinco sentidos | sentidos; sentidos, avisos |
 | Higiene y hábitos | 1º-2º | | |
 | Un plato que cuida | 1º-2º | | |
 | Corazón, pulmones y estómago | 3º-4º | Cada pieza en su sitio | |
@@ -52,7 +52,7 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 | Descanso y movimiento | 3º-4º | | |
 | Emociones, en una ficha corta | 3º-4º | | |
 | La célula | 5º-6º | | |
-| El cerebro y los sentidos | 5º-6º | | |
+| El cerebro y los sentidos | 5º-6º | Los cinco sentidos (Difícil) | sentidos; reflejo |
 | Leer una etiqueta de alimento | 5º-6º | | |
 | Reproducción: células, útero, nacimiento, cuidados | 5º-6º | Así empieza una vida | |
 | El cuerpo es de cada uno | 5º-6º | | |

@@ -148,6 +148,9 @@ class Progreso extends ChangeNotifier {
       ('digestion', 'facil') => const ['dientes'],
       ('digestion', 'medio') => const ['aparato-digestivo'],
       ('digestion', 'dificil') => const ['nutrientes'],
+      ('plantas', 'facil') => const ['encina'],
+      ('plantas', 'medio') => const ['romero'],
+      ('plantas', 'dificil') => const ['trigo'],
       ('sentidos', 'facil') => const ['sentidos'],
       ('sentidos', 'medio') => const ['avisos'],
       ('sentidos', 'dificil') => const ['reflejo'],
@@ -210,6 +213,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «El viaje de la comida» a partir del nivel Medio (3º-4º).',
       'nutrientes' =>
         'Se consigue en «El viaje de la comida» en el nivel Difícil (5º-6º).',
+      'encina' =>
+        'Se consigue en «Árbol, arbusto o hierba» desde el nivel Fácil (1º-2º).',
+      'romero' =>
+        'Se consigue en «Árbol, arbusto o hierba» a partir del nivel Medio (3º-4º).',
+      'trigo' =>
+        'Se consigue en «Árbol, arbusto o hierba» en el nivel Difícil (5º-6º).',
       'sentidos' =>
         'Se consigue en «Los cinco sentidos» desde el nivel Fácil (1º-2º).',
       'avisos' =>

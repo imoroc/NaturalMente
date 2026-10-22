@@ -183,6 +183,33 @@
       "curiosidad": "Un tomate o una manzana son frutos: si los abres con cuidado verás sus semillas dentro."
     },
     {
+      "id": "encina",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Árbol, arbusto o hierba",
+      "titulo": "Encina",
+      "frase": "Es un árbol de nuestros montes: un solo tronco leñoso, copa redonda y hojas que no se caen en invierno.",
+      "curiosidad": "Una encina puede vivir cientos de años y dar sombra a todo un rebaño."
+    },
+    {
+      "id": "romero",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "Árbol, arbusto o hierba",
+      "titulo": "Romero",
+      "frase": "Es un arbusto: tiene muchos tallos leñosos que salen desde el suelo y hojas finas que huelen muy bien.",
+      "curiosidad": "Sus hojas son estrechas y duras para perder poca agua en los veranos secos."
+    },
+    {
+      "id": "trigo",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Árbol, arbusto o hierba",
+      "titulo": "Trigo",
+      "frase": "Es una hierba cultivada: los agricultores la siembran cada año y de su grano sale la harina.",
+      "curiosidad": "El trigo se cultiva desde hace unos 10.000 años: fue una de las primeras plantas que sembraron las personas."
+    },
+    {
       "id": "corazon",
       "zona": "cuerpo",
       "curso": "1º-2º",
@@ -3722,6 +3749,463 @@
           }
         ]
       }
+    },
+    {
+      "id": "plantas",
+      "zona": "invernadero",
+      "tipo": "lugar",
+      "titulo": "Árbol, arbusto o hierba",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada planta a su grupo o toca directamente el grupo.",
+      "opciones": [
+        {
+          "id": "arbol",
+          "nombre": "Árbol"
+        },
+        {
+          "id": "hierba",
+          "nombre": "Hierba"
+        }
+      ],
+      "retos": [
+        {
+          "id": "encina",
+          "nombre": "La encina",
+          "pregunta": "¿Qué tipo de planta es la encina?",
+          "respuesta": "arbol",
+          "pista": "Fíjate en su tronco: es uno solo, grueso y leñoso, y la copa queda alta.",
+          "curiosidad": "Las bellotas de la encina alimentan a ardillas, jabalíes y arrendajos.",
+          "frases": {
+            "arbol": "¡Eso es! La encina es un árbol: tiene un solo tronco leñoso y una copa alta.",
+            "arbusto": "La encina tiene un único tronco grueso; un arbusto tiene muchos tallos leñosos desde abajo.",
+            "hierba": "Su tronco es duro y leñoso, no blando y verde como el de una hierba."
+          }
+        },
+        {
+          "id": "chopo",
+          "nombre": "El chopo",
+          "pregunta": "¿Qué tipo de planta es el chopo?",
+          "respuesta": "arbol",
+          "pista": "Mira lo alto que crece y su tronco único de madera.",
+          "curiosidad": "Los chopos crecen muy deprisa junto a los ríos porque sus raíces necesitan mucha agua.",
+          "frases": {
+            "arbol": "¡Muy bien! El chopo es un árbol alto con un solo tronco de madera.",
+            "arbusto": "Un arbusto es bajo y tiene muchos tallos; el chopo tiene un tronco único y muy alto.",
+            "hierba": "El chopo tiene madera y vive muchos años; una hierba tiene el tallo blando."
+          }
+        },
+        {
+          "id": "cesped",
+          "nombre": "El césped",
+          "pregunta": "¿Qué tipo de planta es el césped?",
+          "respuesta": "hierba",
+          "pista": "Sus tallos son blandos y verdes, y se doblan al pisarlos.",
+          "curiosidad": "El césped vuelve a crecer después de cortarlo porque crece desde la base de sus hojas.",
+          "frases": {
+            "hierba": "¡Muy bien! El césped es hierba: tallos blandos, verdes y bajitos.",
+            "arbol": "No tiene tronco ni madera: sus tallos son blandos y verdes.",
+            "arbusto": "Un arbusto tiene tallos leñosos; los del césped son blandos y se doblan."
+          }
+        },
+        {
+          "id": "amapola",
+          "nombre": "La amapola",
+          "pregunta": "¿Qué tipo de planta es la amapola?",
+          "respuesta": "hierba",
+          "pista": "Su tallo es fino, verde y blando: se dobla con el viento.",
+          "curiosidad": "Las semillas de la amapola pueden esperar muchos años bajo tierra hasta que alguien remueve el suelo.",
+          "frases": {
+            "hierba": "¡Eso es! La amapola es una hierba con el tallo fino, verde y blando.",
+            "arbol": "Su tallo es fino y blando, nada que ver con el tronco de madera de un árbol.",
+            "arbusto": "La amapola no tiene tallos leñosos: su tallo es verde y blando."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Separa 4 plantas del entorno en árboles y hierbas.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "arbol",
+              "nombre": "Árbol"
+            },
+            {
+              "id": "hierba",
+              "nombre": "Hierba"
+            }
+          ],
+          "retos": [
+            {
+              "id": "encina",
+              "nombre": "La encina",
+              "pregunta": "¿Qué tipo de planta es la encina?",
+              "respuesta": "arbol",
+              "pista": "Fíjate en su tronco: es uno solo, grueso y leñoso, y la copa queda alta.",
+              "curiosidad": "Las bellotas de la encina alimentan a ardillas, jabalíes y arrendajos.",
+              "frases": {
+                "arbol": "¡Eso es! La encina es un árbol: tiene un solo tronco leñoso y una copa alta.",
+                "arbusto": "La encina tiene un único tronco grueso; un arbusto tiene muchos tallos leñosos desde abajo.",
+                "hierba": "Su tronco es duro y leñoso, no blando y verde como el de una hierba."
+              }
+            },
+            {
+              "id": "chopo",
+              "nombre": "El chopo",
+              "pregunta": "¿Qué tipo de planta es el chopo?",
+              "respuesta": "arbol",
+              "pista": "Mira lo alto que crece y su tronco único de madera.",
+              "curiosidad": "Los chopos crecen muy deprisa junto a los ríos porque sus raíces necesitan mucha agua.",
+              "frases": {
+                "arbol": "¡Muy bien! El chopo es un árbol alto con un solo tronco de madera.",
+                "arbusto": "Un arbusto es bajo y tiene muchos tallos; el chopo tiene un tronco único y muy alto.",
+                "hierba": "El chopo tiene madera y vive muchos años; una hierba tiene el tallo blando."
+              }
+            },
+            {
+              "id": "cesped",
+              "nombre": "El césped",
+              "pregunta": "¿Qué tipo de planta es el césped?",
+              "respuesta": "hierba",
+              "pista": "Sus tallos son blandos y verdes, y se doblan al pisarlos.",
+              "curiosidad": "El césped vuelve a crecer después de cortarlo porque crece desde la base de sus hojas.",
+              "frases": {
+                "hierba": "¡Muy bien! El césped es hierba: tallos blandos, verdes y bajitos.",
+                "arbol": "No tiene tronco ni madera: sus tallos son blandos y verdes.",
+                "arbusto": "Un arbusto tiene tallos leñosos; los del césped son blandos y se doblan."
+              }
+            },
+            {
+              "id": "amapola",
+              "nombre": "La amapola",
+              "pregunta": "¿Qué tipo de planta es la amapola?",
+              "respuesta": "hierba",
+              "pista": "Su tallo es fino, verde y blando: se dobla con el viento.",
+              "curiosidad": "Las semillas de la amapola pueden esperar muchos años bajo tierra hasta que alguien remueve el suelo.",
+              "frases": {
+                "hierba": "¡Eso es! La amapola es una hierba con el tallo fino, verde y blando.",
+                "arbol": "Su tallo es fino y blando, nada que ver con el tronco de madera de un árbol.",
+                "arbusto": "La amapola no tiene tallos leñosos: su tallo es verde y blando."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Añade los arbustos y clasifica 6 plantas por su tallo: tronco único, muchos tallos leñosos o tallo blando.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "arbol",
+              "nombre": "Árbol"
+            },
+            {
+              "id": "arbusto",
+              "nombre": "Arbusto"
+            },
+            {
+              "id": "hierba",
+              "nombre": "Hierba"
+            }
+          ],
+          "retos": [
+            {
+              "id": "encina",
+              "nombre": "La encina",
+              "pregunta": "¿Qué tipo de planta es la encina?",
+              "respuesta": "arbol",
+              "pista": "Fíjate en su tronco: es uno solo, grueso y leñoso, y la copa queda alta.",
+              "curiosidad": "Las bellotas de la encina alimentan a ardillas, jabalíes y arrendajos.",
+              "frases": {
+                "arbol": "¡Eso es! La encina es un árbol: tiene un solo tronco leñoso y una copa alta.",
+                "arbusto": "La encina tiene un único tronco grueso; un arbusto tiene muchos tallos leñosos desde abajo.",
+                "hierba": "Su tronco es duro y leñoso, no blando y verde como el de una hierba."
+              }
+            },
+            {
+              "id": "chopo",
+              "nombre": "El chopo",
+              "pregunta": "¿Qué tipo de planta es el chopo?",
+              "respuesta": "arbol",
+              "pista": "Mira lo alto que crece y su tronco único de madera.",
+              "curiosidad": "Los chopos crecen muy deprisa junto a los ríos porque sus raíces necesitan mucha agua.",
+              "frases": {
+                "arbol": "¡Muy bien! El chopo es un árbol alto con un solo tronco de madera.",
+                "arbusto": "Un arbusto es bajo y tiene muchos tallos; el chopo tiene un tronco único y muy alto.",
+                "hierba": "El chopo tiene madera y vive muchos años; una hierba tiene el tallo blando."
+              }
+            },
+            {
+              "id": "romero",
+              "nombre": "El romero",
+              "pregunta": "¿Qué tipo de planta es el romero?",
+              "respuesta": "arbusto",
+              "pista": "Cuenta sus tallos: salen muchos, duros y leñosos, desde el suelo.",
+              "curiosidad": "Las abejas visitan mucho las flores del romero, incluso en invierno.",
+              "frases": {
+                "arbusto": "¡Genial! El romero tiene muchos tallos leñosos desde abajo: es un arbusto.",
+                "arbol": "El romero tiene muchos tallos leñosos desde abajo. Un árbol tiene un solo tronco.",
+                "hierba": "Sus tallos son duros como la madera, no blandos como los de una hierba."
+              }
+            },
+            {
+              "id": "tomillo",
+              "nombre": "El tomillo",
+              "pregunta": "¿Qué tipo de planta es el tomillo?",
+              "respuesta": "arbusto",
+              "pista": "Es bajito, pero toca sus tallos: son duros y leñosos.",
+              "curiosidad": "El tomillo huele muy fuerte para protegerse de los animales que quieren comérselo.",
+              "frases": {
+                "arbusto": "¡Así es! El tomillo es un arbusto pequeño, una mata de tallos leñosos.",
+                "arbol": "Es demasiado bajo y no tiene un tronco único: es un arbusto pequeño.",
+                "hierba": "Aunque es bajito, sus tallos son leñosos; las hierbas tienen tallos blandos y verdes."
+              }
+            },
+            {
+              "id": "cesped",
+              "nombre": "El césped",
+              "pregunta": "¿Qué tipo de planta es el césped?",
+              "respuesta": "hierba",
+              "pista": "Sus tallos son blandos y verdes, y se doblan al pisarlos.",
+              "curiosidad": "El césped vuelve a crecer después de cortarlo porque crece desde la base de sus hojas.",
+              "frases": {
+                "hierba": "¡Muy bien! El césped es hierba: tallos blandos, verdes y bajitos.",
+                "arbol": "No tiene tronco ni madera: sus tallos son blandos y verdes.",
+                "arbusto": "Un arbusto tiene tallos leñosos; los del césped son blandos y se doblan."
+              }
+            },
+            {
+              "id": "amapola",
+              "nombre": "La amapola",
+              "pregunta": "¿Qué tipo de planta es la amapola?",
+              "respuesta": "hierba",
+              "pista": "Su tallo es fino, verde y blando: se dobla con el viento.",
+              "curiosidad": "Las semillas de la amapola pueden esperar muchos años bajo tierra hasta que alguien remueve el suelo.",
+              "frases": {
+                "hierba": "¡Eso es! La amapola es una hierba con el tallo fino, verde y blando.",
+                "arbol": "Su tallo es fino y blando, nada que ver con el tronco de madera de un árbol.",
+                "arbusto": "La amapola no tiene tallos leñosos: su tallo es verde y blando."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Clasifica 6 plantas en árbol, arbusto o hierba y decide si cada una es cultivada o silvestre.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "arbol",
+              "nombre": "Árbol"
+            },
+            {
+              "id": "arbusto",
+              "nombre": "Arbusto"
+            },
+            {
+              "id": "hierba",
+              "nombre": "Hierba"
+            }
+          ],
+          "retos": [
+            {
+              "id": "encina",
+              "nombre": "La encina",
+              "pregunta": "¿Qué tipo de planta es la encina?",
+              "respuesta": "arbol",
+              "pista": "Fíjate en su tronco: es uno solo, grueso y leñoso, y la copa queda alta.",
+              "curiosidad": "Las bellotas de la encina alimentan a ardillas, jabalíes y arrendajos.",
+              "frases": {
+                "arbol": "¡Eso es! La encina es un árbol: tiene un solo tronco leñoso y una copa alta.",
+                "arbusto": "La encina tiene un único tronco grueso; un arbusto tiene muchos tallos leñosos desde abajo.",
+                "hierba": "Su tronco es duro y leñoso, no blando y verde como el de una hierba."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "silvestre",
+                "frases": {
+                  "silvestre": "¡Muy bien! La encina crece sola en dehesas y montes.",
+                  "cultivada": "Nadie necesita sembrarla: la encina nace sola de las bellotas en el monte."
+                }
+              }
+            },
+            {
+              "id": "manzano",
+              "nombre": "El manzano",
+              "pregunta": "¿Qué tipo de planta es el manzano?",
+              "respuesta": "arbol",
+              "pista": "Tiene un tronco de madera y de su copa cuelgan las manzanas.",
+              "curiosidad": "Para conseguir buenas manzanas, los agricultores podan los manzanos cada invierno.",
+              "frases": {
+                "arbol": "¡Correcto! El manzano es un árbol con un tronco leñoso y una copa con frutos.",
+                "arbusto": "El manzano tiene un solo tronco que sostiene la copa; no muchos tallos desde abajo.",
+                "hierba": "Su tronco es de madera y dura muchos años, nada que ver con un tallo blando."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "cultivada",
+                "frases": {
+                  "cultivada": "¡Exacto! Los manzanos se plantan y se cuidan en huertos para recoger su fruta.",
+                  "silvestre": "Los manzanos que dan nuestras manzanas los plantan y los cuidan los agricultores."
+                }
+              }
+            },
+            {
+              "id": "romero",
+              "nombre": "El romero",
+              "pregunta": "¿Qué tipo de planta es el romero?",
+              "respuesta": "arbusto",
+              "pista": "Cuenta sus tallos: salen muchos, duros y leñosos, desde el suelo.",
+              "curiosidad": "Las abejas visitan mucho las flores del romero, incluso en invierno.",
+              "frases": {
+                "arbusto": "¡Genial! El romero tiene muchos tallos leñosos desde abajo: es un arbusto.",
+                "arbol": "El romero tiene muchos tallos leñosos desde abajo. Un árbol tiene un solo tronco.",
+                "hierba": "Sus tallos son duros como la madera, no blandos como los de una hierba."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "silvestre",
+                "frases": {
+                  "silvestre": "¡Así es! El romero crece solo en el monte, aunque también se planta en jardines.",
+                  "cultivada": "En el monte nace solo, sin que nadie lo siembre; también se puede plantar en jardines."
+                }
+              }
+            },
+            {
+              "id": "trigo",
+              "nombre": "El trigo",
+              "pregunta": "¿Qué tipo de planta es el trigo?",
+              "respuesta": "hierba",
+              "pista": "Sus tallos son verdes y luego dorados, pero nunca de madera.",
+              "curiosidad": "Con la harina que se saca del grano de trigo se hace el pan.",
+              "frases": {
+                "hierba": "¡Muy bien! El trigo es una hierba: sus tallos son blandos y vive solo una temporada.",
+                "arbol": "El trigo no tiene tronco: sus tallos son finos, huecos y sin madera.",
+                "arbusto": "Sus tallos no son leñosos; además, el trigo se seca cuando da el grano."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "cultivada",
+                "frases": {
+                  "cultivada": "¡Eso es! El trigo lo siembran los agricultores para conseguir harina.",
+                  "silvestre": "Los campos de trigo los siembran los agricultores cada año."
+                }
+              }
+            },
+            {
+              "id": "amapola",
+              "nombre": "La amapola",
+              "pregunta": "¿Qué tipo de planta es la amapola?",
+              "respuesta": "hierba",
+              "pista": "Su tallo es fino, verde y blando: se dobla con el viento.",
+              "curiosidad": "Las semillas de la amapola pueden esperar muchos años bajo tierra hasta que alguien remueve el suelo.",
+              "frases": {
+                "hierba": "¡Eso es! La amapola es una hierba con el tallo fino, verde y blando.",
+                "arbol": "Su tallo es fino y blando, nada que ver con el tronco de madera de un árbol.",
+                "arbusto": "La amapola no tiene tallos leñosos: su tallo es verde y blando."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "silvestre",
+                "frases": {
+                  "silvestre": "¡Genial! La amapola nace sola en los bordes de los caminos y entre los cultivos.",
+                  "cultivada": "Nadie siembra las amapolas: aparecen solas en el campo."
+                }
+              }
+            },
+            {
+              "id": "tomatera",
+              "nombre": "La tomatera",
+              "pregunta": "¿Qué tipo de planta es la tomatera?",
+              "respuesta": "hierba",
+              "pista": "Su tallo es verde y tan blando que necesita una caña para sujetarse.",
+              "curiosidad": "La tomatera se seca después de dar sus tomates: vive solo una temporada.",
+              "frases": {
+                "hierba": "¡Así es! La tomatera es una hierba: su tallo es verde y blando.",
+                "arbol": "No tiene tronco de madera; por eso necesita una caña para no caerse.",
+                "arbusto": "Sus tallos no son leñosos, sino verdes y blandos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Es una planta cultivada o silvestre?",
+                "opciones": [
+                  {
+                    "id": "cultivada",
+                    "nombre": "Cultivada: la siembran y la cuidan las personas"
+                  },
+                  {
+                    "id": "silvestre",
+                    "nombre": "Silvestre: nace y crece sola en el campo"
+                  }
+                ],
+                "respuesta": "cultivada",
+                "frases": {
+                  "cultivada": "¡Muy bien! La tomatera se siembra y se cuida en el huerto.",
+                  "silvestre": "La tomatera la plantamos nosotros en el huerto y la regamos."
+                }
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ecosistemas",

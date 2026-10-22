@@ -4057,6 +4057,12 @@ Color _colorSitio(String id) {
       return const Color(0xFFD1FAE5);
     case 'rio':
       return const Color(0xFFCFFAFE);
+    case 'arbol':
+      return const Color(0xFFDCFCE7);
+    case 'arbusto':
+      return const Color(0xFFECFCCB);
+    case 'hierba':
+      return const Color(0xFFF0FDF4);
     case 'cabeza':
       return const Color(0xFFF3E8FF);
     case 'pecho':
@@ -4084,6 +4090,12 @@ Color _bordeSitio(String id) {
       return const Color(0xFF10B981);
     case 'rio':
       return const Color(0xFF06B6D4);
+    case 'arbol':
+      return const Color(0xFF16A34A);
+    case 'arbusto':
+      return const Color(0xFF65A30D);
+    case 'hierba':
+      return const Color(0xFF4ADE80);
     case 'cabeza':
       return const Color(0xFFC084FC);
     case 'pecho':

@@ -264,11 +264,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 37 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 37);
+  test('el álbum tiene 40 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 40);
     expect(catalogo.fichasDe('reserva').length, 11);
     expect(catalogo.fichasDe('invernadero').length, 11);
-    expect(catalogo.fichasDe('cuerpo').length, 15);
+    expect(catalogo.fichasDe('cuerpo').length, 18);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -369,6 +369,19 @@ void main() {
     await progreso.marcarNivelJuego(digestion, 'dificil');
     expect(progreso.fichaDesbloqueada('nutrientes'), isTrue);
 
+    final habitos = catalogo.actividades.firstWhere((a) => a.id == 'habitos');
+    await progreso.marcarNivelLugar(habitos, 'facil');
+    expect(progreso.fichaDesbloqueada('higiene'), isTrue);
+    expect(progreso.fichaDesbloqueada('descanso'), isFalse);
+    expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isFalse);
+
+    await progreso.marcarNivelLugar(habitos, 'medio');
+    expect(progreso.fichaDesbloqueada('descanso'), isTrue);
+    expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isFalse);
+
+    await progreso.marcarNivelLugar(habitos, 'dificil');
+    expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isTrue);
+
     final ecosistemas = catalogo.actividades.firstWhere((a) => a.id == 'ecosistemas');
     await progreso.marcarNivelEcosistema(ecosistemas, 'facil');
     expect(progreso.fichaDesbloqueada('claro-bosque'), isTrue);
@@ -404,5 +417,42 @@ void main() {
       expect(textoCrudo, isNot(contains(fueraDeAlcance)));
     }
   });
-}
 
+  test('«¿Me cuida o no?» separa costumbres en los tres niveles y en Difícil pregunta qué se cuida', () {
+    final habitos = catalogo.actividades.firstWhere((a) => a.id == 'habitos');
+    expect(habitos.zona, 'cuerpo');
+    expect(habitos.tipo, 'lugar');
+    expect(habitos.medalla, isFalse);
+
+    final niveles = {for (final n in habitos.nivelesLugar) n.id: n};
+    expect(niveles['facil']!.curso, '1º-2º');
+    expect(niveles['medio']!.curso, '3º-4º');
+    expect(niveles['dificil']!.curso, '5º-6º');
+    for (final nivel in niveles.values) {
+      expect(nivel.opciones.map((o) => o.id), ['no-me-cuida', 'me-cuida']);
+      final respuestas = nivel.retos.map((r) => r.respuesta).toSet();
+      expect(respuestas, {'me-cuida', 'no-me-cuida'},
+          reason: 'En ${nivel.id} hay costumbres de los dos lados');
+    }
+    expect(niveles['facil']!.preguntaAdaptacion, isFalse);
+    expect(niveles['medio']!.preguntaAdaptacion, isFalse);
+    expect(niveles['dificil']!.preguntaAdaptacion, isTrue);
+
+    final chuches = niveles['facil']!.retos.firstWhere((r) => r.id == 'solo-chuches');
+    final mal = resolverLugar(reto: chuches, eleccion: 'me-cuida', intento: 1);
+    expect(mal.acierto, isFalse);
+    expect(mal.frase, contains('azúcar'));
+    final conPista = resolverLugar(reto: chuches, eleccion: 'me-cuida', intento: 2);
+    expect(conPista.frase, contains(chuches.pista));
+
+    final primeras = niveles['dificil']!.retos
+        .map((r) => r.adaptacion!.opciones.first.id == r.adaptacion!.respuesta);
+    expect(primeras, everyElement(isFalse),
+        reason: 'La respuesta correcta no se escribe la primera');
+
+    final musica = niveles['dificil']!.retos.firstWhere((r) => r.id == 'musica-alta');
+    expect(resolverLugar(reto: musica, eleccion: 'no-me-cuida', intento: 1).acierto, isTrue);
+    expect(resolverAdaptacion(reto: musica, eleccion: 'oido').acierto, isTrue);
+    expect(resolverAdaptacion(reto: musica, eleccion: 'vista').acierto, isFalse);
+  });
+}

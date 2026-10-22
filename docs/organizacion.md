@@ -2,7 +2,7 @@
 
 Organización para todo el proyecto.
 
-Los ficheros de dentro crecerán. La versión actual tiene tres zonas, 25 fichas, seis actividades y progreso local. Las seis actividades ofrecen los tres niveles. Monta el ecosistema está en La reserva y su implementación y validación se registran en `docs/plan-ecosistemas.md`.
+Los ficheros de dentro crecerán. La versión actual tiene tres zonas, 40 fichas, once actividades y progreso local. Las once actividades ofrecen los tres niveles. Monta el ecosistema está en La reserva y su implementación y validación se registran en `docs/plan-ecosistemas.md`.
 
 ## Carpetas
 

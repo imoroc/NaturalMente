@@ -181,6 +181,13 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 - **Mecánica**: Fácil, unir el órgano con su sentido. Medio, situaciones («huele a quemado», «el agua está fría») en las que hay que elegir qué sentido avisa. Difícil, por qué el aviso llega al cerebro y qué es un reflejo.
 - **Si no acierta**: «Con los ojos cerrados también sabrías que el agua está fría. ¿Qué parte de ti lo nota?».
 
+### ¿Me cuida o no?
+- **Prioridad**: MVP.
+- **Estado**: implementado (`habitos`, tipo `lugar`) con los tres niveles, cromos por nivel (Higiene, Descanso y movimiento, Cuidar los sentidos) y textos en español e inglés. Reutiliza la pantalla y las reglas de «Cada uno a su hogar»: no tiene modelo ni reglas propias. No cuenta para la medalla.
+- **Mecánica**: sale una tarjeta con un dibujo de una costumbre y se arrastra (o se toca) «Me cuida» o «No me cuida». Casi sin texto.
+- **Niveles**: Fácil, higiene, merienda y juego (1º, «Cuido mi cuerpo»). Medio, sueño, pantallas antes de dormir, una hora de actividad física, respirar hondo y cenas pesadas (4º, «El bienestar»). Difícil, auriculares a todo volumen, pantalla muy cerca, postura y dormir antes de un examen, con una pregunta extra de qué se cuida: oído, vista, aparato locomotor o sistema nervioso (6º, «Nos relacionamos»).
+- **Si no acierta**: Natu explica por qué esa costumbre cuida o no, y a la segunda añade la pista.
+
 ### Un plato que cuida
 - **Prioridad**: MVP.
 - **Mecánica**: montar un plato o una merienda arrastrando alimentos. El plato reacciona según lo equilibrado que esté.

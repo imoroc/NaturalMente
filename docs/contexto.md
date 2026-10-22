@@ -12,7 +12,7 @@ Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base 
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
-Ese es el comportamiento previsto para el producto completo. Actualmente los seis juegos, incluido Monta el ecosistema, tienen selector y variantes para los tres niveles.
+Ese es el comportamiento previsto para el producto completo. Actualmente los once juegos, incluidos Monta el ecosistema y ¿Me cuida o no?, tienen selector y variantes para los tres niveles.
 
 ## Cómo llegamos aquí
 

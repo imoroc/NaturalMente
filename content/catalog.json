@@ -352,6 +352,33 @@
       "titulo": "Un bosque conectado",
       "frase": "Las plantas y los animales del bosque se relacionan entre sí y con el agua, el aire y el suelo.",
       "curiosidad": "Una cadena alimentaria enseña solo un camino. En un bosque real hay muchas cadenas conectadas."
+    },
+    {
+      "id": "higiene",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "¿Me cuida o no?",
+      "titulo": "Higiene",
+      "frase": "Lavarse las manos, ducharse y cepillarse los dientes quita los gérmenes y cuida el cuerpo.",
+      "curiosidad": "En las manos hay muchísimos gérmenes que no se ven; el jabón ayuda a que el agua se los lleve."
+    },
+    {
+      "id": "descanso",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "¿Me cuida o no?",
+      "titulo": "Descanso y movimiento",
+      "frase": "Dormir lo suficiente y moverse cada día dan energía y ayudan a crecer con fuerza.",
+      "curiosidad": "Mientras duermes, el cuerpo repara los músculos que han trabajado durante el día."
+    },
+    {
+      "id": "cuidar-sentidos",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "¿Me cuida o no?",
+      "titulo": "Cuidar los sentidos",
+      "frase": "Proteger el oído y la vista, cuidar la postura y dormir bien ayuda a percibir el mundo y a movernos.",
+      "curiosidad": "Lo que captan los sentidos viaja por los nervios hasta el cerebro en una fracción de segundo."
     }
   ],
   "actividades": [
@@ -4413,6 +4440,383 @@
           }
         ]
       }
+    },
+    {
+      "id": "habitos",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "¿Me cuida o no?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada costumbre a «Me cuida» o a «No me cuida», o toca la tarjeta.",
+      "opciones": [
+        {
+          "id": "no-me-cuida",
+          "nombre": "No me cuida"
+        },
+        {
+          "id": "me-cuida",
+          "nombre": "Me cuida"
+        }
+      ],
+      "retos": [
+        {
+          "id": "lavar-manos",
+          "nombre": "Manos limpias",
+          "pregunta": "Lavarse las manos antes de comer",
+          "respuesta": "me-cuida",
+          "pista": "El agua y el jabón quitan los gérmenes que no se ven.",
+          "curiosidad": "Para que el lavado funcione, frota con jabón mientras cantas dos veces «Cumpleaños feliz».",
+          "frases": {
+            "me-cuida": "¡Sí! Con las manos limpias, los gérmenes no llegan a tu comida.",
+            "no-me-cuida": "Las manos tocan muchas cosas. Si las lavas antes de comer, los gérmenes no llegan a tu boca."
+          }
+        },
+        {
+          "id": "cepillar-dientes",
+          "nombre": "Dientes limpios",
+          "pregunta": "Cepillarse los dientes después de comer",
+          "respuesta": "me-cuida",
+          "pista": "Los restos de comida que se quedan entre los dientes los estropean.",
+          "curiosidad": "Conviene cepillarse unos dos minutos, por delante, por detrás y por arriba.",
+          "frases": {
+            "me-cuida": "¡Muy bien! Cepillarte quita los restos de comida y cuida tus dientes.",
+            "no-me-cuida": "Si no te cepillas, la comida se queda pegada y puede salir una caries."
+          }
+        },
+        {
+          "id": "solo-chuches",
+          "nombre": "Merienda de chuches",
+          "pregunta": "Merendar solo chucherías",
+          "respuesta": "no-me-cuida",
+          "pista": "Las chuches tienen mucho azúcar y casi nada de lo que el cuerpo necesita para crecer.",
+          "curiosidad": "Una fruta o un bocadillo dan energía y además te ayudan a crecer.",
+          "frases": {
+            "no-me-cuida": "¡Eso es! Las chuches, mejor de vez en cuando. Una fruta o un bocadillo te cuidan más.",
+            "me-cuida": "Están ricas, pero casi solo tienen azúcar. Para crecer, tu cuerpo necesita una merienda variada."
+          }
+        },
+        {
+          "id": "jugar-parque",
+          "nombre": "Jugar al aire libre",
+          "pregunta": "Correr y jugar en el parque",
+          "respuesta": "me-cuida",
+          "pista": "Al moverte, tus músculos y tus huesos se hacen más fuertes.",
+          "curiosidad": "Jugar con otros niños también te pone de buen humor.",
+          "frases": {
+            "me-cuida": "¡Genial! Moverte y jugar al aire libre hace fuerte a tu cuerpo.",
+            "no-me-cuida": "Correr y jugar mueve tus músculos y tus huesos. ¡Eso sí te cuida!"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Higiene, comida y juego: cuatro costumbres de cada día.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "no-me-cuida",
+              "nombre": "No me cuida"
+            },
+            {
+              "id": "me-cuida",
+              "nombre": "Me cuida"
+            }
+          ],
+          "retos": [
+            {
+              "id": "lavar-manos",
+              "nombre": "Manos limpias",
+              "pregunta": "Lavarse las manos antes de comer",
+              "respuesta": "me-cuida",
+              "pista": "El agua y el jabón quitan los gérmenes que no se ven.",
+              "curiosidad": "Para que el lavado funcione, frota con jabón mientras cantas dos veces «Cumpleaños feliz».",
+              "frases": {
+                "me-cuida": "¡Sí! Con las manos limpias, los gérmenes no llegan a tu comida.",
+                "no-me-cuida": "Las manos tocan muchas cosas. Si las lavas antes de comer, los gérmenes no llegan a tu boca."
+              }
+            },
+            {
+              "id": "cepillar-dientes",
+              "nombre": "Dientes limpios",
+              "pregunta": "Cepillarse los dientes después de comer",
+              "respuesta": "me-cuida",
+              "pista": "Los restos de comida que se quedan entre los dientes los estropean.",
+              "curiosidad": "Conviene cepillarse unos dos minutos, por delante, por detrás y por arriba.",
+              "frases": {
+                "me-cuida": "¡Muy bien! Cepillarte quita los restos de comida y cuida tus dientes.",
+                "no-me-cuida": "Si no te cepillas, la comida se queda pegada y puede salir una caries."
+              }
+            },
+            {
+              "id": "solo-chuches",
+              "nombre": "Merienda de chuches",
+              "pregunta": "Merendar solo chucherías",
+              "respuesta": "no-me-cuida",
+              "pista": "Las chuches tienen mucho azúcar y casi nada de lo que el cuerpo necesita para crecer.",
+              "curiosidad": "Una fruta o un bocadillo dan energía y además te ayudan a crecer.",
+              "frases": {
+                "no-me-cuida": "¡Eso es! Las chuches, mejor de vez en cuando. Una fruta o un bocadillo te cuidan más.",
+                "me-cuida": "Están ricas, pero casi solo tienen azúcar. Para crecer, tu cuerpo necesita una merienda variada."
+              }
+            },
+            {
+              "id": "jugar-parque",
+              "nombre": "Jugar al aire libre",
+              "pregunta": "Correr y jugar en el parque",
+              "respuesta": "me-cuida",
+              "pista": "Al moverte, tus músculos y tus huesos se hacen más fuertes.",
+              "curiosidad": "Jugar con otros niños también te pone de buen humor.",
+              "frases": {
+                "me-cuida": "¡Genial! Moverte y jugar al aire libre hace fuerte a tu cuerpo.",
+                "no-me-cuida": "Correr y jugar mueve tus músculos y tus huesos. ¡Eso sí te cuida!"
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Descanso, movimiento y emociones: cinco costumbres para estar bien.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "no-me-cuida",
+              "nombre": "No me cuida"
+            },
+            {
+              "id": "me-cuida",
+              "nombre": "Me cuida"
+            }
+          ],
+          "retos": [
+            {
+              "id": "dormir-diez-horas",
+              "nombre": "Dormir bien",
+              "pregunta": "Dormir unas diez horas cada noche",
+              "respuesta": "me-cuida",
+              "pista": "Mientras duermes, el cuerpo descansa y se prepara para el día siguiente.",
+              "curiosidad": "Los niños necesitan dormir más horas que los adultos porque todavía están creciendo.",
+              "frases": {
+                "me-cuida": "¡Exacto! Dormir lo suficiente te da energía y te ayuda a atender en clase.",
+                "no-me-cuida": "Al dormir, el cuerpo y la mente descansan. A tu edad hacen falta unas diez horas."
+              }
+            },
+            {
+              "id": "pantalla-cama",
+              "nombre": "Pantallas en la cama",
+              "pregunta": "Usar la tableta en la cama antes de dormir",
+              "respuesta": "no-me-cuida",
+              "pista": "La luz de la pantalla hace que te cueste más dormirte.",
+              "curiosidad": "Leer un cuento o escuchar música tranquila ayuda a dormirse mejor.",
+              "frases": {
+                "no-me-cuida": "¡Bien visto! Antes de dormir, mejor apagar las pantallas y hacer algo tranquilo.",
+                "me-cuida": "La luz de la pantalla despeja al cuerpo y luego cuesta dormirse. Mejor un cuento."
+              }
+            },
+            {
+              "id": "moverse-cada-dia",
+              "nombre": "Una hora de juego",
+              "pregunta": "Moverse y jugar una hora cada día",
+              "respuesta": "me-cuida",
+              "pista": "Cuando te mueves, trabajan tus músculos, tus huesos y tu corazón.",
+              "curiosidad": "Andar, bailar, nadar o jugar al pilla-pilla cuentan como actividad física.",
+              "frases": {
+                "me-cuida": "¡Eso es! Moverte cada día hace más fuertes tus músculos, tus huesos y tu corazón.",
+                "no-me-cuida": "Moverte cada día pone a trabajar músculos y huesos. ¡Eso sí te cuida!"
+              }
+            },
+            {
+              "id": "respirar-hondo",
+              "nombre": "Calma",
+              "pregunta": "Respirar hondo cuando estás nervioso",
+              "respuesta": "me-cuida",
+              "pista": "Tomar aire despacio ayuda a que el cuerpo se calme.",
+              "curiosidad": "Cuando estás nervioso, el corazón late más deprisa; respirar despacio lo tranquiliza.",
+              "frases": {
+                "me-cuida": "¡Muy bien! Respirar despacio te ayuda a calmarte y a pensar mejor.",
+                "no-me-cuida": "Cuidarse también es cuidar cómo te sientes. Respirar hondo ayuda a calmarse."
+              }
+            },
+            {
+              "id": "cena-enorme",
+              "nombre": "Cena enorme",
+              "pregunta": "Cenar muchísimo justo antes de acostarse",
+              "respuesta": "no-me-cuida",
+              "pista": "Con la tripa muy llena, al cuerpo le cuesta descansar.",
+              "curiosidad": "Cenar algo ligero un rato antes de acostarte ayuda a dormir mejor.",
+              "frases": {
+                "no-me-cuida": "¡Correcto! Una cena ligera, un rato antes de dormir, te ayuda a descansar.",
+                "me-cuida": "Si cenas muchísimo justo antes de acostarte, al cuerpo le cuesta descansar."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Cuidar los sentidos, el sistema nervioso y el aparato locomotor.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "no-me-cuida",
+              "nombre": "No me cuida"
+            },
+            {
+              "id": "me-cuida",
+              "nombre": "Me cuida"
+            }
+          ],
+          "retos": [
+            {
+              "id": "musica-alta",
+              "nombre": "Volumen a tope",
+              "pregunta": "Escuchar música con auriculares a todo volumen",
+              "respuesta": "no-me-cuida",
+              "pista": "Los sonidos muy fuertes pueden dañar el oído poco a poco.",
+              "curiosidad": "Si alguien a tu lado oye tu música, el volumen está demasiado alto.",
+              "frases": {
+                "no-me-cuida": "¡Bien! El volumen muy alto no te cuida. Ahora, ¿qué parte se daña?",
+                "me-cuida": "Los sonidos muy fuertes pueden dañar el oído aunque no duela en ese momento."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué parte del cuerpo se daña con el volumen muy alto?",
+                "opciones": [
+                  {
+                    "id": "vista",
+                    "nombre": "La vista, que capta la luz y los colores"
+                  },
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  }
+                ],
+                "respuesta": "oido",
+                "frases": {
+                  "oido": "¡Exacto! El oído capta los sonidos y los nervios los llevan al cerebro. Hay que protegerlo.",
+                  "vista": "La vista capta la luz. El volumen muy alto daña el oído.",
+                  "locomotor": "Los huesos y los músculos nos mueven. El volumen muy alto daña el oído."
+                }
+              }
+            },
+            {
+              "id": "pantalla-cerca",
+              "nombre": "Pantalla muy cerca",
+              "pregunta": "Mirar la pantalla muy de cerca durante mucho rato",
+              "respuesta": "no-me-cuida",
+              "pista": "Los ojos se cansan cuando miran algo muy cerca sin descansar.",
+              "curiosidad": "De vez en cuando, mira algo lejano por la ventana para que tus ojos descansen.",
+              "frases": {
+                "no-me-cuida": "¡Correcto! Así se cansa un sentido. ¿Sabes cuál?",
+                "me-cuida": "Mirar la pantalla muy de cerca y durante mucho rato cansa los ojos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué sentido se cansa al mirar la pantalla tan de cerca?",
+                "opciones": [
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  },
+                  {
+                    "id": "vista",
+                    "nombre": "La vista, que capta la luz y los colores"
+                  }
+                ],
+                "respuesta": "vista",
+                "frases": {
+                  "vista": "¡Muy bien! Los ojos captan la luz y el cerebro forma las imágenes. Descansar la vista la protege.",
+                  "oido": "El oído capta los sonidos. Mirar tan de cerca cansa la vista.",
+                  "locomotor": "Los huesos y los músculos nos mueven. Mirar tan de cerca cansa la vista."
+                }
+              }
+            },
+            {
+              "id": "espalda-recta",
+              "nombre": "Buena postura",
+              "pregunta": "Sentarse con la espalda recta para estudiar",
+              "respuesta": "me-cuida",
+              "pista": "Una buena postura evita que la espalda se cargue.",
+              "curiosidad": "La columna está formada por muchos huesos pequeños llamados vértebras.",
+              "frases": {
+                "me-cuida": "¡Eso es! Sentarte bien cuida tu espalda. ¿Qué parte del cuerpo estás cuidando?",
+                "no-me-cuida": "Sentarte con la espalda recta evita dolores. ¡Eso sí te cuida!"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué cuidas al sentarte con la espalda recta?",
+                "opciones": [
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  },
+                  {
+                    "id": "vista",
+                    "nombre": "La vista, que capta la luz y los colores"
+                  }
+                ],
+                "respuesta": "locomotor",
+                "frases": {
+                  "locomotor": "¡Exacto! Huesos, articulaciones y músculos forman el aparato locomotor, que nos sostiene y nos mueve.",
+                  "oido": "El oído capta los sonidos. Sentarte bien cuida los huesos y los músculos de la espalda.",
+                  "vista": "La vista capta la luz. Sentarte bien cuida los huesos y los músculos de la espalda."
+                }
+              }
+            },
+            {
+              "id": "dormir-examen",
+              "nombre": "Descansar la mente",
+              "pregunta": "Dormir lo suficiente la noche antes de un examen",
+              "respuesta": "me-cuida",
+              "pista": "Mientras duermes, el cerebro ordena lo que has aprendido.",
+              "curiosidad": "Si duermes poco, cuesta más atender, recordar y estar de buen humor.",
+              "frases": {
+                "me-cuida": "¡Muy bien! Dormir bien ayuda a tu cerebro. ¿Qué parte del cuerpo estás cuidando?",
+                "no-me-cuida": "Dormir poco cansa al cerebro y cuesta más recordar. ¡Dormir bien sí te cuida!"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué cuidas al dormir lo suficiente?",
+                "opciones": [
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  },
+                  {
+                    "id": "nervioso",
+                    "nombre": "El sistema nervioso: cerebro y nervios"
+                  }
+                ],
+                "respuesta": "nervioso",
+                "frases": {
+                  "nervioso": "¡Exacto! El cerebro recibe lo que captan los sentidos y da órdenes al cuerpo. Necesita descansar.",
+                  "oido": "El oído capta los sonidos. Al dormir descansa sobre todo el cerebro.",
+                  "locomotor": "Los músculos también descansan, pero quien ordena lo aprendido es el cerebro."
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

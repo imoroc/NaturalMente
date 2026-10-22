@@ -75,8 +75,47 @@ class Criatura extends StatelessWidget {
     'intestinos',
   };
 
+  // Costumbres de «¿Me cuida o no?»: un icono grande y casi nada de texto.
+  static const _costumbres = {
+    'lavar-manos': (Icons.clean_hands_rounded, Color(0xFF0284C7)),
+    'cepillar-dientes': (Icons.brush_rounded, Color(0xFF0D9488)),
+    'solo-chuches': (Icons.cookie_rounded, Color(0xFFB45309)),
+    'jugar-parque': (Icons.sports_soccer_rounded, Color(0xFF16A34A)),
+    'dormir-diez-horas': (Icons.bedtime_rounded, Color(0xFF6366F1)),
+    'pantalla-cama': (Icons.tablet_android_rounded, Color(0xFF475569)),
+    'moverse-cada-dia': (Icons.directions_run_rounded, Color(0xFF16A34A)),
+    'respirar-hondo': (Icons.self_improvement_rounded, Color(0xFF0D9488)),
+    'cena-enorme': (Icons.dinner_dining_rounded, Color(0xFFEA580C)),
+    'musica-alta': (Icons.headphones_rounded, Color(0xFFDB2777)),
+    'pantalla-cerca': (Icons.tv_rounded, Color(0xFF475569)),
+    'espalda-recta': (Icons.chair_alt_rounded, Color(0xFF8B5CF6)),
+    'dormir-examen': (Icons.nights_stay_rounded, Color(0xFF6366F1)),
+  };
+
   @override
   Widget build(BuildContext context) {
+    final costumbre = _costumbres[id];
+    if (costumbre != null) {
+      return Container(
+        width: 88,
+        height: 88,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD0C9B8),
+              offset: Offset(0, 4),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Center(
+          child: Icon(costumbre.$1, size: 58, color: costumbre.$2),
+        ),
+      );
+    }
     if (_organosCuerpo.contains(id)) {
       return Container(
         width: 88,
@@ -249,6 +288,14 @@ class IconoSitio extends StatelessWidget {
       'bosque' => (Icons.park_rounded, const Color(0xFF15803D)),
       'selva' => (Icons.forest_rounded, const Color(0xFF059669)),
       'rio' => (Icons.water_rounded, const Color(0xFF0891B2)),
+      'me-cuida' => (
+        Icons.sentiment_very_satisfied_rounded,
+        const Color(0xFF16A34A),
+      ),
+      'no-me-cuida' => (
+        Icons.sentiment_dissatisfied_rounded,
+        const Color(0xFFEA580C),
+      ),
       _ => (Icons.explore_rounded, const Color(0xFF15803D)),
     };
     return Container(
@@ -3420,6 +3467,21 @@ class IlustracionFicha extends StatelessWidget {
         Icons.wb_sunny_rounded,
         const Color(0xFFD97706),
         const Color(0xFFFEF3C7),
+      ),
+      'higiene' => (
+        Icons.clean_hands_rounded,
+        const Color(0xFF0284C7),
+        const Color(0xFFE0F2FE),
+      ),
+      'descanso' => (
+        Icons.bedtime_rounded,
+        const Color(0xFF6366F1),
+        const Color(0xFFEEF2FF),
+      ),
+      'cuidar-sentidos' => (
+        Icons.hearing_rounded,
+        const Color(0xFFDB2777),
+        const Color(0xFFFCE7F3),
       ),
       _ => (
         Icons.auto_awesome_rounded,

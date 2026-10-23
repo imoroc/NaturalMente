@@ -105,7 +105,7 @@ void main() {
         await tocar(tester, 'adaptacion-${reto.id}-${adaptacion.respuesta}');
       }
       if (reto != nivel.retos.last) {
-        await tocar(tester, 'boton-pie-lugar');
+      // Avance directo sin botón Siguiente intermedio
       }
     }
   }
@@ -130,7 +130,7 @@ void main() {
           expect(progreso.fichaDesbloqueada('descanso'), isTrue);
           expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isTrue);
           expect(progreso.medallaConseguida(catalogo.actividades), isFalse);
-          expect(posicionesCorrectas, hasLength(4));
+          expect(posicionesCorrectas, hasLength(6));
           expect(
             posicionesCorrectas.toSet().length,
             greaterThan(1),

@@ -28,44 +28,53 @@ void main() {
     await tocar(tester, 'juego-sentidos');
   }
 
-  testWidgets('Fácil une órganos y sentidos sin usar el atlas del cuerpo', (
-    tester,
-  ) async {
-    await abrirJuego(tester);
-    expect(find.text('Cromo: Los cinco sentidos'), findsOneWidget);
-    await tocar(tester, 'nivel-facil');
-    for (final sentido in ['vista', 'oido', 'olfato', 'gusto', 'tacto']) {
+  testWidgets(
+    'Fácil une órganos y sentidos avanzando automáticamente sin botón Siguiente',
+    (tester) async {
+      await abrirJuego(tester);
+      expect(find.text('Cromo: Los cinco sentidos'), findsOneWidget);
+      await tocar(tester, 'nivel-facil');
+      for (final sentido in ['vista', 'oido', 'olfato', 'gusto', 'tacto']) {
+        expect(
+          find.byKey(Key('sitio-$sentido'), skipOffstage: false),
+          findsOneWidget,
+        );
+      }
+      await tocar(tester, 'sitio-oido');
+      expect(find.textContaining('¿Para qué sirven los ojos?'), findsOneWidget);
+      await tocar(tester, 'sitio-tacto');
+      expect(find.textContaining('Ciérralos un momento'), findsOneWidget);
+      await tocar(tester, 'sitio-vista');
+      // Avanza automáticamente al siguiente reto sin botón intermedio «Siguiente»
+      expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+      expect(find.textContaining('✓ Los ojos en su sitio'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'Difícil pregunta por el cerebro y los actos reflejos y avanza automáticamente',
+    (tester) async {
+      await abrirJuego(tester);
+      await tocar(tester, 'nivel-dificil');
+      await tocar(tester, 'sitio-olfato');
       expect(
-        find.byKey(Key('sitio-$sentido'), skipOffstage: false),
+        find.byKey(
+          const Key('pregunta-adaptacion-incendio'),
+          skipOffstage: false,
+        ),
         findsOneWidget,
       );
-    }
-    await tocar(tester, 'sitio-oido');
-    expect(find.textContaining('¿Para qué sirven los ojos?'), findsOneWidget);
-    await tocar(tester, 'sitio-tacto');
-    expect(find.textContaining('Ciérralos un momento'), findsOneWidget);
-    await tocar(tester, 'sitio-vista');
-    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('Difícil pregunta por el cerebro y los actos reflejos', (
-    tester,
-  ) async {
-    await abrirJuego(tester);
-    await tocar(tester, 'nivel-dificil');
-    await tocar(tester, 'sitio-olfato');
-    expect(
-      find.byKey(
-        const Key('pregunta-adaptacion-incendio'),
-        skipOffstage: false,
-      ),
-      findsOneWidget,
-    );
-    await tocar(tester, 'adaptacion-incendio-sangre');
-    expect(find.textContaining('viajan por los nervios'), findsOneWidget);
-    await tocar(tester, 'adaptacion-incendio-nervios');
-    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
+      await tocar(tester, 'adaptacion-incendio-sangre');
+      expect(find.textContaining('viajan por los nervios'), findsOneWidget);
+      await tocar(tester, 'adaptacion-incendio-nervios');
+      // Tras responder la pregunta extra, avanza directamente al siguiente estímulo
+      expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+      expect(
+        find.textContaining('✓ Hueles el humo de un incendio en su sitio'),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

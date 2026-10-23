@@ -3,6 +3,7 @@ import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/expedicion_diaria.dart';
 import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
@@ -57,6 +58,8 @@ class MapaPage extends StatelessWidget {
                         _ZonaTarjeta(zona: zona),
                         const SizedBox(height: 14),
                       ],
+                      const _TarjetaExpedicionDiaria(),
+                      const SizedBox(height: 14),
                       const _TarjetaAlbumPrincipal(),
                     ],
                   ),
@@ -175,19 +178,24 @@ class _CabeceraNatu extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFECFDF5),
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(
-                    color: const Color(0xFF86EFAC),
-                    width: 2,
+              InkWell(
+                key: const Key('abrir-armario-natu'),
+                borderRadius: BorderRadius.circular(22),
+                onTap: () => mostrarArmarioNatu(context),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFECFDF5),
+                    borderRadius: BorderRadius.circular(22),
+                    border: Border.all(
+                      color: const Color(0xFF86EFAC),
+                      width: 2,
+                    ),
                   ),
-                ),
-                child: DibujoMascota(
-                  gesto: albumCompleto ? 'feliz' : 'hola',
-                  tamano: 64,
+                  child: DibujoMascota(
+                    gesto: albumCompleto ? 'feliz' : 'hola',
+                    tamano: 64,
+                  ),
                 ),
               ),
               const SizedBox(width: 14),
@@ -197,7 +205,9 @@ class _CabeceraNatu extends StatelessWidget {
                   children: [
                     Texto(
                       'NaturalMente',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     const SizedBox(height: 3),
                     Texto(
@@ -210,6 +220,94 @@ class _CabeceraNatu extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(999),
+                onTap: () => mostrarArmarioNatu(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFBEB),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFF59E0B)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const IconoSemilla(tamano: 15),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Texto(
+                          '${progreso.semillas} Semillas · Armario',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF92400E),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                borderRadius: BorderRadius.circular(999),
+                onTap: () {
+                  context.sonidoToque();
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const ExpedicionDiariaPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF0D6),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFFF9F1C)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.local_fire_department_rounded,
+                        size: 15,
+                        color: Color(0xFFE66A00),
+                      ),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Texto(
+                          progreso.rachaActiva() > 0
+                              ? 'Racha: ${progreso.rachaActiva()} d'
+                              : 'Reto diario',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFFB45309),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -418,7 +516,7 @@ class _ZonaTarjeta extends StatelessWidget {
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(color: estilo.borde, width: 2),
                       ),
-                      child: Icon(estilo.icono, color: estilo.acento, size: 30),
+                      child: zona.id.isEmpty ? Icon(estilo.icono, color: estilo.acento, size: 30) : InsigniaIlustradaZona(id: zona.id, tamano: 52),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -665,7 +763,7 @@ void _mostrarAlbumCompleto(BuildContext context) {
             children: [
               Row(
                 children: [
-                  const DibujoMascota(gesto: 'feliz', tamano: 52),
+                  const DibujoMascota(gesto: 'estudio', tamano: 56),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -780,6 +878,144 @@ _EstiloZona _estiloZona(String id) {
         acento: Color(0xFF334155),
         icono: Icons.explore_rounded,
       );
+  }
+}
+
+class _TarjetaExpedicionDiaria extends StatelessWidget {
+  const _TarjetaExpedicionDiaria();
+
+  @override
+  Widget build(BuildContext context) {
+    final progreso = Alcance.of(context).progreso;
+    final hechaHoy = progreso.expedicionHoyHecha();
+    final racha = progreso.rachaActiva();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF8EC),
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: const Color(0xFFFF9F1C), width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xFFD97706),
+            offset: Offset(0, 5),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const Key('abrir-expedicion-diaria'),
+          borderRadius: BorderRadius.circular(24),
+          onTap: () {
+            context.sonidoToque();
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const ExpedicionDiariaPage(),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: const Color(0xFFFF9F1C),
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.local_fire_department_rounded,
+                    color: Color(0xFFE66A00),
+                    size: 32,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Texto(
+                              hechaHoy
+                                  ? '✓ EXPEDICIÓN DE HOY SUPERADA'
+                                  : 'RETO DIARIO · ELIGE DIFICULTAD',
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFFB45309),
+                              ),
+                            ),
+                          ),
+                          if (racha > 0)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFFEDD5),
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                              child: Texto(
+                                'Racha: $racha ${racha == 1 ? 'día' : 'días'}',
+                                style: const TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF9A3412),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Texto(
+                        'Expedición del Día con Natu',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w900),
+                      ),
+                      const SizedBox(height: 2),
+                      const Texto(
+                        'Repasa los tres mundos con retos rápidos, gana Semillas de Sabiduría y mantén viva tu racha.',
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF475569),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Color(0xFFB45309),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

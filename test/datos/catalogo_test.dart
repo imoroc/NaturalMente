@@ -386,7 +386,9 @@ void main() {
     await progreso.marcarNivelEcosistema(ecosistemas, 'facil');
     expect(progreso.fichaDesbloqueada('claro-bosque'), isTrue);
 
-    final plantas = catalogo.actividades.firstWhere((a) => a.id == 'plantas');
+    final plantas = catalogo.actividades.firstWhere(
+      (a) => a.id == 'porte-planta' || a.id == 'plantas',
+    );
     await progreso.marcarNivelLugar(plantas, 'facil');
     expect(progreso.fichaDesbloqueada('encina'), isTrue);
     expect(progreso.fichaDesbloqueada('romero'), isFalse);

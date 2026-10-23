@@ -31,6 +31,11 @@ class _HerbarioPageState extends State<HerbarioPage> {
   bool _falloGuardado = false;
   List<String> _partesBandeja = const [];
   final Map<String, List<Opcion>> _opcionesFuncion = {};
+  int _comboActual = 0;
+  int _mejorComboSesion = 0;
+  int _semillasSesion = 0;
+  bool _pistaEnPaso = false;
+  int _pistasSesion = 0;
 
   Herbario get _herbario => widget.actividad.herbario!;
 
@@ -45,6 +50,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
         respuestaCorrecta: pregunta.respuesta,
       );
     }
+    final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
       _partida = PartidaHerbario(herbario: _herbario, nivel: nivel);
       _partesBandeja = BarajadorOpciones.barajarIds(
@@ -56,13 +62,49 @@ class _HerbarioPageState extends State<HerbarioPage> {
         ..addAll(opcionesPorParte);
       _guardado = false;
       _falloGuardado = false;
+      _comboActual = comboGlobal;
+      _mejorComboSesion = comboGlobal;
+      _semillasSesion = 0;
+      _pistaEnPaso = false;
+      _pistasSesion = 0;
     });
+  }
+
+  void _registrarPasoPrecision(bool acierto) {
+    final prog = Alcance.maybeOf(context)?.progreso;
+    final baseCombo = prog?.comboActual ?? _comboActual;
+    if (acierto) {
+      final aLaPrimera = !_pistaEnPaso;
+      final nuevoCombo = aLaPrimera ? baseCombo + 1 : 1;
+      final ganadas = aLaPrimera
+          ? (nuevoCombo >= 3 ? 3 : (nuevoCombo == 2 ? 2 : 1))
+          : 1;
+      setState(() {
+        _comboActual = nuevoCombo;
+        if (nuevoCombo > _mejorComboSesion) _mejorComboSesion = nuevoCombo;
+        _semillasSesion += ganadas;
+        _pistaEnPaso = false;
+      });
+      prog?.registrarAciertoPrecision(
+        aLaPrimera: aLaPrimera,
+        comboActual: nuevoCombo,
+      );
+    } else {
+      setState(() {
+        _comboActual = 0;
+        _pistaEnPaso = true;
+        _pistasSesion++;
+      });
+      prog?.romperComboPrecision();
+    }
   }
 
   void _colocar(String pieza, String destino) {
     final partida = _partida!;
     setState(() => partida.colocar(pieza, destino));
-    if (partida.resultado?.acierto ?? false) {
+    final acierto = partida.resultado?.acierto ?? false;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       if (partida.completa) {
         context.sonidoCelebracion();
       } else {
@@ -82,7 +124,9 @@ class _HerbarioPageState extends State<HerbarioPage> {
     final partida = _partida!;
     if (partida.preguntaActual != parte) return;
     setState(() => partida.responder(opcion));
-    if (partida.resultado?.acierto ?? false) {
+    final acierto = partida.resultado?.acierto ?? false;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       if (partida.completa) {
         context.sonidoCelebracion();
       } else {
@@ -133,6 +177,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
   void _consultar(String id) {
     final partida = _partida!;
     if (!partida.puedeConsultar(id)) {
+      context.sonidoPista();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Texto('Primero descubre para qué sirve esta parte.'),
@@ -140,6 +185,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
       );
       return;
     }
+    context.sonidoDescubrimiento();
     final parte = _herbario.parte(id);
     showModalBottomSheet<void>(
       context: context,
@@ -163,7 +209,11 @@ class _HerbarioPageState extends State<HerbarioPage> {
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-ficha'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
+
                 child: const Texto('Seguir jugando'),
               ),
             ],
@@ -183,6 +233,12 @@ class _HerbarioPageState extends State<HerbarioPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          InsigniaPrecisionAppBar(
+            combo: _comboActual,
+            semillasSesion: _semillasSesion,
+          ),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -505,6 +561,13 @@ class _HerbarioPageState extends State<HerbarioPage> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
+          const SizedBox(height: 8),
+          ResumenPrecisionFinal(
+            semillasGanadas: _semillasSesion,
+            mejorComboSesion: _mejorComboSesion,
+            sinPistas: _pistasSesion == 0,
+          ),
+          const SizedBox(height: 6),
           if (_guardando) const Texto('Guardando tu progreso…'),
           if (_guardado)
             const Texto('Nivel superado y guardado en este dispositivo.'),
@@ -521,7 +584,12 @@ class _HerbarioPageState extends State<HerbarioPage> {
           FilledButton(
             key: const Key('herbario-otra-vez'),
             style: EstilosJuego.accion,
-            onPressed: _guardando ? null : () => _empezar(nivel),
+            onPressed: _guardando
+                ? null
+                : () {
+                    context.sonidoToque();
+                    _empezar(nivel);
+                  },
             child: const Texto('Otra vez'),
           ),
         ],
@@ -529,11 +597,21 @@ class _HerbarioPageState extends State<HerbarioPage> {
         OutlinedButton(
           key: const Key('herbario-cambiar-nivel'),
           style: EstilosJuego.accion,
-          onPressed: _guardando ? null : () => setState(() => _partida = null),
+          onPressed: _guardando
+              ? null
+              : () {
+                  context.sonidoToque();
+                  setState(() => _partida = null);
+                },
           child: const Texto('Cambiar nivel'),
         ),
         TextButton(
-          onPressed: _guardando ? null : () => Navigator.of(context).pop(),
+          onPressed: _guardando
+              ? null
+              : () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
           child: const Texto('Volver al invernadero'),
         ),
       ],
@@ -603,7 +681,10 @@ class _HerbarioPageState extends State<HerbarioPage> {
       dragAnchorStrategy: rotulo
           ? childDragAnchorStrategy
           : pointerDragAnchorStrategy,
-      onDragStarted: () => setState(() => partida.seleccionar(parte.id)),
+      onDragStarted: () {
+        context.sonidoSeleccion();
+        setState(() => partida.seleccionar(parte.id));
+      },
       feedback: Material(
         color: Colors.transparent,
         child: rotulo
@@ -633,7 +714,10 @@ class _HerbarioPageState extends State<HerbarioPage> {
         label: context.traducir('Pieza ${parte.nombre}'),
         child: tarjeta(
           clave: Key('pieza-${parte.id}'),
-          onTap: () => setState(() => partida.seleccionar(parte.id)),
+          onTap: () {
+            context.sonidoSeleccion();
+            setState(() => partida.seleccionar(parte.id));
+          },
         ),
       ),
     );

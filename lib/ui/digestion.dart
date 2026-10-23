@@ -33,6 +33,11 @@ class _ViajePageState extends State<ViajePage> {
   int _ronda = 0;
   List<String> _destinos = const [];
   final Map<String, List<Opcion>> _opciones = {};
+  int _comboActual = 0;
+  int _mejorComboSesion = 0;
+  int _semillasSesion = 0;
+  bool _pistaEnPaso = false;
+  int _pistasSesion = 0;
 
   Viaje get _viaje => widget.actividad.viaje!;
 
@@ -57,6 +62,7 @@ class _ViajePageState extends State<ViajePage> {
         respuestaCorrecta: preguntaFinal.respuesta,
       );
     }
+    final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
       _ronda += 1;
       _partida = PartidaViaje(viaje: _viaje, nivel: nivel);
@@ -69,17 +75,59 @@ class _ViajePageState extends State<ViajePage> {
         ..addAll(opciones);
       _guardado = false;
       _falloGuardado = false;
+      _comboActual = comboGlobal;
+      _mejorComboSesion = comboGlobal;
+      _semillasSesion = 0;
+      _pistaEnPaso = false;
+      _pistasSesion = 0;
     });
+  }
+
+  void _registrarPasoPrecision(bool acierto) {
+    final prog = Alcance.maybeOf(context)?.progreso;
+    final baseCombo = prog?.comboActual ?? _comboActual;
+    if (acierto) {
+      final aLaPrimera = !_pistaEnPaso;
+      final nuevoCombo = aLaPrimera ? baseCombo + 1 : 1;
+      final ganadas = aLaPrimera
+          ? (nuevoCombo >= 3 ? 3 : (nuevoCombo == 2 ? 2 : 1))
+          : 1;
+      setState(() {
+        _comboActual = nuevoCombo;
+        if (nuevoCombo > _mejorComboSesion) _mejorComboSesion = nuevoCombo;
+        _semillasSesion += ganadas;
+        _pistaEnPaso = false;
+      });
+      prog?.registrarAciertoPrecision(
+        aLaPrimera: aLaPrimera,
+        comboActual: nuevoCombo,
+      );
+    } else {
+      setState(() {
+        _comboActual = 0;
+        _pistaEnPaso = true;
+        _pistasSesion++;
+      });
+      prog?.romperComboPrecision();
+    }
   }
 
   void _cambiar(void Function(PartidaViaje partida) accion) {
     final estabaCompleta = _partida?.completa ?? false;
     setState(() => accion(_partida!));
     final partida = _partida!;
+    if (partida.resultado?.acierto == true &&
+        partida.resultado?.estado != 'masticar') {
+      _registrarPasoPrecision(true);
+    } else if (partida.resultado?.acierto == false) {
+      _registrarPasoPrecision(false);
+    }
     if (partida.completa && !estabaCompleta) {
       context.sonidoCelebracion();
     } else if (partida.resultado?.acierto == true) {
       context.sonidoAcierto();
+    } else if (partida.resultado?.estado == 'masticar') {
+      context.sonidoPaso(partida.mordiscos);
     } else if (partida.resultado?.acierto == false) {
       context.sonidoPista();
     }
@@ -125,6 +173,7 @@ class _ViajePageState extends State<ViajePage> {
       : _viaje.despiste(id).nombre;
 
   void _mostrarCuriosidad(NivelViaje nivel) {
+    context.sonidoDescubrimiento();
     final fichas = Progreso.fichasDeNivel(widget.actividad.id, nivel.id);
     final fichaId = fichas.isEmpty ? 'aparato-digestivo' : fichas.first;
     final titulo =
@@ -181,7 +230,10 @@ class _ViajePageState extends State<ViajePage> {
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
                 child: const Texto('¡Qué interesante!'),
               ),
             ],
@@ -202,6 +254,12 @@ class _ViajePageState extends State<ViajePage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          InsigniaPrecisionAppBar(
+            combo: _comboActual,
+            semillasSesion: _semillasSesion,
+          ),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -474,6 +532,7 @@ class _ViajePageState extends State<ViajePage> {
               Draggable<String>(
                 data: 'bocado',
                 dragAnchorStrategy: pointerDragAnchorStrategy,
+                onDragStarted: () => context.sonidoSeleccion(),
                 feedback: Material(
                   color: Colors.transparent,
                   child: Transform.translate(
@@ -575,6 +634,13 @@ class _ViajePageState extends State<ViajePage> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
+          const SizedBox(height: 8),
+          ResumenPrecisionFinal(
+            semillasGanadas: _semillasSesion,
+            mejorComboSesion: _mejorComboSesion,
+            sinPistas: _pistasSesion == 0,
+          ),
+          const SizedBox(height: 6),
           if (_guardando) const Texto('Guardando tu progreso…'),
           if (_guardado)
             const Texto('Nivel superado y guardado en este dispositivo.'),
@@ -591,7 +657,12 @@ class _ViajePageState extends State<ViajePage> {
           FilledButton(
             key: const Key('viaje-otra-vez'),
             style: EstilosJuego.accion,
-            onPressed: _guardando ? null : () => _empezar(nivel),
+            onPressed: _guardando
+                ? null
+                : () {
+                    context.sonidoToque();
+                    _empezar(nivel);
+                  },
             child: const Texto('Otra vez'),
           ),
         ],
@@ -599,11 +670,21 @@ class _ViajePageState extends State<ViajePage> {
         OutlinedButton(
           key: const Key('viaje-cambiar-nivel'),
           style: EstilosJuego.accion,
-          onPressed: _guardando ? null : () => setState(() => _partida = null),
+          onPressed: _guardando
+              ? null
+              : () {
+                  context.sonidoToque();
+                  setState(() => _partida = null);
+                },
           child: const Texto('Cambiar nivel'),
         ),
         TextButton(
-          onPressed: _guardando ? null : () => Navigator.of(context).pop(),
+          onPressed: _guardando
+              ? null
+              : () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
           child: const Texto('Volver a Dentro de mí'),
         ),
       ],

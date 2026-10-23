@@ -36,6 +36,11 @@ class _NacimientoPageState extends State<NacimientoPage> {
   List<String> _animalesBandeja = const [];
   final Map<String, List<Opcion>> _pasosBandeja = {};
   final Map<String, List<Opcion>> _opcionesPregunta = {};
+  int _comboActual = 0;
+  int _mejorComboSesion = 0;
+  int _semillasSesion = 0;
+  bool _pistaEnPaso = false;
+  int _pistasSesion = 0;
 
   Nacimiento get _nacimiento => widget.actividad.nacimiento!;
 
@@ -75,12 +80,48 @@ class _NacimientoPageState extends State<NacimientoPage> {
       _opcionesPregunta
         ..clear()
         ..addAll(opciones);
+      final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
       _guardado = false;
       _falloGuardado = false;
+      _comboActual = comboGlobal;
+      _mejorComboSesion = comboGlobal;
+      _semillasSesion = 0;
+      _pistaEnPaso = false;
+      _pistasSesion = 0;
     });
   }
 
+  void _registrarPasoPrecision(bool acierto) {
+    final prog = Alcance.maybeOf(context)?.progreso;
+    final baseCombo = prog?.comboActual ?? _comboActual;
+    if (acierto) {
+      final aLaPrimera = !_pistaEnPaso;
+      final nuevoCombo = aLaPrimera ? baseCombo + 1 : 1;
+      final ganadas = aLaPrimera
+          ? (nuevoCombo >= 3 ? 3 : (nuevoCombo == 2 ? 2 : 1))
+          : 1;
+      setState(() {
+        _comboActual = nuevoCombo;
+        if (nuevoCombo > _mejorComboSesion) _mejorComboSesion = nuevoCombo;
+        _semillasSesion += ganadas;
+        _pistaEnPaso = false;
+      });
+      prog?.registrarAciertoPrecision(
+        aLaPrimera: aLaPrimera,
+        comboActual: nuevoCombo,
+      );
+    } else {
+      setState(() {
+        _comboActual = 0;
+        _pistaEnPaso = true;
+        _pistasSesion++;
+      });
+      prog?.romperComboPrecision();
+    }
+  }
+
   void _salirAlSelector() {
+    context.sonidoToque();
     setState(() {
       _nivel = null;
       _clasificar = null;
@@ -123,7 +164,9 @@ class _NacimientoPageState extends State<NacimientoPage> {
 
   void _colocarAnimal(String animal, String nido) {
     setState(() => _clasificar!.colocar(animal, nido));
-    if (_clasificar!.resultado?.acierto ?? false) {
+    final acierto = _clasificar!.resultado?.acierto ?? false;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       if (_completa) {
         context.sonidoCelebracion();
       } else {
@@ -158,7 +201,9 @@ class _NacimientoPageState extends State<NacimientoPage> {
 
   void _comprobarCiclo() {
     setState(() => _ciclos!.comprobar());
-    if (_ciclos!.resultado?.acierto ?? false) {
+    final acierto = _ciclos!.resultado?.acierto ?? false;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       context.sonidoAcierto();
     } else {
       context.sonidoPista();
@@ -168,7 +213,9 @@ class _NacimientoPageState extends State<NacimientoPage> {
 
   void _responder(String opcion) {
     setState(() => _ciclos!.responder(opcion));
-    if (_ciclos!.resultado?.acierto ?? false) {
+    final acierto = _ciclos!.resultado?.acierto ?? false;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       if (_completa) {
         context.sonidoCelebracion();
       } else {
@@ -186,6 +233,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
     required String titulo,
     required String curiosidad,
   }) {
+    context.sonidoDescubrimiento();
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -234,7 +282,11 @@ class _NacimientoPageState extends State<NacimientoPage> {
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
-                onPressed: () => Navigator.of(context).pop(),
+
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
                 child: const Texto('¡Qué interesante!'),
               ),
             ],
@@ -255,6 +307,12 @@ class _NacimientoPageState extends State<NacimientoPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          InsigniaPrecisionAppBar(
+            combo: _comboActual,
+            semillasSesion: _semillasSesion,
+          ),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -491,6 +549,13 @@ class _NacimientoPageState extends State<NacimientoPage> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
+          const SizedBox(height: 8),
+          ResumenPrecisionFinal(
+            semillasGanadas: _semillasSesion,
+            mejorComboSesion: _mejorComboSesion,
+            sinPistas: _pistasSesion == 0,
+          ),
+          const SizedBox(height: 6),
           if (_guardando) const Texto('Guardando tu progreso…'),
           if (_guardado)
             const Texto('Nivel superado y guardado en este dispositivo.'),
@@ -507,7 +572,12 @@ class _NacimientoPageState extends State<NacimientoPage> {
           FilledButton(
             key: const Key('nacimiento-otra-vez'),
             style: EstilosJuego.accion,
-            onPressed: _guardando ? null : () => _empezar(nivel),
+            onPressed: _guardando
+                ? null
+                : () {
+                    context.sonidoToque();
+                    _empezar(nivel);
+                  },
             child: const Texto('Otra vez'),
           ),
         ],
@@ -519,7 +589,12 @@ class _NacimientoPageState extends State<NacimientoPage> {
           child: const Texto('Cambiar nivel'),
         ),
         TextButton(
-          onPressed: _guardando ? null : () => Navigator.of(context).pop(),
+          onPressed: _guardando
+              ? null
+              : () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
           child: const Texto('Volver a la reserva'),
         ),
       ],
@@ -781,7 +856,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
     return Draggable<String>(
       data: animal.id,
       dragAnchorStrategy: pointerDragAnchorStrategy,
-      onDragStarted: () => setState(() => partida.seleccionar(animal.id)),
+      onDragStarted: () {
+        context.sonidoSeleccion();
+        setState(() => partida.seleccionar(animal.id));
+      },
       feedback: Material(
         color: Colors.transparent,
         child: Transform.translate(
@@ -795,7 +873,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
         label: context.traducir('Animal ${animal.nombre}'),
         child: tarjeta(
           clave: Key('animal-${animal.id}'),
-          onTap: () => setState(() => partida.seleccionar(animal.id)),
+          onTap: () {
+            context.sonidoSeleccion();
+            setState(() => partida.seleccionar(animal.id));
+          },
         ),
       ),
     );
@@ -931,7 +1012,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
           FilledButton(
             key: const Key('siguiente-ciclo'),
             style: EstilosJuego.accion,
-            onPressed: () => setState(partida.siguiente),
+            onPressed: () {
+              context.sonidoToque();
+              setState(partida.siguiente);
+            },
             child: const Texto('Siguiente ciclo'),
           ),
         ],
@@ -946,8 +1030,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
     final fallo = partida.primerFallo == indice;
     return DragTarget<String>(
       onWillAcceptWithDetails: (_) => !ordenado,
-      onAcceptWithDetails: (detalles) =>
-          setState(() => partida.colocarEn(detalles.data, indice)),
+      onAcceptWithDetails: (detalles) {
+          setState(() => partida.colocarEn(detalles.data, indice));
+          context.sonidoPaso(partida.colocados);
+        },
       builder: (context, candidatos, _) {
         final encima = candidatos.isNotEmpty;
         final borde = ordenado
@@ -970,7 +1056,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
             claveAccion: Key('hueco-$indice'),
             onTap: pasoId == null || ordenado
                 ? null
-                : () => setState(() => partida.quitar(indice)),
+                : () {
+                    setState(() => partida.quitar(indice));
+                    context.sonidoQuitar();
+                  },
             borde: borde,
             fondo: ordenado
                 ? const Color(0xFFECFDF5)
@@ -1097,6 +1186,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
     );
     return Draggable<String>(
       data: paso.id,
+      onDragStarted: () => context.sonidoSeleccion(),
       dragAnchorStrategy: pointerDragAnchorStrategy,
       feedback: Material(
         color: Colors.transparent,
@@ -1110,7 +1200,10 @@ class _NacimientoPageState extends State<NacimientoPage> {
         label: context.traducir('Paso ${paso.nombre}'),
         child: tarjeta(
           clave: Key('paso-${paso.id}'),
-          onTap: () => setState(() => partida.anadir(paso.id)),
+          onTap: () {
+            setState(() => partida.anadir(paso.id));
+            context.sonidoPaso(partida.colocados);
+          },
         ),
       ),
     );

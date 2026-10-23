@@ -28,6 +28,11 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   bool _permitirSalir = false;
   bool _verAntes = false;
   String? _inspeccionado;
+  int _comboActual = 0;
+  int _mejorComboSesion = 0;
+  int _semillasSesion = 0;
+  bool _pistaEnPaso = false;
+  int _pistasSesion = 0;
   Ecosistema get _ecosistema => widget.actividad.ecosistema!;
   Duration _duracion(int ms) =>
       Duration(milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : ms);
@@ -78,6 +83,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
             respuestaCorrecta: reto.respuesta,
           );
     }
+    final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
       _partida = PartidaEcosistema(_ecosistema, nivel);
       _guardando = false;
@@ -85,6 +91,11 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       _falloGuardado = false;
       _verAntes = false;
       _inspeccionado = null;
+      _comboActual = comboGlobal;
+      _mejorComboSesion = comboGlobal;
+      _semillasSesion = 0;
+      _pistaEnPaso = false;
+      _pistasSesion = 0;
     });
     // Una preferencia fallida no impide jugar ni altera las estrellas.
     Alcance.of(context).progreso.recordarNivelEcosistema(nivel.id);
@@ -107,6 +118,35 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
     });
   }
 
+  void _registrarPasoPrecision(bool acierto) {
+    final prog = Alcance.maybeOf(context)?.progreso;
+    final baseCombo = prog?.comboActual ?? _comboActual;
+    if (acierto) {
+      final aLaPrimera = !_pistaEnPaso;
+      final nuevoCombo = aLaPrimera ? baseCombo + 1 : 1;
+      final ganadas = aLaPrimera
+          ? (nuevoCombo >= 3 ? 3 : (nuevoCombo == 2 ? 2 : 1))
+          : 1;
+      setState(() {
+        _comboActual = nuevoCombo;
+        if (nuevoCombo > _mejorComboSesion) _mejorComboSesion = nuevoCombo;
+        _semillasSesion += ganadas;
+        _pistaEnPaso = false;
+      });
+      prog?.registrarAciertoPrecision(
+        aLaPrimera: aLaPrimera,
+        comboActual: nuevoCombo,
+      );
+    } else {
+      setState(() {
+        _comboActual = 0;
+        _pistaEnPaso = true;
+        _pistasSesion++;
+      });
+      prog?.romperComboPrecision();
+    }
+  }
+
   void _colocar(String pieza, String destino) {
     setState(() {
       _partida!.colocar(pieza, destino);
@@ -114,7 +154,9 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
         _inspeccionado = destino;
       }
     });
-    if (_partida!.acierto == true) {
+    final acierto = _partida!.acierto == true;
+    _registrarPasoPrecision(acierto);
+    if (acierto) {
       context.sonidoAcierto();
     } else {
       context.sonidoPista();
@@ -170,11 +212,17 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.pop(context, false);
+                },
                 child: const Texto('Seguir jugando'),
               ),
               FilledButton(
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.pop(context, true);
+                },
                 child: const Texto('Salir'),
               ),
             ],
@@ -192,12 +240,14 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   }
 
   Future<void> _cambiarNivel() async {
+    context.sonidoToque();
     if (!await _confirmarSalida() || !mounted) return;
     setState(() => _partida = null);
     _arriba();
   }
 
   void _ayuda() {
+    context.sonidoDescubrimiento();
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -229,7 +279,10 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
               ),
               const SizedBox(height: 20),
               FilledButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.pop(context);
+                },
                 style: EstilosJuego.accion,
                 child: const Texto('¡Vamos a jugar!'),
               ),
@@ -252,6 +305,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
         appBar: AppBar(
           title: Texto(widget.actividad.titulo),
           leading: BackButton(onPressed: _salir),
+          actions: [
+            InsigniaPrecisionAppBar(
+              combo: _comboActual,
+              semillasSesion: _semillasSesion,
+            ),
+          ],
         ),
         body: SafeArea(
           top: false,
@@ -598,7 +657,10 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       borderRadius: BorderRadius.circular(14),
       onTap: colocado
           ? () => setState(
-              () => _inspeccionado = _inspeccionado == e.id ? null : e.id,
+              () {
+                context.sonidoSeleccion();
+                _inspeccionado = _inspeccionado == e.id ? null : e.id;
+              },
             )
           : null,
       child: AnimatedContainer(
@@ -687,6 +749,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
                         if (p.seleccion != null) {
                           _colocar(p.seleccion!, e.id);
                         } else {
+                          context.sonidoPista();
                           setState(
                             () => p.frase =
                                 'Primero toca un dibujo de la bandeja.',
@@ -694,10 +757,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
                         }
                       }
                     : colocado
-                    ? () => setState(
-                        () => _inspeccionado = _inspeccionado == e.id
+                    ? () => setState(() {
+                        context.sonidoSeleccion();
+                        _inspeccionado = _inspeccionado == e.id
                             ? null
-                            : e.id,
+                            : e.id;
+                      }
                       )
                     : null,
                 child: AnimatedContainer(
@@ -901,7 +966,16 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
           FilledButton.tonal(
             key: Key('eco-respuesta-${o.id}'),
             style: EstilosJuego.respuesta,
-            onPressed: () => setState(() => p.responder(o.id)),
+            onPressed: () {
+              setState(() => p.responder(o.id));
+              final acierto = p.acierto == true;
+              _registrarPasoPrecision(acierto);
+              if (acierto) {
+                context.sonidoAcierto();
+              } else {
+                context.sonidoPista();
+              }
+            },
             child: Row(
               children: [
                 if (const ['hierba', 'conejo', 'zorro'].contains(o.id)) ...[
@@ -995,12 +1069,18 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
               ChoiceChip(
                 label: const Texto('Después: hay menos'),
                 selected: !_verAntes,
-                onSelected: (_) => setState(() => _verAntes = false),
+                onSelected: (_) {
+                  context.sonidoSeleccion();
+                  setState(() => _verAntes = false);
+                },
               ),
               ChoiceChip(
                 label: const Texto('Antes: hay más'),
                 selected: _verAntes,
-                onSelected: (_) => setState(() => _verAntes = true),
+                onSelected: (_) {
+                  context.sonidoSeleccion();
+                  setState(() => _verAntes = true);
+                },
               ),
             ],
           ),
@@ -1028,7 +1108,10 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       claveAccion: Key('eco-pieza-${e.id}'),
       borde: p.seleccion == e.id ? const Color(0xFF1F8A4C) : EstilosJuego.borde,
       destacada: p.seleccion == e.id,
-      onTap: () => setState(() => p.seleccionar(e.id)),
+      onTap: () {
+        context.sonidoSeleccion();
+        setState(() => p.seleccionar(e.id));
+      },
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -1055,6 +1138,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
         data: e.id,
         maxSimultaneousDrags: 1,
         dragAnchorStrategy: pointerDragAnchorStrategy,
+        onDragStarted: () => context.sonidoSeleccion(),
         feedback: Transform.translate(
           offset: const Offset(-45, -100),
           child: _dibujoArrastre(e.id),
@@ -1081,6 +1165,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
           ? '¡Has dado vida al claro! Las plantas y los animales están conectados.'
           : '¡Has descubierto conexiones del bosque! En la naturaleza hay muchas más.',
       gesto: 'feliz',
+    ),
+    const SizedBox(height: 12),
+    ResumenPrecisionFinal(
+      semillasGanadas: _semillasSesion,
+      mejorComboSesion: _mejorComboSesion,
+      sinPistas: _pistasSesion == 0,
     ),
     const SizedBox(height: 16),
     if (_guardando) const Texto('Guardando tu descubrimiento…'),
@@ -1122,7 +1212,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
     FilledButton(
       key: const Key('eco-otra-vez'),
       style: EstilosJuego.accion,
-      onPressed: _guardando || !_guardado ? null : () => _empezar(p.nivel),
+      onPressed: _guardando || !_guardado
+          ? null
+          : () {
+              context.sonidoToque();
+              _empezar(p.nivel);
+            },
       child: const Texto('Otra vez'),
     ),
     const SizedBox(height: 8),
@@ -1133,6 +1228,12 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       child: const Texto('Cambiar nivel'),
     ),
     const SizedBox(height: 8),
-    TextButton(onPressed: _salir, child: const Texto('Volver a La reserva')),
+    TextButton(
+      onPressed: () {
+        context.sonidoToque();
+        _salir();
+      },
+      child: const Texto('Volver a La reserva'),
+    ),
   ];
 }

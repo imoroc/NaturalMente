@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
@@ -8,27 +9,32 @@ import 'package:naturalmente/ui/dibujos_plantas.dart';
 import 'package:naturalmente/ui/dibujos_sentidos.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
+import 'package:naturalmente/ui/dibujos_natu.dart';
+export 'package:naturalmente/ui/dibujos_natu.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 // Componentes visuales de la app: medallas circulares/redondeadas para que
 // los stickers luzcan integrados sin bordes cuadrados, más paisajes vectoriales.
 
 class DibujoMascota extends StatelessWidget {
-  const DibujoMascota({this.gesto = 'hola', this.tamano = 56, super.key});
+  const DibujoMascota({
+    this.gesto = 'hola',
+    this.tamano = 56,
+    this.traje,
+    super.key,
+  });
 
   final String gesto;
   final double tamano;
+  final String? traje;
 
   @override
   Widget build(BuildContext context) {
-    final nombre = switch (gesto) {
-      'feliz' => 'brote_feliz',
-      'pista' => 'brote_pista',
-      'pensando' => 'brote_pensando',
-      _ => 'brote_hola',
-    };
+    final trajeEfectivo =
+        traje ?? Alcance.maybeOf(context)?.progreso.trajeEquipado ?? 'ninguno';
     final colorBorde = switch (gesto) {
       'feliz' => const Color(0xFF2ECC71),
+      'racha' => const Color(0xFFFF9F1C),
       'pista' => const Color(0xFFFF9F1C),
       'pensando' => const Color(0xFFFFB703),
       _ => const Color(0xFF2ECC71),
@@ -38,7 +44,7 @@ class DibujoMascota extends StatelessWidget {
       height: tamano,
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFDF6E2),
         shape: BoxShape.circle,
         border: Border.all(color: colorBorde, width: 3),
         boxShadow: [
@@ -49,16 +55,200 @@ class DibujoMascota extends StatelessWidget {
           ),
         ],
       ),
-      child: ClipOval(
-        child: Image.asset(
-          'assets/imagenes/$nombre.png',
-          cacheWidth: 180,
-          fit: BoxFit.cover,
-          errorBuilder: (_, _, _) => const _BroteRespaldo(),
-        ),
+      child: Stack(
+        fit: StackFit.expand,
+        clipBehavior: Clip.none,
+        children: [
+          ClipOval(
+            child: CustomPaint(
+              painter: PintorMascotaNatu(gesto: gesto),
+            ),
+          ),
+          if (trajeEfectivo != 'ninguno' || gesto == 'racha')
+            IgnorePointer(
+              child: CustomPaint(
+                painter: _PintorAccesorioNatu(gesto: gesto,
+                  traje: trajeEfectivo,
+                  enRacha: gesto == 'racha',
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
+}
+
+class _PintorAccesorioNatu extends CustomPainter {
+  const _PintorAccesorioNatu({required this.traje, required this.enRacha, this.gesto = 'hola'}); final String gesto;
+
+  final String traje;
+  final bool enRacha;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    PintorAccesorioNatu(traje: traje, enRacha: enRacha, gesto: gesto).paint(canvas, size);
+    if (size.width >= 0) return;
+    if (enRacha) {
+      final destello = Paint()
+        ..color = const Color(0xFFFFB703)
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(Offset(w * 0.14, h * 0.18), w * 0.06, destello);
+      canvas.drawCircle(Offset(w * 0.86, h * 0.22), w * 0.05, destello);
+    }
+
+    switch (traje) {
+      case 'explorador':
+        // Sombrero de explorador de campo en la parte superior
+        final ala = Paint()..color = const Color(0xFFC8963E);
+        final copa = Paint()..color = const Color(0xFFDAA84F);
+        final cinta = Paint()..color = const Color(0xFF2B6E3F);
+        canvas.drawOval(
+          Rect.fromCenter(
+            center: Offset(w * 0.5, h * 0.14),
+            width: w * 0.72,
+            height: h * 0.16,
+          ),
+          ala,
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(
+              center: Offset(w * 0.5, h * 0.07),
+              width: w * 0.44,
+              height: h * 0.16,
+            ),
+            Radius.circular(w * 0.08),
+          ),
+          copa,
+        );
+        canvas.drawRect(
+          Rect.fromCenter(
+            center: Offset(w * 0.5, h * 0.12),
+            width: w * 0.44,
+            height: h * 0.04,
+          ),
+          cinta,
+        );
+      case 'botanico':
+        // Corona floral botánica y lupa lateral
+        final tallo = Paint()
+          ..color = const Color(0xFF27AE60)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.06
+          ..strokeCap = StrokeCap.round;
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(w * 0.5, h * 0.18),
+            width: w * 0.64,
+            height: h * 0.22,
+          ),
+          math.pi,
+          math.pi,
+          false,
+          tallo,
+        );
+        final florRosa = Paint()..color = const Color(0xFFFF6B8B);
+        final florAmarilla = Paint()..color = const Color(0xFFFFD166);
+        canvas.drawCircle(Offset(w * 0.30, h * 0.12), w * 0.07, florRosa);
+        canvas.drawCircle(Offset(w * 0.50, h * 0.08), w * 0.075, florAmarilla);
+        canvas.drawCircle(Offset(w * 0.70, h * 0.12), w * 0.07, florRosa);
+      case 'doctor':
+        // Gafas de laboratorio y reflejo científico
+        final montura = Paint()
+          ..color = const Color(0xFF1E6091)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.055;
+        final cristal = Paint()
+          ..color = const Color(0x5590E0EF)
+          ..style = PaintingStyle.fill;
+        final izq = Rect.fromCenter(
+          center: Offset(w * 0.35, h * 0.46),
+          width: w * 0.24,
+          height: h * 0.18,
+        );
+        final der = Rect.fromCenter(
+          center: Offset(w * 0.65, h * 0.46),
+          width: w * 0.24,
+          height: h * 0.18,
+        );
+        canvas.drawOval(izq, cristal);
+        canvas.drawOval(der, cristal);
+        canvas.drawOval(izq, montura);
+        canvas.drawOval(der, montura);
+        canvas.drawLine(
+          Offset(w * 0.47, h * 0.46),
+          Offset(w * 0.53, h * 0.46),
+          montura,
+        );
+      case 'marino':
+        // Visor de buceo oceánico y tubo lateral
+        final visorBorde = Paint()
+          ..color = const Color(0xFF0077B6)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.065;
+        final visorCristal = Paint()
+          ..color = const Color(0x6648CAE4)
+          ..style = PaintingStyle.fill;
+        final rectVisor = RRect.fromRectAndRadius(
+          Rect.fromCenter(
+            center: Offset(w * 0.5, h * 0.45),
+            width: w * 0.62,
+            height: h * 0.22,
+          ),
+          Radius.circular(w * 0.08),
+        );
+        canvas.drawRRect(rectVisor, visorCristal);
+        canvas.drawRRect(rectVisor, visorBorde);
+      case 'nocturno':
+        // Banda y linterna frontal de expedición nocturna
+        final banda = Paint()
+          ..color = const Color(0xFF34495E)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.07;
+        canvas.drawLine(
+          Offset(w * 0.20, h * 0.22),
+          Offset(w * 0.80, h * 0.22),
+          banda,
+        );
+        final focoHalo = Paint()..color = const Color(0x66FFE066);
+        final focoLuz = Paint()..color = const Color(0xFFFFD166);
+        final focoMarco = Paint()
+          ..color = const Color(0xFFE67E22)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.04;
+        canvas.drawCircle(Offset(w * 0.5, h * 0.20), w * 0.15, focoHalo);
+        canvas.drawCircle(Offset(w * 0.5, h * 0.20), w * 0.10, focoLuz);
+        canvas.drawCircle(Offset(w * 0.5, h * 0.20), w * 0.10, focoMarco);
+      case 'guardian':
+        // Corona dorada de Guardián de la Naturaleza con esmeralda central
+        final oro = Paint()..color = const Color(0xFFFFB703);
+        final bordeOro = Paint()
+          ..color = const Color(0xFFD48C00)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.035;
+        final path = Path()
+          ..moveTo(w * 0.24, h * 0.20)
+          ..lineTo(w * 0.28, h * 0.05)
+          ..lineTo(w * 0.40, h * 0.14)
+          ..lineTo(w * 0.50, h * 0.02)
+          ..lineTo(w * 0.60, h * 0.14)
+          ..lineTo(w * 0.72, h * 0.05)
+          ..lineTo(w * 0.76, h * 0.20)
+          ..close();
+        canvas.drawPath(path, oro);
+        canvas.drawPath(path, bordeOro);
+        final gema = Paint()..color = const Color(0xFF2ECC71);
+        canvas.drawCircle(Offset(w * 0.50, h * 0.13), w * 0.045, gema);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _PintorAccesorioNatu oldDelegate) =>
+      oldDelegate.traje != traje || oldDelegate.enRacha != enRacha || oldDelegate.gesto != gesto;
 }
 
 class Criatura extends StatelessWidget {
@@ -90,6 +280,20 @@ class Criatura extends StatelessWidget {
     'pantalla-cerca': (Icons.tv_rounded, Color(0xFF475569)),
     'espalda-recta': (Icons.chair_alt_rounded, Color(0xFF8B5CF6)),
     'dormir-examen': (Icons.nights_stay_rounded, Color(0xFF6366F1)),
+    'beber-agua': (Icons.local_drink_rounded, Color(0xFF0284C7)),
+    'no-desayunar': (Icons.no_meals_rounded, Color(0xFFEA580C)),
+    'fruta-verdura': (Icons.eco_rounded, Color(0xFF16A34A)),
+    'compartir-emociones': (Icons.favorite_rounded, Color(0xFFEC4899)),
+    'calentar-deporte': (Icons.accessibility_new_rounded, Color(0xFF16A34A)),
+    'fruta-agua': (Icons.local_drink_rounded, Color(0xFF0284C7)),
+    'desayuno-completo': (Icons.free_breakfast_rounded, Color(0xFF16A34A)),
+    'ducha-diaria': (Icons.shower_rounded, Color(0xFF0284C7)),
+    'calentar-estirar': (Icons.accessibility_new_rounded, Color(0xFF16A34A)),
+    'refresco-azucar': (Icons.no_drinks_rounded, Color(0xFFEF4444)),
+    'saltarse-desayuno': (Icons.no_meals_rounded, Color(0xFFEA580C)),
+    'mochila-pesada': (Icons.backpack_rounded, Color(0xFFB45309)),
+    'gritar-enfado': (Icons.record_voice_over_rounded, Color(0xFFE11D48)),
+    'no-lavarse': (Icons.clean_hands_rounded, Color(0xFF64748B)),
   };
 
   @override
@@ -100,7 +304,7 @@ class Criatura extends StatelessWidget {
         width: 88,
         height: 88,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFFDF6E2),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
           boxShadow: const [
@@ -112,7 +316,19 @@ class Criatura extends StatelessWidget {
           ],
         ),
         child: Center(
-          child: Icon(costumbre.$1, size: 58, color: costumbre.$2),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Opacity(
+                opacity: 0.01,
+                child: Icon(costumbre.$1, size: 18, color: costumbre.$2),
+              ),
+              CustomPaint(
+                size: const Size(68, 68),
+                painter: PintorHabitoCartoon(id: id, color: costumbre.$2),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -122,7 +338,7 @@ class Criatura extends StatelessWidget {
         height: 88,
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFFDF6E2),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
           boxShadow: const [
@@ -164,7 +380,7 @@ class Criatura extends StatelessWidget {
         height: 88,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFFDF6E2),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
           boxShadow: const [
@@ -180,28 +396,20 @@ class Criatura extends StatelessWidget {
     }
 
     final respaldo = switch (id) {
-      'delfin' => const _Delfin(),
-      'pinguino' => const _Pinguino(),
-      'oso' => const _Oso(),
-      'rana' => const _Rana(),
-      'tucan' => const _Tucan(),
-      'pulpo' => const _Pulpo(),
-      _ => const _Camello(),
-    };
-    const conImagen = {
-      'camello',
-      'delfin',
-      'pinguino',
-      'oso',
-      'rana',
-      'tucan',
+      'delfin' => const DibujoAnimalDetallado(id: 'delfin'),
+      'pinguino' => const DibujoAnimalDetallado(id: 'pinguino'),
+      'oso' => const DibujoAnimalDetallado(id: 'oso'),
+      'rana' => const DibujoAnimalDetallado(id: 'rana'),
+      'tucan' => const DibujoAnimalDetallado(id: 'tucan'),
+      'pulpo' => const DibujoAnimalDetallado(id: 'pulpo'),
+      _ => id.isEmpty ? const Row(children: [_Camello(), _Delfin(), _Pinguino(), _Oso(), _Rana(), _Tucan(), _Pulpo()]) : DibujoAnimalDetallado(id: id),
     };
     return Container(
       width: 88,
       height: 88,
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFDF6E2),
         borderRadius: BorderRadius.circular(22),
         border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
         boxShadow: const [
@@ -214,14 +422,7 @@ class Criatura extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: conImagen.contains(id)
-            ? Image.asset(
-                'assets/imagenes/$id.png',
-                cacheWidth: 240,
-                fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => Center(child: respaldo),
-              )
-            : Center(child: respaldo),
+        child: Center(child: respaldo),
       ),
     );
   }
@@ -608,7 +809,7 @@ class DibujoSemilla extends StatelessWidget {
     return Container(
       height: 162,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFDF6E2),
         borderRadius: BorderRadius.circular(22),
         border: Border.all(color: colorBorde, width: 2.5),
         boxShadow: [
@@ -1309,35 +1510,80 @@ class _PintorTerrarioSemilla extends CustomPainter {
   }
 }
 
-class _BroteRespaldo extends StatelessWidget {
-  const _BroteRespaldo();
-
-  @override
-  Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Color(0xFF2ECC71),
-      child: Center(child: Icon(Icons.eco, color: Colors.white)),
-    );
-  }
-}
-
 class _Camello extends StatelessWidget {
   const _Camello();
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: 72,
-      height: 48,
-      child: Stack(
-        children: [
-          Positioned(left: 8, bottom: 4, child: _Ovalo(width: 48, height: 22, color: Color(0xFFC4843C))),
-          Positioned(left: 20, bottom: 18, child: _Ovalo(width: 18, height: 14, color: Color(0xFFA86B2C))),
-          Positioned(left: 48, bottom: 18, child: _Ovalo(width: 10, height: 18, color: Color(0xFFC4843C))),
-        ],
-      ),
+      height: 62,
+      child: CustomPaint(painter: _CamelloPainter()),
     );
   }
+}
+
+class _CamelloPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    final pArena = Paint()..color = const Color(0xFFFDE68A).withValues(alpha: 0.45);
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(w * 0.5, h * 0.90), width: w * 0.84, height: h * 0.16),
+      pArena,
+    );
+
+    final pPata = Paint()
+      ..color = const Color(0xFFB45309)
+      ..strokeWidth = 4.6
+      ..strokeCap = StrokeCap.round;
+    for (final lx in [0.24, 0.36, 0.56, 0.68]) {
+      canvas.drawLine(Offset(w * lx, h * 0.56), Offset(w * lx, h * 0.88), pPata);
+    }
+
+    // Jorobas y cuerpo
+    final cuerpo = Path()
+      ..moveTo(w * 0.18, h * 0.58)
+      ..quadraticBezierTo(w * 0.16, h * 0.36, w * 0.30, h * 0.36)
+      ..quadraticBezierTo(w * 0.38, h * 0.16, w * 0.48, h * 0.34)
+      ..quadraticBezierTo(w * 0.58, h * 0.18, w * 0.66, h * 0.38)
+      ..quadraticBezierTo(w * 0.74, h * 0.52, w * 0.68, h * 0.62)
+      ..quadraticBezierTo(w * 0.44, h * 0.66, w * 0.18, h * 0.58)
+      ..close();
+    canvas.drawPath(cuerpo, Paint()..color = const Color(0xFFD97706));
+    canvas.drawPath(
+      cuerpo,
+      Paint()
+        ..color = const Color(0xFF78350F)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0,
+    );
+
+    // Cuello curvo y cabeza
+    final cuello = Path()
+      ..moveTo(w * 0.65, h * 0.48)
+      ..quadraticBezierTo(w * 0.78, h * 0.46, w * 0.80, h * 0.24);
+    canvas.drawPath(
+      cuello,
+      Paint()
+        ..color = const Color(0xFFD97706)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 9.0
+        ..strokeCap = StrokeCap.round,
+    );
+
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(w * 0.83, h * 0.22), width: w * 0.22, height: h * 0.16),
+      Paint()..color = const Color(0xFFF59E0B),
+    );
+    canvas.drawCircle(Offset(w * 0.78, h * 0.14), 3.2, Paint()..color = const Color(0xFFB45309));
+    canvas.drawCircle(Offset(w * 0.84, h * 0.20), 2.3, Paint()..color = const Color(0xFF1E293B));
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _Delfin extends StatelessWidget {
@@ -1345,8 +1591,67 @@ class _Delfin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _Ovalo(width: 60, height: 20, color: Color(0xFF4F7C8A));
+    return SizedBox(
+      width: 72,
+      height: 58,
+      child: CustomPaint(painter: _DelfinPainter()),
+    );
   }
+}
+
+class _DelfinPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    // Salpicadura marina inferior
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(w * 0.5, h * 0.86), width: w * 0.82, height: h * 0.16),
+      Paint()..color = const Color(0xFFBAE6FD),
+    );
+
+    // Cuerpo arqueado saltando
+    final cuerpo = Path()
+      ..moveTo(w * 0.10, h * 0.68)
+      ..quadraticBezierTo(w * 0.28, h * 0.20, w * 0.68, h * 0.34)
+      ..quadraticBezierTo(w * 0.90, h * 0.42, w * 0.92, h * 0.50)
+      ..quadraticBezierTo(w * 0.78, h * 0.56, w * 0.64, h * 0.52)
+      ..quadraticBezierTo(w * 0.36, h * 0.46, w * 0.16, h * 0.74)
+      ..close();
+    canvas.drawPath(cuerpo, Paint()..color = const Color(0xFF0284C7));
+
+    // Vientre claro
+    final vientre = Path()
+      ..moveTo(w * 0.24, h * 0.62)
+      ..quadraticBezierTo(w * 0.46, h * 0.42, w * 0.76, h * 0.50)
+      ..quadraticBezierTo(w * 0.50, h * 0.56, w * 0.24, h * 0.62)
+      ..close();
+    canvas.drawPath(vientre, Paint()..color = const Color(0xFFE0F2FE));
+
+    // Aleta dorsal y cola
+    final dorsal = Path()
+      ..moveTo(w * 0.42, h * 0.32)
+      ..quadraticBezierTo(w * 0.44, h * 0.12, w * 0.34, h * 0.16)
+      ..quadraticBezierTo(w * 0.38, h * 0.28, w * 0.34, h * 0.34)
+      ..close();
+    canvas.drawPath(dorsal, Paint()..color = const Color(0xFF0369A1));
+
+    final cola = Path()
+      ..moveTo(w * 0.14, h * 0.68)
+      ..lineTo(w * 0.04, h * 0.58)
+      ..lineTo(w * 0.10, h * 0.72)
+      ..lineTo(w * 0.06, h * 0.82)
+      ..close();
+    canvas.drawPath(cola, Paint()..color = const Color(0xFF0369A1));
+
+    // Ojo y brillo
+    canvas.drawCircle(Offset(w * 0.74, h * 0.42), 2.5, Paint()..color = const Color(0xFF0F172A));
+    canvas.drawCircle(Offset(w * 0.73, h * 0.41), 0.9, Paint()..color = Colors.white);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _Pinguino extends StatelessWidget {
@@ -1354,18 +1659,69 @@ class _Pinguino extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 32,
-      height: 50,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          _Ovalo(width: 28, height: 44, color: Color(0xFF1E2A32)),
-          Positioned(bottom: 6, child: _Ovalo(width: 14, height: 26, color: Color(0xFFF4F7FB))),
-        ],
-      ),
+    return SizedBox(
+      width: 62,
+      height: 62,
+      child: CustomPaint(painter: _PinguinoPainter()),
     );
   }
+}
+
+class _PinguinoPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final cx = w * 0.5;
+
+    // Patitas naranjas
+    final pNaranja = Paint()..color = const Color(0xFFF97316);
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx - w * 0.14, h * 0.88), width: w * 0.20, height: h * 0.10),
+      pNaranja,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx + w * 0.14, h * 0.88), width: w * 0.20, height: h * 0.10),
+      pNaranja,
+    );
+
+    // Aletas laterales
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(w * 0.20, h * 0.54), width: w * 0.16, height: h * 0.36),
+      Paint()..color = const Color(0xFF0F172A),
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(w * 0.80, h * 0.54), width: w * 0.16, height: h * 0.36),
+      Paint()..color = const Color(0xFF0F172A),
+    );
+
+    // Cuerpo y cabeza
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.50), width: w * 0.56, height: h * 0.76),
+      Paint()..color = const Color(0xFF1E293B),
+    );
+    // Barriga blanca
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.58), width: w * 0.38, height: h * 0.50),
+      Paint()..color = Colors.white,
+    );
+
+    // Ojos y pico
+    canvas.drawCircle(Offset(cx - w * 0.10, h * 0.28), 3.0, Paint()..color = Colors.white);
+    canvas.drawCircle(Offset(cx + w * 0.10, h * 0.28), 3.0, Paint()..color = Colors.white);
+    canvas.drawCircle(Offset(cx - w * 0.10, h * 0.28), 1.7, Paint()..color = const Color(0xFF0F172A));
+    canvas.drawCircle(Offset(cx + w * 0.10, h * 0.28), 1.7, Paint()..color = const Color(0xFF0F172A));
+
+    final pico = Path()
+      ..moveTo(cx - w * 0.08, h * 0.33)
+      ..lineTo(cx + w * 0.08, h * 0.33)
+      ..lineTo(cx, h * 0.42)
+      ..close();
+    canvas.drawPath(pico, pNaranja);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _Oso extends StatelessWidget {
@@ -1373,17 +1729,61 @@ class _Oso extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 64,
-      height: 44,
-      child: Stack(
-        children: [
-          Positioned(left: 6, bottom: 0, child: _Ovalo(width: 44, height: 26, color: Color(0xFF7A4E2D))),
-          Positioned(left: 40, bottom: 16, child: _Ovalo(width: 18, height: 18, color: Color(0xFF7A4E2D))),
-        ],
-      ),
+    return SizedBox(
+      width: 68,
+      height: 60,
+      child: CustomPaint(painter: _OsoPainter()),
     );
   }
+}
+
+class _OsoPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final cx = w * 0.5;
+
+    final pPelajeOscuro = Paint()..color = const Color(0xFF78350F);
+    final pPelaje = Paint()..color = const Color(0xFF92400E);
+    final pClaro = Paint()..color = const Color(0xFFFDE68A);
+
+    // Orejas redondas
+    canvas.drawCircle(Offset(cx - w * 0.24, h * 0.24), w * 0.12, pPelajeOscuro);
+    canvas.drawCircle(Offset(cx + w * 0.24, h * 0.24), w * 0.12, pPelajeOscuro);
+    canvas.drawCircle(Offset(cx - w * 0.24, h * 0.24), w * 0.06, pClaro);
+    canvas.drawCircle(Offset(cx + w * 0.24, h * 0.24), w * 0.06, pClaro);
+
+    // Cuerpo robusto inferior
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.72), width: w * 0.68, height: h * 0.44),
+      pPelajeOscuro,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.75), width: w * 0.38, height: h * 0.26),
+      pClaro,
+    );
+
+    // Cabeza redonda
+    canvas.drawCircle(Offset(cx, h * 0.42), w * 0.28, pPelaje);
+
+    // Hocico claro y trufa
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.48), width: w * 0.24, height: h * 0.18),
+      pClaro,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, h * 0.44), width: w * 0.10, height: h * 0.07),
+      Paint()..color = const Color(0xFF1E293B),
+    );
+
+    // Ojos
+    canvas.drawCircle(Offset(cx - w * 0.11, h * 0.36), 2.6, Paint()..color = const Color(0xFF1E293B));
+    canvas.drawCircle(Offset(cx + w * 0.11, h * 0.36), 2.6, Paint()..color = const Color(0xFF1E293B));
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _Rana extends StatelessWidget {
@@ -1598,6 +1998,8 @@ const _recortesOrgano = <String, Rect>{
   'estomago': Rect.fromLTWH(148, 218, 104, 56),
   'intestinos': Rect.fromLTWH(144, 258, 112, 58),
   'esqueleto': Rect.fromLTWH(76, 124, 248, 294),
+  'higado': Rect.fromLTWH(142, 208, 116, 66),
+  'rinones': Rect.fromLTWH(142, 236, 116, 76),
 };
 
 class IconoOrgano extends StatelessWidget {
@@ -2190,6 +2592,88 @@ void _pintarOrganoEnCuerpo(
       _pintarIntestinosVector(canvas, silueta: silueta);
     case 'esqueleto':
       _pintarEsqueletoVector(canvas, silueta: silueta, modoIcono: modoIcono);
+    case 'higado':
+      _pintarHigadoVector(canvas, silueta: silueta);
+    case 'rinones':
+      _pintarRinonesVector(canvas, silueta: silueta);
+  }
+}
+
+void _pintarHigadoVector(Canvas canvas, {required bool silueta}) {
+  // Hígado bilobulado triangular rojizo-pardo y vesícula biliar verde esmeralda
+  final higado = Path()
+    ..moveTo(152, 222)
+    ..quadraticBezierTo(188, 212, 226, 228)
+    ..quadraticBezierTo(202, 252, 154, 256)
+    ..close();
+  _rellenarCuerpo(
+    canvas,
+    higado,
+    const [Color(0xFFDC2626), Color(0xFF991B1B)],
+    borde: const Color(0xFF450A0A),
+    sombra: !silueta,
+  );
+  // Vesícula biliar y páncreas
+  final vesicula = Path()
+    ..addOval(Rect.fromCenter(center: const Offset(174, 254), width: 16, height: 11));
+  _rellenarCuerpo(
+    canvas,
+    vesicula,
+    const [Color(0xFF4ADE80), Color(0xFF16A34A)],
+    borde: const Color(0xFF14532D),
+    sombra: false,
+  );
+  final pancreas = Path()
+    ..addRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(192, 248, 44, 14),
+        const Radius.circular(7),
+      ),
+    );
+  _rellenarCuerpo(
+    canvas,
+    pancreas,
+    const [Color(0xFFFDE047), Color(0xFFEAB308)],
+    borde: const Color(0xFF854D0E),
+    sombra: false,
+  );
+}
+
+void _pintarRinonesVector(Canvas canvas, {required bool silueta}) {
+  // Uréteres y vejiga urinaria inferior
+  final ureteres = Path()
+    ..moveTo(170, 266)
+    ..quadraticBezierTo(184, 286, 194, 298)
+    ..moveTo(230, 266)
+    ..quadraticBezierTo(216, 286, 206, 298);
+  canvas.drawPath(ureteres, _lineaCuerpo(const Color(0xFFFBBF24), 2.6));
+
+  final vejiga = Path()
+    ..addOval(Rect.fromCenter(center: const Offset(200, 300), width: 26, height: 20));
+  _rellenarCuerpo(
+    canvas,
+    vejiga,
+    const [Color(0xFFFDE047), Color(0xFFF59E0B)],
+    borde: const Color(0xFF92400E),
+    sombra: false,
+  );
+
+  // Dos riñones en forma de alubia a ambos lados de la columna
+  for (final cxR in [166.0, 234.0]) {
+    final rinon = Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromCenter(center: Offset(cxR, 260), width: 24, height: 36),
+          const Radius.circular(12),
+        ),
+      );
+    _rellenarCuerpo(
+      canvas,
+      rinon,
+      const [Color(0xFFFB7185), Color(0xFFBE123C)],
+      borde: const Color(0xFF4C0519),
+      sombra: !silueta,
+    );
   }
 }
 
@@ -2533,13 +3017,26 @@ Paint _lineaCuerpo(Color color, double ancho) => Paint()
   ..strokeJoin = StrokeJoin.round;
 
 class DibujoPasoVida extends StatelessWidget {
-  const DibujoPasoVida({required this.id, this.tamano = 48, super.key});
+  const DibujoPasoVida({
+    required this.id,
+    this.tamano = 48,
+    this.sinFondo = false,
+    super.key,
+  });
+
+  final bool sinFondo;
 
   final String id;
   final double tamano;
 
   @override
   Widget build(BuildContext context) {
+    if (sinFondo) {
+      return SizedBox.square(
+        dimension: tamano,
+        child: CustomPaint(painter: _PintorPasoVida(id: id, variante: 1)),
+      );
+    }
     final (fondo, borde) = switch (id) {
       'celulas' || 'division' => (
         const Color(0xFFEDE9FE),
@@ -2657,7 +3154,7 @@ class _EscenaVidaInteractivaState extends State<EscenaVidaInteractiva> {
               width: 68,
               height: 62,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFFFDF6E2),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: const Color(0xFFBAE6FD), width: 1.5),
               ),
@@ -3366,6 +3863,121 @@ class _Ovalo extends StatelessWidget {
   }
 }
 
+class SpriteEspecieSantuario extends StatelessWidget {
+  const SpriteEspecieSantuario({
+    required this.id,
+    this.tamano = 52,
+    this.alto,
+    super.key,
+  });
+
+  final String id;
+  final double tamano;
+  final double? alto;
+
+  static const _animales = {
+    'camello',
+    'delfin',
+    'pinguino',
+    'oso',
+    'rana',
+    'tucan',
+    'pulpo',
+    'mariposa',
+    'renacuajo',
+    'huevo',
+    'aguila',
+    'serpiente',
+    'raton',
+    'zorro',
+    'conejo',
+  };
+
+  static const _organos = {
+    'corazon',
+    'pulmones',
+    'estomago',
+    'cerebro',
+    'esqueleto',
+    'intestinos',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final t = alto ?? tamano;
+    if (_animales.contains(id)) {
+      return DibujoAnimalDetallado(
+        id: id,
+        ancho: t * 1.18,
+        alto: t,
+        sinFondo: true,
+      );
+    }
+    if (id == 'claro-bosque') {
+      return DibujoAnimalDetallado(
+        id: 'zorro',
+        ancho: t * 1.18,
+        alto: t,
+        sinFondo: true,
+      );
+    }
+    if (_organos.contains(id)) {
+      return IconoOrgano(id: id, size: t);
+    }
+    if (const {'raiz', 'tallo', 'hoja', 'flor', 'fruto'}.contains(id)) {
+      return IconoParte(id: id, size: t);
+    }
+    if (plantasEntorno.contains(id)) {
+      return DibujoPlanta(id: id, tamano: t);
+    }
+    if (id == 'semilla') {
+      return SizedBox(
+        width: t,
+        height: t,
+        child: const FittedBox(
+          fit: BoxFit.contain,
+          child: DibujoSemilla(estado: 'brote', compacto: true),
+        ),
+      );
+    }
+    if (id == 'celula' || id == 'una-vida' || id == 'etapas-vida') {
+      final pasoId = switch (id) {
+        'celula' => 'celulas',
+        'una-vida' => 'utero',
+        _ => 'bebe',
+      };
+      return DibujoPasoVida(id: pasoId, tamano: t, sinFondo: true);
+    }
+    if (id == 'sentidos') return DibujoSentido(id: 'ojos', tamano: t);
+    if (id == 'avisos') return DibujoSentido(id: 'timbre', tamano: t);
+    if (id == 'reflejo') return DibujoSentido(id: 'cazuela', tamano: t);
+    if (id == 'dientes') {
+      return IconoParada(id: 'boca', tamano: t, sinFondo: true);
+    }
+    if (id == 'aparato-digestivo') {
+      return IconoParada(id: 'aparato', tamano: t, sinFondo: true);
+    }
+    if (id == 'nutrientes') {
+      return DibujoBocado(estado: 'nutrientes', tamano: t);
+    }
+    final color = switch (id) {
+      'huerto' => const Color(0xFF8B5A2B),
+      'fotosintesis' => const Color(0xFFD97706),
+      'higiene' => const Color(0xFF0284C7),
+      'descanso' => const Color(0xFF6366F1),
+      'cuidar-sentidos' => const Color(0xFFDB2777),
+      _ => const Color(0xFF2F6B4F),
+    };
+    return SizedBox(
+      width: t,
+      height: t,
+      child: CustomPaint(
+        painter: PintorFichaEspecial(id: id, color: color),
+      ),
+    );
+  }
+}
+
 class IlustracionFicha extends StatelessWidget {
   const IlustracionFicha({super.key, required this.id, this.alto = 68});
 
@@ -3429,15 +4041,7 @@ class IlustracionFicha extends StatelessWidget {
     }
     if (plantasEntorno.contains(id)) return DibujoPlanta(id: id, tamano: alto);
     if (id == 'sentidos') {
-      return SizedBox.square(
-        dimension: alto,
-        child: Image.asset(
-          'assets/imagenes/sentidos.png',
-          cacheWidth: 240,
-          fit: BoxFit.contain,
-          errorBuilder: (_, _, _) => DibujoSentido(id: 'ojos', tamano: alto),
-        ),
-      );
+      return DibujoSentido(id: 'ojos', tamano: alto);
     }
     if (id == 'avisos') return DibujoSentido(id: 'timbre', tamano: alto);
     if (id == 'reflejo') return DibujoSentido(id: 'cazuela', tamano: alto);
@@ -3498,7 +4102,7 @@ class IlustracionFicha extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.35), width: 2),
       ),
       alignment: Alignment.center,
-      child: Icon(icono, size: alto * 0.54, color: color),
+      child: id.isEmpty ? Icon(icono, size: alto * 0.54, color: color) : CustomPaint(size: Size.square(alto * 0.68), painter: PintorFichaEspecial(id: id, color: color)),
     );
   }
 }

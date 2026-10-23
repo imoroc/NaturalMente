@@ -130,6 +130,8 @@ class PlantaHerbario extends StatelessWidget {
                                 onColocar(pieza, entrada.key);
                               } else if (colocada) {
                                 onConsultar(entrada.key);
+                              } else {
+                                context.sonidoPista();
                               }
                             },
                             child: Stack(

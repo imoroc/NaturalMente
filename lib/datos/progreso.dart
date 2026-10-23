@@ -40,7 +40,9 @@ class Progreso extends ChangeNotifier {
 
   Future<void> marcarReto(Actividad actividad, Reto reto) async {
     await _marcar(_reto(actividad, reto));
-    await desbloquearFicha(reto.id);
+    if (!_nivelesConCromo.containsKey(actividad.id)) {
+      await desbloquearFicha(reto.id);
+    }
   }
 
   Future<void> marcarActividad(Actividad actividad) async {
@@ -121,6 +123,8 @@ class Progreso extends ChangeNotifier {
   static const _nivelesConCromo = {
     'nacimiento': ['facil', 'medio', 'dificil'],
     'digestion': ['facil', 'medio', 'dificil'],
+    'plantas': ['facil', 'medio', 'dificil'],
+    'porte-planta': ['facil', 'medio', 'dificil'],
     'sentidos': ['facil', 'medio', 'dificil'],
     'habitos': ['facil', 'medio', 'dificil'],
   };
@@ -149,12 +153,18 @@ class Progreso extends ChangeNotifier {
       ('digestion', 'facil') => const ['dientes'],
       ('digestion', 'medio') => const ['aparato-digestivo'],
       ('digestion', 'dificil') => const ['nutrientes'],
+
       ('habitos', 'facil') => const ['higiene'],
       ('habitos', 'medio') => const ['descanso'],
       ('habitos', 'dificil') => const ['cuidar-sentidos'],
-      ('plantas', 'facil') => const ['encina'],
-      ('plantas', 'medio') => const ['romero'],
-      ('plantas', 'dificil') => const ['trigo'],
+
+
+
+
+      ('plantas' || 'porte-planta', 'facil') => const ['encina'],
+      ('plantas' || 'porte-planta', 'medio') => const ['romero'],
+      ('plantas' || 'porte-planta', 'dificil') => const ['trigo'],
+
       ('sentidos', 'facil') => const ['sentidos'],
       ('sentidos', 'medio') => const ['avisos'],
       ('sentidos', 'dificil') => const ['reflejo'],
@@ -252,14 +262,16 @@ class Progreso extends ChangeNotifier {
 
   Future<void> marcarNivelLugar(Actividad actividad, String nivel) async {
     await _marcar('${actividad.id}/$nivel/completo');
-    final retosNivel =
-        actividad.nivelesLugar
-            .where((n) => n.id == nivel)
-            .firstOrNull
-            ?.retos ??
-        const <Reto>[];
-    for (final reto in retosNivel) {
-      await desbloquearFicha(reto.id);
+    if (!_nivelesConCromo.containsKey(actividad.id)) {
+      final retosNivel =
+          actividad.nivelesLugar
+              .where((n) => n.id == nivel)
+              .firstOrNull
+              ?.retos ??
+          const <Reto>[];
+      for (final reto in retosNivel) {
+        await desbloquearFicha(reto.id);
+      }
     }
     if (nivel == 'facil') {
       for (final reto in actividad.retos) {
@@ -368,7 +380,6 @@ class Progreso extends ChangeNotifier {
       }
     }
     await marcarActividad(actividad);
-
   }
 
   int nivelesSuperadosDe(Actividad actividad) {
@@ -418,6 +429,372 @@ class Progreso extends ChangeNotifier {
 
   int totalMaxNiveles(Iterable<Actividad> actividades) =>
       actividades.fold(0, (suma, a) => suma + maxNivelesDe(a));
+
+  // --- Economía educativa: Semillas de Sabiduría y Racha de Precisión ---
+
+  static const _claveSemillas = 'economia/semillas';
+  static const _claveComboActual = 'economia/combo-actual';
+  static const _claveMejorCombo = 'economia/mejor-combo';
+  static const _claveTrajeEquipado = 'natu/traje-equipado';
+  static const _claveTrajesEquipados = 'natu/trajes-equipados';
+  static const _claveRachaDias = 'racha/dias';
+  static const _claveUltimaFechaRacha = 'racha/ultima-fecha';
+
+  static const trajesDisponibles = <String>[
+    'ninguno',
+    'explorador',
+    'botanico',
+    'doctor',
+    'marino',
+    'nocturno',
+    'guardian',
+    'apicultor',
+    'polar',
+    'aviador',
+    'lupas',
+    'brujula',
+    'herbarioro',
+    'maestro_reserva',
+    'maestro_invernadero',
+    'maestro_cuerpo',
+    'racha_fuego',
+    'leyenda_natu',
+  ];
+
+  static const trajesPorLogro = <String>{
+    'maestro_reserva',
+    'maestro_invernadero',
+    'maestro_cuerpo',
+    'racha_fuego',
+    'leyenda_natu',
+  };
+
+  int get semillas => _prefs.getInt(_claveSemillas) ?? 0;
+
+  int get comboActual => _prefs.getInt(_claveComboActual) ?? 0;
+
+  int get mejorCombo => _prefs.getInt(_claveMejorCombo) ?? 0;
+
+  Future<int> sumarSemillas(int cantidad) async {
+    if (cantidad <= 0) return 0;
+    final nuevoTotal = semillas + cantidad;
+    try {
+      await _prefs.setInt(_claveSemillas, nuevoTotal);
+    } catch (_) {
+      return 0;
+    }
+    notifyListeners();
+    return cantidad;
+  }
+
+  Future<void> romperComboPrecision() async {
+    try {
+      await _prefs.setInt(_claveComboActual, 0);
+    } catch (_) {
+      return;
+    }
+    notifyListeners();
+  }
+
+  Future<int> registrarAciertoPrecision({
+    required bool aLaPrimera,
+    int? comboActual,
+  }) async {
+    final comboEfectivo =
+        comboActual ?? (aLaPrimera ? (this.comboActual + 1) : 1);
+    final ganadas = aLaPrimera
+        ? (comboEfectivo >= 3 ? 3 : (comboEfectivo == 2 ? 2 : 1))
+        : 1;
+    final nuevoTotal = semillas + ganadas;
+    try {
+      await _prefs.setInt(_claveSemillas, nuevoTotal);
+      await _prefs.setInt(_claveComboActual, comboEfectivo);
+      if (comboEfectivo > mejorCombo) {
+        await _prefs.setInt(_claveMejorCombo, comboEfectivo);
+      }
+    } catch (_) {
+      return 0;
+    }
+    notifyListeners();
+    return ganadas;
+  }
+
+  // --- Logros de Maestría por Zona y Juego Completo ---
+
+  bool zonaDominada(Iterable<Actividad> actividadesZona) {
+    final lista = actividadesZona.toList();
+    if (lista.isEmpty) return false;
+    return totalNivelesSuperados(lista) >= totalMaxNiveles(lista);
+  }
+
+  bool logroTrajeCumplido(
+    String trajeId,
+    Iterable<Actividad> todasActividades,
+  ) {
+    if (hecho('traje/$trajeId')) return true;
+    final lista = todasActividades.toList();
+    if (lista.isEmpty) return false;
+    return switch (trajeId) {
+      'maestro_reserva' => zonaDominada(
+        lista.where((a) => a.zona == 'reserva'),
+      ),
+      'maestro_invernadero' => zonaDominada(
+        lista.where((a) => a.zona == 'invernadero'),
+      ),
+      'maestro_cuerpo' => zonaDominada(
+        lista.where((a) => a.zona == 'cuerpo'),
+      ),
+      'racha_fuego' => rachaDias >= 3 || mejorCombo >= 8,
+      'leyenda_natu' => zonaDominada(lista),
+      _ => false,
+    };
+  }
+
+  Future<List<String>> sincronizarLogrosTrajes(
+    Iterable<Actividad> todasActividades,
+  ) async {
+    final nuevos = <String>[];
+    for (final id in trajesPorLogro) {
+      if (!hecho('traje/$id') && logroTrajeCumplido(id, todasActividades)) {
+        await _marcar('traje/$id');
+        nuevos.add(id);
+      }
+    }
+    return nuevos;
+  }
+
+  // --- Armario Científico de Natu (Multi-ranura compatible) ---
+
+  static String slotDeTraje(String trajeId) => switch (trajeId) {
+    'explorador' ||
+    'botanico' ||
+    'nocturno' ||
+    'apicultor' ||
+    'polar' ||
+    'maestro_reserva' ||
+    'maestro_invernadero' =>
+      'cabeza',
+    'doctor' || 'marino' || 'aviador' || 'lupas' || 'maestro_cuerpo' => 'ojos',
+    'guardian' ||
+    'brujula' ||
+    'herbarioro' ||
+    'racha_fuego' ||
+    'leyenda_natu' =>
+      'insignia',
+    _ => 'ninguno',
+  };
+
+  Set<String> get trajesEquipados {
+    final lista = _prefs.getStringList(_claveTrajesEquipados);
+    if (lista != null && lista.isNotEmpty) {
+      final validos = lista
+          .where((id) => id != 'ninguno' && trajeDesbloqueado(id))
+          .toSet();
+      if (validos.isNotEmpty) return validos;
+    }
+    final individual = _prefs.getString(_claveTrajeEquipado) ?? 'ninguno';
+    if (individual != 'ninguno' && trajeDesbloqueado(individual)) {
+      return {individual};
+    }
+    return const <String>{};
+  }
+
+  bool trajeEstaEquipado(String trajeId) {
+    if (trajeId == 'ninguno') return trajesEquipados.isEmpty;
+    return trajesEquipados.contains(trajeId);
+  }
+
+  String get trajeEquipado {
+    final activos = trajesEquipados;
+    if (activos.isEmpty) return 'ninguno';
+    if (activos.length == 1) return activos.first;
+    return activos.join(',');
+  }
+
+  bool trajeDesbloqueado(String trajeId) =>
+      trajeId == 'ninguno' || hecho('traje/$trajeId');
+
+  Set<String> get trajesDesbloqueados => {
+    'ninguno',
+    for (final id in trajesDisponibles)
+      if (hecho('traje/$id')) id,
+  };
+
+  Future<bool> desbloquearTraje(String trajeId, int coste) async {
+    if (!trajesDisponibles.contains(trajeId)) return false;
+    if (trajeDesbloqueado(trajeId)) {
+      return equiparTraje(trajeId);
+    }
+    if (coste < 0 || semillas < coste) return false;
+    final resto = semillas - coste;
+    try {
+      final okSemillas = await _prefs.setInt(_claveSemillas, resto);
+      if (!okSemillas) return false;
+      await _marcar('traje/$trajeId');
+      await _guardarTrajeEnSlot(trajeId, alternarSiYaEsta: false);
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> equiparTraje(String trajeId) async {
+    if (!trajeDesbloqueado(trajeId)) return false;
+    try {
+      final ok = await _guardarTrajeEnSlot(trajeId, alternarSiYaEsta: false);
+      if (!ok) return false;
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> alternarTraje(String trajeId) async {
+    if (!trajeDesbloqueado(trajeId)) return false;
+    try {
+      final ok = await _guardarTrajeEnSlot(trajeId, alternarSiYaEsta: true);
+      if (!ok) return false;
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> _guardarTrajeEnSlot(
+    String trajeId, {
+    required bool alternarSiYaEsta,
+  }) async {
+    if (trajeId == 'ninguno') {
+      await _prefs.setStringList(_claveTrajesEquipados, const <String>[]);
+      return _prefs.setString(_claveTrajeEquipado, 'ninguno');
+    }
+    final actuales = trajesEquipados.toList();
+    final slotNuevo = slotDeTraje(trajeId);
+    if (alternarSiYaEsta && actuales.contains(trajeId)) {
+      actuales.remove(trajeId);
+    } else {
+      actuales.removeWhere((id) => slotDeTraje(id) == slotNuevo);
+      actuales.add(trajeId);
+    }
+    await _prefs.setStringList(_claveTrajesEquipados, actuales);
+    final principal = actuales.isEmpty ? 'ninguno' : actuales.last;
+    return _prefs.setString(_claveTrajeEquipado, principal);
+  }
+
+  // --- Racha Diaria y Expedición del Día ---
+
+  static String formatearFecha(DateTime fecha) {
+    final y = fecha.year.toString().padLeft(4, '0');
+    final m = fecha.month.toString().padLeft(2, '0');
+    final d = fecha.day.toString().padLeft(2, '0');
+    return '$y-$m-$d';
+  }
+
+  String? get ultimaFechaRacha => _prefs.getString(_claveUltimaFechaRacha);
+
+  int rachaActiva([DateTime? referencia]) {
+    final guardada = _prefs.getInt(_claveRachaDias) ?? 0;
+    if (guardada <= 0) return 0;
+    final ultima = ultimaFechaRacha;
+    if (ultima == null) return 0;
+    final ref = referencia ?? DateTime.now();
+    final hoy = formatearFecha(ref);
+    final ayer = formatearFecha(DateTime(ref.year, ref.month, ref.day - 1));
+    if (ultima == hoy || ultima == ayer) {
+      return guardada;
+    }
+    return 0;
+  }
+
+  int get rachaDias => rachaActiva();
+
+  bool expedicionHoyHecha([DateTime? referencia]) {
+    final hoy = formatearFecha(referencia ?? DateTime.now());
+    if (hecho('expedicion/$hoy')) return true;
+    final ultima = ultimaFechaRacha;
+    if (ultima == null) return false;
+    return ultima == hoy;
+  }
+
+  String dificultadExpedicionHoy([DateTime? referencia]) {
+    final hoy = formatearFecha(referencia ?? DateTime.now());
+    return _prefs.getString('expedicion/dificultad/$hoy') ?? 'facil';
+  }
+
+  int aciertosExpedicionHoy([DateTime? referencia]) {
+    final hoy = formatearFecha(referencia ?? DateTime.now());
+    return _prefs.getInt('expedicion/aciertos/$hoy') ?? 3;
+  }
+
+  int mejorComboExpedicionHoy([DateTime? referencia]) {
+    final hoy = formatearFecha(referencia ?? DateTime.now());
+    return _prefs.getInt('expedicion/combo/$hoy') ?? mejorCombo;
+  }
+
+  int semillasExpedicionHoy([DateTime? referencia]) {
+    final hoy = formatearFecha(referencia ?? DateTime.now());
+    return _prefs.getInt('expedicion/semillas/$hoy') ?? 10;
+  }
+
+  Future<int> completarExpedicionDiaria({
+    DateTime? fecha,
+    int semillasRecompensa = 10,
+    String? dificultad,
+    int? aciertosALaPrimera,
+    int? mejorComboSesion,
+    int? semillasTotalesSesion,
+  }) async {
+    final ref = fecha ?? DateTime.now();
+    final hoy = formatearFecha(ref);
+    final ayer = formatearFecha(DateTime(ref.year, ref.month, ref.day - 1));
+    final ultima = ultimaFechaRacha;
+    final rachaPrevia = _prefs.getInt(_claveRachaDias) ?? 0;
+
+    int nuevaRacha;
+    int premio;
+    if (ultima == hoy && rachaPrevia > 0) {
+      nuevaRacha = rachaPrevia;
+      // Repetir el reto diario el mismo día no entrega semillas extra.
+      premio = 0;
+    } else if (ultima == ayer && rachaPrevia > 0) {
+      nuevaRacha = rachaPrevia + 1;
+      premio = semillasRecompensa;
+    } else {
+      nuevaRacha = 1;
+      premio = semillasRecompensa;
+    }
+
+    try {
+      await _prefs.setInt(_claveRachaDias, nuevaRacha);
+      await _prefs.setString(_claveUltimaFechaRacha, hoy);
+      if (premio > 0) {
+        await _prefs.setInt(_claveSemillas, semillas + premio);
+      }
+      if (dificultad != null) {
+        await _prefs.setString('expedicion/dificultad/$hoy', dificultad);
+      }
+      if (aciertosALaPrimera != null) {
+        await _prefs.setInt('expedicion/aciertos/$hoy', aciertosALaPrimera);
+      }
+      if (mejorComboSesion != null) {
+        await _prefs.setInt('expedicion/combo/$hoy', mejorComboSesion);
+      }
+      if (semillasTotalesSesion != null) {
+        await _prefs.setInt(
+          'expedicion/semillas/$hoy',
+          semillasTotalesSesion + premio,
+        );
+      }
+      await _marcar('expedicion/$hoy');
+    } catch (_) {
+      return rachaPrevia;
+    }
+    notifyListeners();
+    return nuevaRacha;
+  }
 
   Future<void> _marcar(String id) async {
     if (!_hechos.add(id)) return;

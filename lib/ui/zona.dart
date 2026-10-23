@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
@@ -10,6 +11,7 @@ import 'package:naturalmente/ui/digestion.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
+import 'package:naturalmente/ui/laboratorio_zona.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -94,7 +96,63 @@ class ZonaPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFDCFCE7),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: const Color(0xFF86EFAC),
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.public_rounded,
+                            size: 20,
+                            color: Color(0xFF15803D),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Texto(
+                              '1. EXPOSITOR DE BIOMAS EN VIVO',
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(
+                                    color: const Color(0xFF14532D),
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 0.5,
+                                  ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: const Texto(
+                              'Toca o arrastra',
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF16A34A),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    BannerEvolucionZona(zona: zona),
+                    const SizedBox(height: 16),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -179,7 +237,63 @@ class ZonaPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                     ],
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF3E8FF),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: const Color(0xFFD8B4FE),
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.science_rounded,
+                            size: 20,
+                            color: Color(0xFF7E22CE),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Texto(
+                              '3. LABORATORIO DE EXPERIMENTACIÓN',
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(
+                                    color: const Color(0xFF581C87),
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 0.5,
+                                  ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: const Texto(
+                              'Simulador libre',
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF7E22CE),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TarjetaAccesoLaboratorio(zona: zona),
+                    const SizedBox(height: 14),
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
@@ -216,7 +330,7 @@ class ZonaPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Texto(
-                                      'ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
+                                      '4. ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelLarge
@@ -613,6 +727,11 @@ void mostrarDetalleFicha(
   Ficha ficha, {
   required bool desbloqueada,
 }) {
+  if (desbloqueada) {
+    context.sonidoDescubrimiento();
+  } else {
+    context.sonidoPista();
+  }
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -681,6 +800,8 @@ void mostrarDetalleFicha(
             ),
             const SizedBox(height: 16),
             if (desbloqueada) ...[
+              TarjetaFichaEnciclopedica(fichaId: ficha.id),
+              const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
@@ -725,7 +846,10 @@ void mostrarDetalleFicha(
             const SizedBox(height: 16),
             FilledButton(
               key: const Key('cerrar-detalle-ficha'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                context.sonidoToque();
+                Navigator.of(context).pop();
+              },
               child: Texto(desbloqueada ? '¡Genial!' : '¡Voy a descubrirlo!'),
             ),
           ],
@@ -936,7 +1060,10 @@ class _FiltroAlbumChip extends StatelessWidget {
         color: activo ? const Color(0xFFB45309) : const Color(0xFFFCD34D),
         width: 1.5,
       ),
-      onSelected: (_) => alTocar(),
+      onSelected: (_) {
+        context.sonidoSeleccion();
+        alTocar();
+      },
     );
   }
 }

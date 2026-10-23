@@ -1541,7 +1541,7 @@
             },
             {
               "id": "huerto",
-              "nombre": "Tierra de jardín"
+              "nombre": "Tierra"
             }
           ]
         },
@@ -1559,7 +1559,7 @@
             },
             {
               "id": "mucha",
-              "nombre": "Demasiada agua"
+              "nombre": "Mucha agua"
             }
           ]
         },
@@ -1617,7 +1617,7 @@
                 },
                 {
                   "id": "huerto",
-                  "nombre": "Tierra de jardín"
+                  "nombre": "Tierra"
                 }
               ]
             },
@@ -1635,7 +1635,7 @@
                 },
                 {
                   "id": "mucha",
-                  "nombre": "Demasiada agua"
+                  "nombre": "Mucha agua"
                 }
               ]
             },
@@ -1690,7 +1690,7 @@
                 },
                 {
                   "id": "huerto",
-                  "nombre": "Tierra de jardín"
+                  "nombre": "Tierra"
                 }
               ]
             },
@@ -1708,7 +1708,7 @@
                 },
                 {
                   "id": "mucha",
-                  "nombre": "Demasiada agua"
+                  "nombre": "Mucha agua"
                 }
               ]
             },
@@ -1792,7 +1792,7 @@
                 },
                 {
                   "id": "huerto",
-                  "nombre": "Tierra de jardín"
+                  "nombre": "Tierra"
                 }
               ]
             },
@@ -1810,7 +1810,7 @@
                 },
                 {
                   "id": "mucha",
-                  "nombre": "Demasiada agua"
+                  "nombre": "Mucha agua"
                 }
               ]
             },
@@ -1838,15 +1838,15 @@
               "opciones": [
                 {
                   "id": "fria",
-                  "nombre": "Frío (4 °C)"
+                  "nombre": "4 °C"
                 },
                 {
                   "id": "templada",
-                  "nombre": "Templado (20 °C)"
+                  "nombre": "20 °C"
                 },
                 {
                   "id": "calor",
-                  "nombre": "Calor (42 °C)"
+                  "nombre": "42 °C"
                 }
               ]
             }
@@ -4575,6 +4575,30 @@
                 "me-cuida": "¡Genial! Moverte y jugar al aire libre hace fuerte a tu cuerpo.",
                 "no-me-cuida": "Correr y jugar mueve tus músculos y tus huesos. ¡Eso sí te cuida!"
               }
+            },
+            {
+              "id": "beber-agua",
+              "nombre": "Agua fresca",
+              "pregunta": "Beber agua cuando tienes sed",
+              "respuesta": "me-cuida",
+              "pista": "Nuestro cuerpo necesita agua para hidratarse después de correr y jugar.",
+              "curiosidad": "Más de la mitad de nuestro cuerpo está formado por agua.",
+              "frases": {
+                "me-cuida": "¡Genial! El agua fresca es la mejor bebida para quitarte la sed.",
+                "no-me-cuida": "El cuerpo necesita agua todos los días para funcionar bien. ¡Beber agua sí te cuida!"
+              }
+            },
+            {
+              "id": "no-desayunar",
+              "nombre": "Salir sin desayunar",
+              "pregunta": "Ir al colegio con la tripa vacía",
+              "respuesta": "no-me-cuida",
+              "pista": "Después de toda la noche durmiendo, el cuerpo necesita energía para empezar el día.",
+              "curiosidad": "Un buen desayuno puede llevar leche, fruta y pan o cereales.",
+              "frases": {
+                "no-me-cuida": "¡Eso es! Sin desayunar te falta energía para aprender y jugar por la mañana.",
+                "me-cuida": "Con la tripa vacía te cansas antes en clase. Desayunar por la mañana te da fuerzas."
+              }
             }
           ]
         },
@@ -4653,6 +4677,30 @@
               "frases": {
                 "no-me-cuida": "¡Correcto! Una cena ligera, un rato antes de dormir, te ayuda a descansar.",
                 "me-cuida": "Si cenas muchísimo justo antes de acostarte, al cuerpo le cuesta descansar."
+              }
+            },
+            {
+              "id": "fruta-verdura",
+              "nombre": "Colores en el plato",
+              "pregunta": "Comer fruta y verdura todos los días",
+              "respuesta": "me-cuida",
+              "pista": "Las frutas y las verduras tienen vitaminas y agua que protegen tu cuerpo.",
+              "curiosidad": "Tomar cinco raciones de fruta y verdura al día llena tu plato de vitaminas.",
+              "frases": {
+                "me-cuida": "¡Muy bien! Las frutas y las verduras dan vitaminas y ayudan a crecer sano.",
+                "no-me-cuida": "Las frutas y las verduras aportan vitaminas y fibra. ¡Comerlas cada día sí te cuida!"
+              }
+            },
+            {
+              "id": "compartir-emociones",
+              "nombre": "Contar cómo te sientes",
+              "pregunta": "Hablar con tu familia o amigos cuando estás triste o preocupado",
+              "respuesta": "me-cuida",
+              "pista": "Expresar lo que sientes ayuda a que los demás te comprendan y te acompañen.",
+              "curiosidad": "La salud también consiste en sentirnos a gusto con nosotros mismos y con los demás.",
+              "frases": {
+                "me-cuida": "¡Exacto! Contar lo que te pasa alivia las preocupaciones y cuida tus emociones.",
+                "no-me-cuida": "Guardarte todo dentro te hace sentir peor. Hablar con alguien de confianza sí te cuida."
               }
             }
           ]
@@ -4811,6 +4859,76 @@
                   "nervioso": "¡Exacto! El cerebro recibe lo que captan los sentidos y da órdenes al cuerpo. Necesita descansar.",
                   "oido": "El oído capta los sonidos. Al dormir descansa sobre todo el cerebro.",
                   "locomotor": "Los músculos también descansan, pero quien ordena lo aprendido es el cerebro."
+                }
+              }
+            },
+            {
+              "id": "calentar-deporte",
+              "nombre": "Calentar antes",
+              "pregunta": "Estirar y calentar antes de hacer deporte",
+              "respuesta": "me-cuida",
+              "pista": "Preparar los músculos y las articulaciones antes de correr evita tirones y lesiones.",
+              "curiosidad": "Al calentar, llega más sangre a los músculos y las articulaciones se mueven mejor.",
+              "frases": {
+                "me-cuida": "¡Muy bien! Calentar prepara el cuerpo para el ejercicio. ¿Qué parte estás protegiendo?",
+                "no-me-cuida": "Empezar a correr de golpe sin calentar puede causar tirones. ¡Calentar sí te cuida!"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué parte del cuerpo proteges al calentar antes de hacer deporte?",
+                "opciones": [
+                  {
+                    "id": "vista",
+                    "nombre": "La vista, que capta la luz y los colores"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  },
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  }
+                ],
+                "respuesta": "locomotor",
+                "frases": {
+                  "locomotor": "¡Exacto! Al calentar preparas los músculos y las articulaciones del aparato locomotor para no lesionarte.",
+                  "vista": "La vista capta la luz. Al estirar y calentar proteges los músculos y las articulaciones.",
+                  "oido": "El oído capta los sonidos. Al estirar y calentar proteges los músculos y las articulaciones."
+                }
+              }
+            },
+            {
+              "id": "mochila-pesada",
+              "nombre": "Mochila en un hombro",
+              "pregunta": "Llevar una mochila muy pesada colgada de un solo hombro",
+              "respuesta": "no-me-cuida",
+              "pista": "Si todo el peso cae en un lado, la espalda se tuerce y los músculos se sobrecargan.",
+              "curiosidad": "Lo ideal es usar las dos tiras acolchadas y llevar solo lo necesario para ese día.",
+              "frases": {
+                "no-me-cuida": "¡Bien visto! Llevar tanto peso en un solo hombro sobrecarga la espalda. ¿Qué parte sufre?",
+                "me-cuida": "Colgar todo el peso de un solo hombro tuerce la espalda. Conviene usar las dos tiras."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué parte del cuerpo sufre si cargas demasiado peso en un solo hombro?",
+                "opciones": [
+                  {
+                    "id": "oido",
+                    "nombre": "El oído, que capta los sonidos"
+                  },
+                  {
+                    "id": "locomotor",
+                    "nombre": "El aparato locomotor: huesos y músculos"
+                  },
+                  {
+                    "id": "nervioso",
+                    "nombre": "El sistema nervioso: cerebro y nervios"
+                  }
+                ],
+                "respuesta": "locomotor",
+                "frases": {
+                  "locomotor": "¡Correcto! Repartir bien el peso en los dos hombros protege la columna y los músculos de la espalda.",
+                  "oido": "El oído capta los sonidos. El peso de la mochila carga la columna y los músculos.",
+                  "nervioso": "El cerebro dirige el cuerpo, pero quien soporta el peso de la mochila es el aparato locomotor."
                 }
               }
             }

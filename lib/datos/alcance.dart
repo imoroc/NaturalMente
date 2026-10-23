@@ -19,6 +19,10 @@ class Alcance extends InheritedNotifier<Progreso> {
     return alcance!;
   }
 
+  static Alcance? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<Alcance>();
+  }
+
   @override
   bool updateShouldNotify(Alcance oldWidget) {
     return catalogo != oldWidget.catalogo ||

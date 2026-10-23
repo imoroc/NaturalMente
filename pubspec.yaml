@@ -24,6 +24,5 @@ flutter:
   assets:
     - content/catalog.json
     - content/en.json
-    - assets/imagenes/
     - assets/icono/
 

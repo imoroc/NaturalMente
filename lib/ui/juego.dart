@@ -42,6 +42,38 @@ class _JuegoPageState extends State<JuegoPage> {
   List<Opcion> _finalOpcionesBarajadas = const [];
   List<Opcion> _pasosBarajados = const [];
   List<Control> _controlesBarajados = const [];
+  int _comboActual = 0;
+  int _mejorComboSesion = 0;
+  int _semillasSesion = 0;
+  bool _pistaEnPaso = false;
+
+  void _registrarPasoPrecision(bool acierto) {
+    if (acierto) {
+      final aLaPrimera = !_pistaEnPaso;
+      final baseCombo =
+          Alcance.maybeOf(context)?.progreso.comboActual ?? _comboActual;
+      final nuevoCombo = aLaPrimera ? baseCombo + 1 : 1;
+      final ganadas = aLaPrimera
+          ? (nuevoCombo >= 3 ? 3 : (nuevoCombo == 2 ? 2 : 1))
+          : 1;
+      setState(() {
+        _comboActual = nuevoCombo;
+        if (nuevoCombo > _mejorComboSesion) _mejorComboSesion = nuevoCombo;
+        _semillasSesion += ganadas;
+        _pistaEnPaso = false;
+      });
+      Alcance.maybeOf(context)?.progreso.registrarAciertoPrecision(
+        aLaPrimera: aLaPrimera,
+        comboActual: nuevoCombo,
+      );
+    } else {
+      setState(() {
+        _comboActual = 0;
+        _pistaEnPaso = true;
+      });
+      Alcance.maybeOf(context)?.progreso.romperComboPrecision();
+    }
+  }
 
   bool get _tieneNiveles => widget.actividad.nivelesLugar.isNotEmpty;
 
@@ -197,6 +229,7 @@ class _JuegoPageState extends State<JuegoPage> {
     if (_listo) return;
     _listo = true;
     final actividad = widget.actividad;
+    _comboActual = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     if (_tieneNiveles) return;
     if (actividad.tipo == 'lugar' && _retosLugar.isNotEmpty) {
       final progreso = Alcance.of(context).progreso;
@@ -222,6 +255,12 @@ class _JuegoPageState extends State<JuegoPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          InsigniaPrecisionAppBar(
+            combo: _comboActual,
+            semillasSesion: _semillasSesion,
+          ),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -298,15 +337,18 @@ class _JuegoPageState extends State<JuegoPage> {
                   preguntaFinal: _preguntaFinalActualBarajada,
                   preguntaFinalElegida: _preguntaFinalElegida,
                   onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
-                  onElegir: (control, opcion) => setState(() {
-                    _valores[control] = opcion;
-                    if (_baseCompletada) {
-                      _baseCompletada = false;
-                      _preguntaFinalAcertada = false;
-                      _preguntaFinalElegida = null;
-                    }
-                    _resultado = null;
-                  }),
+                  onElegir: (control, opcion) {
+                    context.sonidoSeleccion();
+                    setState(() {
+                      _valores[control] = opcion;
+                      if (_baseCompletada) {
+                        _baseCompletada = false;
+                        _preguntaFinalAcertada = false;
+                        _preguntaFinalElegida = null;
+                      }
+                      _resultado = null;
+                    });
+                  },
                   onAvanzar: _avanzar,
                   onReiniciarBote: _otraVez,
                   onResponderFinal: _responderPreguntaFinal,
@@ -345,16 +387,15 @@ class _JuegoPageState extends State<JuegoPage> {
                   preguntaFinalElegida: _preguntaFinalElegida,
                   onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
                   onAnadir: (id) {
-                    context.sonidoToque();
                     setState(() {
                       if (!_orden.contains(id)) {
                         _orden.add(id);
                         _resultado = null;
                       }
                     });
+                    context.sonidoPaso(_orden.length);
                   },
                   onColocarEnHueco: (id, indice) {
-                    context.sonidoToque();
                     setState(() {
                       final posActual = _orden.indexOf(id);
                       if (posActual >= 0) {
@@ -364,9 +405,10 @@ class _JuegoPageState extends State<JuegoPage> {
                       _orden.insert(destino, id);
                       _resultado = null;
                     });
+                    context.sonidoPaso(_orden.length);
                   },
                   onQuitar: (indice) {
-                    context.sonidoToque();
+                    context.sonidoQuitar();
                     setState(() {
                       _orden.removeAt(indice);
                       _resultado = null;
@@ -586,11 +628,16 @@ class _JuegoPageState extends State<JuegoPage> {
       _valores.clear();
       _orden.clear();
       _retosResueltosNivel.clear();
+      _comboActual = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
+      _mejorComboSesion = 0;
+      _semillasSesion = 0;
+      _pistaEnPaso = false;
       _prepararBarajadoNivel();
     });
   }
 
   void _salirAlSelector() {
+    context.sonidoToque();
     setState(() {
       _nivelIdx = null;
       _reto = 0;
@@ -618,7 +665,7 @@ class _JuegoPageState extends State<JuegoPage> {
     if (idx < 0 || idx == _reto || _retosResueltosNivel.contains(retoId)) {
       return;
     }
-    context.sonidoToque();
+    context.sonidoSeleccion();
     setState(() {
       _reto = idx;
       _intento = 1;
@@ -677,6 +724,14 @@ class _JuegoPageState extends State<JuegoPage> {
     );
     // El atlas del cuerpo es solo de «Cada pieza en su sitio».
     final esCuerpo = actividad.id == 'piezas';
+    final esPortePlanta =
+        actividad.id == 'porte-planta' || actividad.id == 'plantas';
+    final autoAvance =
+        esCuerpo ||
+        actividad.id == 'sentidos' ||
+        esPortePlanta ||
+        actividad.id == 'plantas' ||
+        actividad.id == 'habitos';
     setState(() {
       _sitioElegido = sitio;
       _resultado = resultado;
@@ -687,7 +742,7 @@ class _JuegoPageState extends State<JuegoPage> {
           _retosResueltosNivel.add(reto.id);
           _ultimoRetoCompletado = reto;
           final siguienteIdx = _siguienteRetoPendiente();
-          if (esCuerpo && siguienteIdx != null) {
+          if (autoAvance && siguienteIdx != null) {
             _reto = siguienteIdx;
             _intento = 1;
             _sitioElegido = null;
@@ -702,6 +757,7 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      _registrarPasoPrecision(true);
       final terminaNivel = !_pideAdaptacion && _siguienteRetoPendiente() == null;
       if (terminaNivel) {
         context.sonidoCelebracion();
@@ -712,7 +768,8 @@ class _JuegoPageState extends State<JuegoPage> {
       if (_nivelActual == null || _nivelActual!.id == 'facil') {
         await progreso.marcarReto(actividad, reto);
       }
-      if (!_pideAdaptacion) {
+      if (!_pideAdaptacion &&
+          !const {'sentidos', 'porte-planta', 'plantas'}.contains(actividad.id)) {
         await progreso.desbloquearFicha(reto.id);
       }
       if (terminaNivel && _nivelActual != null) {
@@ -720,6 +777,7 @@ class _JuegoPageState extends State<JuegoPage> {
         await progreso.marcarActividad(actividad);
       }
     } else {
+      _registrarPasoPrecision(false);
       context.sonidoPista();
     }
   }
@@ -731,6 +789,14 @@ class _JuegoPageState extends State<JuegoPage> {
     final resultado = resolverAdaptacion(reto: reto, eleccion: eleccion);
     // El atlas del cuerpo es solo de «Cada pieza en su sitio».
     final esCuerpo = actividad.id == 'piezas';
+    final esPortePlanta =
+        actividad.id == 'porte-planta' || actividad.id == 'plantas';
+    final autoAvance =
+        esCuerpo ||
+        actividad.id == 'sentidos' ||
+        esPortePlanta ||
+        actividad.id == 'plantas' ||
+        actividad.id == 'habitos';
     setState(() {
       _adaptacionElegida = eleccion;
       _resultado = resultado;
@@ -739,7 +805,7 @@ class _JuegoPageState extends State<JuegoPage> {
         _retosResueltosNivel.add(reto.id);
         _ultimoRetoCompletado = reto;
         final siguienteIdx = _siguienteRetoPendiente();
-        if (esCuerpo && siguienteIdx != null) {
+        if (autoAvance && siguienteIdx != null) {
           _reto = siguienteIdx;
           _intento = 1;
           _sitioElegido = null;
@@ -751,6 +817,7 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      _registrarPasoPrecision(true);
       final terminaNivel = _siguienteRetoPendiente() == null;
       if (terminaNivel) {
         context.sonidoCelebracion();
@@ -758,18 +825,22 @@ class _JuegoPageState extends State<JuegoPage> {
         context.sonidoAcierto();
       }
       final progreso = Alcance.of(context).progreso;
-      await progreso.desbloquearFicha(reto.id);
+      if (!const {'sentidos', 'porte-planta', 'plantas'}.contains(actividad.id)) {
+        await progreso.desbloquearFicha(reto.id);
+      }
       if (_nivelActual != null && terminaNivel) {
         await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
         await progreso.marcarActividad(actividad);
       }
     } else {
+      _registrarPasoPrecision(false);
       context.sonidoPista();
     }
   }
 
   void _mostrarCuriosidad(Reto reto) {
     if (reto.curiosidad.isEmpty) return;
+    context.sonidoDescubrimiento();
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -818,7 +889,10 @@ class _JuegoPageState extends State<JuegoPage> {
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
                 child: const Texto('¡Qué interesante!'),
               ),
             ],
@@ -831,6 +905,7 @@ class _JuegoPageState extends State<JuegoPage> {
   void _mostrarCuriosidadControles() {
     final curiosidad = _nivelActual?.curiosidad ?? '';
     if (curiosidad.isEmpty) return;
+    context.sonidoDescubrimiento();
     final fichasNivel = Progreso.fichasDeNivel(
       widget.actividad.id,
       _nivelActual?.id ?? 'facil',
@@ -893,7 +968,10 @@ class _JuegoPageState extends State<JuegoPage> {
               const SizedBox(height: 16),
               FilledButton(
                 key: const Key('cerrar-curiosidad'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  context.sonidoToque();
+                  Navigator.of(context).pop();
+                },
                 child: const Texto('¡Qué interesante!'),
               ),
             ],
@@ -906,6 +984,7 @@ class _JuegoPageState extends State<JuegoPage> {
   void _siguiente() {
     final siguienteIdx = _siguienteRetoPendiente();
     if (siguienteIdx == null) return;
+    context.sonidoToque();
     setState(() {
       _reto = siguienteIdx;
       _intento = 1;
@@ -923,6 +1002,7 @@ class _JuegoPageState extends State<JuegoPage> {
       _salirAlSelector();
       return;
     }
+    context.sonidoToque();
     Navigator.of(context).pop();
   }
 
@@ -956,14 +1036,17 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (paso.experimentoCompletado) {
+      _registrarPasoPrecision(true);
       if (!pideFinal) {
         context.sonidoCelebracion();
       } else {
         context.sonidoAcierto();
       }
     } else if (paso.avanzaEtapa) {
+      _registrarPasoPrecision(true);
       context.sonidoAcierto();
     } else {
+      _registrarPasoPrecision(false);
       context.sonidoPista();
     }
     if (paso.experimentoCompletado && !pideFinal) {
@@ -976,6 +1059,7 @@ class _JuegoPageState extends State<JuegoPage> {
   }
 
   void _otraVez() {
+    context.sonidoToque();
     setState(() {
       _valores.clear();
       _orden.clear();
@@ -1006,12 +1090,14 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      _registrarPasoPrecision(true);
       if (!pideFinal) {
         context.sonidoCelebracion();
       } else {
         context.sonidoAcierto();
       }
     } else {
+      _registrarPasoPrecision(false);
       context.sonidoPista();
     }
     if (resultado.acierto && !pideFinal) {
@@ -1039,6 +1125,7 @@ class _JuegoPageState extends State<JuegoPage> {
       }
     });
     if (resultado.acierto) {
+      _registrarPasoPrecision(true);
       context.sonidoCelebracion();
       final progreso = Alcance.of(context).progreso;
       if (_nivelActual != null) {
@@ -1046,6 +1133,7 @@ class _JuegoPageState extends State<JuegoPage> {
       }
       await progreso.marcarActividad(actividad);
     } else {
+      _registrarPasoPrecision(false);
       context.sonidoPista();
     }
   }
@@ -1290,6 +1378,8 @@ class _Lugar extends StatelessWidget {
   Widget build(BuildContext context) {
     // El atlas del cuerpo es solo de «Cada pieza en su sitio».
     final esCuerpo = actividad.id == 'piezas';
+    final esPortePlanta =
+        actividad.id == 'porte-planta' || actividad.id == 'plantas';
     final fraseInicial = actividad.intro.isNotEmpty
         ? actividad.intro
         : 'Arrastra cada figura a su lugar o toca directamente la tarjeta.';
@@ -1304,7 +1394,7 @@ class _Lugar extends StatelessWidget {
       builder: (context, outerConstraints) {
         final escalaTexto = MediaQuery.textScalerOf(context).scale(1.0);
         final pantallaBaja =
-            outerConstraints.maxHeight < 540 || escalaTexto > 1.25;
+            outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || (esPortePlanta && outerConstraints.maxHeight < 750);
         final progresoValor =
             (organosColocados.length +
                 (retoCompleto ? 0.0 : (lugarAcertado ? 0.65 : 0.25))) /
@@ -1312,10 +1402,16 @@ class _Lugar extends StatelessWidget {
 
         Widget cabeceraReto() {
           final pista = _pistaReto(reto.id);
-          final etiquetaTipo = esCuerpo ? 'Pieza' : 'Reto';
+          final etiquetaTipo = esCuerpo
+              ? 'Pieza'
+              : (actividad.id == 'sentidos'
+                    ? 'Estímulo'
+                    : (esPortePlanta ? 'Espécimen' : 'Reto'));
           final retoCuriosidad = retoCompleto
               ? reto
-              : (esCuerpo ? ultimoRetoCompletado : null);
+              : ((esCuerpo || actividad.id == 'sentidos' || esPortePlanta || actividad.id == 'habitos')
+                    ? ultimoRetoCompletado
+                    : null);
           return AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
@@ -1343,6 +1439,7 @@ class _Lugar extends StatelessWidget {
                 Draggable<String>(
                   data: reto.id,
                   dragAnchorStrategy: pointerDragAnchorStrategy,
+                  onDragStarted: () => context.sonidoSeleccion(),
                   feedback: Material(
                     color: Colors.transparent,
                     child: _Miniatura(id: reto.id),
@@ -1401,7 +1498,10 @@ class _Lugar extends StatelessWidget {
                               ),
                             ),
                           ),
-                          if (esCuerpo &&
+                          if ((esCuerpo ||
+                                  actividad.id == 'sentidos' ||
+                                  esPortePlanta ||
+                                  actividad.id == 'habitos') &&
                               !retoCompleto &&
                               ultimoRetoCompletado != null)
                             Container(
@@ -1510,6 +1610,198 @@ class _Lugar extends StatelessWidget {
             );
             if (usarAlturaFija) return tarjeta;
             return Center(child: SingleChildScrollView(child: tarjeta));
+          }
+
+          if (actividad.id == 'sentidos') {
+            final gridSentidos = LayoutBuilder(
+              builder: (context, constraints) {
+                const separacion = 10.0;
+                final columnas =
+                    constraints.maxWidth > 520 && opciones.length >= 4 ? 3 : 2;
+                final filas = (opciones.length / columnas).ceil();
+                final ancho =
+                    (constraints.maxWidth - separacion * (columnas - 1)) /
+                    columnas;
+                final alto = usarAlturaFija
+                    ? 94.0
+                    : (constraints.maxHeight - separacion * (filas - 1)) /
+                          filas;
+                return GridView.count(
+                  crossAxisCount: columnas,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: separacion,
+                  crossAxisSpacing: separacion,
+                  childAspectRatio: (ancho / alto).clamp(0.65, 4.5),
+                  children: [
+                    for (final opcion in opciones)
+                      _Sitio(
+                        opcion: opcion,
+                        elegido: sitioElegido == opcion.id,
+                        acierto: lugarAcertado && sitioElegido == opcion.id,
+                        criatura: reto.id,
+                        onElegir: () => onSoltar(opcion.id),
+                      ),
+                  ],
+                );
+              },
+            );
+            final bandejaSentidos = Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8FAFC),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFBAE6FD), width: 1.5),
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (final r in retosNivel) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: InkWell(
+                          key: Key('estimulo-sentido-${r.id}'),
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () => onSeleccionarReto?.call(r.id),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 180),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: organosColocados.contains(r.id)
+                                  ? const Color(0xFFDCFCE7)
+                                  : (r.id == reto.id
+                                        ? const Color(0xFFE0F2FE)
+                                        : Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: organosColocados.contains(r.id)
+                                    ? const Color(0xFF22C55E)
+                                    : (r.id == reto.id
+                                          ? const Color(0xFF0284C7)
+                                          : const Color(0xFFCBD5E1)),
+                                width: r.id == reto.id ? 2 : 1.3,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _Miniatura(id: r.id, tamano: 22),
+                                const SizedBox(width: 5),
+                                Texto(
+                                  r.nombre,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w900,
+                                    color: organosColocados.contains(r.id)
+                                        ? const Color(0xFF15803D)
+                                        : (r.id == reto.id
+                                              ? const Color(0xFF0369A1)
+                                              : const Color(0xFF334155)),
+                                  ),
+                                ),
+                                if (organosColocados.contains(r.id)) ...[
+                                  const SizedBox(width: 4),
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    size: 14,
+                                    color: Color(0xFF16A34A),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            );
+            if (usarAlturaFija) {
+              final filas = (opciones.length / 2).ceil();
+              final alturaGrid = filas * 94.0 + (filas - 1) * 10.0;
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  bandejaSentidos,
+                  SizedBox(height: alturaGrid, child: gridSentidos),
+                ],
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                bandejaSentidos,
+                Expanded(child: gridSentidos),
+              ],
+            );
+          }
+
+          if (actividad.id == 'habitos') {
+            final bandejaHabitos = BandejaHabitosInteractiva(
+              retoActualId: reto.id,
+              retosIds: [for (final r in retosNivel) r.id],
+              retosNombres: [for (final r in retosNivel) r.nombre],
+              resueltos: organosColocados,
+              onSeleccionarReto: onSeleccionarReto,
+            );
+            final filaSitios = Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var i = 0; i < opciones.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 10),
+                  Expanded(
+                    child: _Sitio(
+                      opcion: opciones[i],
+                      elegido: sitioElegido == opciones[i].id,
+                      acierto: lugarAcertado && sitioElegido == opciones[i].id,
+                      criatura: reto.id,
+                      onElegir: () => onSoltar(opciones[i].id),
+                    ),
+                  ),
+                ],
+              ],
+            );
+            if (usarAlturaFija) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  bandejaHabitos,
+                  SizedBox(height: 104, child: filaSitios),
+                ],
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                bandejaHabitos,
+                Expanded(child: filaSitios),
+              ],
+            );
+          }
+
+          if (esPortePlanta) {
+            final inspector = _InspectorPorteBotanico(
+              reto: reto,
+              opciones: opciones,
+              retosNivel: retosNivel,
+              organosColocados: organosColocados,
+              sitioElegido: sitioElegido,
+              lugarAcertado: lugarAcertado,
+              bloqueado: lugarAcertado && !retoCompleto,
+              onElegirSitio: onSoltar,
+              onSeleccionarReto: onSeleccionarReto,
+            );
+            if (usarAlturaFija) {
+              return SizedBox(height: 360, child: inspector);
+            }
+            return inspector;
           }
 
           if (esCuerpo) {
@@ -2534,9 +2826,12 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                         onTap: _fasesGerminacion[i].$1 <= maxEtapaDesbloqueada
-                            ? () => setState(
-                                () => _etapaVista = _fasesGerminacion[i].$1,
-                              )
+                            ? () {
+                                context.sonidoSeleccion();
+                                setState(
+                                  () => _etapaVista = _fasesGerminacion[i].$1,
+                                );
+                              }
                             : null,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -3195,8 +3490,9 @@ class _OpcionControl extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
         child: Container(
-          constraints: const BoxConstraints(minHeight: 54),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+          constraints: const BoxConstraints(minHeight: 58),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
@@ -3218,7 +3514,7 @@ class _OpcionControl extends StatelessWidget {
               Texto(
                 nombre,
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 11.5,
@@ -3249,8 +3545,33 @@ class _OpcionControl extends StatelessWidget {
       ),
     );
 
-    return Draggable<_AccionHerramienta>(
+    return LongPressDraggable<_AccionHerramienta>(
       data: accion,
+      delay: const Duration(milliseconds: 180),
+      onDragStarted: () {
+        context.sonidoSeleccion();
+        final scrollable = Scrollable.maybeOf(context);
+        if (scrollable != null && scrollable.position.pixels > 0) {
+          scrollable.position.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 280),
+            curve: Curves.easeOutCubic,
+          );
+        }
+      },
+      onDragUpdate: (details) {
+        if (details.globalPosition.dy < 280) {
+          final scrollable = Scrollable.maybeOf(context);
+          if (scrollable != null && scrollable.position.pixels > 0) {
+            scrollable.position.jumpTo(
+              (scrollable.position.pixels - 18).clamp(
+                0.0,
+                scrollable.position.maxScrollExtent,
+              ),
+            );
+          }
+        }
+      },
       feedback: Material(
         color: Colors.transparent,
         child: _InsigniaHerramientaArrastre(accion: accion),
@@ -3314,13 +3635,23 @@ class _Orden extends StatefulWidget {
 
 class _OrdenState extends State<_Orden> {
   String? _etapaFoco;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void didUpdateWidget(covariant _Orden oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.nivelActual?.id != widget.nivelActual?.id) {
       _etapaFoco = null;
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -3359,7 +3690,7 @@ class _OrdenState extends State<_Orden> {
     final etapaActiva =
         focoValido ?? (orden.isNotEmpty ? orden.last : etapaPorDefecto);
     final compacto = totalPasos > 4;
-    final altoCasilla = compacto ? 46.0 : 50.0;
+    final altoCasilla = compacto ? 42.0 : 46.0;
 
     Widget casillaHistoria(int i) {
       final ocupada = i < orden.length;
@@ -3419,7 +3750,7 @@ class _OrdenState extends State<_Orden> {
                       Expanded(
                         child: Texto(
                           '${i + 1}. ${nombre(pasoId)}',
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: compacto ? 10.2 : 11.2,
@@ -3452,6 +3783,7 @@ class _OrdenState extends State<_Orden> {
             return Draggable<String>(
               data: pasoId,
               dragAnchorStrategy: pointerDragAnchorStrategy,
+              onDragStarted: () => context.sonidoSeleccion(),
               feedback: Material(
                 color: Colors.transparent,
                 child: DibujoPasoVida(id: pasoId, tamano: 52),
@@ -3681,92 +4013,113 @@ class _OrdenState extends State<_Orden> {
               ),
             )
           else ...[
-            EscenaVidaInteractiva(
-              etapaActiva: etapaActiva,
-              nivelId: nivelActual?.id ?? 'facil',
-              onSeleccionarEtapa: (id) => setState(() => _etapaFoco = id),
-            ),
-            const SizedBox(height: 5),
             muralPasos(),
             const SizedBox(height: 5),
             Expanded(
-              child: orden.length == totalPasos
-                  ? Center(
-                      child: SingleChildScrollView(
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
+              child: Scrollbar(
+                controller: _scrollController,
+                thumbVisibility: true,
+                child: ListView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  padding: const EdgeInsets.only(right: 6, bottom: 8),
+                  children: [
+                    EscenaVidaInteractiva(
+                      etapaActiva: etapaActiva,
+                      nivelId: nivelActual?.id ?? 'facil',
+                      onSeleccionarEtapa: (id) {
+                        context.sonidoSeleccion();
+                        setState(() => _etapaFoco = id);
+                      },
+                    ),
+                    const SizedBox(height: 6),
+                    if (orden.length == totalPasos)
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: widget.baseCompletada
+                              ? const Color(0xFFF0FDF4)
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
                             color: widget.baseCompletada
-                                ? const Color(0xFFF0FDF4)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: widget.baseCompletada
-                                  ? const Color(0xFF10B981)
-                                  : const Color(0xFFBAE6FD),
-                              width: 2,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Texto(
-                                widget.baseCompletada
-                                    ? '✓ ¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
-                                    : '¡Las $totalPasos viñetas están colocadas! Pulsa «${actividad.boton}» o toca una viñeta si quieres cambiarla.',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.w800,
-                                  color: Color(0xFF1E293B),
-                                ),
-                              ),
-                              if (widget.baseCompletada &&
-                                  widget.onCuriosidad != null) ...[
-                                const SizedBox(height: 6),
-                                OutlinedButton.icon(
-                                  key: const Key('curiosidad-vida'),
-                                  onPressed: widget.onCuriosidad,
-                                  icon: const Icon(
-                                    Icons.auto_awesome_rounded,
-                                    size: 16,
-                                  ),
-                                  label: const Texto('Ver curiosidad'),
-                                ),
-                              ],
-                            ],
+                                ? const Color(0xFF10B981)
+                                : const Color(0xFFBAE6FD),
+                            width: 2,
                           ),
                         ),
-                      ),
-                    )
-                  : ListView(
-                      children: [
-                        for (final paso in widget.pasosDisponibles)
-                          if (!orden.contains(paso.id)) ...[
-                            Draggable<String>(
-                              data: paso.id,
-                              dragAnchorStrategy: pointerDragAnchorStrategy,
-                              feedback: Material(
-                                color: Colors.transparent,
-                                child: DibujoPasoVida(id: paso.id, tamano: 52),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Texto(
+                              widget.baseCompletada
+                                  ? '✓ ¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
+                                  : '¡Las $totalPasos viñetas están colocadas! Pulsa «${actividad.boton}» o toca una viñeta si quieres cambiarla.',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 12.5,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF1E293B),
                               ),
-                              childWhenDragging: Opacity(
-                                opacity: 0.4,
-                                child: _TarjetaPasoVida(
-                                  paso: paso,
-                                  numeroDestino: orden.length + 1,
-                                  explicacion: _explicacionPasoVida(
-                                    paso.id,
-                                    nivelActual?.id,
-                                  ),
-                                  onTap: () {
-                                    setState(() => _etapaFoco = paso.id);
-                                    widget.onAnadir(paso.id);
-                                  },
+                            ),
+                            if (widget.baseCompletada &&
+                                widget.onCuriosidad != null) ...[
+                              const SizedBox(height: 6),
+                              OutlinedButton.icon(
+                                key: const Key('curiosidad-vida'),
+                                onPressed: widget.onCuriosidad,
+                                icon: const Icon(
+                                  Icons.auto_awesome_rounded,
+                                  size: 16,
+                                ),
+                                label: const Texto('Ver curiosidad'),
+                              ),
+                            ],
+                          ],
+                        ),
+                      )
+                    else ...[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.swipe_vertical_rounded,
+                              size: 14,
+                              color: Color(0xFF0284C7),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Texto(
+                                'Desliza para ver todas las viñetas (${widget.pasosDisponibles.length - orden.length} por colocar)',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color(0xFF0369A1),
                                 ),
                               ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      for (final paso in widget.pasosDisponibles)
+                        if (!orden.contains(paso.id)) ...[
+                          LongPressDraggable<String>(
+                            data: paso.id,
+                            delay: const Duration(milliseconds: 220),
+                            dragAnchorStrategy: pointerDragAnchorStrategy,
+                            onDragStarted: () => context.sonidoSeleccion(),
+                            feedback: Material(
+                              color: Colors.transparent,
+                              child: DibujoPasoVida(id: paso.id, tamano: 52),
+                            ),
+                            childWhenDragging: Opacity(
+                              opacity: 0.4,
                               child: _TarjetaPasoVida(
-                                key: Key('paso-${paso.id}'),
                                 paso: paso,
                                 numeroDestino: orden.length + 1,
                                 explicacion: _explicacionPasoVida(
@@ -3779,10 +4132,26 @@ class _OrdenState extends State<_Orden> {
                                 },
                               ),
                             ),
-                            const SizedBox(height: 6),
-                          ],
-                      ],
-                    ),
+                            child: _TarjetaPasoVida(
+                              key: Key('paso-${paso.id}'),
+                              paso: paso,
+                              numeroDestino: orden.length + 1,
+                              explicacion: _explicacionPasoVida(
+                                paso.id,
+                                nivelActual?.id,
+                              ),
+                              onTap: () {
+                                setState(() => _etapaFoco = paso.id);
+                                widget.onAnadir(paso.id);
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                        ],
+                    ],
+                  ],
+                ),
+              ),
             ),
           ],
           const SizedBox(height: 4),
@@ -3850,39 +4219,82 @@ class _TarjetaPasoVida extends StatelessWidget {
   final String explicacion;
   final VoidCallback onTap;
 
+  Widget _envolverArrastreRapido(BuildContext context, Widget hijo) {
+    return Draggable<String>(
+      data: paso.id,
+      dragAnchorStrategy: pointerDragAnchorStrategy,
+      onDragStarted: () => context.sonidoSeleccion(),
+      feedback: Material(
+        color: Colors.transparent,
+        child: DibujoPasoVida(id: paso.id, tamano: 52),
+      ),
+      childWhenDragging: Opacity(opacity: 0.4, child: hijo),
+      child: hijo,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final miniatura = Container(
+      padding: const EdgeInsets.all(2.5),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0F9FF),
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: const Color(0xFFBAE6FD)),
+      ),
+      child: DibujoPasoVida(id: paso.id, tamano: 36),
+    );
+
+    final insigniaPaso = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE0F2FE),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.add_circle_rounded,
+            color: Color(0xFF0284C7),
+            size: 15,
+          ),
+          const SizedBox(width: 3),
+          Texto(
+            'Paso $numeroDestino',
+            style: const TextStyle(
+              fontSize: 10.2,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF0369A1),
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(16),
       child: InkWell(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: const Color(0xFFBAE6FD), width: 2),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFFBAE6FD), width: 1.8),
             boxShadow: const [
               BoxShadow(
                 color: Color(0xFFE2E8F0),
-                offset: Offset(0, 3),
+                offset: Offset(0, 2),
                 blurRadius: 0,
               ),
             ],
           ),
           child: Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF0F9FF),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFBAE6FD)),
-                ),
-                child: DibujoPasoVida(id: paso.id, tamano: 42),
-              ),
-              const SizedBox(width: 10),
+              _envolverArrastreRapido(context, miniatura),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -3891,19 +4303,19 @@ class _TarjetaPasoVida extends StatelessWidget {
                       paso.nombre,
                       style: const TextStyle(
                         fontWeight: FontWeight.w900,
-                        fontSize: 13.5,
+                        fontSize: 12.8,
                         color: Color(0xFF0F172A),
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 1.5),
                     Texto(
                       explicacion,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 11.2,
+                        fontSize: 10.8,
                         fontWeight: FontWeight.w600,
-                        height: 1.18,
+                        height: 1.15,
                         color: Color(0xFF475569),
                       ),
                     ),
@@ -3911,32 +4323,7 @@ class _TarjetaPasoVida extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE0F2FE),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.add_circle_rounded,
-                      color: Color(0xFF0284C7),
-                      size: 16,
-                    ),
-                    const SizedBox(width: 3),
-                    Texto(
-                      'Paso $numeroDestino',
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFF0369A1),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _envolverArrastreRapido(context, insigniaPaso),
             ],
           ),
         ),
@@ -4006,6 +4393,22 @@ String? _pistaReto(String id) => switch (id) {
   'cerebro' => 'Piensa, recuerda y dirige el cuerpo',
   'esqueleto' => 'Huesos que nos sostienen y mueven',
   'intestinos' => 'Absorben los nutrientes y el agua',
+  'ojos' => 'Captan la luz, las formas y los colores',
+  'orejas' => 'Recogen las vibraciones y los sonidos',
+  'nariz' => 'Detecta los aromas que flotan en el aire',
+  'lengua' => 'Sus papilas distinguen los sabores',
+  'piel' => 'Nota el frío, el calor y las texturas',
+  'humo' => 'Un olor fuerte avisa en la cocina',
+  'piscina' => 'Notamos de golpe su temperatura al entrar',
+  'timbre' => 'Un sonido avisa a toda la clase',
+  'limon' => 'Un sabor intenso al probar una gota',
+  'semaforo' => 'Una luz de color nos indica esperar',
+  'arena' => 'Notamos su temperatura bajo los pies',
+  'cazuela' => 'El aroma viaja por el aire hasta nosotros',
+  'nombre' => 'Una voz viaja en ondas por el aire',
+  'verde' => 'Miramos la luz antes de cruzar',
+  'leche' => 'Su olor y su sabor nos avisan a la vez',
+  'incendio' => 'Olor a humo y sirenas nos ponen alerta',
   _ => null,
 };
 
@@ -4014,8 +4417,16 @@ String? _subtituloSitio(String id) => switch (id) {
   'pecho' => 'Protegido por las costillas',
   'barriga' => 'Estómago e intestinos',
   'extremidades' => 'Brazos y piernas en movimiento',
+  // Costumbres y sentidos
   'me-cuida' => 'Me hace sentir bien',
   'no-me-cuida' => 'Mejor cambiarlo',
+  // Sentidos
+  'vista' => 'Ojos · Colores, formas y luz',
+  'oido' => 'Oídos · Sonidos, música y voces',
+  'olfato' => 'Nariz · Aromas y olores del aire',
+  'gusto' => 'Lengua · Sabores dulces o ácidos',
+  'tacto' => 'Piel · Frío, calor y texturas',
+  // Fin sentidos
   _ => null,
 };
 
@@ -4077,6 +4488,16 @@ Color _colorSitio(String id) {
       return const Color(0xFFF3E8FF);
     case 'pecho':
       return const Color(0xFFFFE4E6);
+    case 'vista':
+      return const Color(0xFFE0F2FE);
+    case 'oido':
+      return const Color(0xFFF3E8FF);
+    case 'olfato':
+      return const Color(0xFFDCFCE7);
+    case 'gusto':
+      return const Color(0xFFFFE4E6);
+    case 'tacto':
+      return const Color(0xFFFEF3C7);
     case 'barriga':
       return const Color(0xFFFEF3C7);
     case 'extremidades':
@@ -4114,6 +4535,16 @@ Color _bordeSitio(String id) {
       return const Color(0xFFC084FC);
     case 'pecho':
       return const Color(0xFFFB7185);
+    case 'vista':
+      return const Color(0xFF0284C7);
+    case 'oido':
+      return const Color(0xFF9333EA);
+    case 'olfato':
+      return const Color(0xFF16A34A);
+    case 'gusto':
+      return const Color(0xFFE11D48);
+    case 'tacto':
+      return const Color(0xFFD97706);
     case 'barriga':
       return const Color(0xFFFBBF24);
     case 'extremidades':
@@ -4124,5 +4555,602 @@ Color _bordeSitio(String id) {
       return const Color(0xFFFB923C);
     default:
       return const Color(0xFFD6CFC0);
+  }
+}
+
+
+class _InspectorPorteBotanico extends StatefulWidget {
+  const _InspectorPorteBotanico({
+    required this.reto,
+    required this.opciones,
+    required this.retosNivel,
+    required this.organosColocados,
+    required this.sitioElegido,
+    required this.lugarAcertado,
+    required this.bloqueado,
+    required this.onElegirSitio,
+    required this.onSeleccionarReto,
+  });
+
+  final Reto reto;
+  final List<Opcion> opciones;
+  final List<Reto> retosNivel;
+  final Set<String> organosColocados;
+  final String? sitioElegido;
+  final bool lugarAcertado;
+  final bool bloqueado;
+  final void Function(String sitio, {String? organoArrastrado}) onElegirSitio;
+  final ValueChanged<String>? onSeleccionarReto;
+
+  @override
+  State<_InspectorPorteBotanico> createState() =>
+      _InspectorPorteBotanicoState();
+}
+
+class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
+  bool _lupaCorteza = false;
+  bool _pruebaViento = false;
+
+  (String altura, String talloInfo, String resistenciaInfo, double escala)
+  _fichaTecnica(String id) {
+    return switch (id) {
+      'manzano' => (
+        '6 m (alta)',
+        '1 tronco leñoso firme con copa redondeada y manzanas',
+        'Su tronco de madera sostiene las ramas frente al viento',
+        0.85,
+      ),
+      'chopo' => (
+        '16 m (muy alta)',
+        '1 tronco recto, alto y esbelto de corteza clara',
+        'Tronco leñoso firme cuya copa se mece en lo alto',
+        0.98,
+      ),
+      'tomillo' => (
+        '0,4 m (mata baja)',
+        'Muchos tallos leñosos finos que salen desde la tierra',
+        'Ramas bajas y resistentes pegadas al suelo pedregoso',
+        0.42,
+      ),
+      'cesped' => (
+        '0,15 m (ras del suelo)',
+        'Briznas verdes muy finas, tiernas y blandas',
+        'Se dobla por completo con la brisa como una alfombra',
+        0.22,
+      ),
+      'tomatera' => (
+        '0,7 m (baja)',
+        'Tallo verde, jugoso y tierno que da tomates rojos',
+        'Su tallo herbáceo es blando y se inclina con el viento',
+        0.38,
+      ),
+      'encina' => (
+        '12 m (muy alta)',
+        '1 tronco grueso con corteza rugosa',
+        'No se dobla con el viento fuerte',
+        1.0,
+      ),
+      'pino' => (
+        '18 m (gigante)',
+        '1 tronco recto que ramifica arriba',
+        'Tronco firme y rígido todo el año',
+        1.0,
+      ),
+      'olivo' => (
+        '8 m (alta)',
+        '1 tronco grueso y retorcido de madera dura',
+        'Madera muy resistente al viento',
+        0.9,
+      ),
+      'romero' => (
+        '1,2 m (media)',
+        'Varios tallos duros desde el suelo',
+        'Ramas duras pero más bajas que una persona',
+        0.52,
+      ),
+      'rosal' => (
+        '1,4 m (media)',
+        'Tallos ramificados desde la base con espinas',
+        'Se mece un poco pero sus ramas son firmes',
+        0.55,
+      ),
+      'lavanda' => (
+        '0,9 m (media-baja)',
+        'Mata baja con muchos tallos desde la tierra',
+        'Tallos duros en la base sin tronco único',
+        0.48,
+      ),
+      'trigo' => (
+        '0,6 m (baja)',
+        'Tallo fino, hueco y flexible de color verde/dorado',
+        'Se dobla suavemente con la brisa sin romperse',
+        0.32,
+      ),
+      'amapola' => (
+        '0,4 m (pequeña)',
+        'Tallo verde, tierno y muy blando con pelillos',
+        'Se inclina entera cuando sopla el viento',
+        0.28,
+      ),
+      'trebol' => (
+        '0,15 m (ras del suelo)',
+        'Tallos verdes muy tiernos que crecen pegados al suelo',
+        'Blanda y flexible como una alfombra verde',
+        0.22,
+      ),
+      _ => (
+        '1,0 m',
+        'Observa si tiene tronco, ramas desde el suelo o tallo tierno',
+        'Observa cómo reacciona al viento',
+        0.5,
+      ),
+    };
+  }
+
+  String _resumenCategoria(String id) {
+    return switch (id) {
+      'arbol' => '1 tronco grueso · Ramas arriba',
+      'arbusto' => 'Varios tallos duros desde el suelo',
+      'hierba' => 'Tallo verde, fino y flexible',
+      _ => '',
+    };
+  }
+
+  IconData _iconoCategoria(String id) {
+    return switch (id) {
+      'arbol' => Icons.park_rounded,
+      'arbusto' => Icons.forest_rounded,
+      'hierba' => Icons.grass_rounded,
+      _ => Icons.eco_rounded,
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final (altura, talloInfo, resistenciaInfo, _) = _fichaTecnica(
+      widget.reto.id,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF0FDF4),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFFBBF7D0), width: 1.5),
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.biotech_rounded,
+                  size: 16,
+                  color: Color(0xFF15803D),
+                ),
+                const SizedBox(width: 6),
+                const Texto(
+                  'Muestras:',
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF166534),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                for (var i = 0; i < widget.retosNivel.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 6),
+                  Builder(
+                    builder: (context) {
+                      final r = widget.retosNivel[i];
+                      final resuelto = widget.organosColocados.contains(r.id);
+                      final activo = r.id == widget.reto.id;
+                      return InkWell(
+                        onTap: () => widget.onSeleccionarReto?.call(r.id),
+                        borderRadius: BorderRadius.circular(999),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 180),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: activo
+                                ? const Color(0xFF16A34A)
+                                : (resuelto
+                                      ? const Color(0xFFDCFCE7)
+                                      : Colors.white),
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(
+                              color: activo
+                                  ? const Color(0xFF15803D)
+                                  : (resuelto
+                                        ? const Color(0xFF4ADE80)
+                                        : const Color(0xFFCBD5E1)),
+                              width: activo ? 2 : 1.2,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (resuelto) ...[
+                                Icon(
+                                  Icons.check_circle_rounded,
+                                  size: 13,
+                                  color: activo
+                                      ? Colors.white
+                                      : const Color(0xFF16A34A),
+                                ),
+                                const SizedBox(width: 4),
+                              ],
+                              Texto(
+                                r.nombre,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w900,
+                                  color: activo
+                                      ? Colors.white
+                                      : const Color(0xFF1E293B),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          flex: 5,
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFE0F2FE), Color(0xFFF0FDF4)],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: const Color(0xFF86EFAC), width: 2),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned(
+                        left: 4,
+                        top: 4,
+                        bottom: 4,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: const Color(0xFFCBD5E1)),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Icon(
+                                Icons.straighten_rounded,
+                                size: 14,
+                                color: Color(0xFF0369A1),
+                              ),
+                              Texto(
+                                altura,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF0F172A),
+                                ),
+                              ),
+                              const Texto(
+                                'Suelo 0 m',
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF64748B),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: _pruebaViento ? 0.035 : 0.0,
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                        child: AnimatedScale(
+                          scale: _lupaCorteza ? 1.18 : 1.0,
+                          duration: const Duration(milliseconds: 280),
+                          child: Draggable<String>(
+                            data: widget.reto.id,
+                            dragAnchorStrategy: pointerDragAnchorStrategy,
+                            onDragStarted: () => context.sonidoSeleccion(),
+                            feedback: Material(
+                              color: Colors.transparent,
+                              child: _Miniatura(id: widget.reto.id, tamano: 68),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 48),
+                              child: SizedBox(
+                                width: 170,
+                                height: 130,
+                                child: VisorBotanicoInteractivo(
+                                  especimenId: widget.reto.id,
+                                  lupaActiva: _lupaCorteza,
+                                  vientoActivo: _pruebaViento,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                context.sonidoSeleccion();
+                                setState(() => _lupaCorteza = !_lupaCorteza);
+                              },
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _lupaCorteza
+                                      ? const Color(0xFFFEF3C7)
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: _lupaCorteza
+                                        ? const Color(0xFFD97706)
+                                        : const Color(0xFFCBD5E1),
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.search_rounded,
+                                      size: 15,
+                                      color: _lupaCorteza
+                                          ? const Color(0xFFB45309)
+                                          : const Color(0xFF475569),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    const Flexible(
+                                      child: Texto(
+                                        'Lupa tallo',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                context.sonidoSeleccion();
+                                setState(() => _pruebaViento = !_pruebaViento);
+                              },
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _pruebaViento
+                                      ? const Color(0xFFE0F2FE)
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: _pruebaViento
+                                        ? const Color(0xFF0284C7)
+                                        : const Color(0xFFCBD5E1),
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.air_rounded,
+                                      size: 15,
+                                      color: _pruebaViento
+                                          ? const Color(0xFF0369A1)
+                                          : const Color(0xFF475569),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    const Flexible(
+                                      child: Texto(
+                                        'Soplar aire',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.92),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFFBBF7D0)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Texto(
+                              '• Tallo: $talloInfo',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF1E293B),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Texto(
+                              '• Al viento: $resistenciaInfo',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF475569),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          flex: 4,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < widget.opciones.length; i++) ...[
+                if (i > 0) const SizedBox(width: 8),
+                Expanded(
+                  child: Builder(
+                    builder: (context) {
+                      final o = widget.opciones[i];
+                      final elegido = widget.sitioElegido == o.id;
+                      final esCorrecto = elegido && widget.lugarAcertado;
+                      final colorCat = _bordeSitio(o.id);
+                      return DragTarget<String>(
+                        onWillAcceptWithDetails: (_) => !widget.bloqueado,
+                        onAcceptWithDetails: (_) => widget.onElegirSitio(o.id),
+                        builder: (context, candidatos, _) {
+                          final encima = candidatos.isNotEmpty;
+                          return Material(
+                            color: esCorrecto
+                                ? const Color(0xFFDCFCE7)
+                                : (encima
+                                      ? colorCat.withValues(alpha: 0.18)
+                                      : Colors.white),
+                            borderRadius: BorderRadius.circular(18),
+                            child: InkWell(
+                              key: Key('sitio-${o.id}'),
+                              onTap: widget.bloqueado
+                                  ? null
+                                  : () => widget.onElegirSitio(o.id),
+                              borderRadius: BorderRadius.circular(18),
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(
+                                    color: esCorrecto
+                                        ? const Color(0xFF16A34A)
+                                        : (elegido
+                                              ? const Color(0xFFF59E0B)
+                                              : colorCat),
+                                    width: (esCorrecto || encima) ? 2.8 : 2.0,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      _iconoCategoria(o.id),
+                                      size: 26,
+                                      color: colorCat,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Texto(
+                                      o.nombre,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 13.5,
+                                        fontWeight: FontWeight.w900,
+                                        color: Color(0xFF0F172A),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Texto(
+                                      _resumenCategoria(o.id),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF475569),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

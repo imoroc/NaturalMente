@@ -616,7 +616,14 @@ class _PintorBocado extends CustomPainter {
 
 /// Icono de una parada o de un despiste, recortado del mismo dibujo.
 class IconoParada extends StatelessWidget {
-  const IconoParada({required this.id, this.tamano = 48, super.key});
+  const IconoParada({
+    required this.id,
+    this.tamano = 48,
+    this.sinFondo = false,
+    super.key,
+  });
+
+  final bool sinFondo;
 
   final String id;
   final double tamano;
@@ -627,11 +634,13 @@ class IconoParada extends StatelessWidget {
       width: tamano,
       height: tamano,
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF7F0),
+        color: sinFondo ? const Color(0x00000000) : const Color(0xFFFFF7F0),
         borderRadius: BorderRadius.circular(tamano * .28),
-        border: Border.all(color: const Color(0xFFF5C59A), width: 2),
+        border: sinFondo
+            ? null
+            : Border.all(color: const Color(0xFFF5C59A), width: 2),
       ),
-      padding: EdgeInsets.all(tamano * .08),
+      padding: sinFondo ? EdgeInsets.zero : EdgeInsets.all(tamano * .08),
       child: CustomPaint(painter: _PintorIconoParada(id)),
     );
   }

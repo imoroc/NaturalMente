@@ -148,16 +148,25 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   }
 
   void _colocar(String pieza, String destino) {
+    var acierto = false;
     setState(() {
       _partida!.colocar(pieza, destino);
-      if (_partida!.acierto == true) {
+      acierto = _partida!.acierto == true;
+      if (acierto) {
         _inspeccionado = destino;
+        _verAntes = false;
+        _partida!.seguir();
       }
     });
-    final acierto = _partida!.acierto == true;
     _registrarPasoPrecision(acierto);
     if (acierto) {
-      context.sonidoAcierto();
+      if (_partida!.completa) {
+        context.sonidoCelebracion();
+        _guardar();
+      } else {
+        context.sonidoAcierto();
+      }
+      _arriba();
     } else {
       context.sonidoPista();
     }
@@ -967,11 +976,24 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
             key: Key('eco-respuesta-${o.id}'),
             style: EstilosJuego.respuesta,
             onPressed: () {
-              setState(() => p.responder(o.id));
-              final acierto = p.acierto == true;
+              var acierto = false;
+              setState(() {
+                p.responder(o.id);
+                acierto = p.acierto == true;
+                if (acierto && p.cambio == null) {
+                  _verAntes = false;
+                  p.seguir();
+                }
+              });
               _registrarPasoPrecision(acierto);
               if (acierto) {
-                context.sonidoAcierto();
+                if (p.completa) {
+                  context.sonidoCelebracion();
+                  _guardar();
+                } else {
+                  context.sonidoAcierto();
+                }
+                if (!p.confirmado) _arriba();
               } else {
                 context.sonidoPista();
               }
@@ -1031,14 +1053,6 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
           onPressed: _seguir,
           icon: const Icon(Icons.restore_rounded),
           label: const Texto('Restaurar el claro'),
-        ),
-      ] else if (p.confirmado) ...[
-        const SizedBox(height: 16),
-        FilledButton(
-          key: const Key('eco-seguir'),
-          style: EstilosJuego.accion,
-          onPressed: _seguir,
-          child: Texto(p.pasos == p.total ? 'Ver mi descubrimiento' : 'Seguir'),
         ),
       ],
       if (p.completa) ..._final(p),

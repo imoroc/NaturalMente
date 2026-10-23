@@ -1077,9 +1077,16 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
         }
         _semillasSesion += ganadas;
       });
+      if (_pasoActual + 1 >= _mision.length) {
+        context.sonidoCelebracion();
+      } else {
+        context.sonidoAcierto();
+      }
+      await _siguientePaso();
     } else {
       await _progreso.romperComboPrecision();
       if (!mounted) return;
+      context.sonidoPista();
       setState(() {
         _opcionElegida = indice;
         _falloEnPasoActual = true;
@@ -1566,29 +1573,6 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: Color(0xFF065F46),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  FilledButton.icon(
-                    key: const Key('siguiente-reto-expedicion'),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF1F8A4C),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                    onPressed: _siguientePaso,
-                    icon: const Icon(Icons.arrow_forward_rounded),
-                    label: Text(
-                      _pasoActual + 1 < _mision.length
-                          ? context.tr('Siguiente reto')
-                          : context.tr('Completar reto diario'),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 15,
-                      ),
                     ),
                   ),
                 ],

@@ -336,9 +336,64 @@ class _SintetizadorMelodico {
   static const MethodChannel _canal = MethodChannel('naturalmente/audio');
   static const int _frecuenciaMuestreo = 44100;
   static final Map<_EfectoSonoro, Uint8List> _cache = {};
+  static final Map<String, (Uint8List, String)?> _cacheArchivos = {};
   static Uint8List? _cacheMusica;
 
+  static List<String> _candidatosEfecto(_EfectoSonoro efecto) => switch (efecto) {
+    _EfectoSonoro.paso1 ||
+    _EfectoSonoro.paso2 ||
+    _EfectoSonoro.paso3 ||
+    _EfectoSonoro.paso4 ||
+    _EfectoSonoro.paso5 ||
+    _EfectoSonoro.paso6 => [efecto.name, 'paso'],
+    _ => [efecto.name],
+  };
+
+  static Future<(Uint8List, String)?> _cargarArchivoPersonalizado(
+    List<String> nombres,
+  ) async {
+    final clave = nombres.first;
+    if (_cacheArchivos.containsKey(clave)) {
+      return _cacheArchivos[clave];
+    }
+    for (final nombre in nombres) {
+      for (final ext in const ['mp3', 'wav', 'ogg']) {
+        try {
+          final data = await rootBundle.load('assets/sonidos/$nombre.$ext');
+          if (data.lengthInBytes > 0) {
+            final bytes = data.buffer.asUint8List(
+              data.offsetInBytes,
+              data.lengthInBytes,
+            );
+            final resultado = (bytes, ext);
+            _cacheArchivos[clave] = resultado;
+            return resultado;
+          }
+        } catch (_) {}
+      }
+    }
+    _cacheArchivos[clave] = null;
+    return null;
+  }
+
   static void reproducir(_EfectoSonoro efecto) {
+    _reproducirAsync(efecto);
+  }
+
+  static Future<void> _reproducirAsync(_EfectoSonoro efecto) async {
+    final personalizado = await _cargarArchivoPersonalizado(
+      _candidatosEfecto(efecto),
+    );
+    if (personalizado != null) {
+      _canal
+          .invokeMethod<void>('reproducirArchivo', <String, Object>{
+            'id': efecto.name,
+            'bytes': personalizado.$1,
+            'ext': personalizado.$2,
+          })
+          .catchError((_) {});
+      return;
+    }
     final pcm = _cache.putIfAbsent(efecto, () => _generarEfecto(efecto));
     _canal
         .invokeMethod<void>('reproducirPcm', <String, Object>{
@@ -352,6 +407,20 @@ class _SintetizadorMelodico {
   static void sincronizarMusica(bool activa) {
     if (!activa) {
       _canal.invokeMethod<void>('detenerMusicaPcm').catchError((_) {});
+      return;
+    }
+    _iniciarMusicaAsync();
+  }
+
+  static Future<void> _iniciarMusicaAsync() async {
+    final personalizado = await _cargarArchivoPersonalizado(const ['musica']);
+    if (personalizado != null) {
+      _canal
+          .invokeMethod<void>('iniciarMusicaArchivo', <String, Object>{
+            'bytes': personalizado.$1,
+            'ext': personalizado.$2,
+          })
+          .catchError((_) {});
       return;
     }
     final pcm = _cacheMusica ??= _generarBucleAmbiental();

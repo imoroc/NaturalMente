@@ -212,8 +212,14 @@ class _NacimientoPageState extends State<NacimientoPage> {
   }
 
   void _responder(String opcion) {
-    setState(() => _ciclos!.responder(opcion));
-    final acierto = _ciclos!.resultado?.acierto ?? false;
+    var acierto = false;
+    setState(() {
+      _ciclos!.responder(opcion);
+      acierto = _ciclos!.resultado?.acierto ?? false;
+      if (acierto && _ciclos!.cicloTerminado && _ciclos!.hayOtroCiclo) {
+        _ciclos!.siguiente();
+      }
+    });
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (_completa) {
@@ -962,7 +968,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _burbuja(partida.resultado, partida.nivel.intro),
+            _burbuja(partida.resultado, ciclo.intro),
             if (partida.cicloOrdenado && !partida.preguntaAcertada) ...[
               const SizedBox(height: 16),
               const Texto(
@@ -994,7 +1000,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
           ],
         ),
       ),
-      if (partida.cicloTerminado) ...[
+      if (partida.cicloOrdenado) ...[
         const SizedBox(height: 12),
         OutlinedButton.icon(
           key: const Key('curiosidad-ciclo'),
@@ -1007,18 +1013,6 @@ class _NacimientoPageState extends State<NacimientoPage> {
           icon: const Icon(Icons.auto_awesome_rounded, size: 18),
           label: const Texto('Ver curiosidad'),
         ),
-        if (partida.hayOtroCiclo) ...[
-          const SizedBox(height: 8),
-          FilledButton(
-            key: const Key('siguiente-ciclo'),
-            style: EstilosJuego.accion,
-            onPressed: () {
-              context.sonidoToque();
-              setState(partida.siguiente);
-            },
-            child: const Texto('Siguiente ciclo'),
-          ),
-        ],
       ],
     ];
   }

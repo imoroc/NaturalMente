@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/imagenes/brote_hola.png" alt="Natu, guía de NaturalMente" width="110" />
+<img src="assets/icono/icono.png" alt="Natu, guía de NaturalMente" width="110" />
 
 # NaturalMente
 
@@ -10,17 +10,6 @@
 [![Dart](https://img.shields.io/badge/Dart-3.13%2B-0175C2?logo=dart&logoColor=white)](https://dart.dev)
 [![Plataformas](https://img.shields.io/badge/Plataformas-Android%20%7C%20iOS%20%7C%20Web-2E7D32)](#comandos-de-desarrollo-y-compilación)
 [![Modo](https://img.shields.io/badge/Arquitectura-100%25%20Offline%20%C2%B7%20Sin%20cuentas-15803D)](#arquitectura-del-proyecto)
-
-<p align="center">
-  <img src="assets/imagenes/brote_feliz.png" alt="Natu feliz" width="64" />
-  <img src="assets/imagenes/camello.png" alt="Camello" width="64" />
-  <img src="assets/imagenes/delfin.png" alt="Delfín" width="64" />
-  <img src="assets/imagenes/pinguino.png" alt="Pingüino" width="64" />
-  <img src="assets/imagenes/oso.png" alt="Oso pardo" width="64" />
-  <img src="assets/imagenes/rana.png" alt="Rana" width="64" />
-  <img src="assets/imagenes/tucan.png" alt="Tucán" width="64" />
-  <img src="assets/imagenes/brote_pista.png" alt="Natu dando una pista" width="64" />
-</p>
 
 </div>
 

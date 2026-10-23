@@ -47,7 +47,7 @@ void main() {
       await tocar(tester, 'sitio-vista');
       // Avanza automáticamente al siguiente reto sin botón intermedio «Siguiente»
       expect(find.text('Siguiente', skipOffstage: false), findsNothing);
-      expect(find.textContaining('✓ Los ojos en su sitio'), findsOneWidget);
+      expect(find.textContaining('Estímulo 2 de '), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
@@ -70,10 +70,7 @@ void main() {
       await tocar(tester, 'adaptacion-incendio-nervios');
       // Tras responder la pregunta extra, avanza directamente al siguiente estímulo
       expect(find.text('Siguiente', skipOffstage: false), findsNothing);
-      expect(
-        find.textContaining('✓ Hueles el humo de un incendio en su sitio'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Estímulo 2 de '), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

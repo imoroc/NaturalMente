@@ -87,7 +87,6 @@ void main() {
     for (final ciclo in nivel.ciclos) {
       await ordenarCiclo(tester, ciclo.respuesta);
       await tocar(tester, 'respuesta-${ciclo.id}-${ciclo.pregunta.respuesta}');
-      if (ciclo != nivel.ciclos.last) await tocar(tester, 'siguiente-ciclo');
     }
   }
 
@@ -208,12 +207,12 @@ void main() {
 
     await tocar(tester, 'respuesta-rana-arbol');
     expect(find.textContaining('Todavía no tiene patas'), findsOneWidget);
-    await tocar(tester, 'respuesta-rana-agua');
     await tocar(tester, 'curiosidad-ciclo');
     expect(find.textContaining('branquias'), findsWidgets);
     await tocar(tester, 'cerrar-curiosidad');
 
-    await tocar(tester, 'siguiente-ciclo');
+    await tocar(tester, 'respuesta-rana-agua');
+    expect(find.byKey(const Key('siguiente-ciclo')), findsNothing);
     expect(find.text('Ciclo 2 de 2: La mariposa'), findsOneWidget);
     expect(progreso.nivelJuegoHecho(actividad, 'medio'), isFalse);
     await ordenarCiclo(tester, [

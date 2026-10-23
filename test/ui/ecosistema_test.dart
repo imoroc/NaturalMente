@@ -44,8 +44,7 @@ void main() {
               t.getCenter(find.byKey(const Key('eco-pieza-hierba'))),
         );
         await t.pumpAndSettle();
-        expect(find.byKey(const Key('eco-seguir')), findsOneWidget);
-        await tocar(t, 'eco-seguir');
+        expect(find.byKey(const Key('eco-seguir')), findsNothing);
         expect(
           find.textContaining('Sus raíces sujetan la tierra húmeda'),
           findsOneWidget,
@@ -53,7 +52,6 @@ void main() {
         for (final id in ['conejo', 'zorro']) {
           await tocar(t, 'eco-pieza-$id');
           await tocar(t, 'eco-destino-$id');
-          await tocar(t, 'eco-seguir');
         }
         if (nivel != 'facil') {
           expect(
@@ -70,9 +68,7 @@ void main() {
             findsOneWidget,
           );
           await tocar(t, 'eco-respuesta-hierba');
-          await tocar(t, 'eco-seguir');
           await tocar(t, 'eco-respuesta-conejo');
-          await tocar(t, 'eco-seguir');
           if (nivel == 'dificil') {
             await tocar(t, 'eco-respuesta-menos-comida');
             expect(
@@ -185,12 +181,9 @@ void main() {
       for (final id in ['hierba', 'conejo', 'zorro']) {
         await tocar(t, 'eco-pieza-$id');
         await tocar(t, 'eco-destino-$id');
-        await tocar(t, 'eco-seguir');
       }
       await tocar(t, 'eco-respuesta-hierba');
-      await tocar(t, 'eco-seguir');
       await tocar(t, 'eco-respuesta-conejo');
-      await tocar(t, 'eco-seguir');
       await tocar(t, 'eco-respuesta-menos-comida');
       await tocar(t, 'eco-restaurar');
       await tocar(t, 'eco-respuesta-menos-presas');

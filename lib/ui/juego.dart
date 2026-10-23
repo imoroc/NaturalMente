@@ -299,24 +299,16 @@ class _JuegoPageState extends State<JuegoPage> {
                   adaptacionElegida: _adaptacionElegida,
                   retoCompleto: _retoCompleto,
                   resultado: _resultado,
-                  pie: _retoCompleto
-                      ? (hayMasRetos ? 'Siguiente' : 'Volver')
-                      : null,
+                  pie: (_retoCompleto && !hayMasRetos) ? 'Volver' : null,
                   onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
                   onSoltar: _soltar,
                   onSeleccionarReto: _seleccionarReto,
                   onResponderAdaptacion: _responderAdaptacion,
-                  onCuriosidad: () => _mostrarCuriosidad(
-                    _retoCompleto
-                        ? retos[_reto]
-                        : (_ultimoRetoCompletado ?? retos[_reto]),
-                  ),
+                  onCuriosidad: () => _mostrarCuriosidad(retos[_reto]),
                   onOtraVez: (_retoCompleto && !hayMasRetos)
                       ? () => _empezarNivel(_nivelIdx ?? 0)
                       : null,
-                  onPie: _retoCompleto
-                      ? (hayMasRetos ? _siguiente : _volver)
-                      : _volver,
+                  onPie: _volver,
                 ),
                 'controles' => _Controles(
                   actividad: actividad,
@@ -662,9 +654,12 @@ class _JuegoPageState extends State<JuegoPage> {
     if (_lugarAcertado && !_retoCompleto) return;
     final retos = _retosLugar;
     final idx = retos.indexWhere((r) => r.id == retoId);
-    if (idx < 0 || idx == _reto || _retosResueltosNivel.contains(retoId)) {
+    if (idx < 0) return;
+    if (_retosResueltosNivel.contains(retoId)) {
+      _mostrarCuriosidad(retos[idx]);
       return;
     }
+    if (idx == _reto) return;
     context.sonidoSeleccion();
     setState(() {
       _reto = idx;
@@ -722,16 +717,6 @@ class _JuegoPageState extends State<JuegoPage> {
       eleccion: sitio,
       intento: _intento,
     );
-    // El atlas del cuerpo es solo de «Cada pieza en su sitio».
-    final esCuerpo = actividad.id == 'piezas';
-    final esPortePlanta =
-        actividad.id == 'porte-planta' || actividad.id == 'plantas';
-    final autoAvance =
-        esCuerpo ||
-        actividad.id == 'sentidos' ||
-        esPortePlanta ||
-        actividad.id == 'plantas' ||
-        actividad.id == 'habitos';
     setState(() {
       _sitioElegido = sitio;
       _resultado = resultado;
@@ -742,9 +727,10 @@ class _JuegoPageState extends State<JuegoPage> {
           _retosResueltosNivel.add(reto.id);
           _ultimoRetoCompletado = reto;
           final siguienteIdx = _siguienteRetoPendiente();
-          if (autoAvance && siguienteIdx != null) {
+          if (siguienteIdx != null) {
             _reto = siguienteIdx;
             _intento = 1;
+            _resultado = null;
             _sitioElegido = null;
             _lugarAcertado = false;
             _adaptacionAcertada = false;
@@ -787,16 +773,6 @@ class _JuegoPageState extends State<JuegoPage> {
     final actividad = widget.actividad;
     final reto = _retosLugar[_reto];
     final resultado = resolverAdaptacion(reto: reto, eleccion: eleccion);
-    // El atlas del cuerpo es solo de «Cada pieza en su sitio».
-    final esCuerpo = actividad.id == 'piezas';
-    final esPortePlanta =
-        actividad.id == 'porte-planta' || actividad.id == 'plantas';
-    final autoAvance =
-        esCuerpo ||
-        actividad.id == 'sentidos' ||
-        esPortePlanta ||
-        actividad.id == 'plantas' ||
-        actividad.id == 'habitos';
     setState(() {
       _adaptacionElegida = eleccion;
       _resultado = resultado;
@@ -805,9 +781,10 @@ class _JuegoPageState extends State<JuegoPage> {
         _retosResueltosNivel.add(reto.id);
         _ultimoRetoCompletado = reto;
         final siguienteIdx = _siguienteRetoPendiente();
-        if (autoAvance && siguienteIdx != null) {
+        if (siguienteIdx != null) {
           _reto = siguienteIdx;
           _intento = 1;
+          _resultado = null;
           _sitioElegido = null;
           _lugarAcertado = false;
           _adaptacionAcertada = false;
@@ -979,22 +956,6 @@ class _JuegoPageState extends State<JuegoPage> {
         ),
       ),
     );
-  }
-
-  void _siguiente() {
-    final siguienteIdx = _siguienteRetoPendiente();
-    if (siguienteIdx == null) return;
-    context.sonidoToque();
-    setState(() {
-      _reto = siguienteIdx;
-      _intento = 1;
-      _resultado = null;
-      _sitioElegido = null;
-      _lugarAcertado = false;
-      _adaptacionAcertada = false;
-      _adaptacionElegida = null;
-      _prepararBarajadoReto();
-    });
   }
 
   void _volver() {
@@ -1407,11 +1368,7 @@ class _Lugar extends StatelessWidget {
               : (actividad.id == 'sentidos'
                     ? 'Estímulo'
                     : (esPortePlanta ? 'Espécimen' : 'Reto'));
-          final retoCuriosidad = retoCompleto
-              ? reto
-              : ((esCuerpo || actividad.id == 'sentidos' || esPortePlanta || actividad.id == 'habitos')
-                    ? ultimoRetoCompletado
-                    : null);
+          final retoCuriosidad = (retoCompleto || lugarAcertado) ? reto : null;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
@@ -1498,30 +1455,6 @@ class _Lugar extends StatelessWidget {
                               ),
                             ),
                           ),
-                          if ((esCuerpo ||
-                                  actividad.id == 'sentidos' ||
-                                  esPortePlanta ||
-                                  actividad.id == 'habitos') &&
-                              !retoCompleto &&
-                              ultimoRetoCompletado != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFDCFCE7),
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                              child: Texto(
-                                '✓ ${ultimoRetoCompletado!.nombre} en su sitio',
-                                style: const TextStyle(
-                                  fontSize: 10.5,
-                                  fontWeight: FontWeight.w900,
-                                  color: Color(0xFF15803D),
-                                ),
-                              ),
-                            ),
                           if (pista != null && !retoCompleto)
                             Texto(
                               pista,

@@ -3,17 +3,22 @@ package com.naturalmente.naturalmente
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
+import android.media.MediaPlayer
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
     private val ejecutorAudio = Executors.newCachedThreadPool()
     private val cacheSonidos = ConcurrentHashMap<String, ByteArray>()
+    private val cacheArchivos = ConcurrentHashMap<String, File>()
     @Volatile
     private var pistaMusica: AudioTrack? = null
+    @Volatile
+    private var reproductorMusica: MediaPlayer? = null
     @Volatile
     private var musicaActiva: Boolean = false
 
@@ -24,6 +29,23 @@ class MainActivity : FlutterActivity() {
             "naturalmente/audio"
         ).setMethodCallHandler { llamada, resultado ->
             when (llamada.method) {
+                "reproducirArchivo" -> {
+                    val id = llamada.argument<String>("id") ?: "efecto"
+                    val bytes = llamada.argument<ByteArray>("bytes")
+                    val ext = llamada.argument<String>("ext") ?: "mp3"
+                    if (bytes != null && bytes.isNotEmpty()) {
+                        reproducirArchivo(id, bytes, ext)
+                    }
+                    resultado.success(null)
+                }
+                "iniciarMusicaArchivo" -> {
+                    val bytes = llamada.argument<ByteArray>("bytes")
+                    val ext = llamada.argument<String>("ext") ?: "mp3"
+                    if (bytes != null && bytes.isNotEmpty()) {
+                        iniciarMusicaArchivo(bytes, ext)
+                    }
+                    resultado.success(null)
+                }
                 "reproducirPcm" -> {
                     val id = llamada.argument<String>("id")
                     val pcmRecibido = llamada.argument<ByteArray>("pcm")
@@ -56,6 +78,72 @@ class MainActivity : FlutterActivity() {
                     resultado.success(null)
                 }
                 else -> resultado.notImplemented()
+            }
+        }
+    }
+
+    private fun reproducirArchivo(id: String, bytes: ByteArray, ext: String) {
+        ejecutorAudio.execute {
+            try {
+                val clave = "$id.$ext"
+                val archivo = cacheArchivos.getOrPut(clave) {
+                    val f = File(cacheDir, "sonido_$clave")
+                    f.writeBytes(bytes)
+                    f
+                }
+                val mp = MediaPlayer()
+                mp.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
+                mp.setDataSource(archivo.absolutePath)
+                mp.setOnCompletionListener { it.release() }
+                mp.setOnErrorListener { player, _, _ ->
+                    player.release()
+                    true
+                }
+                mp.prepare()
+                mp.start()
+            } catch (_: Throwable) {
+            }
+        }
+    }
+
+    @Synchronized
+    private fun iniciarMusicaArchivo(bytes: ByteArray, ext: String) {
+        musicaActiva = true
+        ejecutorAudio.execute {
+            synchronized(this) {
+                try {
+                    reproductorMusica?.let {
+                        if (it.isPlaying) return@synchronized
+                        it.release()
+                    }
+                    val archivo = File(cacheDir, "musica_fondo.$ext")
+                    if (!archivo.exists() || archivo.length().toInt() != bytes.size) {
+                        archivo.writeBytes(bytes)
+                    }
+                    val mp = MediaPlayer()
+                    mp.setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
+                    )
+                    mp.setDataSource(archivo.absolutePath)
+                    mp.isLooping = true
+                    mp.setVolume(0.55f, 0.55f)
+                    mp.prepare()
+                    if (musicaActiva) {
+                        mp.start()
+                        reproductorMusica = mp
+                    } else {
+                        mp.release()
+                    }
+                } catch (_: Throwable) {
+                }
             }
         }
     }
@@ -148,6 +236,17 @@ class MainActivity : FlutterActivity() {
     private fun detenerMusicaPcm() {
         musicaActiva = false
         try {
+            reproductorMusica?.let {
+                if (it.isPlaying) {
+                    it.stop()
+                }
+                it.release()
+            }
+        } catch (_: Throwable) {
+        } finally {
+            reproductorMusica = null
+        }
+        try {
             pistaMusica?.let {
                 if (it.playState == AudioTrack.PLAYSTATE_PLAYING) {
                     it.stop()
@@ -162,6 +261,11 @@ class MainActivity : FlutterActivity() {
 
     override fun onPause() {
         try {
+            reproductorMusica?.let {
+                if (it.isPlaying) {
+                    it.pause()
+                }
+            }
             pistaMusica?.let {
                 if (it.playState == AudioTrack.PLAYSTATE_PLAYING) {
                     it.pause()
@@ -176,6 +280,7 @@ class MainActivity : FlutterActivity() {
         super.onResume()
         if (musicaActiva) {
             try {
+                reproductorMusica?.start()
                 pistaMusica?.play()
             } catch (_: Throwable) {
             }

@@ -28,7 +28,8 @@ void main() {
     expect(find.textContaining('poca agua'), findsOneWidget);
 
     await _tocar(tester, const Key('sitio-desierto'));
-    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
+    expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+    expect(find.textContaining('Reto 2 de '), findsOneWidget);
 
     await _atras(tester);
     await _atras(tester);
@@ -114,12 +115,8 @@ void main() {
     await _tocar(tester, const Key('nivel-facil'));
 
     await _tocar(tester, const Key('sitio-desierto'));
-    expect(find.byKey(const Key('curiosidad-camello'), skipOffstage: false), findsOneWidget);
-
-    await _tocar(tester, const Key('curiosidad-camello'));
-    expect(find.text('CUADERNO DE NATU'), findsOneWidget);
-    expect(find.textContaining('grasa'), findsOneWidget);
-    await _tocar(tester, const Key('cerrar-curiosidad'));
+    expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+    expect(find.textContaining('Reto 2 de '), findsOneWidget);
 
     await _tocar(tester, const Key('cambiar-nivel'));
     expect(find.byKey(const Key('nivel-medio')), findsOneWidget);
@@ -133,10 +130,15 @@ void main() {
       find.byKey(const Key('pregunta-adaptacion-camello'), skipOffstage: false),
       findsOneWidget,
     );
-    expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+    expect(find.byKey(const Key('curiosidad-camello'), skipOffstage: false), findsOneWidget);
+    await _tocar(tester, const Key('curiosidad-camello'));
+    expect(find.text('CUADERNO DE NATU'), findsOneWidget);
+    expect(find.textContaining('grasa'), findsOneWidget);
+    await _tocar(tester, const Key('cerrar-curiosidad'));
 
     await _tocar(tester, const Key('adaptacion-camello-joroba'));
-    expect(find.text('Siguiente', skipOffstage: false), findsOneWidget);
+    expect(find.text('Siguiente', skipOffstage: false), findsNothing);
+    expect(find.textContaining('Reto 2 de '), findsOneWidget);
   });
 }
 

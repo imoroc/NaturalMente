@@ -43,7 +43,7 @@ void main() {
     expect(find.textContaining('Fíjate en su tronco'), findsOneWidget);
     await tocar(tester, 'sitio-arbol');
     expect(find.text('Siguiente', skipOffstage: false), findsNothing);
-    expect(find.textContaining('✓ La encina en su sitio'), findsOneWidget);
+    expect(find.textContaining('Espécimen 2 de '), findsOneWidget);
 
     await tocar(tester, 'cambiar-nivel');
     await tocar(tester, 'nivel-dificil');
@@ -60,7 +60,7 @@ void main() {
     expect(find.textContaining('bellotas'), findsWidgets);
     await tocar(tester, 'adaptacion-encina-silvestre');
     expect(find.text('Siguiente', skipOffstage: false), findsNothing);
-    expect(find.textContaining('✓ La encina en su sitio'), findsOneWidget);
+    expect(find.textContaining('Espécimen 2 de '), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

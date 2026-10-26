@@ -36,7 +36,7 @@ void main() {
       ['boca', 'esofago', 'estomago', 'intestino'],
       ['boca', 'esofago', 'estomago', 'intestino-delgado', 'intestino-grueso'],
     ]);
-    expect(viaje.niveles.map((n) => n.masticar), [true, true, false]);
+    expect(viaje.niveles.map((n) => n.masticar), [true, true, true]);
     expect(viaje.niveles[0].despistes, ['pulmones']);
     expect(viaje.niveles[1].preguntaFinal, isNotNull);
     expect(viaje.niveles[2].paradas.every((p) => p.pregunta != null), isTrue);
@@ -151,9 +151,14 @@ void main() {
     expect(juego.progreso, 1);
   });
 
-  test('Difícil pide responder en cada parada antes de seguir', () {
+  test('Difícil pide masticar y responder en cada parada antes de seguir', () {
     final juego = partida('dificil');
     juego.mover('boca');
+    expect(juego.faltaMasticar, isTrue);
+    expect(juego.preguntaPendiente, isNull);
+    for (var i = 0; i < mordiscosNecesarios; i++) {
+      juego.masticar();
+    }
     expect(juego.faltaMasticar, isFalse);
     expect(juego.preguntaPendiente, 'boca');
     juego.mover('esofago');

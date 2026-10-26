@@ -169,7 +169,9 @@ void main() {
     await tester.tapAt(boca);
     await tester.pumpAndSettle();
     expect(find.text('Paradas recorridas: 1 de 2'), findsOneWidget);
+    expect(progreso.comboActual, 1);
     await masticarTodo(tester);
+    expect(progreso.comboActual, 1);
 
     final inicio = tester.getCenter(find.byKey(const Key('bocado')));
     final barriga = Offset(caja.center.dx, caja.top + caja.height * 300 / 400);
@@ -216,6 +218,8 @@ void main() {
     await tocar(tester, 'nivel-dificil');
     expect(find.text('Paradas recorridas: 0 de 5'), findsOneWidget);
     await tocar(tester, 'destino-boca');
+    expect(find.byKey(const Key('masticar')), findsOneWidget);
+    await masticarTodo(tester);
     expect(find.byKey(const Key('pregunta-boca')), findsOneWidget);
     await tocar(tester, 'destino-esofago');
     expect(find.textContaining('responde qué pasa'), findsOneWidget);

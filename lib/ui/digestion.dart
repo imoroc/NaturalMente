@@ -119,7 +119,8 @@ class _ViajePageState extends State<ViajePage> {
     if (partida.resultado?.acierto == true &&
         partida.resultado?.estado != 'masticar') {
       _registrarPasoPrecision(true);
-    } else if (partida.resultado?.acierto == false) {
+    } else if (partida.resultado?.acierto == false &&
+        partida.resultado?.estado != 'masticar') {
       _registrarPasoPrecision(false);
     }
     if (partida.completa && !estabaCompleta) {
@@ -128,10 +129,15 @@ class _ViajePageState extends State<ViajePage> {
       context.sonidoAcierto();
     } else if (partida.resultado?.estado == 'masticar') {
       context.sonidoPaso(partida.mordiscos);
-    } else if (partida.resultado?.acierto == false) {
+    } else if (partida.resultado?.acierto == false &&
+        partida.resultado?.estado != 'masticar') {
       context.sonidoPista();
     }
-    _verPregunta();
+    if (partida.preguntaPendiente != null ||
+        partida.mostrarPreguntaFinal ||
+        partida.completa) {
+      _verPregunta();
+    }
     _guardarSiCompleta();
   }
 
@@ -501,7 +507,7 @@ class _ViajePageState extends State<ViajePage> {
         const SizedBox(height: 12),
         Center(
           child: SizedBox(
-            width: math.min(ancho, 340),
+            width: math.min(ancho, 270),
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFFDFBF6),

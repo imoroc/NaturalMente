@@ -379,6 +379,141 @@
       "titulo": "Cuidar los sentidos",
       "frase": "Proteger el oído y la vista, cuidar la postura y dormir bien ayuda a percibir el mundo y a movernos.",
       "curiosidad": "Lo que captan los sentidos viaja por los nervios hasta el cerebro en una fracción de segundo."
+    },
+    {
+      "id": "herbivoro",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Picos, dientes y huellas",
+      "titulo": "Herbívoros, carnívoros y omnívoros",
+      "frase": "Según su alimentación, los animales son herbívoros si comen plantas, carnívoros si cazan otros animales y omnívoros si comen de ambos.",
+      "curiosidad": "Las muelas de los ciervos son anchas como piedras de molino para machacar hierba y bellotas."
+    },
+    {
+      "id": "pico-garra",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "Picos, dientes y huellas",
+      "titulo": "Picos, dientes y garras",
+      "frase": "La boca y las patas de cada animal están adaptadas a su dieta: picos en gancho para desgarrar, picos largos para pescar o incisivos para roer.",
+      "curiosidad": "Los dientes delanteros de las ardillas y los castores crecen durante toda su vida y se afilan al roer madera y piñas."
+    },
+    {
+      "id": "branquias",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "Picos, dientes y huellas",
+      "titulo": "Huellas, pezuñas y garras",
+      "frase": "Las huellas que dejan los animales en el barro revelan cómo viven: pezuñas duras para correr y trepar, almohadillas con garras para cazar o membranas para nadar.",
+      "curiosidad": "Los felinos como el lince esconden sus uñas al caminar, por eso en sus huellas solo se marcan las cuatro almohadillas y el cojinete central."
+    },
+    {
+      "id": "vertebrado",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "¿Huesos o caparazón?",
+      "titulo": "Vertebrados e invertebrados",
+      "frase": "Los vertebrados tienen esqueleto interno con columna vertebral; los invertebrados carecen de huesos internos.",
+      "curiosidad": "El pulpo no tiene ni un solo hueso dentro del cuerpo, por eso puede colarse por huecos diminutos entre las rocas."
+    },
+    {
+      "id": "anfibio",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "¿Huesos o caparazón?",
+      "titulo": "Los cinco grupos de vertebrados",
+      "frase": "Los vertebrados se clasifican en mamíferos, aves, reptiles, anfibios y peces según su piel, respiración y reproducción.",
+      "curiosidad": "El murciélago vuela por la noche, pero no es un ave: tiene pelo, orejas y alimenta a sus crías con leche."
+    },
+    {
+      "id": "artropodo",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "¿Huesos o caparazón?",
+      "titulo": "Artrópodos, moluscos y más",
+      "frase": "Los invertebrados incluyen artrópodos con patas articuladas, moluscos de cuerpo blando, anélidos con anillos y cnidarios como las medusas.",
+      "curiosidad": "Los insectos tienen seis patas y antenas, mientras que las arañas tienen ocho patas y ningún par de antenas."
+    },
+    {
+      "id": "abeja-polen",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Polen y semillas viajeras",
+      "titulo": "Las partes de la flor",
+      "frase": "El cáliz y la corola envuelven la flor, los estambres fabrican el polen y el pistilo se transforma en fruto al fecundarse.",
+      "curiosidad": "Las abejas visitan las flores buscando néctar dulce y llevan el polen pegado en sus patitas de una flor a otra."
+    },
+    {
+      "id": "semilla-viajera",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "Polen y semillas viajeras",
+      "titulo": "Semillas viajeras",
+      "frase": "Las plantas dispersan sus semillas con paracaídas que lleva el viento, flotando en el agua o con la ayuda de los animales.",
+      "curiosidad": "Las semillas del arce tienen una aleta que gira en el aire igual que las aspas de un helicóptero."
+    },
+    {
+      "id": "helecho-espora",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Polen y semillas viajeras",
+      "titulo": "Con flores, con piñas o con esporas",
+      "frase": "Las angiospermas guardan sus semillas en frutos, las gimnospermas en piñas y los musgos y helechos se reproducen por esporas.",
+      "curiosidad": "Los puntitos oscuros debajo de las hojas del helecho son bolsitas llamadas soros llenas de esporas microscópicas."
+    },
+    {
+      "id": "hoja-caduca",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Los árboles y las estaciones",
+      "titulo": "Hoja caduca y hoja perenne",
+      "frase": "Los árboles de hoja caduca tiran sus hojas en otoño y los de hoja perenne conservan su copa verde durante todo el año.",
+      "curiosidad": "Las agujas del pino tienen una cubierta protectora que les permite resistir las heladas del invierno sin secarse."
+    },
+    {
+      "id": "formas-hoja",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "Los árboles y las estaciones",
+      "titulo": "Formas y bordes de las hojas",
+      "frase": "Cada árbol tiene hojas adaptadas a su entorno: agujas finas en los pinos, hojas lobuladas o aserradas en robles y castaños, y hojas duras en las encinas.",
+      "curiosidad": "El envés blanquecino de las hojas de la encina y del olivo refleja el sol intenso del verano para ahorrar agua."
+    },
+    {
+      "id": "bosque-clima",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Los árboles y las estaciones",
+      "titulo": "Los bosques y las estaciones",
+      "frase": "Los hayedos y robledales crecen en climas húmedos, los encinares y alcornocales resisten la sequía estival y las coníferas soportan la nieve de alta montaña.",
+      "curiosidad": "La copa en forma de cono de los abetos y pinos de montaña hace que la nieve resbale sin partir sus ramas."
+    },
+    {
+      "id": "huerta-organos",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Del huerto a la mesa",
+      "titulo": "Raíces, hojas y frutos",
+      "frase": "En el huerto cultivamos plantas de las que comemos su raíz bajo tierra, sus hojas tiernas o sus frutos jugosos con semillas.",
+      "curiosidad": "Aunque el tomate y el pepino se sirven en ensalada, botánicamente son frutos porque nacen de la flor y guardan semillas."
+    },
+    {
+      "id": "partes-comestibles",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "Del huerto a la mesa",
+      "titulo": "Las partes que comemos",
+      "frase": "En la huerta aprovechamos los seis órganos vegetales: raíces como la zanahoria, tallos como el espárrago, hojas, flores, frutos y semillas.",
+      "curiosidad": "La alcachofa que comemos es el capullo de la flor antes de abrirse; si la dejas en la planta se abre con pétalos violetas."
+    },
+    {
+      "id": "recursos-plantas",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Del huerto a la mesa",
+      "titulo": "Reservas y recursos vegetales",
+      "frase": "Las plantas acumulan nutrientes en tubérculos, bulbos, raíces y granos de cereal, y nos proporcionan fibras como el algodón y aceites como el de oliva.",
+      "curiosidad": "La patata no es una raíz, sino un tallo subterráneo engrosado (tubérculo) con pequeñas yemas llamadas «ojos»."
     }
   ],
   "actividades": [
@@ -1512,6 +1647,852 @@
       }
     },
     {
+      "id": "dieta",
+      "zona": "reserva",
+      "tipo": "lugar",
+      "titulo": "Picos, dientes y huellas",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Usa la lupa dental, el probador de picos y el molde de huellas en barro para investigar cada animal.",
+      "opciones": [
+        { "id": "dieta-herbivoro", "nombre": "Herbívoro" },
+        { "id": "dieta-carnivoro", "nombre": "Carnívoro" },
+        { "id": "dieta-omnivoro", "nombre": "Omnívoro" }
+      ],
+      "retos": [
+        {
+          "id": "ciervo-bellota",
+          "nombre": "Ciervo",
+          "pregunta": "Examina la dentadura y el menú del ciervo en el laboratorio. ¿Qué tipo de dieta tiene?",
+          "respuesta": "dieta-herbivoro",
+          "pista": "Observa sus muelas anchas: solo come partes de plantas.",
+          "curiosidad": "Cada primavera a los ciervos machos les crece una cuerna nueva de hueso.",
+          "frases": {
+            "dieta-herbivoro": "¡Muy bien! El ciervo se alimenta únicamente de vegetales.",
+            "dieta-carnivoro": "Fíjate en la lupa dental: no tiene colmillos de caza, sino muelas para moler hierba.",
+            "dieta-omnivoro": "El ciervo no caza otros animales; su menú es cien por cien vegetal."
+          }
+        },
+        {
+          "id": "lobo-iberico",
+          "nombre": "Lobo",
+          "pregunta": "Inspecciona con la lupa dental las muelas y los caninos del lobo. ¿Qué dieta tiene?",
+          "respuesta": "dieta-carnivoro",
+          "pista": "Mira sus caninos afilados en la lupa dental.",
+          "curiosidad": "El olfato del lobo es tan fino que detecta rastros a gran distancia.",
+          "frases": {
+            "dieta-carnivoro": "¡Genial! El lobo es un depredador carnívoro.",
+            "dieta-herbivoro": "Sus colmillos puntiagudos están adaptados a desgarrar carne, no a moler hierba.",
+            "dieta-omnivoro": "Su dentadura carnicera está especializada en cazar otros animales."
+          }
+        },
+        {
+          "id": "jabali-bosque",
+          "nombre": "Jabalí",
+          "pregunta": "Revisa en el laboratorio qué desentierra y come el jabalí en el bosque. ¿Qué dieta tiene?",
+          "respuesta": "dieta-omnivoro",
+          "pista": "Come tanto alimentos de origen vegetal como animal.",
+          "curiosidad": "Con su hocico fuerte remueve la tierra del bosque buscando comida.",
+          "frases": {
+            "dieta-omnivoro": "¡Perfecto! El jabalí es omnívoro porque come plantas y pequeños animales.",
+            "dieta-herbivoro": "Además de bellotas y raíces, también se alimenta de lombrices y escarabajos.",
+            "dieta-carnivoro": "Gran parte de su dieta son bellotas, castañas y raíces, así que come de ambos."
+          }
+        },
+        {
+          "id": "conejo-prado",
+          "nombre": "Conejo",
+          "pregunta": "Mira en el laboratorio los incisivos y el alimento del conejo. ¿En qué grupo lo clasificas?",
+          "respuesta": "dieta-herbivoro",
+          "pista": "Solo se alimenta de hierbas, raíces y tallos.",
+          "curiosidad": "Los dientes del conejo crecen sin parar y se desgastan al roer hierba.",
+          "frases": {
+            "dieta-herbivoro": "¡Exacto! El conejo es un mamífero herbívoro.",
+            "dieta-carnivoro": "El conejo no caza presas; busca tréboles y brotes verdes.",
+            "dieta-omnivoro": "Su alimentación se basa solo en plantas, hojas y cortezas."
+          }
+        },
+        {
+          "id": "lince-cazador",
+          "nombre": "Lince ibérico",
+          "pregunta": "Observa las herramientas de estudio del lince ibérico. ¿Dónde lo colocas según lo que come?",
+          "respuesta": "dieta-carnivoro",
+          "pista": "Se alimenta cazando otros animales del monte.",
+          "curiosidad": "Los pinceles negros de sus orejas le ayudan a localizar el más mínimo ruido.",
+          "frases": {
+            "dieta-carnivoro": "¡Bravo! El lince ibérico es un felino carnívoro.",
+            "dieta-herbivoro": "El lince no come hierba; sus garras y colmillos son de cazador.",
+            "dieta-omnivoro": "El lince se alimenta exclusivamente de las presas que caza."
+          }
+        },
+        {
+          "id": "oso-pardo",
+          "nombre": "Oso pardo",
+          "pregunta": "Analiza las muelas y la comida del oso pardo con las herramientas. ¿Qué dieta tiene?",
+          "respuesta": "dieta-omnivoro",
+          "pista": "En su menú hay frutos del bosque y también peces.",
+          "curiosidad": "En otoño come muchas bayas y frutos secos para acumular reservas antes del invierno.",
+          "frases": {
+            "dieta-omnivoro": "¡Muy bien! El oso pardo combina plantas, frutos, miel y animales.",
+            "dieta-herbivoro": "Toma muchas bayas y raíces, pero también pesca truchas y come insectos.",
+            "dieta-carnivoro": "Aunque pesca y caza, la mayor parte del año come frutos, brotes y raíces."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Clasifica cada animal en herbívoro, carnívoro u omnívoro observando qué come.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "dieta-herbivoro", "nombre": "Herbívoro" },
+            { "id": "dieta-carnivoro", "nombre": "Carnívoro" },
+            { "id": "dieta-omnivoro", "nombre": "Omnívoro" }
+          ],
+          "retos": [
+            {
+              "id": "ciervo-bellota",
+              "nombre": "Ciervo",
+              "pregunta": "Examina la dentadura y el menú del ciervo en el laboratorio. ¿Qué tipo de dieta tiene?",
+              "respuesta": "dieta-herbivoro",
+              "pista": "Observa sus muelas anchas: solo come partes de plantas.",
+              "curiosidad": "Cada primavera a los ciervos machos les crece una cuerna nueva de hueso.",
+              "frases": {
+                "dieta-herbivoro": "¡Muy bien! El ciervo se alimenta únicamente de vegetales.",
+                "dieta-carnivoro": "Fíjate en la lupa dental: no tiene colmillos de caza, sino muelas para moler hierba.",
+                "dieta-omnivoro": "El ciervo no caza otros animales; su menú es cien por cien vegetal."
+              }
+            },
+            {
+              "id": "lobo-iberico",
+              "nombre": "Lobo",
+              "pregunta": "Inspecciona con la lupa dental las muelas y los caninos del lobo. ¿Qué dieta tiene?",
+              "respuesta": "dieta-carnivoro",
+              "pista": "Mira sus caninos afilados en la lupa dental.",
+              "curiosidad": "El olfato del lobo es tan fino que detecta rastros a gran distancia.",
+              "frases": {
+                "dieta-carnivoro": "¡Genial! El lobo es un depredador carnívoro.",
+                "dieta-herbivoro": "Sus colmillos puntiagudos están adaptados a desgarrar carne, no a moler hierba.",
+                "dieta-omnivoro": "Su dentadura carnicera está especializada en cazar otros animales."
+              }
+            },
+            {
+              "id": "jabali-bosque",
+              "nombre": "Jabalí",
+              "pregunta": "Revisa en el laboratorio qué desentierra y come el jabalí en el bosque. ¿Qué dieta tiene?",
+              "respuesta": "dieta-omnivoro",
+              "pista": "Come tanto alimentos de origen vegetal como animal.",
+              "curiosidad": "Con su hocico fuerte remueve la tierra del bosque buscando comida.",
+              "frases": {
+                "dieta-omnivoro": "¡Perfecto! El jabalí es omnívoro porque come plantas y pequeños animales.",
+                "dieta-herbivoro": "Además de bellotas y raíces, también se alimenta de lombrices y escarabajos.",
+                "dieta-carnivoro": "Gran parte de su dieta son bellotas, castañas y raíces, así que come de ambos."
+              }
+            },
+            {
+              "id": "conejo-prado",
+              "nombre": "Conejo",
+              "pregunta": "Mira en el laboratorio los incisivos y el alimento del conejo. ¿En qué grupo lo clasificas?",
+              "respuesta": "dieta-herbivoro",
+              "pista": "Solo se alimenta de hierbas, raíces y tallos.",
+              "curiosidad": "Los dientes del conejo crecen sin parar y se desgastan al roer hierba.",
+              "frases": {
+                "dieta-herbivoro": "¡Exacto! El conejo es un mamífero herbívoro.",
+                "dieta-carnivoro": "El conejo no caza presas; busca tréboles y brotes verdes.",
+                "dieta-omnivoro": "Su alimentación se basa solo en plantas, hojas y cortezas."
+              }
+            },
+            {
+              "id": "lince-cazador",
+              "nombre": "Lince ibérico",
+              "pregunta": "Observa las herramientas de estudio del lince ibérico. ¿Dónde lo colocas según lo que come?",
+              "respuesta": "dieta-carnivoro",
+              "pista": "Se alimenta cazando otros animales del monte.",
+              "curiosidad": "Los pinceles negros de sus orejas le ayudan a localizar el más mínimo ruido.",
+              "frases": {
+                "dieta-carnivoro": "¡Bravo! El lince ibérico es un felino carnívoro.",
+                "dieta-herbivoro": "El lince no come hierba; sus garras y colmillos son de cazador.",
+                "dieta-omnivoro": "El lince se alimenta exclusivamente de las presas que caza."
+              }
+            },
+            {
+              "id": "oso-pardo",
+              "nombre": "Oso pardo",
+              "pregunta": "Analiza las muelas y la comida del oso pardo con las herramientas. ¿Qué dieta tiene?",
+              "respuesta": "dieta-omnivoro",
+              "pista": "En su menú hay frutos del bosque y también peces.",
+              "curiosidad": "En otoño come muchas bayas y frutos secos para acumular reservas antes del invierno.",
+              "frases": {
+                "dieta-omnivoro": "¡Muy bien! El oso pardo combina plantas, frutos, miel y animales.",
+                "dieta-herbivoro": "Toma muchas bayas y raíces, pero también pesca truchas y come insectos.",
+                "dieta-carnivoro": "Aunque pesca y caza, la mayor parte del año come frutos, brotes y raíces."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Examina la forma del pico, los dientes y las patas para descubrir cómo consigue su alimento.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "adaptacion-desgarrar", "nombre": "Cazar y desgarrar" },
+            { "id": "adaptacion-filtrar-pescar", "nombre": "Pescar o filtrar en agua" },
+            { "id": "adaptacion-triturar-roer", "nombre": "Roer y triturar semillas" }
+          ],
+          "retos": [
+            {
+              "id": "aguila-real",
+              "nombre": "Águila real",
+              "pregunta": "Pon a prueba el pico y las patas del águila real en el banco de trabajo. ¿Para qué están adaptados?",
+              "respuesta": "adaptacion-desgarrar",
+              "pista": "Las aves rapaces usan sus garras curvas y su pico ganchudo para sujetar presas.",
+              "curiosidad": "El águila real puede divisar un conejo desde gran altura mientras planea.",
+              "frases": {
+                "adaptacion-desgarrar": "¡Exacto! Su pico en gancho y sus garras sirven para cazar y desgarrar.",
+                "adaptacion-filtrar-pescar": "Su pico no es plano ni largo de orilla; es curvo y afilado.",
+                "adaptacion-triturar-roer": "Las aves no tienen dientes para roer piñas; el águila es una rapaz cazadora."
+              }
+            },
+            {
+              "id": "garza-charca",
+              "nombre": "Garza real",
+              "pregunta": "Observa la forma del pico y de las patas de la garza real. ¿Cómo consigue su comida?",
+              "respuesta": "adaptacion-filtrar-pescar",
+              "pista": "Sus patas zancudas y su pico alargado son ideales para capturar peces en el agua.",
+              "curiosidad": "Permanece inmóvil en la charca hasta que un pez pasa cerca de su pico.",
+              "frases": {
+                "adaptacion-filtrar-pescar": "¡Genial! Su pico largo y recto funciona como un arpón para pescar.",
+                "adaptacion-desgarrar": "No tiene pico ganchudo de rapaz, sino largo y fino para el agua.",
+                "adaptacion-triturar-roer": "Su pico alargado está adaptado a pescar en la charca, no a partir nueces."
+              }
+            },
+            {
+              "id": "ardilla-pinar",
+              "nombre": "Ardilla roja",
+              "pregunta": "Mira con la lupa la boca y las patas de la ardilla roja. ¿Qué adaptación utiliza para alimentarse?",
+              "respuesta": "adaptacion-triturar-roer",
+              "pista": "Sus dientes delanteros funcionan como pequeños cinceles para abrir frutos secos.",
+              "curiosidad": "Esconde avellanas y bellotas bajo tierra y, si olvida alguna, nace un nuevo árbol.",
+              "frases": {
+                "adaptacion-triturar-roer": "¡Perfecto! Sus incisivos y muelas están hechos para roer y triturar semillas.",
+                "adaptacion-desgarrar": "La ardilla no tiene pico ganchudo ni caza; abre piñas y avellanas.",
+                "adaptacion-filtrar-pescar": "Vive en las copas de los pinos royendo semillas, no filtrando en el río."
+              }
+            },
+            {
+              "id": "buho-nocturno",
+              "nombre": "Búho real",
+              "pregunta": "Examina las herramientas anatómicas del búho real en el laboratorio. ¿Cuál es su especialidad?",
+              "respuesta": "adaptacion-desgarrar",
+              "pista": "Es una rapaz nocturna con pico curvo y garras prensiles.",
+              "curiosidad": "Las plumas del búho tienen bordes suaves que amortiguan el ruido al batir las alas.",
+              "frases": {
+                "adaptacion-desgarrar": "¡Muy bien! El búho atrapa roedores con sus garras y pico curvo.",
+                "adaptacion-filtrar-pescar": "El búho no filtra agua; caza pequeños animales terrestres de noche.",
+                "adaptacion-triturar-roer": "No roe semillas; sus garras están hechas para atrapar presas."
+              }
+            },
+            {
+              "id": "pato-cuchara",
+              "nombre": "Pato cuchara",
+              "pregunta": "Inspecciona el pico y las patas del pato cuchara con las tres pruebas. ¿Para qué sirven?",
+              "respuesta": "adaptacion-filtrar-pescar",
+              "pista": "Mueve el pico en el agua para colar pequeñas plantas e invertebrados acuáticos.",
+              "curiosidad": "Las laminillas de su pico retienen la comida mientras dejan salir el agua.",
+              "frases": {
+                "adaptacion-filtrar-pescar": "¡Bravo! Su pico plano filtra el alimento directamente del agua.",
+                "adaptacion-desgarrar": "Su pico es redondeado y plano, no ganchudo.",
+                "adaptacion-triturar-roer": "En lugar de roer cortezas, cuela el agua de la laguna."
+              }
+            },
+            {
+              "id": "castor-ribera",
+              "nombre": "Castor",
+              "pregunta": "Comprueba en el laboratorio la dentadura del castor junto al río. ¿En qué grupo encaja?",
+              "respuesta": "adaptacion-triturar-roer",
+              "pista": "Es un roedor con dientes delanteros muy fuertes y muelas planas.",
+              "curiosidad": "El esmalte de sus incisivos es muy duro para poder roer troncos sin romperse.",
+              "frases": {
+                "adaptacion-triturar-roer": "¡Excelente! El castor roe madera y tritura cortezas y hojas.",
+                "adaptacion-desgarrar": "No usa colmillos para cazar; usa incisivos planos para cortar ramas.",
+                "adaptacion-filtrar-pescar": "Aunque nada muy bien, no pesca ni filtra: se alimenta de cortezas y plantas."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Analiza el molde de barro y la forma de la pata para descubrir cómo se desplaza y vive cada animal.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            { "id": "huella-pezuna", "nombre": "Pezuña dura para correr o trepar" },
+            { "id": "huella-garra", "nombre": "Almohadillas y garras de cazador" },
+            { "id": "huella-palmeada", "nombre": "Pata palmeada para nadar" }
+          ],
+          "retos": [
+            {
+              "id": "cabra-montes",
+              "nombre": "Cabra montés",
+              "pregunta": "Usa el molde de barro y analiza la pata de la cabra montés. ¿Qué tipo de apoyo tiene?",
+              "respuesta": "huella-pezuna",
+              "pista": "Mira el molde de barro: tiene pezuña hendida en dos dedos duros.",
+              "curiosidad": "La base de las pezuñas de la cabra montés es elástica como una goma para no resbalar en los riscos.",
+              "frases": {
+                "huella-pezuna": "¡Muy bien! Sus pezuñas hendidas le permiten trepar por rocas escarpadas y correr sin hacerse daño.",
+                "huella-garra": "No tiene almohadillas ni garras de carnívoro; pisa sobre dos dedos cubiertos por estuches córneos duros.",
+                "huella-palmeada": "Vive en las cumbres rocosas, por lo que no tiene membrana interdigital de animal acuático."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué la pezuña de la cabra montés está dividida en dos partes móviles con base gomosa?",
+                "opciones": [
+                  { "id": "bucear", "nombre": "Para impulsar el cuerpo al bucear por el fondo de los lagos de alta montaña" },
+                  { "id": "roca", "nombre": "Para hacer pinza sobre los salientes de la roca y no resbalar en la montaña" },
+                  { "id": "nido", "nombre": "Para entrelazar ramas secas y tejer nidos redondos en las copas de los pinos" }
+                ],
+                "respuesta": "roca",
+                "frases": {
+                  "roca": "¡Exacto! Sus dos dedos se abren y amortiguan el salto sobre las piedras.",
+                  "bucear": "La cabra montés es un mamífero terrestre de alta montaña.",
+                  "nido": "Las cabras no construyen nidos en las copas de los árboles."
+                }
+              }
+            },
+            {
+              "id": "lobo-huella",
+              "nombre": "Lobo en la nieve",
+              "pregunta": "Examina en el laboratorio el rastro que deja el lobo al trotar. ¿Qué tipo de pata posee?",
+              "respuesta": "huella-garra",
+              "pista": "Observa las cuatro yemas digitales y las marcas de las garras fijas al frente.",
+              "curiosidad": "Cuando la manada camina por nieve profunda, los lobos pisan exactamente sobre las huellas del primero para ahorrar energía.",
+              "frases": {
+                "huella-garra": "¡Bravo! El lobo tiene almohadillas amortiguadoras y garras no retráctiles que siempre se marcan en el barro.",
+                "huella-pezuna": "El lobo no tiene pezuñas de herbívoro; tiene dedos con cojinetes y uñas fuertes.",
+                "huella-palmeada": "Es un depredador terrestre corredor, sin las anchas membranas de las aves o mamíferos acuáticos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo se distingue en el barro la huella de un cánido como el lobo de la de un felino como el lince?",
+                "opciones": [
+                  { "id": "unas", "nombre": "El lobo marca las puntas de las uñas delante de los dedos y el lince las guarda" },
+                  { "id": "casco", "nombre": "El lobo deja marcado un casco redondo de hueso y el lince una pezuña hendida" },
+                  { "id": "alas", "nombre": "El lobo deja marcas de plumas largas alrededor del talón al posarse en el barro" }
+                ],
+                "respuesta": "unas",
+                "frases": {
+                  "unas": "¡Sobresaliente! Las uñas del lobo no son retráctiles y le dan tracción al correr.",
+                  "casco": "Ninguno de los dos tiene pezuñas; ambos tienen almohadillas plantares.",
+                  "alas": "El lobo es un mamífero cuadrúpedo y está cubierto de pelo, no de plumas."
+                }
+              }
+            },
+            {
+              "id": "nutria-huella",
+              "nombre": "Nutria en la orilla",
+              "pregunta": "Observa las pruebas de laboratorio de la nutria junto al río. ¿Qué tipo de pata tiene?",
+              "respuesta": "huella-palmeada",
+              "pista": "Fíjate en la membrana interdigital extendida entre sus dedos como un remo.",
+              "curiosidad": "Además de sus patas palmeadas, la nutria usa su cola musculosa como timón para girar rápido bajo el agua.",
+              "frases": {
+                "huella-palmeada": "¡Genial! Sus patas palmeadas con membrana entre los dedos empujan el agua como aletas al nadar.",
+                "huella-pezuna": "En el fango del río unas pezuñas estrechas se hundirían y no empujarían el agua al bucear.",
+                "huella-garra": "Aunque es carnívora, su huella se caracteriza por los cinco dedos unidos por membrana nadadora."
+              },
+              "adaptacion": {
+                "enunciado": "¿Para qué sirve la membrana de piel que une los dedos en los animales semiacuáticos como la nutria o el pato?",
+                "opciones": [
+                  { "id": "trepar", "nombre": "Sirve para sujetarse a las ramas altas y abrir piñas duras en los bosques" },
+                  { "id": "volar", "nombre": "Sirve para planear entre los árboles igual que las alas de los murciélagos" },
+                  { "id": "remo", "nombre": "Aumenta la superficie de la pata para empujar más agua al nadar sin hundirse" }
+                ],
+                "respuesta": "remo",
+                "frases": {
+                  "remo": "¡Exacto! Funciona igual que las aletas de un buceador al impulsar el cuerpo en el agua.",
+                  "trepar": "Las patas palmeadas están adaptadas al medio acuático y a las orillas húmedas.",
+                  "volar": "La membrana interdigital de la nutria es para nadar en ríos y lagos."
+                }
+              }
+            },
+            {
+              "id": "caballo-galope",
+              "nombre": "Caballo",
+              "pregunta": "Estudia la marca del caballo en el molde de rastreo. ¿Qué estructura tiene en el extremo de su pata?",
+              "respuesta": "huella-pezuna",
+              "pista": "Apoya el peso en un casco duro que protege el extremo de la pata.",
+              "curiosidad": "El casco del caballo está formado por queratina, el mismo material que nuestras uñas, pero mucho más grueso.",
+              "frases": {
+                "huella-pezuna": "¡Perfecto! El caballo camina y galopa sobre una pezuña única llamada casco.",
+                "huella-garra": "Los caballos son herbívoros corredores y no tienen garras ni almohadillas de felino o cánido.",
+                "huella-palmeada": "Su casco compacto está adaptado a galopar por praderas firmes, no a remar en el agua."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué ventaja le da al caballo apoyar la pata sobre un único casco duro?",
+                "opciones": [
+                  { "id": "trepar", "nombre": "Le permite sujetarse con fuerza a las cortezas verticales de los grandes árboles" },
+                  { "id": "excavar", "nombre": "Le sirve para cavar galerías profundas y refugios subterráneos durante el invierno" },
+                  { "id": "galope", "nombre": "Le permite correr a gran velocidad por terrenos duros resistiendo el desgaste" }
+                ],
+                "respuesta": "galope",
+                "frases": {
+                  "galope": "¡Muy bien! Los ungulados como el caballo están adaptados a recorrer largas distancias corriendo.",
+                  "trepar": "Un casco rígido no puede rodear ramas para trepar.",
+                  "excavar": "Los caballos viven al aire libre en praderas y dehesas, no en madrigueras."
+                }
+              }
+            },
+            {
+              "id": "lince-huella",
+              "nombre": "Lince en la arena",
+              "pregunta": "Analiza el molde de arena y la anatomía de la pata del lince. ¿Con qué estructura camina y caza?",
+              "respuesta": "huella-garra",
+              "pista": "Sus garras son retráctiles: permanecen escondidas al caminar y salen al atrapar la presa.",
+              "curiosidad": "Las patas del lince están rodeadas de pelo espeso que actúa como raquetas sobre la arena o la nieve.",
+              "frases": {
+                "huella-garra": "¡Exacto! Tiene almohadillas silenciosas y garras retráctiles que mantiene afiladas al guardarlas.",
+                "huella-pezuna": "Las pezuñas hacen ruido sobre las piedras; el lince necesita almohadillas blandas para acechar.",
+                "huella-palmeada": "Es un cazador de monte mediterráneo, no un animal nadador de charca."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué los felinos como el lince mantienen sus garras guardadas dentro de la pata al caminar?",
+                "opciones": [
+                  { "id": "nadar", "nombre": "Para flotar mejor sobre la corriente al cruzar los ríos profundos del bosque" },
+                  { "id": "filo", "nombre": "Para avanzar en silencio sin desgastar la punta afilada de las uñas en el suelo" },
+                  { "id": "roer", "nombre": "Para poder triturar cortezas y bellotas duras usando las almohadillas plantares" }
+                ],
+                "respuesta": "filo",
+                "frases": {
+                  "filo": "¡Muy bien! Así sus garras siguen curvas y afiladas cuando necesitan sujetar una presa.",
+                  "nadar": "Guardar las uñas sirve para el acecho silencioso y para conservar su filo en tierra.",
+                  "roer": "Las garras sujetan presas; la comida se desgarra en la boca con los dientes."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grupos",
+      "zona": "reserva",
+      "tipo": "lugar",
+      "titulo": "¿Huesos o caparazón?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Activa el visor de rayos X, la lupa de piel y el contador de patas para clasificar cada especie.",
+      "opciones": [
+        { "id": "grupo-vertebrado", "nombre": "Vertebrado" },
+        { "id": "grupo-invertebrado", "nombre": "Invertebrado" }
+      ],
+      "retos": [
+        {
+          "id": "caballo-prado",
+          "nombre": "Caballo",
+          "pregunta": "Pasa el visor de rayos X por el cuerpo del caballo. ¿En qué gran grupo lo clasificas?",
+          "respuesta": "grupo-vertebrado",
+          "pista": "Su esqueleto interno con columna vertebral sostiene todo su cuerpo.",
+          "curiosidad": "El casco del caballo es como una uña muy gruesa sobre un único dedo.",
+          "frases": {
+            "grupo-vertebrado": "¡Muy bien! El caballo tiene columna vertebral y esqueleto interno.",
+            "grupo-invertebrado": "Mira los rayos X: tiene una larga columna vertebral y costillas dentro del cuerpo."
+          }
+        },
+        {
+          "id": "escarabajo-corteza",
+          "nombre": "Escarabajo",
+          "pregunta": "Analiza al escarabajo con el visor de rayos X y la lupa. ¿A qué grupo pertenece?",
+          "respuesta": "grupo-invertebrado",
+          "pista": "Los insectos carecen de columna vertebral.",
+          "curiosidad": "Las alas duras del escarabajo se llaman élitros y protegen otro par de alas para volar.",
+          "frases": {
+            "grupo-invertebrado": "¡Bravo! No tiene huesos internos, sino un caparazón exterior.",
+            "grupo-vertebrado": "En los rayos X no aparecen huesos internos; su protección va por fuera."
+          }
+        },
+        {
+          "id": "gorrion-rama",
+          "nombre": "Gorrión",
+          "pregunta": "Observa el interior del gorrión con el escáner del laboratorio. ¿En qué grupo va?",
+          "respuesta": "grupo-vertebrado",
+          "pista": "Todas las aves poseen esqueleto interno con columna vertebral.",
+          "curiosidad": "Los huesos de las aves tienen cavidades con aire para pesar muy poco al volar.",
+          "frases": {
+            "grupo-vertebrado": "¡Exacto! El gorrión es un ave y tiene esqueleto interno.",
+            "grupo-invertebrado": "Las aves tienen huesos internos y columna vertebral."
+          }
+        },
+        {
+          "id": "pulpo-roca",
+          "nombre": "Pulpo",
+          "pregunta": "Inspecciona el cuerpo del pulpo en el laboratorio. ¿Dónde lo colocas?",
+          "respuesta": "grupo-invertebrado",
+          "pista": "Carece de columna vertebral y de esqueleto interno.",
+          "curiosidad": "El pulpo puede cambiar el color y la textura de su piel en un instante para camuflarse.",
+          "frases": {
+            "grupo-invertebrado": "¡Perfecto! El pulpo es un molusco invertebrado.",
+            "grupo-vertebrado": "El pulpo no tiene columna vertebral ni huesos."
+          }
+        },
+        {
+          "id": "triton-charca",
+          "nombre": "Tritón",
+          "pregunta": "Aunque su piel es blanda y húmeda, examina al tritón con los rayos X. ¿Qué es?",
+          "respuesta": "grupo-vertebrado",
+          "pista": "Es un anfibio con esqueleto interno.",
+          "curiosidad": "Nada como un pez en la charca, pero tiene columna vertebral y cuatro patas.",
+          "frases": {
+            "grupo-vertebrado": "¡Genial! Aunque su piel es blanda, por dentro tiene columna vertebral.",
+            "grupo-invertebrado": "Activa los rayos X: verás su cráneo y su columna vertebral de anfibio."
+          }
+        },
+        {
+          "id": "cangrejo-rio",
+          "nombre": "Cangrejo de río",
+          "pregunta": "Comprueba con los rayos X y la lupa cómo se sostiene el cangrejo de río. ¿Qué es?",
+          "respuesta": "grupo-invertebrado",
+          "pista": "Su esqueleto es externo, como una armadura sin columna vertebral.",
+          "curiosidad": "Para poder crecer, el cangrejo debe desprenderse de su caparazón antiguo y estrenar uno nuevo.",
+          "frases": {
+            "grupo-invertebrado": "¡Muy bien! El cangrejo es un invertebrado con exoesqueleto.",
+            "grupo-vertebrado": "Su coraza está por fuera; por dentro no tiene columna vertebral."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Usa los rayos X para distinguir animales vertebrados (con huesos) e invertebrados.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "grupo-vertebrado", "nombre": "Vertebrado" },
+            { "id": "grupo-invertebrado", "nombre": "Invertebrado" }
+          ],
+          "retos": [
+            {
+              "id": "caballo-prado",
+              "nombre": "Caballo",
+              "pregunta": "Pasa el visor de rayos X por el cuerpo del caballo. ¿En qué gran grupo lo clasificas?",
+              "respuesta": "grupo-vertebrado",
+              "pista": "Su esqueleto interno con columna vertebral sostiene todo su cuerpo.",
+              "curiosidad": "El casco del caballo es como una uña muy gruesa sobre un único dedo.",
+              "frases": {
+                "grupo-vertebrado": "¡Muy bien! El caballo tiene columna vertebral y esqueleto interno.",
+                "grupo-invertebrado": "Mira los rayos X: tiene una larga columna vertebral y costillas dentro del cuerpo."
+              }
+            },
+            {
+              "id": "escarabajo-corteza",
+              "nombre": "Escarabajo",
+              "pregunta": "Analiza al escarabajo con el visor de rayos X y la lupa. ¿A qué grupo pertenece?",
+              "respuesta": "grupo-invertebrado",
+              "pista": "Los insectos carecen de columna vertebral.",
+              "curiosidad": "Las alas duras del escarabajo se llaman élitros y protegen otro par de alas para volar.",
+              "frases": {
+                "grupo-invertebrado": "¡Bravo! No tiene huesos internos, sino un caparazón exterior.",
+                "grupo-vertebrado": "En los rayos X no aparecen huesos internos; su protección va por fuera."
+              }
+            },
+            {
+              "id": "gorrion-rama",
+              "nombre": "Gorrión",
+              "pregunta": "Observa el interior del gorrión con el escáner del laboratorio. ¿En qué grupo va?",
+              "respuesta": "grupo-vertebrado",
+              "pista": "Todas las aves poseen esqueleto interno con columna vertebral.",
+              "curiosidad": "Los huesos de las aves tienen cavidades con aire para pesar muy poco al volar.",
+              "frases": {
+                "grupo-vertebrado": "¡Exacto! El gorrión es un ave y tiene esqueleto interno.",
+                "grupo-invertebrado": "Las aves tienen huesos internos y columna vertebral."
+              }
+            },
+            {
+              "id": "pulpo-roca",
+              "nombre": "Pulpo",
+              "pregunta": "Inspecciona el cuerpo del pulpo en el laboratorio. ¿Dónde lo colocas?",
+              "respuesta": "grupo-invertebrado",
+              "pista": "Carece de columna vertebral y de esqueleto interno.",
+              "curiosidad": "El pulpo puede cambiar el color y la textura de su piel en un instante para camuflarse.",
+              "frases": {
+                "grupo-invertebrado": "¡Perfecto! El pulpo es un molusco invertebrado.",
+                "grupo-vertebrado": "El pulpo no tiene columna vertebral ni huesos."
+              }
+            },
+            {
+              "id": "triton-charca",
+              "nombre": "Tritón",
+              "pregunta": "Aunque su piel es blanda y húmeda, examina al tritón con los rayos X. ¿Qué es?",
+              "respuesta": "grupo-vertebrado",
+              "pista": "Es un anfibio con esqueleto interno.",
+              "curiosidad": "Nada como un pez en la charca, pero tiene columna vertebral y cuatro patas.",
+              "frases": {
+                "grupo-vertebrado": "¡Genial! Aunque su piel es blanda, por dentro tiene columna vertebral.",
+                "grupo-invertebrado": "Activa los rayos X: verás su cráneo y su columna vertebral de anfibio."
+              }
+            },
+            {
+              "id": "cangrejo-rio",
+              "nombre": "Cangrejo de río",
+              "pregunta": "Comprueba con los rayos X y la lupa cómo se sostiene el cangrejo de río. ¿Qué es?",
+              "respuesta": "grupo-invertebrado",
+              "pista": "Su esqueleto es externo, como una armadura sin columna vertebral.",
+              "curiosidad": "Para poder crecer, el cangrejo debe desprenderse de su caparazón antiguo y estrenar uno nuevo.",
+              "frases": {
+                "grupo-invertebrado": "¡Muy bien! El cangrejo es un invertebrado con exoesqueleto.",
+                "grupo-vertebrado": "Su coraza está por fuera; por dentro no tiene columna vertebral."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Usa la lupa de piel para clasificar los cinco grupos de vertebrados según su cubierta y medio.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "vert-mamifero-ave", "nombre": "Mamíferos y Aves" },
+            { "id": "vert-reptil-anfibio", "nombre": "Reptiles y Anfibios" },
+            { "id": "vert-pez", "nombre": "Peces" }
+          ],
+          "retos": [
+            {
+              "id": "murcielago-cueva",
+              "nombre": "Murciélago",
+              "pregunta": "Vuela de noche, pero mira su piel con la lupa y cómo cría. ¿En qué grupo de vertebrados va?",
+              "respuesta": "vert-mamifero-ave",
+              "pista": "Aunque tiene alas de piel, está cubierto de pelo y es un mamífero.",
+              "curiosidad": "Se orienta en la oscuridad emitiendo sonidos muy agudos y escuchando su eco.",
+              "frases": {
+                "vert-mamifero-ave": "¡Exacto! El murciélago es el único mamífero capaz de volar.",
+                "vert-reptil-anfibio": "No tiene escamas ni piel desnuda de charca; tiene pelo suave y da leche.",
+                "vert-pez": "Respira aire con pulmones y vuela, no vive bajo el agua."
+              }
+            },
+            {
+              "id": "lagartija-sol",
+              "nombre": "Lagartija",
+              "pregunta": "Mira con la lupa de piel el dorso de la lagartija sobre la roca. ¿En qué grupo encaja?",
+              "respuesta": "vert-reptil-anfibio",
+              "pista": "Es un reptil terrestre de piel escamosa.",
+              "curiosidad": "Si un depredador la atrapa por la cola, puede soltarla para escapar y luego le vuelve a crecer.",
+              "frases": {
+                "vert-reptil-anfibio": "¡Genial! La lagartija es un reptil con escamas secas.",
+                "vert-mamifero-ave": "No tiene pelo ni plumas; necesita el calor del sol para activarse.",
+                "vert-pez": "Sus escamas son secas y respira aire con pulmones en tierra firme."
+              }
+            },
+            {
+              "id": "caballito-mar",
+              "nombre": "Caballito de mar",
+              "pregunta": "Observa con las tres herramientas cómo respira y se mueve el caballito de mar. ¿Qué es?",
+              "respuesta": "vert-pez",
+              "pista": "Aunque su cabeza recuerda a un caballo, tiene branquias y aletas.",
+              "curiosidad": "Se sujeta a las praderas marinas enrollando su cola prensil para que no lo arrastre la corriente.",
+              "frases": {
+                "vert-pez": "¡Perfecto! El caballito de mar es un pez óseo muy singular.",
+                "vert-mamifero-ave": "No tiene pelo ni pulmones; vive siempre sumergido respirando por branquias.",
+                "vert-reptil-anfibio": "Tiene aletas y branquias toda su vida, así que pertenece a los peces."
+              }
+            },
+            {
+              "id": "ciguena-nido",
+              "nombre": "Cigüeña blanca",
+              "pregunta": "Examina con la lupa la cubierta y las extremidades de la cigüeña blanca. ¿Dónde la clasificas?",
+              "respuesta": "vert-mamifero-ave",
+              "pista": "Las plumas y el pico córneo son rasgos propios de las aves.",
+              "curiosidad": "Las cigüeñas saludan a su pareja chocando sus picos con un sonido llamado crotoreo.",
+              "frases": {
+                "vert-mamifero-ave": "¡Muy bien! La cigüeña es un ave vertebrada con plumas.",
+                "vert-reptil-anfibio": "Su cuerpo está cubierto de plumas blancas y negras, no de escamas.",
+                "vert-pez": "Camina por las charcas con patas largas, pero es un ave que vuela."
+              }
+            },
+            {
+              "id": "salamandra-musgo",
+              "nombre": "Salamandra",
+              "pregunta": "Inspecciona la piel y las extremidades de la salamandra en el laboratorio. ¿Qué vertebrado es?",
+              "respuesta": "vert-reptil-anfibio",
+              "pista": "Es un anfibio de piel húmeda que realiza metamorfosis.",
+              "curiosidad": "Sus llamativos colores negro y amarillo avisan a los depredadores de que no sabe bien.",
+              "frases": {
+                "vert-reptil-anfibio": "¡Bravo! La salamandra es un anfibio de piel húmeda.",
+                "vert-mamifero-ave": "Su piel es lisa y húmeda, sin un solo pelo ni pluma.",
+                "vert-pez": "De adulta tiene cuatro patas para caminar por el bosque húmedo."
+              }
+            },
+            {
+              "id": "atun-oceano",
+              "nombre": "Atún",
+              "pregunta": "Revisa la piel, los rayos X y las extremidades del atún en el visor. ¿Dónde va?",
+              "respuesta": "vert-pez",
+              "pista": "Es un vertebrado acuático con aletas y respiración branquial.",
+              "curiosidad": "Su cuerpo en forma de huso corta el agua casi sin rozamiento.",
+              "frases": {
+                "vert-pez": "¡Excelente! El atún es un pez marino.",
+                "vert-mamifero-ave": "A diferencia del delfín, el atún tiene escamas y branquias.",
+                "vert-reptil-anfibio": "Vive siempre en el mar impulsándose con sus aletas."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Usa el contador de patas y el escáner para distinguir los principales grupos de invertebrados.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            { "id": "inv-artropodo", "nombre": "Artrópodos" },
+            { "id": "inv-molusco", "nombre": "Moluscos" },
+            { "id": "inv-anelido-cnidario", "nombre": "Anélidos y Cnidarios" }
+          ],
+          "retos": [
+            {
+              "id": "abeja-colmena",
+              "nombre": "Abeja",
+              "pregunta": "Usa el contador de patas y la lupa con la abeja. ¿A qué grupo de invertebrados pertenece?",
+              "respuesta": "inv-artropodo",
+              "pista": "Usa el contador de patas: los insectos tienen 6 patas articuladas y son artrópodos.",
+              "curiosidad": "Las abejas bailan en el panal para indicar a sus compañeras dónde están las flores.",
+              "frases": {
+                "inv-artropodo": "¡Muy bien! La abeja es un insecto, dentro del grupo de los artrópodos.",
+                "inv-molusco": "No tiene cuerpo blando con concha, sino patas articuladas y exoesqueleto.",
+                "inv-anelido-cnidario": "Tiene patas articuladas, antenas y alas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo distinguimos a un insecto como la abeja de un arácnido como la araña?",
+                "opciones": [
+                  { "id": "huesos", "nombre": "Los insectos poseen una columna vertebral interna y las arañas carecen de ella" },
+                  { "id": "seis", "nombre": "Los insectos tienen 6 patas y 2 antenas, y los arácnidos 8 patas sin antenas" },
+                  { "id": "concha", "nombre": "Las arañas protegen su abdomen dentro de una concha calcárea en espiral" }
+                ],
+                "respuesta": "seis",
+                "frases": {
+                  "seis": "¡Exacto! Contar las patas (6 en insectos, 8 en arácnidos) es el truco infalible.",
+                  "huesos": "Ambos son artrópodos invertebrados, ninguno tiene columna vertebral.",
+                  "concha": "La concha en espiral es propia de muchos moluscos, no de los arácnidos."
+                }
+              }
+            },
+            {
+              "id": "caracol-huerta",
+              "nombre": "Caracol",
+              "pregunta": "Mira con la lupa y el contador de patas cómo se desplaza el caracol. ¿Qué invertebrado es?",
+              "respuesta": "inv-molusco",
+              "pista": "Los animales de cuerpo blando con pie musculoso y concha son moluscos.",
+              "curiosidad": "Cuando hace mucho calor o sequía, el caracol se encierra en su concha para no perder humedad.",
+              "frases": {
+                "inv-molusco": "¡Genial! El caracol es un molusco gasterópodo.",
+                "inv-artropodo": "No tiene patas articuladas; se desliza sobre un único pie musculoso.",
+                "inv-anelido-cnidario": "Su cuerpo no está dividido en anillos ni tiene tentáculos urticantes."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué tienen en común el caracol, la almeja y el pulpo para ser todos moluscos?",
+                "opciones": [
+                  { "id": "blando", "nombre": "Tienen el cuerpo blando y musculoso, a menudo protegido por una o dos conchas" },
+                  { "id": "seis", "nombre": "Todos caminan sobre seis patas articuladas y tienen dos antenas sensoriales" },
+                  { "id": "columna", "nombre": "Todos poseen una columna vertebral flexible formada por pequeños huesos" }
+                ],
+                "respuesta": "blando",
+                "frases": {
+                  "blando": "¡Bravo! Todos los moluscos comparten ese cuerpo blando y musculoso.",
+                  "seis": "Las seis patas articuladas son de los insectos.",
+                  "columna": "Los moluscos son invertebrados y carecen de columna vertebral."
+                }
+              }
+            },
+            {
+              "id": "medusa-costa",
+              "nombre": "Medusa",
+              "pregunta": "Inspecciona en el laboratorio la estructura corporal de la medusa. ¿En qué grupo va?",
+              "respuesta": "inv-anelido-cnidario",
+              "pista": "Es un invertebrado marino muy sencillo con tentáculos: un cnidario.",
+              "curiosidad": "Más de nueve décimas partes del cuerpo de una medusa son simplemente agua.",
+              "frases": {
+                "inv-anelido-cnidario": "¡Exacto! La medusa es un cnidario acuático de cuerpo gelatinoso.",
+                "inv-artropodo": "No tiene caparazón duro ni patas articuladas.",
+                "inv-molusco": "No tiene pie musculoso ni concha calcárea."
+              },
+              "adaptacion": {
+                "enunciado": "¿Para qué utiliza la medusa los tentáculos que cuelgan de su sombrilla?",
+                "opciones": [
+                  { "id": "caminar", "nombre": "Para caminar rápido sobre las rocas secas de la costa cuando baja la marea" },
+                  { "id": "capturar", "nombre": "Para defenderse y atrapar pequeño alimento mientras flota en el agua marina" },
+                  { "id": "roer", "nombre": "Para triturar conchas duras y excavar galerías profundas bajo la arena" }
+                ],
+                "respuesta": "capturar",
+                "frases": {
+                  "capturar": "¡Muy bien! Sus tentáculos tienen células especiales para atrapar su alimento en el mar.",
+                  "caminar": "Las medusas viven flotando y nadando suavemente en el agua marina.",
+                  "roer": "Las medusas son animales marinos sin dientes ni mandíbulas."
+                }
+              }
+            },
+            {
+              "id": "arana-tela",
+              "nombre": "Araña de jardín",
+              "pregunta": "Examina la cubierta y cuenta las patas de la araña de jardín. ¿En qué grupo la clasificas?",
+              "respuesta": "inv-artropodo",
+              "pista": "Sus 8 patas tienen articulaciones; es un arácnido dentro de los artrópodos.",
+              "curiosidad": "Un hilo de tela de araña es más elástico y resistente que un hilo de acero del mismo grosor.",
+              "frases": {
+                "inv-artropodo": "¡Perfecto! Los arácnidos tienen patas articuladas y pertenecen a los artrópodos.",
+                "inv-molusco": "Tiene 8 patas articuladas y exoesqueleto, no cuerpo blando de molusco.",
+                "inv-anelido-cnidario": "No es un gusano anillado ni una medusa: tiene patas articuladas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué significa la palabra «artrópodo»?",
+                "opciones": [
+                  { "id": "blando", "nombre": "Significa «cuerpo gelatinoso con largos tentáculos para flotar en el mar»" },
+                  { "id": "plumas", "nombre": "Significa «animal terrestre cubierto de plumas impermeables y pico duro»" },
+                  { "id": "articuladas", "nombre": "Significa «patas articuladas», unidas a un esqueleto externo protector" }
+                ],
+                "respuesta": "articuladas",
+                "frases": {
+                  "articuladas": "¡Muy bien! Insectos, arácnidos, crustáceos y miriápodos comparten sus patas articuladas.",
+                  "blando": "El cuerpo gelatinoso con tentáculos corresponde a las medusas.",
+                  "plumas": "Las plumas son exclusivas de las aves vertebradas."
+                }
+              }
+            },
+            {
+              "id": "lombriz-humeda",
+              "nombre": "Lombriz",
+              "pregunta": "Observa con la lupa de piel y el contador de patas el cuerpo de la lombriz. ¿Dónde está?",
+              "respuesta": "inv-anelido-cnidario",
+              "pista": "Los gusanos con el cuerpo segmentado en anillos se llaman anélidos.",
+              "curiosidad": "Al excavar galerías en el huerto, las lombrices airean la tierra y la hacen más fértil para las plantas.",
+              "frases": {
+                "inv-anelido-cnidario": "¡Sobresaliente! La lombriz es un anélido porque su cuerpo está formado por anillos.",
+                "inv-artropodo": "No tiene patas articuladas ni exoesqueleto rígido.",
+                "inv-molusco": "No tiene concha; su cuerpo está segmentado en anillos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué la lombriz de tierra pertenece al grupo de los anélidos?",
+                "opciones": [
+                  { "id": "alas", "nombre": "Porque despliega cuatro alas transparentes cuando sale a la superficie" },
+                  { "id": "branquias", "nombre": "Porque tiene el cuerpo cubierto de escamas duras y aletas para nadar" },
+                  { "id": "anillos", "nombre": "Porque su cuerpo blando y cilíndrico está dividido en muchos anillos" }
+                ],
+                "respuesta": "anillos",
+                "frases": {
+                  "anillos": "¡Exacto! La palabra «anélido» viene precisamente de esos pequeños anillos.",
+                  "alas": "La lombriz no tiene ni alas ni patas.",
+                  "branquias": "Vive en la tierra húmeda y respira a través de su piel."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "germinacion",
       "zona": "invernadero",
       "tipo": "controles",
@@ -1886,6 +2867,1336 @@
               "secar": "La luz del sol suave no seca las hojas: les da energía para hacer la fotosíntesis y fabricar su alimento."
             }
           }
+        }
+      ]
+    },
+    {
+      "id": "polinizacion",
+      "zona": "invernadero",
+      "tipo": "lugar",
+      "titulo": "Polen y semillas viajeras",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Usa la lupa floral, el túnel de viento y agua y el vuelo de la abeja para clasificar flores, semillas y plantas.",
+      "opciones": [
+        { "id": "flor-caliz-corola", "nombre": "Cáliz y Corola" },
+        { "id": "flor-estambres", "nombre": "Estambres" },
+        { "id": "flor-pistilo", "nombre": "Pistilo" }
+      ],
+      "retos": [
+        {
+          "id": "sepalo-verde",
+          "nombre": "Sépalos del capullo",
+          "pregunta": "Comprueba en las pruebas del capullo y de la flor qué hacen estas hojitas verdes de la base. ¿A qué envoltura pertenecen?",
+          "respuesta": "flor-caliz-corola",
+          "pista": "Los sépalos verdes forman el cáliz en la envoltura exterior de la flor.",
+          "curiosidad": "Cuando la flor aún está cerrada en capullo, el cáliz la abriga del frío y de la lluvia.",
+          "frases": {
+            "flor-caliz-corola": "¡Muy bien! Los sépalos verdes forman el cáliz de la flor.",
+            "flor-estambres": "Los estambres son los filamentos con polen, no las hojitas verdes de la base.",
+            "flor-pistilo": "El pistilo está en el centro con forma de botellita."
+          }
+        },
+        {
+          "id": "antena-polen",
+          "nombre": "Filamento con anteras",
+          "pregunta": "Observa dónde se sitúan estos tallitos rematados en dos bolsitas amarillas y qué ocurre cuando pasa la abeja. ¿Qué parte de la flor son?",
+          "respuesta": "flor-estambres",
+          "pista": "Es la parte masculina de la flor donde se produce el polen.",
+          "curiosidad": "Al rozar los estambres, el cuerpo peludo de la abeja queda cubierto de granos de polen.",
+          "frases": {
+            "flor-estambres": "¡Genial! El filamento y la antera forman el estambre.",
+            "flor-caliz-corola": "No es un pétalo ni un sépalo, sino la parte que produce el polen.",
+            "flor-pistilo": "El pistilo recibe el polen; quien lo fabrica es el estambre."
+          }
+        },
+        {
+          "id": "ovario-flor",
+          "nombre": "Cámara con óvulos",
+          "pregunta": "Examina la cavidad redondeada del fondo de la flor y comprueba en qué se transforma al formarse el fruto. ¿De qué órgano es la base?",
+          "respuesta": "flor-pistilo",
+          "pista": "Es la parte inferior del órgano femenino central de la flor.",
+          "curiosidad": "Cuando los pétalos se caen, el ovario del pistilo engorda hasta convertirse en una fruta como la manzana o la cereza.",
+          "frases": {
+            "flor-pistilo": "¡Perfecto! El ovario es la base del pistilo y dará origen al fruto.",
+            "flor-caliz-corola": "Está en el centro mismo de la flor, dentro del pistilo.",
+            "flor-estambres": "Los estambres rodean al pistilo, pero el ovario forma la base de la botella central."
+          }
+        },
+        {
+          "id": "petalo-color",
+          "nombre": "Pétalos vistosos",
+          "pregunta": "Observa cómo estas láminas coloreadas atraen a los insectos y se desprenden tras la polinización. ¿Qué parte de la flor forman?",
+          "respuesta": "flor-caliz-corola",
+          "pista": "El conjunto de pétalos de colores es la corola.",
+          "curiosidad": "Muchas flores tienen dibujos en sus pétalos que guían a las abejas hacia el néctar.",
+          "frases": {
+            "flor-caliz-corola": "¡Exacto! Los pétalos forman la corola para atraer a los insectos polinizadores.",
+            "flor-estambres": "Los pétalos envuelven la flor; quienes fabrican el polen son los estambres.",
+            "flor-pistilo": "El pistilo está protegido en el centro de la corola."
+          }
+        },
+        {
+          "id": "saco-polinico",
+          "nombre": "Granos de polen",
+          "pregunta": "Sigue en la prueba de la abeja de qué bolsitas se desprende este polvillo amarillo dorado. ¿En qué órgano floral se fabrica?",
+          "respuesta": "flor-estambres",
+          "pista": "El polen madura en las anteras de los estambres.",
+          "curiosidad": "Vistos al microscopio, los granos de polen de cada planta tienen formas geométricas distintas.",
+          "frases": {
+            "flor-estambres": "¡Bravo! Los granos de polen se producen en los estambres.",
+            "flor-caliz-corola": "El cáliz y la corola envuelven la flor, pero el polen nace en los estambres.",
+            "flor-pistilo": "El polen llega al pistilo después, pero se fabrica en los estambres."
+          }
+        },
+        {
+          "id": "estigma-cuello",
+          "nombre": "Estigma y estilo",
+          "pregunta": "Mira el cuello central con punta pegajosa donde germina el polen y baja hacia los óvulos. ¿De qué órgano floral forma parte?",
+          "respuesta": "flor-pistilo",
+          "pista": "Forma la parte alta de la botellita central de la flor.",
+          "curiosidad": "Su punta es ligeramente pegajosa para que el polen que trae la abeja se quede bien sujeto.",
+          "frases": {
+            "flor-pistilo": "¡Muy bien! Es la entrada superior del pistilo.",
+            "flor-caliz-corola": "No forma parte de las hojas exteriores, sino del órgano femenino central.",
+            "flor-estambres": "No fabrica polen: lo recibe cuando llega desde los estambres."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Explora la posición en la flor, la prueba del capullo y la abeja y el paso de flor a fruto para clasificar sus órganos.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "flor-caliz-corola", "nombre": "Cáliz y Corola" },
+            { "id": "flor-estambres", "nombre": "Estambres" },
+            { "id": "flor-pistilo", "nombre": "Pistilo" }
+          ],
+          "retos": [
+            {
+              "id": "sepalo-verde",
+              "nombre": "Sépalos del capullo",
+              "pregunta": "Comprueba en las pruebas del capullo y de la flor qué hacen estas hojitas verdes de la base. ¿A qué envoltura pertenecen?",
+              "respuesta": "flor-caliz-corola",
+              "pista": "Los sépalos verdes forman el cáliz en la envoltura exterior de la flor.",
+              "curiosidad": "Cuando la flor aún está cerrada en capullo, el cáliz la abriga del frío y de la lluvia.",
+              "frases": {
+                "flor-caliz-corola": "¡Muy bien! Los sépalos verdes forman el cáliz de la flor.",
+                "flor-estambres": "Los estambres son los filamentos con polen, no las hojitas verdes de la base.",
+                "flor-pistilo": "El pistilo está en el centro con forma de botellita."
+              }
+            },
+            {
+              "id": "antena-polen",
+              "nombre": "Filamento con anteras",
+              "pregunta": "Observa dónde se sitúan estos tallitos rematados en dos bolsitas amarillas y qué ocurre cuando pasa la abeja. ¿Qué parte de la flor son?",
+              "respuesta": "flor-estambres",
+              "pista": "Es la parte masculina de la flor donde se produce el polen.",
+              "curiosidad": "Al rozar los estambres, el cuerpo peludo de la abeja queda cubierto de granos de polen.",
+              "frases": {
+                "flor-estambres": "¡Genial! El filamento y la antera forman el estambre.",
+                "flor-caliz-corola": "No es un pétalo ni un sépalo, sino la parte que produce el polen.",
+                "flor-pistilo": "El pistilo recibe el polen; quien lo fabrica es el estambre."
+              }
+            },
+            {
+              "id": "ovario-flor",
+              "nombre": "Cámara con óvulos",
+              "pregunta": "Examina la cavidad redondeada del fondo de la flor y comprueba en qué se transforma al formarse el fruto. ¿De qué órgano es la base?",
+              "respuesta": "flor-pistilo",
+              "pista": "Es la parte inferior del órgano femenino central de la flor.",
+              "curiosidad": "Cuando los pétalos se caen, el ovario del pistilo engorda hasta convertirse en una fruta como la manzana o la cereza.",
+              "frases": {
+                "flor-pistilo": "¡Perfecto! El ovario es la base del pistilo y dará origen al fruto.",
+                "flor-caliz-corola": "Está en el centro mismo de la flor, dentro del pistilo.",
+                "flor-estambres": "Los estambres rodean al pistilo, pero el ovario forma la base de la botella central."
+              }
+            },
+            {
+              "id": "petalo-color",
+              "nombre": "Pétalos vistosos",
+              "pregunta": "Observa cómo estas láminas coloreadas atraen a los insectos y se desprenden tras la polinización. ¿Qué parte de la flor forman?",
+              "respuesta": "flor-caliz-corola",
+              "pista": "El conjunto de pétalos de colores es la corola.",
+              "curiosidad": "Muchas flores tienen dibujos en sus pétalos que guían a las abejas hacia el néctar.",
+              "frases": {
+                "flor-caliz-corola": "¡Exacto! Los pétalos forman la corola para atraer a los insectos polinizadores.",
+                "flor-estambres": "Los pétalos envuelven la flor; quienes fabrican el polen son los estambres.",
+                "flor-pistilo": "El pistilo está protegido en el centro de la corola."
+              }
+            },
+            {
+              "id": "saco-polinico",
+              "nombre": "Granos de polen",
+              "pregunta": "Sigue en la prueba de la abeja de qué bolsitas se desprende este polvillo amarillo dorado. ¿En qué órgano floral se fabrica?",
+              "respuesta": "flor-estambres",
+              "pista": "El polen madura en las anteras de los estambres.",
+              "curiosidad": "Vistos al microscopio, los granos de polen de cada planta tienen formas geométricas distintas.",
+              "frases": {
+                "flor-estambres": "¡Bravo! Los granos de polen se producen en los estambres.",
+                "flor-caliz-corola": "El cáliz y la corola envuelven la flor, pero el polen nace en los estambres.",
+                "flor-pistilo": "El polen llega al pistilo después, pero se fabrica en los estambres."
+              }
+            },
+            {
+              "id": "estigma-cuello",
+              "nombre": "Estigma y estilo",
+              "pregunta": "Mira el cuello central con punta pegajosa donde germina el polen y baja hacia los óvulos. ¿De qué órgano floral forma parte?",
+              "respuesta": "flor-pistilo",
+              "pista": "Forma la parte alta de la botellita central de la flor.",
+              "curiosidad": "Su punta es ligeramente pegajosa para que el polen que trae la abeja se quede bien sujeto.",
+              "frases": {
+                "flor-pistilo": "¡Muy bien! Es la entrada superior del pistilo.",
+                "flor-caliz-corola": "No forma parte de las hojas exteriores, sino del órgano femenino central.",
+                "flor-estambres": "No fabrica polen: lo recibe cuando llega desde los estambres."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Prueba el túnel de viento y agua para descubrir cómo viaja cada semilla a nuevos lugares.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "viaje-viento", "nombre": "Por el viento" },
+            { "id": "viaje-agua", "nombre": "Por el agua" },
+            { "id": "viaje-animal", "nombre": "Con animales" }
+          ],
+          "retos": [
+            {
+              "id": "diente-leon",
+              "nombre": "Diente de león",
+              "pregunta": "Pon a prueba la semilla del diente de león en el laboratorio. ¿Cómo viaja a nuevos prados?",
+              "respuesta": "viaje-viento",
+              "pista": "En el túnel de viento sale volando con la brisa más suave.",
+              "curiosidad": "Un solo soplido puede enviar decenas de semillas de diente de león a recorrer el prado.",
+              "frases": {
+                "viaje-viento": "¡Exacto! Su paracaídas de pelitos vuela empujado por el viento.",
+                "viaje-agua": "Si se moja su plumón se apelmaza; está hecho para planear en el aire seco.",
+                "viaje-animal": "No tiene ganchos ni pulpa jugosa; viaja flotando en la brisa."
+              }
+            },
+            {
+              "id": "coco-costa",
+              "nombre": "Coco",
+              "pregunta": "Haz las tres pruebas de laboratorio con el coco. ¿Cómo logra viajar de una isla a otra?",
+              "respuesta": "viaje-agua",
+              "pista": "Es demasiado pesado para el viento, pero flota muy bien sobre el agua.",
+              "curiosidad": "Los cocos pueden flotar en el mar durante semanas y germinar al llegar a una playa nueva.",
+              "frases": {
+                "viaje-agua": "¡Bravo! El coco flota por el agua gracias a su cubierta fibrosa.",
+                "viaje-viento": "Pesa demasiado para que el viento lo levante.",
+                "viaje-animal": "Las corrientes de agua son su principal medio para cruzar de isla en isla."
+              }
+            },
+            {
+              "id": "cereza-pajaro",
+              "nombre": "Cereza",
+              "pregunta": "Observa qué ocurre con la cereza en las tres pruebas del laboratorio. ¿Quién dispersa su semilla?",
+              "respuesta": "viaje-animal",
+              "pista": "Los frutos carnosos y dulces atraen a los animales para que transporten sus semillas.",
+              "curiosidad": "El hueso duro protege la semilla para que no se estropee y pueda germinar en el suelo.",
+              "frases": {
+                "viaje-animal": "¡Muy bien! Las aves y mamíferos comen la fruta y dispersan la semilla.",
+                "viaje-viento": "Una cereza carnosa no tiene alas ni paracaídas para volar con la brisa.",
+                "viaje-agua": "Su color rojo vivo sirve para llamar la atención de los pájaros del bosque."
+              }
+            },
+            {
+              "id": "samara-arce",
+              "nombre": "Semilla de arce",
+              "pregunta": "Comprueba en el simulador cómo se comporta la semilla de arce al soltarse del árbol. ¿Cómo se dispersa?",
+              "respuesta": "viaje-viento",
+              "pista": "Su forma de hélice retrasa la caída para que la brisa la lleve lejos.",
+              "curiosidad": "Su giro inspirado en la naturaleza ayudó a diseñar hélices y drones.",
+              "frases": {
+                "viaje-viento": "¡Genial! La sámara de arce planea girando con el viento.",
+                "viaje-agua": "Su ala membranosa está diseñada para volar en el aire, no para navegar.",
+                "viaje-animal": "No es un fruto carnoso; viaja planeando con el viento."
+              }
+            },
+            {
+              "id": "nenufar-semilla",
+              "nombre": "Semilla de nenúfar",
+              "pregunta": "Examina la cubierta de la semilla de nenúfar en el simulador. ¿Qué medio usa para viajar?",
+              "respuesta": "viaje-agua",
+              "pista": "Navega por la superficie de ríos y lagunas.",
+              "curiosidad": "Tras flotar unos días lejos de la planta madre, la bolsita deja salir el aire y la semilla se siembra en el lodo.",
+              "frases": {
+                "viaje-agua": "¡Perfecto! Viaja flotando por el agua de la charca.",
+                "viaje-viento": "Crece en el agua y usa la corriente para desplazarse.",
+                "viaje-animal": "Su flotador natural está adaptado para viajar por el agua."
+              }
+            },
+            {
+              "id": "cadillo-pelo",
+              "nombre": "Cadillo con ganchos",
+              "pregunta": "Mira con la lupa la superficie del cadillo y prueba los tres botones. ¿Cómo viaja?",
+              "respuesta": "viaje-animal",
+              "pista": "Viaja de polizón enganchado en el pelo o las plumas de los animales.",
+              "curiosidad": "Un inventor diseñó el cierre de velcro después de mirar con lupa los ganchitos de estas semillas.",
+              "frases": {
+                "viaje-animal": "¡Excelente! Se engancha al pelo de los animales para viajar lejos.",
+                "viaje-viento": "Sus ganchos no son plumas de vuelo; sirven para agarrarse al pelaje.",
+                "viaje-agua": "Crece en caminos secos donde pasan mamíferos y aves."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Clasifica las plantas en angiospermas (con fruto), gimnospermas (con piñas) y plantas sin flores (con esporas).",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            { "id": "planta-angiosperma", "nombre": "Angiospermas (con fruto)" },
+            { "id": "planta-gimnosperma", "nombre": "Gimnospermas (con piñas)" },
+            { "id": "planta-esporas", "nombre": "Sin flores (con esporas)" }
+          ],
+          "retos": [
+            {
+              "id": "manzano-flor",
+              "nombre": "Manzano",
+              "pregunta": "Examina en el laboratorio las flores y el corte de la manzana. ¿A qué grupo de plantas pertenece?",
+              "respuesta": "planta-angiosperma",
+              "pista": "Tiene flores vistosas y sus semillas están encerradas dentro de un fruto.",
+              "curiosidad": "Si cortas una manzana por la mitad en horizontal, las cinco cámaras de semillas dibujan una estrella.",
+              "frases": {
+                "planta-angiosperma": "¡Muy bien! El manzano es una angiosperma porque produce flores y frutos.",
+                "planta-gimnosperma": "No produce piñas leñosas; guarda sus pepitas dentro de la manzana.",
+                "planta-esporas": "Tiene flores completas y semillas, no esporas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué diferencia principal hay entre una angiosperma como el manzano y una gimnosperma como el pino?",
+                "opciones": [
+                  { "id": "raices", "nombre": "Los manzanos absorben toda el agua por las hojas y los pinos no tienen raíces" },
+                  { "id": "fruto", "nombre": "Las angiospermas guardan las semillas en frutos y las gimnospermas en piñas" },
+                  { "id": "esporas", "nombre": "Los manzanos se reproducen por esporas microscópicas sin llegar a dar semillas" }
+                ],
+                "respuesta": "fruto",
+                "frases": {
+                  "fruto": "¡Exacto! En las angiospermas el ovario de la flor se convierte en un fruto que envuelve las semillas.",
+                  "raices": "Tanto los manzanos como los pinos son árboles con raíz, tronco y hojas.",
+                  "esporas": "Las manzanas guardan dentro las semillas (pepitas) del manzano."
+                }
+              }
+            },
+            {
+              "id": "pino-pina",
+              "nombre": "Pino piñonero",
+              "pregunta": "Inspecciona con la lupa las agujas y la piña del pino piñonero. ¿En qué grupo botánico va?",
+              "respuesta": "planta-gimnosperma",
+              "pista": "Las coníferas con piñas y semillas desnudas son gimnospermas.",
+              "curiosidad": "Cuando hace calor y el aire está seco, las escamas de la piña se abren para dejar salir los piñones.",
+              "frases": {
+                "planta-gimnosperma": "¡Perfecto! El pino es una gimnosperma: forma piñas en lugar de frutos carnosos.",
+                "planta-angiosperma": "No tiene flores de pétalos vistosos ni frutos como la manzana.",
+                "planta-esporas": "Sí produce semillas (los piñones), así que no es un helecho ni un musgo."
+              },
+              "adaptacion": {
+                "enunciado": "¿Dónde se encuentran las semillas de un pino?",
+                "opciones": [
+                  { "id": "pulpa", "nombre": "Encerradas dentro de un fruto carnoso y muy jugoso como el melocotón" },
+                  { "id": "soros", "nombre": "En diminutos saquitos de esporas alineados bajo las hojas del árbol" },
+                  { "id": "pina", "nombre": "Apoyadas directamente entre las escamas leñosas de las piñas" }
+                ],
+                "respuesta": "pina",
+                "frases": {
+                  "pina": "¡Muy bien! Por eso «gimnosperma» significa planta de semilla desnuda.",
+                  "pulpa": "Las gimnospermas no forman frutos carnosos.",
+                  "soros": "Los soros con esporas son propios de los helechos."
+                }
+              }
+            },
+            {
+              "id": "helecho-soros",
+              "nombre": "Helecho",
+              "pregunta": "Usa la lupa botánica para mirar el envés de la hoja del helecho. ¿En qué grupo lo clasificas?",
+              "respuesta": "planta-esporas",
+              "pista": "Usa la lupa en el reverso de su hoja (fronde): verás bolsitas de esporas.",
+              "curiosidad": "Cuando brota una hoja nueva de helecho, sale enrollada en espiral como el bastón de un violín.",
+              "frases": {
+                "planta-esporas": "¡Bravo! El helecho es una planta sin flores que se reproduce por esporas.",
+                "planta-angiosperma": "Los helechos nunca producen flores ni frutos.",
+                "planta-gimnosperma": "Tampoco tienen piñas ni semillas; usan esporas microscópicas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué son los puntitos oscuros (soros) que aparecen debajo de las hojas de los helechos?",
+                "opciones": [
+                  { "id": "semillas", "nombre": "Pequeños piñones leñosos idénticos a los que maduran en las piñas del pino" },
+                  { "id": "esporas", "nombre": "Pequeños saquitos llenos de esporas con las que el helecho se reproduce" },
+                  { "id": "flores", "nombre": "Capullos de flores diminutas que esperan a las abejas para formar frutos" }
+                ],
+                "respuesta": "esporas",
+                "frases": {
+                  "esporas": "¡Sobresaliente! Cuando maduran, los soros se abren y el viento reparte las esporas por el suelo húmedo.",
+                  "semillas": "Los helechos no fabrican semillas.",
+                  "flores": "Los helechos son plantas sin flores."
+                }
+              }
+            },
+            {
+              "id": "abeto-cono",
+              "nombre": "Abeto",
+              "pregunta": "Observa los conos erguidos del abeto con las herramientas del laboratorio. ¿Qué tipo de planta es?",
+              "respuesta": "planta-gimnosperma",
+              "pista": "Es una conífera emparentada con los pinos y cedros.",
+              "curiosidad": "A diferencia de las piñas del pino que cuelgan hacia abajo, los conos del abeto crecen mirando hacia el cielo.",
+              "frases": {
+                "planta-gimnosperma": "¡Genial! El abeto es una gimnosperma productora de conos o piñas.",
+                "planta-angiosperma": "No forma flores con corola ni frutos carnosos.",
+                "planta-esporas": "Se reproduce por semillas aladas que salen de sus conos."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo suele polinizarse la mayoría de las gimnospermas como los pinos y abetos?",
+                "opciones": [
+                  { "id": "viento", "nombre": "Gracias al viento, que lleva los granos de polen de árbol en árbol" },
+                  { "id": "peces", "nombre": "Gracias a los peces de río, que llevan las piñas bajo la corriente" },
+                  { "id": "raices", "nombre": "Intercambiando el polen bajo la tierra húmeda mediante las raíces" }
+                ],
+                "respuesta": "viento",
+                "frases": {
+                  "viento": "¡Exacto! Como no necesitan atraer insectos, no tienen pétalos de colores y usan el viento.",
+                  "peces": "Son árboles terrestres y su polen viaja por el aire.",
+                  "raices": "El polen siempre viaja por el exterior desde los conos masculinos a los femeninos."
+                }
+              }
+            },
+            {
+              "id": "musgo-capsula",
+              "nombre": "Musgo",
+              "pregunta": "Analiza con la lupa los filamentos y cápsulas del musgo sobre la roca. ¿Dónde encaja?",
+              "respuesta": "planta-esporas",
+              "pista": "Es una planta muy sencilla sin flores que necesita humedad y forma cápsulas con esporas.",
+              "curiosidad": "Los musgos actúan como esponjas naturales en el bosque, reteniendo el agua de la lluvia.",
+              "frases": {
+                "planta-esporas": "¡Excelente! El musgo es una planta sin flores que se reproduce mediante esporas.",
+                "planta-angiosperma": "No tiene flores ni frutos.",
+                "planta-gimnosperma": "No es un árbol con piñas, sino una pequeña planta con cápsulas de esporas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué tienen en común los musgos y los helechos?",
+                "opciones": [
+                  { "id": "frutos", "nombre": "Ambos producen flores perfumadas en primavera y frutos dulces en verano" },
+                  { "id": "pinas", "nombre": "Ambos guardan sus semillas desnudas entre las escamas duras de una piña" },
+                  { "id": "sinflor", "nombre": "Son plantas sin flores ni semillas que se reproducen mediante esporas" }
+                ],
+                "respuesta": "sinflor",
+                "frases": {
+                  "sinflor": "¡Muy bien! Ambos grupos pertenecen a las plantas sin flores y necesitan ambientes húmedos.",
+                  "frutos": "Solo las angiospermas producen frutos.",
+                  "pinas": "Las piñas son exclusivas de las gimnospermas."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "estaciones",
+      "zona": "invernadero",
+      "tipo": "lugar",
+      "titulo": "Los árboles y las estaciones",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Cambia las estaciones del año, examina la forma de cada hoja con la lupa y descubre cómo se adaptan los bosques al clima.",
+      "opciones": [
+        { "id": "arbol-caduco", "nombre": "Hoja caduca" },
+        { "id": "arbol-perenne", "nombre": "Hoja perenne" }
+      ],
+      "retos": [
+        {
+          "id": "haya-otono",
+          "nombre": "Haya",
+          "pregunta": "Cambia las estaciones del año en el laboratorio y observa la copa del haya. ¿Qué tipo de hoja tiene?",
+          "respuesta": "arbol-caduco",
+          "pista": "Mira la pestaña de otoño e invierno: pierde toda su hoja cuando llega el frío.",
+          "curiosidad": "Los hayedos forman en otoño una alfombra dorada de hojarasca que alimenta el suelo del bosque.",
+          "frases": {
+            "arbol-caduco": "¡Muy bien! El haya es un árbol de hoja caduca.",
+            "arbol-perenne": "En invierno sus ramas quedan sin hojas para ahorrar energía."
+          }
+        },
+        {
+          "id": "pino-verde",
+          "nombre": "Pino",
+          "pregunta": "Comprueba en las tres estaciones cómo se ven las agujas del pino. ¿Qué tipo de hoja tiene?",
+          "respuesta": "arbol-perenne",
+          "pista": "Conserva su follaje verde en las cuatro estaciones.",
+          "curiosidad": "Las agujas del pino están cubiertas por una fina capa de cera que evita que se hielen en invierno.",
+          "frases": {
+            "arbol-perenne": "¡Bravo! El pino es un árbol de hoja perenne.",
+            "arbol-caduco": "Mira la pestaña de invierno: el pino sigue verde todo el año."
+          }
+        },
+        {
+          "id": "roble-bosque",
+          "nombre": "Roble",
+          "pregunta": "Avanza de primavera a otoño e invierno en el visor del roble. ¿En qué grupo lo clasificas?",
+          "respuesta": "arbol-caduco",
+          "pista": "Tira sus hojas en otoño y brota de nuevo en primavera.",
+          "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
+          "frases": {
+            "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
+            "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+          }
+        },
+        {
+          "id": "encina-dehesa",
+          "nombre": "Encina",
+          "pregunta": "Gira la rueda de las estaciones sobre la encina de la dehesa. ¿Dónde la colocas?",
+          "respuesta": "arbol-perenne",
+          "pista": "Nunca se queda con las ramas desnudas en otoño ni en invierno.",
+          "curiosidad": "Sus hojas tienen pelitos blancos por debajo para no perder agua durante los veranos secos.",
+          "frases": {
+            "arbol-perenne": "¡Perfecto! La encina conserva sus hojas todo el año.",
+            "arbol-caduco": "Aunque el roble sí tira la hoja, su prima la encina es de hoja perenne."
+          }
+        },
+        {
+          "id": "cerezo-valle",
+          "nombre": "Cerezo",
+          "pregunta": "Observa qué ocurre con las hojas del cerezo cuando llega el frío en el simulador. ¿Qué árbol es?",
+          "respuesta": "arbol-caduco",
+          "pista": "Cambia de aspecto en cada estación y pasa el invierno sin hojas.",
+          "curiosidad": "Antes de que salgan las hojas nuevas en primavera, el cerezo se viste entero de flores blancas.",
+          "frases": {
+            "arbol-caduco": "¡Genial! El cerezo es un árbol frutal de hoja caduca.",
+            "arbol-perenne": "En otoño sus hojas se vuelven rojizas y caen al suelo."
+          }
+        },
+        {
+          "id": "olivo-campo",
+          "nombre": "Olivo",
+          "pregunta": "Examina la copa del olivo en primavera, otoño e invierno. ¿Qué tipo de hoja tiene?",
+          "respuesta": "arbol-perenne",
+          "pista": "Renueva sus hojas poquito a poco sin quedarse nunca desnudo.",
+          "curiosidad": "Los olivos son árboles muy longevos que pueden vivir cientos de años en el campo.",
+          "frases": {
+            "arbol-perenne": "¡Muy bien! El olivo es un árbol de hoja perenne.",
+            "arbol-caduco": "El olivo mantiene su copa verde incluso cuando cosechamos las aceitunas en invierno."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Cambia entre primavera, otoño e invierno para clasificar árboles de hoja caduca y de hoja perenne.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "arbol-caduco", "nombre": "Hoja caduca" },
+            { "id": "arbol-perenne", "nombre": "Hoja perenne" }
+          ],
+          "retos": [
+            {
+              "id": "haya-otono",
+              "nombre": "Haya",
+              "pregunta": "Cambia las estaciones del año en el laboratorio y observa la copa del haya. ¿Qué tipo de hoja tiene?",
+              "respuesta": "arbol-caduco",
+              "pista": "Mira la pestaña de otoño e invierno: pierde toda su hoja cuando llega el frío.",
+              "curiosidad": "Los hayedos forman en otoño una alfombra dorada de hojarasca que alimenta el suelo del bosque.",
+              "frases": {
+                "arbol-caduco": "¡Muy bien! El haya es un árbol de hoja caduca.",
+                "arbol-perenne": "En invierno sus ramas quedan sin hojas para ahorrar energía."
+              }
+            },
+            {
+              "id": "pino-verde",
+              "nombre": "Pino",
+              "pregunta": "Comprueba en las tres estaciones cómo se ven las agujas del pino. ¿Qué tipo de hoja tiene?",
+              "respuesta": "arbol-perenne",
+              "pista": "Conserva su follaje verde en las cuatro estaciones.",
+              "curiosidad": "Las agujas del pino están cubiertas por una fina capa de cera que evita que se hielen en invierno.",
+              "frases": {
+                "arbol-perenne": "¡Bravo! El pino es un árbol de hoja perenne.",
+                "arbol-caduco": "Mira la pestaña de invierno: el pino sigue verde todo el año."
+              }
+            },
+            {
+              "id": "roble-bosque",
+              "nombre": "Roble",
+              "pregunta": "Avanza de primavera a otoño e invierno en el visor del roble. ¿En qué grupo lo clasificas?",
+              "respuesta": "arbol-caduco",
+              "pista": "Tira sus hojas en otoño y brota de nuevo en primavera.",
+              "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
+              "frases": {
+                "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
+                "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+              }
+            },
+            {
+              "id": "encina-dehesa",
+              "nombre": "Encina",
+              "pregunta": "Gira la rueda de las estaciones sobre la encina de la dehesa. ¿Dónde la colocas?",
+              "respuesta": "arbol-perenne",
+              "pista": "Nunca se queda con las ramas desnudas en otoño ni en invierno.",
+              "curiosidad": "Sus hojas tienen pelitos blancos por debajo para no perder agua durante los veranos secos.",
+              "frases": {
+                "arbol-perenne": "¡Perfecto! La encina conserva sus hojas todo el año.",
+                "arbol-caduco": "Aunque el roble sí tira la hoja, su prima la encina es de hoja perenne."
+              }
+            },
+            {
+              "id": "cerezo-valle",
+              "nombre": "Cerezo",
+              "pregunta": "Observa qué ocurre con las hojas del cerezo cuando llega el frío en el simulador. ¿Qué árbol es?",
+              "respuesta": "arbol-caduco",
+              "pista": "Cambia de aspecto en cada estación y pasa el invierno sin hojas.",
+              "curiosidad": "Antes de que salgan las hojas nuevas en primavera, el cerezo se viste entero de flores blancas.",
+              "frases": {
+                "arbol-caduco": "¡Genial! El cerezo es un árbol frutal de hoja caduca.",
+                "arbol-perenne": "En otoño sus hojas se vuelven rojizas y caen al suelo."
+              }
+            },
+            {
+              "id": "olivo-campo",
+              "nombre": "Olivo",
+              "pregunta": "Examina la copa del olivo en primavera, otoño e invierno. ¿Qué tipo de hoja tiene?",
+              "respuesta": "arbol-perenne",
+              "pista": "Renueva sus hojas poquito a poco sin quedarse nunca desnudo.",
+              "curiosidad": "Los olivos son árboles muy longevos que pueden vivir cientos de años en el campo.",
+              "frases": {
+                "arbol-perenne": "¡Muy bien! El olivo es un árbol de hoja perenne.",
+                "arbol-caduco": "El olivo mantiene su copa verde incluso cuando cosechamos las aceitunas en invierno."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Analiza con la lupa cómo es cada hoja y ponla a prueba frente al calor del verano y el frío del invierno.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "hoja-lobulada-aserrada", "nombre": "Hoja ancha y fina (caduca)" },
+            { "id": "hoja-entera-dura", "nombre": "Hoja dura con cera (perenne)" },
+            { "id": "hoja-aguja", "nombre": "Acícula en aguja (conífera)" }
+          ],
+          "retos": [
+            {
+              "id": "roble-lobulada",
+              "nombre": "Roble carballo",
+              "pregunta": "Observa en el laboratorio qué ocurre con la hoja del roble frente al calor estival y el frío invernal. ¿Qué tipo de hoja tiene?",
+              "respuesta": "hoja-lobulada-aserrada",
+              "pista": "Su borde tiene entrantes y salientes redondeados llamados lóbulos.",
+              "curiosidad": "Las hojas anchas y lobuladas del roble captan mucha luz en verano y se caen todas en otoño.",
+              "frases": {
+                "hoja-lobulada-aserrada": "¡Genial! La hoja del roble es ancha, caduca y de borde lobulado.",
+                "hoja-aguja": "El roble no tiene agujas como los pinos, sino hojas anchas con lóbulos.",
+                "hoja-entera-dura": "Su borde no es liso ni permanece en invierno: es una hoja lobulada de árbol caduco."
+              }
+            },
+            {
+              "id": "encina-coriacea",
+              "nombre": "Encina",
+              "pregunta": "Pon a prueba la hoja de la encina con la lupa, el calor de verano y el invierno. ¿Qué estrategia foliar presenta?",
+              "respuesta": "hoja-entera-dura",
+              "pista": "Es una hoja dura y resistente, recubierta de pelusilla por debajo para soportar la sequía.",
+              "curiosidad": "Las hojas jóvenes de la encina tienen algún pinchito para defenderse de los herbívoros, pero las altas tienen el borde liso.",
+              "frases": {
+                "hoja-entera-dura": "¡Perfecto! La encina tiene hojas duras (coriáceas) que aguantan el verano seco y el invierno.",
+                "hoja-aguja": "No es una conífera de agujas, sino un árbol mediterráneo de hoja coriácea.",
+                "hoja-lobulada-aserrada": "A diferencia del roble, la encina no tiene lóbulos profundos ni tira su copa en otoño."
+              }
+            },
+            {
+              "id": "pino-acicula",
+              "nombre": "Pino albar",
+              "pregunta": "Analiza en el laboratorio cómo responde el follaje del pino albar al calor y a la nieve. ¿Cómo es su hoja?",
+              "respuesta": "hoja-aguja",
+              "pista": "Sus hojas son finas y alargadas como agujas reunidas de dos en dos.",
+              "curiosidad": "Al ser tan estrechas y estar cubiertas de cera, las acículas apenas pierden agua y soportan la nieve.",
+              "frases": {
+                "hoja-aguja": "¡Exacto! El pino tiene hojas en forma de aguja llamadas acículas.",
+                "hoja-lobulada-aserrada": "No tiene un limbo ancho con lóbulos ni dientes de sierra, sino agujas finas.",
+                "hoja-entera-dura": "Aunque resiste todo el año, su forma es de aguja fina y no de lámina ovalada."
+              }
+            },
+            {
+              "id": "castano-aserrada",
+              "nombre": "Castaño",
+              "pregunta": "Comprueba con las tres pruebas del laboratorio cómo se comporta la hoja del castaño a lo largo del año. ¿Cómo la clasificas?",
+              "respuesta": "hoja-lobulada-aserrada",
+              "pista": "Su borde parece los dientes de una sierra y se vuelve dorado en otoño.",
+              "curiosidad": "En otoño el castaño suelta sus hojas aserradas al mismo tiempo que se abren los erizos con las castañas.",
+              "frases": {
+                "hoja-lobulada-aserrada": "¡Bravo! La hoja del castaño tiene el borde aserrado y cae en otoño.",
+                "hoja-aguja": "Es una hoja grande y alargada con nervios marcados, no una aguja.",
+                "hoja-entera-dura": "Fíjate con la lupa en su contorno: no es liso, sino lleno de picos como una sierra."
+              }
+            },
+            {
+              "id": "olivo-lanceolada",
+              "nombre": "Olivo",
+              "pregunta": "Examina con la lupa y el simulador térmico cómo resiste el olivo el sol de verano sin secarse. ¿Dónde lo sitúas?",
+              "respuesta": "hoja-entera-dura",
+              "pista": "Tiene el borde entero y liso, forma de lanza y textura dura todo el año.",
+              "curiosidad": "El envés plateado de la hoja del olivo refleja el sol intenso del verano para que el árbol no se recaliente.",
+              "frases": {
+                "hoja-entera-dura": "¡Excelente! La hoja del olivo es entera, lanceolada y dura para resistir el calor.",
+                "hoja-aguja": "Aunque es estrecha como una pequeña lanza, tiene limbo plano y no es una aguja de pino.",
+                "hoja-lobulada-aserrada": "Su borde es totalmente liso (entero) y permanece verde todo el año."
+              }
+            },
+            {
+              "id": "cedro-aguja",
+              "nombre": "Cedro de montaña",
+              "pregunta": "Inspecciona en las tres pruebas del laboratorio el follaje del cedro de montaña. ¿Qué tipo de hoja tiene?",
+              "respuesta": "hoja-aguja",
+              "pista": "Forma pequeños pinceles de agujas cortas sobre las ramas leñosas.",
+              "curiosidad": "Las acículas del cedro brotan agrupadas en pequeños manojos que permanecen verdes varios años.",
+              "frases": {
+                "hoja-aguja": "¡Muy bien! El cedro es una conífera de hojas en aguja agrupadas en manojos.",
+                "hoja-lobulada-aserrada": "No pierde hojas anchas en otoño; mantiene sus agujas cortas todo el año.",
+                "hoja-entera-dura": "Sus hojas no son láminas anchas como las del olivo, sino agujas cortas."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Interpreta el climograma de lluvia y temperatura, la corteza y la estación crítica de cada árbol para descubrir su bosque.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            { "id": "bosque-atlantico", "nombre": "Bosque caducifolio húmedo" },
+            { "id": "bosque-mediterraneo", "nombre": "Bosque mediterráneo seco" },
+            { "id": "bosque-montana", "nombre": "Coníferas de alta montaña" }
+          ],
+          "retos": [
+            {
+              "id": "hayedo-niebla",
+              "nombre": "Haya común",
+              "pregunta": "Analiza el climograma, la corteza lisa y el reposo invernal del haya común en el laboratorio. ¿De qué bosque forma parte?",
+              "respuesta": "bosque-atlantico",
+              "pista": "Necesita lluvias frecuentes, nieblas frescas y suelos húmedos, y tira su hoja en otoño.",
+              "curiosidad": "En verano las copas de las hayas son tan frondosas que apenas dejan pasar el sol al suelo del bosque.",
+              "frases": {
+                "bosque-atlantico": "¡Muy bien! El hayedo es el gran protagonista del bosque caducifolio húmedo.",
+                "bosque-mediterraneo": "Las hayas no soportan los veranos largos y secos del clima mediterráneo.",
+                "bosque-montana": "No es una conífera de agujas perennes, sino un árbol caducifolio de hoja ancha."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué los árboles del bosque caducifolio como el haya tiran todas sus hojas en otoño?",
+                "opciones": [
+                  { "id": "heladas", "nombre": "Para ahorrar energía y evitar que el hielo estropee sus hojas tan finas" },
+                  { "id": "sequia", "nombre": "Para que las raíces absorban arena seca del suelo durante todo el invierno" },
+                  { "id": "flores", "nombre": "Porque en invierno transforman todas sus hojas verdes en frutos tropicales" }
+                ],
+                "respuesta": "heladas",
+                "frases": {
+                  "heladas": "¡Exacto! Con menos horas de luz y heladas invernales, desprenderse de las hojas finas evita daños y pérdida de agua.",
+                  "sequia": "Las raíces absorben agua y sales minerales, nunca arena seca.",
+                  "flores": "En invierno el árbol entra en reposo y espera a la primavera para brotar."
+                }
+              }
+            },
+            {
+              "id": "encinar-seco",
+              "nombre": "Encina",
+              "pregunta": "Comprueba en el climograma la sequía de julio y agosto y cómo la resiste la encina. ¿En qué bosque la clasificas?",
+              "respuesta": "bosque-mediterraneo",
+              "pista": "Está adaptado a veranos muy calurosos y secos sin perder su copa verde.",
+              "curiosidad": "Las bellotas de la encina maduran en otoño y alimentan a grullas, ciervos, jabalíes y ratones de campo.",
+              "frases": {
+                "bosque-mediterraneo": "¡Genial! El encinar es el bosque mediterráneo más característico de la península.",
+                "bosque-atlantico": "A diferencia del hayedo, conserva sus hojas duras todo el año y resiste la sequía estival.",
+                "bosque-montana": "No es una conífera de alta montaña, sino un árbol mediterráneo de copa redondeada."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo logran las encinas resistir los veranos largos, secos y calurosos del clima mediterráneo?",
+                "opciones": [
+                  { "id": "caduca", "nombre": "Pierden el tronco y las raíces cada verano y vuelven a brotar en septiembre" },
+                  { "id": "coriacea", "nombre": "Tienen hojas pequeñas y duras con pelitos debajo que reducen la evaporación" },
+                  { "id": "hielo", "nombre": "Fabrican bloques de hielo bajo las bellotas para enfriar la tierra reseca" }
+                ],
+                "respuesta": "coriacea",
+                "frases": {
+                  "coriacea": "¡Sobresaliente! Sus hojas coriáceas y sus raíces profundas evitan que el árbol se seque en verano.",
+                  "caduca": "El tronco y las raíces son permanentes durante toda la vida del árbol.",
+                  "hielo": "Ningún árbol fabrica hielo; se protegen evitando perder humedad por las hojas."
+                }
+              }
+            },
+            {
+              "id": "pinar-cumbre",
+              "nombre": "Pino negro",
+              "pregunta": "Observa las temperaturas bajo cero del climograma y cómo resbalan las nevadas por la copa del pino negro. ¿Qué bosque forma?",
+              "respuesta": "bosque-montana",
+              "pista": "Crece en las cumbres frías donde nieva mucho en invierno y sopla viento fuerte.",
+              "curiosidad": "El pino negro es capaz de crecer entre rocas a más de dos mil metros de altitud, donde otros árboles no aguantan.",
+              "frases": {
+                "bosque-montana": "¡Excelente! Los pinares de cumbre son bosques de coníferas adaptados al frío de alta montaña.",
+                "bosque-atlantico": "No pierde sus hojas en otoño: mantiene sus acículas verdes bajo la nieve.",
+                "bosque-mediterraneo": "Está adaptado a las heladas y nevadas de las cumbres más altas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué muchos pinos y abetos de alta montaña tienen la copa con forma de cono o pirámide?",
+                "opciones": [
+                  { "id": "cono", "nombre": "Para que la nieve resbale hacia el suelo sin acumular peso ni romper ramas" },
+                  { "id": "viento", "nombre": "Para atrapar toda la nieve encima de la copa y tapar la luz todo el año" },
+                  { "id": "raiz", "nombre": "Porque sus raíces crecen hacia arriba buscando las nubes de las montañas" }
+                ],
+                "respuesta": "cono",
+                "frases": {
+                  "cono": "¡Muy bien! Sus ramas flexibles e inclinadas dejan caer la nieve como si fueran un tejado empinado.",
+                  "viento": "Si acumularan toda la nieve encima, el peso partiría las ramas.",
+                  "raiz": "Sus raíces crecen bajo tierra y se sujetan con fuerza entre las grietas de la roca."
+                }
+              }
+            },
+            {
+              "id": "robledal-humedo",
+              "nombre": "Roble carballo",
+              "pregunta": "Examina las lluvias abundantes del climograma y el suelo de hojarasca del roble carballo. ¿Qué tipo de bosque habita?",
+              "respuesta": "bosque-atlantico",
+              "pista": "Es un bosque templado y húmedo que se tiñe de ocre en otoño antes de perder la hoja.",
+              "curiosidad": "En los troncos viejos del robledal viven líquenes, musgos, pájaros carpinteros y lirones.",
+              "frases": {
+                "bosque-atlantico": "¡Perfecto! El robledal forma bosques caducifolios en zonas templadas y húmedas.",
+                "bosque-mediterraneo": "Este roble de hoja ancha y blanda necesita suelos húmedos y tira la hoja cada otoño.",
+                "bosque-montana": "No es un pinar ni un abetal de agujas perennes."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué ventaja ofrecen las hojas grandes y finas del roble y del haya durante la primavera y el verano?",
+                "opciones": [
+                  { "id": "nieve", "nombre": "Acumulan grandes bloques de nieve encima para calentar las ramas en julio" },
+                  { "id": "luz", "nombre": "Presentan una gran superficie verde para captar mucha luz en primavera" },
+                  { "id": "sal", "nombre": "Filtran el agua salada de las olas cuando sube la marea hasta la montaña" }
+                ],
+                "respuesta": "luz",
+                "frases": {
+                  "luz": "¡Muy bien! Como en su clima no falta el agua en verano, pueden desplegar hojas anchas que aprovechan al máximo la luz solar.",
+                  "nieve": "En primavera y verano no nieva en el robledal.",
+                  "sal": "Los robledales crecen tierra adentro con agua dulce de lluvia."
+                }
+              }
+            },
+            {
+              "id": "alcornocal-corcho",
+              "nombre": "Alcornoque",
+              "pregunta": "Inspecciona el climograma estival y la corteza aislante del alcornoque en el laboratorio. ¿De qué bosque es propio?",
+              "respuesta": "bosque-mediterraneo",
+              "pista": "Comparte clima templado de veranos secos con la encina y el romero.",
+              "curiosidad": "Cada nueve o diez años se puede extraer con cuidado el corcho del tronco sin hacer daño al árbol.",
+              "frases": {
+                "bosque-mediterraneo": "¡Bravo! El alcornocal es un bosque mediterráneo perennifolio muy valioso.",
+                "bosque-atlantico": "No tira sus hojas en otoño ni pertenece a los bosques caducifolios del norte.",
+                "bosque-montana": "Vive en laderas templadas mediterráneas, no en las cumbres heladas de alta montaña."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué función cumple la gruesa corteza de corcho del alcornoque en su entorno natural?",
+                "opciones": [
+                  { "id": "flotar", "nombre": "Permite que el árbol entero se suelte del suelo y navegue por los arroyos" },
+                  { "id": "polen", "nombre": "Sustituye a las hojas verdes porque el alcornoque nunca tiene ramas altas" },
+                  { "id": "corcho", "nombre": "Aísla y protege el interior del tronco frente al calor extremo y la sequía" }
+                ],
+                "respuesta": "corcho",
+                "frases": {
+                  "corcho": "¡Exacto! El corcho es un aislante natural extraordinario que resguarda los tejidos vivos del tronco.",
+                  "flotar": "Aunque el corcho flota, el árbol vive firmemente enraizado en la tierra.",
+                  "polen": "El alcornoque tiene una copa frondosa llena de hojas verdes todo el año."
+                }
+              }
+            },
+            {
+              "id": "abetal-nieve",
+              "nombre": "Abeto blanco",
+              "pregunta": "Revisa el climograma de montaña y el porte piramidal del abeto blanco frente a las ventiscas. ¿A qué bosque pertenece?",
+              "respuesta": "bosque-montana",
+              "pista": "Es una conífera de valles fríos y laderas altas de montaña con inviernos nevados.",
+              "curiosidad": "En los abetales de montaña encuentran refugio animales como el urogallo y el pito negro.",
+              "frases": {
+                "bosque-montana": "¡Perfecto! El abetal es un bosque de coníferas de montaña adaptado al frío y la nieve.",
+                "bosque-atlantico": "El abeto no es caducifolio; conserva sus agujas verdes durante todo el invierno.",
+                "bosque-mediterraneo": "Necesita el ambiente frío y húmedo de las montañas altas."
+              },
+              "adaptacion": {
+                "enunciado": "¿Cómo soportan las hojas de las coníferas de montaña las heladas del invierno sin congelarse?",
+                "opciones": [
+                  { "id": "caida", "nombre": "Se deshacen con la primera lluvia de otoño y dejan el abeto sin corteza" },
+                  { "id": "cera", "nombre": "Son agujas gruesas cubiertas de cera con savia que resiste las heladas" },
+                  { "id": "calor", "nombre": "Calientan el aire del valle desprendiendo vapor hirviendo por las raíces" }
+                ],
+                "respuesta": "cera",
+                "frases": {
+                  "cera": "¡Fantástico! Su reducida superficie, su cutícula de cera y su savia espesa impiden que el hielo las dañe.",
+                  "caida": "Conservan tanto su corteza como sus agujas durante todo el invierno.",
+                  "calor": "Las plantas no desprenden vapor hirviendo; resisten el frío gracias a la estructura de sus agujas."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "huerta",
+      "zona": "invernadero",
+      "tipo": "lugar",
+      "titulo": "Del huerto a la mesa",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Explora el corte de la huerta, examina dónde crece cada alimento en la planta y descubre qué órgano o recurso vegetal aprovechamos.",
+      "opciones": [
+        { "id": "huerta-raiz", "nombre": "Raíz" },
+        { "id": "huerta-hoja", "nombre": "Hoja" },
+        { "id": "huerta-fruto", "nombre": "Fruto" }
+      ],
+      "retos": [
+        {
+          "id": "zanahoria-raiz",
+          "nombre": "Zanahoria",
+          "pregunta": "Mira el corte de la tierra en el laboratorio de la huerta. ¿Qué parte de la planta es la zanahoria?",
+          "respuesta": "huerta-raiz",
+          "pista": "Crece bajo tierra absorbiendo agua y guardando reservas de color naranja.",
+          "curiosidad": "Las hojas verdes de la zanahoria asoman fuera de la tierra, pero lo que comemos es su raíz.",
+          "frases": {
+            "huerta-raiz": "¡Exacto! La zanahoria que comemos es la raíz principal de la planta.",
+            "huerta-hoja": "Sus hojas salen arriba, pero la zanahoria naranja crece bajo tierra: es una raíz.",
+            "huerta-fruto": "No nace de la flor ni tiene semillas dentro; es una raíz subterránea."
+          }
+        },
+        {
+          "id": "lechuga-hoja",
+          "nombre": "Lechuga",
+          "pregunta": "Examina la lechuga en el bancal de la huerta. ¿Qué parte de la planta cosechamos para la ensalada?",
+          "respuesta": "huerta-hoja",
+          "pista": "Son láminas verdes y tiernas que crecen abiertas buscando la luz del sol.",
+          "curiosidad": "Igual que la espinaca o la acelga, de la lechuga aprovechamos sus hojas frescas.",
+          "frases": {
+            "huerta-hoja": "¡Genial! De la lechuga nos comemos sus hojas verdes.",
+            "huerta-raiz": "Su raíz queda bajo tierra; nosotros cosechamos las hojas que crecen arriba.",
+            "huerta-fruto": "No es un fruto con pepitas, sino el conjunto de hojas tiernas de la planta."
+          }
+        },
+        {
+          "id": "tomate-fruto",
+          "nombre": "Tomate",
+          "pregunta": "Abre el tomate con el corte interior en el laboratorio. ¿Qué parte de la tomatera es?",
+          "respuesta": "huerta-fruto",
+          "pista": "Nace cuando se transforma la flor amarilla y guarda las semillas en su pulpa jugosa.",
+          "curiosidad": "Aunque lo tomamos con sal y aceite en ensalada, botánicamente el tomate es un fruto.",
+          "frases": {
+            "huerta-fruto": "¡Perfecto! El tomate es el fruto con semillas de la tomatera.",
+            "huerta-raiz": "Cuelga de las ramas al aire libre y procede de la flor: es un fruto.",
+            "huerta-hoja": "Las hojas de la tomatera son verdes y olorosas; el tomate rojo es su fruto."
+          }
+        },
+        {
+          "id": "rabano-raiz",
+          "nombre": "Rábano",
+          "pregunta": "Observa en el corte del bancal dónde se forma el rábano rojo. ¿Qué órgano de la planta comemos?",
+          "respuesta": "huerta-raiz",
+          "pista": "Está enterrado en la tierra del huerto y tiene pelitos absorbentes en la punta.",
+          "curiosidad": "Los rábanos crecen tan deprisa que se pueden cosechar apenas un mes después de sembrarlos.",
+          "frases": {
+            "huerta-raiz": "¡Muy bien! El rábano es una raíz engrosada y crujiente que crece bajo tierra.",
+            "huerta-hoja": "Las hojas verdes quedan fuera del suelo; el bulbito rojo que comemos es la raíz.",
+            "huerta-fruto": "Crece bajo el suelo sujetando la planta, así que es una raíz y no un fruto."
+          }
+        },
+        {
+          "id": "espinaca-hoja",
+          "nombre": "Espinaca",
+          "pregunta": "Inspecciona en el laboratorio los manojos verdes de la espinaca. ¿Qué parte de la planta son?",
+          "respuesta": "huerta-hoja",
+          "pista": "Tienen peciolo, limbo verde oscuro y nervios por los que circula la savia.",
+          "curiosidad": "Las hojas de espinaca son ricas en vitaminas, hierro y minerales que nos dan fuerza.",
+          "frases": {
+            "huerta-hoja": "¡Bravo! De la espinaca cosechamos sus hojas verdes y nutritivas.",
+            "huerta-raiz": "Crece por encima del suelo desplegando hojas verdes hacia el sol.",
+            "huerta-fruto": "No guarda semillas en su interior; son las hojas de la planta."
+          }
+        },
+        {
+          "id": "fresa-fruto",
+          "nombre": "Fresa",
+          "pregunta": "Mira en el laboratorio cómo nace la fresa tras caerse los pétalos blancos. ¿Qué parte comemos?",
+          "respuesta": "huerta-fruto",
+          "pista": "Se forma a partir de la flor y lleva multitud de granitos con semillas.",
+          "curiosidad": "Las fresas anuncian que están maduras y dulces cambiando su color del verde al rojo brillante.",
+          "frases": {
+            "huerta-fruto": "¡Excelente! La fresa se forma a partir de la flor de la fresera.",
+            "huerta-raiz": "Crece fuera de la tierra colgada de los tallos después de florecer.",
+            "huerta-hoja": "Sus hojas son verdes y divididas en tres; la parte roja y dulce es el fruto."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Mira en qué parte de la planta crece cada verdura o fruta del huerto y clasifícala en raíz, hoja o fruto.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "huerta-raiz", "nombre": "Raíz" },
+            { "id": "huerta-hoja", "nombre": "Hoja" },
+            { "id": "huerta-fruto", "nombre": "Fruto" }
+          ],
+          "retos": [
+            {
+              "id": "zanahoria-raiz",
+              "nombre": "Zanahoria",
+              "pregunta": "Mira el corte de la tierra en el laboratorio de la huerta. ¿Qué parte de la planta es la zanahoria?",
+              "respuesta": "huerta-raiz",
+              "pista": "Crece bajo tierra absorbiendo agua y guardando reservas de color naranja.",
+              "curiosidad": "Las hojas verdes de la zanahoria asoman fuera de la tierra, pero lo que comemos es su raíz.",
+              "frases": {
+                "huerta-raiz": "¡Exacto! La zanahoria que comemos es la raíz principal de la planta.",
+                "huerta-hoja": "Sus hojas salen arriba, pero la zanahoria naranja crece bajo tierra: es una raíz.",
+                "huerta-fruto": "No nace de la flor ni tiene semillas dentro; es una raíz subterránea."
+              }
+            },
+            {
+              "id": "lechuga-hoja",
+              "nombre": "Lechuga",
+              "pregunta": "Examina la lechuga en el bancal de la huerta. ¿Qué parte de la planta cosechamos para la ensalada?",
+              "respuesta": "huerta-hoja",
+              "pista": "Son láminas verdes y tiernas que crecen abiertas buscando la luz del sol.",
+              "curiosidad": "Igual que la espinaca o la acelga, de la lechuga aprovechamos sus hojas frescas.",
+              "frases": {
+                "huerta-hoja": "¡Genial! De la lechuga nos comemos sus hojas verdes.",
+                "huerta-raiz": "Su raíz queda bajo tierra; nosotros cosechamos las hojas que crecen arriba.",
+                "huerta-fruto": "No es un fruto con pepitas, sino el conjunto de hojas tiernas de la planta."
+              }
+            },
+            {
+              "id": "tomate-fruto",
+              "nombre": "Tomate",
+              "pregunta": "Abre el tomate con el corte interior en el laboratorio. ¿Qué parte de la tomatera es?",
+              "respuesta": "huerta-fruto",
+              "pista": "Nace cuando se transforma la flor amarilla y guarda las semillas en su pulpa jugosa.",
+              "curiosidad": "Aunque lo tomamos con sal y aceite en ensalada, botánicamente el tomate es un fruto.",
+              "frases": {
+                "huerta-fruto": "¡Perfecto! El tomate es el fruto con semillas de la tomatera.",
+                "huerta-raiz": "Cuelga de las ramas al aire libre y procede de la flor: es un fruto.",
+                "huerta-hoja": "Las hojas de la tomatera son verdes y olorosas; el tomate rojo es su fruto."
+              }
+            },
+            {
+              "id": "rabano-raiz",
+              "nombre": "Rábano",
+              "pregunta": "Observa en el corte del bancal dónde se forma el rábano rojo. ¿Qué órgano de la planta comemos?",
+              "respuesta": "huerta-raiz",
+              "pista": "Está enterrado en la tierra del huerto y tiene pelitos absorbentes en la punta.",
+              "curiosidad": "Los rábanos crecen tan deprisa que se pueden cosechar apenas un mes después de sembrarlos.",
+              "frases": {
+                "huerta-raiz": "¡Muy bien! El rábano es una raíz engrosada y crujiente que crece bajo tierra.",
+                "huerta-hoja": "Las hojas verdes quedan fuera del suelo; el bulbito rojo que comemos es la raíz.",
+                "huerta-fruto": "Crece bajo el suelo sujetando la planta, así que es una raíz y no un fruto."
+              }
+            },
+            {
+              "id": "espinaca-hoja",
+              "nombre": "Espinaca",
+              "pregunta": "Inspecciona en el laboratorio los manojos verdes de la espinaca. ¿Qué parte de la planta son?",
+              "respuesta": "huerta-hoja",
+              "pista": "Tienen peciolo, limbo verde oscuro y nervios por los que circula la savia.",
+              "curiosidad": "Las hojas de espinaca son ricas en vitaminas, hierro y minerales que nos dan fuerza.",
+              "frases": {
+                "huerta-hoja": "¡Bravo! De la espinaca cosechamos sus hojas verdes y nutritivas.",
+                "huerta-raiz": "Crece por encima del suelo desplegando hojas verdes hacia el sol.",
+                "huerta-fruto": "No guarda semillas en su interior; son las hojas de la planta."
+              }
+            },
+            {
+              "id": "fresa-fruto",
+              "nombre": "Fresa",
+              "pregunta": "Mira en el laboratorio cómo nace la fresa tras caerse los pétalos blancos. ¿Qué parte comemos?",
+              "respuesta": "huerta-fruto",
+              "pista": "Se forma a partir de la flor y lleva multitud de granitos con semillas.",
+              "curiosidad": "Las fresas anuncian que están maduras y dulces cambiando su color del verde al rojo brillante.",
+              "frases": {
+                "huerta-fruto": "¡Excelente! La fresa se forma a partir de la flor de la fresera.",
+                "huerta-raiz": "Crece fuera de la tierra colgada de los tallos después de florecer.",
+                "huerta-hoja": "Sus hojas son verdes y divididas en tres; la parte roja y dulce es el fruto."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Inspecciona el corte botánico de la huerta para distinguir raíces, tallos, hojas, flores, frutos y semillas comestibles.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            { "id": "huerto-raiz-tallo", "nombre": "Raíz o Tallo" },
+            { "id": "huerto-hoja-flor", "nombre": "Hoja o Flor" },
+            { "id": "huerto-fruto-semilla", "nombre": "Fruto o Semilla" }
+          ],
+          "retos": [
+            {
+              "id": "zanahoria-raiz",
+              "nombre": "Zanahoria",
+              "pregunta": "Mira el corte de la tierra en el laboratorio de la huerta. ¿Qué parte de la planta es la zanahoria?",
+              "respuesta": "huerto-raiz-tallo",
+              "pista": "Mira el corte subterráneo del huerto: es la raíz principal engrosada.",
+              "curiosidad": "Las hojas verdes de la zanahoria asoman fuera de la tierra, pero lo que comemos es su raíz.",
+              "frases": {
+                "huerto-raiz-tallo": "¡Exacto! La zanahoria que comemos es la raíz de la planta.",
+                "huerto-hoja-flor": "Sus hojas salen arriba, pero la zanahoria naranja crece bajo tierra: es una raíz.",
+                "huerto-fruto-semilla": "No tiene semillas dentro; es una raíz subterránea."
+              }
+            },
+            {
+              "id": "lechuga-hoja",
+              "nombre": "Lechuga",
+              "pregunta": "Examina la lechuga en el banco de la huerta. ¿Qué parte de la planta cosechamos para la ensalada?",
+              "respuesta": "huerto-hoja-flor",
+              "pista": "Son las hojas verdes de la planta.",
+              "curiosidad": "Igual que la espinaca o la acelga, de la lechuga aprovechamos sus hojas tiernas.",
+              "frases": {
+                "huerto-hoja-flor": "¡Genial! De la lechuga nos comemos sus hojas.",
+                "huerto-raiz-tallo": "Crece abierta sobre el suelo formando hojas anchas.",
+                "huerto-fruto-semilla": "No es un fruto con pepitas, sino las hojas verdes de la planta."
+              }
+            },
+            {
+              "id": "tomate-fruto",
+              "nombre": "Tomate",
+              "pregunta": "Abre el tomate con el corte interior en el laboratorio. ¿Qué parte de la tomatera es?",
+              "respuesta": "huerto-fruto-semilla",
+              "pista": "Todo órgano que nace de una flor y guarda dentro las semillas es un fruto.",
+              "curiosidad": "Aunque lo tomamos en ensalada con verduras, botánicamente el tomate, el pepino y la calabaza son frutos.",
+              "frases": {
+                "huerto-fruto-semilla": "¡Perfecto! El tomate es el fruto con semillas de la tomatera.",
+                "huerto-raiz-tallo": "Cuelga de las ramas y procede de la flor: es un fruto.",
+                "huerto-hoja-flor": "Nace después de la flor para proteger las semillas en su interior."
+              }
+            },
+            {
+              "id": "esparrago-tallo",
+              "nombre": "Espárrago",
+              "pregunta": "Inspecciona en el corte del huerto cómo brota el espárrago. ¿Qué órgano de la planta comemos?",
+              "respuesta": "huerto-raiz-tallo",
+              "pista": "Conduce el agua y los nutrientes hacia arriba: es el tallo joven.",
+              "curiosidad": "Si no cosechas el espárrago, crece alto y se llena de ramitas verdes plumosas.",
+              "frases": {
+                "huerto-raiz-tallo": "¡Muy bien! El espárrago es el tallo tierno de la esparraguera.",
+                "huerto-hoja-flor": "No es una hoja ancha ni una flor; es el tallo principal recién brotado.",
+                "huerto-fruto-semilla": "No guarda semillas en su interior; es un tallo."
+              }
+            },
+            {
+              "id": "alcachofa-flor",
+              "nombre": "Alcachofa",
+              "pregunta": "Usa las tres vistas del laboratorio con la alcachofa. ¿Qué órgano de la planta es?",
+              "respuesta": "huerto-hoja-flor",
+              "pista": "Es la flor de la planta cosechada cuando todavía está en capullo.",
+              "curiosidad": "Tanto la alcachofa como el brócoli y la coliflor son capullos florales comestibles.",
+              "frases": {
+                "huerto-hoja-flor": "¡Bravo! La alcachofa es el capullo de la flor antes de abrirse.",
+                "huerto-raiz-tallo": "Crece en la punta alta de las ramas, no bajo tierra.",
+                "huerto-fruto-semilla": "Se cosecha antes de que la flor se abra y forme frutos."
+              }
+            },
+            {
+              "id": "guisante-vaina",
+              "nombre": "Guisantes",
+              "pregunta": "Observa el interior de la vaina de los guisantes en el visor. ¿Qué parte comemos?",
+              "respuesta": "huerto-fruto-semilla",
+              "pista": "La vaina es el fruto y cada guisante redondo es una semilla.",
+              "curiosidad": "Las legumbres como los guisantes, las lentejas y los garbanzos son semillas muy nutritivas.",
+              "frases": {
+                "huerto-fruto-semilla": "¡Excelente! Los guisantes son las semillas guardadas dentro del fruto en vaina.",
+                "huerto-raiz-tallo": "Crecen dentro de las vainas que salen de las flores, no en la raíz.",
+                "huerto-hoja-flor": "Si siembras un guisante en humedad, germina porque es una semilla."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Examina los órganos de reserva subterráneos y la transformación de las plantas cultivadas en alimentos, tejidos y aceites.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            { "id": "recurso-tuberculo-raiz", "nombre": "Tubérculo o raíz de reserva" },
+            { "id": "recurso-bulbo-cereal", "nombre": "Bulbo o grano de cereal" },
+            { "id": "recurso-fibra-aceite", "nombre": "Fibra textil o aceite" }
+          ],
+          "retos": [
+            {
+              "id": "patata-tuberculo",
+              "nombre": "Patata",
+              "pregunta": "Examina en el laboratorio cómo crece la patata bajo tierra y sus «ojos» o yemas. ¿En qué grupo va?",
+              "respuesta": "recurso-tuberculo-raiz",
+              "pista": "Es un tallo subterráneo engrosado (tubérculo) lleno de reservas de almidón.",
+              "curiosidad": "Si dejas una patata en la despensa mucho tiempo, de sus pequeñas yemas («ojos») empiezan a brotar tallos nuevos.",
+              "frases": {
+                "recurso-tuberculo-raiz": "¡Muy bien! La patata es un tubérculo: un tallo subterráneo que almacena reservas.",
+                "recurso-bulbo-cereal": "No está formada por capas como la cebolla ni es una espiga de grano.",
+                "recurso-fibra-aceite": "La cultivamos como alimento rico en energía, no para tejer ni prensar aceite."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué los botánicos explican que la patata es un tallo subterráneo (tubérculo) y no una raíz?",
+                "opciones": [
+                  { "id": "yemas", "nombre": "Porque tiene yemas («ojos») de las que brotan tallos y hojas si germina" },
+                  { "id": "flores", "nombre": "Porque crece colgada de las ramas más altas después de caerse los pétalos" },
+                  { "id": "semilla", "nombre": "Porque cada patata es un fruto hueco lleno de pepitas dulces en el centro" }
+                ],
+                "respuesta": "yemas",
+                "frases": {
+                  "yemas": "¡Exacto! Solo los tallos poseen yemas capaces de producir nuevas ramas y hojas; las raíces auténticas nunca tienen yemas.",
+                  "flores": "Las patatas se forman bajo tierra en los estolones subterráneos.",
+                  "semilla": "Por dentro es maciza y acumula almidón, no pepitas."
+                }
+              }
+            },
+            {
+              "id": "cebolla-bulbo",
+              "nombre": "Cebolla",
+              "pregunta": "Inspecciona con la lupa el corte en capas concéntricas de la cebolla. ¿Cómo se clasifica?",
+              "respuesta": "recurso-bulbo-cereal",
+              "pista": "Está formada por capas jugosas que rodean la yema central bajo tierra: es un bulbo.",
+              "curiosidad": "La cebolla, el ajo, el puerro y el tulipán guardan sus reservas en bulbos subterráneos.",
+              "frases": {
+                "recurso-bulbo-cereal": "¡Genial! La cebolla es un bulbo subterráneo formado por capas nutritivas.",
+                "recurso-tuberculo-raiz": "Las raíces de la cebolla son los hilitos de su base; la bola en capas es un bulbo.",
+                "recurso-fibra-aceite": "Es una hortaliza de bulbo para la cocina, no una planta textil."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué son en realidad las capas blancas y jugosas que vemos al cortar una cebolla por la mitad?",
+                "opciones": [
+                  { "id": "cortezas", "nombre": "Son anillos de madera leñosa idénticos al tronco de los pinos centenarios" },
+                  { "id": "frutos", "nombre": "Son pétalos de colores que se cierran bajo el barro cuando llega el frío" },
+                  { "id": "capas", "nombre": "Son hojas subterráneas modificadas y engrosadas para guardar nutrientes" }
+                ],
+                "respuesta": "capas",
+                "frases": {
+                  "capas": "¡Sobresaliente! En los bulbos, la base de las hojas se vuelve gruesa y carnosa bajo tierra para almacenar reservas.",
+                  "cortezas": "La cebolla es una planta herbácea sin madera.",
+                  "frutos": "La flor de la cebolla sale arriba en un tallo alto, no bajo tierra."
+                }
+              }
+            },
+            {
+              "id": "algodon-fibra",
+              "nombre": "Planta del algodón",
+              "pregunta": "Analiza las cápsulas blancas del algodonero y su transformación en el taller. ¿Qué recurso vegetal nos da?",
+              "respuesta": "recurso-fibra-aceite",
+              "pista": "Sus copos blancos se hilan en bobinas para tejer camisetas, sábanas y toallas.",
+              "curiosidad": "Junto con el lino y el cáñamo, el algodón es una de las fibras vegetales más suaves y transpirables.",
+              "frases": {
+                "recurso-fibra-aceite": "¡Excelente! El algodón nos proporciona fibra vegetal para fabricar tejidos y ropa.",
+                "recurso-tuberculo-raiz": "Los copos blancos salen de las cápsulas de las ramas, no de las raíces.",
+                "recurso-bulbo-cereal": "No es un bulbo de huerta ni un cereal para hacer harina, sino una planta textil."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué función tienen para la propia planta del algodón las fibras blancas que envuelven sus semillas?",
+                "opciones": [
+                  { "id": "abrigo", "nombre": "Calientan las raíces bajo la tierra cuando nieva en los prados de montaña" },
+                  { "id": "viento", "nombre": "Envuelven las semillas para que el viento las disperse al abrirse la cápsula" },
+                  { "id": "nectar", "nombre": "Alimentan a las lombrices del suelo con zumo dulce durante la primavera" }
+                ],
+                "respuesta": "viento",
+                "frases": {
+                  "viento": "¡Muy bien! Esos filamentos ligeros ayudan a que las semillas vuelen con la brisa, y las personas los hilamos para hacer tela.",
+                  "abrigo": "El algodón crece en climas cálidos y sus fibras salen en las cápsulas aéreas.",
+                  "nectar": "Son fibras secas de celulosa, no zumo ni néctar."
+                }
+              }
+            },
+            {
+              "id": "remolacha-raiz",
+              "nombre": "Remolacha",
+              "pregunta": "Observa el corte subterráneo y el aprovechamiento de la remolacha en el laboratorio. ¿Dónde encaja?",
+              "respuesta": "recurso-tuberculo-raiz",
+              "pista": "Es una raíz principal muy gruesa que acumula azúcares fabricados en las hojas.",
+              "curiosidad": "Además de la remolacha roja de ensalada, existe la remolacha azucarera de la que se extrae azúcar blanco.",
+              "frases": {
+                "recurso-tuberculo-raiz": "¡Perfecto! La remolacha es una raíz napiforme de reserva rica en azúcares.",
+                "recurso-bulbo-cereal": "No tiene túnicas en capas como la cebolla ni es un grano de cereal.",
+                "recurso-fibra-aceite": "Su raíz almacena azúcares y agua, no fibras textiles ni aceite."
+              },
+              "adaptacion": {
+                "enunciado": "¿Para qué engrosan tanto su raíz principal plantas como la remolacha o la zanahoria?",
+                "opciones": [
+                  { "id": "piedras", "nombre": "Para empujar las rocas del camino y salir caminando hacia otros terrenos" },
+                  { "id": "reserva", "nombre": "Para almacenar agua y azúcares de reserva que la planta fabricó con sol" },
+                  { "id": "polen", "nombre": "Para atraer abejas bajo la tierra y polinizar las raíces en la oscuridad" }
+                ],
+                "respuesta": "reserva",
+                "frases": {
+                  "reserva": "¡Muy bien! Guardan bajo tierra los nutrientes fabricados en las hojas para resistir el invierno y florecer después.",
+                  "piedras": "Las plantas viven fijas en el suelo y no se desplazan.",
+                  "polen": "Las abejas visitan las flores aéreas, nunca las raíces subterráneas."
+                }
+              }
+            },
+            {
+              "id": "trigo-harina",
+              "nombre": "Espiga de trigo",
+              "pregunta": "Sigue en el laboratorio el recorrido desde la espiga dorada hasta el molino. ¿Qué recurso es?",
+              "respuesta": "recurso-bulbo-cereal",
+              "pista": "Sus granos secos se muelen para obtener la harina con la que hacemos pan y pasta.",
+              "curiosidad": "El trigo, el arroz, el maíz, la avena y la cebada son los cereales que alimentan a gran parte de la humanidad.",
+              "frases": {
+                "recurso-bulbo-cereal": "¡Bravo! El trigo es un cereal cuyos granos son semillas ricas en nutrientes.",
+                "recurso-tuberculo-raiz": "El grano de trigo madura en la espiga alta de la planta, no bajo tierra.",
+                "recurso-fibra-aceite": "Del grano de trigo obtenemos harina para hacer pan, no hilo textil."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué los granos de cereales como el trigo, el arroz o el maíz son tan importantes en nuestra alimentación?",
+                "opciones": [
+                  { "id": "almidon", "nombre": "Sus semillas guardan abundantes hidratos de carbono que nos dan energía" },
+                  { "id": "sal", "nombre": "Sus hojas saladas sirven para fabricar cristal y herramientas de herrería" },
+                  { "id": "esporas", "nombre": "Sus raíces producen leche líquida sin necesidad de moler ni cocer el pan" }
+                ],
+                "respuesta": "almidon",
+                "frases": {
+                  "almidon": "¡Exacto! La planta llena sus semillas de almidón para alimentar al embrión, y nosotros lo aprovechamos como fuente de energía.",
+                  "sal": "Los cereales son cultivos alimentarios, no minerales ni metales.",
+                  "esporas": "Del trigo aprovechamos los granos de la espiga molidos en harina."
+                }
+              }
+            },
+            {
+              "id": "aceituna-aceite",
+              "nombre": "Aceituna del olivo",
+              "pregunta": "Observa en el laboratorio el prensado de las aceitunas en la almazara. ¿En qué grupo la clasificas?",
+              "respuesta": "recurso-fibra-aceite",
+              "pista": "Al prensar la pulpa de este fruto mediterráneo se obtiene el aceite de oliva.",
+              "curiosidad": "El aceite de oliva virgen es uno de los pilares más saludables de la dieta mediterránea.",
+              "frases": {
+                "recurso-fibra-aceite": "¡Perfecto! De la aceituna del olivo extraemos aceite vegetal saludable.",
+                "recurso-tuberculo-raiz": "La aceituna no crece bajo tierra: es el fruto que madura en las ramas del olivo.",
+                "recurso-bulbo-cereal": "Es un fruto carnoso con hueso (drupa) del que sacamos aceite, no un bulbo ni un cereal."
+              },
+              "adaptacion": {
+                "enunciado": "¿De qué parte del olivo se obtiene el aceite de oliva en la almazara?",
+                "opciones": [
+                  { "id": "tronco", "nombre": "De la corteza seca del tronco, raspando la madera vieja durante el otoño" },
+                  { "id": "raiz", "nombre": "De los pelos absorbentes de la raíz, hirviendo la tierra húmeda del olivar" },
+                  { "id": "pulpa", "nombre": "Del fruto maduro del olivo, prensando la pulpa carnosa de la aceituna" }
+                ],
+                "respuesta": "pulpa",
+                "frases": {
+                  "pulpa": "¡Fenomenal! El aceite de oliva es el zumo oleoso natural que guarda la pulpa de la aceituna.",
+                  "tronco": "La madera del olivo es dura y compacta, pero el aceite está en las aceitunas.",
+                  "raiz": "Las raíces absorben agua y sales minerales; el aceite se acumula en el fruto."
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -2605,7 +4916,8 @@
             "resumen": "Recorre las 5 partes del aparato digestivo, del bolo alimenticio a la absorción de nutrientes, y explica qué pasa en cada una.",
             "intro": "Lleva el bocado por las cinco partes del aparato digestivo y explica qué ocurre en cada parada.",
             "curiosidad": "La pared del intestino delgado está llena de pliegues diminutos, las vellosidades, que aumentan muchísimo la superficie para absorber nutrientes.",
-            "masticar": false,
+            "masticar": true,
+            "sinMasticar": "¡Todavía no me han masticado! Toca «Masticar» antes de tragarme.",
             "atras": "Ya he pasado por ahí: la comida siempre viaja hacia delante, nunca hacia atrás.",
             "despistes": [
               "pulmones",

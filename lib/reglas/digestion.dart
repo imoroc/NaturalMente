@@ -35,6 +35,7 @@ class PartidaViaje {
 
   /// Parada cuya pregunta hay que responder antes de seguir (solo Difícil).
   String? get preguntaPendiente {
+    if (faltaMasticar) return null;
     final aqui = posicion;
     if (aqui == null || _respondidas.contains(aqui)) return null;
     return nivel.parada(aqui).pregunta == null ? null : aqui;

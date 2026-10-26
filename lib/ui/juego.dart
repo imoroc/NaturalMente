@@ -152,7 +152,14 @@ class _JuegoPageState extends State<JuegoPage> {
     );
   }
 
-  static const _sitiosFijos = {'habitos'};
+  static const _sitiosFijos = {
+    'habitos',
+    'dieta',
+    'grupos',
+    'polinizacion',
+    'estaciones',
+    'huerta',
+  };
 
   void _prepararBarajadoReto() {
     final retos = _retosLugar;
@@ -755,7 +762,16 @@ class _JuegoPageState extends State<JuegoPage> {
         await progreso.marcarReto(actividad, reto);
       }
       if (!_pideAdaptacion &&
-          !const {'sentidos', 'porte-planta', 'plantas'}.contains(actividad.id)) {
+          !const {
+            'sentidos',
+            'porte-planta',
+            'plantas',
+            'dieta',
+            'grupos',
+            'polinizacion',
+            'estaciones',
+            'huerta',
+          }.contains(actividad.id)) {
         await progreso.desbloquearFicha(reto.id);
       }
       if (terminaNivel && _nivelActual != null) {
@@ -802,7 +818,16 @@ class _JuegoPageState extends State<JuegoPage> {
         context.sonidoAcierto();
       }
       final progreso = Alcance.of(context).progreso;
-      if (!const {'sentidos', 'porte-planta', 'plantas'}.contains(actividad.id)) {
+      if (!const {
+        'sentidos',
+        'porte-planta',
+        'plantas',
+        'dieta',
+        'grupos',
+        'polinizacion',
+        'estaciones',
+        'huerta',
+      }.contains(actividad.id)) {
         await progreso.desbloquearFicha(reto.id);
       }
       if (_nivelActual != null && terminaNivel) {
@@ -1341,6 +1366,13 @@ class _Lugar extends StatelessWidget {
     final esCuerpo = actividad.id == 'piezas';
     final esPortePlanta =
         actividad.id == 'porte-planta' || actividad.id == 'plantas';
+    final esJuegoInspector = const {
+      'dieta',
+      'grupos',
+      'polinizacion',
+      'estaciones',
+      'huerta',
+    }.contains(actividad.id);
     final fraseInicial = actividad.intro.isNotEmpty
         ? actividad.intro
         : 'Arrastra cada figura a su lugar o toca directamente la tarjeta.';
@@ -1355,7 +1387,7 @@ class _Lugar extends StatelessWidget {
       builder: (context, outerConstraints) {
         final escalaTexto = MediaQuery.textScalerOf(context).scale(1.0);
         final pantallaBaja =
-            outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || (esPortePlanta && outerConstraints.maxHeight < 750);
+            outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || ((esPortePlanta || esJuegoInspector) && outerConstraints.maxHeight < 750);
         final progresoValor =
             (organosColocados.length +
                 (retoCompleto ? 0.0 : (lugarAcertado ? 0.65 : 0.25))) /
@@ -1367,7 +1399,7 @@ class _Lugar extends StatelessWidget {
               ? 'Pieza'
               : (actividad.id == 'sentidos'
                     ? 'Estímulo'
-                    : (esPortePlanta ? 'Espécimen' : 'Reto'));
+                    : ((esPortePlanta || esJuegoInspector) ? 'Espécimen' : 'Reto'));
           final retoCuriosidad = (retoCompleto || lugarAcertado) ? reto : null;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 220),
@@ -1717,6 +1749,36 @@ class _Lugar extends StatelessWidget {
                 Expanded(child: filaSitios),
               ],
             );
+          }
+
+          if (esJuegoInspector) {
+            final respuestasMapa = <String, String>{
+              for (final r in retosNivel)
+                if (organosColocados.contains(r.id)) r.id: r.respuesta,
+            };
+            final inspector = InspectorInteractivoNuevoJuego(
+              actividadId: actividad.id,
+              nivel: nivelActual?.id ?? 'facil',
+              opciones: opciones,
+              retos: retosNivel,
+              respuestas: respuestasMapa,
+              seleccionado: reto.id,
+              sitioElegido: sitioElegido,
+              lugarAcertado: lugarAcertado,
+              bloqueado: lugarAcertado && !retoCompleto,
+              alSeleccionar: (id) => onSeleccionarReto?.call(id),
+              alAsignar: (retoId, sitioId) {
+                if (lugarAcertado && !retoCompleto) return;
+                if (retoId != reto.id) {
+                  onSeleccionarReto?.call(retoId);
+                }
+                onSoltar(sitioId);
+              },
+            );
+            if (usarAlturaFija) {
+              return SizedBox(height: 360, child: inspector);
+            }
+            return inspector;
           }
 
           if (esPortePlanta) {
@@ -4342,6 +4404,7 @@ String? _pistaReto(String id) => switch (id) {
   'verde' => 'Miramos la luz antes de cruzar',
   'leche' => 'Su olor y su sabor nos avisan a la vez',
   'incendio' => 'Olor a humo y sirenas nos ponen alerta',
+  final otro when idsNuevosJuegos.contains(otro) => pistaRetoNuevoJuego(otro),
   _ => null,
 };
 
@@ -4359,6 +4422,7 @@ String? _subtituloSitio(String id) => switch (id) {
   'olfato' => 'Nariz · Aromas y olores del aire',
   'gusto' => 'Lengua · Sabores dulces o ácidos',
   'tacto' => 'Piel · Frío, calor y texturas',
+  final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(otro),
   // Fin sentidos
   _ => null,
 };
@@ -4440,7 +4504,9 @@ Color _colorSitio(String id) {
     case 'no-me-cuida':
       return const Color(0xFFFFEDD5);
     default:
-      return const Color(0xFFF6F1E6);
+      return idsNuevosJuegos.contains(id)
+          ? colorSitioNuevoJuego(id)
+          : const Color(0xFFF6F1E6);
   }
 }
 
@@ -4487,7 +4553,9 @@ Color _bordeSitio(String id) {
     case 'no-me-cuida':
       return const Color(0xFFFB923C);
     default:
-      return const Color(0xFFD6CFC0);
+      return idsNuevosJuegos.contains(id)
+          ? bordeSitioNuevoJuego(id)
+          : const Color(0xFFD6CFC0);
   }
 }
 
@@ -4528,85 +4596,85 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
   _fichaTecnica(String id) {
     return switch (id) {
       'manzano' => (
-        '6 m (alta)',
+        '6 m',
         '1 tronco leñoso firme con copa redondeada y manzanas',
         'Su tronco de madera sostiene las ramas frente al viento',
         0.85,
       ),
       'chopo' => (
-        '16 m (muy alta)',
+        '16 m',
         '1 tronco recto, alto y esbelto de corteza clara',
         'Tronco leñoso firme cuya copa se mece en lo alto',
         0.98,
       ),
       'tomillo' => (
-        '0,4 m (mata baja)',
+        '0,4 m',
         'Muchos tallos leñosos finos que salen desde la tierra',
         'Ramas bajas y resistentes pegadas al suelo pedregoso',
         0.42,
       ),
       'cesped' => (
-        '0,15 m (ras del suelo)',
+        '0,15 m',
         'Briznas verdes muy finas, tiernas y blandas',
         'Se dobla por completo con la brisa como una alfombra',
         0.22,
       ),
       'tomatera' => (
-        '0,7 m (baja)',
+        '0,7 m',
         'Tallo verde, jugoso y tierno que da tomates rojos',
         'Su tallo herbáceo es blando y se inclina con el viento',
         0.38,
       ),
       'encina' => (
-        '12 m (muy alta)',
+        '12 m',
         '1 tronco grueso con corteza rugosa',
         'No se dobla con el viento fuerte',
         1.0,
       ),
       'pino' => (
-        '18 m (gigante)',
+        '18 m',
         '1 tronco recto que ramifica arriba',
         'Tronco firme y rígido todo el año',
         1.0,
       ),
       'olivo' => (
-        '8 m (alta)',
+        '8 m',
         '1 tronco grueso y retorcido de madera dura',
         'Madera muy resistente al viento',
         0.9,
       ),
       'romero' => (
-        '1,2 m (media)',
+        '1,2 m',
         'Varios tallos duros desde el suelo',
         'Ramas duras pero más bajas que una persona',
         0.52,
       ),
       'rosal' => (
-        '1,4 m (media)',
+        '1,4 m',
         'Tallos ramificados desde la base con espinas',
         'Se mece un poco pero sus ramas son firmes',
         0.55,
       ),
       'lavanda' => (
-        '0,9 m (media-baja)',
+        '0,9 m',
         'Mata baja con muchos tallos desde la tierra',
         'Tallos duros en la base sin tronco único',
         0.48,
       ),
       'trigo' => (
-        '0,6 m (baja)',
+        '0,6 m',
         'Tallo fino, hueco y flexible de color verde/dorado',
         'Se dobla suavemente con la brisa sin romperse',
         0.32,
       ),
       'amapola' => (
-        '0,4 m (pequeña)',
+        '0,4 m',
         'Tallo verde, tierno y muy blando con pelillos',
         'Se inclina entera cuando sopla el viento',
         0.28,
       ),
       'trebol' => (
-        '0,15 m (ras del suelo)',
+        '0,15 m',
         'Tallos verdes muy tiernos que crecen pegados al suelo',
         'Blanda y flexible como una alfombra verde',
         0.22,
@@ -4761,17 +4829,18 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                     alignment: Alignment.center,
                     children: [
                       Positioned(
-                        left: 4,
-                        top: 4,
-                        bottom: 4,
+                        left: 2,
+                        top: 6,
+                        bottom: 6,
                         child: Container(
+                          width: 38,
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 4,
+                            horizontal: 3,
+                            vertical: 5,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.85),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(9),
                             border: Border.all(color: const Color(0xFFCBD5E1)),
                           ),
                           child: Column(
@@ -4779,21 +4848,24 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                             children: [
                               const Icon(
                                 Icons.straighten_rounded,
-                                size: 14,
+                                size: 13,
                                 color: Color(0xFF0369A1),
                               ),
-                              Texto(
-                                altura,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w900,
-                                  color: Color(0xFF0F172A),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Texto(
+                                  altura,
+                                  style: const TextStyle(
+                                    fontSize: 9.5,
+                                    fontWeight: FontWeight.w900,
+                                    color: Color(0xFF0F172A),
+                                  ),
                                 ),
                               ),
                               const Texto(
-                                'Suelo 0 m',
+                                '0 m',
                                 style: TextStyle(
-                                  fontSize: 9,
+                                  fontSize: 8.5,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF64748B),
                                 ),

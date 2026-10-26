@@ -7,6 +7,8 @@ import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/dibujos_plantas.dart';
 import 'package:naturalmente/ui/dibujos_sentidos.dart';
+import 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
+export 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/dibujos_natu.dart';
@@ -395,6 +397,27 @@ class Criatura extends StatelessWidget {
       );
     }
 
+    if (idsNuevosJuegos.contains(id)) {
+      return Container(
+        width: 88,
+        height: 88,
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFDF6E2),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD0C9B8),
+              offset: Offset(0, 4),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Center(child: DibujoNuevoJuego(id: id, tamano: 68)),
+      );
+    }
+
     final respaldo = switch (id) {
       'delfin' => const DibujoAnimalDetallado(id: 'delfin'),
       'pinguino' => const DibujoAnimalDetallado(id: 'pinguino'),
@@ -479,6 +502,19 @@ class IconoSitio extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(5),
         child: DibujoSentido(id: id, tamano: 38),
+      );
+    }
+
+    if (idsNuevosJuegos.contains(id)) {
+      return Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.9),
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(5),
+        child: DibujoNuevoJuego(id: id, tamano: 38),
       );
     }
 
@@ -3960,6 +3996,9 @@ class SpriteEspecieSantuario extends StatelessWidget {
     if (id == 'nutrientes') {
       return DibujoBocado(estado: 'nutrientes', tamano: t);
     }
+    if (idsNuevosJuegos.contains(id)) {
+      return DibujoNuevoJuego(id: id, tamano: t);
+    }
     final color = switch (id) {
       'huerto' => const Color(0xFF8B5A2B),
       'fotosintesis' => const Color(0xFFD97706),
@@ -4045,6 +4084,9 @@ class IlustracionFicha extends StatelessWidget {
     }
     if (id == 'avisos') return DibujoSentido(id: 'timbre', tamano: alto);
     if (id == 'reflejo') return DibujoSentido(id: 'cazuela', tamano: alto);
+    if (idsNuevosJuegos.contains(id)) {
+      return DibujoNuevoJuego(id: id, tamano: alto);
+    }
     if (id == 'dientes') return IconoParada(id: 'boca', tamano: alto);
     if (id == 'aparato-digestivo') {
       return IconoParada(id: 'aparato', tamano: alto);

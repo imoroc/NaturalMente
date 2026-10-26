@@ -20,6 +20,8 @@ const idsSentidos = <String>{
   'peluche',
   'tostada',
   'ducha',
+  'humo',
+  'piscina',
   'timbre',
   'limon',
   'semaforo',
@@ -40,13 +42,16 @@ class DibujoSentido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final idNormalizado = switch (id) {
-      'vista' => 'ojos',
-      'oido' => 'orejas',
-      'olfato' => 'nariz',
-      'gusto' => 'lengua',
-      'tacto' => 'piel',
+      'vista' || 'ojos' || 'arcoiris' => 'ojos',
+      'oido' || 'orejas' || 'tambor' => 'orejas',
+      'olfato' || 'nariz' || 'jazmin' => 'nariz',
+      'gusto' || 'lengua' || 'fresa' => 'lengua',
+      'tacto' || 'piel' || 'peluche' => 'piel',
+      'tostada' => 'humo',
+      'ducha' => 'piscina',
       _ => id,
     };
+
     return construirDibujoSentidos(
       id: idNormalizado,
       color: const Color(0xFF1E293B),

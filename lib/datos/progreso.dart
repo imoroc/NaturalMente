@@ -127,6 +127,11 @@ class Progreso extends ChangeNotifier {
     'porte-planta': ['facil', 'medio', 'dificil'],
     'sentidos': ['facil', 'medio', 'dificil'],
     'habitos': ['facil', 'medio', 'dificil'],
+    'dieta': ['facil', 'medio', 'dificil'],
+    'grupos': ['facil', 'medio', 'dificil'],
+    'polinizacion': ['facil', 'medio', 'dificil'],
+    'estaciones': ['facil', 'medio', 'dificil'],
+    'huerta': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -168,6 +173,21 @@ class Progreso extends ChangeNotifier {
       ('sentidos', 'facil') => const ['sentidos'],
       ('sentidos', 'medio') => const ['avisos'],
       ('sentidos', 'dificil') => const ['reflejo'],
+      ('dieta', 'facil') => const ['herbivoro'],
+      ('dieta', 'medio') => const ['pico-garra'],
+      ('dieta', 'dificil') => const ['branquias'],
+      ('grupos', 'facil') => const ['vertebrado'],
+      ('grupos', 'medio') => const ['anfibio'],
+      ('grupos', 'dificil') => const ['artropodo'],
+      ('polinizacion', 'facil') => const ['abeja-polen'],
+      ('polinizacion', 'medio') => const ['semilla-viajera'],
+      ('polinizacion', 'dificil') => const ['helecho-espora'],
+      ('estaciones', 'facil') => const ['hoja-caduca'],
+      ('estaciones', 'medio') => const ['formas-hoja'],
+      ('estaciones', 'dificil') => const ['bosque-clima'],
+      ('huerta', 'facil') => const ['huerta-organos'],
+      ('huerta', 'medio') => const ['partes-comestibles'],
+      ('huerta', 'dificil') => const ['recursos-plantas'],
       _ => const <String>[],
     };
   }
@@ -245,6 +265,36 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Los cinco sentidos» a partir del nivel Medio (3º-4º).',
       'reflejo' =>
         'Se consigue en «Los cinco sentidos» en el nivel Difícil (5º-6º).',
+      'herbivoro' =>
+        'Se consigue en «Picos, dientes y huellas» desde el nivel Fácil (1º-2º).',
+      'pico-garra' =>
+        'Se consigue en «Picos, dientes y huellas» a partir del nivel Medio (3º-4º).',
+      'branquias' =>
+        'Se consigue en «Picos, dientes y huellas» en el nivel Difícil (5º-6º).',
+      'vertebrado' =>
+        'Se consigue en «¿Huesos o caparazón?» desde el nivel Fácil (1º-2º).',
+      'anfibio' =>
+        'Se consigue en «¿Huesos o caparazón?» a partir del nivel Medio (3º-4º).',
+      'artropodo' =>
+        'Se consigue en «¿Huesos o caparazón?» en el nivel Difícil (5º-6º).',
+      'abeja-polen' =>
+        'Se consigue en «Polen y semillas viajeras» desde el nivel Fácil (1º-2º).',
+      'semilla-viajera' =>
+        'Se consigue en «Polen y semillas viajeras» a partir del nivel Medio (3º-4º).',
+      'helecho-espora' =>
+        'Se consigue en «Polen y semillas viajeras» en el nivel Difícil (5º-6º).',
+      'hoja-caduca' =>
+        'Se consigue en «Los árboles y las estaciones» desde el nivel Fácil (1º-2º).',
+      'formas-hoja' =>
+        'Se consigue en «Los árboles y las estaciones» a partir del nivel Medio (3º-4º).',
+      'bosque-clima' =>
+        'Se consigue en «Los árboles y las estaciones» en el nivel Difícil (5º-6º).',
+      'huerta-organos' =>
+        'Se consigue en «Del huerto a la mesa» desde el nivel Fácil (1º-2º).',
+      'partes-comestibles' =>
+        'Se consigue en «Del huerto a la mesa» a partir del nivel Medio (3º-4º).',
+      'recursos-plantas' =>
+        'Se consigue en «Del huerto a la mesa» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }

@@ -265,9 +265,9 @@ void main() {
   });
 
   test('el álbum tiene 40 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 40);
-    expect(catalogo.fichasDe('reserva').length, 11);
-    expect(catalogo.fichasDe('invernadero').length, 11);
+    expect(catalogo.fichas.length, 55);
+    expect(catalogo.fichasDe('reserva').length, 17);
+    expect(catalogo.fichasDe('invernadero').length, 20);
     expect(catalogo.fichasDe('cuerpo').length, 18);
 
     SharedPreferences.setMockInitialValues({});
@@ -404,6 +404,10 @@ void main() {
     await progreso.marcarNivelLugar(sentidos, 'dificil');
     expect(progreso.fichaDesbloqueada('avisos'), isTrue);
     expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
+    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta']) {
+      final act = catalogo.actividades.firstWhere((a) => a.id == nuevoId);
+      await progreso.marcarNivelLugar(act, 'dificil');
+    }
     expect(
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,

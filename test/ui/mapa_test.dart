@@ -33,7 +33,7 @@ void main() {
 
     await _atras(tester);
     await _atras(tester);
-    expect(find.text('1/40', skipOffstage: false), findsNWidgets(2));
+    expect(find.text('1/55', skipOffstage: false), findsNWidgets(2));
 
     await _tocar(tester, const Key('zona-invernadero'));
     await _tocar(tester, const Key('juego-germinacion'));

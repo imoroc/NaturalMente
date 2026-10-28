@@ -5,6 +5,8 @@ import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 
 class InfoTrajeNatu {
   const InfoTrajeNatu({
@@ -950,7 +952,8 @@ class ExpedicionDiariaPage extends StatefulWidget {
   State<ExpedicionDiariaPage> createState() => _ExpedicionDiariaPageState();
 }
 
-class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
+class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
+    with FeedbackAcierto<ExpedicionDiariaPage> {
   String _dificultad = 'facil';
   late List<PreguntaExpedicion> _mision;
   bool _enSelectorDificultad = true;
@@ -1011,6 +1014,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
   }
 
   void _iniciarConDificultad(String dificultadElegida) {
+    ocultarAcierto();
     if (_progreso.expedicionHoyHecha(widget.fechaReferencia)) return;
     setState(() {
       _dificultad = dificultadElegida;
@@ -1032,6 +1036,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
   }
 
   void _volverAlSelectorDificultad() {
+    ocultarAcierto();
     // Solo se puede cambiar de dificultad si aún NO se ha completado hoy
     if (_completada || _progreso.expedicionHoyHecha(widget.fechaReferencia)) {
       return;
@@ -1078,11 +1083,18 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
         _semillasSesion += ganadas;
       });
       if (_pasoActual + 1 >= _mision.length) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
-      await _siguientePaso();
+      if (_pasoActual + 1 >= _mision.length) {
+        await registrarGuardadoFinal(() async {
+          await _siguientePaso();
+          return _completada;
+        });
+      } else {
+        await _siguientePaso();
+      }
     } else {
       await _progreso.romperComboPrecision();
       if (!mounted) return;
@@ -1124,6 +1136,28 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
         _enSelectorDificultad = false;
       });
     }
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    if (!_completada && !(_pasoResuelto && _pasoActual + 1 == _mision.length)) {
+      return null;
+    }
+    return DatosFinJuego(
+      titulo: '¡Desafío diario completado!',
+      actividad: 'Reto diario',
+      nivel: '',
+      resumen: ResumenPrecisionFinal(
+        aciertosALaPrimera: _aciertosALaPrimera,
+        totalPasos: _mision.length,
+        mejorComboSesion: _mejorComboSesion,
+        semillasGanadas: _semillasSesion,
+      ),
+      textoVolver: 'Volver al mapa',
+      onVolver: () => Navigator.of(context).pop(),
+      textoExtra: 'Armario de Natu',
+      onExtra: () => mostrarArmarioNatu(context, _progreso),
+    );
   }
 
   @override
@@ -1379,7 +1413,10 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
             ),
             child: Column(
               children: [
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       key: const Key('progreso-expedicion-diaria'),
@@ -1390,7 +1427,6 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
                         color: Color(0xFF9A3412),
                       ),
                     ),
-                    const SizedBox(width: 8),
                     InkWell(
                       borderRadius: BorderRadius.circular(999),
                       onTap: _volverAlSelectorDificultad,
@@ -1414,30 +1450,27 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage> {
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 3,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFECFDF5),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: const Color(0xFF6EE7B7),
+                          width: 1.5,
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFECFDF5),
-                          borderRadius: BorderRadius.circular(999),
-                          border: Border.all(
-                            color: const Color(0xFF6EE7B7),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Text(
-                          context.tr(pregunta.zonaNombre),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFF065F46),
-                          ),
+                      ),
+                      child: Text(
+                        context.tr(pregunta.zonaNombre),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF065F46),
                         ),
                       ),
                     ),

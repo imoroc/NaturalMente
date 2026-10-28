@@ -63,3 +63,11 @@ Los textos originales siguen en español en el catálogo y en las reglas; sus tr
 **La cadena es un modelo sencillo.** Hierba → conejo → zorro muestra una de las conexiones del bosque. El zorro también consume otros animales y frutos. Los ejemplos antes/después de Difícil representan una posibilidad, no una predicción numérica ni una dieta exclusiva. El juego no muestra depredación explícita ni animales sufriendo.
 
 **Progreso de ecosistemas.** Cada nivel completo añade una estrella y desbloquea el mismo cromo del bosque, sin duplicarlo ni modificar los requisitos de la medalla. Se recuerda el último nivel; las partidas pendientes se conservan al pausar la app en memoria, pero empiezan de nuevo al cerrar el proceso.
+
+## 28 de octubre de 2026
+
+**Feedback y cierre comunes obligatorios.** Cada juego, existente o nuevo, integra el check verde animado de acierto y la variante de victoria con sonido y vibración, respetando los ajustes y el movimiento reducido. Se aplica a todos sus niveles; las preguntas de comprensión y finales pendientes impiden celebrar el final antes de tiempo.
+
+**Las opciones aparecen automáticamente tras la victoria.** El resultado usa `FinJuego` con resumen, repetición, selector de nivel y vuelta al mundo. Se puede cerrar para seguir explorando las explicaciones. El reto diario conserva su límite diario y ofrece vuelta al mapa y armario, sin repetir una misión ya completada.
+
+**El guardado no repite la jugada.** Las acciones esperan a que se guarde el progreso y, si falla, se ofrece reintentar solo la persistencia, sin volver a puntuar. Se reutilizan `FeedbackAcierto`, `DatosFinJuego` y `registrarGuardadoFinal`; no se duplican los efectos ni se encadenan mediante temporizadores por juego. La referencia de implementación es [feedback-y-cierre.md](feedback-y-cierre.md).

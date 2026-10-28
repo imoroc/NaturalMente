@@ -12,6 +12,8 @@ import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'soporte_cierre.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late Catalogo catalogo;
@@ -58,6 +60,7 @@ void main() {
   }
 
   Future<void> tocar(WidgetTester tester, String key) async {
+  await seguirExplorando(tester);
     final finder = find.byKey(Key(key));
     await tester.ensureVisible(finder);
     await tester.pumpAndSettle();

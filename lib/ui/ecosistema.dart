@@ -11,6 +11,8 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/escena_ecosistema.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class EcosistemaPage extends StatefulWidget {
@@ -20,7 +22,8 @@ class EcosistemaPage extends StatefulWidget {
   State<EcosistemaPage> createState() => _EcosistemaPageState();
 }
 
-class _EcosistemaPageState extends State<EcosistemaPage> {
+class _EcosistemaPageState extends State<EcosistemaPage>
+    with FeedbackAcierto<EcosistemaPage> {
   PartidaEcosistema? _partida;
   final ScrollController _scroll = ScrollController();
   final Map<String, List<OpcionEcosistema>> _opciones = {};
@@ -73,6 +76,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   }
 
   void _empezar(NivelEcosistema nivel) {
+    ocultarAcierto();
     _opciones.clear();
     for (final reto in nivel.retos) {
       _opciones[reto.id] =
@@ -161,10 +165,10 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (_partida!.completa) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
         _guardar();
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
       _arriba();
     } else {
@@ -178,7 +182,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
       _partida!.seguir();
     });
     if (_partida!.completa) {
-      context.sonidoCelebracion();
+      mostrarAcierto(finalDeNivel: true);
       _guardar();
     } else {
       context.sonidoToque();
@@ -187,6 +191,14 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   }
 
   Future<void> _guardar() async {
+    if (_guardando || _guardado) return;
+    await registrarGuardadoFinal(() async {
+      await _persistirFinal();
+      return _guardado;
+    });
+  }
+
+  Future<void> _persistirFinal() async {
     final partida = _partida!;
     if (_guardando || _guardado || !partida.completa) return;
     final progreso = Alcance.of(context).progreso;
@@ -251,6 +263,7 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
   Future<void> _cambiarNivel() async {
     context.sonidoToque();
     if (!await _confirmarSalida() || !mounted) return;
+    ocultarAcierto();
     setState(() => _partida = null);
     _arriba();
   }
@@ -299,6 +312,28 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    if (!(_partida?.completa == true)) return null;
+    final nivel = _partida!.nivel;
+    return DatosFinJuego(
+      actividad: widget.actividad.titulo,
+      nivel: nivel.nombre,
+      resumen: ResumenPrecisionFinal(
+        semillasGanadas: _semillasSesion,
+        mejorComboSesion: _mejorComboSesion,
+        sinPistas: _pistasSesion == 0,
+      ),
+      onRepetir: () => _empezar(nivel),
+      onCambiarNivel: () {
+        _cambiarNivel();
+      },
+      onVolver: () {
+        _salir();
+      },
     );
   }
 
@@ -988,10 +1023,10 @@ class _EcosistemaPageState extends State<EcosistemaPage> {
               _registrarPasoPrecision(acierto);
               if (acierto) {
                 if (p.completa) {
-                  context.sonidoCelebracion();
+                  mostrarAcierto(finalDeNivel: true);
                   _guardar();
                 } else {
-                  context.sonidoAcierto();
+                  mostrarAcierto();
                 }
                 if (!p.confirmado) _arriba();
               } else {

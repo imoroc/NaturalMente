@@ -114,7 +114,7 @@ flowchart TD
 | [`lib/reglas/`](lib/reglas/) | Evaluación de respuestas, progresión de pistas y barajado sin repetir posición (sin widgets) | Iván |
 | [`lib/datos/`](lib/datos/) y [`lib/modelo/`](lib/modelo/) | Carga de `catalog.json`, modelos inmutables y persistencia local de estrellas y cromos | Alfredo / Equipo |
 | [`content/`](content/) | Catálogo de juegos, textos pedagógicos (`catalog.json`) y mapa de cobertura (`cobertura.md`) | Alfredo |
-| [`assets/imagenes/`](assets/imagenes/) y [`assets/icono/`](assets/icono/) | Ilustraciones de personajes (`Natu`, animales) e icono de la aplicación | David |
+| [`lib/ui/dibujos.dart`](lib/ui/dibujos.dart) y [`assets/icono/`](assets/icono/) | Ilustraciones vectoriales de personajes (`Natu`, animales) e icono de la aplicación | David |
 | [`test/`](test/) | Pruebas unitarias de catálogo/reglas (`test/datos/`) y pruebas de integración de UI (`test/ui/`) | Diego |
 | [`android/`](android/) e [`ios/`](ios/) | Configuración nativa, identificador (`com.naturalmente.naturalmente`), iconos y firmas | Alejandro |
 | [`web/`](web/) | Soporte de ejecución local en Chrome durante el desarrollo | Equipo |
@@ -227,3 +227,11 @@ El botón ES/EN permite elegir **Español** o **English** solo en el mapa princi
 ### Monta el ecosistema
 
 Nueva misión de La reserva con ilustración vectorial propia, tres niveles y un cromo del bosque. Su [plan y validación](docs/plan-ecosistemas.md) describen el recorrido, las comprobaciones y los pendientes en dispositivos. Funciona en ambos idiomas y conserva los requisitos de la medalla.
+
+### Cierre de los juegos
+
+Este comportamiento es obligatorio para todos los juegos y niveles, incluidos los nuevos. Los agentes deben consultar [AGENTS.md](AGENTS.md) y la [guía de implementación de feedback y cierre](docs/feedback-y-cierre.md).
+
+Al superar un nivel, la animación del check verde, el sonido y la vibración dan paso automáticamente a una pantalla de resultado. Muestra el resumen y mantiene visibles las opciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. El botón de cerrar permite seguir explorando las explicaciones y curiosidades del ejercicio.
+
+Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 16 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.

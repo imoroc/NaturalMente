@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'soporte_cierre.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -143,6 +145,7 @@ void main() {
 }
 
 Future<void> _tocar(WidgetTester tester, Key key) async {
+  await seguirExplorando(tester);
   final finder = find.byKey(key, skipOffstage: false);
   await tester.ensureVisible(finder);
   await tester.pump();

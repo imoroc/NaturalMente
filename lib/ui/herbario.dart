@@ -11,6 +11,8 @@ import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/planta.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -23,7 +25,8 @@ class HerbarioPage extends StatefulWidget {
   State<HerbarioPage> createState() => _HerbarioPageState();
 }
 
-class _HerbarioPageState extends State<HerbarioPage> {
+class _HerbarioPageState extends State<HerbarioPage>
+    with FeedbackAcierto<HerbarioPage> {
   PartidaHerbario? _partida;
   final _pregunta = GlobalKey();
   bool _guardando = false;
@@ -40,6 +43,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
   Herbario get _herbario => widget.actividad.herbario!;
 
   void _empezar(NivelHerbario nivel) {
+    ocultarAcierto();
     final opcionesPorParte = <String, List<Opcion>>{};
     for (final id in nivel.partes) {
       final pregunta = _herbario.parte(id).pregunta;
@@ -106,9 +110,9 @@ class _HerbarioPageState extends State<HerbarioPage> {
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (partida.completa) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else {
       context.sonidoPista();
@@ -128,9 +132,9 @@ class _HerbarioPageState extends State<HerbarioPage> {
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (partida.completa) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else {
       context.sonidoPista();
@@ -157,6 +161,14 @@ class _HerbarioPageState extends State<HerbarioPage> {
   }
 
   Future<void> _guardarSiCompleta() async {
+    if (_guardando || _guardado) return;
+    await registrarGuardadoFinal(() async {
+      await _persistirFinal();
+      return _guardado;
+    });
+  }
+
+  Future<void> _persistirFinal() async {
     final partida = _partida!;
     if (!partida.completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
@@ -220,6 +232,27 @@ class _HerbarioPageState extends State<HerbarioPage> {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    if (!(_partida?.completa == true)) return null;
+    final nivel = _partida!.nivel;
+    return DatosFinJuego(
+      actividad: widget.actividad.titulo,
+      nivel: nivel.nombre,
+      resumen: ResumenPrecisionFinal(
+        semillasGanadas: _semillasSesion,
+        mejorComboSesion: _mejorComboSesion,
+        sinPistas: _pistasSesion == 0,
+      ),
+      onRepetir: () => _empezar(nivel),
+      onCambiarNivel: () {
+        ocultarAcierto();
+        setState(() => _partida = null);
+      },
+      onVolver: () => Navigator.of(context).pop(),
     );
   }
 
@@ -601,6 +634,7 @@ class _HerbarioPageState extends State<HerbarioPage> {
               ? null
               : () {
                   context.sonidoToque();
+                  ocultarAcierto();
                   setState(() => _partida = null);
                 },
           child: const Texto('Cambiar nivel'),

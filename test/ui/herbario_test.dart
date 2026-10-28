@@ -7,8 +7,11 @@ import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/main.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'soporte_cierre.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +48,7 @@ void main() {
   }
 
   Future<void> tocar(WidgetTester tester, String key) async {
+  await seguirExplorando(tester);
     final finder = find.byKey(Key(key));
     await tester.ensureVisible(finder);
     await tester.tap(finder);
@@ -134,6 +138,37 @@ void main() {
     );
     await tocar(tester, 'herbario-cambiar-nivel');
     expect(find.text('✓ Nivel superado'), findsOneWidget);
+  });
+
+  testWidgets('solo los aciertos muestran el check y la última pieza celebra', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1100));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await abrir(tester);
+    await tocar(tester, 'nivel-facil');
+    await tocar(tester, 'pieza-raiz');
+    await tocar(tester, 'destino-hoja');
+    expect(find.byType(AnimacionAcierto), findsNothing);
+
+    await tester.tap(find.byKey(const Key('destino-raiz')));
+    await tester.pump();
+    expect(
+      tester.widget<AnimacionAcierto>(find.byType(AnimacionAcierto)).finalDeNivel,
+      isFalse,
+    );
+    await tester.pumpAndSettle();
+    await colocar(tester, 'tallo');
+    await tocar(tester, 'pieza-hoja');
+    await tester.tap(find.byKey(const Key('destino-hoja')));
+    await tester.pump();
+    expect(
+      tester.widget<AnimacionAcierto>(find.byType(AnimacionAcierto)).finalDeNivel,
+      isTrue,
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(AnimacionAcierto), findsNothing);
+    expect(find.byKey(const Key('herbario-completo')), findsOneWidget);
   });
 
   testWidgets('una pieza se coloca también mediante arrastre', (tester) async {

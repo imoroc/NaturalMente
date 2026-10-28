@@ -19,6 +19,8 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 4. Cada pregunta o reto del catálogo lleva su `nivel` y su `bloque`. Un mismo juego vale para los tres niveles filtrando.
 5. Las mecánicas se repiten a propósito: arrastrar a un sitio, ordenar, elegir entre opciones y mover controles. Así una sola pantalla sirve para varios juegos, como ya hace `lib/ui/juego.dart`.
 6. Fotos, dibujos y sonidos son nuestros o tienen una licencia que permita publicarlos en una tienda, y cada uno se apunta en `content/licencias.md`. Nada del libro del colegio.
+7. Cada sección evaluada que se resuelve correctamente usa el check verde compartido, con sonido y vibración según los ajustes. Todos los juegos y niveles deben reutilizar `FeedbackAcierto`, no crear su propio efecto.
+8. Al terminar el nivel completo, incluidas sus preguntas finales, la animación de victoria da paso automáticamente a `FinJuego`, con el resumen y las opciones disponibles. No basta con dejar «Otra vez» o «Cambiar nivel» al pie del ejercicio. La integración y las comprobaciones obligatorias están en [feedback-y-cierre.md](feedback-y-cierre.md).
 
 ## La reserva (animales)
 

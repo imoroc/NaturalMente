@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:typed_data' show Endian;
 
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -163,9 +164,12 @@ class Idioma extends ChangeNotifier {
       _SintetizadorMelodico.reproducir(_EfectoSonoro.acierto);
     }
     if (_vibracion) {
-      HapticFeedback.mediumImpact();
+      _VibracionAcierto.reproducir();
     }
   }
+
+  /// Prepara los dos efectos de feedback sin reproducirlos.
+  Future<void> prepararAciertos() => _SintetizadorMelodico.prepararAciertos();
 
   void reproducirPista() {
     _secuenciaSonido++;
@@ -183,7 +187,7 @@ class Idioma extends ChangeNotifier {
       _SintetizadorMelodico.reproducir(_EfectoSonoro.celebracion);
     }
     if (_vibracion) {
-      HapticFeedback.heavyImpact();
+      _VibracionAcierto.reproducir(finalDeNivel: true);
     }
   }
 
@@ -291,6 +295,31 @@ extension TraduccionContext on BuildContext {
   void sonidoCelebracion() => IdiomaScope.of(this)?.reproducirCelebracion();
 }
 
+/// Pulso propio en Android; confirmación del sistema en las demás plataformas.
+abstract final class _VibracionAcierto {
+  static const _canal = MethodChannel('naturalmente/haptica');
+
+  static Future<void> reproducir({bool finalDeNivel = false}) async {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      try {
+        final reproducida = await _canal.invokeMethod<bool>('acierto', {
+          'finalDeNivel': finalDeNivel,
+        });
+        if (reproducida == true) return;
+      } on MissingPluginException {
+        // Permite ejecutar la app con un motor que aún no incluya el canal.
+      } on PlatformException {
+        // Conserva el feedback estándar si el dispositivo rechaza el patrón.
+      }
+    }
+    if (finalDeNivel) {
+      await HapticFeedback.successNotification();
+    } else {
+      await HapticFeedback.mediumImpact();
+    }
+  }
+}
+
 enum _EfectoSonoro {
   toque,
   seleccion,
@@ -338,6 +367,19 @@ class _SintetizadorMelodico {
   static final Map<_EfectoSonoro, Uint8List> _cache = {};
   static final Map<String, (Uint8List, String)?> _cacheArchivos = {};
   static Uint8List? _cacheMusica;
+  static Future<void>? _preparacionAciertos;
+
+  static Future<void> prepararAciertos() => _preparacionAciertos ??= () async {
+    for (final efecto in const [
+      _EfectoSonoro.acierto,
+      _EfectoSonoro.celebracion,
+    ]) {
+      final archivo = await _cargarArchivoPersonalizado(_candidatosEfecto(efecto));
+      if (archivo == null) {
+        _cache.putIfAbsent(efecto, () => _generarEfecto(efecto));
+      }
+    }
+  }();
 
   static List<String> _candidatosEfecto(_EfectoSonoro efecto) => switch (efecto) {
     _EfectoSonoro.paso1 ||

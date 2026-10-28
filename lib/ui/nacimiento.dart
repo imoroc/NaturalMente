@@ -13,6 +13,8 @@ import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class NacimientoPage extends StatefulWidget {
@@ -24,7 +26,8 @@ class NacimientoPage extends StatefulWidget {
   State<NacimientoPage> createState() => _NacimientoPageState();
 }
 
-class _NacimientoPageState extends State<NacimientoPage> {
+class _NacimientoPageState extends State<NacimientoPage>
+    with FeedbackAcierto<NacimientoPage> {
   NivelNacimiento? _nivel;
   PartidaClasificar? _clasificar;
   PartidaCiclos? _ciclos;
@@ -48,6 +51,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
       _clasificar?.completa == true || _ciclos?.completa == true;
 
   void _empezar(NivelNacimiento nivel) {
+    ocultarAcierto();
     final pasos = <String, List<Opcion>>{};
     final opciones = <String, List<Opcion>>{};
     for (final ciclo in nivel.ciclos) {
@@ -121,6 +125,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
   }
 
   void _salirAlSelector() {
+    ocultarAcierto();
     context.sonidoToque();
     setState(() {
       _nivel = null;
@@ -130,6 +135,14 @@ class _NacimientoPageState extends State<NacimientoPage> {
   }
 
   Future<void> _guardarSiCompleta() async {
+    if (_guardando || _guardado) return;
+    await registrarGuardadoFinal(() async {
+      await _persistirFinal();
+      return _guardado;
+    });
+  }
+
+  Future<void> _persistirFinal() async {
     final nivel = _nivel;
     if (nivel == null || !_completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
@@ -168,9 +181,9 @@ class _NacimientoPageState extends State<NacimientoPage> {
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (_completa) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else {
       context.sonidoPista();
@@ -204,7 +217,7 @@ class _NacimientoPageState extends State<NacimientoPage> {
     final acierto = _ciclos!.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
     if (acierto) {
-      context.sonidoAcierto();
+      mostrarAcierto();
     } else {
       context.sonidoPista();
     }
@@ -223,9 +236,9 @@ class _NacimientoPageState extends State<NacimientoPage> {
     _registrarPasoPrecision(acierto);
     if (acierto) {
       if (_completa) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else {
       context.sonidoPista();
@@ -299,6 +312,24 @@ class _NacimientoPageState extends State<NacimientoPage> {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    if (!(_completa)) return null;
+    final nivel = _nivel!;
+    return DatosFinJuego(
+      actividad: widget.actividad.titulo,
+      nivel: nivel.nombre,
+      resumen: ResumenPrecisionFinal(
+        semillasGanadas: _semillasSesion,
+        mejorComboSesion: _mejorComboSesion,
+        sinPistas: _pistasSesion == 0,
+      ),
+      onRepetir: () => _empezar(nivel),
+      onCambiarNivel: _salirAlSelector,
+      onVolver: () => Navigator.of(context).pop(),
     );
   }
 

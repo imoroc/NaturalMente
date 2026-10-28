@@ -1,9 +1,14 @@
 package com.naturalmente.naturalmente
 
+import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
 import android.media.MediaPlayer
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -12,6 +17,14 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
+    private val vibrador: Vibrator? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSystemService(VibratorManager::class.java)?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        }
+    }
     private val ejecutorAudio = Executors.newCachedThreadPool()
     private val cacheSonidos = ConcurrentHashMap<String, ByteArray>()
     private val cacheArchivos = ConcurrentHashMap<String, File>()
@@ -24,6 +37,20 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "naturalmente/haptica"
+        ).setMethodCallHandler { llamada, resultado ->
+            if (llamada.method == "acierto") {
+                try {
+                    resultado.success(vibrarAcierto(llamada.argument<Boolean>("finalDeNivel") == true))
+                } catch (_: SecurityException) {
+                    resultado.error("vibracion_no_disponible", "Vibración no disponible", null)
+                }
+            } else {
+                resultado.notImplemented()
+            }
+        }
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             "naturalmente/audio"
@@ -80,6 +107,31 @@ class MainActivity : FlutterActivity() {
                 else -> resultado.notImplemented()
             }
         }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun vibrarAcierto(finalDeNivel: Boolean): Boolean {
+        val motor = vibrador ?: return false
+        if (!motor.hasVibrator()) return false
+        val tiempos = if (finalDeNivel) longArrayOf(0, 32, 92, 58) else longArrayOf(0, 38)
+        val amplitudes = if (finalDeNivel) intArrayOf(0, 140, 0, 210) else intArrayOf(0, 155)
+        val atributos = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        // Sustituye un pulso anterior si llegan dos aciertos seguidos.
+        motor.cancel()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val efecto = if (motor.hasAmplitudeControl()) {
+                VibrationEffect.createWaveform(tiempos, amplitudes, -1)
+            } else {
+                VibrationEffect.createWaveform(tiempos, -1)
+            }
+            motor.vibrate(efecto, atributos)
+        } else {
+            motor.vibrate(tiempos, -1, atributos)
+        }
+        return true
     }
 
     private fun reproducirArchivo(id: String, bytes: ByteArray, ext: String) {
@@ -260,6 +312,7 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onPause() {
+        vibrador?.cancel()
         try {
             reproductorMusica?.let {
                 if (it.isPlaying) {

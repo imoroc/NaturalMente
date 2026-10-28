@@ -2263,74 +2263,72 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                   child: AnimatedScale(
                     scale: encima ? 1.07 : 1.0,
                     duration: const Duration(milliseconds: 140),
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 132),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 9,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorFondoEtiqueta,
-                        borderRadius: BorderRadius.circular(13),
-                        border: Border.all(color: colorBorde, width: 1.8),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x18000000),
-                            blurRadius: 6,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            zonaCompleta
-                                ? Icons.check_circle_rounded
-                                : (encima
-                                      ? Icons.add_circle_rounded
-                                      : Icons.place_rounded),
-                            size: 15,
-                            color: zonaCompleta
-                                ? const Color(0xFF15803D)
-                                : const Color(0xFF0369A1),
-                          ),
-                          const SizedBox(width: 4),
-                          Flexible(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Texto(
-                                  opcion.nombre,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 11.5,
-                                    fontWeight: FontWeight.w900,
-                                    height: 1.05,
-                                    color: Color(0xFF0F172A),
-                                  ),
-                                ),
-                                if (organosZona.isNotEmpty)
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 132),
+                        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: colorFondoEtiqueta,
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(color: colorBorde, width: 1.8),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x18000000),
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              zonaCompleta
+                                  ? Icons.check_circle_rounded
+                                  : (encima ? Icons.add_circle_rounded : Icons.place_rounded),
+                              size: 15,
+                              color: zonaCompleta
+                                  ? const Color(0xFF15803D)
+                                  : const Color(0xFF0369A1),
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   Texto(
-                                    zonaCompleta
-                                        ? '¡Completa!'
-                                        : '$colocadosEnZona/${organosZona.length} colocados',
+                                    opcion.nombre,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 9.5,
-                                      fontWeight: FontWeight.w800,
-                                      color: zonaCompleta
-                                          ? const Color(0xFF15803D)
-                                          : const Color(0xFF475569),
+                                    style: const TextStyle(
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w900,
+                                      height: 1.05,
+                                      color: Color(0xFF0F172A),
                                     ),
                                   ),
-                              ],
+                                  if (organosZona.isNotEmpty)
+                                    Texto(
+                                      zonaCompleta
+                                          ? '¡Completa!'
+                                          : '$colocadosEnZona/${organosZona.length} colocados',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 9.5,
+                                        fontWeight: FontWeight.w800,
+                                        color: zonaCompleta
+                                            ? const Color(0xFF15803D)
+                                            : const Color(0xFF475569),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

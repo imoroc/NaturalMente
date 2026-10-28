@@ -5631,14 +5631,16 @@ class _InspectorInteractivoNuevoJuegoState
                                           : herramientas[i].color,
                                     ),
                                     const SizedBox(width: 4),
-                                    Text(
-                                      context.traducir(herramientas[i].etiqueta),
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w800,
-                                        color: modoSeguro == i
-                                            ? Colors.white
-                                            : const Color(0xFF1E293B),
+                                    Flexible(
+                                      child: Text(
+                                        context.traducir(herramientas[i].etiqueta),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w800,
+                                          color: modoSeguro == i ? Colors.white : const Color(0xFF1E293B),
+                                        ),
                                       ),
                                     ),
                                   ],

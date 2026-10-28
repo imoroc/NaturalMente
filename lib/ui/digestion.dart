@@ -13,6 +13,8 @@ import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class ViajePage extends StatefulWidget {
@@ -24,7 +26,7 @@ class ViajePage extends StatefulWidget {
   State<ViajePage> createState() => _ViajePageState();
 }
 
-class _ViajePageState extends State<ViajePage> {
+class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
   PartidaViaje? _partida;
   final _pregunta = GlobalKey();
   bool _guardando = false;
@@ -42,6 +44,7 @@ class _ViajePageState extends State<ViajePage> {
   Viaje get _viaje => widget.actividad.viaje!;
 
   void _empezar(NivelViaje nivel) {
+    ocultarAcierto();
     final opciones = <String, List<Opcion>>{};
     for (final parada in nivel.paradas) {
       final pregunta = parada.pregunta;
@@ -124,9 +127,9 @@ class _ViajePageState extends State<ViajePage> {
       _registrarPasoPrecision(false);
     }
     if (partida.completa && !estabaCompleta) {
-      context.sonidoCelebracion();
+      mostrarAcierto(finalDeNivel: true);
     } else if (partida.resultado?.acierto == true) {
-      context.sonidoAcierto();
+      mostrarAcierto();
     } else if (partida.resultado?.estado == 'masticar') {
       context.sonidoPaso(partida.mordiscos);
     } else if (partida.resultado?.acierto == false &&
@@ -155,6 +158,14 @@ class _ViajePageState extends State<ViajePage> {
   }
 
   Future<void> _guardarSiCompleta() async {
+    if (_guardando || _guardado) return;
+    await registrarGuardadoFinal(() async {
+      await _persistirFinal();
+      return _guardado;
+    });
+  }
+
+  Future<void> _persistirFinal() async {
     final partida = _partida;
     if (partida == null || !partida.completa || _guardando || _guardado) {
       return;
@@ -246,6 +257,27 @@ class _ViajePageState extends State<ViajePage> {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    if (!(_partida?.completa == true)) return null;
+    final nivel = _partida!.nivel;
+    return DatosFinJuego(
+      actividad: widget.actividad.titulo,
+      nivel: nivel.nombre,
+      resumen: ResumenPrecisionFinal(
+        semillasGanadas: _semillasSesion,
+        mejorComboSesion: _mejorComboSesion,
+        sinPistas: _pistasSesion == 0,
+      ),
+      onRepetir: () => _empezar(nivel),
+      onCambiarNivel: () {
+        ocultarAcierto();
+        setState(() => _partida = null);
+      },
+      onVolver: () => Navigator.of(context).pop(),
     );
   }
 
@@ -680,6 +712,7 @@ class _ViajePageState extends State<ViajePage> {
               ? null
               : () {
                   context.sonidoToque();
+                  ocultarAcierto();
                   setState(() => _partida = null);
                 },
           child: const Texto('Cambiar nivel'),

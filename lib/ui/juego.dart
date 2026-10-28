@@ -8,6 +8,8 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class JuegoPage extends StatefulWidget {
@@ -19,7 +21,7 @@ class JuegoPage extends StatefulWidget {
   State<JuegoPage> createState() => _JuegoPageState();
 }
 
-class _JuegoPageState extends State<JuegoPage> {
+class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   int? _nivelIdx;
   var _reto = 0;
   var _listo = false;
@@ -46,6 +48,7 @@ class _JuegoPageState extends State<JuegoPage> {
   int _mejorComboSesion = 0;
   int _semillasSesion = 0;
   bool _pistaEnPaso = false;
+  int _pistasSesion = 0;
 
   void _registrarPasoPrecision(bool acierto) {
     if (acierto) {
@@ -70,6 +73,7 @@ class _JuegoPageState extends State<JuegoPage> {
       setState(() {
         _comboActual = 0;
         _pistaEnPaso = true;
+        _pistasSesion++;
       });
       Alcance.maybeOf(context)?.progreso.romperComboPrecision();
     }
@@ -246,6 +250,33 @@ class _JuegoPageState extends State<JuegoPage> {
       _reto = pendiente < 0 ? 0 : pendiente;
     }
     _prepararBarajadoNivel();
+  }
+
+  @override
+  DatosFinJuego? construirFinJuego() {
+    final completo = widget.actividad.tipo == 'lugar'
+        ? _retoCompleto && _siguienteRetoPendiente() == null
+        : _baseCompletada &&
+              (_nivelActual?.preguntaFinal == null || _preguntaFinalAcertada);
+    if (!completo) return null;
+    return DatosFinJuego(
+      actividad: widget.actividad.titulo,
+      nivel: _nivelActual?.nombre ?? '',
+      resumen: ResumenPrecisionFinal(
+        semillasGanadas: _semillasSesion,
+        mejorComboSesion: _mejorComboSesion,
+        sinPistas: _pistasSesion == 0,
+      ),
+      onRepetir: () {
+        if (_nivelIdx != null) {
+          _empezarNivel(_nivelIdx!);
+        } else {
+          _otraVez();
+        }
+      },
+      onCambiarNivel: _tieneNiveles ? _salirAlSelector : null,
+      onVolver: () => Navigator.of(context).pop(),
+    );
   }
 
   @override
@@ -609,6 +640,7 @@ class _JuegoPageState extends State<JuegoPage> {
   }
 
   void _empezarNivel(int idx) {
+    ocultarAcierto();
     if (idx < 0 || idx >= widget.actividad.nivelesLugar.length) return;
     setState(() {
       _nivelIdx = idx;
@@ -631,11 +663,13 @@ class _JuegoPageState extends State<JuegoPage> {
       _mejorComboSesion = 0;
       _semillasSesion = 0;
       _pistaEnPaso = false;
+      _pistasSesion = 0;
       _prepararBarajadoNivel();
     });
   }
 
   void _salirAlSelector() {
+    ocultarAcierto();
     context.sonidoToque();
     setState(() {
       _nivelIdx = null;
@@ -753,30 +787,39 @@ class _JuegoPageState extends State<JuegoPage> {
       _registrarPasoPrecision(true);
       final terminaNivel = !_pideAdaptacion && _siguienteRetoPendiente() == null;
       if (terminaNivel) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
-      final progreso = Alcance.of(context).progreso;
-      if (_nivelActual == null || _nivelActual!.id == 'facil') {
-        await progreso.marcarReto(actividad, reto);
+      final nivelGuardado = _nivelActual;
+      Future<bool> guardar() async {
+        final progreso = Alcance.of(context).progreso;
+        if (nivelGuardado == null || nivelGuardado.id == 'facil') {
+          await progreso.marcarReto(actividad, reto);
+        }
+        if (!_pideAdaptacion &&
+            !const {
+              'sentidos',
+              'porte-planta',
+              'plantas',
+              'dieta',
+              'grupos',
+              'polinizacion',
+              'estaciones',
+              'huerta',
+            }.contains(actividad.id)) {
+          await progreso.desbloquearFicha(reto.id);
+        }
+        if (terminaNivel && nivelGuardado != null) {
+          await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
+          await progreso.marcarActividad(actividad);
+        }
+        return true;
       }
-      if (!_pideAdaptacion &&
-          !const {
-            'sentidos',
-            'porte-planta',
-            'plantas',
-            'dieta',
-            'grupos',
-            'polinizacion',
-            'estaciones',
-            'huerta',
-          }.contains(actividad.id)) {
-        await progreso.desbloquearFicha(reto.id);
-      }
-      if (terminaNivel && _nivelActual != null) {
-        await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
-        await progreso.marcarActividad(actividad);
+      if (terminaNivel) {
+        await registrarGuardadoFinal(guardar);
+      } else {
+        await guardar();
       }
     } else {
       _registrarPasoPrecision(false);
@@ -813,26 +856,35 @@ class _JuegoPageState extends State<JuegoPage> {
       _registrarPasoPrecision(true);
       final terminaNivel = _siguienteRetoPendiente() == null;
       if (terminaNivel) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
-      final progreso = Alcance.of(context).progreso;
-      if (!const {
-        'sentidos',
-        'porte-planta',
-        'plantas',
-        'dieta',
-        'grupos',
-        'polinizacion',
-        'estaciones',
-        'huerta',
-      }.contains(actividad.id)) {
-        await progreso.desbloquearFicha(reto.id);
+      final nivelGuardado = _nivelActual;
+      Future<bool> guardar() async {
+        final progreso = Alcance.of(context).progreso;
+        if (!const {
+          'sentidos',
+          'porte-planta',
+          'plantas',
+          'dieta',
+          'grupos',
+          'polinizacion',
+          'estaciones',
+          'huerta',
+        }.contains(actividad.id)) {
+          await progreso.desbloquearFicha(reto.id);
+        }
+        if (nivelGuardado != null && terminaNivel) {
+          await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
+          await progreso.marcarActividad(actividad);
+        }
+        return true;
       }
-      if (_nivelActual != null && terminaNivel) {
-        await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
-        await progreso.marcarActividad(actividad);
+      if (terminaNivel) {
+        await registrarGuardadoFinal(guardar);
+      } else {
+        await guardar();
       }
     } else {
       _registrarPasoPrecision(false);
@@ -1024,27 +1076,33 @@ class _JuegoPageState extends State<JuegoPage> {
     if (paso.experimentoCompletado) {
       _registrarPasoPrecision(true);
       if (!pideFinal) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else if (paso.avanzaEtapa) {
       _registrarPasoPrecision(true);
-      context.sonidoAcierto();
+      mostrarAcierto();
     } else {
       _registrarPasoPrecision(false);
       context.sonidoPista();
     }
     if (paso.experimentoCompletado && !pideFinal) {
-      final progreso = Alcance.of(context).progreso;
-      if (_nivelActual != null) {
-        await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
+      final nivelGuardado = _nivelActual;
+      Future<bool> guardar() async {
+        final progreso = Alcance.of(context).progreso;
+        if (nivelGuardado != null) {
+          await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
+        }
+        await progreso.marcarActividad(actividad);
+        return true;
       }
-      await progreso.marcarActividad(actividad);
+      await registrarGuardadoFinal(guardar);
     }
   }
 
   void _otraVez() {
+    ocultarAcierto();
     context.sonidoToque();
     setState(() {
       _valores.clear();
@@ -1078,20 +1136,25 @@ class _JuegoPageState extends State<JuegoPage> {
     if (resultado.acierto) {
       _registrarPasoPrecision(true);
       if (!pideFinal) {
-        context.sonidoCelebracion();
+        mostrarAcierto(finalDeNivel: true);
       } else {
-        context.sonidoAcierto();
+        mostrarAcierto();
       }
     } else {
       _registrarPasoPrecision(false);
       context.sonidoPista();
     }
     if (resultado.acierto && !pideFinal) {
-      final progreso = Alcance.of(context).progreso;
-      if (_nivelActual != null) {
-        await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
+      final nivelGuardado = _nivelActual;
+      Future<bool> guardar() async {
+        final progreso = Alcance.of(context).progreso;
+        if (nivelGuardado != null) {
+          await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
+        }
+        await progreso.marcarActividad(actividad);
+        return true;
       }
-      await progreso.marcarActividad(actividad);
+      await registrarGuardadoFinal(guardar);
     }
   }
 
@@ -1112,12 +1175,17 @@ class _JuegoPageState extends State<JuegoPage> {
     });
     if (resultado.acierto) {
       _registrarPasoPrecision(true);
-      context.sonidoCelebracion();
-      final progreso = Alcance.of(context).progreso;
-      if (_nivelActual != null) {
-        await progreso.marcarNivelLugar(actividad, _nivelActual!.id);
+      mostrarAcierto(finalDeNivel: true);
+      final nivelGuardado = _nivelActual;
+      Future<bool> guardar() async {
+        final progreso = Alcance.of(context).progreso;
+        if (nivelGuardado != null) {
+          await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
+        }
+        await progreso.marcarActividad(actividad);
+        return true;
       }
-      await progreso.marcarActividad(actividad);
+      await registrarGuardadoFinal(guardar);
     } else {
       _registrarPasoPrecision(false);
       context.sonidoPista();

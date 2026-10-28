@@ -11,6 +11,8 @@ import 'package:naturalmente/main.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'soporte_cierre.dart';
+
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
   for (final nivel in ['facil', 'medio', 'dificil']) {
@@ -211,6 +213,7 @@ Future<void> abrir(WidgetTester t) async {
 }
 
 Future<void> tocar(WidgetTester t, String key) async {
+  await seguirExplorando(t);
   final f = find.byKey(Key(key));
   await t.ensureVisible(f);
   await t.pumpAndSettle();

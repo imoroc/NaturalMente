@@ -195,6 +195,29 @@ flutter run -d android
 
 ### 3. Generar paquetes de distribución (Release)
 
+Para compilar, instalar y abrir una versión optimizada en el Android conectado,
+desde Bash (Linux/macOS, con Flutter y el SDK de Android):
+
+```bash
+./run-android-release.sh
+# Si hay varios dispositivos:
+./run-android-release.sh ID_DEL_DISPOSITIVO
+```
+
+El [script](run-android-release.sh) usa `--release`, compila solo para la
+arquitectura del dispositivo, elimina iconos sin usar, ofusca Dart y separa sus
+símbolos. Flutter activa R8 y la reducción de recursos en release. Permite
+configurar `FLUTTER_BIN`, `ANDROID_HOME` (o `ANDROID_SDK_ROOT`) y `ANDROID_DEVICE`.
+Instala mediante `adb install -r`, conservando el progreso; si falla por firma o
+versión, termina sin desinstalar ni borrar datos.
+
+Cada ejecución guarda el APK, los símbolos Dart y los mapas R8 disponibles en
+una carpeta propia bajo `build/android-release/`. Conserva esa carpeta para
+interpretar errores de esa compilación; `flutter clean` elimina `build/`.
+La configuración actual de Gradle firma release con la clave de desarrollo.
+Esta versión permite probar las optimizaciones de producción, pero publicar en
+Google Play requiere configurar la firma de producción y generar un AAB.
+
 - **APK de Android** (para instalar directamente en un dispositivo o compartir el archivo):
 
   ```powershell

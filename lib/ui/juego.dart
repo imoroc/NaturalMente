@@ -157,6 +157,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   }
 
   static const _sitiosFijos = {
+    'piezas',
     'habitos',
     'dieta',
     'grupos',

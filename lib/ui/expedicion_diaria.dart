@@ -193,8 +193,6 @@ class _HojaArmarioNatu extends StatefulWidget {
 }
 
 class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
-  String _gestoVista = 'hola';
-
   static const List<(String id, String etiqueta)> _posesNatu = [
     ('hola', 'Saludo'),
     ('feliz', 'Celebración'),
@@ -212,6 +210,7 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
       listenable: progreso,
       builder: (context, _) {
         final equipados = progreso.trajesEquipados;
+        final poseActual = progreso.poseEquipada;
         return Container(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.88,
@@ -259,7 +258,7 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                         Row(
                           children: [
                             DibujoMascota(
-                              gesto: _gestoVista,
+                              gesto: poseActual,
                               tamano: 84,
                               traje: progreso.trajeEquipado,
                             ),
@@ -359,24 +358,25 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                       style: TextStyle(
                                         fontSize: 11.5,
                                         fontWeight: FontWeight.w800,
-                                        color: _gestoVista == idPose
+                                        color: poseActual == idPose
                                             ? Colors.white
                                             : const Color(0xFF3B2314),
                                       ),
                                     ),
-                                    selected: _gestoVista == idPose,
+                                    selected: poseActual == idPose,
                                     selectedColor: const Color(0xFF72B034),
                                     backgroundColor: const Color(0xFFFDF6E2),
                                     checkmarkColor: Colors.white,
                                     side: BorderSide(
-                                      color: _gestoVista == idPose
+                                      color: poseActual == idPose
                                           ? const Color(0xFF3B2314)
                                           : const Color(0xFFB8C99D),
                                       width: 1.6,
                                     ),
                                     visualDensity: VisualDensity.compact,
-                                    onSelected: (_) =>
-                                        setState(() => _gestoVista = idPose),
+                                    onSelected: (_) {
+                                      progreso.equiparPose(idPose);
+                                    },
                                   ),
                                 ),
                             ],
@@ -704,8 +704,8 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'raiz',
     pregunta: '¿Qué parte de la planta está bajo tierra y bebe agua?',
-    opciones: ['La raíz', 'La flor', 'El fruto'],
-    indiceCorrecto: 0,
+    opciones: ['La flor', 'La raíz', 'El fruto'],
+    indiceCorrecto: 1,
     explicacion:
         '¡Exacto! La raíz sujeta la planta al suelo y absorbe el agua con sales minerales.',
   ),
@@ -714,27 +714,21 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'corazon',
     pregunta: '¿Qué órgano late sin parar en el pecho para impulsar la sangre?',
-    opciones: ['El corazón', 'El estómago', 'El esqueleto'],
-    indiceCorrecto: 0,
+    opciones: ['El estómago', 'El esqueleto', 'El corazón'],
+    indiceCorrecto: 2,
     explicacion:
         '¡Genial! El corazón funciona como una bomba que lleva la sangre a todo el cuerpo.',
-  ),
-  PreguntaExpedicion(
-    id: 'f-sentidos',
-    zonaNombre: 'Nuestro Cuerpo',
-    fichaIlustracion: 'sentidos',
-    pregunta: '¿Con qué órgano de los sentidos podemos ver los colores del semáforo?',
-    opciones: ['Con los ojos (la vista)', 'Con las orejas (el oído)', 'Con la piel (el tacto)'],
-    indiceCorrecto: 0,
-    explicacion:
-        '¡Estupendo! Los ojos son los órganos del sentido de la vista.',
   ),
   PreguntaExpedicion(
     id: 'f-huevo',
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'huevo',
     pregunta: '¿Cómo nacen los pollitos, los patos y las tortugas?',
-    opciones: ['Salen de un huevo (ovíparos)', 'Nacen de la barriga de su madre', 'Brotan de una semilla'],
+    opciones: [
+      'Salen de un huevo (ovíparos)',
+      'Nacen de la barriga de su madre',
+      'Brotan de una semilla',
+    ],
     indiceCorrecto: 0,
     explicacion:
         '¡Eso es! Las aves y los reptiles son animales ovíparos porque nacen de un huevo.',
@@ -743,11 +737,187 @@ const _bancoFacil = <PreguntaExpedicion>[
     id: 'f-encina',
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'encina',
-    pregunta: 'La encina tiene un tronco grueso y duro de madera. ¿Qué tipo de planta es?',
-    opciones: ['Un árbol', 'Una hierba blanda', 'Un alga marina'],
-    indiceCorrecto: 0,
+    pregunta:
+        'La encina tiene un tronco grueso y duro de madera. ¿Qué tipo de planta es?',
+    opciones: ['Una hierba blanda', 'Un árbol', 'Un alga marina'],
+    indiceCorrecto: 1,
     explicacion:
         '¡Correcto! Los árboles tienen un tronco leñoso, grueso y alto del que salen las ramas.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-sentidos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'sentidos',
+    pregunta:
+        '¿Con qué órgano de los sentidos podemos ver los colores del semáforo?',
+    opciones: [
+      'Con las orejas (el oído)',
+      'Con la piel (el tacto)',
+      'Con los ojos (la vista)',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Estupendo! Los ojos son los órganos del sentido de la vista.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-delfin',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'delfin',
+    pregunta:
+        'El delfín nada en el mar, pero sale a respirar aire y mama leche al nacer. ¿Qué es?',
+    opciones: ['Un mamífero marino', 'Un insecto con alas', 'Un árbol acuático'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Muy bien! Aunque vive en el mar, el delfín es un mamífero vivíparo que respira con pulmones.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-semilla',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'semilla',
+    pregunta:
+        '¿Qué necesita una semilla en la maceta para germinar y empezar a crecer?',
+    opciones: [
+      'Estar guardada en hielo seco',
+      'Agua, aire y una temperatura adecuada',
+      'Pintura de colores y ruido fuerte',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Exacto! Con agua y buen temple la semilla despierta y saca su primera raíz.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-dientes',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'dientes',
+    pregunta:
+        '¿Dónde empieza el viaje de la comida cuando mordemos y masticamos una manzana?',
+    opciones: [
+      'En los tobillos',
+      'En los pulmones',
+      'En la boca, con los dientes y la saliva',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Genial! En la boca los dientes trituran el alimento y la lengua lo mezcla con la saliva.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-herbivoro',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'herbivoro',
+    pregunta:
+        'La vaca, la oveja y el conejo se alimentan de hierba, hojas y plantas. ¿Cómo se llaman?',
+    opciones: ['Herbívoros', 'Carnívoros', 'Minerales'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Bravo! Los animales que comen únicamente plantas, hojas o frutos son herbívoros.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-hoja-caduca',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'hoja-caduca',
+    pregunta:
+        '¿Cómo llamamos a los árboles como el haya o el chopo que tiran todas sus hojas en otoño?',
+    opciones: [
+      'Árboles de plástico',
+      'Árboles de hoja caduca',
+      'Plantas sin raíces',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Eso es! Los árboles de hoja caduca pierden sus hojas en otoño y brotan de nuevo en primavera.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-higiene',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'higiene',
+    pregunta:
+        '¿Qué hábito saludable debemos hacer después de comer para cuidar nuestros dientes?',
+    opciones: [
+      'Comer caramelos pegajosos sin parar',
+      'No beber nunca agua',
+      'Cepillarnos bien los dientes con el cepillo',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Muy bien! Cepillarse los dientes después de las comidas evita las caries y cuida la boca.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vertebrado',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'vertebrado',
+    pregunta:
+        'El caballo y el gorrión tienen huesos y columna vertebral por dentro. ¿Qué son?',
+    opciones: [
+      'Animales vertebrados',
+      'Animales invertebrados sin huesos',
+      'Rocas del río',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Perfecto! Los animales con esqueleto interno y columna vertebral son vertebrados.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-abeja-polen',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'abeja-polen',
+    pregunta:
+        'Cuando una abeja viaja de flor en flor buscando néctar, ¿qué polvillo amarillo transporta en sus patas?',
+    opciones: ['Arena de la playa', 'El polen de las flores', 'Copos de nieve'],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Fantástico! Las abejas llevan el polen de una flor a otra y ayudan a que nazcan frutos y semillas.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-cerebro',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'cerebro',
+    pregunta:
+        '¿Qué órgano protegido dentro de la cabeza piensa, aprende y dirige nuestros movimientos?',
+    opciones: ['El estómago', 'La rodilla', 'El cerebro'],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Así es! El cerebro está protegido por el cráneo y dirige lo que pensamos, sentimos y hacemos.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-pinguino',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'pinguino',
+    pregunta:
+        'El pingüino tiene plumas y pico, pone huevos y usa sus alas como aletas para nadar. ¿Qué es?',
+    opciones: ['Un ave marina que no vuela', 'Un pez con escamas', 'Un anfibio de charca'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Excelente! Aunque no vuela por el aire, el pingüino es un ave adaptada a nadar en aguas muy frías.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-huerta-organos',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'huerta-organos',
+    pregunta:
+        'Cuando comemos una zanahoria fresca de la huerta, ¿qué parte de la planta nos estamos comiendo?',
+    opciones: [
+      'Una flor con pétalos azules',
+      'Una raíz que crece bajo tierra',
+      'La corteza de un tronco gigante',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Muy bien! La zanahoria es una raíz gruesa donde la planta guarda alimento bajo el suelo.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-una-vida',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'una-vida',
+    pregunta:
+        'Las personas, los animales y las plantas nacen, crecen, se alimentan y se relacionan. ¿Qué son?',
+    opciones: [
+      'Objetos inertes sin vida',
+      'Juguetes de cuerda',
+      'Seres vivos',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Exacto! Todos los seres vivos realizan las funciones vitales de nutrición, relación y reproducción.',
   ),
 ];
 
@@ -774,11 +944,11 @@ const _bancoMedio = <PreguntaExpedicion>[
     pregunta:
         'Cuando la flor de un manzano se transforma tras la polinización, ¿qué se forma alrededor de las semillas?',
     opciones: [
-      'El fruto, que protege las semillas en su interior',
       'Una raíz secundaria subterránea',
+      'El fruto, que protege las semillas en su interior',
       'El tallo leñoso principal',
     ],
-    indiceCorrecto: 0,
+    indiceCorrecto: 1,
     explicacion:
         '¡Genial! La flor se transforma en el fruto, que guarda y protege las semillas.',
   ),
@@ -788,8 +958,8 @@ const _bancoMedio = <PreguntaExpedicion>[
     fichaIlustracion: 'pulmones',
     pregunta:
         'Al inspirar aire por la nariz, ¿qué órganos esponjosos recogen el oxígeno para nuestro cuerpo?',
-    opciones: ['Los pulmones', 'Los intestinos', 'Los huesos del cráneo'],
-    indiceCorrecto: 0,
+    opciones: ['Los intestinos', 'Los huesos del cráneo', 'Los pulmones'],
+    indiceCorrecto: 2,
     explicacion:
         '¡Muy bien! Los pulmones toman el oxígeno del aire y expulsan el dióxido de carbono.',
   ),
@@ -809,26 +979,210 @@ const _bancoMedio = <PreguntaExpedicion>[
         '¡Fantástico! Al nacer del huevo, el renacuajo vive en el agua y respira por branquias.',
   ),
   PreguntaExpedicion(
-    id: 'm-aparato',
-    zonaNombre: 'Nuestro Cuerpo',
-    fichaIlustracion: 'aparato-digestivo',
-    pregunta:
-        'Después de masticar en la boca, ¿por qué tubo baja el bolo alimenticio hasta llegar al estómago?',
-    opciones: ['Por el esófago', 'Por la tráquea hacia los pulmones', 'Por los nervios ópticos'],
-    indiceCorrecto: 0,
-    explicacion:
-        '¡Así se hace! El esófago empuja el bolo alimenticio desde la boca hasta el estómago.',
-  ),
-  PreguntaExpedicion(
     id: 'm-romero',
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'romero',
     pregunta:
         'El romero tiene tallos leñosos pero se ramifica desde el mismo suelo sin un tronco único. ¿Qué es?',
-    opciones: ['Un arbusto', 'Un árbol gigante', 'Una hierba de tallo flexible'],
-    indiceCorrecto: 0,
+    opciones: [
+      'Un árbol gigante',
+      'Un arbusto',
+      'Una hierba de tallo flexible',
+    ],
+    indiceCorrecto: 1,
     explicacion:
         '¡Muy bien! Los arbustos tienen tallos leñosos que nacen directamente desde la base del suelo.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-aparato',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'aparato-digestivo',
+    pregunta:
+        'Después de masticar en la boca, ¿por qué tubo baja el bolo alimenticio hasta llegar al estómago?',
+    opciones: [
+      'Por la tráquea hacia los pulmones',
+      'Por los nervios ópticos',
+      'Por el esófago',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Así se hace! El esófago empuja el bolo alimenticio desde la boca hasta el estómago.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-pico-garra',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'pico-garra',
+    pregunta:
+        'El águila tiene un pico curvo y ganchudo y fuertes garras afiladas. ¿Qué tipo de alimentación tiene?',
+    opciones: [
+      'Es un ave rapaz carnívora que caza sus presas',
+      'Solo filtra barro del fondo con pico plano',
+      'Se alimenta únicamente de polen líquido',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Exacto! Las aves rapaces usan sus garras para sujetar la presa y su pico ganchudo para desgarrar.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-semilla-viajera',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'semilla-viajera',
+    pregunta:
+        '¿Por qué las semillas del diente de león tienen un penacho blanco parecido a un paracaídas?',
+    opciones: [
+      'Para hundirse en las rocas del río',
+      'Para flotar en el viento y viajar lejos de la planta madre',
+      'Para dar calor al tronco en invierno',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Bravo! Su vilano ligero permite que la brisa disperse las semillas hacia nuevos suelos.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-esqueleto',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'esqueleto',
+    pregunta:
+        '¿Qué dos partes trabajan juntas en el aparato locomotor para sostenernos y producir el movimiento?',
+    opciones: [
+      'Los dientes y la saliva',
+      'Las pestañas y el oído interno',
+      'Los huesos del esqueleto y los músculos',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Genial! Los músculos tiran de los huesos en las articulaciones para que podamos movernos.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-anfibio',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'anfibio',
+    pregunta:
+        '¿Qué dos grupos de vertebrados tienen el cuerpo cubierto de pelo o de plumas para mantener su calor?',
+    opciones: [
+      'Los mamíferos (pelo) y las aves (plumas)',
+      'Los peces y las medusas',
+      'Los reptiles y las lombrices',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Muy bien! Los mamíferos tienen pelo y las aves plumas, lo que les ayuda a conservar su temperatura.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-formas-hoja',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'formas-hoja',
+    pregunta:
+        '¿Cómo se llama el borde de una hoja cuando tiene pequeños picos parecidos a los dientes de una sierra?',
+    opciones: ['Borde lobulado redondo', 'Borde aserrado', 'Raíz principal'],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Correcto! Los botánicos observan el limbo y el borde (liso, aserrado o lobulado) para identificar cada árbol.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-estomago',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'estomago',
+    pregunta:
+        'Cuando el bolo alimenticio se mezcla y se bate con los jugos gástricos en el estómago, ¿en qué se transforma?',
+    opciones: [
+      'En aire puro de los pulmones',
+      'En saliva fresca de la boca',
+      'En una papilla llamada quimo',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Estupendo! En el estómago los jugos gástricos transforman el bolo alimenticio en quimo.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-tucan',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'tucan',
+    pregunta:
+        '¿En qué ecosistema cálido, lluvioso y lleno de árboles altos vive el tucán alcanzando frutos de las ramas?',
+    opciones: [
+      'En la selva tropical',
+      'En el desierto de dunas secas',
+      'En el hielo de los polos',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Así es! En la selva tropical llueve mucho todo el año y abundan los árboles con frutos.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-partes-comestibles',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'partes-comestibles',
+    pregunta:
+        'El tomate y la calabaza se forman a partir de la flor y guardan semillas dentro. ¿Qué órgano vegetal son?',
+    opciones: [
+      'Raíces subterráneas sin semillas',
+      'Frutos de la planta',
+      'Hojas aciculares de pino',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Exacto! En botánica, cualquier parte que procede de la flor y encierra las semillas es un fruto.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-avisos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'avisos',
+    pregunta:
+        '¿Qué órgano del sentido del oído vibra cuando llegan las ondas sonoras y envía el aviso hacia el cerebro?',
+    opciones: [
+      'La pupila del ojo',
+      'Las papilas gustativas de la lengua',
+      'El tímpano y el caracol en el oído',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Muy bien! El sonido entra por la oreja, hace vibrar el tímpano y el oído interno avisa al cerebro.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-oso',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'oso',
+    pregunta:
+        'El oso pardo come frutos del bosque, raíces, miel y también peces del río. ¿Qué tipo de dieta tiene?',
+    opciones: [
+      'Es omnívoro porque come alimentos de origen vegetal y animal',
+      'Es exclusivamente herbívoro de hierba seca',
+      'Fabrica su alimento con luz solar como las plantas',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Perfecto! Los animales omnívoros aprovechan tanto plantas y frutos como otros animales.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-huerto',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'huerto',
+    pregunta:
+        '¿Por dónde sube el agua con sales minerales desde la raíz hasta las hojas de una planta?',
+    opciones: [
+      'Por los pétalos caídos en el suelo',
+      'Por los vasos conductores dentro del tallo',
+      'Saltando por fuera de las ramas',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Genial! El tallo sostiene la planta y reparte el agua y el alimento por sus conductos internos.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-descanso',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'descanso',
+    pregunta:
+        '¿Por qué es fundamental dormir suficientes horas cada noche durante la infancia?',
+    opciones: [
+      'Para que los huesos se vuelvan blandos como gelatina',
+      'Para no tener que respirar oxígeno',
+      'Porque mientras dormimos el cuerpo descansa, crece y el cerebro afianza lo aprendido',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Exacto! El descanso nocturno repara la energía, ayuda al crecimiento y cuida el sistema nervioso.',
   ),
 ];
 
@@ -855,11 +1209,11 @@ const _bancoDificil = <PreguntaExpedicion>[
     pregunta:
         'Durante la fotosíntesis, la hoja combina savia bruta, luz solar y dióxido de carbono. ¿Qué gas libera al aire?',
     opciones: [
-      'Oxígeno, imprescindible para la respiración de los seres vivos',
       'Vapor de gasolina',
+      'Oxígeno, imprescindible para la respiración de los seres vivos',
       'Sales minerales sólidas',
     ],
-    indiceCorrecto: 0,
+    indiceCorrecto: 1,
     explicacion:
         '¡Excelente! Al fabricar savia elaborada en los cloroplastos, las hojas liberan oxígeno al aire.',
   ),
@@ -868,41 +1222,15 @@ const _bancoDificil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'nutrientes',
     pregunta:
-        '¿En qué parte del aparato digestivo pasan los nutrientes de los alimentos hacia la sangre?',
+        '¿En qué parte del aparato digestivo se forma el quilo y pasan los nutrientes hacia la sangre?',
     opciones: [
-      'En el intestino delgado, a través de sus paredes',
       'En los dientes incisivos al morder',
       'En el intestino grueso al expulsar las heces',
+      'En el intestino delgado, a través de sus vellosidades',
     ],
-    indiceCorrecto: 0,
+    indiceCorrecto: 2,
     explicacion:
-        '¡Impecable! En el intestino delgado los nutrientes atraviesan sus paredes y pasan a la sangre.',
-  ),
-  PreguntaExpedicion(
-    id: 'd-reflejo',
-    zonaNombre: 'Nuestro Cuerpo',
-    fichaIlustracion: 'reflejo',
-    pregunta:
-        'En la función de relación, ¿quién lleva el mensaje desde los órganos de los sentidos hasta el cerebro?',
-    opciones: [
-      'Los nervios del sistema nervioso',
-      'Los huesos del esqueleto',
-      'Los jugos gástricos del estómago',
-    ],
-    indiceCorrecto: 0,
-    explicacion:
-        '¡Perfecto! Los sentidos captan la información y los nervios la transmiten rápidamente al cerebro.',
-  ),
-  PreguntaExpedicion(
-    id: 'd-celula',
-    zonaNombre: 'Nuestro Cuerpo',
-    fichaIlustracion: 'celula',
-    pregunta:
-        '¿Cuál es la unidad viva más pequeña que forma todos los tejidos y órganos de los seres vivos?',
-    opciones: ['La célula', 'El órgano completo', 'El grano de arena'],
-    indiceCorrecto: 0,
-    explicacion:
-        '¡Científico experto! Todos los seres vivos están formados por células vivas.',
+        '¡Impecable! En el intestino delgado el quimo pasa a ser quilo y los nutrientes pasan a la sangre.',
   ),
   PreguntaExpedicion(
     id: 'd-mariposa',
@@ -914,6 +1242,208 @@ const _bancoDificil = <PreguntaExpedicion>[
     indiceCorrecto: 0,
     explicacion:
         '¡Sobresaliente! Los insectos como la mariposa y los anfibios como la rana realizan la metamorfosis.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-helecho-espora',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'helecho-espora',
+    pregunta:
+        'Los helechos y los musgos son plantas que nunca tienen flores ni semillas. ¿Cómo se reproducen?',
+    opciones: [
+      'Dando frutos carnosos como el melocotón',
+      'Mediante esporas diminutas que en los helechos se forman en los soros',
+      'Mediante piñas leñosas como los pinos',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Magnífico! Los musgos y los helechos se reproducen por esporas en lugares húmedos y sombríos.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-reflejo',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'reflejo',
+    pregunta:
+        'En la función de relación, ¿quién lleva los impulsos desde los órganos de los sentidos hasta el cerebro y los músculos?',
+    opciones: [
+      'Los huesos del esqueleto',
+      'Los jugos gástricos del estómago',
+      'Los nervios del sistema nervioso',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Perfecto! Los sentidos captan la información y los nervios transmiten las señales al cerebro y al aparato locomotor.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-artropodo',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'artropodo',
+    pregunta:
+        '¿Cómo diferenciamos científicamente a un insecto como la abeja de un arácnido como la araña dentro de los artrópodos?',
+    opciones: [
+      'Los insectos tienen 6 patas y 2 antenas; los arácnidos tienen 8 patas y carecen de antenas',
+      'Los insectos tienen columna vertebral ósea y las arañas tienen concha de caracol',
+      'Los arácnidos respiran por branquias de pez y tienen plumas',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Exacto! Ambos son artrópodos con patas articuladas, pero los insectos tienen 6 patas y los arácnidos 8.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-bosque-clima',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'bosque-clima',
+    pregunta:
+        '¿Por qué la encina del bosque mediterráneo tiene hojas pequeñas, duras y coriáceas durante todo el año?',
+    opciones: [
+      'Para absorber sal marina bajo el océano',
+      'Para resistir los veranos largos, secos y calurosos perdiendo muy poca agua',
+      'Porque pierde todas sus hojas al llegar octubre',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Sobresaliente! Sus hojas perennes y duras evitan que el árbol se seque durante la sequía estival.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-celula',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'celula',
+    pregunta:
+        '¿Cómo se agrupan las células del mismo tipo cuando trabajan juntas en nuestro cuerpo (como en un músculo)?',
+    opciones: [
+      'En rocas minerales inertes',
+      'En semillas con cáscara',
+      'Forman tejidos, que a su vez se unen formando órganos, aparatos y sistemas',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Científico experto! Células → tejidos → órganos → aparatos y sistemas → organismo completo.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-branquias',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'branquias',
+    pregunta:
+        '¿Cómo obtienen los peces como el atún o la trucha el oxígeno que necesitan sin salir del agua?',
+    opciones: [
+      'El agua entra por la boca y pasa por las branquias, que filtran el oxígeno disuelto',
+      'Tienen pulmones de ave escondidos en la aleta caudal',
+      'No necesitan oxígeno para vivir',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Muy bien! Las branquias son láminas muy finas llenas de capilares que captan el oxígeno disuelto en el agua.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-trigo',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'trigo',
+    pregunta:
+        '¿Cómo se llaman los poros microscópicos de las hojas por donde la planta intercambia gases con el aire?',
+    opciones: ['Alvéolos pulmonares', 'Estomas', 'Tubérculos subterráneos'],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Brillante! A través de los estomas de las hojas entran y salen el dióxido de carbono, el oxígeno y el vapor de agua.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-intestinos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'intestinos',
+    pregunta:
+        '¿Qué ocurre en el intestino grueso con los restos de alimentos que el cuerpo no puede aprovechar?',
+    opciones: [
+      'Se convierten de nuevo en bolo alimenticio y suben al esófago',
+      'Pasan directamente a los pulmones para convertirse en aire',
+      'Se absorbe el agua sobrante y se compactan formando las heces para su expulsión',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Excelente! El intestino grueso recupera el agua y transforma los desechos no digeridos en heces.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-pulpo',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'pulpo',
+    pregunta:
+        'El pulpo, el calamar, la almeja y el caracol tienen el cuerpo blando y musculoso. ¿A qué grupo de invertebrados pertenecen?',
+    opciones: ['A los moluscos', 'A los vertebrados anfibios', 'A los insectos con seis patas'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Genial! Todos ellos son moluscos, aunque unos tengan concha externa y otros como el pulpo no.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-recursos-plantas',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'recursos-plantas',
+    pregunta:
+        'La patata crece bajo tierra, tiene yemas y almacena reservas, pero no es una raíz. ¿Qué órgano vegetal es?',
+    opciones: [
+      'Un fruto carnoso de árbol',
+      'Un tallo subterráneo engrosado llamado tubérculo',
+      'Una hoja flotante de charca',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Exacto! La patata es un tubérculo: un tallo subterráneo donde la planta acumula almidón de reserva.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-cuidar-sentidos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'cuidar-sentidos',
+    pregunta:
+        '¿Por qué no debemos escuchar música con auriculares a un volumen muy alto durante mucho tiempo?',
+    opciones: [
+      'Porque gasta el esmalte de los dientes incisivos',
+      'Porque impide que el estómago produzca jugos gástricos',
+      'Porque las vibraciones intensas pueden dañar el tímpano y las células del oído interno',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Muy bien! Cuidar la salud auditiva moderando el volumen protege el tímpano y el oído interno.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-cadena-equilibrio',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'claro-bosque',
+    pregunta:
+        'En un ecosistema, ¿qué ocurriría primero con la hierba si desaparecieran todos los herbívoros como los conejos?',
+    opciones: [
+      'Al principio crecería más hierba al no ser consumida, alterando el equilibrio de toda la red trófica',
+      'Los depredadores carnívoros empezarían a hacer la fotosíntesis con sus hojas',
+      'Las rocas se transformarían en mamíferos acuáticos',
+    ],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Gran razonamiento! En un ecosistema todos los eslabones dependen unos de otros para mantener el equilibrio.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-fruto',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'fruto',
+    pregunta:
+        '¿Qué diferencia hay entre la savia bruta y la savia elaborada que circulan por el interior de una planta?',
+    opciones: [
+      'Son exactamente lo mismo y solo circulan por las flores secas',
+      'La savia bruta es agua y sales de la raíz; la savia elaborada lleva los nutrientes fabricados en la hoja',
+      'La savia bruta la fabrican las abejas y la savia elaborada cae de la lluvia',
+    ],
+    indiceCorrecto: 1,
+    explicacion:
+        '¡Sobresaliente! El xilema sube la savia bruta hasta las hojas y el floema reparte la savia elaborada a toda la planta.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-etapas-vida',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'etapas-vida',
+    pregunta:
+        '¿Cómo cooperan el aparato digestivo, el respiratorio y el circulatorio en la función de nutrición humana?',
+    opciones: [
+      'Solo funciona uno cada día de la semana mientras los demás se apagan',
+      'Se encargan únicamente de mover los huesos del codo al saltar',
+      'El digestivo aporta nutrientes y el respiratorio oxígeno, y la sangre del circulatorio los reparte a las células',
+    ],
+    indiceCorrecto: 2,
+    explicacion:
+        '¡Brillante! La nutrición requiere el trabajo coordinado de varios aparatos para llevar nutrientes y oxígeno a cada célula.',
   ),
 ];
 
@@ -942,7 +1472,7 @@ class ExpedicionDiariaPage extends StatefulWidget {
     final semillaDia = ref.year * 372 + ref.month * 31 + ref.day;
     final seleccion = <PreguntaExpedicion>[];
     for (var i = 0; i < 3; i++) {
-      final idx = (semillaDia + i * 2) % banco.length;
+      final idx = (semillaDia + i * 5) % banco.length;
       seleccion.add(banco[idx]);
     }
     return seleccion;

@@ -2155,6 +2155,9 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                   organoActual: widget.organoActual,
                   zonaDestacada: _zonaHover ?? widget.zonaDestacada,
                   aciertoZona: _zonaHover != null || widget.aciertoZona,
+                  zonasVisibles: {
+                    for (final o in widget.opciones) o.id,
+                  },
                 ),
               ),
             ),
@@ -2165,7 +2168,8 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                   _zonasCuerpoRects[widget.opciones[i].id] ??
                       Rect.fromLTWH(40, 20.0 + i * 95, 320, 84),
                 ),
-                esIzquierda: i.isEven,
+                esIzquierda: widget.opciones[i].id == 'cabeza' ||
+                    widget.opciones[i].id == 'barriga',
               ),
           ],
         );
@@ -2349,6 +2353,7 @@ class _CuerpoHerbarioPainter extends CustomPainter {
     required this.organoActual,
     required this.zonaDestacada,
     required this.aciertoZona,
+    this.zonasVisibles = const {'cabeza', 'pecho', 'barriga', 'extremidades'},
   });
 
   final List<String> organosNivel;
@@ -2356,6 +2361,7 @@ class _CuerpoHerbarioPainter extends CustomPainter {
   final String organoActual;
   final String? zonaDestacada;
   final bool aciertoZona;
+  final Set<String> zonasVisibles;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -2541,12 +2547,29 @@ class _CuerpoHerbarioPainter extends CustomPainter {
       _lineaCuerpo(const Color(0xFFD9A784), 1.6),
     );
 
-    // Líneas guía punteadas hacia las etiquetas anatómicas laterales
-    final pGuia = _lineaCuerpo(const Color(0xFF94A3B8).withValues(alpha: 0.45), 1.4);
-    canvas.drawLine(const Offset(96, 58), const Offset(148, 58), pGuia);
-    canvas.drawLine(const Offset(256, 170), const Offset(306, 170), pGuia);
-    canvas.drawLine(const Offset(96, 266), const Offset(144, 266), pGuia);
-    canvas.drawLine(const Offset(250, 362), const Offset(306, 362), pGuia);
+    // Líneas guía hacia las etiquetas anatómicas laterales activas
+    final pGuia = _lineaCuerpo(
+      const Color(0xFF64748B).withValues(alpha: 0.55),
+      1.6,
+    );
+    final pPuntoGuia = Paint()
+      ..color = const Color(0xFF0284C7).withValues(alpha: 0.70);
+    if (zonasVisibles.contains('cabeza')) {
+      canvas.drawLine(const Offset(112, 58), const Offset(152, 58), pGuia);
+      canvas.drawCircle(const Offset(152, 58), 3.0, pPuntoGuia);
+    }
+    if (zonasVisibles.contains('pecho')) {
+      canvas.drawLine(const Offset(256, 170), const Offset(288, 170), pGuia);
+      canvas.drawCircle(const Offset(256, 170), 3.0, pPuntoGuia);
+    }
+    if (zonasVisibles.contains('barriga')) {
+      canvas.drawLine(const Offset(112, 266), const Offset(144, 266), pGuia);
+      canvas.drawCircle(const Offset(144, 266), 3.0, pPuntoGuia);
+    }
+    if (zonasVisibles.contains('extremidades')) {
+      canvas.drawLine(const Offset(238, 362), const Offset(288, 362), pGuia);
+      canvas.drawCircle(const Offset(238, 362), 3.0, pPuntoGuia);
+    }
 
     // Resaltado de zona cuando el usuario interactúa o arrastra un órgano encima
     if (zonaActiva != null) {

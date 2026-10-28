@@ -66,7 +66,10 @@ class ZonaPage extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          const DibujoMascota(gesto: 'hola', tamano: 52),
+                          DibujoMascota(
+                            gesto: progreso.poseEquipada,
+                            tamano: 52,
+                          ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(

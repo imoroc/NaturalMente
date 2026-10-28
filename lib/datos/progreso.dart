@@ -734,6 +734,41 @@ class Progreso extends ChangeNotifier {
     return _prefs.setString(_claveTrajeEquipado, principal);
   }
 
+  static const _clavePoseEquipada = 'natu/pose-equipada';
+
+  static const posesDisponibles = <String>[
+    'hola',
+    'feliz',
+    'pensando',
+    'estudio',
+    'pista',
+  ];
+
+  bool get tienePosePersonalizada {
+    final pose = _prefs.getString(_clavePoseEquipada);
+    return pose != null && posesDisponibles.contains(pose);
+  }
+
+  String get poseEquipada {
+    final pose = _prefs.getString(_clavePoseEquipada);
+    if (pose != null && posesDisponibles.contains(pose)) {
+      return pose;
+    }
+    return 'hola';
+  }
+
+  Future<bool> equiparPose(String pose) async {
+    if (!posesDisponibles.contains(pose)) return false;
+    try {
+      final ok = await _prefs.setString(_clavePoseEquipada, pose);
+      if (!ok) return false;
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
   // --- Racha Diaria y Expedición del Día ---
 
   static String formatearFecha(DateTime fecha) {

@@ -45,14 +45,11 @@ class LaboratorioZonaPage extends StatelessWidget {
         elevation: 0,
         title: Row(
           children: [
-            Icon(
-              switch (zona.id) {
-                'reserva' => Icons.flashlight_on_rounded,
-                'invernadero' => Icons.biotech_rounded,
-                _ => Icons.monitor_heart_rounded,
-              },
-              color: colorAcento,
-            ),
+            Icon(switch (zona.id) {
+              'reserva' => Icons.flashlight_on_rounded,
+              'invernadero' => Icons.biotech_rounded,
+              _ => Icons.monitor_heart_rounded,
+            }, color: colorAcento),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
@@ -115,10 +112,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Copa del bosque',
     posicionRelativa: Offset(0.11, 0.25),
     activoDeNoche: false,
-    conductaDia:
-        'De día está muy activo: salta entre las ramas altas y usa su gran pico ligero para alcanzar frutos maduros.',
-    conductaNoche:
-        'De noche apoya el pico sobre su espalda, pliega la cola y duerme camuflado en los huecos altos del árbol.',
+    conductaDia: 'De día está muy activo: salta entre las ramas altas y usa su gran pico ligero para alcanzar frutos maduros.',
+    conductaNoche: 'De noche apoya el pico sobre su espalda, pliega la cola y duerme camuflado en los huecos altos del árbol.',
   ),
   _AnimalReservaInfo(
     id: 'aguila',
@@ -126,10 +121,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Cumbres rocosas',
     posicionRelativa: Offset(0.25, 0.16),
     activoDeNoche: false,
-    conductaDia:
-        'Aprovecha las corrientes de aire caliente del día para planear desde las alturas con su vista agudísima.',
-    conductaNoche:
-        'Cuando se oculta el sol regresa a su nido en los riscos altos de la montaña para descansar segura.',
+    conductaDia: 'Aprovecha las corrientes de aire caliente del día para planear desde las alturas con su vista agudísima.',
+    conductaNoche: 'Cuando se oculta el sol regresa a su nido en los riscos altos de la montaña para descansar segura.',
   ),
   _AnimalReservaInfo(
     id: 'oso',
@@ -137,10 +130,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Cueva del bosque',
     posicionRelativa: Offset(0.13, 0.67),
     activoDeNoche: false,
-    conductaDia:
-        'Recorre el bosque buscando bayas, bellotas, raíces tiernas y truchas frescas en la orilla del río.',
-    conductaNoche:
-        'Al caer la noche se refugia en el interior de su osera de piedra para dormir resguardado del frío.',
+    conductaDia: 'Recorre el bosque buscando bayas, bellotas, raíces tiernas y truchas frescas en la orilla del río.',
+    conductaNoche: 'Al caer la noche se refugia en el interior de su osera de piedra para dormir resguardado del frío.',
   ),
   _AnimalReservaInfo(
     id: 'zorro',
@@ -148,10 +139,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Sotobosque',
     posicionRelativa: Offset(0.27, 0.56),
     activoDeNoche: true,
-    conductaDia:
-        'Durante las horas de más sol descansa enroscado en su madriguera cubriéndose el hocico con su cola tupida.',
-    conductaNoche:
-        '¡Cazador crepuscular y nocturno! Se orienta en la oscuridad gracias a su oído fino y sus bigotes táctiles.',
+    conductaDia: 'Durante las horas de más sol descansa enroscado en su madriguera cubriéndose el hocico con su cola tupida.',
+    conductaNoche: '¡Cazador crepuscular y nocturno! Se orienta en la oscuridad gracias a su oído fino y sus bigotes táctiles.',
   ),
   _AnimalReservaInfo(
     id: 'mariposa',
@@ -159,10 +148,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Ribera florida',
     posicionRelativa: Offset(0.38, 0.34),
     activoDeNoche: false,
-    conductaDia:
-        'Calienta sus alas al sol y vuela de flor en flor junto al río libando néctar con su espiritrompa.',
-    conductaNoche:
-        'De noche pliega sus alas en vertical bajo las hojas de la ribera para pasar inadvertida.',
+    conductaDia: 'Calienta sus alas al sol y vuela de flor en flor junto al río libando néctar con su espiritrompa.',
+    conductaNoche: 'De noche pliega sus alas en vertical bajo las hojas de la ribera para pasar inadvertida.',
   ),
   _AnimalReservaInfo(
     id: 'rana',
@@ -170,10 +157,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Río y charca dulce',
     posicionRelativa: Offset(0.42, 0.66),
     activoDeNoche: true,
-    conductaDia:
-        'Bajo el sol permanece quieta entre los juncos húmedos de la charca para que su piel desnuda no se seque.',
-    conductaNoche:
-        '¡Muy activa de noche! Croa en la charca de agua dulce y atrapa insectos al vuelo con su lengua pegajosa.',
+    conductaDia: 'Bajo el sol permanece quieta entre los juncos húmedos de la charca para que su piel desnuda no se seque.',
+    conductaNoche: '¡Muy activa de noche! Croa en la charca de agua dulce y atrapa insectos al vuelo con su lengua pegajosa.',
   ),
   _AnimalReservaInfo(
     id: 'renacuajo',
@@ -181,10 +166,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Pozas del río dulce',
     posicionRelativa: Offset(0.49, 0.83),
     activoDeNoche: false,
-    conductaDia:
-        'Nada en las aguas dulces templadas por el sol respirando por branquias y alimentándose de microalgas.',
-    conductaNoche:
-        'Por la noche se esconde bajo los guijarros y tallos sumergidos del fondo de la charca.',
+    conductaDia: 'Nada en las aguas dulces templadas por el sol respirando por branquias y alimentándose de microalgas.',
+    conductaNoche: 'Por la noche se esconde bajo los guijarros y tallos sumergidos del fondo de la charca.',
   ),
   _AnimalReservaInfo(
     id: 'camello',
@@ -192,10 +175,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Dunas costeras',
     posicionRelativa: Offset(0.62, 0.44),
     activoDeNoche: false,
-    conductaDia:
-        'Camina firme sobre la arena gracias a sus almohadillas anchas y sus largas pestañas que frenan el viento.',
-    conductaNoche:
-        'Cuando refresca la arena por la noche se tumba en grupo sobre las dunas para rumiar y descansar.',
+    conductaDia: 'Camina firme sobre la arena gracias a sus almohadillas anchas y sus largas pestañas que frenan el viento.',
+    conductaNoche: 'Cuando refresca la arena por la noche se tumba en grupo sobre las dunas para rumiar y descansar.',
   ),
   _AnimalReservaInfo(
     id: 'delfin',
@@ -203,10 +184,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Océano abierto',
     posicionRelativa: Offset(0.77, 0.54),
     activoDeNoche: false,
-    conductaDia:
-        'Nada en manada por el océano salado, se comunica con chasquidos y salta para respirar por su espiráculo.',
-    conductaNoche:
-        'Duerme con la mitad de su cerebro despierta (sueño unihemisférico) para seguir subiendo a respirar aire.',
+    conductaDia: 'Nada en manada por el océano salado, se comunica con chasquidos y salta para respirar por su espiráculo.',
+    conductaNoche: 'Duerme con la mitad de su cerebro despierta (sueño unihemisférico) para seguir subiendo a respirar aire.',
   ),
   _AnimalReservaInfo(
     id: 'pulpo',
@@ -214,10 +193,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Fondo del océano',
     posicionRelativa: Offset(0.81, 0.83),
     activoDeNoche: true,
-    conductaDia:
-        'Durante el día se oculta en su cueva del arrecife marino imitando el color y la textura de las rocas.',
-    conductaNoche:
-        '¡Explorador nocturno del océano! Sale a cazar cangrejos y moluscos palpando el fondo con sus 8 tentáculos.',
+    conductaDia: 'Durante el día se oculta en su cueva del arrecife marino imitando el color y la textura de las rocas.',
+    conductaNoche: '¡Explorador nocturno del océano! Sale a cazar cangrejos y moluscos palpando el fondo con sus 8 tentáculos.',
   ),
   _AnimalReservaInfo(
     id: 'pinguino',
@@ -225,10 +202,8 @@ const _animalesReserva = <_AnimalReservaInfo>[
     habitat: 'Costa rocosa helada',
     posicionRelativa: Offset(0.92, 0.39),
     activoDeNoche: false,
-    conductaDia:
-        'De día se zambulle desde los bloques de hielo al océano usando sus alas como potentes aletas.',
-    conductaNoche:
-        'Pasa la noche en tierra firme agrupado en colonia sobre el roquedo costero para conservar el calor.',
+    conductaDia: 'De día se zambulle desde los bloques de hielo al océano usando sus alas como potentes aletas.',
+    conductaNoche: 'Pasa la noche en tierra firme agrupado en colonia sobre el roquedo costero para conservar el calor.',
   ),
 ];
 
@@ -805,11 +780,7 @@ class _PintorPaisajeReserva extends CustomPainter {
       textDirection: TextDirection.ltr,
     )..layout();
     final r = RRect.fromRectAndRadius(
-      Rect.fromCenter(
-        center: pos,
-        width: tp.width + 12,
-        height: tp.height + 5,
-      ),
+      Rect.fromCenter(center: pos, width: tp.width + 12, height: tp.height + 5),
       const Radius.circular(999),
     );
     canvas.drawRRect(
@@ -849,8 +820,7 @@ class _PintorPaisajeReserva extends CustomPainter {
         (0.64, 0.10, 1.9),
         (0.76, 0.08, 2.1),
       ]) {
-        final parpadeo =
-            0.5 + 0.5 * math.sin(faseAnim * 2 * math.pi + sx * 12);
+        final parpadeo = 0.5 + 0.5 * math.sin(faseAnim * 2 * math.pi + sx * 12);
         canvas.drawCircle(
           Offset(w * sx, h * sy),
           r * (0.8 + 0.4 * parpadeo),
@@ -874,11 +844,7 @@ class _PintorPaisajeReserva extends CustomPainter {
         28,
         Paint()..color = const Color(0xFFFDE047).withValues(alpha: 0.35),
       );
-      canvas.drawCircle(
-        solPos,
-        19,
-        Paint()..color = const Color(0xFFFACC15),
-      );
+      canvas.drawCircle(solPos, 19, Paint()..color = const Color(0xFFFACC15));
     }
 
     // 3. Cordillera montañosa al fondo con cumbres nevadas (donde nace el río dulce)
@@ -1501,7 +1467,9 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  context.tr('2. Absorción en la Raíz (Agua y Sales Minerales)'),
+                  context.tr(
+                    '2. Absorción en la Raíz (Agua y Sales Minerales)',
+                  ),
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
@@ -1639,7 +1607,10 @@ class _PintorReactorFotosintesis extends CustomPainter {
       const Radius.circular(999),
     );
     canvas.drawRRect(r, Paint()..color = fondo);
-    tp.paint(canvas, Offset(centro.dx - tp.width / 2, centro.dy - tp.height / 2));
+    tp.paint(
+      canvas,
+      Offset(centro.dx - tp.width / 2, centro.dy - tp.height / 2),
+    );
   }
 
   @override
@@ -1698,7 +1669,8 @@ class _PintorReactorFotosintesis extends CustomPainter {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFFFDE047).withValues(alpha: esIntensa ? 0.32 : 0.15),
+              const Color(0xFFFDE047)
+                  .withValues(alpha: esIntensa ? 0.32 : 0.15),
               const Color(0xFFFDE047).withValues(alpha: 0.0),
             ],
           ).createShader(Rect.fromLTWH(0, 0, w * 0.55, sueloY)),
@@ -1932,11 +1904,14 @@ class _PintorReactorFotosintesis extends CustomPainter {
     canvas.drawPath(
       talloPath,
       Paint()
-        ..shader = const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xFF15803D), Color(0xFF22C55E), Color(0xFF166534)],
-        ).createShader(Rect.fromLTWH(plantaX - 10, h * 0.20, 20, sueloY - h * 0.20)),
+        ..shader =
+            const LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xFF15803D), Color(0xFF22C55E), Color(0xFF166534)],
+            ).createShader(
+              Rect.fromLTWH(plantaX - 10, h * 0.20, 20, sueloY - h * 0.20),
+            ),
     );
     canvas.drawPath(
       talloPath,
@@ -2025,7 +2000,9 @@ class _PintorReactorFotosintesis extends CustomPainter {
       final desfase = capa == 0 ? 0.0 : math.pi / numPetalos;
       final largoPetalo = (capa == 0 ? 31.0 : 26.0) * aperturaFlor;
       final anchoPetalo = (capa == 0 ? 17.5 : 14.5) * aperturaFlor;
-      final colorPetalo = capa == 0 ? const Color(0xFFE11D48) : const Color(0xFFFB7185);
+      final colorPetalo = capa == 0
+          ? const Color(0xFFE11D48)
+          : const Color(0xFFFB7185);
 
       for (var i = 0; i < numPetalos; i++) {
         final ang = i * (math.pi * 2 / numPetalos) + desfase + balanceo;
@@ -2061,7 +2038,8 @@ class _PintorReactorFotosintesis extends CustomPainter {
     // Corona de 12 estambres de polen y gran botón floral dorado central
     for (var i = 0; i < 12; i++) {
       final ang = i * (math.pi / 6) + balanceo;
-      final pEstambre = florCentro + Offset(math.cos(ang) * 17.5, math.sin(ang) * 17.5);
+      final pEstambre =
+          florCentro + Offset(math.cos(ang) * 17.5, math.sin(ang) * 17.5);
       canvas.drawLine(
         florCentro + Offset(math.cos(ang) * 12.0, math.sin(ang) * 12.0),
         pEstambre,
@@ -2115,8 +2093,14 @@ class _PintorReactorFotosintesis extends CustomPainter {
     // Cono óptico desde la hoja derecha hacia el microscopio
     final conoLupa = Path()
       ..moveTo(plantaX + 56, h * 0.44)
-      ..lineTo(lupaCentro.dx - lupaRadio * 0.65, lupaCentro.dy - lupaRadio * 0.75)
-      ..lineTo(lupaCentro.dx - lupaRadio * 0.65, lupaCentro.dy + lupaRadio * 0.75)
+      ..lineTo(
+        lupaCentro.dx - lupaRadio * 0.65,
+        lupaCentro.dy - lupaRadio * 0.75,
+      )
+      ..lineTo(
+        lupaCentro.dx - lupaRadio * 0.65,
+        lupaCentro.dy + lupaRadio * 0.75,
+      )
       ..close();
     canvas.drawPath(
       conoLupa,
@@ -2211,11 +2195,7 @@ class _PintorReactorFotosintesis extends CustomPainter {
       pCelulaOclusiva,
     );
     canvas.drawOval(
-      Rect.fromCenter(
-        center: lupaCentro,
-        width: apertura * 1.35,
-        height: 26,
-      ),
+      Rect.fromCenter(center: lupaCentro, width: apertura * 1.35, height: 26),
       Paint()..color = const Color(0xFF052E16),
     );
 
@@ -2354,59 +2334,59 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
     return switch ((id, _estadoCuerpo)) {
       ('corazon', 'correr') => (
         'Corazón (145 latidos/min)',
-        '¡Bombeo máximo! Al correr, tus músculos necesitan mucho más oxígeno y nutrientes, por lo que el miocardio impulsa la sangre a gran velocidad.',
+        '¡Bombeo máximo! Al correr, tus músculos necesitan mucho más oxígeno y nutrientes, por lo que el miocardio impulsa la sangre a gran velocidad',
       ),
       ('corazon', _) => (
         'Corazón ($_pulsacionesPorMinuto latidos/min)',
-        'Órgano muscular con cuatro cavidades (aurículas y ventrículos) que impulsa la sangre por arterias, capilares y venas.',
+        'Órgano muscular con cuatro cavidades (aurículas y ventrículos) que impulsa la sangre por arterias, capilares y venas',
       ),
       ('pulmones', 'correr') => (
         'Pulmones y Diafragma (34 resp/min)',
-        'Los bronquios y millones de alvéolos pulmonares aceleran el intercambio de gases: entra O₂ a la sangre y sale CO₂.',
+        'Los bronquios y millones de alvéolos pulmonares aceleran el intercambio de gases: entra O₂ a la sangre y sale CO₂',
       ),
       ('pulmones', _) => (
         'Pulmones y Árbol Bronquial ($_respiracionesPorMinuto resp/min)',
-        'El aire baja por la tráquea y los bronquios hasta los alvéolos. El músculo diafragma sube y baja para ventilar el pecho.',
+        'El aire baja por la tráquea y los bronquios hasta los alvéolos. El músculo diafragma sube y baja para ventilar el pecho',
       ),
       ('higado', 'comer') => (
         'Hígado, Vesícula Biliar y Páncreas (Activos)',
-        'Las glándulas anejas segregan bilis y jugo pancreático al duodeno para descomponer las grasas y los hidratos de carbono.',
+        'Las glándulas anejas segregan bilis y jugo pancreático al duodeno para descomponer las grasas y los hidratos de carbono',
       ),
       ('higado', _) => (
         'Hígado, Vesícula y Páncreas (Glándulas anejas)',
-        'El hígado produce la bilis, almacena glucosa y filtra sustancias; el páncreas aporta jugos digestivos e insulina.',
+        'El hígado produce la bilis, almacena glucosa y filtra sustancias; el páncreas aporta jugos digestivos e insulina',
       ),
       ('estomago', 'comer') => (
         'Estómago (Quimo gástrico en acción)',
-        'Las paredes musculares del estómago baten el bolo alimenticio con los jugos gástricos hasta convertirlo en quimo.',
+        'Las paredes musculares del estómago baten el bolo alimenticio con los jugos gástricos hasta convertirlo en quimo',
       ),
       ('estomago', _) => (
         'Esófago y Estómago',
-        'El tubo digestivo conduce el alimento masticado hasta el estómago en forma de J, donde comienza la digestión química.',
+        'El tubo digestivo conduce el alimento masticado hasta el estómago en forma de J, donde comienza la digestión química',
       ),
       ('intestinos', 'comer') => (
         'Intestino Delgado y Grueso (Absorbiendo nutrientes)',
-        'Las vellosidades del intestino delgado pasan glucosa y aminoácidos a la sangre ($glucosaTexto mg/dL); el colon absorbe el agua.',
+        'Las vellosidades del intestino delgado pasan glucosa y aminoácidos a la sangre ($glucosaTexto mg/dL); el colon absorbe el agua',
       ),
       ('intestinos', _) => (
         'Intestino Delgado (7 m) e Intestino Grueso',
-        'El intestino delgado absorbe los nutrientes útiles hacia los capilares sanguíneos y el intestino grueso compacta los desechos.',
+        'El intestino delgado absorbe los nutrientes útiles hacia los capilares sanguíneos y el intestino grueso compacta los desechos',
       ),
       ('rinones', _) => (
         'Riñones y Aparato Excretor ($_filtradoRenal mL/h)',
-        'Los dos riñones filtran la sangre continuamente para limpiar las sustancias de desecho y formar la orina que baja por los uréteres a la vejiga.',
+        'Los dos riñones filtran la sangre continuamente para limpiar las sustancias de desecho y formar la orina que baja por los uréteres a la vejiga',
       ),
       ('cerebro', 'estudiar') => (
-        'Cerebro, Cerebelo y Médula (Alta actividad sináptica)',
-        '¡Neuronas a pleno rendimiento! La corteza cerebral procesa la atención, la memoria y el razonamiento consumiendo glucosa y oxígeno.',
+        'Cerebro, Cerebelo y Médula Espinal',
+        '¡Neuronas a pleno rendimiento! La corteza cerebral procesa la atención, la memoria y el razonamiento consumiendo glucosa y oxígeno',
       ),
       ('cerebro', _) => (
         'Cerebro, Cerebelo y Médula Espinal',
-        'El cerebro dirige los pensamientos y sentidos, el cerebelo coordina el equilibrio y la médula espinal transmite impulsos nerviosos.',
+        'El cerebro dirige los pensamientos y sentidos, el cerebelo coordina el equilibrio y la médula espinal transmite impulsos nerviosos',
       ),
       _ => (
         'Esqueleto, Articulaciones y Musculatura',
-        'Los 206 huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales.',
+        'Los 206 huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales',
       ),
     };
   }
@@ -2969,9 +2949,8 @@ class _PintorEscannerRayosXVivo extends CustomPainter {
     if (verTodos || capaSistema == 'nervioso') {
       final activoEsq = organoActivo == 'esqueleto';
       final pHueso = Paint()
-        ..color = const Color(0xFFE2E8F0).withValues(
-          alpha: activoEsq ? 0.95 : 0.42,
-        )
+        ..color = const Color(0xFFE2E8F0)
+            .withValues(alpha: activoEsq ? 0.95 : 0.42)
         ..style = PaintingStyle.stroke
         ..strokeWidth = activoEsq ? 3.4 : 2.6
         ..strokeCap = StrokeCap.round;
@@ -3090,7 +3069,10 @@ class _PintorEscannerRayosXVivo extends CustomPainter {
       final numImpulsos = estadoCuerpo == 'estudiar' ? 7 : 4;
       final pImpulso = Paint()..color = const Color(0xFFFDE047);
       for (var i = 0; i < numImpulsos; i++) {
-        final t = (fase * (estadoCuerpo == 'estudiar' ? 3.2 : 1.8) + i / numImpulsos) % 1.0;
+        final t =
+            (fase * (estadoCuerpo == 'estudiar' ? 3.2 : 1.8) +
+                i / numImpulsos) %
+            1.0;
         final iy = h * (0.15 + t * 0.52);
         canvas.drawCircle(Offset(cx, iy), 3.4, pImpulso);
       }
@@ -3415,21 +3397,22 @@ class _PintorEscannerRayosXVivo extends CustomPainter {
     canvas.drawRect(
       Rect.fromCenter(center: Offset(cx, scanY), width: h * 0.46, height: 34),
       Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color(0xFF38BDF8).withValues(alpha: 0.0),
-            const Color(0xFF38BDF8).withValues(alpha: 0.25),
-            const Color(0xFF38BDF8).withValues(alpha: 0.0),
-          ],
-        ).createShader(
-          Rect.fromCenter(
-            center: Offset(cx, scanY),
-            width: h * 0.46,
-            height: 34,
-          ),
-        ),
+        ..shader =
+            LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color(0xFF38BDF8).withValues(alpha: 0.0),
+                const Color(0xFF38BDF8).withValues(alpha: 0.25),
+                const Color(0xFF38BDF8).withValues(alpha: 0.0),
+              ],
+            ).createShader(
+              Rect.fromCenter(
+                center: Offset(cx, scanY),
+                width: h * 0.46,
+                height: 34,
+              ),
+            ),
     );
     canvas.drawLine(
       Offset(cx - h * 0.23, scanY),
@@ -3539,33 +3522,39 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (titulo, subtitulo, icono, colorFondo, colorBorde, colorTexto) =
-        switch (zona.id) {
-          'reserva' => (
-            'Expedición Nocturna con Linterna',
-            'Explora el bosque, el río dulce, las dunas y el océano con tu linterna científica.',
-            Icons.flashlight_on_rounded,
-            const Color(0xFF0F172A),
-            const Color(0xFF10B981),
-            Colors.white,
-          ),
-          'invernadero' => (
-            'Simulador de Fotosíntesis en Vivo',
-            'Controla el sol, el riego y el CO₂ para fabricar savia elaborada y oxígeno.',
-            Icons.wb_sunny_rounded,
-            const Color(0xFFECFDF5),
-            const Color(0xFF16A34A),
-            const Color(0xFF064E3B),
-          ),
-          _ => (
-            'Escáner Anatómico de Rayos X',
-            'Desliza la lente de rayos X por los 8 órganos y sistemas del cuerpo en vivo.',
-            Icons.biotech_rounded,
-            const Color(0xFFF0F9FF),
-            const Color(0xFF0284C7),
-            const Color(0xFF0C4A6E),
-          ),
-        };
+    final (
+      titulo,
+      subtitulo,
+      icono,
+      colorFondo,
+      colorBorde,
+      colorTexto,
+    ) = switch (zona.id) {
+      'reserva' => (
+        'Expedición Nocturna con Linterna',
+        'Explora el bosque, el río dulce, las dunas y el océano con tu linterna científica.',
+        Icons.flashlight_on_rounded,
+        const Color(0xFF0F172A),
+        const Color(0xFF10B981),
+        Colors.white,
+      ),
+      'invernadero' => (
+        'Simulador de Fotosíntesis en Vivo',
+        'Controla el sol, el riego y el CO₂ para fabricar savia elaborada y oxígeno.',
+        Icons.wb_sunny_rounded,
+        const Color(0xFFECFDF5),
+        const Color(0xFF16A34A),
+        const Color(0xFF064E3B),
+      ),
+      _ => (
+        'Escáner Anatómico de Rayos X',
+        'Desliza la lente de rayos X por los 8 órganos y sistemas del cuerpo en vivo.',
+        Icons.biotech_rounded,
+        const Color(0xFFF0F9FF),
+        const Color(0xFF0284C7),
+        const Color(0xFF0C4A6E),
+      ),
+    };
 
     return Material(
       color: colorFondo,
@@ -3708,16 +3697,19 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2800),
-    )..addStatusListener((s) {
-        if (s == AnimationStatus.completed &&
-            !WidgetsBinding.instance.runtimeType.toString().contains('Test') &&
-            mounted) {
-          _animController.forward(from: 0.0);
-        }
-      });
+    _animController =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 2800),
+        )..addStatusListener((s) {
+          if (s == AnimationStatus.completed &&
+              !WidgetsBinding.instance.runtimeType.toString().contains(
+                'Test',
+              ) &&
+              mounted) {
+            _animController.forward(from: 0.0);
+          }
+        });
     _animController.forward(from: 0.0);
   }
 
@@ -3743,8 +3735,10 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.36,
           y: 0.18,
           bioma: 'Aire soleado',
-          accionViva: '¡La mariposa bate sus alas tras completar su metamorfosis!',
-          pistaDesbloqueo: 'Supera el nivel Difícil de «¿Cómo nacen y crecen?».',
+          accionViva:
+              '¡La mariposa bate sus alas tras completar su metamorfosis!',
+          pistaDesbloqueo:
+              'Supera el nivel Difícil de «¿Cómo nacen y crecen?».',
         ),
         _SlotHabitat(
           id: 'claro-bosque',
@@ -3752,15 +3746,18 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.24,
           bioma: 'Ecosistema del bosque',
           accionViva: '¡El zorro rojo patrulla el claro del bosque en equilibrio con su hábitat!',
-          pistaDesbloqueo: 'Completa la cadena alimentaria en «El claro del bosque».',
+          pistaDesbloqueo:
+              'Completa la cadena alimentaria en «El claro del bosque».',
         ),
         _SlotHabitat(
           id: 'pinguino',
           x: 0.84,
           y: 0.24,
           bioma: 'Costa helada',
-          accionViva: '¡El pingüino camina sobre el hielo y se zambulle en el mar!',
-          pistaDesbloqueo: 'Resuelve el hogar del pingüino en «Cada animal en su hogar».',
+          accionViva:
+              '¡El pingüino camina sobre el hielo y se zambulle en el mar!',
+          pistaDesbloqueo:
+              'Resuelve el hogar del pingüino en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
           id: 'camello',
@@ -3776,7 +3773,8 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.54,
           bioma: 'Bosque templado',
           accionViva: '¡El oso pardo busca bayas maduras y miel en el bosque!',
-          pistaDesbloqueo: 'Encuentra el bosque del oso en «Cada animal en su hogar».',
+          pistaDesbloqueo:
+              'Encuentra el bosque del oso en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
           id: 'rana',
@@ -3784,15 +3782,18 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.56,
           bioma: 'Charca de agua dulce',
           accionViva: '¡Croac! La rana da un gran salto hasta el nenúfar.',
-          pistaDesbloqueo: 'Completa el nivel Medio de «Cada animal en su hogar».',
+          pistaDesbloqueo:
+              'Completa el nivel Medio de «Cada animal en su hogar».',
         ),
         _SlotHabitat(
           id: 'huevo',
           x: 0.84,
           y: 0.54,
           bioma: 'Nido del bosque',
-          accionViva: '¡El cascarón tiembla: una cría ovípara está lista para salir!',
-          pistaDesbloqueo: 'Completa el nivel Fácil de «¿Cómo nacen y crecen?».',
+          accionViva:
+              '¡El cascarón tiembla: una cría ovípara está lista para salir!',
+          pistaDesbloqueo:
+              'Completa el nivel Fácil de «¿Cómo nacen y crecen?».',
         ),
         _SlotHabitat(
           id: 'delfin',
@@ -3800,14 +3801,16 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.84,
           bioma: 'Océano abierto',
           accionViva: '¡El delfín mular salta sobre las olas y respira por su espiráculo!',
-          pistaDesbloqueo: 'Lleva al delfín al mar en «Cada animal en su hogar».',
+          pistaDesbloqueo:
+              'Lleva al delfín al mar en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
           id: 'pulpo',
           x: 0.52,
           y: 0.85,
           bioma: 'Arrecife submarino',
-          accionViva: '¡El pulpo mueve sus 8 tentáculos con ventosas entre las rocas!',
+          accionViva:
+              '¡El pulpo mueve sus 8 tentáculos con ventosas entre las rocas!',
           pistaDesbloqueo: 'Descubre al pulpo en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
@@ -3815,7 +3818,8 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.80,
           y: 0.84,
           bioma: 'Orilla de la charca',
-          accionViva: '¡El renacuajo nada con su cola mientras desarrolla sus patas!',
+          accionViva:
+              '¡El renacuajo nada con su cola mientras desarrolla sus patas!',
           pistaDesbloqueo: 'Supera el nivel Medio de «¿Cómo nacen y crecen?».',
         ),
       ],
@@ -3825,16 +3829,20 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.14,
           y: 0.34,
           bioma: 'Dehesa mediterránea',
-          accionViva: '¡La encina enraíza firme en la dehesa y da sombra y bellotas!',
-          pistaDesbloqueo: 'Supera el nivel Fácil de «Árbol, arbusto o hierba».',
+          accionViva:
+              '¡La encina enraíza firme en la dehesa y da sombra y bellotas!',
+          pistaDesbloqueo:
+              'Supera el nivel Fácil de «Árbol, arbusto o hierba».',
         ),
         _SlotHabitat(
           id: 'fotosintesis',
           x: 0.42,
           y: 0.24,
           bioma: 'Pradera soleada',
-          accionViva: '¡Sus hojas captan la luz solar y liberan oxígeno puro al aire!',
-          pistaDesbloqueo: 'Supera el nivel Difícil del «Laboratorio de germinación».',
+          accionViva:
+              '¡Sus hojas captan la luz solar y liberan oxígeno puro al aire!',
+          pistaDesbloqueo:
+              'Supera el nivel Difícil del «Laboratorio de germinación».',
         ),
         _SlotHabitat(
           id: 'flor',
@@ -3842,15 +3850,18 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.36,
           bioma: 'Pradera con colmena',
           accionViva: '¡Las flores abiertas atraen a las abejas polinizadoras de la colmena!',
-          pistaDesbloqueo: 'Completa las partes de la planta en «Arma la planta».',
+          pistaDesbloqueo:
+              'Completa las partes de la planta en «Arma la planta».',
         ),
         _SlotHabitat(
           id: 'romero',
           x: 0.86,
           y: 0.34,
           bioma: 'Ladera pedregosa mediterránea',
-          accionViva: '¡El arbusto de romero resiste la sequía en la ladera soleada!',
-          pistaDesbloqueo: 'Supera el nivel Medio de «Árbol, arbusto o hierba».',
+          accionViva:
+              '¡El arbusto de romero resiste la sequía en la ladera soleada!',
+          pistaDesbloqueo:
+              'Supera el nivel Medio de «Árbol, arbusto o hierba».',
         ),
         _SlotHabitat(
           id: 'hoja',
@@ -3865,7 +3876,8 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.32,
           y: 0.62,
           bioma: 'Orilla del arroyo',
-          accionViva: '¡El tallo conduce el agua del suelo húmedo hacia las hojas!',
+          accionViva:
+              '¡El tallo conduce el agua del suelo húmedo hacia las hojas!',
           pistaDesbloqueo: 'Coloca el tallo en «Arma la planta».',
         ),
         _SlotHabitat(
@@ -3881,16 +3893,20 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.70,
           y: 0.62,
           bioma: 'Surcos de regadío',
-          accionViva: '¡La tierra labrada y abonada nutre las hortalizas de la huerta!',
-          pistaDesbloqueo: 'Supera el nivel Medio del «Laboratorio de germinación».',
+          accionViva:
+              '¡La tierra labrada y abonada nutre las hortalizas de la huerta!',
+          pistaDesbloqueo:
+              'Supera el nivel Medio del «Laboratorio de germinación».',
         ),
         _SlotHabitat(
           id: 'trigo',
           x: 0.88,
           y: 0.60,
           bioma: 'Campiña secana',
-          accionViva: '¡Las espigas doradas de trigo maduran al sol de la campiña!',
-          pistaDesbloqueo: 'Supera el nivel Difícil de «Árbol, arbusto o hierba».',
+          accionViva:
+              '¡Las espigas doradas de trigo maduran al sol de la campiña!',
+          pistaDesbloqueo:
+              'Supera el nivel Difícil de «Árbol, arbusto o hierba».',
         ),
         _SlotHabitat(
           id: 'semilla',
@@ -3898,7 +3914,8 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.86,
           bioma: 'Corte del subsuelo húmedo',
           accionViva: '¡Bajo el mantillo húmedo la semilla hincha su cubierta y germina!',
-          pistaDesbloqueo: 'Supera el nivel Fácil del «Laboratorio de germinación».',
+          pistaDesbloqueo:
+              'Supera el nivel Fácil del «Laboratorio de germinación».',
         ),
         _SlotHabitat(
           id: 'raiz',
@@ -3910,45 +3927,46 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
         ),
       ],
       _ => const [
-        // PANEL IZQUIERDO (x: 0.15): Relación, Sentidos y Locomotor bien espaciados
-        _SlotHabitat(
-          id: 'sentidos',
-          x: 0.15,
-          y: 0.08,
-          bioma: 'Panel Nervioso · 5 Sentidos',
-          accionViva: '¡Vista, oído, olfato, gusto y tacto captan estímulos del entorno!',
-          pistaDesbloqueo: 'Supera el nivel Fácil de «Los cinco sentidos».',
-        ),
+        // PANEL IZQUIERDO (x: 0.14): Relación, Sentidos y Aparato Locomotor ordenados según su conexión anatómica
         _SlotHabitat(
           id: 'avisos',
-          x: 0.15,
-          y: 0.36,
+          x: 0.14,
+          y: 0.16,
           bioma: 'Panel Nervioso · Vías sensoriales',
           accionViva: '¡Los nervios sensoriales envían avisos eléctricos hacia el cerebro!',
           pistaDesbloqueo: 'Supera el nivel Medio de «Los cinco sentidos».',
         ),
         _SlotHabitat(
+          id: 'sentidos',
+          x: 0.14,
+          y: 0.39,
+          bioma: 'Panel Nervioso · 5 Sentidos',
+          accionViva: '¡Vista, oído, olfato, gusto y tacto captan estímulos del entorno!',
+          pistaDesbloqueo: 'Supera el nivel Fácil de «Los cinco sentidos».',
+        ),
+        _SlotHabitat(
+          id: 'reflejo',
+          x: 0.14,
+          y: 0.62,
+          bioma: 'Panel Nervioso · Acto reflejo',
+          accionViva:
+              '¡La médula espinal dispara respuestas reflejas ultrarrápidas!',
+          pistaDesbloqueo: 'Supera el nivel Difícil de «Los cinco sentidos».',
+        ),
+        _SlotHabitat(
           id: 'esqueleto',
-          x: 0.15,
-          y: 0.64,
+          x: 0.14,
+          y: 0.85,
           bioma: 'Panel Locomotor · Huesos y Músculos',
           accionViva: '¡El aparato locomotor ejecuta las órdenes motoras con precisión!',
           pistaDesbloqueo: 'Coloca el esqueleto en «Cada pieza en su sitio».',
         ),
-        _SlotHabitat(
-          id: 'reflejo',
-          x: 0.15,
-          y: 0.92,
-          bioma: 'Panel Nervioso · Arco reflejo',
-          accionViva: '¡La médula espinal dispara respuestas reflejas ultrarrápidas!',
-          pistaDesbloqueo: 'Supera el nivel Difícil de «Los cinco sentidos».',
-        ),
 
-        // CUERPO ANATÓMICO CENTRAL: 5 niveles verticales sin solapamiento
+        // CUERPO ANATÓMICO CENTRAL: 5 niveles verticales alojados dentro de su cavidad real
         _SlotHabitat(
           id: 'cerebro',
           x: 0.50,
-          y: 0.05,
+          y: 0.13,
           bioma: 'Cavidad craneal · Cerebro',
           accionViva: '¡Alojado en el cráneo, coordina pensamientos, memoria y movimientos!',
           pistaDesbloqueo: 'Coloca el cerebro en «Cada pieza en su sitio».',
@@ -3956,39 +3974,40 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
         _SlotHabitat(
           id: 'dientes',
           x: 0.50,
-          y: 0.25,
+          y: 0.27,
           bioma: 'Cavidad bucal · Masticación',
-          accionViva: '¡En la boca, los dientes trituran el alimento con la saliva!',
-          pistaDesbloqueo: 'Supera el nivel Fácil de «El viaje del bocado».',
+          accionViva:
+              '¡En la boca, los dientes trituran el alimento con la saliva!',
+          pistaDesbloqueo: 'Supera el nivel Fácil de «El viaje de la comida».',
         ),
         _SlotHabitat(
           id: 'pulmones',
-          x: 0.39,
-          y: 0.46,
+          x: 0.41,
+          y: 0.45,
           bioma: 'Cavidad torácica · Pulmones',
           accionViva: '¡En el tórax, los pulmones oxigenan la sangre en cada inspiración!',
           pistaDesbloqueo: 'Coloca los pulmones en «Cada pieza en su sitio».',
         ),
         _SlotHabitat(
           id: 'corazon',
-          x: 0.61,
-          y: 0.46,
+          x: 0.59,
+          y: 0.45,
           bioma: 'Cavidad torácica · Corazón',
           accionViva: '¡En el centro-izquierda del pecho, impulsa sangre arterial a todo el cuerpo!',
           pistaDesbloqueo: 'Coloca el corazón en «Cada pieza en su sitio».',
         ),
         _SlotHabitat(
           id: 'aparato-digestivo',
-          x: 0.39,
-          y: 0.68,
+          x: 0.41,
+          y: 0.63,
           bioma: 'Cavidad abdominal · Vías digestivas',
           accionViva: '¡Las glándulas digestivas y el tubo digestivo transforman los alimentos!',
-          pistaDesbloqueo: 'Supera el nivel Medio de «El viaje del bocado».',
+          pistaDesbloqueo: 'Supera el nivel Medio de «El viaje de la comida».',
         ),
         _SlotHabitat(
           id: 'estomago',
-          x: 0.61,
-          y: 0.68,
+          x: 0.59,
+          y: 0.63,
           bioma: 'Cavidad abdominal · Estómago',
           accionViva: '¡En el abdomen superior, digiere los alimentos con jugos gástricos!',
           pistaDesbloqueo: 'Coloca el estómago en «Cada pieza en su sitio».',
@@ -3996,44 +4015,45 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
         _SlotHabitat(
           id: 'intestinos',
           x: 0.50,
-          y: 0.92,
+          y: 0.79,
           bioma: 'Abdomen inferior · Intestinos',
           accionViva: '¡Absorben los nutrientes digeridos hacia los capilares sanguíneos!',
           pistaDesbloqueo: 'Coloca los intestinos en «Cada pieza en su sitio».',
         ),
 
-        // PANEL DERECHO (x: 0.85): Nutrición Celular y Etapas de la Vida bien espaciados
-        _SlotHabitat(
-          id: 'nutrientes',
-          x: 0.85,
-          y: 0.08,
-          bioma: 'Panel Vital · Nutrientes en sangre',
-          accionViva: '¡Glucosa, oxígeno y vitaminas llegan por la sangre a cada tejido!',
-          pistaDesbloqueo: 'Supera el nivel Difícil de «El viaje del bocado».',
-        ),
+        // PANEL DERECHO (x: 0.86): Células, Nutrición en Sangre y Ciclo Vital ordenados sin cruces
         _SlotHabitat(
           id: 'celula',
-          x: 0.85,
-          y: 0.36,
+          x: 0.86,
+          y: 0.16,
           bioma: 'Panel Vital · Célula humana',
-          accionViva: '¡Las células se nutren, respiran y se dividen para regenerar tejidos!',
-          pistaDesbloqueo: 'Supera el nivel Difícil de «Crecer paso a paso».',
+          accionViva: '¡Las células se nutren, respiran y se dividen para formar tejidos!',
+          pistaDesbloqueo: 'Supera el nivel Difícil de «Así empieza una vida».',
+        ),
+        _SlotHabitat(
+          id: 'nutrientes',
+          x: 0.86,
+          y: 0.39,
+          bioma: 'Panel Vital · Nutrientes en sangre',
+          accionViva: '¡Nutrientes y oxígeno viajan por la sangre desde el corazón a cada tejido!',
+          pistaDesbloqueo: 'Supera el nivel Difícil de «El viaje de la comida».',
         ),
         _SlotHabitat(
           id: 'una-vida',
-          x: 0.85,
-          y: 0.64,
+          x: 0.86,
+          y: 0.62,
           bioma: 'Panel Vital · Nacimiento e infancia',
-          accionViva: '¡Desde el nacimiento crecemos y aprendemos nuevas habilidades!',
-          pistaDesbloqueo: 'Supera el nivel Fácil de «Crecer paso a paso».',
+          accionViva:
+              '¡Desde el nacimiento crecemos y aprendemos nuevas habilidades!',
+          pistaDesbloqueo: 'Supera el nivel Fácil de «Así empieza una vida».',
         ),
         _SlotHabitat(
           id: 'etapas-vida',
-          x: 0.85,
-          y: 0.92,
+          x: 0.86,
+          y: 0.85,
           bioma: 'Panel Vital · Etapas de la vida',
           accionViva: '¡Infancia, adolescencia, madurez y vejez completan el ciclo vital!',
-          pistaDesbloqueo: 'Supera el nivel Medio de «Crecer paso a paso».',
+          pistaDesbloqueo: 'Supera el nivel Medio de «Así empieza una vida».',
         ),
       ],
     };
@@ -4074,7 +4094,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
     ) = switch (widget.zona.id) {
       'reserva' => (
         'Santuario de Biomas en Vivo',
-        'Observa cómo se desplazan por su bioma, aliméntalos o cógelos para interactuar con ellos.',
+        'Observa cómo se desplazan por su bioma.',
         'Alimentar',
         Icons.restaurant_rounded,
         const Color(0xFF10B981),
@@ -4225,68 +4245,64 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: widget.zona.id == 'cuerpo' ? 320 : 245,
+            height: widget.zona.id == 'cuerpo' ? 350 : 245,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18),
-              child: AnimatedBuilder(
-                animation: _animController,
-                builder: (context, _) {
-                  final t = _animController.value;
-                  return Stack(
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: PintorBiomasSantuarioDetallado(
-                            zonaId: widget.zona.id,
-                            progresoAnim: t,
-                            efectoActivo: _efectoActivo,
-                            modoAmbiente: _modoAmbiente,
-                          ),
-                        ),
-                      ),
-                      for (var i = 0; i < slots.length; i++)
-                        Builder(
-                          builder: (context) {
-                            final slot = slots[i];
-                            final desbloqueado = progreso.fichaDesbloqueada(
-                              slot.id,
-                            );
-                            final seleccionado = _seleccionadoId == slot.id;
-                            final ficha = mapaFichas[slot.id];
-
-                            // Solo los animales de la reserva caminan/nadan/vuelan y pueden arrastrarse;
-                            // las plantas están enraizadas en su ecosistema y los órganos fijos en su cavidad.
-                            final (offsetReal, _, _) = esReserva
-                                ? calcularLocomocionRealEspecie(
-                                    id: slot.id,
-                                    fase: (t + i * 0.17) % 1.0,
-                                    activo:
-                                        desbloqueado &&
-                                        _arrastrandoId != slot.id,
-                                    amplitud: _efectoActivo ? 1.35 : 1.0,
-                                  )
-                                : (Offset.zero, 0.0, '');
-                            final offsetTotal =
-                                esReserva && _arrastrandoId == slot.id
-                                ? _offsetArrastre
-                                : offsetReal;
-                            final escala = seleccionado ? 1.15 : 1.0;
-
-                            return Align(
-                              alignment: Alignment(
-                                slot.x * 2 - 1,
-                                slot.y * 2 - 1,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return AnimatedBuilder(
+                    animation: _animController,
+                    builder: (context, _) {
+                      final t = _animController.value;
+                      return Stack(
+                        children: [
+                          Positioned.fill(
+                            child: CustomPaint(
+                              painter: PintorBiomasSantuarioDetallado(
+                                zonaId: widget.zona.id,
+                                progresoAnim: t,
+                                efectoActivo: _efectoActivo,
+                                modoAmbiente: _modoAmbiente,
                               ),
-                              child: Transform.translate(
-                                offset: desbloqueado
-                                    ? offsetTotal
-                                    : Offset.zero,
-                                child: Transform.scale(
-                                  scale:
-                                      esReserva && _arrastrandoId == slot.id
-                                      ? 1.22
-                                      : escala,
-                                  child: GestureDetector(
+                            ),
+                          ),
+                          for (var i = 0; i < slots.length; i++)
+                            Builder(
+                              builder: (context) {
+                                final slot = slots[i];
+                                final desbloqueado = progreso.fichaDesbloqueada(
+                                  slot.id,
+                                );
+                                final seleccionado = _seleccionadoId == slot.id;
+                                final ficha = mapaFichas[slot.id];
+
+                                // Solo los animales de la reserva caminan/nadan/vuelan y pueden arrastrarse;
+                                // las plantas están enraizadas en su ecosistema y los órganos fijos en su cavidad.
+                                final (offsetReal, _, _) = esReserva
+                                    ? calcularLocomocionRealEspecie(
+                                        id: slot.id,
+                                        fase: (t + i * 0.17) % 1.0,
+                                        activo:
+                                            desbloqueado &&
+                                            _arrastrandoId != slot.id,
+                                        amplitud: _efectoActivo ? 1.35 : 1.0,
+                                      )
+                                    : (Offset.zero, 0.0, '');
+                                final offsetTotal =
+                                    esReserva && _arrastrandoId == slot.id
+                                    ? _offsetArrastre
+                                    : offsetReal;
+                                final escala = seleccionado ? 1.15 : 1.0;
+
+                                final nodoWidget = Transform.translate(
+                                  offset: desbloqueado
+                                      ? offsetTotal
+                                      : Offset.zero,
+                                  child: Transform.scale(
+                                    scale: esReserva && _arrastrandoId == slot.id
+                                        ? 1.22
+                                        : escala,
+                                    child: GestureDetector(
                                     onTap: () {
                                       if (desbloqueado) {
                                         context.sonidoAcierto();
@@ -4337,8 +4353,12 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Container(
-                                          width: widget.zona.id == 'cuerpo' ? 40 : 50,
-                                          height: widget.zona.id == 'cuerpo' ? 34 : 44,
+                                          width: widget.zona.id == 'cuerpo'
+                                              ? 40
+                                              : 50,
+                                          height: widget.zona.id == 'cuerpo'
+                                              ? 34
+                                              : 44,
                                           padding: EdgeInsets.all(
                                             desbloqueado ? 0 : 4,
                                           ),
@@ -4349,9 +4369,8 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                                         ? 0.25
                                                         : 0.0,
                                                   )
-                                                : const Color(
-                                                    0xFF0F172A,
-                                                  ).withValues(alpha: 0.55),
+                                                : const Color(0xFF0F172A)
+                                                      .withValues(alpha: 0.55),
                                             shape: BoxShape.circle,
                                             border: Border.all(
                                               color: seleccionado
@@ -4365,7 +4384,10 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                           child: desbloqueado
                                               ? SpriteEspecieSantuario(
                                                   id: slot.id,
-                                                  alto: widget.zona.id == 'cuerpo' ? 32 : 42,
+                                                  alto:
+                                                      widget.zona.id == 'cuerpo'
+                                                      ? 32
+                                                      : 42,
                                                 )
                                               : const Center(
                                                   child: Icon(
@@ -4398,11 +4420,13 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                                 ? switch (slot.id) {
                                                     'sentidos' => '5 Sentidos',
                                                     'avisos' => 'Nervios',
-                                                    'reflejo' => 'Arco reflejo',
-                                                    'aparato-digestivo' => 'Digestivo',
+                                                    'reflejo' => 'Acto reflejo',
+                                                    'aparato-digestivo' =>
+                                                      'Digestivo',
                                                     'una-vida' => 'Embarazo',
                                                     'etapas-vida' => 'Etapas',
-                                                    _ => ficha?.titulo ?? slot.id,
+                                                    _ =>
+                                                      ficha?.titulo ?? slot.id,
                                                   }
                                                 : '¿?',
                                             style: TextStyle(
@@ -4418,16 +4442,34 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                    ],
-                  );
-                },
-              ),
+                              );
+
+                              if (widget.zona.id == 'cuerpo') {
+                                return Positioned(
+                                  left: constraints.maxWidth * slot.x - 42,
+                                  top: constraints.maxHeight * slot.y - 26,
+                                  width: 84,
+                                  height: 52,
+                                  child: Center(child: nodoWidget),
+                                );
+                              }
+                              return Align(
+                                alignment: Alignment(
+                                  slot.x * 2 - 1,
+                                  slot.y * 2 - 1,
+                                ),
+                                child: nodoWidget,
+                              );
+                            },
+                          ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
           ),
+        ),
           const SizedBox(height: 10),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),

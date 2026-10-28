@@ -66,6 +66,67 @@ class PartidaViaje {
     };
   }
 
+  /// Nombre de la etapa de transformación del alimento según el curso y parada.
+  String get nombreFaseBocado {
+    final aqui = posicion;
+    if (aqui == null) return 'Alimento en el plato';
+    final esFacil = nivel.id == 'facil';
+    final pendiente = preguntaPendiente;
+    return switch (aqui) {
+      'boca' =>
+        faltaMasticar
+            ? (_mordiscos == 0 ? 'Alimento entero' : 'Trozos masticándose')
+            : (esFacil
+                  ? 'Comida masticada'
+                  : (pendiente == 'boca'
+                        ? 'Comida triturada con saliva'
+                        : 'Fase 1: Bolo alimenticio')),
+      'esofago' => 'Fase 1: Bolo alimenticio',
+      'barriga' => 'Papilla en el estómago',
+      'estomago' =>
+        pendiente == 'estomago'
+            ? 'Bolo con jugos gástricos'
+            : 'Fase 2: Quimo',
+      'intestino' => 'Fase 3: Quilo y nutrientes',
+      'intestino-delgado' =>
+        pendiente == 'intestino-delgado'
+            ? 'Quimo en el intestino delgado'
+            : 'Fase 3: Quilo → Nutrientes',
+      'intestino-grueso' =>
+        pendiente == 'intestino-grueso'
+            ? 'Restos no digeridos'
+            : 'Fase 4: Heces',
+      _ => 'Nutrientes',
+    };
+  }
+
+  /// Explicación breve del estado de transformación del alimento en la parada actual.
+  String get detalleFaseBocado {
+    final aqui = posicion;
+    if (aqui == null) {
+      return 'Trozo de manzana listo para empezar la digestión.';
+    }
+    return switch (aqui) {
+      'boca' =>
+        faltaMasticar
+            ? 'Los dientes cortan y trituran; la saliva ablanda la comida.'
+            : 'Masa blanda formada al masticar y mezclar con saliva, lista para tragar.',
+      'esofago' =>
+        'El bolo baja empujado desde la garganta hasta el estómago.',
+      'barriga' =>
+        'El estómago remueve y deshace la comida como una papilla.',
+      'estomago' =>
+        'Papilla ácida formada al mezclar el bolo con los jugos gástricos.',
+      'intestino' =>
+        'Del quilo pasan los nutrientes a la sangre y los restos continúan.',
+      'intestino-delgado' =>
+        'Los jugos digestivos forman el quilo y las vellosidades absorben sus nutrientes.',
+      'intestino-grueso' =>
+        'Se absorbe el agua sobrante y los restos forman las heces.',
+      _ => 'El cuerpo aprovecha los nutrientes del alimento.',
+    };
+  }
+
   double get progreso {
     final pasos = nivel.ruta.length + (nivel.preguntaFinal == null ? 0 : 1);
     final hechos =

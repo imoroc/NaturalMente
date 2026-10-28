@@ -4689,7 +4689,7 @@
                 "extremidades": "Las extremidades reciben el oxígeno a través de la sangre, pero no alojan los pulmones."
               },
               "adaptacion": {
-                "enunciado": "¿A qué aparato pertenecen los pulmones y qué función cumplen en la nutrición?",
+                "enunciado": "¿A qué aparato pertenecen los pulmones y qué función cumplen?",
                 "opciones": [
                   {
                     "id": "respiratorio",
@@ -4867,21 +4867,21 @@
               {
                 "id": "esofago",
                 "nombre": "Esófago",
-                "llegada": "Al tragar bajo por el esófago, un tubo que me empuja desde la garganta hasta el estómago.",
+                "llegada": "Ya soy el bolo alimenticio. Al tragar bajo por el esófago, un tubo que me empuja desde la garganta hasta el estómago.",
                 "pista": "Busca el tubo largo que baja por el cuello y el pecho.",
                 "salto": "No puedo saltar hasta ahí: primero tengo que bajar por el tubo que une la boca con el estómago."
               },
               {
                 "id": "estomago",
                 "nombre": "Estómago",
-                "llegada": "En el estómago me mezclan con jugos que me deshacen hasta dejarme como una papilla.",
+                "llegada": "En el estómago me mezclan con jugos que me deshacen hasta convertirme en una papilla llamada quimo.",
                 "pista": "Busca la bolsa en forma de J que está debajo de las costillas.",
                 "salto": "Todavía estoy en trozos: antes del intestino, el estómago tiene que convertirme en papilla."
               },
               {
                 "id": "intestino",
                 "nombre": "Intestino",
-                "llegada": "En el intestino el cuerpo aprovecha lo bueno de la comida y lo que sobra sale fuera.",
+                "llegada": "En el intestino paso a ser el quilo: el cuerpo aprovecha mis nutrientes y lo que sobra forma las heces.",
                 "pista": "Busca el tubo largo y plegado que ocupa casi toda la barriga."
               }
             ],
@@ -5025,7 +5025,7 @@
                   "opciones": [
                     {
                       "id": "absorcion",
-                      "nombre": "Los nutrientes pasan a la sangre, que los reparte por todo el cuerpo"
+                      "nombre": "El quimo se convierte en quilo y sus nutrientes pasan a la sangre, que los reparte por todo el cuerpo"
                     },
                     {
                       "id": "respira",
@@ -5038,7 +5038,7 @@
                   ],
                   "respuesta": "absorcion",
                   "frases": {
-                    "absorcion": "¡Exacto! A esto se le llama absorción de nutrientes.",
+                    "absorcion": "¡Exacto! En el intestino delgado se forma el quilo y se produce la absorción de nutrientes.",
                     "respira": "El oxígeno entra por los pulmones, no por el intestino.",
                     "saliva": "La saliva se fabrica en la boca, al principio del viaje."
                   }

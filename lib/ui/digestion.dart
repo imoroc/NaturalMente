@@ -563,6 +563,8 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             ),
           ),
         ),
+        const SizedBox(height: 10),
+        _tarjetaTransformacionBocado(partida),
         const SizedBox(height: 12),
         if (libre) ...[
           Row(
@@ -727,6 +729,57 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
           child: const Texto('Volver a Dentro de mí'),
         ),
       ],
+    );
+  }
+
+  Widget _tarjetaTransformacionBocado(PartidaViaje partida) {
+    return Container(
+      key: const Key('estado-bocado'),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFBEB),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFFDE68A), width: 1.5),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFFF59E0B), width: 1.8),
+            ),
+            child: DibujoBocado(estado: partida.estadoBocado, tamano: 40),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Texto(
+                  partida.nombreFaseBocado,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 13.5,
+                    color: Color(0xFF92400E),
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Texto(
+                  partida.detalleFaseBocado,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF78350F),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

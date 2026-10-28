@@ -193,7 +193,9 @@ class _CabeceraNatu extends StatelessWidget {
                     ),
                   ),
                   child: DibujoMascota(
-                    gesto: albumCompleto ? 'feliz' : 'hola',
+                    gesto: progreso.tienePosePersonalizada
+                        ? progreso.poseEquipada
+                        : (albumCompleto ? 'feliz' : 'hola'),
                     tamano: 64,
                   ),
                 ),

@@ -2671,11 +2671,7 @@ class PintorMascotaNatu extends CustomPainter {
     if (rotacion != 0) canvas.rotate(rotacion);
 
     // Tallo corto
-    canvas.drawLine(
-      Offset.zero,
-      Offset(0, -escala * 0.45),
-      pTrazo,
-    );
+    canvas.drawLine(Offset.zero, Offset(0, -escala * 0.45), pTrazo);
 
     // Hoja izquierda y hoja derecha
     for (final dir in [-1.0, 1.0]) {
@@ -2969,11 +2965,7 @@ class PintorMascotaNatu extends CustomPainter {
       Offset(derOjo.dx + w * 0.040, centroOjos.dy + h * 0.065),
     ]) {
       canvas.drawOval(
-        Rect.fromCenter(
-          center: cMoflete,
-          width: w * 0.075,
-          height: h * 0.042,
-        ),
+        Rect.fromCenter(center: cMoflete, width: w * 0.075, height: h * 0.042),
         Paint()..color = _cMejilla.withValues(alpha: 0.65),
       );
     }
@@ -5813,38 +5805,10 @@ class _PintorInsigniaZona extends CustomPainter {
 
         final almohadilla = Path()
           ..moveTo(cx, h * 0.45)
-          ..cubicTo(
-            w * 0.68,
-            h * 0.45,
-            w * 0.80,
-            h * 0.64,
-            w * 0.74,
-            h * 0.78,
-          )
-          ..cubicTo(
-            w * 0.70,
-            h * 0.88,
-            w * 0.58,
-            h * 0.86,
-            cx,
-            h * 0.81,
-          )
-          ..cubicTo(
-            w * 0.42,
-            h * 0.86,
-            w * 0.30,
-            h * 0.88,
-            w * 0.26,
-            h * 0.78,
-          )
-          ..cubicTo(
-            w * 0.20,
-            h * 0.64,
-            w * 0.32,
-            h * 0.45,
-            cx,
-            h * 0.45,
-          )
+          ..cubicTo(w * 0.68, h * 0.45, w * 0.80, h * 0.64, w * 0.74, h * 0.78)
+          ..cubicTo(w * 0.70, h * 0.88, w * 0.58, h * 0.86, cx, h * 0.81)
+          ..cubicTo(w * 0.42, h * 0.86, w * 0.30, h * 0.88, w * 0.26, h * 0.78)
+          ..cubicTo(w * 0.20, h * 0.64, w * 0.32, h * 0.45, cx, h * 0.45)
           ..close();
         canvas.drawPath(almohadilla, pRellenoHuella);
         canvas.drawOval(
@@ -7278,7 +7242,7 @@ class DatosEnciclopedicosFicha {
         habitatOSistema: 'Armazón interno de todo el cuerpo humano',
         locomocionOFuncion: 'Sostiene el cuerpo, da forma y se mueve junto con los músculos y articulaciones',
         alimentacionOProceso: 'Protege órganos delicados: el cráneo al cerebro y las costillas al corazón y pulmones',
-        datoCientifico: 'El cuerpo humano adulto tiene 206 huesos, y el más largo y fuerte es el fémur del muslo.',
+        datoCientifico: 'El cuerpo humano adulto tiene 206 huesos, y el más largo y fuerte es el fémur.',
         tipoMovimiento: 'pulso',
       ),
       _ => const DatosEnciclopedicosFicha(
@@ -8355,48 +8319,79 @@ class PintorBiomasSantuarioDetallado extends CustomPainter {
         ..strokeWidth = 2.0,
     );
 
-    // 4. Líneas de conexión neural (columna izquierda -> cerebro/médula) y metabólica (torso -> columna derecha)
+    // Guías anatómicas internas sutiles: eje medular cervical y hueso femoral
+    canvas.drawLine(
+      Offset(cx, h * 0.31),
+      Offset(cx, h * 0.39),
+      Paint()
+        ..color = const Color(0xFF0284C7).withValues(alpha: 0.35)
+        ..strokeWidth = 3.0
+        ..strokeCap = StrokeCap.round,
+    );
+    canvas.drawLine(
+      Offset(cx - w * 0.07, h * 0.83),
+      Offset(cx - w * 0.07, h * 0.94),
+      Paint()
+        ..color = const Color(0xFF64748B).withValues(alpha: 0.40)
+        ..strokeWidth = 4.0
+        ..strokeCap = StrokeCap.round,
+    );
+
+    // 4. Líneas guía anatómicas ordenadas sin cruces:
+    // Columna izquierda (x=0.14): avisos (0.16)->cerebro, sentidos (0.39)->cara, reflejo (0.62)->médula, esqueleto (0.85)->hueso pierna
+    final conexionesIzq = <(Offset nodo, Offset cuerpo)>[
+      (Offset(w * 0.23, h * 0.16), Offset(cx - w * 0.05, h * 0.13)),
+      (Offset(w * 0.23, h * 0.39), Offset(cx - w * 0.06, h * 0.21)),
+      (Offset(w * 0.23, h * 0.62), Offset(cx - w * 0.01, h * 0.35)),
+      (Offset(w * 0.23, h * 0.85), Offset(cx - w * 0.07, h * 0.88)),
+    ];
     final pNervio = Paint()
-      ..color = const Color(0xFF0284C7).withValues(alpha: 0.42)
+      ..color = const Color(0xFF0284C7).withValues(alpha: 0.52)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.8;
-    for (final (xNodo, yNodo) in [
-      (0.15, 0.14),
-      (0.15, 0.39),
-      (0.15, 0.63),
-      (0.15, 0.87),
-    ]) {
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round;
+    final pPuntoNervio = Paint()
+      ..color = const Color(0xFF0284C7).withValues(alpha: 0.78);
+
+    for (final (origen, destino) in conexionesIzq) {
+      final midX = (origen.dx + destino.dx) * 0.5;
       final rutaIzq = Path()
-        ..moveTo(w * xNodo, h * yNodo)
-        ..quadraticBezierTo(
-          w * 0.30,
-          h * yNodo,
-          cx,
-          h * (yNodo < 0.5 ? 0.12 : 0.46),
-        );
+        ..moveTo(origen.dx, origen.dy)
+        ..cubicTo(midX, origen.dy, midX, destino.dy, destino.dx, destino.dy);
       canvas.drawPath(rutaIzq, pNervio);
+      canvas.drawCircle(origen, 2.8, pPuntoNervio);
+      canvas.drawCircle(destino, 3.2, pPuntoNervio);
     }
 
+    // Columna derecha (x=0.86): celula (0.16)<-tejido brazo, nutrientes (0.39)<-corazón, una-vida (0.62)<-abdomen, etapas-vida (0.85)<-crecimiento
+    final conexionesDer = <(Offset cuerpo, Offset nodo)>[
+      (Offset(cx + w * 0.15, h * 0.38), Offset(w * 0.77, h * 0.16)),
+      (Offset(cx + w * 0.09, h * 0.45), Offset(w * 0.77, h * 0.39)),
+      (Offset(cx + w * 0.09, h * 0.72), Offset(w * 0.77, h * 0.62)),
+      (Offset(cx + w * 0.07, h * 0.88), Offset(w * 0.77, h * 0.85)),
+    ];
     final pArteria = Paint()
-      ..color = const Color(0xFFE11D48).withValues(alpha: 0.38)
+      ..color = const Color(0xFF16A34A).withValues(alpha: 0.50)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.8;
-    for (final (xNodo, yNodo) in [
-      (0.85, 0.14),
-      (0.85, 0.39),
-      (0.85, 0.63),
-      (0.85, 0.87),
-    ]) {
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round;
+    final pPuntoArteria = Paint()
+      ..color = const Color(0xFF16A34A).withValues(alpha: 0.78);
+
+    for (final (origen, destino) in conexionesDer) {
+      final midX = (origen.dx + destino.dx) * 0.5;
       final rutaDer = Path()
-        ..moveTo(cx + w * 0.08, h * 0.46)
-        ..quadraticBezierTo(w * 0.70, h * yNodo, w * xNodo, h * yNodo);
+        ..moveTo(origen.dx, origen.dy)
+        ..cubicTo(midX, origen.dy, midX, destino.dy, destino.dx, destino.dy);
       canvas.drawPath(rutaDer, pArteria);
+      canvas.drawCircle(origen, 3.2, pPuntoArteria);
+      canvas.drawCircle(destino, 2.8, pPuntoArteria);
     }
 
-    // 5. Acción «Impulso»: impulsos nerviosos dorados viajando al cerebro y ondas arteriales rojas desde el corazón
+    // 5. Acción «Impulso»: impulsos nerviosos dorados y señales vitales viajando por cada línea anatómica
     if (efectoActivo) {
       final t = progresoAnim;
-      final cCorazon = Offset(cx + w * 0.09, h * 0.46);
+      final cCorazon = Offset(cx + w * 0.09, h * 0.45);
       for (var i = 0; i < 3; i++) {
         final faseOnda = (t + i / 3.0) % 1.0;
         canvas.drawCircle(
@@ -8410,12 +8405,11 @@ class PintorBiomasSantuarioDetallado extends CustomPainter {
         );
       }
 
-      final nodosIzq = [(0.15, 0.14), (0.15, 0.39), (0.15, 0.63), (0.15, 0.87)];
-      for (var i = 0; i < nodosIzq.length; i++) {
-        final (xOr, yOr) = nodosIzq[i];
+      for (var i = 0; i < conexionesIzq.length; i++) {
+        final (origen, destino) = conexionesIzq[i];
         final avance = (t * 1.6 + i * 0.25) % 1.0;
-        final px = w * xOr + (cx - w * xOr) * avance;
-        final py = h * yOr + (h * 0.12 - h * yOr) * avance;
+        final px = origen.dx + (destino.dx - origen.dx) * avance;
+        final py = origen.dy + (destino.dy - origen.dy) * avance;
         canvas.drawCircle(
           Offset(px, py),
           5.5,
@@ -8428,12 +8422,11 @@ class PintorBiomasSantuarioDetallado extends CustomPainter {
         );
       }
 
-      final nodosDer = [(0.85, 0.14), (0.85, 0.39), (0.85, 0.63), (0.85, 0.87)];
-      for (var i = 0; i < nodosDer.length; i++) {
-        final (xDest, yDest) = nodosDer[i];
+      for (var i = 0; i < conexionesDer.length; i++) {
+        final (origen, destino) = conexionesDer[i];
         final avance = (t * 1.4 + i * 0.22) % 1.0;
-        final px = cCorazon.dx + (w * xDest - cCorazon.dx) * avance;
-        final py = cCorazon.dy + (h * yDest - cCorazon.dy) * avance;
+        final px = origen.dx + (destino.dx - origen.dx) * avance;
+        final py = origen.dy + (destino.dy - origen.dy) * avance;
         canvas.drawCircle(
           Offset(px, py),
           3.5,

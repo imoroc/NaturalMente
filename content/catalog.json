@@ -435,6 +435,33 @@
       "curiosidad": "Los insectos tienen seis patas y antenas, mientras que las arañas tienen ocho patas y ningún par de antenas."
     },
     {
+      "id": "ser-vivo",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "¿Vivo o no vivo?",
+      "titulo": "Los seres vivos",
+      "frase": "Los seres vivos nacen, se alimentan, crecen, se reproducen y mueren. Las piedras, el agua o las nubes no.",
+      "curiosidad": "Un árbol no se mueve de sitio, pero está vivo: nace de una semilla, toma agua y luz y crece cada año."
+    },
+    {
+      "id": "funciones-vitales",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "¿Vivo o no vivo?",
+      "titulo": "Las funciones vitales",
+      "frase": "Nutrición, relación y reproducción: lo que no las cumple no es un ser vivo, aunque se mueva o se haga más grande.",
+      "curiosidad": "Una semilla puede pasar años dormida y seguir viva hasta que encuentra agua."
+    },
+    {
+      "id": "reinos",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "¿Vivo o no vivo?",
+      "titulo": "Los reinos de la vida",
+      "frase": "Los seres vivos se agrupan en reinos: animales, plantas, hongos y seres muy pequeños como las bacterias.",
+      "curiosidad": "En una cucharada de tierra del bosque viven millones de bacterias."
+    },
+    {
       "id": "abeja-polen",
       "zona": "invernadero",
       "curso": "1º-2º",
@@ -6752,6 +6779,533 @@
           }
         ]
       }
+    },
+    {
+      "id": "vivo",
+      "zona": "reserva",
+      "tipo": "lugar",
+      "titulo": "¿Vivo o no vivo?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada tarjeta a su grupo o toca directamente el grupo.",
+      "opciones": [
+        {
+          "id": "no-vivo",
+          "nombre": "No está vivo"
+        },
+        {
+          "id": "vivo",
+          "nombre": "Está vivo"
+        }
+      ],
+      "retos": [
+        {
+          "id": "vivo-gato",
+          "nombre": "El gato",
+          "pregunta": "¿El gato está vivo?",
+          "respuesta": "vivo",
+          "pista": "Piensa en un gatito: nace, toma leche y se hace mayor.",
+          "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
+          "frases": {
+            "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
+            "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+          }
+        },
+        {
+          "id": "vivo-piedra",
+          "nombre": "La piedra",
+          "pregunta": "¿La piedra está viva?",
+          "respuesta": "no-vivo",
+          "pista": "Una piedra no come, no crece y no tiene crías.",
+          "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
+          "frases": {
+            "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
+            "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+          }
+        },
+        {
+          "id": "vivo-arbol",
+          "nombre": "El árbol",
+          "pregunta": "¿El árbol está vivo?",
+          "respuesta": "vivo",
+          "pista": "No anda, pero nace de una semilla, bebe agua y crece cada año.",
+          "curiosidad": "Por los anillos del tronco se puede saber cuántos años tiene un árbol.",
+          "frases": {
+            "vivo": "¡Muy bien! El árbol nace de una semilla, toma agua y luz y crece: está vivo.",
+            "no-vivo": "Aunque no se mueve de sitio, el árbol nace, toma agua y crece. Es un ser vivo."
+          }
+        },
+        {
+          "id": "vivo-agua",
+          "nombre": "El agua",
+          "pregunta": "¿El agua está viva?",
+          "respuesta": "no-vivo",
+          "pista": "El agua corre por el río, pero no nace ni se alimenta.",
+          "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+          "frases": {
+            "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
+            "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
+          }
+        },
+        {
+          "id": "vivo-nube",
+          "nombre": "La nube",
+          "pregunta": "¿La nube está viva?",
+          "respuesta": "no-vivo",
+          "pista": "La nube se mueve con el viento, pero no nace ni se alimenta.",
+          "curiosidad": "Las nubes están hechas de gotitas de agua tan pequeñas que flotan en el aire.",
+          "frases": {
+            "no-vivo": "¡Bien! La nube se mueve porque la empuja el viento. No es un ser vivo.",
+            "vivo": "La nube se mueve porque la empuja el viento, no porque quiera. No come ni crece."
+          }
+        },
+        {
+          "id": "vivo-mariquita",
+          "nombre": "La mariquita",
+          "pregunta": "¿La mariquita está viva?",
+          "respuesta": "vivo",
+          "pista": "Es pequeña, pero nace de un huevo, come y vuela.",
+          "curiosidad": "Las mariquitas ayudan en el huerto porque se comen los pulgones de las plantas.",
+          "frases": {
+            "vivo": "¡Sí! La mariquita nace de un huevo, come pulgones y crece: está viva.",
+            "no-vivo": "Aunque es muy pequeña, la mariquita nace de un huevo, come y crece. Es un ser vivo."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Separa seis cosas del entorno en vivas y no vivas.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "no-vivo",
+              "nombre": "No está vivo"
+            },
+            {
+              "id": "vivo",
+              "nombre": "Está vivo"
+            }
+          ],
+          "retos": [
+            {
+              "id": "vivo-gato",
+              "nombre": "El gato",
+              "pregunta": "¿El gato está vivo?",
+              "respuesta": "vivo",
+              "pista": "Piensa en un gatito: nace, toma leche y se hace mayor.",
+              "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
+              "frases": {
+                "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
+                "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+              }
+            },
+            {
+              "id": "vivo-piedra",
+              "nombre": "La piedra",
+              "pregunta": "¿La piedra está viva?",
+              "respuesta": "no-vivo",
+              "pista": "Una piedra no come, no crece y no tiene crías.",
+              "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
+              "frases": {
+                "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
+                "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+              }
+            },
+            {
+              "id": "vivo-arbol",
+              "nombre": "El árbol",
+              "pregunta": "¿El árbol está vivo?",
+              "respuesta": "vivo",
+              "pista": "No anda, pero nace de una semilla, bebe agua y crece cada año.",
+              "curiosidad": "Por los anillos del tronco se puede saber cuántos años tiene un árbol.",
+              "frases": {
+                "vivo": "¡Muy bien! El árbol nace de una semilla, toma agua y luz y crece: está vivo.",
+                "no-vivo": "Aunque no se mueve de sitio, el árbol nace, toma agua y crece. Es un ser vivo."
+              }
+            },
+            {
+              "id": "vivo-agua",
+              "nombre": "El agua",
+              "pregunta": "¿El agua está viva?",
+              "respuesta": "no-vivo",
+              "pista": "El agua corre por el río, pero no nace ni se alimenta.",
+              "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+              "frases": {
+                "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
+                "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
+              }
+            },
+            {
+              "id": "vivo-nube",
+              "nombre": "La nube",
+              "pregunta": "¿La nube está viva?",
+              "respuesta": "no-vivo",
+              "pista": "La nube se mueve con el viento, pero no nace ni se alimenta.",
+              "curiosidad": "Las nubes están hechas de gotitas de agua tan pequeñas que flotan en el aire.",
+              "frases": {
+                "no-vivo": "¡Bien! La nube se mueve porque la empuja el viento. No es un ser vivo.",
+                "vivo": "La nube se mueve porque la empuja el viento, no porque quiera. No come ni crece."
+              }
+            },
+            {
+              "id": "vivo-mariquita",
+              "nombre": "La mariquita",
+              "pregunta": "¿La mariquita está viva?",
+              "respuesta": "vivo",
+              "pista": "Es pequeña, pero nace de un huevo, come y vuela.",
+              "curiosidad": "Las mariquitas ayudan en el huerto porque se comen los pulgones de las plantas.",
+              "frases": {
+                "vivo": "¡Sí! La mariquita nace de un huevo, come pulgones y crece: está viva.",
+                "no-vivo": "Aunque es muy pequeña, la mariquita nace de un huevo, come y crece. Es un ser vivo."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Casos que despistan: semilla, seta, fuego… y explica por qué.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "no-vivo",
+              "nombre": "No está vivo"
+            },
+            {
+              "id": "vivo",
+              "nombre": "Está vivo"
+            }
+          ],
+          "retos": [
+            {
+              "id": "vivo-semilla",
+              "nombre": "La semilla",
+              "pregunta": "¿La semilla está viva?",
+              "respuesta": "vivo",
+              "pista": "Dentro de la semilla hay una planta pequeñita esperando agua.",
+              "curiosidad": "Algunas semillas pueden esperar muchos años dormidas antes de germinar.",
+              "frases": {
+                "vivo": "¡Muy bien! La semilla parece quieta, pero está viva. Ahora, ¿por qué?",
+                "no-vivo": "Parece una piedrecita, pero si la riegas germina y crece. Está viva."
+              },
+              "adaptacion": {
+                "enunciado": "¿Por qué la semilla es un ser vivo?",
+                "opciones": [
+                  {
+                    "id": "dura",
+                    "nombre": "Porque es dura y pequeña"
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Porque dentro hay una planta que germina y crece"
+                  },
+                  {
+                    "id": "mano",
+                    "nombre": "Porque se puede llevar en la mano"
+                  }
+                ],
+                "respuesta": "germina",
+                "frases": {
+                  "germina": "¡Exacto! Con agua y calor, la planta que lleva dentro germina y crece.",
+                  "dura": "Una piedra también es dura y pequeña. Lo que cuenta es que la semilla germina y crece.",
+                  "mano": "Una canica también se lleva en la mano. Lo que cuenta es que la semilla germina y crece."
+                }
+              }
+            },
+            {
+              "id": "vivo-seta",
+              "nombre": "La seta",
+              "pregunta": "¿La seta está viva?",
+              "respuesta": "vivo",
+              "pista": "No es una planta, pero nace, se alimenta y crece en el bosque.",
+              "curiosidad": "Lo que vemos de la seta es solo una parte: bajo tierra tiene muchos hilos finísimos.",
+              "frases": {
+                "vivo": "¡Bien! La seta es un ser vivo. Ahora, ¿qué hace para serlo?",
+                "no-vivo": "La seta nace de unas semillitas llamadas esporas, se alimenta y crece. Está viva."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué hace la seta que demuestra que está viva?",
+                "opciones": [
+                  {
+                    "id": "lluvia",
+                    "nombre": "Sale cuando llueve, como los charcos"
+                  },
+                  {
+                    "id": "blanca",
+                    "nombre": "Tiene un color bonito"
+                  },
+                  {
+                    "id": "esporas",
+                    "nombre": "Nace de esporas, se alimenta y crece"
+                  }
+                ],
+                "respuesta": "esporas",
+                "frases": {
+                  "esporas": "¡Eso es! Nace de esporas, toma alimento del suelo y crece. Es un ser vivo.",
+                  "lluvia": "Los charcos también salen con la lluvia y no están vivos. La seta nace, se alimenta y crece.",
+                  "blanca": "El color no dice si algo está vivo. La seta nace, se alimenta y crece."
+                }
+              }
+            },
+            {
+              "id": "vivo-fuego",
+              "nombre": "El fuego",
+              "pregunta": "¿El fuego está vivo?",
+              "respuesta": "no-vivo",
+              "pista": "El fuego se mueve y crece, pero no nace ni se alimenta. ¿Está vivo?",
+              "curiosidad": "El fuego necesita aire para arder: por eso se apaga si lo tapas.",
+              "frases": {
+                "no-vivo": "¡Muy bien! El fuego se mueve y crece, pero no es un ser vivo. ¿Qué le falta?",
+                "vivo": "El fuego se mueve y se hace más grande, pero no se alimenta ni tiene crías."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le falta al fuego para ser un ser vivo?",
+                "opciones": [
+                  {
+                    "id": "moverse",
+                    "nombre": "Le falta moverse"
+                  },
+                  {
+                    "id": "nutrirse",
+                    "nombre": "No se alimenta ni tiene crías: solo quema lo que encuentra"
+                  },
+                  {
+                    "id": "crecer",
+                    "nombre": "Le falta crecer"
+                  }
+                ],
+                "respuesta": "nutrirse",
+                "frases": {
+                  "nutrirse": "¡Exacto! Quemar no es alimentarse, y el fuego no tiene crías. No está vivo.",
+                  "moverse": "El fuego sí se mueve. Lo que le falta es alimentarse y tener crías.",
+                  "crecer": "El fuego sí se hace más grande. Lo que le falta es alimentarse y tener crías."
+                }
+              }
+            },
+            {
+              "id": "vivo-robot",
+              "nombre": "El robot de juguete",
+              "pregunta": "¿El robot de juguete está vivo?",
+              "respuesta": "no-vivo",
+              "pista": "Se mueve y hace ruido, pero funciona con pilas.",
+              "curiosidad": "Los robots hacen lo que alguien ha programado; si se gastan las pilas, se paran.",
+              "frases": {
+                "no-vivo": "¡Bien! El robot se mueve, pero no está vivo. ¿Por qué?",
+                "vivo": "El robot se mueve gracias a las pilas. No nace, no crece ni tiene crías."
+              },
+              "adaptacion": {
+                "enunciado": "El robot se mueve y hace ruido. ¿Por qué no está vivo?",
+                "opciones": [
+                  {
+                    "id": "colores",
+                    "nombre": "Porque es de colores"
+                  },
+                  {
+                    "id": "pequeno",
+                    "nombre": "Porque es pequeño"
+                  },
+                  {
+                    "id": "pilas",
+                    "nombre": "Funciona con pilas: no nace, no crece ni tiene crías"
+                  }
+                ],
+                "respuesta": "pilas",
+                "frases": {
+                  "pilas": "¡Eso es! Moverse no basta: los seres vivos nacen, crecen y tienen crías.",
+                  "colores": "Muchos seres vivos también son de colores. El robot no nace, no crece ni tiene crías.",
+                  "pequeno": "Una hormiga es pequeña y está viva. El robot no nace, no crece ni tiene crías."
+                }
+              }
+            },
+            {
+              "id": "vivo-musgo",
+              "nombre": "El musgo",
+              "pregunta": "¿El musgo está vivo?",
+              "respuesta": "vivo",
+              "pista": "Es una alfombra verde y blandita que toma agua y crece sobre las piedras.",
+              "curiosidad": "El musgo aguanta muy seco durante semanas y vuelve a ponerse verde cuando llueve.",
+              "frases": {
+                "vivo": "¡Muy bien! El musgo es una planta pequeña. ¿Qué demuestra que está vivo?",
+                "no-vivo": "Parece una alfombra, pero el musgo es una planta: toma agua y crece."
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué hace el musgo que demuestra que está vivo?",
+                "opciones": [
+                  {
+                    "id": "suave",
+                    "nombre": "Es suave al tocarlo"
+                  },
+                  {
+                    "id": "piedra",
+                    "nombre": "Está siempre encima de la misma piedra"
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Toma agua, crece y forma nuevos musgos"
+                  }
+                ],
+                "respuesta": "agua",
+                "frases": {
+                  "agua": "¡Exacto! Toma agua, crece y se reproduce. Es un ser vivo.",
+                  "suave": "Un cojín también es suave. El musgo está vivo porque toma agua, crece y se reproduce.",
+                  "piedra": "Quedarse en un sitio no dice nada: los árboles tampoco andan. El musgo toma agua y crece."
+                }
+              }
+            },
+            {
+              "id": "vivo-cristal",
+              "nombre": "El cristal de sal",
+              "pregunta": "¿El cristal de sal está vivo?",
+              "respuesta": "no-vivo",
+              "pista": "En agua muy salada, el cristal se hace más grande, pero no come.",
+              "curiosidad": "Si dejas agua con mucha sal en un plato al sol, aparecen cristales en forma de cubo.",
+              "frases": {
+                "no-vivo": "¡Bien! El cristal se hace grande, pero no está vivo. ¿Por qué?",
+                "vivo": "El cristal se hace más grande porque se le pega sal, no porque se alimente."
+              },
+              "adaptacion": {
+                "enunciado": "El cristal de sal se hace más grande en el agua. ¿Por qué no está vivo?",
+                "opciones": [
+                  {
+                    "id": "color",
+                    "nombre": "Porque no tiene color"
+                  },
+                  {
+                    "id": "sal",
+                    "nombre": "Crece porque se le pega más sal: no se alimenta ni se reproduce"
+                  },
+                  {
+                    "id": "quieto",
+                    "nombre": "Porque no se mueve"
+                  }
+                ],
+                "respuesta": "sal",
+                "frases": {
+                  "sal": "¡Exacto! Se le pega sal por fuera, pero no se alimenta ni tiene cristales hijos.",
+                  "color": "El color no dice si algo está vivo. El cristal no se alimenta ni se reproduce.",
+                  "quieto": "Los árboles tampoco se mueven y están vivos. El cristal no se alimenta ni se reproduce."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Coloca cada ser vivo en su reino: animales, plantas, hongos o seres muy pequeños.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "reino-animal",
+              "nombre": "Animales"
+            },
+            {
+              "id": "reino-plantas",
+              "nombre": "Plantas"
+            },
+            {
+              "id": "reino-hongos",
+              "nombre": "Hongos"
+            },
+            {
+              "id": "reino-diminutos",
+              "nombre": "Seres muy pequeños"
+            }
+          ],
+          "retos": [
+            {
+              "id": "vivo-coral",
+              "nombre": "El coral",
+              "pregunta": "¿En qué reino va el coral?",
+              "respuesta": "reino-animal",
+              "pista": "Parece una roca o una planta, pero son animalitos que atrapan comida con tentáculos.",
+              "curiosidad": "Los arrecifes de coral los construyen millones de animalitos durante cientos de años.",
+              "frases": {
+                "reino-animal": "¡Muy bien! El coral está formado por animales diminutos que comen con tentáculos.",
+                "reino-plantas": "No fabrica su alimento con la luz: atrapa comida con sus tentáculos. Es un animal.",
+                "reino-hongos": "No toma su alimento de restos como los hongos: lo atrapa con tentáculos. Es un animal.",
+                "reino-diminutos": "Cada animalito es pequeño, pero tiene tentáculos y boca. Es un animal."
+              }
+            },
+            {
+              "id": "vivo-helecho",
+              "nombre": "El helecho",
+              "pregunta": "¿En qué reino va el helecho?",
+              "respuesta": "reino-plantas",
+              "pista": "No tiene flores, pero es verde y fabrica su alimento con la luz.",
+              "curiosidad": "Los helechos ya existían en la Tierra antes que los dinosaurios.",
+              "frases": {
+                "reino-plantas": "¡Exacto! El helecho no tiene flores, pero es una planta verde que fabrica su alimento.",
+                "reino-animal": "El helecho no se desplaza ni come otros seres: fabrica su alimento con la luz.",
+                "reino-hongos": "Los hongos no son verdes. El helecho usa la luz para fabricar su alimento: es una planta.",
+                "reino-diminutos": "El helecho se ve a simple vista y tiene hojas grandes. Es una planta."
+              }
+            },
+            {
+              "id": "vivo-champinon",
+              "nombre": "El champiñón",
+              "pregunta": "¿En qué reino va el champiñón?",
+              "respuesta": "reino-hongos",
+              "pista": "No es verde y no fabrica su alimento con la luz: lo toma de restos del suelo.",
+              "curiosidad": "Los champiñones se cultivan en cuevas y naves oscuras porque no necesitan luz.",
+              "frases": {
+                "reino-hongos": "¡Muy bien! El champiñón es un hongo: toma su alimento de restos del suelo.",
+                "reino-plantas": "No es verde ni usa la luz para fabricar su alimento. Es un hongo.",
+                "reino-animal": "No se mueve ni tiene boca: absorbe el alimento del suelo. Es un hongo.",
+                "reino-diminutos": "El champiñón se ve sin microscopio. Es un hongo, como las setas."
+              }
+            },
+            {
+              "id": "vivo-levadura",
+              "nombre": "La levadura del pan",
+              "pregunta": "¿En qué reino va la levadura?",
+              "respuesta": "reino-hongos",
+              "pista": "Es tan pequeña que no se ve, pero pertenece al mismo reino que las setas.",
+              "curiosidad": "La levadura suelta burbujas de gas dentro de la masa: por eso el pan sale esponjoso.",
+              "frases": {
+                "reino-hongos": "¡Genial! La levadura es un hongo diminuto, pariente de las setas.",
+                "reino-diminutos": "Es muy pequeña, pero la levadura es un hongo, del mismo reino que las setas.",
+                "reino-plantas": "La levadura no es verde ni usa la luz. Es un hongo.",
+                "reino-animal": "La levadura no se mueve ni tiene boca. Es un hongo diminuto."
+              }
+            },
+            {
+              "id": "vivo-bacteria",
+              "nombre": "La bacteria del yogur",
+              "pregunta": "¿En qué reino va la bacteria del yogur?",
+              "respuesta": "reino-diminutos",
+              "pista": "Es un ser de una sola célula que solo se ve con microscopio.",
+              "curiosidad": "Las bacterias del yogur convierten la leche en yogur y ayudan a nuestra digestión.",
+              "frases": {
+                "reino-diminutos": "¡Exacto! La bacteria es un ser vivo de una sola célula: solo se ve al microscopio.",
+                "reino-hongos": "Los hongos tienen células más grandes y complejas. La bacteria es un ser muy pequeño.",
+                "reino-plantas": "La bacteria no tiene hojas ni raíces: es una sola célula diminuta.",
+                "reino-animal": "La bacteria no es un animal: es una sola célula que solo se ve al microscopio."
+              }
+            },
+            {
+              "id": "vivo-paramecio",
+              "nombre": "El paramecio",
+              "pregunta": "¿En qué reino va el paramecio?",
+              "respuesta": "reino-diminutos",
+              "pista": "Vive en una gota de agua de charca y nada moviendo unos pelitos muy finos.",
+              "curiosidad": "En una sola gota de agua de charca pueden nadar cientos de paramecios.",
+              "frases": {
+                "reino-diminutos": "¡Muy bien! El paramecio es un ser de una sola célula que vive en el agua.",
+                "reino-animal": "Nada y come, pero es una sola célula: va con los seres muy pequeños.",
+                "reino-plantas": "No es verde ni fabrica su alimento con la luz. Es un ser muy pequeño.",
+                "reino-hongos": "No toma alimento de restos como los hongos: nada y caza en el agua."
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "habitos",

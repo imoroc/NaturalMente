@@ -132,6 +132,7 @@ class Progreso extends ChangeNotifier {
     'polinizacion': ['facil', 'medio', 'dificil'],
     'estaciones': ['facil', 'medio', 'dificil'],
     'huerta': ['facil', 'medio', 'dificil'],
+    'vivo': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -159,6 +160,9 @@ class Progreso extends ChangeNotifier {
       ('digestion', 'medio') => const ['aparato-digestivo'],
       ('digestion', 'dificil') => const ['nutrientes'],
 
+      ('vivo', 'facil') => const ['ser-vivo'],
+      ('vivo', 'medio') => const ['funciones-vitales'],
+      ('vivo', 'dificil') => const ['reinos'],
       ('habitos', 'facil') => const ['higiene'],
       ('habitos', 'medio') => const ['descanso'],
       ('habitos', 'dificil') => const ['cuidar-sentidos'],
@@ -247,6 +251,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «El viaje de la comida» a partir del nivel Medio (3º-4º).',
       'nutrientes' =>
         'Se consigue en «El viaje de la comida» en el nivel Difícil (5º-6º).',
+      'ser-vivo' =>
+        'Se consigue en «¿Vivo o no vivo?» desde el nivel Fácil (1º-2º).',
+      'funciones-vitales' =>
+        'Se consigue en «¿Vivo o no vivo?» a partir del nivel Medio (3º-4º).',
+      'reinos' =>
+        'Se consigue en «¿Vivo o no vivo?» en el nivel Difícil (5º-6º).',
       'higiene' =>
         'Se consigue en «¿Me cuida o no?» desde el nivel Fácil (1º-2º).',
       'descanso' =>

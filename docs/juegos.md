@@ -46,12 +46,14 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Clasificar
 - **Prioridad**: MVP.
+- **Estado**: cubierto por «¿Huesos o caparazón?» (`grupos`, tipo `lugar`, en La reserva) con un visor de rayos X, una lupa de piel y un contador de patas. Fácil, vertebrado o invertebrado; Medio, los grupos de vertebrados (mamíferos y aves, reptiles y anfibios, peces); Difícil, artrópodos, moluscos y anélidos o cnidarios, con pregunta extra. Dibujos e inspector en `lib/ui/dibujos_nuevos_juegos.dart`. Cromos por nivel: Vertebrados e invertebrados, Los cinco grupos de vertebrados y Artrópodos, moluscos y más. «¿Vuela, nada o anda?» no se ha hecho.
 - **Mecánica**: arrastrar animales a cajas.
 - **Niveles**: Fácil, «¿vuela, nada o anda?». Medio, mamífero, ave, pez, reptil o anfibio. Difícil, vertebrado o invertebrado, y dentro de los invertebrados, insecto, arácnido o molusco.
 - **Si no acierta**: la caja explica qué tienen los suyos. «En esta caja todos tienen plumas. ¿Tiene plumas el murciélago?».
 
 ### Qué come cada uno
 - **Prioridad**: MVP.
+- **Estado**: cubierto en parte por «Picos, dientes y huellas» (`dieta`, tipo `lugar`, en La reserva). Fácil clasifica en herbívoro, carnívoro u omnívoro con una lupa dental. La cadena de comida de Difícil la cubre «Monta el ecosistema». Cromo de Fácil: Herbívoros, carnívoros y omnívoros.
 - **Mecánica**: Fácil y Medio, dar de comer al animal eligiendo entre tres platos. Difícil, ordenar una cadena de comida (planta, herbívoro, carnívoro).
 - **Si no acierta**: el animal rechaza la comida con una razón. «Yo no como carne. Mis dientes son para masticar hierba».
 
@@ -69,6 +71,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Picos y patas
 - **Prioridad**: Extra.
+- **Estado**: cubierto por los niveles Medio y Difícil de «Picos, dientes y huellas» (`dieta`). Medio relaciona pico, dientes y patas con cómo consigue el alimento; Difícil, la huella y la pata con cómo se desplaza, con pregunta extra. Cromos: Picos, dientes y garras, y Huellas, pezuñas y garras.
 - **Mecánica**: cada ave tiene un pico o unas patas, y hay que llevarla a la comida o al sitio que le encaja (pico fuerte para semillas, largo para el néctar, ganchudo para la carne; patas palmeadas para nadar).
 - **Niveles**: Fácil, solo picos y 3 aves. Difícil, picos y patas, y por qué.
 - **Por qué**: sale de una idea de taller del material del colegio, con dibujos y frases nuestras.
@@ -103,18 +106,21 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### De semilla a semilla
 - **Prioridad**: MVP.
+- **Estado**: cubierto en parte por «Polen y semillas viajeras» (`polinizacion`, tipo `lugar`, en El invernadero). Fácil, partes de la flor (cáliz y corola, estambres, pistilo); Medio, cómo viajan las semillas (viento, agua, animales); Difícil, plantas con fruto, con piñas o con esporas, con pregunta extra. Cromos: Las partes de la flor, Semillas viajeras y Con flores, con piñas o con esporas. Falta ordenar el ciclo completo de semilla a semilla.
 - **Mecánica**: ordenar el ciclo de una planta (semilla, brote, planta, flor, fruto con semillas).
 - **Niveles**: Fácil, 3 pasos. Medio, 5 pasos. Difícil, se añade quién lleva el polen (abeja o viento).
 - **Si no acierta**: «Antes del fruto tiene que haber una flor».
 
 ### Mi huerto
 - **Prioridad**: Extra.
+- **Estado**: no está hecho tal cual. «Del huerto a la mesa» (`huerta`, tipo `lugar`, en El invernadero) trata el huerto desde otro lado: qué parte de la planta comemos (Fácil, raíz, hoja o fruto; Medio, seis órganos; Difícil, reservas, fibras y aceites, con pregunta extra). Cromos: Raíces, hojas y frutos, Las partes que comemos y Reservas y recursos vegetales.
 - **Mecánica**: plantar semillas, regar y esperar varias rondas. Cada planta dice qué necesita. Al final se cosecha.
 - **Niveles**: Fácil, una planta y riego. Medio, varias plantas con necesidades distintas. Difícil, elegir qué plantar según la estación.
 - **Por qué**: une el huerto de 2º y 3º con la germinación y reutiliza su regla.
 
 ### Hoja a hoja
 - **Prioridad**: Extra.
+- **Estado**: cubierto en parte por «Los árboles y las estaciones» (`estaciones`, tipo `lugar`, en El invernadero) con una rueda de estaciones, una lupa de hojas y un climograma. Fácil, hoja caduca o perenne; Medio, forma y textura de la hoja; Difícil, a qué bosque pertenece cada árbol según el clima, con pregunta extra. Cromos: Hoja caduca y hoja perenne, Formas y bordes de las hojas y Los bosques y las estaciones.
 - **Mecánica**: Fácil, memoria de parejas de hojas. Difícil, unir cada hoja con su árbol.
 
 ### La planta a oscuras
@@ -124,10 +130,11 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ## Seres vivos y ecosistemas
 
-«Monta el ecosistema» se integra en La reserva. La ubicación de futuros juegos de este bloque se decidirá por actividad (ver `docs/decisiones.md`).
+«Monta el ecosistema» y «¿Vivo o no vivo?» se integran en La reserva. La ubicación de futuros juegos de este bloque se decidirá por actividad (ver `docs/decisiones.md`).
 
 ### ¿Vivo o no vivo?
 - **Prioridad**: MVP.
+- **Estado**: implementado (`vivo`, tipo `lugar`) en La reserva, con el motor de «Cada uno a su hogar». Fácil, seis cosas del entorno (gato, piedra, árbol, agua, nube, mariquita); Medio, seis casos que despistan (semilla, seta, fuego, robot de juguete, musgo, cristal de sal) con la pregunta «¿por qué?»; Difícil, seis seres vivos en su reino (coral, helecho, champiñón, levadura, bacteria del yogur, paramecio). Dibujos en `lib/ui/dibujos_vivo.dart`. Cromos por nivel: Los seres vivos, Las funciones vitales y Los reinos de la vida. No cuenta para la medalla.
 - **Mecánica**: separar lo vivo de lo que no lo está (piedra, seta, árbol, agua, gato, nube).
 - **Niveles**: Fácil, ejemplos claros. Medio, casos que despistan (semilla, seta, fuego). Difícil, colocar los seres vivos en su reino: animales, plantas, hongos y seres muy pequeños.
 - **Si no acierta**: «El fuego se mueve y crece, pero no nace ni se alimenta. ¿Está vivo?».

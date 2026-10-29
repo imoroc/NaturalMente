@@ -103,7 +103,7 @@ void main() {
       expect(reabierto.fichaDesbloqueada('claro-bosque'), isTrue);
       expect(reabierto.hecho('hogar/camello'), isTrue);
       expect(reabierto.medallaConseguida(catalogo.actividades), isFalse);
-      expect(reabierto.totalMaxNiveles(catalogo.actividades), 48);
+      expect(reabierto.totalMaxNiveles(catalogo.actividades), 51);
       expect(
         () => p.marcarNivelEcosistema(actividad, 'ausente'),
         throwsArgumentError,

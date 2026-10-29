@@ -264,9 +264,9 @@ void main() {
     }
   });
 
-  test('el álbum tiene 40 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 55);
-    expect(catalogo.fichasDe('reserva').length, 17);
+  test('el álbum tiene 58 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 58);
+    expect(catalogo.fichasDe('reserva').length, 20);
     expect(catalogo.fichasDe('invernadero').length, 20);
     expect(catalogo.fichasDe('cuerpo').length, 18);
 
@@ -404,7 +404,7 @@ void main() {
     await progreso.marcarNivelLugar(sentidos, 'dificil');
     expect(progreso.fichaDesbloqueada('avisos'), isTrue);
     expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
-    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta']) {
+    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo']) {
       final act = catalogo.actividades.firstWhere((a) => a.id == nuevoId);
       await progreso.marcarNivelLugar(act, 'dificil');
     }
@@ -460,5 +460,61 @@ void main() {
     expect(resolverLugar(reto: musica, eleccion: 'no-me-cuida', intento: 1).acierto, isTrue);
     expect(resolverAdaptacion(reto: musica, eleccion: 'oido').acierto, isTrue);
     expect(resolverAdaptacion(reto: musica, eleccion: 'vista').acierto, isFalse);
+  });
+
+  test('«¿Vivo o no vivo?» separa lo vivo, explica los casos que despistan y ordena por reinos', () async {
+    final vivo = catalogo.actividades.firstWhere((a) => a.id == 'vivo');
+    expect(vivo.zona, 'reserva');
+    expect(vivo.tipo, 'lugar');
+    expect(vivo.medalla, isFalse);
+
+    final niveles = {for (final n in vivo.nivelesLugar) n.id: n};
+    expect(niveles['facil']!.curso, '1º-2º');
+    expect(niveles['medio']!.curso, '3º-4º');
+    expect(niveles['dificil']!.curso, '5º-6º');
+    for (final id in ['facil', 'medio']) {
+      final nivel = niveles[id]!;
+      expect(nivel.opciones.map((o) => o.id), ['no-vivo', 'vivo']);
+      expect(nivel.retos.map((r) => r.respuesta).toSet(), {'vivo', 'no-vivo'},
+          reason: 'En $id hay tarjetas de los dos lados');
+    }
+    expect(niveles['dificil']!.opciones.map((o) => o.id),
+        ['reino-animal', 'reino-plantas', 'reino-hongos', 'reino-diminutos']);
+    expect(niveles['dificil']!.retos.map((r) => r.respuesta).toSet(),
+        hasLength(4), reason: 'Cada reino tiene al menos un ser vivo');
+    expect(niveles['facil']!.preguntaAdaptacion, isFalse);
+    expect(niveles['medio']!.preguntaAdaptacion, isTrue);
+    expect(niveles['dificil']!.preguntaAdaptacion, isFalse);
+
+    for (final reto in niveles['medio']!.retos) {
+      final adaptacion = reto.adaptacion!;
+      expect(adaptacion.opciones.first.id, isNot(adaptacion.respuesta),
+          reason: 'La respuesta correcta no se escribe la primera');
+    }
+
+    final fuego = niveles['medio']!.retos.firstWhere((r) => r.id == 'vivo-fuego');
+    final primera = resolverLugar(reto: fuego, eleccion: 'vivo', intento: 1);
+    expect(primera.acierto, isFalse);
+    expect(primera.frase, contains('no se alimenta'));
+    final segunda = resolverLugar(reto: fuego, eleccion: 'vivo', intento: 2);
+    expect(segunda.frase, contains(fuego.pista));
+    expect(resolverAdaptacion(reto: fuego, eleccion: 'nutrirse').acierto, isTrue);
+    expect(resolverAdaptacion(reto: fuego, eleccion: 'moverse').acierto, isFalse);
+
+    final levadura =
+        niveles['dificil']!.retos.firstWhere((r) => r.id == 'vivo-levadura');
+    expect(resolverLugar(reto: levadura, eleccion: 'reino-hongos', intento: 1).acierto,
+        isTrue);
+    expect(resolverLugar(reto: levadura, eleccion: 'reino-diminutos', intento: 1).acierto,
+        isFalse);
+
+    SharedPreferences.setMockInitialValues({});
+    final progreso = await Progreso.abrir();
+    await progreso.marcarNivelLugar(vivo, 'facil');
+    expect(progreso.fichaDesbloqueada('ser-vivo'), isTrue);
+    expect(progreso.fichaDesbloqueada('funciones-vitales'), isFalse);
+    await progreso.marcarNivelLugar(vivo, 'dificil');
+    expect(progreso.fichaDesbloqueada('funciones-vitales'), isTrue);
+    expect(progreso.fichaDesbloqueada('reinos'), isTrue);
   });
 }

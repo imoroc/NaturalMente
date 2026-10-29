@@ -19,7 +19,7 @@
 
 **NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
 
-Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **8 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **24 misiones**) y coleccionan **31 cromos** con curiosidades científicas en su álbum personal.
+Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **17 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **51 misiones**) y coleccionan **58 cromos** con curiosidades científicas en su álbum personal.
 
 ### Principios de diseño pedagógico y técnico
 
@@ -35,16 +35,25 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **8 juegos inte
 
 ## Mundos, actividades y niveles
 
-| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (31) |
+| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (58) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
 | **La reserva**<br>*(Animales)* | **Cada uno a su hogar** (`hogar`) | Clasificación de animales en su hábitat y adaptaciones al medio | 4 hábitats y 4 animales (*camello, delfín, pingüino, oso*) | 6 hábitats (+ *selva, río*) y 6 animales (+ *rana, tucán*) con pregunta de adaptación | 6 ecosistemas y 7 animales (+ *pulpo*, invertebrado marino) con preguntas de clasificación científica | 7 |
 | **La reserva**<br>*(Animales)* | **¿Huevo o barriga?** (`nacimiento`) | Separar animales por cómo nacen y ordenar ciclos de vida, por arrastre o toque | 6 animales al *huevo* o a la *barriga de su madre* (*pingüino, tucán, rana · camello, delfín, oso*) | Ciclos de la *rana* y la *mariposa* en 4 pasos + pregunta de comprensión por ciclo | Metamorfosis de la *rana* en 5 fases y de la *mariposa* (larva, pupa, adulto) + preguntas de razonamiento (anfibio, en qué se parecen) | 3 |
+| **La reserva**<br>*(Animales)* | **Picos, dientes y huellas** (`dieta`) | Investigar cada animal con lupa dental, probador de picos y molde de huellas | Herbívoro, carnívoro u omnívoro (*ciervo, lobo, jabalí, conejo, lince, oso pardo*) | Cómo consigue el alimento según pico, dientes y patas (*águila, garza, ardilla, búho, pato cuchara, castor*) | Cómo se desplaza según la huella y la pata + pregunta extra | 3 |
+| **La reserva**<br>*(Animales)* | **¿Huesos o caparazón?** (`grupos`) | Clasificar con visor de rayos X, lupa de piel y contador de patas | Vertebrado o invertebrado (6 animales) | Grupos de vertebrados (*mamíferos y aves, reptiles y anfibios, peces*) | Artrópodos, moluscos y anélidos o cnidarios + pregunta extra | 3 |
 | **La reserva**<br>*(Ecosistemas)* | **Monta el ecosistema** (`ecosistemas`) | Dar vida a un claro del bosque y descubrir conexiones | Hierba, conejo y zorro por arrastre o toque | Dos relaciones alimentarias con flechas explicadas | Dos predicciones y comparación antes/después | 1 |
+| **La reserva**<br>*(Seres vivos)* | **¿Vivo o no vivo?** (`vivo`) | Separar lo vivo de lo que no lo está, por arrastre o toque | 6 cosas del entorno (*gato, piedra, árbol, agua, nube, mariquita*) | 6 casos que despistan (*semilla, seta, fuego, robot, musgo, cristal de sal*) + pregunta «¿por qué?» | 6 seres vivos en su reino (*animales, plantas, hongos, seres muy pequeños*) | 3 |
 | **El invernadero**<br>*(Plantas)* | **Haz crecer la semilla** (`germinacion`) | Simulación experimental día a día (Días 1, 3, 5 y 7) en bote transparente | 3 variables (*sustrato, agua, luz*) hasta lograr el brote en tierra o algodón | Experimento de 4 etapas + pregunta final sobre el papel de las sales minerales del suelo | 4 variables (+ *temperatura en °C*) + pregunta científica sobre fotosíntesis y germinación | 3 |
 | **El invernadero**<br>*(Plantas)* | **Herbario desmontable** (`herbario`) | Montaje interactivo de las partes de la planta por arrastre o toque | 3 partes (*raíz, tallo, hoja*) sobre el modelo botánico | 5 partes (+ *flor, fruto*) con sus funciones y curiosidades | 5 partes + cuestionario sobre la función de cada órgano vegetal | 5 |
+| **El invernadero**<br>*(Plantas)* | **Árbol, arbusto o hierba** (`plantas`) | Llevar plantas del entorno a su grupo | Árbol o hierba (*encina, chopo, césped, amapola*) | Árbol, arbusto o hierba | Además, cultivada o silvestre | 3 |
+| **El invernadero**<br>*(Plantas)* | **Polen y semillas viajeras** (`polinizacion`) | Lupa floral, túnel de viento y agua y vuelo de la abeja | Partes de la flor (*cáliz y corola, estambres, pistilo*) | Cómo viaja cada semilla (*viento, agua, animales*) | Con fruto, con piñas o con esporas + pregunta extra | 3 |
+| **El invernadero**<br>*(Plantas)* | **Los árboles y las estaciones** (`estaciones`) | Rueda de estaciones, lupa de hojas y climograma | Hoja caduca o perenne (6 árboles) | Forma y textura de la hoja (ancha, dura con cera, aguja) | A qué bosque pertenece cada árbol según el clima + pregunta extra | 3 |
+| **El invernadero**<br>*(Plantas)* | **Del huerto a la mesa** (`huerta`) | Corte de la huerta para ver qué parte de la planta comemos | Raíz, hoja o fruto (6 alimentos) | Raíz o tallo, hoja o flor, fruto o semilla | Reservas, cereales, fibras y aceites + pregunta extra | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Cada pieza en su sitio** (`piezas`) | Atlas anatómico interactivo: arrastrar o tocar órganos hacia su cavidad | 3 órganos en 3 zonas: *cerebro* (Cabeza), *corazón* (Pecho) y *estómago* (Abdomen) | 5 piezas en 4 zonas (+ *pulmones* en Pecho y *músculos y huesos* en Extremidades) + reto de función | 6 piezas (+ *intestinos* en Abdomen) + preguntas sobre aparatos y sistemas del cuerpo humano | 6 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **El viaje de la comida** (`digestion`) | Llevar un bocado por el aparato digestivo tocando el cuerpo, los botones o arrastrándolo | *Boca* y *barriga*, con tres mordiscos para masticar y el pulmón como despiste | 4 paradas (*boca, esófago, estómago, intestino*) con pulmones y corazón como despistes + pregunta final | 5 partes (+ *intestino delgado y grueso*) + qué pasa en cada parada (*bolo, quimo, absorción, heces*) | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Así empieza una vida** (`vida`) | Línea temporal interactiva con visor de subetapas y explicación biológica | 4 viñetas: *unión de dos células, crecimiento en el útero, nacimiento y cuidados* | 5 fases (*fecundación, embrión con latido, feto con cordón, nacimiento y bebé*) + pregunta vivíparos | 6 fases (*cigoto, multiplicación celular, tejidos y órganos, placenta, parto y crecimiento por etapas*) | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **Los cinco sentidos** (`sentidos`) | Unir órganos y situaciones con su sentido | Ojos, orejas, nariz, lengua y piel con su sentido | 6 situaciones de aviso | 5 avisos + pregunta sobre nervios, cerebro y actos reflejos | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **¿Me cuida o no?** (`habitos`) | Separar costumbres en «Me cuida» o «No me cuida» | Higiene, merienda y juego | Sueño, pantallas, actividad física y calma | Oído, vista, postura y descanso + qué parte se cuida | 3 |
 
 ---
 
@@ -72,7 +81,7 @@ flowchart LR
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
     MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 31 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(8 juegos · 24 niveles)"]
+    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(17 juegos · 51 niveles)"]
     DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
   end
 
@@ -172,7 +181,7 @@ flutter test
 
 - `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
 - `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
-- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 8 juegos, barajador sin repetición, desbloqueo de los 31 cromos) y pruebas de widgets/flujos completos en pantalla.
+- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 17 juegos, barajador sin repetición, desbloqueo de los 58 cromos) y pruebas de widgets/flujos completos en pantalla.
 
 ### 2. Ejecutar la aplicación en local
 
@@ -257,4 +266,4 @@ Este comportamiento es obligatorio para todos los juegos y niveles, incluidos lo
 
 Al superar un nivel, la animación del check verde, el sonido y la vibración dan paso automáticamente a una pantalla de resultado. Muestra el resumen y mantiene visibles las opciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. El botón de cerrar permite seguir explorando las explicaciones y curiosidades del ejercicio.
 
-Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 16 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.
+Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 17 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.

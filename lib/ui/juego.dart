@@ -164,6 +164,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
     'polinizacion',
     'estaciones',
     'huerta',
+    'vivo',
   };
 
   void _prepararBarajadoReto() {
@@ -808,6 +809,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
               'polinizacion',
               'estaciones',
               'huerta',
+              'vivo',
             }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }
@@ -873,6 +875,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
           'polinizacion',
           'estaciones',
           'huerta',
+          'vivo',
         }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }
@@ -4492,6 +4495,7 @@ String? _subtituloSitio(String id) => switch (id) {
   'gusto' => 'Lengua · Sabores dulces o ácidos',
   'tacto' => 'Piel · Frío, calor y texturas',
   final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(otro),
+  final otro when idsSitiosVivo.contains(otro) => subtituloSitioVivo(otro),
   // Fin sentidos
   _ => null,
 };
@@ -4573,6 +4577,7 @@ Color _colorSitio(String id) {
     case 'no-me-cuida':
       return const Color(0xFFFFEDD5);
     default:
+      if (idsSitiosVivo.contains(id)) return colorSitioVivo(id);
       return idsNuevosJuegos.contains(id)
           ? colorSitioNuevoJuego(id)
           : const Color(0xFFF6F1E6);
@@ -4622,6 +4627,7 @@ Color _bordeSitio(String id) {
     case 'no-me-cuida':
       return const Color(0xFFFB923C);
     default:
+      if (idsSitiosVivo.contains(id)) return bordeSitioVivo(id);
       return idsNuevosJuegos.contains(id)
           ? bordeSitioNuevoJuego(id)
           : const Color(0xFFD6CFC0);

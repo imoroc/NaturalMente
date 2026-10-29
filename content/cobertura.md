@@ -10,16 +10,16 @@ No se copia una frase de las guías. Lo de Tierra y universo no está aquí a pr
 
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
-| Cómo se desplazan | 1º-2º | | |
-| Cómo nacen y qué comen, muy simple | 1º-2º | ¿Huevo o barriga? (Fácil): cómo nacen | nacimiento; huevo |
+| Cómo se desplazan | 1º-2º | Picos, dientes y huellas (Difícil): huellas y patas | dieta; branquias |
+| Cómo nacen y qué comen, muy simple | 1º-2º | ¿Huevo o barriga? (Fácil): cómo nacen. Picos, dientes y huellas (Fácil): qué comen | nacimiento; huevo. dieta; herbivoro |
 | Cuidar a los animales, plásticos | 1º-2º | | |
-| Mamíferos y aves | 1º-2º | | |
-| Peces, reptiles y anfibios | 3º-4º | | |
-| Invertebrados e insectos | 3º-4º | | |
+| Mamíferos y aves | 1º-2º | ¿Huesos o caparazón? (Medio) | grupos; anfibio |
+| Peces, reptiles y anfibios | 3º-4º | ¿Huesos o caparazón? (Medio) | grupos; anfibio |
+| Invertebrados e insectos | 3º-4º | ¿Huesos o caparazón? (Fácil y Difícil) | grupos; vertebrado, artropodo |
 | Hábitat: desierto, mar, polo, bosque | 1º-2º | Cada uno a su hogar | |
-| Adaptaciones (frío, agua, comida) | 3º-4º | | |
+| Adaptaciones (frío, agua, comida) | 3º-4º | Cada uno a su hogar (Medio y Difícil); Picos, dientes y huellas (Medio) | hogar; dieta; pico-garra |
 | Ciclo de vida | 3º-4º | ¿Huevo o barriga? (Medio y Difícil): ciclos de la rana y la mariposa | nacimiento; renacuajo, mariposa |
-| Vertebrados e invertebrados con ejemplos | 5º-6º | | |
+| Vertebrados e invertebrados con ejemplos | 5º-6º | ¿Huesos o caparazón? | grupos; vertebrado, artropodo |
 | Especies del entorno y cuidado | 5º-6º | | |
 
 El juego principal de la zona es «Cada uno a su hogar».
@@ -32,10 +32,10 @@ El juego principal de la zona es «Cada uno a su hogar».
 | Qué necesita para vivir | 1º-2º | Laboratorio de germinación | |
 | Árbol, arbusto y hierba | 1º-2º | Árbol, arbusto o hierba | plantas; encina, romero |
 | Cultivadas y silvestres | 3º-4º | Árbol, arbusto o hierba (Difícil) | plantas; trigo |
-| Huerto | 3º-4º | | |
+| Huerto | 3º-4º | Del huerto a la mesa | huerta; huerta-organos, partes-comestibles, recursos-plantas |
 | La luz y el alimento de la planta | 3º-4º | | |
-| Hojas distintas | 3º-4º | | |
-| De la semilla a una planta que deja semillas | 5º-6º | | |
+| Hojas distintas | 3º-4º | Los árboles y las estaciones | estaciones; hoja-caduca, formas-hoja, bosque-clima |
+| De la semilla a una planta que deja semillas | 5º-6º | Polen y semillas viajeras (flor, polen y semillas; falta el ciclo ordenado) | polinizacion; abeja-polen, semilla-viajera, helecho-espora |
 
 El juego principal es «Laboratorio de germinación». La luz como energía y el agua como materia se dicen dentro de ese juego, no en otra zona.
 
@@ -63,6 +63,9 @@ Los juegos principales de la zona son «Cada pieza en su sitio» y «Así empiez
 
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
+| Seres vivos y cosas que no están vivas | 1º-2º | ¿Vivo o no vivo? (Fácil) | vivo; ser-vivo |
+| Funciones vitales: nutrición, relación y reproducción | 3º-4º | ¿Vivo o no vivo? (Medio): casos que despistan | vivo; funciones-vitales |
+| Los reinos: animales, plantas, hongos y seres muy pequeños | 5º-6º | ¿Vivo o no vivo? (Difícil) | vivo; reinos |
 | Relaciones entre plantas y animales | 1º-2º | Un bosque conectado | ecosistemas; claro-bosque |
 | Cadenas alimentarias y sentido de las flechas | 3º-4º | Monta el ecosistema | ecosistemas |
 | Cambios en la disponibilidad de alimento | 5º-6º | ¿Qué pasaría si hay menos…? | ecosistemas |

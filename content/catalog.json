@@ -381,6 +381,33 @@
       "curiosidad": "Lo que captan los sentidos viaja por los nervios hasta el cerebro en una fracción de segundo."
     },
     {
+      "id": "merienda",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Un plato que cuida",
+      "titulo": "Una merienda que cuida",
+      "frase": "Fruta, yogur o un bocadillo cuidan el cuerpo cada día; los bollos, las chuches y los refrescos, solo de vez en cuando.",
+      "curiosidad": "Para la sed, la mejor bebida es el agua: el cuerpo de un niño es más de la mitad agua."
+    },
+    {
+      "id": "plato-equilibrado",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Un plato que cuida",
+      "titulo": "El plato equilibrado",
+      "frase": "La mitad del plato, verduras y frutas; un cuarto, proteínas como legumbres, huevo o pescado; y otro cuarto, cereales.",
+      "curiosidad": "Comer de muchos colores distintos ayuda a tomar vitaminas diferentes."
+    },
+    {
+      "id": "etiqueta",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Un plato que cuida",
+      "titulo": "Leer una etiqueta",
+      "frase": "La etiqueta dice cuánto azúcar, sal y grasa hay en 100 g. Comparando dos productos se elige el que más cuida.",
+      "curiosidad": "En la lista de ingredientes, el primero es el que más hay en el producto."
+    },
+    {
       "id": "herbivoro",
       "zona": "reserva",
       "curso": "1º-2º",
@@ -7301,6 +7328,506 @@
                 "reino-animal": "Nada y come, pero es una sola célula: va con los seres muy pequeños.",
                 "reino-plantas": "No es verde ni fabrica su alimento con la luz. Es un ser muy pequeño.",
                 "reino-hongos": "No toma alimento de restos como los hongos: nada y caza en el agua."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plato",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "Un plato que cuida",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada alimento a su sitio o toca directamente el sitio.",
+      "opciones": [
+        {
+          "id": "de-vez-en-cuando",
+          "nombre": "De vez en cuando"
+        },
+        {
+          "id": "cada-dia",
+          "nombre": "Para cada día"
+        }
+      ],
+      "retos": [
+        {
+          "id": "plato-manzana",
+          "nombre": "La manzana",
+          "pregunta": "¿La manzana es para cada día o para de vez en cuando?",
+          "respuesta": "cada-dia",
+          "pista": "La fruta tiene agua, vitaminas y un dulzor natural.",
+          "curiosidad": "Una manzana entera llena más que un zumo, porque conserva la piel y la fibra.",
+          "frases": {
+            "cada-dia": "¡Sí! La manzana es una merienda que cuida: agua, vitaminas y fibra.",
+            "de-vez-en-cuando": "La fruta se puede comer todos los días: tiene vitaminas y agua."
+          }
+        },
+        {
+          "id": "plato-bollo",
+          "nombre": "El bollo de chocolate",
+          "pregunta": "¿El bollo de chocolate es para cada día o para de vez en cuando?",
+          "respuesta": "de-vez-en-cuando",
+          "pista": "Lleva mucho azúcar y grasa: da energía rápida, pero poco más.",
+          "curiosidad": "Un bollo de chocolate puede llevar tanto azúcar como cinco terrones.",
+          "frases": {
+            "de-vez-en-cuando": "¡Bien! El bollo está rico, pero lleva mucho azúcar. Mejor de vez en cuando.",
+            "cada-dia": "El bollo lleva mucho azúcar y grasa. Si lo comes cada día, tu cuerpo recibe demasiado."
+          }
+        },
+        {
+          "id": "plato-yogur",
+          "nombre": "El yogur natural",
+          "pregunta": "¿El yogur natural es para cada día o para de vez en cuando?",
+          "respuesta": "cada-dia",
+          "pista": "Viene de la leche y ayuda a tener huesos fuertes.",
+          "curiosidad": "El yogur se hace con leche y unas bacterias buenas que la vuelven espesa.",
+          "frases": {
+            "cada-dia": "¡Muy bien! El yogur natural cuida tus huesos y tu barriga.",
+            "de-vez-en-cuando": "El yogur natural tiene calcio para los huesos. Se puede tomar a diario."
+          }
+        },
+        {
+          "id": "plato-chuches",
+          "nombre": "Las chuches",
+          "pregunta": "¿Las chuches son para cada día o para de vez en cuando?",
+          "respuesta": "de-vez-en-cuando",
+          "pista": "Son casi todo azúcar y colorantes, y se pegan a los dientes.",
+          "curiosidad": "Las chuches pegajosas se quedan en los dientes y los microbios se alimentan de su azúcar.",
+          "frases": {
+            "de-vez-en-cuando": "¡Eso es! Las chuches son casi todo azúcar: solo de vez en cuando.",
+            "cada-dia": "Las chuches son casi todo azúcar y se pegan a los dientes. Mejor solo de vez en cuando."
+          }
+        },
+        {
+          "id": "plato-bocadillo",
+          "nombre": "El bocadillo de queso",
+          "pregunta": "¿El bocadillo de queso es para cada día o para de vez en cuando?",
+          "respuesta": "cada-dia",
+          "pista": "El pan da energía y el queso, calcio para los huesos.",
+          "curiosidad": "El pan se hace con harina de trigo, agua, sal y levadura, un hongo diminuto.",
+          "frases": {
+            "cada-dia": "¡Sí! Pan y queso dan energía y calcio: una merienda que cuida.",
+            "de-vez-en-cuando": "El pan da energía para jugar y el queso cuida los huesos. Vale para cada día."
+          }
+        },
+        {
+          "id": "plato-refresco",
+          "nombre": "El refresco",
+          "pregunta": "¿El refresco es para cada día o para de vez en cuando?",
+          "respuesta": "de-vez-en-cuando",
+          "pista": "Tiene muchas burbujas y mucho azúcar. Para la sed, mejor el agua.",
+          "curiosidad": "Una lata de refresco puede llevar unos siete terrones de azúcar.",
+          "frases": {
+            "de-vez-en-cuando": "¡Muy bien! Para la sed, el agua. El refresco, solo de vez en cuando.",
+            "cada-dia": "El refresco lleva mucho azúcar. Para beber cada día, lo mejor es el agua."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Prepara la merienda: qué es para cada día y qué, de vez en cuando.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "de-vez-en-cuando",
+              "nombre": "De vez en cuando"
+            },
+            {
+              "id": "cada-dia",
+              "nombre": "Para cada día"
+            }
+          ],
+          "retos": [
+            {
+              "id": "plato-manzana",
+              "nombre": "La manzana",
+              "pregunta": "¿La manzana es para cada día o para de vez en cuando?",
+              "respuesta": "cada-dia",
+              "pista": "La fruta tiene agua, vitaminas y un dulzor natural.",
+              "curiosidad": "Una manzana entera llena más que un zumo, porque conserva la piel y la fibra.",
+              "frases": {
+                "cada-dia": "¡Sí! La manzana es una merienda que cuida: agua, vitaminas y fibra.",
+                "de-vez-en-cuando": "La fruta se puede comer todos los días: tiene vitaminas y agua."
+              }
+            },
+            {
+              "id": "plato-bollo",
+              "nombre": "El bollo de chocolate",
+              "pregunta": "¿El bollo de chocolate es para cada día o para de vez en cuando?",
+              "respuesta": "de-vez-en-cuando",
+              "pista": "Lleva mucho azúcar y grasa: da energía rápida, pero poco más.",
+              "curiosidad": "Un bollo de chocolate puede llevar tanto azúcar como cinco terrones.",
+              "frases": {
+                "de-vez-en-cuando": "¡Bien! El bollo está rico, pero lleva mucho azúcar. Mejor de vez en cuando.",
+                "cada-dia": "El bollo lleva mucho azúcar y grasa. Si lo comes cada día, tu cuerpo recibe demasiado."
+              }
+            },
+            {
+              "id": "plato-yogur",
+              "nombre": "El yogur natural",
+              "pregunta": "¿El yogur natural es para cada día o para de vez en cuando?",
+              "respuesta": "cada-dia",
+              "pista": "Viene de la leche y ayuda a tener huesos fuertes.",
+              "curiosidad": "El yogur se hace con leche y unas bacterias buenas que la vuelven espesa.",
+              "frases": {
+                "cada-dia": "¡Muy bien! El yogur natural cuida tus huesos y tu barriga.",
+                "de-vez-en-cuando": "El yogur natural tiene calcio para los huesos. Se puede tomar a diario."
+              }
+            },
+            {
+              "id": "plato-chuches",
+              "nombre": "Las chuches",
+              "pregunta": "¿Las chuches son para cada día o para de vez en cuando?",
+              "respuesta": "de-vez-en-cuando",
+              "pista": "Son casi todo azúcar y colorantes, y se pegan a los dientes.",
+              "curiosidad": "Las chuches pegajosas se quedan en los dientes y los microbios se alimentan de su azúcar.",
+              "frases": {
+                "de-vez-en-cuando": "¡Eso es! Las chuches son casi todo azúcar: solo de vez en cuando.",
+                "cada-dia": "Las chuches son casi todo azúcar y se pegan a los dientes. Mejor solo de vez en cuando."
+              }
+            },
+            {
+              "id": "plato-bocadillo",
+              "nombre": "El bocadillo de queso",
+              "pregunta": "¿El bocadillo de queso es para cada día o para de vez en cuando?",
+              "respuesta": "cada-dia",
+              "pista": "El pan da energía y el queso, calcio para los huesos.",
+              "curiosidad": "El pan se hace con harina de trigo, agua, sal y levadura, un hongo diminuto.",
+              "frases": {
+                "cada-dia": "¡Sí! Pan y queso dan energía y calcio: una merienda que cuida.",
+                "de-vez-en-cuando": "El pan da energía para jugar y el queso cuida los huesos. Vale para cada día."
+              }
+            },
+            {
+              "id": "plato-refresco",
+              "nombre": "El refresco",
+              "pregunta": "¿El refresco es para cada día o para de vez en cuando?",
+              "respuesta": "de-vez-en-cuando",
+              "pista": "Tiene muchas burbujas y mucho azúcar. Para la sed, mejor el agua.",
+              "curiosidad": "Una lata de refresco puede llevar unos siete terrones de azúcar.",
+              "frases": {
+                "de-vez-en-cuando": "¡Muy bien! Para la sed, el agua. El refresco, solo de vez en cuando.",
+                "cada-dia": "El refresco lleva mucho azúcar. Para beber cada día, lo mejor es el agua."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Llena el plato por partes: verduras y frutas, proteínas y cereales.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "mitad-verdura",
+              "nombre": "Verduras y frutas"
+            },
+            {
+              "id": "cuarto-proteina",
+              "nombre": "Proteínas"
+            },
+            {
+              "id": "cuarto-cereal",
+              "nombre": "Cereales"
+            }
+          ],
+          "retos": [
+            {
+              "id": "plato-brocoli",
+              "nombre": "El brócoli",
+              "pregunta": "¿En qué parte del plato va el brócoli?",
+              "respuesta": "mitad-verdura",
+              "pista": "Un plato con solo pasta da mucha energía, pero no tiene verdura. ¿Qué le falta?",
+              "curiosidad": "El brócoli es una flor: lo que comemos son muchos capullos que todavía no se han abierto.",
+              "frases": {
+                "mitad-verdura": "¡Muy bien! El brócoli es una verdura: va en la mitad grande del plato.",
+                "cuarto-proteina": "El brócoli es una verdura. Las proteínas son legumbres, huevo, pescado o carne.",
+                "cuarto-cereal": "El brócoli no es un cereal como el arroz o el pan: es una verdura."
+              }
+            },
+            {
+              "id": "plato-lentejas",
+              "nombre": "Las lentejas",
+              "pregunta": "¿En qué parte del plato van las lentejas?",
+              "respuesta": "cuarto-proteina",
+              "pista": "Las legumbres ayudan a los músculos a crecer, igual que el huevo o el pescado.",
+              "curiosidad": "Las lentejas son semillas: crecen dentro de unas vainas pequeñitas.",
+              "frases": {
+                "cuarto-proteina": "¡Eso es! Las lentejas son legumbres y dan proteínas para los músculos.",
+                "mitad-verdura": "Las lentejas son legumbres: dan proteínas, como el huevo o el pescado.",
+                "cuarto-cereal": "Parecen granitos, pero las lentejas son legumbres, ricas en proteínas."
+              }
+            },
+            {
+              "id": "plato-arroz",
+              "nombre": "El arroz",
+              "pregunta": "¿En qué parte del plato va el arroz?",
+              "respuesta": "cuarto-cereal",
+              "pista": "El arroz, el pan y la pasta dan energía para moverse y pensar.",
+              "curiosidad": "El arroz crece en campos inundados de agua.",
+              "frases": {
+                "cuarto-cereal": "¡Muy bien! El arroz es un cereal: da energía para todo el día.",
+                "mitad-verdura": "El arroz no es una verdura: es un cereal, como el trigo.",
+                "cuarto-proteina": "El arroz da sobre todo energía: es un cereal, no una proteína."
+              }
+            },
+            {
+              "id": "plato-tomate",
+              "nombre": "El tomate",
+              "pregunta": "¿En qué parte del plato va el tomate?",
+              "respuesta": "mitad-verdura",
+              "pista": "Es rojo, jugoso y se come en ensalada con la lechuga.",
+              "curiosidad": "El tomate tiene semillas dentro porque es el fruto de la tomatera.",
+              "frases": {
+                "mitad-verdura": "¡Exacto! El tomate va con las verduras y frutas, en la mitad del plato.",
+                "cuarto-proteina": "El tomate es una hortaliza con mucha agua: va con las verduras.",
+                "cuarto-cereal": "El tomate no es un cereal: va con las verduras y frutas."
+              }
+            },
+            {
+              "id": "plato-pescado",
+              "nombre": "El pescado",
+              "pregunta": "¿En qué parte del plato va el pescado?",
+              "respuesta": "cuarto-proteina",
+              "pista": "El pescado, el huevo, la carne y las legumbres ayudan a crecer.",
+              "curiosidad": "El pescado azul, como la sardina, tiene grasas buenas para el corazón.",
+              "frases": {
+                "cuarto-proteina": "¡Bien! El pescado da proteínas para crecer y reparar los músculos.",
+                "mitad-verdura": "El pescado no es una verdura: da proteínas para crecer.",
+                "cuarto-cereal": "El pescado no es un cereal: da proteínas para crecer."
+              }
+            },
+            {
+              "id": "plato-pan",
+              "nombre": "El pan integral",
+              "pregunta": "¿En qué parte del plato va el pan integral?",
+              "respuesta": "cuarto-cereal",
+              "pista": "Se hace con harina de trigo, un cereal.",
+              "curiosidad": "El pan integral se hace con el grano entero de trigo y tiene más fibra.",
+              "frases": {
+                "cuarto-cereal": "¡Muy bien! El pan integral es un cereal y da energía.",
+                "mitad-verdura": "El pan se hace con harina de trigo: es un cereal.",
+                "cuarto-proteina": "El pan da sobre todo energía: va con los cereales."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Lee etiquetas inventadas y compara dos productos. En 100 g es mucho: más de 15 g de azúcar, 1,5 g de sal o 20 g de grasa.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "etiqueta-azucar",
+              "nombre": "Mucho azúcar"
+            },
+            {
+              "id": "etiqueta-sal",
+              "nombre": "Mucha sal"
+            },
+            {
+              "id": "etiqueta-grasa",
+              "nombre": "Mucha grasa"
+            },
+            {
+              "id": "etiqueta-equilibrada",
+              "nombre": "Buena elección"
+            }
+          ],
+          "retos": [
+            {
+              "id": "plato-cereales",
+              "nombre": "Cereales de colores",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 35 g, sal 0,6 g, grasa 3 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-azucar",
+              "pista": "Mira el azúcar: más de 15 g en 100 g ya es mucho.",
+              "curiosidad": "Los cereales de colores pueden llevar más de un tercio de su peso en azúcar.",
+              "frases": {
+                "etiqueta-azucar": "¡Muy bien! 35 g de azúcar en 100 g es mucho. Ahora compara.",
+                "etiqueta-sal": "0,6 g de sal no es mucho. Fíjate en el azúcar: 35 g.",
+                "etiqueta-grasa": "3 g de grasa es poco. Lo que destaca son los 35 g de azúcar.",
+                "etiqueta-equilibrada": "Fíjate en el azúcar: 35 g en 100 g es mucho."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con unos copos de avena: azúcar 1 g, sal 0 g, grasa 7 g. ¿Cuál elegirías para desayunar cada día?",
+                "opciones": [
+                  {
+                    "id": "dibujos",
+                    "nombre": "Los cereales de colores, porque la caja tiene dibujos"
+                  },
+                  {
+                    "id": "avena",
+                    "nombre": "Los copos de avena, porque tienen mucho menos azúcar"
+                  },
+                  {
+                    "id": "igual",
+                    "nombre": "Da igual, llevan lo mismo"
+                  }
+                ],
+                "respuesta": "avena",
+                "frases": {
+                  "avena": "¡Exacto! La avena casi no tiene azúcar y te da energía durante más tiempo.",
+                  "dibujos": "Los dibujos no alimentan. La avena tiene 1 g de azúcar frente a 35 g.",
+                  "igual": "Compara los números: 1 g de azúcar en la avena y 35 g en los cereales."
+                }
+              }
+            },
+            {
+              "id": "plato-galletitas",
+              "nombre": "Galletitas saladas",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 4 g, sal 2,5 g, grasa 12 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-sal",
+              "pista": "Mira la sal: más de 1,5 g en 100 g ya es mucho.",
+              "curiosidad": "Tomar mucha sal da sed y hace trabajar de más al corazón y a los riñones.",
+              "frases": {
+                "etiqueta-sal": "¡Eso es! 2,5 g de sal en 100 g es mucho. Ahora compara.",
+                "etiqueta-azucar": "4 g de azúcar es poco. Lo que destaca es la sal: 2,5 g.",
+                "etiqueta-grasa": "12 g de grasa no pasa de 20 g. Fíjate en la sal: 2,5 g.",
+                "etiqueta-equilibrada": "Fíjate en la sal: 2,5 g en 100 g es mucho."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con unas tostadas de pan sin sal añadida: azúcar 3 g, sal 0,1 g, grasa 6 g. ¿Cuál tiene menos sal?",
+                "opciones": [
+                  {
+                    "id": "galletitas",
+                    "nombre": "Las galletitas saladas"
+                  },
+                  {
+                    "id": "tostadas",
+                    "nombre": "Las tostadas sin sal añadida"
+                  },
+                  {
+                    "id": "misma",
+                    "nombre": "Las dos tienen la misma sal"
+                  }
+                ],
+                "respuesta": "tostadas",
+                "frases": {
+                  "tostadas": "¡Muy bien! 0,1 g de sal frente a 2,5 g: las tostadas tienen muchísima menos.",
+                  "galletitas": "Las galletitas tienen 2,5 g de sal. Las tostadas solo 0,1 g.",
+                  "misma": "Compara los números: 2,5 g de sal en las galletitas y 0,1 g en las tostadas."
+                }
+              }
+            },
+            {
+              "id": "plato-patatas",
+              "nombre": "Patatas fritas de bolsa",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 0,5 g, sal 1,2 g, grasa 33 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-grasa",
+              "pista": "Mira la grasa: más de 20 g en 100 g ya es mucho.",
+              "curiosidad": "Las patatas de bolsa absorben aceite al freírse; por eso dejan los dedos brillantes.",
+              "frases": {
+                "etiqueta-grasa": "¡Bien! 33 g de grasa en 100 g es mucho. Ahora compara.",
+                "etiqueta-azucar": "0,5 g de azúcar es casi nada. Lo que destaca es la grasa: 33 g.",
+                "etiqueta-sal": "1,2 g de sal no llega a 1,5 g. Fíjate en la grasa: 33 g.",
+                "etiqueta-equilibrada": "Fíjate en la grasa: 33 g en 100 g es mucho."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con palomitas hechas en casa con poco aceite: azúcar 1 g, sal 0,5 g, grasa 10 g. ¿Qué picoteo cuida más?",
+                "opciones": [
+                  {
+                    "id": "patatas",
+                    "nombre": "Las patatas de bolsa, porque crujen más"
+                  },
+                  {
+                    "id": "iguales",
+                    "nombre": "Son iguales, los dos son para picar"
+                  },
+                  {
+                    "id": "palomitas",
+                    "nombre": "Las palomitas caseras, porque tienen mucha menos grasa"
+                  }
+                ],
+                "respuesta": "palomitas",
+                "frases": {
+                  "palomitas": "¡Exacto! 10 g de grasa frente a 33 g: las palomitas caseras cuidan más.",
+                  "patatas": "Crujir no alimenta. Las patatas tienen 33 g de grasa y las palomitas 10 g.",
+                  "iguales": "Compara los números: 33 g de grasa en las patatas y 10 g en las palomitas."
+                }
+              }
+            },
+            {
+              "id": "plato-yogur-etiqueta",
+              "nombre": "Yogur natural",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 4 g, sal 0,1 g, grasa 3 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-equilibrada",
+              "pista": "Compara cada número con los límites: azúcar 15 g, sal 1,5 g y grasa 20 g.",
+              "curiosidad": "El azúcar del yogur natural viene de la propia leche: no lleva azúcar añadido.",
+              "frases": {
+                "etiqueta-equilibrada": "¡Muy bien! Azúcar, sal y grasa están por debajo del límite. Ahora compara.",
+                "etiqueta-azucar": "4 g de azúcar no llega a 15 g. Este yogur es una buena elección.",
+                "etiqueta-sal": "0,1 g de sal es casi nada. Este yogur es una buena elección.",
+                "etiqueta-grasa": "3 g de grasa es poco. Este yogur es una buena elección."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con un yogur de fresa azucarado: azúcar 14 g, sal 0,1 g, grasa 3 g. ¿Cuál tiene menos azúcar?",
+                "opciones": [
+                  {
+                    "id": "fresa",
+                    "nombre": "El yogur de fresa"
+                  },
+                  {
+                    "id": "natural",
+                    "nombre": "El yogur natural"
+                  },
+                  {
+                    "id": "mismo",
+                    "nombre": "Los dos tienen el mismo azúcar"
+                  }
+                ],
+                "respuesta": "natural",
+                "frases": {
+                  "natural": "¡Eso es! 4 g frente a 14 g. Si quieres dulzor, añade fruta troceada.",
+                  "fresa": "El de fresa tiene 14 g de azúcar; el natural, solo 4 g.",
+                  "mismo": "Compara los números: 4 g de azúcar en el natural y 14 g en el de fresa."
+                }
+              }
+            },
+            {
+              "id": "plato-lentejas-bote",
+              "nombre": "Lentejas de bote",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 1 g, sal 0,6 g, grasa 0,5 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-equilibrada",
+              "pista": "Compara cada número con los límites: azúcar 15 g, sal 1,5 g y grasa 20 g.",
+              "curiosidad": "Las lentejas cocidas se guardan en bote con agua y un poco de sal.",
+              "frases": {
+                "etiqueta-equilibrada": "¡Muy bien! Todo está por debajo del límite. Ahora compara.",
+                "etiqueta-azucar": "1 g de azúcar es casi nada. Estas lentejas son una buena elección.",
+                "etiqueta-sal": "0,6 g de sal no llega a 1,5 g. Son una buena elección.",
+                "etiqueta-grasa": "0,5 g de grasa es casi nada. Son una buena elección."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con unas lentejas de bote con chorizo: azúcar 1 g, sal 2 g, grasa 12 g. ¿Cuáles cuidan más?",
+                "opciones": [
+                  {
+                    "id": "chorizo",
+                    "nombre": "Las de chorizo, porque tienen más sabor"
+                  },
+                  {
+                    "id": "solas",
+                    "nombre": "Las lentejas solas, porque tienen menos sal y menos grasa"
+                  },
+                  {
+                    "id": "ninguna",
+                    "nombre": "Ninguna, las legumbres no alimentan"
+                  }
+                ],
+                "respuesta": "solas",
+                "frases": {
+                  "solas": "¡Exacto! Las de chorizo pasan de 1,5 g de sal. Las solas cuidan más.",
+                  "chorizo": "El sabor no lo es todo: las de chorizo tienen 2 g de sal y 12 g de grasa.",
+                  "ninguna": "Las legumbres alimentan mucho: dan proteínas. Las solas tienen menos sal y grasa."
+                }
               }
             }
           ]

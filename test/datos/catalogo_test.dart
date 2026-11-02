@@ -264,11 +264,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 58 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 58);
+  test('el álbum tiene 61 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 61);
     expect(catalogo.fichasDe('reserva').length, 20);
     expect(catalogo.fichasDe('invernadero').length, 20);
-    expect(catalogo.fichasDe('cuerpo').length, 18);
+    expect(catalogo.fichasDe('cuerpo').length, 21);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -404,7 +404,7 @@ void main() {
     await progreso.marcarNivelLugar(sentidos, 'dificil');
     expect(progreso.fichaDesbloqueada('avisos'), isTrue);
     expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
-    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo']) {
+    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo', 'plato']) {
       final act = catalogo.actividades.firstWhere((a) => a.id == nuevoId);
       await progreso.marcarNivelLugar(act, 'dificil');
     }
@@ -516,5 +516,64 @@ void main() {
     await progreso.marcarNivelLugar(vivo, 'dificil');
     expect(progreso.fichaDesbloqueada('funciones-vitales'), isTrue);
     expect(progreso.fichaDesbloqueada('reinos'), isTrue);
+  });
+
+  test('«Un plato que cuida» separa la merienda, llena el plato y lee etiquetas', () async {
+    final plato = catalogo.actividades.firstWhere((a) => a.id == 'plato');
+    expect(plato.zona, 'cuerpo');
+    expect(plato.tipo, 'lugar');
+    expect(plato.medalla, isFalse);
+
+    final niveles = {for (final n in plato.nivelesLugar) n.id: n};
+    expect(niveles['facil']!.curso, '1º-2º');
+    expect(niveles['medio']!.curso, '3º-4º');
+    expect(niveles['dificil']!.curso, '5º-6º');
+    expect(niveles['facil']!.opciones.map((o) => o.id),
+        ['de-vez-en-cuando', 'cada-dia']);
+    expect(niveles['medio']!.opciones.map((o) => o.id),
+        ['mitad-verdura', 'cuarto-proteina', 'cuarto-cereal']);
+    expect(niveles['dificil']!.opciones.map((o) => o.id), [
+      'etiqueta-azucar',
+      'etiqueta-sal',
+      'etiqueta-grasa',
+      'etiqueta-equilibrada',
+    ]);
+    for (final nivel in niveles.values) {
+      expect(nivel.retos.map((r) => r.respuesta).toSet(),
+          nivel.opciones.map((o) => o.id).toSet(),
+          reason: 'En ${nivel.id} cada sitio recibe algún alimento');
+    }
+    expect(niveles['facil']!.preguntaAdaptacion, isFalse);
+    expect(niveles['medio']!.preguntaAdaptacion, isFalse);
+    expect(niveles['dificil']!.preguntaAdaptacion, isTrue);
+
+    for (final reto in niveles['dificil']!.retos) {
+      final adaptacion = reto.adaptacion!;
+      expect(adaptacion.opciones.first.id, isNot(adaptacion.respuesta),
+          reason: 'La respuesta correcta no se escribe la primera');
+    }
+
+    final bollo = niveles['facil']!.retos.firstWhere((r) => r.id == 'plato-bollo');
+    final primera = resolverLugar(reto: bollo, eleccion: 'cada-dia', intento: 1);
+    expect(primera.acierto, isFalse);
+    expect(primera.frase, contains('azúcar'));
+    final segunda = resolverLugar(reto: bollo, eleccion: 'cada-dia', intento: 2);
+    expect(segunda.frase, contains(bollo.pista));
+
+    final cereales =
+        niveles['dificil']!.retos.firstWhere((r) => r.id == 'plato-cereales');
+    expect(resolverLugar(reto: cereales, eleccion: 'etiqueta-azucar', intento: 1).acierto,
+        isTrue);
+    expect(resolverAdaptacion(reto: cereales, eleccion: 'avena').acierto, isTrue);
+    expect(resolverAdaptacion(reto: cereales, eleccion: 'dibujos').acierto, isFalse);
+
+    SharedPreferences.setMockInitialValues({});
+    final progreso = await Progreso.abrir();
+    await progreso.marcarNivelLugar(plato, 'facil');
+    expect(progreso.fichaDesbloqueada('merienda'), isTrue);
+    expect(progreso.fichaDesbloqueada('plato-equilibrado'), isFalse);
+    await progreso.marcarNivelLugar(plato, 'dificil');
+    expect(progreso.fichaDesbloqueada('plato-equilibrado'), isTrue);
+    expect(progreso.fichaDesbloqueada('etiqueta'), isTrue);
   });
 }

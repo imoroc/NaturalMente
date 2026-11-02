@@ -133,6 +133,7 @@ class Progreso extends ChangeNotifier {
     'estaciones': ['facil', 'medio', 'dificil'],
     'huerta': ['facil', 'medio', 'dificil'],
     'vivo': ['facil', 'medio', 'dificil'],
+    'plato': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -163,6 +164,9 @@ class Progreso extends ChangeNotifier {
       ('vivo', 'facil') => const ['ser-vivo'],
       ('vivo', 'medio') => const ['funciones-vitales'],
       ('vivo', 'dificil') => const ['reinos'],
+      ('plato', 'facil') => const ['merienda'],
+      ('plato', 'medio') => const ['plato-equilibrado'],
+      ('plato', 'dificil') => const ['etiqueta'],
       ('habitos', 'facil') => const ['higiene'],
       ('habitos', 'medio') => const ['descanso'],
       ('habitos', 'dificil') => const ['cuidar-sentidos'],
@@ -257,6 +261,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «¿Vivo o no vivo?» a partir del nivel Medio (3º-4º).',
       'reinos' =>
         'Se consigue en «¿Vivo o no vivo?» en el nivel Difícil (5º-6º).',
+      'merienda' =>
+        'Se consigue en «Un plato que cuida» desde el nivel Fácil (1º-2º).',
+      'plato-equilibrado' =>
+        'Se consigue en «Un plato que cuida» a partir del nivel Medio (3º-4º).',
+      'etiqueta' =>
+        'Se consigue en «Un plato que cuida» en el nivel Difícil (5º-6º).',
       'higiene' =>
         'Se consigue en «¿Me cuida o no?» desde el nivel Fácil (1º-2º).',
       'descanso' =>

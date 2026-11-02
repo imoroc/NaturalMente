@@ -165,6 +165,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
     'estaciones',
     'huerta',
     'vivo',
+    'plato',
   };
 
   void _prepararBarajadoReto() {
@@ -810,6 +811,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
               'estaciones',
               'huerta',
               'vivo',
+              'plato',
             }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }
@@ -876,6 +878,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
           'estaciones',
           'huerta',
           'vivo',
+          'plato',
         }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }
@@ -1889,61 +1892,87 @@ class _Lugar extends StatelessWidget {
             return tablero;
           }
 
-          if (usarAlturaFija) {
-            final filas = (opciones.length / 2).ceil();
-            final alturaGrid = filas * 96.0 + (filas - 1) * 10.0;
-            return SizedBox(
-              height: alturaGrid,
-              child: GridView.count(
-                crossAxisCount: 2,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: (outerConstraints.maxWidth - 42) / 2 / 96.0,
-                children: [
-                  for (final opcion in opciones)
-                    _Sitio(
-                      opcion: opcion,
-                      elegido: sitioElegido == opcion.id,
-                      acierto: lugarAcertado && sitioElegido == opcion.id,
-                      criatura: reto.id,
-                      onElegir: () => onSoltar(opcion.id),
-                    ),
-                ],
-              ),
+          Widget rejillaSitios() {
+            if (usarAlturaFija) {
+              final filas = (opciones.length / 2).ceil();
+              final alturaGrid = filas * 96.0 + (filas - 1) * 10.0;
+              return SizedBox(
+                height: alturaGrid,
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: (outerConstraints.maxWidth - 42) / 2 / 96.0,
+                  children: [
+                    for (final opcion in opciones)
+                      _Sitio(
+                        opcion: opcion,
+                        elegido: sitioElegido == opcion.id,
+                        acierto: lugarAcertado && sitioElegido == opcion.id,
+                        criatura: reto.id,
+                        onElegir: () => onSoltar(opcion.id),
+                      ),
+                  ],
+                ),
+              );
+            }
+
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                const separacion = 10.0;
+                final columnas =
+                    constraints.maxWidth > 520 && opciones.length >= 4 ? 3 : 2;
+                final filas = (opciones.length / columnas).ceil();
+                final ancho =
+                    (constraints.maxWidth - separacion * (columnas - 1)) /
+                    columnas;
+                final alto =
+                    (constraints.maxHeight - separacion * (filas - 1)) / filas;
+                return GridView.count(
+                  crossAxisCount: columnas,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: separacion,
+                  crossAxisSpacing: separacion,
+                  childAspectRatio: (ancho / alto).clamp(0.6, 4.5),
+                  children: [
+                    for (final opcion in opciones)
+                      _Sitio(
+                        opcion: opcion,
+                        elegido: sitioElegido == opcion.id,
+                        acierto: lugarAcertado && sitioElegido == opcion.id,
+                        criatura: reto.id,
+                        onElegir: () => onSoltar(opcion.id),
+                      ),
+                  ],
+                );
+              },
             );
           }
 
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              const separacion = 10.0;
-              final columnas =
-                  constraints.maxWidth > 520 && opciones.length >= 4 ? 3 : 2;
-              final filas = (opciones.length / columnas).ceil();
-              final ancho =
-                  (constraints.maxWidth - separacion * (columnas - 1)) /
-                  columnas;
-              final alto =
-                  (constraints.maxHeight - separacion * (filas - 1)) / filas;
-              return GridView.count(
-                crossAxisCount: columnas,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: separacion,
-                crossAxisSpacing: separacion,
-                childAspectRatio: (ancho / alto).clamp(0.6, 4.5),
-                children: [
-                  for (final opcion in opciones)
-                    _Sitio(
-                      opcion: opcion,
-                      elegido: sitioElegido == opcion.id,
-                      acierto: lugarAcertado && sitioElegido == opcion.id,
-                      criatura: reto.id,
-                      onElegir: () => onSoltar(opcion.id),
-                    ),
-                ],
+          if (actividad.id == 'plato' && nivelActual?.id != 'dificil') {
+            final bandejaPlato = BandejaPlato(
+              nivel: nivelActual?.id ?? 'facil',
+              retos: retosNivel,
+              resueltos: organosColocados,
+            );
+            if (usarAlturaFija) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [bandejaPlato, rejillaSitios()],
               );
-            },
-          );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                bandejaPlato,
+                Expanded(child: rejillaSitios()),
+              ],
+            );
+          }
+
+          return rejillaSitios();
         }
 
         final burbujaWidget = Burbuja(
@@ -4496,6 +4525,7 @@ String? _subtituloSitio(String id) => switch (id) {
   'tacto' => 'Piel · Frío, calor y texturas',
   final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(otro),
   final otro when idsSitiosVivo.contains(otro) => subtituloSitioVivo(otro),
+  final otro when idsSitiosPlato.contains(otro) => subtituloSitioPlato(otro),
   // Fin sentidos
   _ => null,
 };
@@ -4578,6 +4608,7 @@ Color _colorSitio(String id) {
       return const Color(0xFFFFEDD5);
     default:
       if (idsSitiosVivo.contains(id)) return colorSitioVivo(id);
+      if (idsSitiosPlato.contains(id)) return colorSitioPlato(id);
       return idsNuevosJuegos.contains(id)
           ? colorSitioNuevoJuego(id)
           : const Color(0xFFF6F1E6);
@@ -4628,6 +4659,7 @@ Color _bordeSitio(String id) {
       return const Color(0xFFFB923C);
     default:
       if (idsSitiosVivo.contains(id)) return bordeSitioVivo(id);
+      if (idsSitiosPlato.contains(id)) return bordeSitioPlato(id);
       return idsNuevosJuegos.contains(id)
           ? bordeSitioNuevoJuego(id)
           : const Color(0xFFD6CFC0);

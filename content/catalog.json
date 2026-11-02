@@ -568,6 +568,114 @@
       "titulo": "Reservas y recursos vegetales",
       "frase": "Las plantas acumulan nutrientes en tubérculos, bulbos, raíces y granos de cereal, y nos proporcionan fibras como el algodón y aceites como el de oliva.",
       "curiosidad": "La patata no es una raíz, sino un tallo subterráneo engrosado (tubérculo) con pequeñas yemas llamadas «ojos»."
+    },
+    {
+      "id": "fruta-verdura",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "¿Qué parte cuido?",
+      "titulo": "Fruta y verdura",
+      "frase": "La fruta y la verdura aportan vitaminas y fibra, y ayudan a que el estómago y los intestinos trabajen bien.",
+      "curiosidad": "Cuantos más colores tenga tu plato, más vitaminas distintas tomas."
+    },
+    {
+      "id": "respirar-hondo",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "¿Qué parte cuido?",
+      "titulo": "Respirar hondo",
+      "frase": "Respirar hondo y despacio llena los pulmones de aire y ayuda a calmar el cuerpo cuando estás nervioso.",
+      "curiosidad": "Los pulmones están protegidos por las costillas, que se mueven al respirar."
+    },
+    {
+      "id": "moverse-cada-dia",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "¿Qué parte cuido?",
+      "titulo": "Un corazón fuerte",
+      "frase": "Moverse cada día hace más fuerte el corazón, que es un músculo, y también los huesos y los músculos.",
+      "curiosidad": "Con el ejercicio, el corazón bombea más sangre en cada latido y trabaja con menos esfuerzo."
+    },
+    {
+      "id": "trucha-arroyo",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "¿Cómo respira?",
+      "titulo": "Las branquias",
+      "frase": "Los peces respiran bajo el agua con las branquias, que toman el oxígeno que va disuelto en el agua.",
+      "curiosidad": "Si sacas un pez del agua, sus branquias se pegan y no pueden tomar oxígeno del aire."
+    },
+    {
+      "id": "lombriz-galeria",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "¿Cómo respira?",
+      "titulo": "Respirar por la piel",
+      "frase": "La lombriz de tierra no tiene pulmones: el oxígeno entra por su piel, que siempre tiene que estar húmeda.",
+      "curiosidad": "Por eso busca la tierra húmeda y se esconde del sol: si su piel se seca, no puede respirar."
+    },
+    {
+      "id": "rana-charca",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "¿Cómo respira?",
+      "titulo": "La rana: pulmones y piel",
+      "frase": "De renacuajo respira con branquias; de adulta usa pulmones y también toma oxígeno por su piel húmeda.",
+      "curiosidad": "En invierno, algunas ranas pasan meses bajo el agua de una charca respirando solo por la piel."
+    },
+    {
+      "id": "savia-planta",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "El viaje de la savia",
+      "titulo": "La savia",
+      "frase": "La savia es el líquido que viaja por dentro de la planta llevando agua y alimento.",
+      "curiosidad": "Los tallos y troncos tienen tubitos muy finos por los que sube y baja la savia."
+    },
+    {
+      "id": "fotosintesis-hoja",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "El viaje de la savia",
+      "titulo": "La hoja fabrica alimento",
+      "frase": "Con la luz del sol, el aire y el agua, las hojas verdes fabrican el alimento de la planta.",
+      "curiosidad": "Al fabricar su alimento, las plantas sueltan oxígeno, el gas que respiramos."
+    },
+    {
+      "id": "savia-elaborada",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "El viaje de la savia",
+      "titulo": "La savia elaborada",
+      "frase": "Las hojas mandan el alimento que fabrican hacia el tallo y las raíces por unos tubitos llamados floema.",
+      "curiosidad": "La savia bruta sube por el xilema y la elaborada se reparte por el floema: son dos caminos distintos."
+    },
+    {
+      "id": "aparato-circulatorio",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Cada órgano, su trabajo",
+      "titulo": "Aparato circulatorio",
+      "frase": "El corazón empuja la sangre por tubitos llamados vasos para llevar el oxígeno y los nutrientes a todo el cuerpo.",
+      "curiosidad": "Si pudieras estirar todos los vasos sanguíneos de un adulto, darían más de una vuelta al mundo."
+    },
+    {
+      "id": "aparato-respiratorio",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Cada órgano, su trabajo",
+      "titulo": "Aparato respiratorio",
+      "frase": "Al respirar, el aire entra por la nariz, baja por la tráquea y llena los pulmones, donde el oxígeno pasa a la sangre.",
+      "curiosidad": "Respiramos muchas veces por minuto sin darnos cuenta: ¡nuestro cuerpo lo hace solo!"
+    },
+    {
+      "id": "sistema-nervioso",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Cada órgano, su trabajo",
+      "titulo": "Sistema nervioso",
+      "frase": "El cerebro, la médula y los nervios mandan y reciben mensajes para que el cuerpo se mueva y sienta.",
+      "curiosidad": "Los mensajes de los nervios viajan tan rápido que notas un pinchazo casi al instante."
     }
   ],
   "actividades": [
@@ -8323,6 +8431,1244 @@
                   "oido": "El oído capta los sonidos. El peso de la mochila carga la columna y los músculos.",
                   "nervioso": "El cerebro dirige el cuerpo, pero quien soporta el peso de la mochila es el aparato locomotor."
                 }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cuidados",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "¿Qué parte cuido?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada cuidado a la parte del cuerpo que protege o toca su tarjeta.",
+      "opciones": [
+        {
+          "id": "cabeza",
+          "nombre": "Cabeza"
+        },
+        {
+          "id": "barriga",
+          "nombre": "Abdomen"
+        },
+        {
+          "id": "extremidades",
+          "nombre": "Extremidades"
+        }
+      ],
+      "retos": [
+        {
+          "id": "cepillar-dientes",
+          "nombre": "Cepillarse los dientes",
+          "pregunta": "Te cepillas los dientes después de comer. ¿En qué parte del cuerpo están?",
+          "respuesta": "cabeza",
+          "pista": "Los dientes están en la boca, y la boca está en la cara.",
+          "curiosidad": "Los dientes de leche se caen para dejar sitio a los dientes definitivos.",
+          "frases": {
+            "cabeza": "¡Eso es! Los dientes están en la boca, dentro de la cabeza.",
+            "barriga": "La comida baja a la barriga, pero los dientes están en la boca, en la cabeza.",
+            "extremidades": "Los brazos y las piernas no tienen dientes: están en la boca, en la cabeza."
+          }
+        },
+        {
+          "id": "lavar-manos",
+          "nombre": "Lavarse las manos",
+          "pregunta": "Te lavas las manos antes de comer. ¿En qué parte del cuerpo están las manos?",
+          "respuesta": "extremidades",
+          "pista": "Las manos están al final de los brazos.",
+          "curiosidad": "Los gérmenes son tan pequeños que no se ven, pero el jabón los arrastra con el agua.",
+          "frases": {
+            "extremidades": "¡Muy bien! Las manos están al final de los brazos, que son extremidades.",
+            "cabeza": "Las manos no están en la cabeza: están al final de los brazos.",
+            "barriga": "Las manos no están en la barriga: están al final de los brazos."
+          }
+        },
+        {
+          "id": "fruta-verdura",
+          "nombre": "Fruta y verdura",
+          "pregunta": "Comer fruta y verdura ayuda a que la comida avance bien. ¿Qué parte del cuerpo trabaja con la comida?",
+          "respuesta": "barriga",
+          "pista": "La comida llega al estómago y pasa por los intestinos, dentro de la barriga.",
+          "curiosidad": "La fibra de la fruta y la verdura ayuda a los intestinos a mover la comida.",
+          "frases": {
+            "barriga": "¡Eso es! El estómago y los intestinos están en la barriga y trabajan con la comida.",
+            "cabeza": "En la cabeza están el cerebro y la boca, pero la comida se digiere en la barriga.",
+            "extremidades": "Los brazos y las piernas no digieren: la comida se digiere en la barriga."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Cada cuidado protege una parte del cuerpo: la cabeza, la barriga o los brazos y las piernas.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Abdomen"
+            },
+            {
+              "id": "extremidades",
+              "nombre": "Extremidades"
+            }
+          ],
+          "retos": [
+            {
+              "id": "cepillar-dientes",
+              "nombre": "Cepillarse los dientes",
+              "pregunta": "Te cepillas los dientes después de comer. ¿En qué parte del cuerpo están?",
+              "respuesta": "cabeza",
+              "pista": "Los dientes están en la boca, y la boca está en la cara.",
+              "curiosidad": "Los dientes de leche se caen para dejar sitio a los dientes definitivos.",
+              "frases": {
+                "cabeza": "¡Eso es! Los dientes están en la boca, dentro de la cabeza.",
+                "barriga": "La comida baja a la barriga, pero los dientes están en la boca, en la cabeza.",
+                "extremidades": "Los brazos y las piernas no tienen dientes: están en la boca, en la cabeza."
+              }
+            },
+            {
+              "id": "lavar-manos",
+              "nombre": "Lavarse las manos",
+              "pregunta": "Te lavas las manos antes de comer. ¿En qué parte del cuerpo están las manos?",
+              "respuesta": "extremidades",
+              "pista": "Las manos están al final de los brazos.",
+              "curiosidad": "Los gérmenes son tan pequeños que no se ven, pero el jabón los arrastra con el agua.",
+              "frases": {
+                "extremidades": "¡Muy bien! Las manos están al final de los brazos, que son extremidades.",
+                "cabeza": "Las manos no están en la cabeza: están al final de los brazos.",
+                "barriga": "Las manos no están en la barriga: están al final de los brazos."
+              }
+            },
+            {
+              "id": "fruta-verdura",
+              "nombre": "Fruta y verdura",
+              "pregunta": "Comer fruta y verdura ayuda a que la comida avance bien. ¿Qué parte del cuerpo trabaja con la comida?",
+              "respuesta": "barriga",
+              "pista": "La comida llega al estómago y pasa por los intestinos, dentro de la barriga.",
+              "curiosidad": "La fibra de la fruta y la verdura ayuda a los intestinos a mover la comida.",
+              "frases": {
+                "barriga": "¡Eso es! El estómago y los intestinos están en la barriga y trabajan con la comida.",
+                "cabeza": "En la cabeza están el cerebro y la boca, pero la comida se digiere en la barriga.",
+                "extremidades": "Los brazos y las piernas no digieren: la comida se digiere en la barriga."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Ahora también cuidamos el pecho, donde están el corazón y los pulmones.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "pecho",
+              "nombre": "Pecho"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Abdomen"
+            },
+            {
+              "id": "extremidades",
+              "nombre": "Extremidades"
+            }
+          ],
+          "retos": [
+            {
+              "id": "musica-alta",
+              "nombre": "Música alta",
+              "pregunta": "Bajar el volumen de los auriculares protege tus oídos. ¿En qué parte del cuerpo están?",
+              "respuesta": "cabeza",
+              "pista": "Los oídos están a los lados de la cabeza.",
+              "curiosidad": "Los sonidos muy fuertes pueden dañar los oídos para siempre.",
+              "frases": {
+                "cabeza": "¡Muy bien! Los oídos están en la cabeza y conviene cuidarlos.",
+                "pecho": "En el pecho están el corazón y los pulmones. Los oídos están en la cabeza.",
+                "barriga": "En la barriga está la digestión. Los oídos están en la cabeza.",
+                "extremidades": "Los brazos y las piernas no oyen: los oídos están en la cabeza."
+              }
+            },
+            {
+              "id": "respirar-hondo",
+              "nombre": "Respirar hondo",
+              "pregunta": "Respirar hondo y despacio llena de aire los pulmones. ¿En qué parte del cuerpo están?",
+              "respuesta": "pecho",
+              "pista": "Notas cómo se hincha el pecho al tomar aire.",
+              "curiosidad": "Respirar hondo y despacio ayuda a calmarse cuando estás nervioso.",
+              "frases": {
+                "pecho": "¡Eso es! Los pulmones están en el pecho, protegidos por las costillas.",
+                "cabeza": "El aire entra por la nariz, pero los pulmones están en el pecho.",
+                "barriga": "La barriga se mueve un poco al respirar, pero los pulmones están en el pecho.",
+                "extremidades": "Los brazos y las piernas no respiran: los pulmones están en el pecho."
+              }
+            },
+            {
+              "id": "calentar-estirar",
+              "nombre": "Calentar y estirar",
+              "pregunta": "Antes de correr, calientas y estiras los músculos de las piernas. ¿Qué parte del cuerpo preparas?",
+              "respuesta": "extremidades",
+              "pista": "Las piernas y los brazos son las extremidades.",
+              "curiosidad": "Los músculos de las piernas están entre los más grandes del cuerpo.",
+              "frases": {
+                "extremidades": "¡Muy bien! Preparas las extremidades: piernas y brazos.",
+                "cabeza": "La cabeza no corre: calientas los músculos de las piernas.",
+                "pecho": "El pecho respira, pero los músculos que corren son los de las piernas.",
+                "barriga": "La barriga digiere, pero los músculos que corren son los de las piernas."
+              }
+            },
+            {
+              "id": "cena-enorme",
+              "nombre": "Cena enorme",
+              "pregunta": "Después de una cena enorme, ¿qué parte del cuerpo trabaja más para digerirla?",
+              "respuesta": "barriga",
+              "pista": "La comida se amasa en el estómago y avanza por los intestinos.",
+              "curiosidad": "Una cena ligera ayuda a descansar mejor, porque la digestión es más fácil.",
+              "frases": {
+                "barriga": "¡Eso es! El estómago y los intestinos trabajan mucho con una cena enorme.",
+                "cabeza": "El cerebro no digiere: de la cena se encarga la barriga.",
+                "pecho": "Los pulmones y el corazón siguen igual: de la cena se encarga la barriga.",
+                "extremidades": "Las piernas y los brazos no digieren: de la cena se encarga la barriga."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Hábitos que cuidan órganos concretos: el cerebro, el corazón, los intestinos y los músculos.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "cabeza",
+              "nombre": "Cabeza"
+            },
+            {
+              "id": "pecho",
+              "nombre": "Pecho"
+            },
+            {
+              "id": "barriga",
+              "nombre": "Abdomen"
+            },
+            {
+              "id": "extremidades",
+              "nombre": "Extremidades"
+            }
+          ],
+          "retos": [
+            {
+              "id": "dormir-examen",
+              "nombre": "Dormir bien",
+              "pregunta": "La noche antes de un examen duermes bien para pensar y recordar mejor. ¿En qué parte del cuerpo está el órgano que descansa?",
+              "respuesta": "cabeza",
+              "pista": "Es el órgano que piensa, recuerda y da las órdenes al cuerpo.",
+              "curiosidad": "Mientras duermes, el cerebro ordena lo que has aprendido durante el día.",
+              "frases": {
+                "cabeza": "¡Muy bien! El cerebro está en la cabeza y rinde mejor si has dormido.",
+                "pecho": "En el pecho están el corazón y los pulmones. El cerebro está en la cabeza.",
+                "barriga": "En la barriga está la digestión. El cerebro está en la cabeza.",
+                "extremidades": "Los músculos de brazos y piernas también descansan, pero pensar y recordar es cosa del cerebro, en la cabeza."
+              }
+            },
+            {
+              "id": "moverse-cada-dia",
+              "nombre": "Moverse cada día",
+              "pregunta": "Correr, saltar y jugar cada día hace más fuerte el corazón. ¿En qué parte del cuerpo está?",
+              "respuesta": "pecho",
+              "pista": "Está entre los pulmones, un poco a la izquierda del pecho.",
+              "curiosidad": "El corazón es un músculo, y se hace más fuerte con el ejercicio.",
+              "frases": {
+                "pecho": "¡Eso es! El corazón está en el pecho y el ejercicio lo hace más fuerte.",
+                "cabeza": "En la cabeza está el cerebro. El corazón está en el pecho.",
+                "barriga": "En la barriga están el estómago y los intestinos. El corazón está en el pecho.",
+                "extremidades": "Las piernas se mueven, pero el corazón está en el pecho."
+              }
+            },
+            {
+              "id": "beber-agua",
+              "nombre": "Beber agua",
+              "pregunta": "Beber agua ayuda a que el intestino funcione bien. ¿En qué parte del cuerpo están los intestinos?",
+              "respuesta": "barriga",
+              "pista": "Los intestinos son un tubo muy largo enrollado dentro de la barriga.",
+              "curiosidad": "Beber suficiente agua ayuda a que el intestino funcione bien.",
+              "frases": {
+                "barriga": "¡Eso es! Los intestinos están en la barriga y el agua les ayuda a trabajar.",
+                "cabeza": "La cabeza también necesita agua, pero los intestinos están en la barriga.",
+                "pecho": "El pecho también necesita agua, pero los intestinos están en la barriga.",
+                "extremidades": "Los músculos también necesitan agua, pero los intestinos están en la barriga."
+              }
+            },
+            {
+              "id": "jugar-parque",
+              "nombre": "Jugar en el parque",
+              "pregunta": "Correr y saltar en el parque fortalece los huesos y los músculos de las piernas. ¿Qué parte del cuerpo se hace más fuerte?",
+              "respuesta": "extremidades",
+              "pista": "Los huesos y los músculos que te hacen correr y saltar están en las piernas.",
+              "curiosidad": "Los huesos se hacen más fuertes cuando los usas: saltar y correr les ayuda.",
+              "frases": {
+                "extremidades": "¡Muy bien! Las piernas y los brazos se hacen más fuertes jugando.",
+                "cabeza": "La cabeza piensa, pero para correr trabajan las piernas.",
+                "pecho": "El pecho respira más rápido al correr, pero los que saltan son los músculos de las piernas.",
+                "barriga": "La barriga digiere. Para correr y saltar trabajan las piernas."
+              }
+            },
+            {
+              "id": "pantalla-cerca",
+              "nombre": "Pantalla cerca",
+              "pregunta": "Mirar una pantalla muy de cerca durante mucho rato cansa los ojos. ¿En qué parte del cuerpo están?",
+              "respuesta": "cabeza",
+              "pista": "Los ojos están en la cara, a los dos lados de la nariz.",
+              "curiosidad": "Mirar a lo lejos de vez en cuando descansa los ojos.",
+              "frases": {
+                "cabeza": "¡Eso es! Los ojos están en la cabeza y necesitan descansar de las pantallas.",
+                "pecho": "Los ojos no están en el pecho: están en la cabeza.",
+                "barriga": "Los ojos no están en la barriga: están en la cabeza.",
+                "extremidades": "Los ojos no están en los brazos ni en las piernas: están en la cabeza."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "respiracion",
+      "zona": "reserva",
+      "tipo": "lugar",
+      "titulo": "¿Cómo respira?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada animal a su forma de respirar o toca su tarjeta.",
+      "opciones": [
+        {
+          "id": "respira-aire",
+          "nombre": "Aire con pulmones"
+        },
+        {
+          "id": "respira-agua",
+          "nombre": "Agua con branquias"
+        }
+      ],
+      "retos": [
+        {
+          "id": "delfin",
+          "nombre": "Delfín",
+          "pregunta": "El delfín vive en el mar. ¿Cómo respira?",
+          "respuesta": "respira-aire",
+          "pista": "Sube a la superficie y suelta el aire por un agujero que tiene en la cabeza.",
+          "curiosidad": "El delfín no es un pez: es un mamífero y necesita subir muchas veces a respirar.",
+          "frases": {
+            "respira-aire": "¡Eso es! Aunque vive en el agua, el delfín respira aire con sus pulmones.",
+            "respira-agua": "Los delfines no tienen branquias. Salen a la superficie a tomar aire."
+          }
+        },
+        {
+          "id": "murcielago-noche",
+          "nombre": "Murciélago",
+          "pregunta": "¿Cómo respira un murciélago cuando vuela de noche?",
+          "respuesta": "respira-aire",
+          "pista": "Es un mamífero y vuela por el aire, pero no vive bajo el agua.",
+          "curiosidad": "Los murciélagos son los únicos mamíferos que vuelan de verdad.",
+          "frases": {
+            "respira-aire": "¡Muy bien! Respira aire con pulmones, igual que tú.",
+            "respira-agua": "El murciélago vive en el aire y no tiene branquias. Respira con pulmones."
+          }
+        },
+        {
+          "id": "salmon-rio",
+          "nombre": "Salmón",
+          "pregunta": "¿Cómo respira el salmón en el río?",
+          "respuesta": "respira-agua",
+          "pista": "Abre y cierra la boca para que el agua pase por unas láminas rojas.",
+          "curiosidad": "El salmón nace en un río, vive en el mar y vuelve al río para poner sus huevos.",
+          "frases": {
+            "respira-agua": "¡Eso es! Con las branquias toma el oxígeno que va disuelto en el agua.",
+            "respira-aire": "El salmón no tiene pulmones: toma el oxígeno del agua con sus branquias."
+          }
+        },
+        {
+          "id": "sardina-banco",
+          "nombre": "Sardina",
+          "pregunta": "Una sardina nada en un banco de peces. ¿Cómo respira?",
+          "respuesta": "respira-agua",
+          "pista": "Mira a los lados de su cabeza: ahí están las branquias.",
+          "curiosidad": "Las sardinas nadan juntas en grupos enormes para protegerse.",
+          "frases": {
+            "respira-agua": "¡Muy bien! Respira bajo el agua con branquias.",
+            "respira-aire": "La sardina no sube a tomar aire. Respira con las branquias, bajo el agua."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Algunos animales respiran aire y otros respiran bajo el agua.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "respira-aire",
+              "nombre": "Aire con pulmones"
+            },
+            {
+              "id": "respira-agua",
+              "nombre": "Agua con branquias"
+            }
+          ],
+          "retos": [
+            {
+              "id": "delfin",
+              "nombre": "Delfín",
+              "pregunta": "El delfín vive en el mar. ¿Cómo respira?",
+              "respuesta": "respira-aire",
+              "pista": "Sube a la superficie y suelta el aire por un agujero que tiene en la cabeza.",
+              "curiosidad": "El delfín no es un pez: es un mamífero y necesita subir muchas veces a respirar.",
+              "frases": {
+                "respira-aire": "¡Eso es! Aunque vive en el agua, el delfín respira aire con sus pulmones.",
+                "respira-agua": "Los delfines no tienen branquias. Salen a la superficie a tomar aire."
+              }
+            },
+            {
+              "id": "murcielago-noche",
+              "nombre": "Murciélago",
+              "pregunta": "¿Cómo respira un murciélago cuando vuela de noche?",
+              "respuesta": "respira-aire",
+              "pista": "Es un mamífero y vuela por el aire, pero no vive bajo el agua.",
+              "curiosidad": "Los murciélagos son los únicos mamíferos que vuelan de verdad.",
+              "frases": {
+                "respira-aire": "¡Muy bien! Respira aire con pulmones, igual que tú.",
+                "respira-agua": "El murciélago vive en el aire y no tiene branquias. Respira con pulmones."
+              }
+            },
+            {
+              "id": "salmon-rio",
+              "nombre": "Salmón",
+              "pregunta": "¿Cómo respira el salmón en el río?",
+              "respuesta": "respira-agua",
+              "pista": "Abre y cierra la boca para que el agua pase por unas láminas rojas.",
+              "curiosidad": "El salmón nace en un río, vive en el mar y vuelve al río para poner sus huevos.",
+              "frases": {
+                "respira-agua": "¡Eso es! Con las branquias toma el oxígeno que va disuelto en el agua.",
+                "respira-aire": "El salmón no tiene pulmones: toma el oxígeno del agua con sus branquias."
+              }
+            },
+            {
+              "id": "sardina-banco",
+              "nombre": "Sardina",
+              "pregunta": "Una sardina nada en un banco de peces. ¿Cómo respira?",
+              "respuesta": "respira-agua",
+              "pista": "Mira a los lados de su cabeza: ahí están las branquias.",
+              "curiosidad": "Las sardinas nadan juntas en grupos enormes para protegerse.",
+              "frases": {
+                "respira-agua": "¡Muy bien! Respira bajo el agua con branquias.",
+                "respira-aire": "La sardina no sube a tomar aire. Respira con las branquias, bajo el agua."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Algunos animales no usan pulmones ni branquias: respiran por la piel o por tubitos.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "respira-aire",
+              "nombre": "Aire con pulmones"
+            },
+            {
+              "id": "respira-agua",
+              "nombre": "Agua con branquias"
+            },
+            {
+              "id": "respira-piel",
+              "nombre": "Piel o tráqueas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "lagartija-muro",
+              "nombre": "Lagartija",
+              "pregunta": "¿Cómo respira una lagartija que toma el sol en un muro?",
+              "respuesta": "respira-aire",
+              "pista": "Tiene la piel seca y con escamas, y vive fuera del agua.",
+              "curiosidad": "Las lagartijas mueven las costillas para llenar de aire sus pulmones.",
+              "frases": {
+                "respira-aire": "¡Eso es! Respira aire con los pulmones, como tú.",
+                "respira-agua": "La lagartija vive en tierra firme: no tiene branquias, sino pulmones.",
+                "respira-piel": "Su piel seca y con escamas no sirve para respirar. Usa los pulmones."
+              }
+            },
+            {
+              "id": "renacuajo-charca",
+              "nombre": "Renacuajo",
+              "pregunta": "¿Cómo respira un renacuajo en la charca?",
+              "respuesta": "respira-agua",
+              "pista": "Todavía no tiene patas y vive todo el tiempo bajo el agua.",
+              "curiosidad": "Al crecer, el renacuajo pierde las branquias y desarrolla pulmones.",
+              "frases": {
+                "respira-agua": "¡Muy bien! Los renacuajos respiran con branquias, como los peces.",
+                "respira-aire": "Todavía no tiene pulmones: respira con branquias bajo el agua.",
+                "respira-piel": "Un renacuajo toma el oxígeno sobre todo con sus branquias."
+              }
+            },
+            {
+              "id": "cangrejo-playa",
+              "nombre": "Cangrejo",
+              "pregunta": "¿Cómo respira un cangrejo de la costa?",
+              "respuesta": "respira-agua",
+              "pista": "Guarda un poco de agua cerca de sus branquias, escondidas bajo el caparazón.",
+              "curiosidad": "Los cangrejos tienen el cuerpo cubierto por un caparazón duro y diez patas.",
+              "frases": {
+                "respira-agua": "¡Eso es! Respira con branquias, que mantiene húmedas bajo el caparazón.",
+                "respira-aire": "Aunque camina por la playa, el cangrejo respira con branquias y las mantiene húmedas.",
+                "respira-piel": "Su caparazón es duro y no deja pasar el aire: respira con branquias."
+              }
+            },
+            {
+              "id": "lombriz-tierra",
+              "nombre": "Lombriz de tierra",
+              "pregunta": "¿Cómo respira una lombriz de tierra?",
+              "respuesta": "respira-piel",
+              "pista": "No tiene pulmones ni branquias, pero su piel siempre está húmeda.",
+              "curiosidad": "Si su piel se seca, la lombriz no puede respirar; por eso vive bajo tierra húmeda.",
+              "frases": {
+                "respira-piel": "¡Eso es! El oxígeno entra por su piel húmeda.",
+                "respira-aire": "La lombriz no tiene pulmones. Respira a través de la piel.",
+                "respira-agua": "No vive bajo el agua ni tiene branquias. Respira por la piel húmeda."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Hay animales que respiran con tubitos muy finos o a través de todo el cuerpo.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "respira-aire",
+              "nombre": "Aire con pulmones"
+            },
+            {
+              "id": "respira-agua",
+              "nombre": "Agua con branquias"
+            },
+            {
+              "id": "respira-piel",
+              "nombre": "Piel o tráqueas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "mariposa-flor",
+              "nombre": "Mariposa",
+              "pregunta": "Los insectos como la mariposa tienen agujeritos en el cuerpo. ¿Cómo respiran?",
+              "respuesta": "respira-piel",
+              "pista": "Su cuerpo tiene unos tubitos muy finos que llevan el aire a todas partes.",
+              "curiosidad": "Los insectos no tienen pulmones: el aire llega a sus células por tubitos llamados tráqueas.",
+              "frases": {
+                "respira-piel": "¡Muy bien! Respira con tráqueas, unos tubitos que reparten el aire por el cuerpo.",
+                "respira-aire": "La mariposa no tiene pulmones. El aire entra por agujeritos y viaja por tráqueas.",
+                "respira-agua": "Las mariposas viven en el aire y no tienen branquias: usan tráqueas."
+              }
+            },
+            {
+              "id": "delfin",
+              "nombre": "Delfín",
+              "pregunta": "Parece un pez, pero un delfín tiene pulmones. ¿Cómo respira?",
+              "respuesta": "respira-aire",
+              "pista": "Sube a la superficie cada pocos minutos.",
+              "curiosidad": "Los delfines duermen con la mitad del cerebro despierta para acordarse de subir a respirar.",
+              "frases": {
+                "respira-aire": "¡Muy bien! Es un mamífero y respira aire con los pulmones.",
+                "respira-agua": "Los delfines viven en el agua, pero no tienen branquias como los peces.",
+                "respira-piel": "Los delfines respiran con pulmones, no por la piel."
+              }
+            },
+            {
+              "id": "saltamontes-prado",
+              "nombre": "Saltamontes",
+              "pregunta": "¿Cómo respira un saltamontes que salta en el prado?",
+              "respuesta": "respira-piel",
+              "pista": "Como otros insectos, el aire le entra por unos agujeritos de los lados del cuerpo.",
+              "curiosidad": "Un saltamontes puede saltar muchas veces la longitud de su propio cuerpo.",
+              "frases": {
+                "respira-piel": "¡Eso es! Respira por tráqueas, que llevan el aire a todo el cuerpo.",
+                "respira-aire": "No tiene pulmones. Respira por tubitos que se llaman tráqueas.",
+                "respira-agua": "Vive en el prado, fuera del agua: respira por tráqueas."
+              }
+            },
+            {
+              "id": "salmon-rio",
+              "nombre": "Salmón",
+              "pregunta": "El salmón vive en el río y en el mar. ¿Cómo respira en los dos sitios?",
+              "respuesta": "respira-agua",
+              "pista": "Un pez usa siempre el mismo órgano para respirar bajo el agua.",
+              "curiosidad": "Las branquias del salmón se adaptan al agua dulce y al agua salada.",
+              "frases": {
+                "respira-agua": "¡Eso es! En el río y en el mar respira con branquias.",
+                "respira-aire": "Aunque viaja mucho, el salmón no tiene pulmones: respira con branquias.",
+                "respira-piel": "El salmón respira con branquias, no por la piel."
+              }
+            },
+            {
+              "id": "medusa-mar",
+              "nombre": "Medusa",
+              "pregunta": "La medusa flota en el mar y no tiene pulmones. ¿Cómo toma el oxígeno?",
+              "respuesta": "respira-piel",
+              "pista": "Su cuerpo es muy fino y blando: el oxígeno del agua pasa directamente por él.",
+              "curiosidad": "Más del noventa por ciento del cuerpo de una medusa es agua.",
+              "frases": {
+                "respira-piel": "¡Muy bien! El oxígeno del agua entra a través de su cuerpo fino y blando.",
+                "respira-aire": "La medusa vive en el agua y no tiene pulmones.",
+                "respira-agua": "No tiene branquias: el oxígeno atraviesa directamente su cuerpo blando."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "savia",
+      "zona": "invernadero",
+      "tipo": "lugar",
+      "titulo": "El viaje de la savia",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada pista de la planta al trabajo que hace o toca su tarjeta.",
+      "opciones": [
+        {
+          "id": "proceso-savia-bruta",
+          "nombre": "Sube agua y sales"
+        },
+        {
+          "id": "proceso-fotosintesis",
+          "nombre": "Fabrica alimento"
+        },
+        {
+          "id": "proceso-savia-elaborada",
+          "nombre": "Reparte el alimento"
+        }
+      ],
+      "retos": [
+        {
+          "id": "absorcion-raiz",
+          "nombre": "La raíz",
+          "pregunta": "La raíz bebe agua del suelo. ¿Qué trabajo hace?",
+          "respuesta": "proceso-savia-bruta",
+          "pista": "Piensa en lo que entra por la raíz desde la tierra: agua y sales.",
+          "curiosidad": "Las raíces tienen pelitos muy finos que absorben el agua del suelo.",
+          "frases": {
+            "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
+            "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
+            "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+          }
+        },
+        {
+          "id": "captura-luz-sol",
+          "nombre": "La hoja verde",
+          "pregunta": "La hoja verde capta la luz del sol. ¿Qué trabajo hace?",
+          "respuesta": "proceso-fotosintesis",
+          "pista": "La luz del sol sirve para fabricar el alimento de la planta.",
+          "curiosidad": "El color verde de las hojas viene de la clorofila.",
+          "frases": {
+            "proceso-fotosintesis": "¡Muy bien! Con la luz del sol, la hoja fabrica alimento.",
+            "proceso-savia-bruta": "La luz no sube desde el suelo. La hoja la usa para fabricar alimento.",
+            "proceso-savia-elaborada": "Antes de repartir el alimento hay que fabricarlo, y eso lo hace la hoja con la luz."
+          }
+        },
+        {
+          "id": "reparto-planta",
+          "nombre": "El alimento",
+          "pregunta": "El alimento fabricado por las hojas viaja a toda la planta. ¿Qué trabajo es este?",
+          "respuesta": "proceso-savia-elaborada",
+          "pista": "Las gotas doradas del dibujo llevan el alimento a cada parte de la planta.",
+          "curiosidad": "Gracias a este reparto, hasta la raíz y los frutos reciben alimento.",
+          "frases": {
+            "proceso-savia-elaborada": "¡Eso es! La planta reparte el alimento para que crezca entera.",
+            "proceso-savia-bruta": "El agua sube de la raíz a las hojas, pero esto es otro viaje: el del alimento.",
+            "proceso-fotosintesis": "Fabricar el alimento ocurre en las hojas. Aquí el alimento ya se está repartiendo."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "La planta bebe agua, fabrica alimento y lo reparte.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "proceso-savia-bruta",
+              "nombre": "Sube agua y sales"
+            },
+            {
+              "id": "proceso-fotosintesis",
+              "nombre": "Fabrica alimento"
+            },
+            {
+              "id": "proceso-savia-elaborada",
+              "nombre": "Reparte el alimento"
+            }
+          ],
+          "retos": [
+            {
+              "id": "absorcion-raiz",
+              "nombre": "La raíz",
+              "pregunta": "La raíz bebe agua del suelo. ¿Qué trabajo hace?",
+              "respuesta": "proceso-savia-bruta",
+              "pista": "Piensa en lo que entra por la raíz desde la tierra: agua y sales.",
+              "curiosidad": "Las raíces tienen pelitos muy finos que absorben el agua del suelo.",
+              "frases": {
+                "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
+                "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
+                "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+              }
+            },
+            {
+              "id": "captura-luz-sol",
+              "nombre": "La hoja verde",
+              "pregunta": "La hoja verde capta la luz del sol. ¿Qué trabajo hace?",
+              "respuesta": "proceso-fotosintesis",
+              "pista": "La luz del sol sirve para fabricar el alimento de la planta.",
+              "curiosidad": "El color verde de las hojas viene de la clorofila.",
+              "frases": {
+                "proceso-fotosintesis": "¡Muy bien! Con la luz del sol, la hoja fabrica alimento.",
+                "proceso-savia-bruta": "La luz no sube desde el suelo. La hoja la usa para fabricar alimento.",
+                "proceso-savia-elaborada": "Antes de repartir el alimento hay que fabricarlo, y eso lo hace la hoja con la luz."
+              }
+            },
+            {
+              "id": "reparto-planta",
+              "nombre": "El alimento",
+              "pregunta": "El alimento fabricado por las hojas viaja a toda la planta. ¿Qué trabajo es este?",
+              "respuesta": "proceso-savia-elaborada",
+              "pista": "Las gotas doradas del dibujo llevan el alimento a cada parte de la planta.",
+              "curiosidad": "Gracias a este reparto, hasta la raíz y los frutos reciben alimento.",
+              "frases": {
+                "proceso-savia-elaborada": "¡Eso es! La planta reparte el alimento para que crezca entera.",
+                "proceso-savia-bruta": "El agua sube de la raíz a las hojas, pero esto es otro viaje: el del alimento.",
+                "proceso-fotosintesis": "Fabricar el alimento ocurre en las hojas. Aquí el alimento ya se está repartiendo."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Ahora hay que descubrir en qué parte de la planta ocurre cada cosa.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "parte-raiz",
+              "nombre": "La raíz"
+            },
+            {
+              "id": "parte-tallo",
+              "nombre": "El tallo"
+            },
+            {
+              "id": "parte-hoja",
+              "nombre": "Las hojas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "absorcion-raiz",
+              "nombre": "Agua del suelo",
+              "pregunta": "La planta bebe el agua que hay en la tierra. ¿Con qué parte la bebe?",
+              "respuesta": "parte-raiz",
+              "pista": "Está bajo tierra y tiene pelitos muy finos.",
+              "curiosidad": "Las raíces también sujetan la planta para que el viento no se la lleve.",
+              "frases": {
+                "parte-raiz": "¡Eso es! La raíz bebe agua y sales del suelo.",
+                "parte-tallo": "El tallo lleva el agua hacia arriba, pero la bebe la raíz.",
+                "parte-hoja": "Las hojas pierden agua, no la beben del suelo: la bebe la raíz."
+              }
+            },
+            {
+              "id": "entrada-co2-hoja",
+              "nombre": "Aire que entra",
+              "pregunta": "La planta toma aire por unos poros diminutos. ¿En qué parte de la planta están?",
+              "respuesta": "parte-hoja",
+              "pista": "Son agujeritos tan pequeños que casi no se ven, y están en la parte verde y plana.",
+              "curiosidad": "Los poros de la hoja se llaman estomas y se abren y se cierran.",
+              "frases": {
+                "parte-hoja": "¡Muy bien! Los poros que toman el aire están en las hojas.",
+                "parte-raiz": "La raíz toma agua del suelo, no aire: los poros están en las hojas.",
+                "parte-tallo": "El tallo lleva el agua hacia arriba: los poros para el aire están sobre todo en las hojas."
+              }
+            },
+            {
+              "id": "subida-xilema",
+              "nombre": "Agua que sube",
+              "pregunta": "El agua con sales sube por unos tubos muy finos. ¿Por qué parte de la planta sube?",
+              "respuesta": "parte-tallo",
+              "pista": "Los tubos van desde el suelo hasta las hojas, por el centro de la planta.",
+              "curiosidad": "Los tubos del tallo son tan finos que el agua sube por ellos incluso en los árboles más altos.",
+              "frases": {
+                "parte-tallo": "¡Eso es! El agua sube por el tallo hasta las hojas.",
+                "parte-raiz": "La raíz absorbe el agua, pero luego esta sube por el tallo.",
+                "parte-hoja": "El agua llega a las hojas, pero sube por el tallo."
+              }
+            },
+            {
+              "id": "clorofila-sol",
+              "nombre": "Luz del sol",
+              "pregunta": "La planta capta la luz del sol con un pigmento verde. ¿En qué parte lo tiene?",
+              "respuesta": "parte-hoja",
+              "pista": "Es la parte más verde y más plana de la planta.",
+              "curiosidad": "Por la clorofila, casi todas las hojas son verdes.",
+              "frases": {
+                "parte-hoja": "¡Eso es! La clorofila está sobre todo en las hojas.",
+                "parte-raiz": "A la raíz no llega la luz del sol: está bajo tierra.",
+                "parte-tallo": "El tallo joven también es verde, pero la mayor parte de la clorofila está en las hojas."
+              }
+            },
+            {
+              "id": "reparto-floema",
+              "nombre": "Alimento que baja",
+              "pregunta": "Los azúcares viajan desde las hojas hacia abajo por unos tubitos. ¿Por qué parte de la planta pasan?",
+              "respuesta": "parte-tallo",
+              "pista": "Para llegar de las hojas a la raíz tienen que pasar por el medio de la planta.",
+              "curiosidad": "Esos tubitos llevan alimento a las raíces, a las flores y a los frutos.",
+              "frases": {
+                "parte-tallo": "¡Muy bien! El alimento baja por el tallo hasta la raíz.",
+                "parte-raiz": "El alimento llega a la raíz, pero baja por el tallo.",
+                "parte-hoja": "El alimento se fabrica en las hojas y sale de ellas por el tallo."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Ponemos nombre a lo que has aprendido: xilema, floema y estomas.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "tubo-xilema",
+              "nombre": "Xilema"
+            },
+            {
+              "id": "tubo-floema",
+              "nombre": "Floema"
+            },
+            {
+              "id": "poro-estomas",
+              "nombre": "Estomas"
+            }
+          ],
+          "retos": [
+            {
+              "id": "ascenso-tallo",
+              "nombre": "La savia bruta",
+              "pregunta": "La savia bruta sube desde la raíz hasta las hojas. ¿Por qué tubos viaja?",
+              "respuesta": "tubo-xilema",
+              "pista": "Estos tubos llevan agua con sales minerales y van de abajo hacia arriba.",
+              "curiosidad": "El xilema es la parte leñosa del tallo: en un tronco, es la madera.",
+              "frases": {
+                "tubo-xilema": "¡Muy bien! La savia bruta viaja por el xilema.",
+                "tubo-floema": "El floema lleva el alimento. La savia bruta, con agua y sales, sube por el xilema.",
+                "poro-estomas": "Los estomas son poros de la hoja, no tubos. La savia bruta sube por el xilema."
+              }
+            },
+            {
+              "id": "estomas-aire",
+              "nombre": "Los poros de la hoja",
+              "pregunta": "Los poros de la hoja dejan entrar el aire y salir el oxígeno. ¿Cómo se llaman?",
+              "respuesta": "poro-estomas",
+              "pista": "Se abren y se cierran como pequeñas bocas.",
+              "curiosidad": "Cuando hace mucho calor, los estomas se cierran para que la planta no pierda demasiada agua.",
+              "frases": {
+                "poro-estomas": "¡Muy bien! Se llaman estomas.",
+                "tubo-xilema": "El xilema es un tubo del tallo. Los poros de la hoja son los estomas.",
+                "tubo-floema": "El floema es un tubo del tallo. Los poros de la hoja son los estomas."
+              }
+            },
+            {
+              "id": "reparto-planta",
+              "nombre": "La savia elaborada",
+              "pregunta": "La savia elaborada reparte el alimento por toda la planta. ¿Por qué tubos viaja?",
+              "respuesta": "tubo-floema",
+              "pista": "Estos tubitos llevan los azúcares que fabrican las hojas.",
+              "curiosidad": "El floema puede llevar el alimento hacia arriba y hacia abajo, según lo que necesite cada parte.",
+              "frases": {
+                "tubo-floema": "¡Eso es! El alimento viaja por el floema.",
+                "tubo-xilema": "El xilema lleva agua con sales hacia arriba. El alimento viaja por el floema.",
+                "poro-estomas": "Los estomas son poros de las hojas, no tubos. El alimento viaja por el floema."
+              }
+            },
+            {
+              "id": "subida-xilema",
+              "nombre": "Los vasos leñosos",
+              "pregunta": "Los vasos leñosos del tallo suben el agua hasta las hojas. ¿Cómo se llaman estos vasos?",
+              "respuesta": "tubo-xilema",
+              "pista": "Son leñosos porque forman la madera del tallo.",
+              "curiosidad": "Los anillos de un tronco son capas de xilema que la planta ha ido formando cada año.",
+              "frases": {
+                "tubo-xilema": "¡Eso es! Los vasos leñosos son el xilema.",
+                "tubo-floema": "El floema no es leñoso: lleva el alimento. Los vasos leñosos son el xilema.",
+                "poro-estomas": "Los estomas son poros de las hojas. Los vasos leñosos son el xilema."
+              }
+            },
+            {
+              "id": "entrada-co2-hoja",
+              "nombre": "La entrada de aire",
+              "pregunta": "Por unos poros de la hoja entra el dióxido de carbono. ¿Cómo se llaman?",
+              "respuesta": "poro-estomas",
+              "pista": "Se encuentran sobre todo en la parte de abajo de la hoja.",
+              "curiosidad": "Una hoja puede tener miles de estomas.",
+              "frases": {
+                "poro-estomas": "¡Eso es! Por los estomas entra el dióxido de carbono.",
+                "tubo-xilema": "El xilema es un tubo del tallo. El aire entra por los estomas.",
+                "tubo-floema": "El floema es un tubo del tallo. El aire entra por los estomas."
+              }
+            },
+            {
+              "id": "reparto-floema",
+              "nombre": "Los tubitos de azúcar",
+              "pregunta": "Por estos tubitos viajan los azúcares desde las hojas hasta la raíz. ¿Cómo se llaman?",
+              "respuesta": "tubo-floema",
+              "pista": "No son leñosos y llevan el alimento que fabrica la planta.",
+              "curiosidad": "Algunos insectos, como los pulgones, se alimentan del azúcar que viaja por el floema.",
+              "frases": {
+                "tubo-floema": "¡Muy bien! Se llaman floema.",
+                "tubo-xilema": "El xilema sube agua con sales. Los tubitos de azúcar son el floema.",
+                "poro-estomas": "Los estomas son poros de la hoja. Los tubitos de azúcar son el floema."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organos",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "Cada órgano, su trabajo",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Arrastra cada órgano al trabajo que hace o toca su tarjeta.",
+      "opciones": [
+        {
+          "id": "trabajo-sangre",
+          "nombre": "Mueve la sangre"
+        },
+        {
+          "id": "trabajo-aire",
+          "nombre": "Toma el aire"
+        },
+        {
+          "id": "trabajo-comida",
+          "nombre": "Aprovecha la comida"
+        }
+      ],
+      "retos": [
+        {
+          "id": "corazon",
+          "nombre": "Corazón",
+          "pregunta": "El corazón late sin parar. ¿Cuál es su trabajo?",
+          "respuesta": "trabajo-sangre",
+          "pista": "Late dentro del pecho y empuja un líquido rojo por todo el cuerpo.",
+          "curiosidad": "Tu corazón tiene más o menos el tamaño de tu puño.",
+          "frases": {
+            "trabajo-sangre": "¡Eso es! El corazón empuja la sangre por todo el cuerpo.",
+            "trabajo-aire": "Los pulmones son los que toman el aire. El corazón empuja la sangre.",
+            "trabajo-comida": "La comida pasa por el estómago y el intestino. El corazón empuja la sangre."
+          }
+        },
+        {
+          "id": "pulmones",
+          "nombre": "Pulmones",
+          "pregunta": "Cuando respiras, el aire llega a los pulmones. ¿Cuál es su trabajo?",
+          "respuesta": "trabajo-aire",
+          "pista": "Se llenan y se vacían cada vez que respiras.",
+          "curiosidad": "Los pulmones se hinchan como globos cada vez que tomas aire.",
+          "frases": {
+            "trabajo-aire": "¡Muy bien! Los pulmones toman el aire que respiras.",
+            "trabajo-sangre": "El corazón es quien empuja la sangre. Los pulmones toman el aire.",
+            "trabajo-comida": "Los pulmones no digieren: toman el aire que respiras."
+          }
+        },
+        {
+          "id": "estomago",
+          "nombre": "Estómago",
+          "pregunta": "Lo que comes llega al estómago. ¿Cuál es su trabajo?",
+          "respuesta": "trabajo-comida",
+          "pista": "Trabaja con la comida: la mezcla y la deshace.",
+          "curiosidad": "El estómago es como una bolsa muy elástica que se estira al comer.",
+          "frases": {
+            "trabajo-comida": "¡Eso es! En el estómago la comida se mezcla y empieza a deshacerse.",
+            "trabajo-sangre": "El estómago no mueve la sangre: trabaja con la comida.",
+            "trabajo-aire": "El aire va a los pulmones. El estómago trabaja con la comida."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Cada órgano tiene su trabajo: mover la sangre, tomar el aire o trabajar con la comida.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "trabajo-sangre",
+              "nombre": "Mueve la sangre"
+            },
+            {
+              "id": "trabajo-aire",
+              "nombre": "Toma el aire"
+            },
+            {
+              "id": "trabajo-comida",
+              "nombre": "Aprovecha la comida"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "Corazón",
+              "pregunta": "El corazón late sin parar. ¿Cuál es su trabajo?",
+              "respuesta": "trabajo-sangre",
+              "pista": "Late dentro del pecho y empuja un líquido rojo por todo el cuerpo.",
+              "curiosidad": "Tu corazón tiene más o menos el tamaño de tu puño.",
+              "frases": {
+                "trabajo-sangre": "¡Eso es! El corazón empuja la sangre por todo el cuerpo.",
+                "trabajo-aire": "Los pulmones son los que toman el aire. El corazón empuja la sangre.",
+                "trabajo-comida": "La comida pasa por el estómago y el intestino. El corazón empuja la sangre."
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Pulmones",
+              "pregunta": "Cuando respiras, el aire llega a los pulmones. ¿Cuál es su trabajo?",
+              "respuesta": "trabajo-aire",
+              "pista": "Se llenan y se vacían cada vez que respiras.",
+              "curiosidad": "Los pulmones se hinchan como globos cada vez que tomas aire.",
+              "frases": {
+                "trabajo-aire": "¡Muy bien! Los pulmones toman el aire que respiras.",
+                "trabajo-sangre": "El corazón es quien empuja la sangre. Los pulmones toman el aire.",
+                "trabajo-comida": "Los pulmones no digieren: toman el aire que respiras."
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "Estómago",
+              "pregunta": "Lo que comes llega al estómago. ¿Cuál es su trabajo?",
+              "respuesta": "trabajo-comida",
+              "pista": "Trabaja con la comida: la mezcla y la deshace.",
+              "curiosidad": "El estómago es como una bolsa muy elástica que se estira al comer.",
+              "frases": {
+                "trabajo-comida": "¡Eso es! En el estómago la comida se mezcla y empieza a deshacerse.",
+                "trabajo-sangre": "El estómago no mueve la sangre: trabaja con la comida.",
+                "trabajo-aire": "El aire va a los pulmones. El estómago trabaja con la comida."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Ahora también hay órganos que mandan órdenes y que aprovechan lo que comes.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "trabajo-sangre",
+              "nombre": "Mueve la sangre"
+            },
+            {
+              "id": "trabajo-aire",
+              "nombre": "Toma el aire"
+            },
+            {
+              "id": "trabajo-comida",
+              "nombre": "Aprovecha la comida"
+            },
+            {
+              "id": "trabajo-ordenes",
+              "nombre": "Manda las órdenes"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "Corazón",
+              "pregunta": "Cuando corres, este órgano late más deprisa. ¿Qué trabajo hace?",
+              "respuesta": "trabajo-sangre",
+              "pista": "Tus músculos piden más oxígeno y alguien tiene que llevárselo con la sangre.",
+              "curiosidad": "El corazón no descansa ni cuando duermes.",
+              "frases": {
+                "trabajo-sangre": "¡Muy bien! Al correr, el corazón manda más sangre a los músculos.",
+                "trabajo-aire": "Al correr respiras más deprisa, pero quien empuja la sangre es el corazón.",
+                "trabajo-comida": "Correr no cambia la digestión de golpe. Lo que se acelera es el corazón, que empuja la sangre.",
+                "trabajo-ordenes": "Las órdenes las manda el cerebro; el corazón empuja la sangre."
+              }
+            },
+            {
+              "id": "cerebro",
+              "nombre": "Cerebro",
+              "pregunta": "Decides levantar la mano y tu mano se mueve. ¿Qué órgano da la orden?",
+              "respuesta": "trabajo-ordenes",
+              "pista": "Está dentro de la cabeza y piensa, recuerda y decide.",
+              "curiosidad": "El cerebro manda mensajes al cuerpo a través de los nervios.",
+              "frases": {
+                "trabajo-ordenes": "¡Eso es! El cerebro manda las órdenes que mueven tu cuerpo.",
+                "trabajo-sangre": "La sangre la mueve el corazón. Las órdenes las manda el cerebro.",
+                "trabajo-aire": "Los pulmones toman el aire. Las órdenes las manda el cerebro.",
+                "trabajo-comida": "El estómago y el intestino trabajan con la comida. Las órdenes las manda el cerebro."
+              }
+            },
+            {
+              "id": "intestinos",
+              "nombre": "Intestinos",
+              "pregunta": "Después del estómago, la comida pasa por un tubo largo y enrollado. ¿Qué trabajo hace?",
+              "respuesta": "trabajo-comida",
+              "pista": "Allí los nutrientes de lo que comes pasan a la sangre.",
+              "curiosidad": "El intestino delgado de un adulto mide varios metros.",
+              "frases": {
+                "trabajo-comida": "¡Muy bien! En los intestinos se aprovechan los nutrientes de la comida.",
+                "trabajo-sangre": "Los nutrientes pasan a la sangre, pero quien la empuja es el corazón.",
+                "trabajo-aire": "El aire no llega a los intestinos: va a los pulmones.",
+                "trabajo-ordenes": "Las órdenes las manda el cerebro; los intestinos aprovechan la comida."
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Pulmones",
+              "pregunta": "Respiras hondo antes de zambullirte en la piscina. ¿Qué órgano se llena de aire?",
+              "respuesta": "trabajo-aire",
+              "pista": "Está en el pecho, a los dos lados del corazón.",
+              "curiosidad": "El oxígeno pasa de los pulmones a la sangre para llegar a todo el cuerpo.",
+              "frases": {
+                "trabajo-aire": "¡Eso es! Los pulmones se llenan de aire y pasan el oxígeno a la sangre.",
+                "trabajo-sangre": "El corazón mueve la sangre, pero el aire entra en los pulmones.",
+                "trabajo-comida": "El aire no va al estómago: va a los pulmones.",
+                "trabajo-ordenes": "El cerebro manda las órdenes, pero el aire entra en los pulmones."
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Los órganos trabajan en equipo: cada uno hace su parte para que todo funcione.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "trabajo-sangre",
+              "nombre": "Mueve la sangre"
+            },
+            {
+              "id": "trabajo-aire",
+              "nombre": "Toma el aire"
+            },
+            {
+              "id": "trabajo-comida",
+              "nombre": "Aprovecha la comida"
+            },
+            {
+              "id": "trabajo-ordenes",
+              "nombre": "Manda las órdenes"
+            }
+          ],
+          "retos": [
+            {
+              "id": "corazon",
+              "nombre": "Corazón",
+              "pregunta": "Si el corazón dejara de latir, ¿qué se pararía por todo el cuerpo?",
+              "respuesta": "trabajo-sangre",
+              "pista": "Piensa en lo que reparte oxígeno y nutrientes a todas partes.",
+              "curiosidad": "La sangre lleva oxígeno desde los pulmones y nutrientes desde los intestinos a todo el cuerpo.",
+              "frases": {
+                "trabajo-sangre": "¡Muy bien! Sin el corazón, la sangre dejaría de circular y no llegaría oxígeno a las células.",
+                "trabajo-aire": "El aire seguiría entrando en los pulmones, pero sin sangre no llegaría a las células.",
+                "trabajo-comida": "La comida podría digerirse, pero sin sangre los nutrientes no llegarían a las células.",
+                "trabajo-ordenes": "El cerebro necesita que la sangre le lleve oxígeno para dar órdenes."
+              }
+            },
+            {
+              "id": "estomago",
+              "nombre": "Estómago",
+              "pregunta": "Los jugos del estómago ayudan a deshacer la comida. ¿Qué trabajo hace este órgano?",
+              "respuesta": "trabajo-comida",
+              "pista": "Es una bolsa con músculos que amasa la comida con jugos.",
+              "curiosidad": "Los músculos del estómago amasan la comida hasta convertirla en una papilla.",
+              "frases": {
+                "trabajo-comida": "¡Eso es! El estómago amasa y deshace la comida con sus jugos.",
+                "trabajo-sangre": "La sangre la empuja el corazón. El estómago amasa la comida.",
+                "trabajo-aire": "El aire va a los pulmones; el estómago amasa la comida.",
+                "trabajo-ordenes": "Las órdenes las manda el cerebro; el estómago trabaja con la comida."
+              }
+            },
+            {
+              "id": "cerebro",
+              "nombre": "Cerebro",
+              "pregunta": "Ves un balón que viene hacia ti y te apartas. ¿Qué órgano recibe lo que ves y decide?",
+              "respuesta": "trabajo-ordenes",
+              "pista": "Recibe los avisos de los ojos y de los oídos y manda mover los músculos.",
+              "curiosidad": "El cerebro gasta mucha energía: necesita oxígeno y azúcar de la sangre todo el tiempo.",
+              "frases": {
+                "trabajo-ordenes": "¡Muy bien! El cerebro recibe los avisos y decide qué hacer.",
+                "trabajo-sangre": "El corazón mueve la sangre, pero quien decide es el cerebro.",
+                "trabajo-aire": "Los pulmones toman aire; quien decide qué hacer es el cerebro.",
+                "trabajo-comida": "El estómago trabaja con la comida; quien decide es el cerebro."
+              }
+            },
+            {
+              "id": "pulmones",
+              "nombre": "Pulmones",
+              "pregunta": "Corres una carrera y respiras más rápido. ¿Qué órgano toma más aire para el cuerpo?",
+              "respuesta": "trabajo-aire",
+              "pista": "Cuando te mueves necesitas más oxígeno y este órgano lo toma del aire.",
+              "curiosidad": "Al respirar sueltas dióxido de carbono, un gas que el cuerpo no necesita.",
+              "frases": {
+                "trabajo-aire": "¡Eso es! Los pulmones toman más oxígeno para que tus músculos trabajen.",
+                "trabajo-sangre": "El corazón late más deprisa, pero el aire lo toman los pulmones.",
+                "trabajo-comida": "Para el aire no hacen falta el estómago ni los intestinos: lo toman los pulmones.",
+                "trabajo-ordenes": "El cerebro manda respirar más rápido, pero el aire lo toman los pulmones."
+              }
+            },
+            {
+              "id": "intestinos",
+              "nombre": "Intestinos",
+              "pregunta": "Los nutrientes de la comida pasan a la sangre a través de las paredes de un tubo largo. ¿Qué órgano es?",
+              "respuesta": "trabajo-comida",
+              "pista": "Es un tubo muy largo y enrollado dentro de la barriga.",
+              "curiosidad": "Las paredes del intestino delgado tienen pliegues para absorber mejor los nutrientes.",
+              "frases": {
+                "trabajo-comida": "¡Muy bien! Los intestinos absorben los nutrientes de la comida.",
+                "trabajo-sangre": "La sangre recoge los nutrientes, pero quien los absorbe es el intestino.",
+                "trabajo-aire": "El aire no llega a los intestinos.",
+                "trabajo-ordenes": "El cerebro manda órdenes, pero los nutrientes los absorbe el intestino."
               }
             }
           ]

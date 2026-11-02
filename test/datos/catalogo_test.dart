@@ -264,11 +264,12 @@ void main() {
     }
   });
 
-  test('el álbum tiene 61 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 61);
-    expect(catalogo.fichasDe('reserva').length, 20);
-    expect(catalogo.fichasDe('invernadero').length, 20);
-    expect(catalogo.fichasDe('cuerpo').length, 21);
+  test('el álbum tiene 70 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 73);
+    expect(catalogo.fichasDe('reserva').length, 23);
+    expect(catalogo.fichasDe('invernadero').length, 23);
+    expect(catalogo.fichasDe('cuerpo').length, 27);
+    )
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -404,7 +405,8 @@ void main() {
     await progreso.marcarNivelLugar(sentidos, 'dificil');
     expect(progreso.fichaDesbloqueada('avisos'), isTrue);
     expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
-    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo', 'plato']) {
+
+    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo', 'plato','cuidados','respiracion','savia','organos',])
       final act = catalogo.actividades.firstWhere((a) => a.id == nuevoId);
       await progreso.marcarNivelLugar(act, 'dificil');
     }
@@ -412,6 +414,32 @@ void main() {
       catalogo.fichas.every((f) => progreso.fichaDesbloqueada(f.id)),
       isTrue,
     );
+  });
+
+  test('los cuatro juegos nuevos dan un cromo por nivel', () async {
+    SharedPreferences.setMockInitialValues({});
+    final progreso = await Progreso.abrir();
+    const cromos = <String, List<String>>{
+      'cuidados': ['fruta-verdura', 'respirar-hondo', 'moverse-cada-dia'],
+      'respiracion': ['trucha-arroyo', 'lombriz-galeria', 'rana-charca'],
+      'savia': ['savia-planta', 'fotosintesis-hoja', 'savia-elaborada'],
+      'organos': ['aparato-circulatorio', 'aparato-respiratorio', 'sistema-nervioso'],
+    };
+    for (final entrada in cromos.entries) {
+      final juego = catalogo.actividades.firstWhere((a) => a.id == entrada.key);
+      final ids = entrada.value;
+      for (final id in ids) {
+        expect(progreso.fichaDesbloqueada(id), isFalse);
+      }
+      await progreso.marcarNivelLugar(juego, 'facil');
+      expect(progreso.fichaDesbloqueada(ids[0]), isTrue);
+      expect(progreso.fichaDesbloqueada(ids[1]), isFalse);
+      await progreso.marcarNivelLugar(juego, 'medio');
+      expect(progreso.fichaDesbloqueada(ids[1]), isTrue);
+      expect(progreso.fichaDesbloqueada(ids[2]), isFalse);
+      await progreso.marcarNivelLugar(juego, 'dificil');
+      expect(progreso.fichaDesbloqueada(ids[2]), isTrue);
+    }
   });
 
   test('ningún texto del catálogo usa palabras prohibidas ni temas fuera de alcance', () {

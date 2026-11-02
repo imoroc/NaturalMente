@@ -597,6 +597,19 @@ class IconoSitio extends StatelessWidget {
       'bosque' => (Icons.park_rounded, const Color(0xFF15803D)),
       'selva' => (Icons.forest_rounded, const Color(0xFF059669)),
       'rio' => (Icons.water_rounded, const Color(0xFF0891B2)),
+      'respira-aire' => (Icons.air_rounded, const Color(0xFF0284C7)),
+      'respira-agua' => (Icons.water_drop_rounded, const Color(0xFF0369A1)),
+      'respira-piel' => (Icons.grain_rounded, const Color(0xFF15803D)),
+      'trabajo-sangre' => (Icons.favorite_rounded, const Color(0xFFE11D48)),
+      'trabajo-aire' => (Icons.air_rounded, const Color(0xFF0284C7)),
+      'trabajo-comida' => (Icons.restaurant_rounded, const Color(0xFFD97706)),
+      'trabajo-ordenes' => (Icons.bolt_rounded, const Color(0xFF8B5CF6)),
+      'parte-raiz' => (Icons.water_drop_rounded, const Color(0xFF92400E)),
+      'parte-tallo' => (Icons.grass_rounded, const Color(0xFF16A34A)),
+      'parte-hoja' => (Icons.eco_rounded, const Color(0xFF22C55E)),
+      'tubo-xilema' => (Icons.arrow_upward_rounded, const Color(0xFF0284C7)),
+      'tubo-floema' => (Icons.arrow_downward_rounded, const Color(0xFFD97706)),
+      'poro-estomas' => (Icons.air_rounded, const Color(0xFF64748B)),
       'me-cuida' => (
         Icons.sentiment_very_satisfied_rounded,
         const Color(0xFF16A34A),
@@ -4132,6 +4145,10 @@ class IlustracionFicha extends StatelessWidget {
     'cerebro',
     'esqueleto',
     'intestinos',
+    // Costumbres de «¿Qué parte cuido?» que también son cromo.
+    'fruta-verdura',
+    'respirar-hondo',
+    'moverse-cada-dia',
   };
 
   @override
@@ -4148,6 +4165,16 @@ class IlustracionFicha extends StatelessWidget {
         height: alto,
         child: FittedBox(fit: BoxFit.contain, child: Criatura(id: id)),
       );
+    }
+    // Cromos de «Cada órgano, su trabajo»: el órgano que los representa.
+    if (id == 'aparato-circulatorio') {
+      return IconoOrgano(id: 'corazon', size: alto);
+    }
+    if (id == 'aparato-respiratorio') {
+      return IconoOrgano(id: 'pulmones', size: alto);
+    }
+    if (id == 'sistema-nervioso') {
+      return IconoOrgano(id: 'cerebro', size: alto);
     }
     if (id == 'semilla') {
       return SizedBox(

@@ -6,6 +6,7 @@ import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/reglas/resolver.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
+import 'package:naturalmente/ui/dibujo_savia.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/ui/feedback_acierto.dart';
@@ -1462,7 +1463,8 @@ class _Lugar extends StatelessWidget {
       builder: (context, outerConstraints) {
         final escalaTexto = MediaQuery.textScalerOf(context).scale(1.0);
         final pantallaBaja =
-            outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || ((esPortePlanta || esJuegoInspector) && outerConstraints.maxHeight < 750);
+            outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || ((esPortePlanta || esJuegoInspector) && outerConstraints.maxHeight < 750) ||
+            (actividad.id == 'savia' && outerConstraints.maxHeight < 800);
         final progresoValor =
             (organosColocados.length +
                 (retoCompleto ? 0.0 : (lugarAcertado ? 0.65 : 0.25))) /
@@ -2046,6 +2048,14 @@ class _Lugar extends StatelessWidget {
                 const SizedBox(height: 8),
                 cabeceraReto(),
                 const SizedBox(height: 10),
+                if (actividad.id == 'savia') ...[
+                  DibujoViajeSavia(
+                    retoId: reto.id,
+                    acertado: lugarAcertado,
+                    ocultarPista: nivelActual?.id == 'medio',
+                  ),
+                  const SizedBox(height: 8),
+                ],
                 zonaCentral(usarAlturaFija: true),
                 const SizedBox(height: 8),
                 burbujaWidget,
@@ -2081,6 +2091,15 @@ class _Lugar extends StatelessWidget {
               const SizedBox(height: 6),
               cabeceraReto(),
               const SizedBox(height: 6),
+              if (actividad.id == 'savia') ...[
+                DibujoViajeSavia(
+                  retoId: reto.id,
+                  acertado: lugarAcertado,
+                  ocultarPista: nivelActual?.id == 'medio',
+                  alto: 120,
+                ),
+                const SizedBox(height: 6),
+              ],
               Expanded(child: zonaCentral(usarAlturaFija: false)),
               const SizedBox(height: 6),
               burbujaWidget,

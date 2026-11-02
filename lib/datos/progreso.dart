@@ -134,6 +134,10 @@ class Progreso extends ChangeNotifier {
     'huerta': ['facil', 'medio', 'dificil'],
     'vivo': ['facil', 'medio', 'dificil'],
     'plato': ['facil', 'medio', 'dificil'],
+    'cuidados': ['facil', 'medio', 'dificil'],
+    'respiracion': ['facil', 'medio', 'dificil'],
+    'savia': ['facil', 'medio', 'dificil'],
+    'organos': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -196,6 +200,18 @@ class Progreso extends ChangeNotifier {
       ('huerta', 'facil') => const ['huerta-organos'],
       ('huerta', 'medio') => const ['partes-comestibles'],
       ('huerta', 'dificil') => const ['recursos-plantas'],
+      ('cuidados', 'facil') => const ['fruta-verdura'],
+      ('cuidados', 'medio') => const ['respirar-hondo'],
+      ('cuidados', 'dificil') => const ['moverse-cada-dia'],
+      ('respiracion', 'facil') => const ['trucha-arroyo'],
+      ('respiracion', 'medio') => const ['lombriz-galeria'],
+      ('respiracion', 'dificil') => const ['rana-charca'],
+      ('savia', 'facil') => const ['savia-planta'],
+      ('savia', 'medio') => const ['fotosintesis-hoja'],
+      ('savia', 'dificil') => const ['savia-elaborada'],
+      ('organos', 'facil') => const ['aparato-circulatorio'],
+      ('organos', 'medio') => const ['aparato-respiratorio'],
+      ('organos', 'dificil') => const ['sistema-nervioso'],
       _ => const <String>[],
     };
   }
@@ -315,6 +331,30 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Del huerto a la mesa» a partir del nivel Medio (3º-4º).',
       'recursos-plantas' =>
         'Se consigue en «Del huerto a la mesa» en el nivel Difícil (5º-6º).',
+      'fruta-verdura' =>
+        'Se consigue en «¿Qué parte cuido?» desde el nivel Fácil (1º-2º).',
+      'respirar-hondo' =>
+        'Se consigue en «¿Qué parte cuido?» a partir del nivel Medio (3º-4º).',
+      'moverse-cada-dia' =>
+        'Se consigue en «¿Qué parte cuido?» en el nivel Difícil (5º-6º).',
+      'trucha-arroyo' =>
+        'Se consigue en «¿Cómo respira?» desde el nivel Fácil (1º-2º).',
+      'lombriz-galeria' =>
+        'Se consigue en «¿Cómo respira?» a partir del nivel Medio (3º-4º).',
+      'rana-charca' =>
+        'Se consigue en «¿Cómo respira?» en el nivel Difícil (5º-6º).',
+      'savia-planta' =>
+        'Se consigue en «El viaje de la savia» desde el nivel Fácil (1º-2º).',
+      'fotosintesis-hoja' =>
+        'Se consigue en «El viaje de la savia» a partir del nivel Medio (3º-4º).',
+      'savia-elaborada' =>
+        'Se consigue en «El viaje de la savia» en el nivel Difícil (5º-6º).',
+      'aparato-circulatorio' =>
+        'Se consigue en «Cada órgano, su trabajo» desde el nivel Fácil (1º-2º).',
+      'aparato-respiratorio' =>
+        'Se consigue en «Cada órgano, su trabajo» a partir del nivel Medio (3º-4º).',
+      'sistema-nervioso' =>
+        'Se consigue en «Cada órgano, su trabajo» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }

@@ -202,6 +202,7 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 - **Mecánica**: montar un plato o una merienda arrastrando alimentos. El plato reacciona según lo equilibrado que esté.
 - **Niveles**: Fácil, elegir entre dos meriendas. Medio, llenar el plato por partes (verdura, proteína, cereal). Difícil, leer una etiqueta inventada y comparar dos productos.
 - **Si no acierta**: «Este plato da mucha energía, pero no tiene verdura. ¿Qué le falta?».
+- **Estado**: implementado (`plato`, tipo `lugar`) en Dentro de mí, con el motor de «Cada uno a su hogar». Fácil separa seis alimentos de merienda en «Para cada día» o «De vez en cuando» y los va poniendo en «Mi merienda»; Medio llena «Mi plato» por partes (la mitad verduras y frutas, un cuarto proteínas, un cuarto cereales); Difícil lee cinco etiquetas inventadas (más de 15 g de azúcar, 1,5 g de sal o 20 g de grasa en 100 g) y compara cada producto con otro. Dibujos y bandeja en `lib/ui/dibujos_plato.dart`. Cromos por nivel: Una merienda que cuida, El plato equilibrado y Leer una etiqueta. No cuenta para la medalla.
 
 ### Un día sano
 - **Prioridad**: MVP.

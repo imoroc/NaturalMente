@@ -19,7 +19,7 @@
 
 **NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
 
-Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **17 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **51 misiones**) y coleccionan **58 cromos** con curiosidades científicas en su álbum personal.
+Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **18 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **54 misiones**) y coleccionan **61 cromos** con curiosidades científicas en su álbum personal.
 
 ### Principios de diseño pedagógico y técnico
 
@@ -35,7 +35,7 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **17 juegos int
 
 ## Mundos, actividades y niveles
 
-| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (58) |
+| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (61) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
 | **La reserva**<br>*(Animales)* | **Cada uno a su hogar** (`hogar`) | Clasificación de animales en su hábitat y adaptaciones al medio | 4 hábitats y 4 animales (*camello, delfín, pingüino, oso*) | 6 hábitats (+ *selva, río*) y 6 animales (+ *rana, tucán*) con pregunta de adaptación | 6 ecosistemas y 7 animales (+ *pulpo*, invertebrado marino) con preguntas de clasificación científica | 7 |
 | **La reserva**<br>*(Animales)* | **¿Huevo o barriga?** (`nacimiento`) | Separar animales por cómo nacen y ordenar ciclos de vida, por arrastre o toque | 6 animales al *huevo* o a la *barriga de su madre* (*pingüino, tucán, rana · camello, delfín, oso*) | Ciclos de la *rana* y la *mariposa* en 4 pasos + pregunta de comprensión por ciclo | Metamorfosis de la *rana* en 5 fases y de la *mariposa* (larva, pupa, adulto) + preguntas de razonamiento (anfibio, en qué se parecen) | 3 |
@@ -53,6 +53,7 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **17 juegos int
 | **El cuerpo**<br>*(Cuerpo humano)* | **El viaje de la comida** (`digestion`) | Llevar un bocado por el aparato digestivo tocando el cuerpo, los botones o arrastrándolo | *Boca* y *barriga*, con tres mordiscos para masticar y el pulmón como despiste | 4 paradas (*boca, esófago, estómago, intestino*) con pulmones y corazón como despistes + pregunta final | 5 partes (+ *intestino delgado y grueso*) + qué pasa en cada parada (*bolo, quimo, absorción, heces*) | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Así empieza una vida** (`vida`) | Línea temporal interactiva con visor de subetapas y explicación biológica | 4 viñetas: *unión de dos células, crecimiento en el útero, nacimiento y cuidados* | 5 fases (*fecundación, embrión con latido, feto con cordón, nacimiento y bebé*) + pregunta vivíparos | 6 fases (*cigoto, multiplicación celular, tejidos y órganos, placenta, parto y crecimiento por etapas*) | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Los cinco sentidos** (`sentidos`) | Unir órganos y situaciones con su sentido | Ojos, orejas, nariz, lengua y piel con su sentido | 6 situaciones de aviso | 5 avisos + pregunta sobre nervios, cerebro y actos reflejos | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **Un plato que cuida** (`plato`) | Llevar alimentos a su sitio, por arrastre o toque, mientras se llena la bandeja | Merienda «para cada día» o «de vez en cuando» (*manzana, bollo, yogur, chuches, bocadillo, refresco*) | Llenar el plato por partes: mitad verduras y frutas, un cuarto proteínas, un cuarto cereales | Leer etiquetas (azúcar, sal y grasa en 100 g) + comparar con otro producto | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **¿Me cuida o no?** (`habitos`) | Separar costumbres en «Me cuida» o «No me cuida» | Higiene, merienda y juego | Sueño, pantallas, actividad física y calma | Oído, vista, postura y descanso + qué parte se cuida | 3 |
 
 ---
@@ -81,7 +82,7 @@ flowchart LR
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
     MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 31 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(17 juegos · 51 niveles)"]
+    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(18 juegos · 54 niveles)"]
     DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
   end
 
@@ -181,7 +182,7 @@ flutter test
 
 - `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
 - `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
-- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 17 juegos, barajador sin repetición, desbloqueo de los 58 cromos) y pruebas de widgets/flujos completos en pantalla.
+- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 18 juegos, barajador sin repetición, desbloqueo de los 61 cromos) y pruebas de widgets/flujos completos en pantalla.
 
 ### 2. Ejecutar la aplicación en local
 
@@ -266,4 +267,4 @@ Este comportamiento es obligatorio para todos los juegos y niveles, incluidos lo
 
 Al superar un nivel, la animación del check verde, el sonido y la vibración dan paso automáticamente a una pantalla de resultado. Muestra el resumen y mantiene visibles las opciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. El botón de cerrar permite seguir explorando las explicaciones y curiosidades del ejercicio.
 
-Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 17 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.
+Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 18 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.

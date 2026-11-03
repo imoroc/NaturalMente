@@ -187,10 +187,8 @@ void main() {
           actividad.herbario!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
-
       } else if (actividad.ecosistema != null) {
         expect(actividad.ecosistema!.niveles.map((n) => n.id), ['facil', 'medio', 'dificil']);
-
       } else if (actividad.tipo == 'nacimiento') {
         expect(
           actividad.nacimiento!.niveles.map((n) => n.id).toList(),
@@ -264,12 +262,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 70 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+  test('el álbum tiene 73 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
     expect(catalogo.fichas.length, 73);
     expect(catalogo.fichasDe('reserva').length, 23);
     expect(catalogo.fichasDe('invernadero').length, 23);
     expect(catalogo.fichasDe('cuerpo').length, 27);
-    )
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -406,7 +403,7 @@ void main() {
     expect(progreso.fichaDesbloqueada('avisos'), isTrue);
     expect(progreso.fichaDesbloqueada('reflejo'), isTrue);
 
-    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo', 'plato','cuidados','respiracion','savia','organos',])
+    for (final nuevoId in ['dieta', 'grupos', 'polinizacion', 'estaciones', 'huerta', 'vivo', 'plato', 'cuidados', 'respiracion', 'savia', 'organos']) {
       final act = catalogo.actividades.firstWhere((a) => a.id == nuevoId);
       await progreso.marcarNivelLugar(act, 'dificil');
     }

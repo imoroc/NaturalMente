@@ -1497,6 +1497,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
   int _aciertosALaPrimera = 0;
   int _semillasSesion = 0;
   bool _completada = false;
+  bool _completadaAlAbrir = false;
 
   Progreso get _progreso => widget.progreso ?? Alcance.of(context).progreso;
 
@@ -1518,6 +1519,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       _mejorComboSesion = _comboActual;
       final hechaHoy = _progreso.expedicionHoyHecha(widget.fechaReferencia);
       if (hechaHoy) {
+        _completadaAlAbrir = true;
         // Si ya completó el reto diario hoy, bloqueamos volver a jugarlo hasta mañana
         // y mostramos directamente el resumen de desafío diario completado.
         _dificultad = _progreso.dificultadExpedicionHoy(widget.fechaReferencia);
@@ -1677,11 +1679,21 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       titulo: '¡Desafío diario completado!',
       actividad: 'Reto diario',
       nivel: '',
-      resumen: ResumenPrecisionFinal(
+      resumen: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CelebracionRachaDiariaDuolingo(
+            rachaDias: _progreso.rachaActiva(widget.fechaReferencia),
+            completadoHoy: true,
+          ),
+          const SizedBox(height: 12),
+          ResumenPrecisionFinal(
         aciertosALaPrimera: _aciertosALaPrimera,
         totalPasos: _mision.length,
         mejorComboSesion: _mejorComboSesion,
         semillasGanadas: _semillasSesion,
+      ),
+        ],
       ),
       textoVolver: 'Volver al mapa',
       onVolver: () => Navigator.of(context).pop(),
@@ -1740,7 +1752,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 680),
-            child: _completada
+            child: _completadaAlAbrir
                 ? _construirPantallaFinal(context)
                 : (_enSelectorDificultad
                       ? _construirPantallaSeleccionDificultad(context)
@@ -1791,7 +1803,8 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           ),
           const SizedBox(height: 16),
           Container(
-            padding: const EdgeInsets.all(18),
+
+      padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(24),
@@ -1930,6 +1943,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
     };
 
     return SingleChildScrollView(
+      key: _completada ? const Key('expedicion-completada') : null,
       padding: const EdgeInsets.all(18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -2028,7 +2042,8 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           ),
           const SizedBox(height: 14),
           Container(
-            padding: const EdgeInsets.all(18),
+
+      padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(24),

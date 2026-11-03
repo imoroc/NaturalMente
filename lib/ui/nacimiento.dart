@@ -34,7 +34,6 @@ class _NacimientoPageState extends State<NacimientoPage>
   final _pregunta = GlobalKey();
   bool _guardando = false;
   bool _guardado = false;
-  bool _falloGuardado = false;
   int _ronda = 0;
   List<String> _animalesBandeja = const [];
   final Map<String, List<Opcion>> _pasosBandeja = {};
@@ -86,7 +85,6 @@ class _NacimientoPageState extends State<NacimientoPage>
         ..addAll(opciones);
       final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
       _guardado = false;
-      _falloGuardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
       _semillasSesion = 0;
@@ -146,15 +144,12 @@ class _NacimientoPageState extends State<NacimientoPage>
     final nivel = _nivel;
     if (nivel == null || !_completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
-    setState(() {
-      _guardando = true;
-      _falloGuardado = false;
-    });
+    setState(() => _guardando = true);
     try {
       await progreso.marcarNivelJuego(widget.actividad, nivel.id);
       if (mounted) setState(() => _guardado = true);
     } catch (_) {
-      if (mounted) setState(() => _falloGuardado = true);
+      // El componente común FinJuego gestiona el reintento si falla el guardado.
     } finally {
       if (mounted) setState(() => _guardando = false);
     }
@@ -586,25 +581,6 @@ class _NacimientoPageState extends State<NacimientoPage>
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          const SizedBox(height: 8),
-          ResumenPrecisionFinal(
-            semillasGanadas: _semillasSesion,
-            mejorComboSesion: _mejorComboSesion,
-            sinPistas: _pistasSesion == 0,
-          ),
-          const SizedBox(height: 6),
-          if (_guardando) const Texto('Guardando tu progreso…'),
-          if (_guardado)
-            const Texto('Nivel superado y guardado en este dispositivo.'),
-          if (_falloGuardado) ...[
-            const Texto(
-              'No he podido guardar tu progreso. Puedes intentarlo otra vez.',
-            ),
-            TextButton(
-              onPressed: _guardarSiCompleta,
-              child: const Texto('Guardar de nuevo'),
-            ),
-          ],
           const SizedBox(height: 8),
           FilledButton(
             key: const Key('nacimiento-otra-vez'),

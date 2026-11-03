@@ -27,7 +27,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   PartidaEcosistema? _partida;
   final ScrollController _scroll = ScrollController();
   final Map<String, List<OpcionEcosistema>> _opciones = {};
-  bool _guardando = false, _guardado = false, _falloGuardado = false;
+  bool _guardando = false, _guardado = false;
   bool _permitirSalir = false;
   bool _verAntes = false;
   String? _inspeccionado;
@@ -92,7 +92,6 @@ class _EcosistemaPageState extends State<EcosistemaPage>
       _partida = PartidaEcosistema(_ecosistema, nivel);
       _guardando = false;
       _guardado = false;
-      _falloGuardado = false;
       _verAntes = false;
       _inspeccionado = null;
       _comboActual = comboGlobal;
@@ -202,19 +201,14 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     final partida = _partida!;
     if (_guardando || _guardado || !partida.completa) return;
     final progreso = Alcance.of(context).progreso;
-    setState(() {
-      _guardando = true;
-      _falloGuardado = false;
-    });
+    setState(() => _guardando = true);
     try {
       await progreso.marcarNivelEcosistema(widget.actividad, partida.nivel.id);
       if (mounted && identical(partida, _partida)) {
         setState(() => _guardado = true);
       }
     } catch (_) {
-      if (mounted && identical(partida, _partida)) {
-        setState(() => _falloGuardado = true);
-      }
+      // El componente común FinJuego gestiona el reintento si falla el guardado.
     } finally {
       if (mounted && identical(partida, _partida)) {
         setState(() => _guardando = false);
@@ -322,10 +316,20 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
-      resumen: ResumenPrecisionFinal(
-        semillasGanadas: _semillasSesion,
-        mejorComboSesion: _mejorComboSesion,
-        sinPistas: _pistasSesion == 0,
+      resumen: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ResumenPrecisionFinal(
+            semillasGanadas: _semillasSesion,
+            mejorComboSesion: _mejorComboSesion,
+            sinPistas: _pistasSesion == 0,
+          ),
+          const SizedBox(height: 8),
+          const Texto(
+            'Tu cromo del bosque está en el álbum de Natu.',
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
       onRepetir: () => _empezar(nivel),
       onCambiarNivel: () {
@@ -1216,48 +1220,6 @@ class _EcosistemaPageState extends State<EcosistemaPage>
       gesto: 'feliz',
     ),
     const SizedBox(height: 12),
-    ResumenPrecisionFinal(
-      semillasGanadas: _semillasSesion,
-      mejorComboSesion: _mejorComboSesion,
-      sinPistas: _pistasSesion == 0,
-    ),
-    const SizedBox(height: 16),
-    if (_guardando) const Texto('Guardando tu descubrimiento…'),
-    if (_falloGuardado) ...[
-      const Texto(
-        'Tu claro está completo. Vamos a intentar guardar la estrella otra vez.',
-      ),
-      FilledButton(onPressed: _guardar, child: const Texto('Guardar de nuevo')),
-    ],
-    if (_guardado) ...[
-      TarjetaJuego(
-        borde: const Color(0xFFE6B24E),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              const Icon(
-                Icons.star_rounded,
-                color: Color(0xFFB77713),
-                size: 36,
-              ),
-              const Texto(
-                '✓ Nivel superado',
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 19),
-              ),
-              const SizedBox(height: 8),
-              const Texto('Un bosque conectado'),
-              const SizedBox(height: 8),
-              const Texto(
-                'Tu cromo del bosque está en el álbum de Natu.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-      const SizedBox(height: 16),
-    ],
     FilledButton(
       key: const Key('eco-otra-vez'),
       style: EstilosJuego.accion,

@@ -813,6 +813,10 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
               'huerta',
               'vivo',
               'plato',
+              'cuidados',
+              'respiracion',
+              'savia',
+              'organos',
             }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }
@@ -880,6 +884,10 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
           'huerta',
           'vivo',
           'plato',
+          'cuidados',
+          'respiracion',
+          'savia',
+          'organos',
         }.contains(actividad.id)) {
           await progreso.desbloquearFicha(reto.id);
         }

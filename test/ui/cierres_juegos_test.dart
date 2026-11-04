@@ -17,6 +17,8 @@ import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
+import 'package:naturalmente/ui/adivinanza.dart';
+import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
@@ -25,6 +27,8 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   'viaje' => ViajePage(actividad: actividad),
   'ecosistema' => EcosistemaPage(actividad: actividad),
   'rescate' => RescatePage(actividad: actividad),
+  'memoria' => MemoriaPage(actividad: actividad),
+  'adivinanza' => AdivinanzaPage(actividad: actividad),
   _ => JuegoPage(actividad: actividad),
 };
 
@@ -191,6 +195,21 @@ Future<void> _jugar(
           tester,
           'respuesta-${especie.id}-${especie.ayuda.respuesta}',
         );
+      }
+    case 'memoria':
+      final nivel = actividad.memoria!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final pareja in nivel.parejas) {
+        await _tocar(tester, 'carta-${pareja.id}-a');
+        await _tocar(tester, 'carta-${pareja.id}-b');
+      }
+    case 'adivinanza':
+      final nivel = actividad.adivinanza!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final ronda in nivel.rondas) {
+        await _tocar(tester, 'adivina-${ronda.respuesta}');
       }
     default:
       fail('Tipo de juego sin recorrido de cierre: ${actividad.tipo}');

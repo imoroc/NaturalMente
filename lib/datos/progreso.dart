@@ -140,6 +140,8 @@ class Progreso extends ChangeNotifier {
     'organos': ['facil', 'medio', 'dificil'],
     'cuida-reserva': ['facil', 'medio', 'dificil'],
     'emociones': ['facil', 'medio', 'dificil'],
+    'memoria-plantas': ['facil', 'medio', 'dificil'],
+    'quien-soy': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -220,6 +222,12 @@ class Progreso extends ChangeNotifier {
       ('emociones', 'facil') => const ['emociones'],
       ('emociones', 'medio') => const ['nombrar-emociones'],
       ('emociones', 'dificil') => const ['empatia'],
+      ('memoria-plantas', 'facil') => const ['cada-parte-su-trabajo'],
+      ('memoria-plantas', 'medio') => const ['asi-vive-una-planta'],
+      ('memoria-plantas', 'dificil') => const ['la-flor-por-dentro'],
+      ('quien-soy', 'facil') => const ['pelo-plumas-escamas'],
+      ('quien-soy', 'medio') => const ['como-viven-animales'],
+      ('quien-soy', 'dificil') => const ['vertebrados-invertebrados'],
       _ => const <String>[],
     };
   }
@@ -375,6 +383,18 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «¿Cómo me siento?» a partir del nivel Medio (3º-4º).',
       'empatia' =>
         'Se consigue en «¿Cómo me siento?» en el nivel Difícil (5º-6º).',
+      'cada-parte-su-trabajo' =>
+        'Se consigue en «Memoria de las plantas» desde el nivel Fácil (1º-2º).',
+      'asi-vive-una-planta' =>
+        'Se consigue en «Memoria de las plantas» a partir del nivel Medio (3º-4º).',
+      'la-flor-por-dentro' =>
+        'Se consigue en «Memoria de las plantas» en el nivel Difícil (5º-6º).',
+      'pelo-plumas-escamas' =>
+        'Se consigue en «¿Quién soy?» desde el nivel Fácil (1º-2º).',
+      'como-viven-animales' =>
+        'Se consigue en «¿Quién soy?» a partir del nivel Medio (3º-4º).',
+      'vertebrados-invertebrados' =>
+        'Se consigue en «¿Quién soy?» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -485,6 +505,10 @@ class Progreso extends ChangeNotifier {
     ],
     'viaje' => [for (final n in actividad.viaje?.niveles ?? const []) n.id],
     'rescate' => [for (final n in actividad.rescate?.niveles ?? const []) n.id],
+    'memoria' => [for (final n in actividad.memoria?.niveles ?? const []) n.id],
+    'adivinanza' => [
+      for (final n in actividad.adivinanza?.niveles ?? const []) n.id,
+    ],
     _ => const [],
   };
 
@@ -523,7 +547,13 @@ class Progreso extends ChangeNotifier {
       final niveles = actividad.herbario?.niveles ?? const [];
       return niveles.where((n) => nivelHerbarioHecho(actividad, n.id)).length;
     }
-    if (const {'nacimiento', 'viaje', 'rescate'}.contains(actividad.tipo)) {
+    if (const {
+      'nacimiento',
+      'viaje',
+      'rescate',
+      'memoria',
+      'adivinanza',
+    }.contains(actividad.tipo)) {
       return _nivelesJuego(
         actividad,
       ).where((n) => nivelJuegoHecho(actividad, n)).length;
@@ -545,7 +575,13 @@ class Progreso extends ChangeNotifier {
     if (actividad.tipo == 'herbario') {
       return actividad.herbario?.niveles.length ?? 1;
     }
-    if (const {'nacimiento', 'viaje', 'rescate'}.contains(actividad.tipo)) {
+    if (const {
+      'nacimiento',
+      'viaje',
+      'rescate',
+      'memoria',
+      'adivinanza',
+    }.contains(actividad.tipo)) {
       final niveles = _nivelesJuego(actividad);
       return niveles.isEmpty ? 1 : niveles.length;
     }

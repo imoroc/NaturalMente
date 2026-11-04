@@ -239,8 +239,9 @@ Mezclan bloques. Pueden tener nivel fijo o el mismo selector.
 
 ### ¿Quién soy?
 - **Prioridad**: MVP.
-- **Mecánica**: salen pistas una a una («Tengo plumas», «No vuelo», «Vivo donde hace mucho frío») y hay que acertar con las menos posibles. Animales, plantas u órganos.
-- **Niveles**: Fácil, 3 opciones con dibujo. Difícil, elegir de una lista larga.
+- **Estado**: implementado en La reserva (`quien-soy`, tipo `adivinanza`), con los tres niveles, el cierre común, cromos por nivel (Pelo, plumas o escamas; Cómo viven los animales; Vertebrados e invertebrados) y textos en español e inglés. Modelo en `lib/modelo/adivinanza.dart`, reglas en `lib/reglas/adivinanza.dart` y pantalla en `lib/ui/adivinanza.dart`, con los dibujos de animales de los juegos nuevos.
+- **Mecánica**: salen pistas de una en una y se toca el animal. Se puede pedir otra pista; si se falla, el animal se descarta y sale la siguiente pista sola. Acertar sin pedir pistas da más semillas.
+- **Niveles**: Fácil, 3 opciones con dibujo (pelo, plumas o escamas, 2º). Medio, 4 opciones (cómo comen, se mueven y nacen, 3º). Difícil, 6 opciones (vertebrados e invertebrados, 5º).
 
 ### Repaso relámpago
 - **Prioridad**: MVP.
@@ -250,8 +251,9 @@ Mezclan bloques. Pueden tener nivel fijo o el mismo selector.
 
 ### Memoria
 - **Prioridad**: Extra.
-- **Mecánica**: parejas de cartas: animal y hábitat, órgano y función, planta y parte.
-- **Niveles**: Fácil, 6 cartas. Difícil, 16.
+- **Estado**: implementado en El invernadero como «Memoria de las plantas» (`memoria-plantas`, tipo `memoria`), con los tres niveles, el cierre común, cromos por nivel (Cada parte, su trabajo; Así vive una planta; La flor por dentro) y textos en español e inglés. Modelo en `lib/modelo/memoria.dart`, reglas en `lib/reglas/memoria.dart` y pantalla en `lib/ui/memoria.dart`. Reutiliza los dibujos de partes de la planta, plantas y juegos nuevos.
+- **Mecánica**: parejas de cartas boca abajo: un dibujo y lo que hace. Si dos no van juntas, se quedan a la vista hasta tocar otra.
+- **Niveles**: Fácil, 6 cartas (partes de la planta y su trabajo, 1º). Medio, 10 cartas (polinización, savia, hoja caduca, 3º). Difícil, 12 cartas (fotosíntesis, estambres, pistilo, cultivadas y silvestres, 5º).
 
 ### Verdadero o falso
 - **Prioridad**: Extra.

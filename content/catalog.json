@@ -730,6 +730,60 @@
       "titulo": "Empatía",
       "frase": "La empatía es ponerse en el lugar del otro para entender cómo se siente y ayudarle.",
       "curiosidad": "Un gesto pequeño, como invitar a alguien a jugar, puede cambiarle el día."
+    },
+    {
+      "id": "cada-parte-su-trabajo",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "Memoria de las plantas",
+      "titulo": "Cada parte, su trabajo",
+      "frase": "La raíz bebe agua, la hoja recoge la luz y el fruto guarda las semillas.",
+      "curiosidad": "Hay plantas que guardan agua y alimento en la raíz, como la zanahoria."
+    },
+    {
+      "id": "asi-vive-una-planta",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "Memoria de las plantas",
+      "titulo": "Así vive una planta",
+      "frase": "Las abejas llevan el polen, la flor se convierte en fruto y el tallo reparte la savia.",
+      "curiosidad": "Sin abejas y otros insectos, muchas plantas no podrían dar fruto."
+    },
+    {
+      "id": "la-flor-por-dentro",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "Memoria de las plantas",
+      "titulo": "La flor por dentro",
+      "frase": "Los estambres fabrican el polen y el pistilo lo recibe para formar la semilla y el fruto.",
+      "curiosidad": "Algunas flores tienen colores que nosotros no vemos, pero las abejas sí."
+    },
+    {
+      "id": "pelo-plumas-escamas",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "¿Quién soy?",
+      "titulo": "Pelo, plumas o escamas",
+      "frase": "Los mamíferos tienen pelo, las aves plumas y los peces escamas.",
+      "curiosidad": "El erizo también es un mamífero: sus púas son pelos muy duros."
+    },
+    {
+      "id": "como-viven-animales",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "¿Quién soy?",
+      "titulo": "Cómo viven los animales",
+      "frase": "Cada animal come, se mueve y nace a su manera: unos cazan de noche, otros guardan comida para el invierno.",
+      "curiosidad": "Las ardillas olvidan dónde enterraron algunas bellotas, y así ayudan a plantar árboles nuevos."
+    },
+    {
+      "id": "vertebrados-invertebrados",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "¿Quién soy?",
+      "titulo": "Vertebrados e invertebrados",
+      "frase": "Los vertebrados tienen columna vertebral; los invertebrados, como insectos, arañas o caracoles, no.",
+      "curiosidad": "El pulpo es un invertebrado muy listo: sabe abrir frascos con sus brazos."
     }
   ],
   "actividades": [
@@ -10668,6 +10722,619 @@
           ]
         }
       ]
+    },
+    {
+      "id": "memoria-plantas",
+      "zona": "invernadero",
+      "tipo": "memoria",
+      "titulo": "Memoria de las plantas",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Cada dificultad desbloquea un cromo sobre cómo vive una planta.",
+      "memoria": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Seis cartas: cada parte de la planta con su trabajo.",
+            "intro": "Da la vuelta a dos cartas y busca cada parte de la planta con su trabajo.",
+            "curiosidad": "Las raíces de algunos árboles son más largas que el árbol que se ve por encima del suelo.",
+            "despedida": "¡Ya sabes para qué sirve cada parte!",
+            "parejas": [
+              {
+                "id": "raiz",
+                "a": {
+                  "texto": "Raíz",
+                  "dibujo": "raiz"
+                },
+                "b": {
+                  "texto": "Toma agua del suelo",
+                  "icono": "agua"
+                },
+                "frase": "¡Pareja! La raíz toma el agua del suelo y sujeta la planta."
+              },
+              {
+                "id": "hoja",
+                "a": {
+                  "texto": "Hoja",
+                  "dibujo": "hoja"
+                },
+                "b": {
+                  "texto": "Recoge la luz del sol",
+                  "icono": "sol"
+                },
+                "frase": "¡Pareja! Las hojas recogen la luz del sol para fabricar alimento."
+              },
+              {
+                "id": "fruto",
+                "a": {
+                  "texto": "Fruto",
+                  "dibujo": "fruto"
+                },
+                "b": {
+                  "texto": "Guarda las semillas",
+                  "icono": "semillas"
+                },
+                "frase": "¡Pareja! Dentro del fruto están las semillas de una planta nueva."
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Diez cartas sobre cómo vive una planta.",
+            "intro": "Busca cada dibujo con lo que hace para que la planta viva y crezca.",
+            "curiosidad": "Una abeja puede visitar cientos de flores en un solo día.",
+            "despedida": "¡Ya conoces la vida de una planta!",
+            "parejas": [
+              {
+                "id": "abeja",
+                "a": {
+                  "texto": "Abeja",
+                  "dibujo": "abeja-polen"
+                },
+                "b": {
+                  "texto": "Lleva el polen de flor en flor",
+                  "icono": "polen"
+                },
+                "frase": "¡Pareja! Al llevar el polen, la abeja ayuda a que la flor dé fruto."
+              },
+              {
+                "id": "tallo",
+                "a": {
+                  "texto": "Tallo",
+                  "dibujo": "tallo"
+                },
+                "b": {
+                  "texto": "Sujeta la planta y lleva la savia",
+                  "icono": "savia"
+                },
+                "frase": "¡Pareja! El tallo sostiene la planta y por dentro lleva la savia."
+              },
+              {
+                "id": "flor",
+                "a": {
+                  "texto": "Flor",
+                  "dibujo": "flor"
+                },
+                "b": {
+                  "texto": "Se convierte en fruto",
+                  "dibujo": "fruto"
+                },
+                "frase": "¡Pareja! Después de la polinización, la flor se convierte en fruto."
+              },
+              {
+                "id": "hoja-caduca",
+                "a": {
+                  "texto": "Hoja caduca",
+                  "dibujo": "hoja-caduca"
+                },
+                "b": {
+                  "texto": "Se cae en otoño",
+                  "icono": "otono"
+                },
+                "frase": "¡Pareja! Los árboles de hoja caduca pierden las hojas en otoño."
+              },
+              {
+                "id": "encina",
+                "a": {
+                  "texto": "Encina",
+                  "dibujo": "encina"
+                },
+                "b": {
+                  "texto": "Da bellotas y es verde todo el año",
+                  "icono": "bellota"
+                },
+                "frase": "¡Pareja! La encina es de hoja perenne y sus frutos son las bellotas."
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Doce cartas: nutrición y reproducción de las plantas.",
+            "intro": "Busca cada parte con su función. Ahora hay más cartas y más parecidas.",
+            "curiosidad": "Con la fotosíntesis, las plantas fabrican su alimento y además sueltan el oxígeno que respiramos.",
+            "despedida": "¡Eres un experto en plantas!",
+            "parejas": [
+              {
+                "id": "raiz",
+                "a": {
+                  "texto": "Raíz",
+                  "dibujo": "raiz"
+                },
+                "b": {
+                  "texto": "Absorbe agua y sales minerales",
+                  "icono": "sales"
+                },
+                "frase": "¡Pareja! Con el agua y las sales que absorbe la raíz se forma la savia bruta."
+              },
+              {
+                "id": "hoja",
+                "a": {
+                  "texto": "Hoja",
+                  "dibujo": "hoja"
+                },
+                "b": {
+                  "texto": "Hace la fotosíntesis con la luz",
+                  "icono": "fotosintesis"
+                },
+                "frase": "¡Pareja! En la hoja, la luz se usa para fabricar alimento: es la fotosíntesis."
+              },
+              {
+                "id": "estambres",
+                "a": {
+                  "texto": "Estambres",
+                  "dibujo": "flor-estambres"
+                },
+                "b": {
+                  "texto": "Fabrican el polen",
+                  "icono": "polen"
+                },
+                "frase": "¡Pareja! Los estambres son la parte de la flor que fabrica el polen."
+              },
+              {
+                "id": "pistilo",
+                "a": {
+                  "texto": "Pistilo",
+                  "dibujo": "flor-pistilo"
+                },
+                "b": {
+                  "texto": "Recibe el polen y forma el fruto",
+                  "dibujo": "fruto"
+                },
+                "frase": "¡Pareja! Cuando el polen llega al pistilo, se forman la semilla y el fruto."
+              },
+              {
+                "id": "trigo",
+                "a": {
+                  "texto": "Trigo",
+                  "dibujo": "trigo"
+                },
+                "b": {
+                  "texto": "Planta cultivada: su semilla da harina",
+                  "icono": "harina"
+                },
+                "frase": "¡Pareja! El trigo se cultiva y con sus semillas se hace la harina del pan."
+              },
+              {
+                "id": "amapola",
+                "a": {
+                  "texto": "Amapola",
+                  "dibujo": "amapola"
+                },
+                "b": {
+                  "texto": "Planta silvestre: crece sola en el campo",
+                  "icono": "campo"
+                },
+                "frase": "¡Pareja! La amapola es silvestre: nadie la siembra y crece sola."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "quien-soy",
+      "zona": "reserva",
+      "tipo": "adivinanza",
+      "titulo": "¿Quién soy?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Adivina el animal con las menos pistas posibles.",
+      "adivinanza": {
+        "animales": [
+          {
+            "id": "conejo",
+            "nombre": "Conejo",
+            "conArticulo": "el conejo",
+            "dibujo": "conejo-prado"
+          },
+          {
+            "id": "ciguena",
+            "nombre": "Cigüeña",
+            "conArticulo": "la cigüeña",
+            "dibujo": "ciguena-nido"
+          },
+          {
+            "id": "trucha",
+            "nombre": "Trucha",
+            "conArticulo": "la trucha",
+            "dibujo": "trucha-arroyo"
+          },
+          {
+            "id": "oso",
+            "nombre": "Oso pardo",
+            "conArticulo": "el oso pardo",
+            "dibujo": "oso-pardo"
+          },
+          {
+            "id": "buho",
+            "nombre": "Búho",
+            "conArticulo": "el búho",
+            "dibujo": "buho-nocturno"
+          },
+          {
+            "id": "murcielago",
+            "nombre": "Murciélago",
+            "conArticulo": "el murciélago",
+            "dibujo": "murcielago-cueva"
+          },
+          {
+            "id": "aguila",
+            "nombre": "Águila",
+            "conArticulo": "el águila",
+            "dibujo": "aguila-real"
+          },
+          {
+            "id": "ardilla",
+            "nombre": "Ardilla",
+            "conArticulo": "la ardilla",
+            "dibujo": "ardilla-pinar"
+          },
+          {
+            "id": "rana",
+            "nombre": "Rana",
+            "conArticulo": "la rana",
+            "dibujo": "rana-charca"
+          },
+          {
+            "id": "lagartija",
+            "nombre": "Lagartija",
+            "conArticulo": "la lagartija",
+            "dibujo": "lagartija-sol"
+          },
+          {
+            "id": "salamandra",
+            "nombre": "Salamandra",
+            "conArticulo": "la salamandra",
+            "dibujo": "salamandra-musgo"
+          },
+          {
+            "id": "jabali",
+            "nombre": "Jabalí",
+            "conArticulo": "el jabalí",
+            "dibujo": "jabali-bosque"
+          },
+          {
+            "id": "garza",
+            "nombre": "Garza",
+            "conArticulo": "la garza",
+            "dibujo": "garza-charca"
+          },
+          {
+            "id": "lombriz",
+            "nombre": "Lombriz",
+            "conArticulo": "la lombriz",
+            "dibujo": "lombriz-tierra"
+          },
+          {
+            "id": "mariposa",
+            "nombre": "Mariposa",
+            "conArticulo": "la mariposa",
+            "dibujo": "mariposa-flor"
+          },
+          {
+            "id": "abeja",
+            "nombre": "Abeja",
+            "conArticulo": "la abeja",
+            "dibujo": "abeja-colmena"
+          },
+          {
+            "id": "arana",
+            "nombre": "Araña",
+            "conArticulo": "la araña",
+            "dibujo": "arana-tela"
+          },
+          {
+            "id": "caracol",
+            "nombre": "Caracol",
+            "conArticulo": "el caracol",
+            "dibujo": "caracol-huerta"
+          },
+          {
+            "id": "cangrejo",
+            "nombre": "Cangrejo de río",
+            "conArticulo": "el cangrejo de río",
+            "dibujo": "cangrejo-rio"
+          }
+        ],
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Cuatro animales y tres opciones con dibujo.",
+            "intro": "Lee la pista y toca el animal. Si no lo sabes, pide otra pista.",
+            "curiosidad": "Los mamíferos tienen pelo, las aves plumas y los peces escamas: así se distinguen de un vistazo.",
+            "despedida": "¡Has adivinado todos los animales!",
+            "rondas": [
+              {
+                "id": "conejo",
+                "respuesta": "conejo",
+                "pistas": [
+                  "Tengo pelo y unas orejas muy largas.",
+                  "Como hierba y brotes tiernos.",
+                  "Me muevo dando saltos."
+                ],
+                "candidatos": [
+                  "conejo",
+                  "ciguena",
+                  "trucha"
+                ],
+                "frase": "¡Sí, soy el conejo! Soy un mamífero: tengo pelo y mis crías toman leche."
+              },
+              {
+                "id": "ciguena",
+                "respuesta": "ciguena",
+                "pistas": [
+                  "Tengo plumas y un pico largo.",
+                  "Hago mi nido en lo alto de torres y campanarios.",
+                  "Tengo las patas largas y rojas."
+                ],
+                "candidatos": [
+                  "ciguena",
+                  "oso",
+                  "rana"
+                ],
+                "frase": "¡Sí, soy la cigüeña! Soy un ave: tengo plumas y pongo huevos."
+              },
+              {
+                "id": "trucha",
+                "respuesta": "trucha",
+                "pistas": [
+                  "Vivo en el agua del río.",
+                  "Respiro con branquias.",
+                  "Tengo escamas y aletas."
+                ],
+                "candidatos": [
+                  "trucha",
+                  "ardilla",
+                  "aguila"
+                ],
+                "frase": "¡Sí, soy la trucha! Soy un pez: respiro bajo el agua con branquias."
+              },
+              {
+                "id": "oso",
+                "respuesta": "oso",
+                "pistas": [
+                  "Soy grande y tengo mucho pelo.",
+                  "Me encanta la miel y las bayas.",
+                  "En invierno duermo mucho en una cueva."
+                ],
+                "candidatos": [
+                  "oso",
+                  "conejo",
+                  "buho"
+                ],
+                "frase": "¡Sí, soy el oso pardo! Soy un mamífero y vivo en las montañas."
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Cinco animales y cuatro opciones: cómo comen, se mueven y nacen.",
+            "intro": "Cada pista habla de cómo vive el animal. ¡Intenta acertar con pocas pistas!",
+            "curiosidad": "La rana cambia muchísimo al crecer: de renacuajo con cola a rana que salta. A eso se le llama metamorfosis.",
+            "despedida": "¡Ya sabes cómo viven los animales de la reserva!",
+            "rondas": [
+              {
+                "id": "buho",
+                "respuesta": "buho",
+                "pistas": [
+                  "Salgo a cazar de noche.",
+                  "Puedo girar mucho la cabeza.",
+                  "Soy un ave con ojos muy grandes."
+                ],
+                "candidatos": [
+                  "buho",
+                  "murcielago",
+                  "aguila",
+                  "ardilla"
+                ],
+                "frase": "¡Sí, soy el búho! Cazo de noche y veo muy bien en la oscuridad."
+              },
+              {
+                "id": "rana",
+                "respuesta": "rana",
+                "pistas": [
+                  "Nazco en el agua y de pequeña tengo cola.",
+                  "Cuando crezco, salto y respiro aire.",
+                  "Cazo insectos con mi lengua pegajosa."
+                ],
+                "candidatos": [
+                  "rana",
+                  "lagartija",
+                  "salamandra",
+                  "trucha"
+                ],
+                "frase": "¡Sí, soy la rana! Nazco renacuajo en el agua y luego vivo también en tierra."
+              },
+              {
+                "id": "ardilla",
+                "respuesta": "ardilla",
+                "pistas": [
+                  "Vivo en los árboles del pinar.",
+                  "Guardo piñones y frutos secos para el invierno.",
+                  "Tengo una cola grande y peluda."
+                ],
+                "candidatos": [
+                  "ardilla",
+                  "conejo",
+                  "jabali",
+                  "buho"
+                ],
+                "frase": "¡Sí, soy la ardilla! Trepo por los árboles y guardo comida para el invierno."
+              },
+              {
+                "id": "aguila",
+                "respuesta": "aguila",
+                "pistas": [
+                  "Soy un ave carnívora.",
+                  "Tengo garras fuertes y el pico curvo.",
+                  "Vuelo muy alto para ver a mis presas."
+                ],
+                "candidatos": [
+                  "aguila",
+                  "ciguena",
+                  "buho",
+                  "garza"
+                ],
+                "frase": "¡Sí, soy el águila! Mis garras y mi pico curvo me sirven para cazar."
+              },
+              {
+                "id": "lagartija",
+                "respuesta": "lagartija",
+                "pistas": [
+                  "Tengo escamas y necesito el sol para calentarme.",
+                  "Me gusta tumbarme en las piedras.",
+                  "Si me atrapan, puedo soltar la cola."
+                ],
+                "candidatos": [
+                  "lagartija",
+                  "salamandra",
+                  "rana",
+                  "lombriz"
+                ],
+                "frase": "¡Sí, soy la lagartija! Soy un reptil y tomo el sol para calentarme."
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Cinco animales y seis opciones: vertebrados e invertebrados.",
+            "intro": "Las primeras pistas dicen a qué grupo pertenezco. ¡Piensa como un científico!",
+            "curiosidad": "Casi todos los animales que existen son invertebrados: los insectos, por sí solos, son muchísimos más que todos los vertebrados.",
+            "despedida": "¡Sabes clasificar los animales como un biólogo!",
+            "rondas": [
+              {
+                "id": "murcielago",
+                "respuesta": "murcielago",
+                "pistas": [
+                  "Soy un vertebrado.",
+                  "Vuelo, pero no soy un ave.",
+                  "Mis crías nacen del vientre de su madre y toman leche.",
+                  "Me oriento con ecos en la oscuridad."
+                ],
+                "candidatos": [
+                  "murcielago",
+                  "buho",
+                  "mariposa",
+                  "aguila",
+                  "abeja",
+                  "ardilla"
+                ],
+                "frase": "¡Sí, soy el murciélago! Soy el único mamífero que vuela."
+              },
+              {
+                "id": "arana",
+                "respuesta": "arana",
+                "pistas": [
+                  "Soy un invertebrado.",
+                  "Tengo el cuerpo con partes y patas articuladas.",
+                  "Tengo ocho patas, no seis.",
+                  "Tejo una red para cazar."
+                ],
+                "candidatos": [
+                  "arana",
+                  "abeja",
+                  "mariposa",
+                  "caracol",
+                  "lombriz",
+                  "cangrejo"
+                ],
+                "frase": "¡Sí, soy la araña! Soy un artrópodo, pero no un insecto: tengo ocho patas."
+              },
+              {
+                "id": "caracol",
+                "respuesta": "caracol",
+                "pistas": [
+                  "Soy un invertebrado de cuerpo blando.",
+                  "Soy un molusco.",
+                  "Llevo mi casa a cuestas.",
+                  "Dejo un rastro brillante al moverme."
+                ],
+                "candidatos": [
+                  "caracol",
+                  "lombriz",
+                  "arana",
+                  "salamandra",
+                  "rana",
+                  "abeja"
+                ],
+                "frase": "¡Sí, soy el caracol! Soy un molusco con concha."
+              },
+              {
+                "id": "salamandra",
+                "respuesta": "salamandra",
+                "pistas": [
+                  "Soy un vertebrado de piel húmeda y sin escamas.",
+                  "Soy un anfibio.",
+                  "Vivo en lugares húmedos del bosque.",
+                  "Tengo manchas amarillas y negras."
+                ],
+                "candidatos": [
+                  "salamandra",
+                  "lagartija",
+                  "rana",
+                  "trucha",
+                  "caracol",
+                  "lombriz"
+                ],
+                "frase": "¡Sí, soy la salamandra! Soy un anfibio, como la rana, pero con cola."
+              },
+              {
+                "id": "abeja",
+                "respuesta": "abeja",
+                "pistas": [
+                  "Soy un invertebrado.",
+                  "Soy un insecto: tengo seis patas.",
+                  "Vivo con miles de compañeras.",
+                  "Llevo el polen de flor en flor y hago miel."
+                ],
+                "candidatos": [
+                  "abeja",
+                  "mariposa",
+                  "arana",
+                  "caracol",
+                  "murcielago",
+                  "lombriz"
+                ],
+                "frase": "¡Sí, soy la abeja! Soy un insecto y ayudo a polinizar las flores."
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

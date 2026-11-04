@@ -4178,6 +4178,21 @@ class IlustracionFicha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cromos de «Memoria de las plantas» y «¿Quién soy?».
+    switch (id) {
+      case 'cada-parte-su-trabajo':
+        return IconoParte(id: 'raiz', size: alto);
+      case 'asi-vive-una-planta':
+        return DibujoNuevoJuego(id: 'abeja-polen', tamano: alto);
+      case 'la-flor-por-dentro':
+        return DibujoNuevoJuego(id: 'flor-estambres', tamano: alto);
+      case 'pelo-plumas-escamas':
+        return DibujoNuevoJuego(id: 'conejo-prado', tamano: alto);
+      case 'como-viven-animales':
+        return DibujoNuevoJuego(id: 'ardilla-pinar', tamano: alto);
+      case 'vertebrados-invertebrados':
+        return DibujoNuevoJuego(id: 'arana-tela', tamano: alto);
+    }
     // Cromos de «¿Cómo me siento?».
     final emocion = switch (id) {
       'emociones' => 'alegria',

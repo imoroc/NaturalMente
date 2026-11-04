@@ -194,6 +194,16 @@ void main() {
           actividad.nacimiento!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.tipo == 'memoria') {
+        expect(
+          actividad.memoria!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
+      } else if (actividad.tipo == 'adivinanza') {
+        expect(
+          actividad.adivinanza!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
       } else if (actividad.tipo == 'rescate') {
         expect(
           actividad.rescate!.niveles.map((n) => n.id).toList(),
@@ -267,10 +277,10 @@ void main() {
     }
   });
 
-  test('el álbum tiene 79 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 79);
-    expect(catalogo.fichasDe('reserva').length, 26);
-    expect(catalogo.fichasDe('invernadero').length, 23);
+  test('el álbum tiene 85 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 85);
+    expect(catalogo.fichasDe('reserva').length, 29);
+    expect(catalogo.fichasDe('invernadero').length, 26);
     expect(catalogo.fichasDe('cuerpo').length, 30);
 
     SharedPreferences.setMockInitialValues({});
@@ -384,6 +394,18 @@ void main() {
 
     await progreso.marcarNivelLugar(habitos, 'dificil');
     expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isTrue);
+
+    for (final (juegoId, cromos) in const [
+      ('memoria-plantas', ['cada-parte-su-trabajo', 'asi-vive-una-planta', 'la-flor-por-dentro']),
+      ('quien-soy', ['pelo-plumas-escamas', 'como-viven-animales', 'vertebrados-invertebrados']),
+    ]) {
+      final juego = catalogo.actividades.firstWhere((a) => a.id == juegoId);
+      await progreso.marcarNivelJuego(juego, 'facil');
+      expect(progreso.fichaDesbloqueada(cromos[0]), isTrue);
+      expect(progreso.fichaDesbloqueada(cromos[1]), isFalse);
+      await progreso.marcarNivelJuego(juego, 'dificil');
+      expect(cromos.every(progreso.fichaDesbloqueada), isTrue);
+    }
 
     final emociones = catalogo.actividades.firstWhere((a) => a.id == 'emociones');
     await progreso.marcarNivelLugar(emociones, 'facil');

@@ -3,6 +3,8 @@ import 'package:naturalmente/modelo/herbario.dart';
 
 import 'package:naturalmente/modelo/ecosistema.dart';
 
+import 'package:naturalmente/modelo/adivinanza.dart';
+import 'package:naturalmente/modelo/memoria.dart';
 import 'package:naturalmente/modelo/nacimiento.dart';
 import 'package:naturalmente/modelo/rescate.dart';
 
@@ -211,6 +213,8 @@ class Actividad {
     this.nacimiento,
     this.viaje,
     this.rescate,
+    this.memoria,
+    this.adivinanza,
   });
 
   final String id;
@@ -237,6 +241,8 @@ class Actividad {
   final Nacimiento? nacimiento;
   final Viaje? viaje;
   final Rescate? rescate;
+  final Memoria? memoria;
+  final Adivinanza? adivinanza;
 
 
   bool get tieneFrases {
@@ -245,6 +251,8 @@ class Actividad {
     if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'viaje') return viaje != null;
     if (tipo == 'rescate') return rescate != null;
+    if (tipo == 'memoria') return memoria != null;
+    if (tipo == 'adivinanza') return adivinanza != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
     }
@@ -295,6 +303,12 @@ class Actividad {
       rescate: mapa['rescate'] == null
           ? null
           : Rescate.desdeMapa(mapa['rescate'] as Map<String, dynamic>),
+      memoria: mapa['memoria'] == null
+          ? null
+          : Memoria.desdeMapa(mapa['memoria'] as Map<String, dynamic>),
+      adivinanza: mapa['adivinanza'] == null
+          ? null
+          : Adivinanza.desdeMapa(mapa['adivinanza'] as Map<String, dynamic>),
     );
     actividad._comprobar();
     return actividad;
@@ -315,6 +329,8 @@ class Actividad {
       'nacimiento',
       'viaje',
       'rescate',
+      'memoria',
+      'adivinanza',
     ].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }

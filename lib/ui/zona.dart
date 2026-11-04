@@ -13,6 +13,7 @@ import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/laboratorio_zona.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
+import 'package:naturalmente/ui/rescate.dart';
 import 'package:naturalmente/ui/texto.dart';
 
 class ZonaPage extends StatelessWidget {
@@ -232,6 +233,7 @@ class ZonaPage extends StatelessWidget {
                                   actividad: actividad,
                                 ),
                                 'viaje' => ViajePage(actividad: actividad),
+                                'rescate' => RescatePage(actividad: actividad),
                                 _ => JuegoPage(actividad: actividad),
                               },
                             ),

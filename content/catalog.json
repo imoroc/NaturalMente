@@ -676,6 +676,33 @@
       "titulo": "Sistema nervioso",
       "frase": "El cerebro, la médula y los nervios mandan y reciben mensajes para que el cuerpo se mueva y sienta.",
       "curiosidad": "Los mensajes de los nervios viajan tan rápido que notas un pinchazo casi al instante."
+    },
+    {
+      "id": "menos-plasticos",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Cuida la reserva",
+      "titulo": "Menos plásticos",
+      "frase": "La basura en el campo y en los ríos daña a los animales. Si usamos menos plástico, hay menos basura.",
+      "curiosidad": "Una bolsa de tela se puede usar cientos de veces."
+    },
+    {
+      "id": "separar-residuos",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "Cuida la reserva",
+      "titulo": "Separar residuos",
+      "frase": "Amarillo para envases, azul para papel y cartón, verde para vidrio y marrón para lo orgánico.",
+      "curiosidad": "Con los restos orgánicos se fabrica compost, un abono para los huertos."
+    },
+    {
+      "id": "especies-amenazadas",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "Cuida la reserva",
+      "titulo": "Especies amenazadas",
+      "frase": "La caza, la contaminación, los incendios y la pérdida de su hábitat ponen en peligro a muchas especies.",
+      "curiosidad": "El lince ibérico estuvo a punto de desaparecer y hoy se recupera gracias a su protección."
     }
   ],
   "actividades": [
@@ -9674,6 +9701,430 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cuida-reserva",
+      "zona": "reserva",
+      "tipo": "rescate",
+      "titulo": "Cuida la reserva",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Cada dificultad desbloquea un cromo sobre cómo cuidar la naturaleza.",
+      "rescate": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Recoge la basura del bosque y del río.",
+            "intro": "Toca la basura que hay en el bosque y en el río. ¡Los animales y las plantas se quedan!",
+            "curiosidad": "Una botella de plástico puede tardar cientos de años en desaparecer de la naturaleza.",
+            "despedida": "¡La reserva está limpia y los animales, a salvo!",
+            "objetos": [
+              {
+                "id": "botella",
+                "nombre": "Botella de plástico",
+                "basura": true,
+                "frase": "¡Fuera! Un pez podría quedar atrapado en esta botella de plástico.",
+                "x": 0.14,
+                "y": 0.8
+              },
+              {
+                "id": "lata",
+                "nombre": "Lata",
+                "basura": true,
+                "frase": "¡Recogida! Una lata tirada puede cortar la pata de un animal.",
+                "x": 0.62,
+                "y": 0.5
+              },
+              {
+                "id": "bolsa",
+                "nombre": "Bolsa de plástico",
+                "basura": true,
+                "frase": "¡Muy bien! Muchos animales confunden las bolsas de plástico con comida.",
+                "x": 0.84,
+                "y": 0.34
+              },
+              {
+                "id": "envoltorio",
+                "nombre": "Envoltorio",
+                "basura": true,
+                "frase": "¡Genial! Los envoltorios tardan muchísimo en desaparecer.",
+                "x": 0.34,
+                "y": 0.56
+              },
+              {
+                "id": "brik",
+                "nombre": "Brik",
+                "basura": true,
+                "frase": "¡Eso es! El río queda más limpio para los animales que viven en él.",
+                "x": 0.9,
+                "y": 0.86
+              },
+              {
+                "id": "pez",
+                "nombre": "Pez",
+                "basura": false,
+                "frase": "El pez vive en el río. ¡Déjalo nadar tranquilo!",
+                "x": 0.44,
+                "y": 0.86
+              },
+              {
+                "id": "rana",
+                "nombre": "Rana",
+                "basura": false,
+                "frase": "La rana es parte de la reserva: mejor no molestarla.",
+                "x": 0.66,
+                "y": 0.7
+              },
+              {
+                "id": "flor",
+                "nombre": "Flor",
+                "basura": false,
+                "frase": "La flor da alimento a las abejas. Se queda donde está.",
+                "x": 0.18,
+                "y": 0.46
+              },
+              {
+                "id": "seta",
+                "nombre": "Seta",
+                "basura": false,
+                "frase": "La seta crece sola en el bosque. No es basura.",
+                "x": 0.02,
+                "y": 0.56
+              },
+              {
+                "id": "hoja",
+                "nombre": "Hoja seca",
+                "basura": false,
+                "frase": "La hoja seca se convierte en abono para el suelo. No hace falta recogerla.",
+                "x": 0.48,
+                "y": 0.44
+              },
+              {
+                "id": "pina",
+                "nombre": "Piña",
+                "basura": false,
+                "frase": "La piña cayó de un pino y guarda semillas. Es parte del bosque.",
+                "x": 0.98,
+                "y": 0.52
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Separa nueve residuos en cuatro contenedores.",
+            "intro": "Lleva cada residuo a su contenedor: toca el contenedor o arrastra el residuo.",
+            "curiosidad": "Con el plástico reciclado se pueden fabricar bancos, forros polares y botellas nuevas.",
+            "despedida": "¡Todo separado! Así los residuos tienen una segunda vida.",
+            "contenedores": [
+              {
+                "id": "amarillo",
+                "nombre": "Envases"
+              },
+              {
+                "id": "azul",
+                "nombre": "Papel y cartón"
+              },
+              {
+                "id": "verde",
+                "nombre": "Vidrio"
+              },
+              {
+                "id": "marron",
+                "nombre": "Orgánico"
+              }
+            ],
+            "residuos": [
+              {
+                "id": "botella",
+                "nombre": "Botella de plástico",
+                "contenedor": "amarillo",
+                "bien": "¡Bien! Las botellas de plástico son envases: van al amarillo.",
+                "mal": "La botella de plástico es un envase. Los envases van al contenedor amarillo."
+              },
+              {
+                "id": "periodico",
+                "nombre": "Periódico",
+                "contenedor": "azul",
+                "bien": "¡Eso es! El papel va al azul y se convierte en papel nuevo.",
+                "mal": "El periódico es papel. El papel y el cartón van al contenedor azul."
+              },
+              {
+                "id": "cascara",
+                "nombre": "Cáscara de plátano",
+                "contenedor": "marron",
+                "bien": "¡Muy bien! Los restos de comida van al orgánico y se convierten en abono.",
+                "mal": "La cáscara es un resto de comida. Va al contenedor marrón, el orgánico."
+              },
+              {
+                "id": "tarro",
+                "nombre": "Tarro de vidrio",
+                "contenedor": "verde",
+                "bien": "¡Genial! El vidrio va al verde y se puede fundir para hacer tarros nuevos.",
+                "mal": "El tarro es de vidrio. El vidrio va al contenedor verde."
+              },
+              {
+                "id": "lata",
+                "nombre": "Lata",
+                "contenedor": "amarillo",
+                "bien": "¡Eso es! Las latas también son envases: al amarillo.",
+                "mal": "La lata es un envase de metal. Va al contenedor amarillo."
+              },
+              {
+                "id": "caja",
+                "nombre": "Caja de cartón",
+                "contenedor": "azul",
+                "bien": "¡Bien! El cartón va al azul. Mejor plegado para que ocupe menos.",
+                "mal": "La caja es de cartón. Va al contenedor azul, con el papel."
+              },
+              {
+                "id": "manzana-mordida",
+                "nombre": "Restos de manzana",
+                "contenedor": "marron",
+                "bien": "¡Muy bien! Con los restos de fruta se hace compost para los huertos.",
+                "mal": "Los restos de fruta son orgánicos. Van al contenedor marrón."
+              },
+              {
+                "id": "botella-vidrio",
+                "nombre": "Botella de vidrio",
+                "contenedor": "verde",
+                "bien": "¡Genial! Las botellas de vidrio van al verde.",
+                "mal": "La botella es de vidrio, no de plástico. Va al contenedor verde."
+              },
+              {
+                "id": "brik",
+                "nombre": "Brik de leche",
+                "contenedor": "amarillo",
+                "bien": "¡Eso es! Los briks son envases: van al amarillo aunque parezcan de cartón.",
+                "mal": "El brik parece cartón, pero es un envase con plástico y metal por dentro. Va al amarillo."
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Cuatro especies en peligro: qué las amenaza y cómo ayudarlas.",
+            "intro": "Conoce cuatro especies amenazadas: elige qué las pone en peligro y qué las ayuda.",
+            "curiosidad": "Gracias a su protección, hoy hay muchos más linces ibéricos que hace veinte años.",
+            "despedida": "¡Ya sabes cómo proteger la biodiversidad de nuestro entorno!",
+            "especies": [
+              {
+                "id": "lince",
+                "nombre": "Lince ibérico",
+                "dibujo": "lince-cazador",
+                "presentacion": "Un felino que solo vive en la península ibérica. Se alimenta sobre todo de conejos.",
+                "amenaza": {
+                  "enunciado": "¿Qué pone en peligro al lince?",
+                  "opciones": [
+                    {
+                      "id": "nieve",
+                      "nombre": "La nieve del invierno"
+                    },
+                    {
+                      "id": "conejos",
+                      "nombre": "Que haya pocos conejos para comer"
+                    },
+                    {
+                      "id": "arboles",
+                      "nombre": "Que haya demasiados árboles"
+                    }
+                  ],
+                  "respuesta": "conejos",
+                  "frases": {
+                    "nieve": "El lince aguanta bien el frío. Su problema es que le falte comida.",
+                    "conejos": "¡Exacto! Si desaparecen los conejos, el lince se queda sin comida.",
+                    "arboles": "El lince vive en el monte, entre árboles y matorrales. Eso no le daña."
+                  }
+                },
+                "ayuda": {
+                  "enunciado": "¿Qué ayuda al lince?",
+                  "opciones": [
+                    {
+                      "id": "casa",
+                      "nombre": "Llevarlo a vivir a una casa"
+                    },
+                    {
+                      "id": "cortar",
+                      "nombre": "Cortar los matorrales donde se esconde"
+                    },
+                    {
+                      "id": "monte",
+                      "nombre": "Cuidar su monte y que vuelvan los conejos"
+                    }
+                  ],
+                  "respuesta": "monte",
+                  "frases": {
+                    "casa": "El lince es un animal salvaje: necesita su monte, no una casa.",
+                    "cortar": "Sin matorrales, el lince no tiene dónde esconderse ni criar.",
+                    "monte": "¡Muy bien! Con monte y conejos, el lince puede vivir y criar."
+                  }
+                }
+              },
+              {
+                "id": "oso",
+                "nombre": "Oso pardo",
+                "dibujo": "oso-pardo",
+                "presentacion": "Vive en la cordillera Cantábrica, también en montes de Castilla y León.",
+                "amenaza": {
+                  "enunciado": "¿Qué pone en peligro al oso pardo?",
+                  "opciones": [
+                    {
+                      "id": "bosque",
+                      "nombre": "Perder su bosque por la tala y los incendios"
+                    },
+                    {
+                      "id": "fruta",
+                      "nombre": "Comer demasiada fruta"
+                    },
+                    {
+                      "id": "lluvia",
+                      "nombre": "Que llueva mucho"
+                    }
+                  ],
+                  "respuesta": "bosque",
+                  "frases": {
+                    "bosque": "¡Eso es! Sin bosque, el oso no tiene comida ni refugio.",
+                    "fruta": "El oso come fruta, bayas y miel. Eso no le hace daño.",
+                    "lluvia": "La lluvia no le hace daño: el bosque necesita agua."
+                  }
+                },
+                "ayuda": {
+                  "enunciado": "¿Qué ayuda al oso pardo?",
+                  "opciones": [
+                    {
+                      "id": "pistas",
+                      "nombre": "Abrir muchas pistas en el monte"
+                    },
+                    {
+                      "id": "fuego",
+                      "nombre": "Proteger el bosque y no hacer fuego en el monte"
+                    },
+                    {
+                      "id": "comida",
+                      "nombre": "Darle de comer en la carretera"
+                    }
+                  ],
+                  "respuesta": "fuego",
+                  "frases": {
+                    "pistas": "Las pistas rompen su bosque y traen ruido. Eso no le ayuda.",
+                    "fuego": "¡Muy bien! Un bosque sano es la casa del oso.",
+                    "comida": "Si se acostumbra a la comida de las personas, el oso corre peligro."
+                  }
+                }
+              },
+              {
+                "id": "aguila",
+                "nombre": "Águila imperial ibérica",
+                "dibujo": "aguila-real",
+                "presentacion": "Un ave rapaz que solo vive en la península ibérica. Hace su nido en árboles altos.",
+                "amenaza": {
+                  "enunciado": "¿Qué pone en peligro al águila imperial?",
+                  "opciones": [
+                    {
+                      "id": "alto",
+                      "nombre": "Volar demasiado alto"
+                    },
+                    {
+                      "id": "mariposas",
+                      "nombre": "Que haya mariposas en el campo"
+                    },
+                    {
+                      "id": "venenos",
+                      "nombre": "La caza y los venenos que se ponen en el campo"
+                    }
+                  ],
+                  "respuesta": "venenos",
+                  "frases": {
+                    "alto": "Volar alto es lo normal para un águila. No le hace daño.",
+                    "mariposas": "Las mariposas no hacen daño al águila.",
+                    "venenos": "¡Exacto! La caza y los venenos han matado a muchas águilas."
+                  }
+                },
+                "ayuda": {
+                  "enunciado": "¿Qué ayuda al águila imperial?",
+                  "opciones": [
+                    {
+                      "id": "vigilar",
+                      "nombre": "Prohibir los venenos y vigilar sus nidos"
+                    },
+                    {
+                      "id": "jaula",
+                      "nombre": "Tenerla en una jaula"
+                    },
+                    {
+                      "id": "talar",
+                      "nombre": "Talar los árboles donde anida"
+                    }
+                  ],
+                  "respuesta": "vigilar",
+                  "frases": {
+                    "vigilar": "¡Muy bien! Así sus pollos pueden crecer sin peligro.",
+                    "jaula": "Un águila necesita volar libre por su territorio.",
+                    "talar": "Sin árboles altos, el águila no tiene dónde poner su nido."
+                  }
+                }
+              },
+              {
+                "id": "trucha",
+                "nombre": "Trucha común",
+                "dibujo": "trucha-arroyo",
+                "presentacion": "Un pez de los ríos de agua fría y limpia, como los de Castilla y León.",
+                "amenaza": {
+                  "enunciado": "¿Qué pone en peligro a la trucha?",
+                  "opciones": [
+                    {
+                      "id": "piedras",
+                      "nombre": "Que el río tenga piedras"
+                    },
+                    {
+                      "id": "contaminacion",
+                      "nombre": "La contaminación del agua del río"
+                    },
+                    {
+                      "id": "ranas",
+                      "nombre": "Que haya ranas en el río"
+                    }
+                  ],
+                  "respuesta": "contaminacion",
+                  "frases": {
+                    "piedras": "Las piedras del fondo son buenas: la trucha pone allí sus huevos.",
+                    "contaminacion": "¡Eso es! En agua sucia la trucha no puede respirar ni criar.",
+                    "ranas": "Las ranas también viven en el río. No dañan a la trucha."
+                  }
+                },
+                "ayuda": {
+                  "enunciado": "¿Qué ayuda a la trucha?",
+                  "opciones": [
+                    {
+                      "id": "basura",
+                      "nombre": "Echar la basura al río"
+                    },
+                    {
+                      "id": "secar",
+                      "nombre": "Sacar mucha agua del río en verano"
+                    },
+                    {
+                      "id": "depurar",
+                      "nombre": "Limpiar el agua antes de devolverla al río"
+                    }
+                  ],
+                  "respuesta": "depurar",
+                  "frases": {
+                    "basura": "La basura ensucia el agua y daña a todos los seres del río.",
+                    "secar": "Si el río lleva poca agua, se calienta y la trucha sufre.",
+                    "depurar": "¡Genial! Las depuradoras limpian el agua sucia antes de que vuelva al río."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

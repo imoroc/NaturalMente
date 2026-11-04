@@ -8,6 +8,7 @@ import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/dibujos_plantas.dart';
 import 'package:naturalmente/ui/dibujos_sentidos.dart';
 import 'package:naturalmente/ui/dibujos_plato.dart';
+import 'package:naturalmente/ui/dibujos_rescate.dart';
 import 'package:naturalmente/ui/dibujos_vivo.dart';
 import 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 export 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
@@ -4153,6 +4154,14 @@ class IlustracionFicha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cromos de «Cuida la reserva».
+    if (id == 'menos-plasticos') return DibujoResiduo(id: 'botella', tamano: alto);
+    if (id == 'separar-residuos') {
+      return DibujoContenedor(id: 'amarillo', tamano: alto);
+    }
+    if (id == 'especies-amenazadas') {
+      return DibujoNuevoJuego(id: 'lince-cazador', tamano: alto);
+    }
     if (id == 'claro-bosque') {
       return SizedBox(
         width: alto * 1.3, height: alto,

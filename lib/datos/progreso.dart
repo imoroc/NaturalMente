@@ -138,6 +138,7 @@ class Progreso extends ChangeNotifier {
     'respiracion': ['facil', 'medio', 'dificil'],
     'savia': ['facil', 'medio', 'dificil'],
     'organos': ['facil', 'medio', 'dificil'],
+    'cuida-reserva': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -212,6 +213,9 @@ class Progreso extends ChangeNotifier {
       ('organos', 'facil') => const ['aparato-circulatorio'],
       ('organos', 'medio') => const ['aparato-respiratorio'],
       ('organos', 'dificil') => const ['sistema-nervioso'],
+      ('cuida-reserva', 'facil') => const ['menos-plasticos'],
+      ('cuida-reserva', 'medio') => const ['separar-residuos'],
+      ('cuida-reserva', 'dificil') => const ['especies-amenazadas'],
       _ => const <String>[],
     };
   }
@@ -355,6 +359,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Cada órgano, su trabajo» a partir del nivel Medio (3º-4º).',
       'sistema-nervioso' =>
         'Se consigue en «Cada órgano, su trabajo» en el nivel Difícil (5º-6º).',
+      'menos-plasticos' =>
+        'Se consigue en «Cuida la reserva» desde el nivel Fácil (1º-2º).',
+      'separar-residuos' =>
+        'Se consigue en «Cuida la reserva» a partir del nivel Medio (3º-4º).',
+      'especies-amenazadas' =>
+        'Se consigue en «Cuida la reserva» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -464,6 +474,7 @@ class Progreso extends ChangeNotifier {
       for (final n in actividad.nacimiento?.niveles ?? const []) n.id,
     ],
     'viaje' => [for (final n in actividad.viaje?.niveles ?? const []) n.id],
+    'rescate' => [for (final n in actividad.rescate?.niveles ?? const []) n.id],
     _ => const [],
   };
 
@@ -502,7 +513,7 @@ class Progreso extends ChangeNotifier {
       final niveles = actividad.herbario?.niveles ?? const [];
       return niveles.where((n) => nivelHerbarioHecho(actividad, n.id)).length;
     }
-    if (actividad.tipo == 'nacimiento' || actividad.tipo == 'viaje') {
+    if (const {'nacimiento', 'viaje', 'rescate'}.contains(actividad.tipo)) {
       return _nivelesJuego(
         actividad,
       ).where((n) => nivelJuegoHecho(actividad, n)).length;
@@ -524,7 +535,7 @@ class Progreso extends ChangeNotifier {
     if (actividad.tipo == 'herbario') {
       return actividad.herbario?.niveles.length ?? 1;
     }
-    if (actividad.tipo == 'nacimiento' || actividad.tipo == 'viaje') {
+    if (const {'nacimiento', 'viaje', 'rescate'}.contains(actividad.tipo)) {
       final niveles = _nivelesJuego(actividad);
       return niveles.isEmpty ? 1 : niveles.length;
     }

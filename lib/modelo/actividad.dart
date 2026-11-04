@@ -4,6 +4,7 @@ import 'package:naturalmente/modelo/herbario.dart';
 import 'package:naturalmente/modelo/ecosistema.dart';
 
 import 'package:naturalmente/modelo/nacimiento.dart';
+import 'package:naturalmente/modelo/rescate.dart';
 
 
 class Opcion {
@@ -209,6 +210,7 @@ class Actividad {
 
     this.nacimiento,
     this.viaje,
+    this.rescate,
   });
 
   final String id;
@@ -234,6 +236,7 @@ class Actividad {
 
   final Nacimiento? nacimiento;
   final Viaje? viaje;
+  final Rescate? rescate;
 
 
   bool get tieneFrases {
@@ -241,6 +244,7 @@ class Actividad {
     if (tipo == 'herbario') return herbario != null;
     if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'viaje') return viaje != null;
+    if (tipo == 'rescate') return rescate != null;
     if (tipo == 'lugar') {
       return retos.isNotEmpty && retos.every((reto) => reto.frases.isNotEmpty);
     }
@@ -288,6 +292,9 @@ class Actividad {
       viaje: mapa['viaje'] == null
           ? null
           : Viaje.desdeMapa(mapa['viaje'] as Map<String, dynamic>),
+      rescate: mapa['rescate'] == null
+          ? null
+          : Rescate.desdeMapa(mapa['rescate'] as Map<String, dynamic>),
     );
     actividad._comprobar();
     return actividad;
@@ -307,6 +314,7 @@ class Actividad {
 
       'nacimiento',
       'viaje',
+      'rescate',
     ].contains(tipo)) {
       throw ArgumentError('La actividad $id tiene un tipo desconocido: $tipo.');
     }

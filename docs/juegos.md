@@ -78,9 +78,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Cuida la reserva
 - **Prioridad**: Extra.
-- **Mecánica**: una escena con basura, plásticos y animales en apuros. Se toca lo que hace daño y se elige qué hacer (recoger, reciclar, no tocar el nido).
-- **Niveles**: Fácil, solo recoger. Medio y Difícil, decidir entre dos acciones y ver qué pasa.
-- **Si no acierta**: «Si nos llevamos los huevos, el pájaro no tendrá crías».
+- **Estado**: implementado (`cuida-reserva`, tipo `rescate`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (Menos plásticos, Separar residuos y Especies amenazadas) y textos en español e inglés. Modelo en `lib/modelo/rescate.dart`, reglas sin widgets en `lib/reglas/rescate.dart`, pantalla en `lib/ui/rescate.dart` y dibujos de la escena, los residuos y los contenedores en `lib/ui/dibujos_rescate.dart`. No cuenta para la medalla.
+- **Mecánica**: Fácil, una escena del bosque y el río donde se toca la basura; los seres vivos y lo que es del bosque se quedan. Medio, llevar cada residuo a su contenedor, tocando o arrastrando. Difícil, cuatro especies amenazadas: primero qué las pone en peligro y después qué las ayuda.
+- **Niveles**: Fácil (1º, «Todos somos animales»: más animales, menos plásticos). Medio (4º, «Rodeados de cambios»: separar residuos). Difícil (6º, «Seres vivos y ecosistemas»: factores que amenazan la biodiversidad) con el lince ibérico, el oso pardo, el águila imperial y la trucha.
+- **Si no acierta**: Natu explica por qué ese ser vivo se queda, a qué contenedor va el residuo o qué le pasa a la especie.
 
 ## El invernadero (plantas)
 

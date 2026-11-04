@@ -16,6 +16,7 @@ import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
+import 'package:naturalmente/ui/rescate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
@@ -23,6 +24,7 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   'nacimiento' => NacimientoPage(actividad: actividad),
   'viaje' => ViajePage(actividad: actividad),
   'ecosistema' => EcosistemaPage(actividad: actividad),
+  'rescate' => RescatePage(actividad: actividad),
   _ => JuegoPage(actividad: actividad),
 };
 
@@ -168,6 +170,27 @@ Future<void> _jugar(
         if (find.byKey(const Key('eco-restaurar')).evaluate().isNotEmpty) {
           await _tocar(tester, 'eco-restaurar');
         }
+      }
+    case 'rescate':
+      final nivel = actividad.rescate!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final objeto in nivel.objetos.where((o) => o.basura)) {
+        await _tocar(tester, 'objeto-${objeto.id}');
+      }
+      for (final residuo in nivel.residuos) {
+        await _tocar(tester, 'contenedor-${residuo.contenedor}');
+      }
+      for (final especie in nivel.especies) {
+        await _tocar(
+          tester,
+          'respuesta-${especie.id}-${especie.amenaza.respuesta}',
+        );
+        expect(find.byType(FinJuego), findsNothing);
+        await _tocar(
+          tester,
+          'respuesta-${especie.id}-${especie.ayuda.respuesta}',
+        );
       }
     default:
       fail('Tipo de juego sin recorrido de cierre: ${actividad.tipo}');

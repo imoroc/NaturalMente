@@ -77,6 +77,8 @@ void main() {
       'partes',
       'animales',
       'despistes',
+      'contenedor',
+      'dibujo',
     };
     void comprobar(Object? valor, [String campo = '']) {
       if (valor is Map) {

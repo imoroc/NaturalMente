@@ -218,9 +218,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### ¿Cómo me siento?
 - **Prioridad**: Extra.
-- **Mecánica**: el personaje vive una situación y hay que elegir la cara que le encaja. Luego, qué le ayudaría.
-- **Niveles**: Fácil, alegría, tristeza, enfado y miedo. Difícil, emociones más finas y cómo ayudar a un compañero.
-- **Ojo**: algunas situaciones no tienen una sola respuesta. Ahí vale cualquier respuesta con sentido y el juego solo comenta.
+- **Estado**: implementado (`emociones`, tipo `lugar`) con los tres niveles, el cierre común de `JuegoPage`, cromos por nivel (Las emociones, Ponerle nombre a lo que siento y Empatía) y textos en español e inglés. Caras y situaciones en `lib/ui/dibujos_emociones.dart`. Las caras van siempre en el mismo orden. No cuenta para la medalla.
+- **Mecánica**: sale una situación con un dibujo y se toca la cara de la emoción que encaja.
+- **Niveles**: Fácil, alegría, tristeza, enfado y miedo (1º, «Cuido mi cuerpo»). Medio, también vergüenza y nervios (4º, «El bienestar»). Difícil, cómo se siente un compañero y, después, qué le ayudaría (6º, «Nos relacionamos»).
+- **Si no acierta**: Natu explica cuándo aparece la emoción elegida y, a la segunda, añade la pista. Las situaciones se han elegido para que solo tengan una respuesta clara.
 
 ### Corazón en marcha
 - **Prioridad**: Extra.

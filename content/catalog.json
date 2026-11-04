@@ -703,6 +703,33 @@
       "titulo": "Especies amenazadas",
       "frase": "La caza, la contaminación, los incendios y la pérdida de su hábitat ponen en peligro a muchas especies.",
       "curiosidad": "El lince ibérico estuvo a punto de desaparecer y hoy se recupera gracias a su protección."
+    },
+    {
+      "id": "emociones",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "¿Cómo me siento?",
+      "titulo": "Las emociones",
+      "frase": "Alegría, tristeza, enfado y miedo son emociones. Todas son normales y nos dicen algo.",
+      "curiosidad": "Las emociones también se notan en el cuerpo: en la cara, en la tripa o en las manos."
+    },
+    {
+      "id": "nombrar-emociones",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "¿Cómo me siento?",
+      "titulo": "Ponerle nombre a lo que siento",
+      "frase": "Saber si sientes vergüenza, nervios o enfado te ayuda a saber qué hacer y a contarlo.",
+      "curiosidad": "Respirar hondo y despacio ayuda a calmarse cuando una emoción es muy fuerte."
+    },
+    {
+      "id": "empatia",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "¿Cómo me siento?",
+      "titulo": "Empatía",
+      "frase": "La empatía es ponerse en el lugar del otro para entender cómo se siente y ayudarle.",
+      "curiosidad": "Un gesto pequeño, como invitar a alguien a jugar, puede cambiarle el día."
     }
   ],
   "actividades": [
@@ -10125,6 +10152,522 @@
           }
         ]
       }
+    },
+    {
+      "id": "emociones",
+      "zona": "cuerpo",
+      "tipo": "lugar",
+      "titulo": "¿Cómo me siento?",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Lee lo que pasa y toca la cara de cómo se siente.",
+      "opciones": [
+        {
+          "id": "alegria",
+          "nombre": "Alegría"
+        },
+        {
+          "id": "tristeza",
+          "nombre": "Tristeza"
+        },
+        {
+          "id": "enfado",
+          "nombre": "Enfado"
+        },
+        {
+          "id": "miedo",
+          "nombre": "Miedo"
+        }
+      ],
+      "retos": [
+        {
+          "id": "cumpleanos",
+          "nombre": "Cumpleaños",
+          "pregunta": "Hoy es tu cumpleaños y tus amigos te dan una sorpresa.",
+          "respuesta": "alegria",
+          "pista": "Piensa en cómo te sientes cuando te hacen un regalo.",
+          "curiosidad": "Cuando estamos alegres sonreímos, y la sonrisa se contagia a los demás.",
+          "frases": {
+            "alegria": "¡Sí! Una sorpresa de tus amigos da mucha alegría.",
+            "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+            "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+            "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+          }
+        },
+        {
+          "id": "perro-perdido",
+          "nombre": "El perro perdido",
+          "pregunta": "Tu perro se ha escapado y no lo encuentras.",
+          "respuesta": "tristeza",
+          "pista": "Echas mucho de menos a tu perro.",
+          "curiosidad": "Llorar también ayuda: después de llorar, muchas veces nos sentimos un poco mejor.",
+          "frases": {
+            "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+            "tristeza": "Es normal sentir tristeza cuando perdemos a alguien que queremos.",
+            "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+            "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+          }
+        },
+        {
+          "id": "columpio",
+          "nombre": "El columpio",
+          "pregunta": "Llevas un rato esperando tu turno y alguien se cuela en el columpio.",
+          "respuesta": "enfado",
+          "pista": "Colarse no es justo. ¿Qué sientes cuando algo no es justo?",
+          "curiosidad": "Cuando estamos enfadados, contar hasta diez ayuda a calmarse antes de hablar.",
+          "frases": {
+            "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+            "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+            "enfado": "¡Eso es! Es normal enfadarse cuando algo es injusto.",
+            "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+          }
+        },
+        {
+          "id": "tormenta",
+          "nombre": "La tormenta",
+          "pregunta": "Es de noche y suenan truenos muy fuertes.",
+          "respuesta": "miedo",
+          "pista": "Los truenos suenan muy fuerte y está oscuro.",
+          "curiosidad": "El miedo nos protege: nos avisa para tener cuidado.",
+          "frases": {
+            "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+            "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+            "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+            "miedo": "¡Sí! Los ruidos fuertes en la oscuridad pueden dar miedo."
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "id": "facil",
+          "nombre": "Fácil",
+          "curso": "1º-2º",
+          "resumen": "Cuatro emociones: alegría, tristeza, enfado y miedo.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "alegria",
+              "nombre": "Alegría"
+            },
+            {
+              "id": "tristeza",
+              "nombre": "Tristeza"
+            },
+            {
+              "id": "enfado",
+              "nombre": "Enfado"
+            },
+            {
+              "id": "miedo",
+              "nombre": "Miedo"
+            }
+          ],
+          "retos": [
+            {
+              "id": "cumpleanos",
+              "nombre": "Cumpleaños",
+              "pregunta": "Hoy es tu cumpleaños y tus amigos te dan una sorpresa.",
+              "respuesta": "alegria",
+              "pista": "Piensa en cómo te sientes cuando te hacen un regalo.",
+              "curiosidad": "Cuando estamos alegres sonreímos, y la sonrisa se contagia a los demás.",
+              "frases": {
+                "alegria": "¡Sí! Una sorpresa de tus amigos da mucha alegría.",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+              }
+            },
+            {
+              "id": "perro-perdido",
+              "nombre": "El perro perdido",
+              "pregunta": "Tu perro se ha escapado y no lo encuentras.",
+              "respuesta": "tristeza",
+              "pista": "Echas mucho de menos a tu perro.",
+              "curiosidad": "Llorar también ayuda: después de llorar, muchas veces nos sentimos un poco mejor.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "Es normal sentir tristeza cuando perdemos a alguien que queremos.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+              }
+            },
+            {
+              "id": "columpio",
+              "nombre": "El columpio",
+              "pregunta": "Llevas un rato esperando tu turno y alguien se cuela en el columpio.",
+              "respuesta": "enfado",
+              "pista": "Colarse no es justo. ¿Qué sientes cuando algo no es justo?",
+              "curiosidad": "Cuando estamos enfadados, contar hasta diez ayuda a calmarse antes de hablar.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "¡Eso es! Es normal enfadarse cuando algo es injusto.",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+              }
+            },
+            {
+              "id": "tormenta",
+              "nombre": "La tormenta",
+              "pregunta": "Es de noche y suenan truenos muy fuertes.",
+              "respuesta": "miedo",
+              "pista": "Los truenos suenan muy fuerte y está oscuro.",
+              "curiosidad": "El miedo nos protege: nos avisa para tener cuidado.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "¡Sí! Los ruidos fuertes en la oscuridad pueden dar miedo."
+              }
+            }
+          ]
+        },
+        {
+          "id": "medio",
+          "nombre": "Medio",
+          "curso": "3º-4º",
+          "resumen": "Seis emociones, también vergüenza y nervios.",
+          "preguntaAdaptacion": false,
+          "opciones": [
+            {
+              "id": "alegria",
+              "nombre": "Alegría"
+            },
+            {
+              "id": "tristeza",
+              "nombre": "Tristeza"
+            },
+            {
+              "id": "enfado",
+              "nombre": "Enfado"
+            },
+            {
+              "id": "miedo",
+              "nombre": "Miedo"
+            },
+            {
+              "id": "verguenza",
+              "nombre": "Vergüenza"
+            },
+            {
+              "id": "nervios",
+              "nombre": "Nervios"
+            }
+          ],
+          "retos": [
+            {
+              "id": "libros-suelo",
+              "nombre": "Los libros al suelo",
+              "pregunta": "Se te caen todos los libros delante de toda la clase.",
+              "respuesta": "verguenza",
+              "pista": "Todos te están mirando. ¿Se te pone la cara roja?",
+              "curiosidad": "A todo el mundo le pasan cosas así. Reírse de uno mismo ayuda a que la vergüenza pase antes.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "¡Eso es! Sentimos vergüenza cuando creemos que todos nos miran.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              }
+            },
+            {
+              "id": "funcion-cole",
+              "nombre": "La función",
+              "pregunta": "Mañana tienes que actuar en la función del colegio.",
+              "respuesta": "nervios",
+              "pista": "Todavía no ha pasado, pero piensas mucho en ello.",
+              "curiosidad": "Respirar hondo, despacio, ayuda a calmar los nervios.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "¡Muy bien! Antes de algo importante es normal sentir nervios."
+              }
+            },
+            {
+              "id": "amiga-se-va",
+              "nombre": "Mi amiga se muda",
+              "pregunta": "Tu mejor amiga se cambia de colegio a otra ciudad.",
+              "respuesta": "tristeza",
+              "pista": "Vas a echar de menos a tu amiga.",
+              "curiosidad": "Hablar de lo que sentimos con alguien de confianza hace que la tristeza pese menos.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "Es normal sentir tristeza al separarse de alguien que queremos.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              }
+            },
+            {
+              "id": "gana-partido",
+              "nombre": "¡Ganamos!",
+              "pregunta": "Tu equipo gana el partido en el último minuto.",
+              "respuesta": "alegria",
+              "pista": "Todos saltan y se abrazan.",
+              "curiosidad": "La alegría se nota en el cuerpo: saltamos, reímos y nos dan ganas de abrazar.",
+              "frases": {
+                "alegria": "¡Genial! Ganar con tu equipo da mucha alegría.",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              }
+            },
+            {
+              "id": "dibujo-roto",
+              "nombre": "El dibujo roto",
+              "pregunta": "Un compañero rompe tu dibujo a propósito.",
+              "respuesta": "enfado",
+              "pista": "Lo ha hecho queriendo. ¿Te parece justo?",
+              "curiosidad": "Enfadarse no es malo; lo importante es decir lo que sentimos sin hacer daño.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "¡Eso es! Es normal enfadarse cuando alguien estropea algo nuestro a propósito.",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              }
+            }
+          ]
+        },
+        {
+          "id": "dificil",
+          "nombre": "Difícil",
+          "curso": "5º-6º",
+          "resumen": "Cómo se siente un compañero y qué le ayudaría.",
+          "preguntaAdaptacion": true,
+          "opciones": [
+            {
+              "id": "alegria",
+              "nombre": "Alegría"
+            },
+            {
+              "id": "tristeza",
+              "nombre": "Tristeza"
+            },
+            {
+              "id": "enfado",
+              "nombre": "Enfado"
+            },
+            {
+              "id": "miedo",
+              "nombre": "Miedo"
+            },
+            {
+              "id": "verguenza",
+              "nombre": "Vergüenza"
+            },
+            {
+              "id": "nervios",
+              "nombre": "Nervios"
+            }
+          ],
+          "retos": [
+            {
+              "id": "equipo-solo",
+              "nombre": "Nadie le elige",
+              "pregunta": "En el recreo, nadie elige a Leo para su equipo.",
+              "respuesta": "tristeza",
+              "pista": "Imagina que nadie te elige a ti.",
+              "curiosidad": "Ponerse en el lugar del otro se llama empatía.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "Sí, Leo seguramente se siente triste y solo. ¿Qué le ayudaría?",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le ayudaría a Leo?",
+                "opciones": [
+                  {
+                    "id": "ignorar",
+                    "nombre": "Hacer como que no lo has visto"
+                  },
+                  {
+                    "id": "invitar",
+                    "nombre": "Invitarle a jugar con tu equipo"
+                  },
+                  {
+                    "id": "reir",
+                    "nombre": "Reírte con los demás"
+                  }
+                ],
+                "respuesta": "invitar",
+                "frases": {
+                  "ignorar": "Si nadie hace nada, Leo sigue solo.",
+                  "invitar": "¡Muy bien! Un gesto pequeño puede cambiarle el día.",
+                  "reir": "Reírse de alguien le hace sentir peor."
+                }
+              }
+            },
+            {
+              "id": "examen",
+              "nombre": "El examen",
+              "pregunta": "A Sara le tiemblan las manos antes de un examen.",
+              "respuesta": "nervios",
+              "pista": "Algo importante está a punto de empezar.",
+              "curiosidad": "Un poco de nervios nos ayuda a estar atentos; muchos nervios nos bloquean.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Sí, Sara está nerviosa. ¿Cómo puedes ayudarla?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le ayudaría a Sara?",
+                "opciones": [
+                  {
+                    "id": "prisa",
+                    "nombre": "Meterle prisa"
+                  },
+                  {
+                    "id": "suspender",
+                    "nombre": "Decirle que va a suspender"
+                  },
+                  {
+                    "id": "respirar",
+                    "nombre": "Respirar hondo con ella y recordarle lo que ha estudiado"
+                  }
+                ],
+                "respuesta": "respirar",
+                "frases": {
+                  "prisa": "Las prisas ponen más nerviosa a Sara.",
+                  "suspender": "Eso la asusta más y le quita confianza.",
+                  "respirar": "¡Eso es! Respirar despacio y confiar en lo que sabe la tranquiliza."
+                }
+              }
+            },
+            {
+              "id": "leer-en-voz-alta",
+              "nombre": "Leer en voz alta",
+              "pregunta": "Hugo se equivoca al leer en voz alta y algunos se ríen.",
+              "respuesta": "verguenza",
+              "pista": "Todos le miran y algunos se ríen.",
+              "curiosidad": "Equivocarse es parte de aprender: todos lo hacemos.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "Sí, Hugo siente vergüenza. ¿Qué le ayudaría?",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le ayudaría a Hugo?",
+                "opciones": [
+                  {
+                    "id": "normal",
+                    "nombre": "Decirle que equivocarse es normal y no reírte"
+                  },
+                  {
+                    "id": "reir",
+                    "nombre": "Reírte tú también"
+                  },
+                  {
+                    "id": "contar",
+                    "nombre": "Contarlo a todo el colegio"
+                  }
+                ],
+                "respuesta": "normal",
+                "frases": {
+                  "normal": "¡Muy bien! Así Hugo se atreverá a leer otra vez.",
+                  "reir": "Reírse hace que Hugo lo pase peor.",
+                  "contar": "Contarlo hace que la vergüenza crezca."
+                }
+              }
+            },
+            {
+              "id": "balon-quitado",
+              "nombre": "El balón",
+              "pregunta": "A Nora le cogen su balón sin pedírselo.",
+              "respuesta": "enfado",
+              "pista": "Le han quitado algo suyo sin pedir permiso.",
+              "curiosidad": "Hablar con calma o pedir ayuda a un adulto resuelve más que gritar.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "Sí, Nora está enfadada. ¿Qué puede hacer?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le ayudaría a Nora?",
+                "opciones": [
+                  {
+                    "id": "empujar",
+                    "nombre": "Empujar al que lo cogió"
+                  },
+                  {
+                    "id": "calma",
+                    "nombre": "Pedirlo con calma o avisar a un adulto"
+                  },
+                  {
+                    "id": "romper",
+                    "nombre": "Romper algo del otro"
+                  }
+                ],
+                "respuesta": "calma",
+                "frases": {
+                  "empujar": "Empujar puede hacer daño y empeorar el problema.",
+                  "calma": "¡Eso es! Hablar con calma resuelve el problema sin hacer daño.",
+                  "romper": "Romper algo suyo solo hace que los dos estén peor."
+                }
+              }
+            },
+            {
+              "id": "ruidos-noche",
+              "nombre": "Ruidos de noche",
+              "pregunta": "En la acampada, Pablo oye ruidos raros fuera de la tienda.",
+              "respuesta": "miedo",
+              "pista": "No sabe qué hace ese ruido y está oscuro.",
+              "curiosidad": "Entender lo que nos da miedo suele hacerlo más pequeño.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "Sí, Pablo tiene miedo. ¿Qué le ayudaría?",
+                "verguenza": "La vergüenza aparece cuando creemos que todos nos están mirando. Piensa otra vez.",
+                "nervios": "Los nervios llegan antes de algo importante que va a pasar. ¿Es eso lo que ocurre?"
+              },
+              "adaptacion": {
+                "enunciado": "¿Qué le ayudaría a Pablo?",
+                "opciones": [
+                  {
+                    "id": "asustar",
+                    "nombre": "Asustarle más con un susto"
+                  },
+                  {
+                    "id": "solo",
+                    "nombre": "Dejarle solo"
+                  },
+                  {
+                    "id": "acompanar",
+                    "nombre": "Acompañarle y buscar con una linterna de dónde viene el ruido"
+                  }
+                ],
+                "respuesta": "acompanar",
+                "frases": {
+                  "asustar": "Un susto hace que el miedo de Pablo crezca.",
+                  "solo": "Sentirse solo hace el miedo más grande.",
+                  "acompanar": "¡Muy bien! Acompañado y sabiendo qué es, el miedo se hace pequeño."
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

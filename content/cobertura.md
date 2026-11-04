@@ -50,7 +50,7 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 | Corazón, pulmones y estómago | 3º-4º | Cada pieza en su sitio | |
 | Camino de la comida | 3º-4º | El viaje de la comida | digestion; dientes, aparato-digestivo, nutrientes |
 | Descanso y movimiento | 3º-4º | ¿Me cuida o no? (Medio): sueño, pantallas, actividad física y calma | habitos; descanso |
-| Emociones, en una ficha corta | 3º-4º | | |
+| Emociones, en una ficha corta | 3º-4º | ¿Cómo me siento? (los tres niveles) | emociones; emociones, nombrar-emociones, empatia |
 | La célula | 5º-6º | | |
 | El cerebro y los sentidos | 5º-6º | Los cinco sentidos (Difícil) | sentidos; reflejo |
 | Leer una etiqueta de alimento | 5º-6º | Un plato que cuida (Difícil): azúcar, sal y grasa en 100 g | plato; etiqueta |

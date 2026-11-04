@@ -267,11 +267,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 76 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 76);
+  test('el álbum tiene 79 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 79);
     expect(catalogo.fichasDe('reserva').length, 26);
     expect(catalogo.fichasDe('invernadero').length, 23);
-    expect(catalogo.fichasDe('cuerpo').length, 27);
+    expect(catalogo.fichasDe('cuerpo').length, 30);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -384,6 +384,16 @@ void main() {
 
     await progreso.marcarNivelLugar(habitos, 'dificil');
     expect(progreso.fichaDesbloqueada('cuidar-sentidos'), isTrue);
+
+    final emociones = catalogo.actividades.firstWhere((a) => a.id == 'emociones');
+    await progreso.marcarNivelLugar(emociones, 'facil');
+    expect(progreso.fichaDesbloqueada('emociones'), isTrue);
+    expect(progreso.fichaDesbloqueada('nombrar-emociones'), isFalse);
+    await progreso.marcarNivelLugar(emociones, 'medio');
+    expect(progreso.fichaDesbloqueada('nombrar-emociones'), isTrue);
+    expect(progreso.fichaDesbloqueada('empatia'), isFalse);
+    await progreso.marcarNivelLugar(emociones, 'dificil');
+    expect(progreso.fichaDesbloqueada('empatia'), isTrue);
 
     final reserva = catalogo.actividades.firstWhere((a) => a.id == 'cuida-reserva');
     await progreso.marcarNivelJuego(reserva, 'facil');
@@ -613,5 +623,24 @@ void main() {
     await progreso.marcarNivelLugar(plato, 'dificil');
     expect(progreso.fichaDesbloqueada('plato-equilibrado'), isTrue);
     expect(progreso.fichaDesbloqueada('etiqueta'), isTrue);
+  });
+
+  test('«¿Cómo me siento?» sube de cuatro a seis emociones y en Difícil pregunta qué ayuda', () {
+    final emociones = catalogo.actividades.firstWhere((a) => a.id == 'emociones');
+    final niveles = {for (final n in emociones.nivelesLugar) n.id: n};
+    expect(niveles['facil']!.opciones.map((o) => o.id), ['alegria', 'tristeza', 'enfado', 'miedo']);
+    expect(niveles['medio']!.opciones, hasLength(6));
+    expect(niveles['dificil']!.preguntaAdaptacion, isTrue);
+    for (final nivel in niveles.values) {
+      for (final reto in nivel.retos) {
+        final mal = resolverLugar(
+          reto: reto,
+          eleccion: nivel.opciones.firstWhere((o) => o.id != reto.respuesta).id,
+          intento: 2,
+        );
+        expect(mal.acierto, isFalse);
+        expect(mal.frase, contains(reto.pista));
+      }
+    }
   });
 }

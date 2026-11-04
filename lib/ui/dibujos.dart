@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
+import 'package:naturalmente/ui/dibujos_emociones.dart';
 import 'package:naturalmente/ui/dibujos_nacimiento.dart';
 import 'package:naturalmente/ui/dibujos_plantas.dart';
 import 'package:naturalmente/ui/dibujos_sentidos.dart';
@@ -339,6 +340,28 @@ class Criatura extends StatelessWidget {
         ),
       );
     }
+    final situacion = situacionesEmocion[id];
+    if (situacion != null) {
+      return Container(
+        width: 88,
+        height: 88,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD0C9B8),
+              offset: Offset(0, 4),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Center(
+          child: Icon(situacion.$1, size: 58, color: situacion.$2),
+        ),
+      );
+    }
     if (_organosCuerpo.contains(id)) {
       return Container(
         width: 88,
@@ -507,6 +530,7 @@ class IconoSitio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (idsSitiosEmocion.contains(id)) return DibujoEmocion(id: id, tamano: 60);
     if (_zonasCuerpo.contains(id)) {
       return Container(
         width: 48,
@@ -4154,6 +4178,14 @@ class IlustracionFicha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cromos de «¿Cómo me siento?».
+    final emocion = switch (id) {
+      'emociones' => 'alegria',
+      'nombrar-emociones' => 'nervios',
+      'empatia' => 'verguenza',
+      _ => null,
+    };
+    if (emocion != null) return DibujoEmocion(id: emocion, tamano: alto);
     // Cromos de «Cuida la reserva».
     if (id == 'menos-plasticos') return DibujoResiduo(id: 'botella', tamano: alto);
     if (id == 'separar-residuos') {

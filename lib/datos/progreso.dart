@@ -139,6 +139,7 @@ class Progreso extends ChangeNotifier {
     'savia': ['facil', 'medio', 'dificil'],
     'organos': ['facil', 'medio', 'dificil'],
     'cuida-reserva': ['facil', 'medio', 'dificil'],
+    'emociones': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -216,6 +217,9 @@ class Progreso extends ChangeNotifier {
       ('cuida-reserva', 'facil') => const ['menos-plasticos'],
       ('cuida-reserva', 'medio') => const ['separar-residuos'],
       ('cuida-reserva', 'dificil') => const ['especies-amenazadas'],
+      ('emociones', 'facil') => const ['emociones'],
+      ('emociones', 'medio') => const ['nombrar-emociones'],
+      ('emociones', 'dificil') => const ['empatia'],
       _ => const <String>[],
     };
   }
@@ -365,6 +369,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Cuida la reserva» a partir del nivel Medio (3º-4º).',
       'especies-amenazadas' =>
         'Se consigue en «Cuida la reserva» en el nivel Difícil (5º-6º).',
+      'emociones' =>
+        'Se consigue en «¿Cómo me siento?» desde el nivel Fácil (1º-2º).',
+      'nombrar-emociones' =>
+        'Se consigue en «¿Cómo me siento?» a partir del nivel Medio (3º-4º).',
+      'empatia' =>
+        'Se consigue en «¿Cómo me siento?» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }

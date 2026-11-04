@@ -8,6 +8,7 @@ import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujo_savia.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/dibujos_emociones.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 import 'package:naturalmente/ui/feedback_acierto.dart';
 import 'package:naturalmente/ui/fin_juego.dart';
@@ -167,6 +168,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
     'huerta',
     'vivo',
     'plato',
+    'emociones',
   };
 
   void _prepararBarajadoReto() {
@@ -4553,6 +4555,8 @@ String? _subtituloSitio(String id) => switch (id) {
   final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(otro),
   final otro when idsSitiosVivo.contains(otro) => subtituloSitioVivo(otro),
   final otro when idsSitiosPlato.contains(otro) => subtituloSitioPlato(otro),
+  final otro when idsSitiosEmocion.contains(otro) =>
+    subtituloSitioEmocion(otro),
   // Fin sentidos
   _ => null,
 };
@@ -4636,6 +4640,7 @@ Color _colorSitio(String id) {
     default:
       if (idsSitiosVivo.contains(id)) return colorSitioVivo(id);
       if (idsSitiosPlato.contains(id)) return colorSitioPlato(id);
+      if (idsSitiosEmocion.contains(id)) return colorSitioEmocion(id);
       return idsNuevosJuegos.contains(id)
           ? colorSitioNuevoJuego(id)
           : const Color(0xFFF6F1E6);
@@ -4687,6 +4692,7 @@ Color _bordeSitio(String id) {
     default:
       if (idsSitiosVivo.contains(id)) return bordeSitioVivo(id);
       if (idsSitiosPlato.contains(id)) return bordeSitioPlato(id);
+      if (idsSitiosEmocion.contains(id)) return bordeSitioEmocion(id);
       return idsNuevosJuegos.contains(id)
           ? bordeSitioNuevoJuego(id)
           : const Color(0xFFD6CFC0);

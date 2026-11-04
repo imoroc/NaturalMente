@@ -6,6 +6,7 @@ import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/burbuja.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
+import 'package:naturalmente/ui/cromos_zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/digestion.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
@@ -39,9 +40,6 @@ class ZonaPage extends StatelessWidget {
       body: ListenableBuilder(
         listenable: progreso,
         builder: (context, _) {
-          final desbloqueadas = fichas
-              .where((f) => progreso.fichaDesbloqueada(f.id))
-              .length;
           return Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 780),
@@ -305,79 +303,10 @@ class ZonaPage extends StatelessWidget {
                     const SizedBox(height: 8),
                     TarjetaAccesoLaboratorio(zona: zona),
                     const SizedBox(height: 14),
-                    Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFFBEB),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: const Color(0xFFF59E0B),
-                          width: 2.2,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFEF3C7),
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: const Color(0xFFFBBF24),
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.auto_stories_rounded,
-                                  size: 20,
-                                  color: Color(0xFFB45309),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Texto(
-                                      '4. ÁLBUM DE CROMOS · $desbloqueadas/${fichas.length} DESCUBIERTOS',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge
-                                          ?.copyWith(
-                                            color: const Color(0xFF78350F),
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 0.4,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 2),
-                                    const Texto(
-                                      'Juega a las misiones y supera niveles para desbloquear todas las fichas del cuaderno de Natu.',
-                                      style: TextStyle(
-                                        fontSize: 12.5,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFF92400E),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          for (var i = 0; i < fichas.length; i++) ...[
-                            TarjetaCromoFicha(
-                              ficha: fichas[i],
-                              desbloqueada: progreso.fichaDesbloqueada(
-                                fichas[i].id,
-                              ),
-                            ),
-                            if (i < fichas.length - 1)
-                              const SizedBox(height: 10),
-                          ],
-                        ],
-                      ),
+                    ResumenCromosZona(
+                      zona: zona,
+                      fichas: fichas,
+                      progreso: progreso,
                     ),
                   ],
                 ),

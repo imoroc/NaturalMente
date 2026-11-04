@@ -4418,6 +4418,7 @@
   "Se consigue en «Cada órgano, su trabajo» desde el nivel Fácil (1º-2º).": "Earned in “Every organ has its job” from the Easy level (Years 1–2).",
   "Se consigue en «Cada órgano, su trabajo» a partir del nivel Medio (3º-4º).": "Earned in “Every organ has its job” from the Medium level (Years 3–4).",
   "Se consigue en «Cada órgano, su trabajo» en el nivel Difícil (5º-6º).": "Earned in “Every organ has its job” at the Hard level (Years 5–6).",
+
   "Cuida la reserva": "Look after the reserve",
   "Menos plásticos": "Less plastic",
   "La basura en el campo y en los ríos daña a los animales. Si usamos menos plástico, hay menos basura.": "Litter in the countryside and in rivers harms animals. If we use less plastic, there is less litter.",
@@ -4876,5 +4877,19 @@
   "Se consigue en «Memoria de las plantas» en el nivel Difícil (5º-6º).": "Earned in “Plant memory game” at the Hard level (Years 5–6).",
   "Se consigue en «¿Quién soy?» desde el nivel Fácil (1º-2º).": "Earned in “Who am I?” from the Easy level (Years 1–2).",
   "Se consigue en «¿Quién soy?» a partir del nivel Medio (3º-4º).": "Earned in “Who am I?” from the Medium level (Years 3–4).",
-  "Se consigue en «¿Quién soy?» en el nivel Difícil (5º-6º).": "Earned in “Who am I?” at the Hard level (Years 5–6)."
+  "Se consigue en «¿Quién soy?» en el nivel Difícil (5º-6º).": "Earned in “Who am I?” at the Hard level (Years 5–6).",
+
+  "4. CROMOS · {0}/{1}": "4. STICKERS · {0}/{1}",
+  "Ver todos": "See all",
+  "¡Has descubierto todos los cromos de este mundo!": "You've found every sticker in this world!",
+  "Próximo cromo: {0}": "Next sticker: {0}",
+  "Cromos de {0}": "{0} stickers",
+  "{0} de {1} descubiertos": "{0} of {1} found",
+  "Cuadrícula": "Grid",
+  "Lista": "List",
+  "Por juego": "By game",
+  "Descubiertos primero": "Found first",
+  "Por curso": "By year",
+  "De la A a la Z": "A to Z"
+
 }

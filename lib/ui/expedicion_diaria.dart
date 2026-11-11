@@ -865,7 +865,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     opciones: ['Arena de la playa', 'El polen de las flores', 'Copos de nieve'],
     indiceCorrecto: 1,
     explicacion:
-        '¡Fantástico! Las abejas llevan el polen de una flor a otra y ayudan a que nazcan frutos y semillas.',
+        '¡Fantástico! Las abejas transportan polen entre flores y pueden facilitar la fecundación y la formación de frutos y semillas.',
   ),
   PreguntaExpedicion(
     id: 'f-cerebro',
@@ -1331,7 +1331,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 0,
     explicacion:
-        '¡Muy bien! Las branquias son láminas muy finas llenas de capilares que captan el oxígeno disuelto en el agua.',
+        '¡Muy bien! Las branquias tienen superficies finas y muchos capilares que permiten que el oxígeno disuelto en el agua pase a la sangre.',
   ),
   PreguntaExpedicion(
     id: 'd-trigo',

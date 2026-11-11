@@ -6804,20 +6804,20 @@ class BandejaHabitosInteractiva extends StatelessWidget {
   ) {
     return switch (id) {
       'dormir' || 'descansar' => (
-        'Descanso cerebral',
-        'El cerebro y los músculos recuperan energía mientras dormimos.',
+        'Descanso y recuperación',
+        'Durante el sueño, el cerebro procesa información y consolida recuerdos, mientras los músculos se recuperan del esfuerzo.',
         Icons.bedtime_rounded,
         const Color(0xFF6366F1),
       ),
       'dientes' || 'manos' || 'ducha' => (
         'Higiene protectora',
-        'Elimina microbios de la piel, manos y dientes para evitar infecciones.',
+        'La higiene reduce los microbios de la piel, las manos y los dientes, y ayuda a prevenir infecciones.',
         Icons.clean_hands_rounded,
         const Color(0xFF0284C7),
       ),
       'fruta' || 'agua' || 'desayuno' || 'verdura' => (
         'Nutrición e hidratación',
-        'Aporta agua, vitaminas y energía limpia a todas nuestras células.',
+        'Aporta agua y nutrientes que las células utilizan para funcionar.',
         Icons.water_drop_rounded,
         const Color(0xFF16A34A),
       ),

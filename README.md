@@ -28,7 +28,7 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **26 actividad
   - **Fácil (1.º-2.º)**: identificación visual directa, vocabulario cercano y mecánicas accesibles.
   - **Medio (3.º-4.º)**: ampliación de elementos y preguntas de comprensión tras resolver cada reto.
   - **Difícil (5.º-6.º)**: vocabulario científico de tercer ciclo (vertebrados e invertebrados, fotosíntesis, aparatos y sistemas, cigoto y multiplicación celular) y retos de razonamiento.
-- **Catálogo desacoplado de la interfaz**: todo el contenido didáctico, pistas, curiosidades y preguntas reside en [`content/catalog.json`](content/catalog.json), separado de las reglas de evaluación (`lib/reglas/`) y de los componentes visuales (`lib/ui/`).
+- **Contenido y traducciones**: el catálogo [`content/catalog.json`](content/catalog.json) reúne las fichas y la configuración de las actividades; [`content/en.json`](content/en.json) contiene sus traducciones al inglés. Los módulos de reglas (`lib/reglas/`) y las pantallas (`lib/ui/`) consumen esos datos. Las mecánicas especializadas también generan algunos mensajes de estado desde su propio código.
 - **Ilustración vectorial e interactividad propia**: escenarios, laboratorio de germinación, modelo anatómico con colocación por arrastre o toque (*drag & drop* + *tap*) y visor de etapas de la vida renderizados mediante `CustomPainter` en Flutter.
 
 ---
@@ -68,38 +68,43 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **26 actividad
 
 ## Arquitectura del proyecto
 
-El proyecto separa estrictamente los **datos curriculares**, el **modelo de dominio**, las **reglas de negocio puras** (testeables sin necesidad de montar widgets) y la **capa de presentación**.
+El proyecto organiza el contenido curricular y sus traducciones, los modelos de dominio, la lógica de las actividades y la capa de presentación. El catálogo concentra los datos reutilizables; las mecánicas especializadas también pueden generar mensajes específicos desde sus módulos de reglas o de interfaz.
 
 ```mermaid
 flowchart LR
   subgraph Datos["1. Contenido y Persistencia"]
-    JSON["content/catalog.json"]
-    PREFS["SharedPreferences\n(Progreso local)"]
+    JSON["content/catalog.json\n(Fichas y actividades)"]
+    EN["content/en.json\n(Traducciones al inglés)"]
+    PREFS["SharedPreferences\n(Progreso y preferencias locales)"]
   end
 
   subgraph Dominio["2. Modelo y Acceso a Datos"]
     CAT["lib/datos/catalogo.dart"]
     PROG["lib/datos/progreso.dart"]
+    IDIOMA["lib/idiomas/idioma.dart"]
     MOD["lib/modelo/\n(Zona, Actividad, Ficha, Herbario)"]
   end
 
-  subgraph Reglas["3. Lógica Pura (Sin Widgets)"]
-    RES["lib/reglas/resolver.dart\n(Evaluación, pistas, barajado)"]
+  subgraph Reglas["3. Reglas y lógica de las actividades"]
+    RES["lib/reglas/\n(Evaluación y resolución específica)"]
   end
 
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
     MAPA["lib/ui/mapa.dart\n(Mundos y álbum de 85 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(26 actividades · 78 combinaciones de actividad y nivel)"]
-    DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
+    JUEGO["lib/ui/juego.dart y módulos específicos\n(26 actividades · 78 combinaciones de actividad y nivel)"]
+    DIB["lib/ui/dibujos.dart y módulos de ilustración\n(CustomPainters e ilustraciones)"]
   end
 
   JSON --> CAT
+  EN --> IDIOMA
   PREFS <--> PROG
+  PREFS <--> IDIOMA
   CAT --> MOD
   MOD --> RES
   MOD --> Interfaz
   PROG --> Interfaz
+  IDIOMA --> Interfaz
   RES --> JUEGO
   DIB --> JUEGO
   DIB --> MAPA

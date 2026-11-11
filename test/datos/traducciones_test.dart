@@ -93,6 +93,7 @@ void main() {
       'Espécimen por descubrir · {0}',
       'Cómo conseguirlo: {0}',
       'O₂ {0} %',
+      'O₂: {0} %',
       '⚡ Glucosa {0} mg/dL',
       '💧 Riñón {0} mL/h',
       '♥ {0} LPM',

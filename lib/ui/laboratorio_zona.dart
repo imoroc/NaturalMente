@@ -1333,7 +1333,7 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
-                              'O₂: $rendimiento %',
+                              context.tr('O₂: $rendimiento %'),
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w900,

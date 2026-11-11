@@ -101,6 +101,11 @@ void main() {
       '💧 Riñón {0} mL/h',
       '♥ {0} LPM',
       '≈ {0} RPM',
+      'Falta preparar {0}.',
+      'Zona {0}',
+      'Consultar {0}',
+      'Cuerpo con el aparato digestivo. La manzana está en: {0}',
+      'El reto diario se juega una vez al día. Si te equivocas de nivel antes de terminarlo, podrás volver atrás para cambiarlo.',
     ];
 
     for (final plantilla in plantillas) {

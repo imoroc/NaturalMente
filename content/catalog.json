@@ -1926,18 +1926,9 @@
       "quien": "Natu dice",
       "intro": "Usa la lupa dental, el probador de picos y el molde de huellas en barro para investigar cada animal.",
       "opciones": [
-        {
-          "id": "dieta-herbivoro",
-          "nombre": "Herbívoro"
-        },
-        {
-          "id": "dieta-carnivoro",
-          "nombre": "Carnívoro"
-        },
-        {
-          "id": "dieta-omnivoro",
-          "nombre": "Omnívoro"
-        }
+        { "id": "dieta-herbivoro", "nombre": "Herbívoro" },
+        { "id": "dieta-carnivoro", "nombre": "Carnívoro" },
+        { "id": "dieta-omnivoro", "nombre": "Omnívoro" }
       ],
       "retos": [
         {
@@ -2027,18 +2018,9 @@
           "resumen": "Clasifica cada animal en herbívoro, carnívoro u omnívoro observando qué come.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "dieta-herbivoro",
-              "nombre": "Herbívoro"
-            },
-            {
-              "id": "dieta-carnivoro",
-              "nombre": "Carnívoro"
-            },
-            {
-              "id": "dieta-omnivoro",
-              "nombre": "Omnívoro"
-            }
+            { "id": "dieta-herbivoro", "nombre": "Herbívoro" },
+            { "id": "dieta-carnivoro", "nombre": "Carnívoro" },
+            { "id": "dieta-omnivoro", "nombre": "Omnívoro" }
           ],
           "retos": [
             {
@@ -2128,18 +2110,9 @@
           "resumen": "Examina la forma del pico, los dientes y las patas para descubrir cómo consigue su alimento.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "adaptacion-desgarrar",
-              "nombre": "Cazar y desgarrar"
-            },
-            {
-              "id": "adaptacion-filtrar-pescar",
-              "nombre": "Pescar o filtrar en agua"
-            },
-            {
-              "id": "adaptacion-triturar-roer",
-              "nombre": "Roer y triturar semillas"
-            }
+            { "id": "adaptacion-desgarrar", "nombre": "Cazar y desgarrar" },
+            { "id": "adaptacion-filtrar-pescar", "nombre": "Pescar o filtrar en agua" },
+            { "id": "adaptacion-triturar-roer", "nombre": "Roer y triturar semillas" }
           ],
           "retos": [
             {
@@ -2229,18 +2202,9 @@
           "resumen": "Analiza el molde de barro y la forma de la pata para descubrir cómo se desplaza y vive cada animal.",
           "preguntaAdaptacion": true,
           "opciones": [
-            {
-              "id": "huella-pezuna",
-              "nombre": "Pezuña dura para correr o trepar"
-            },
-            {
-              "id": "huella-garra",
-              "nombre": "Almohadillas y garras de cazador"
-            },
-            {
-              "id": "huella-palmeada",
-              "nombre": "Pata palmeada para nadar"
-            }
+            { "id": "huella-pezuna", "nombre": "Pezuña dura para correr o trepar" },
+            { "id": "huella-garra", "nombre": "Almohadillas y garras de cazador" },
+            { "id": "huella-palmeada", "nombre": "Pata palmeada para nadar" }
           ],
           "retos": [
             {
@@ -2258,18 +2222,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué la pezuña de la cabra montés está dividida en dos partes móviles con base gomosa?",
                 "opciones": [
-                  {
-                    "id": "bucear",
-                    "nombre": "Para impulsar el cuerpo al bucear por el fondo de los lagos de alta montaña"
-                  },
-                  {
-                    "id": "roca",
-                    "nombre": "Para hacer pinza sobre los salientes de la roca y no resbalar en la montaña"
-                  },
-                  {
-                    "id": "nido",
-                    "nombre": "Para entrelazar ramas secas y tejer nidos redondos en las copas de los pinos"
-                  }
+                  { "id": "bucear", "nombre": "Para impulsar el cuerpo al bucear por el fondo de los lagos de alta montaña" },
+                  { "id": "roca", "nombre": "Para hacer pinza sobre los salientes de la roca y no resbalar en la montaña" },
+                  { "id": "nido", "nombre": "Para entrelazar ramas secas y tejer nidos redondos en las copas de los pinos" }
                 ],
                 "respuesta": "roca",
                 "frases": {
@@ -2294,18 +2249,9 @@
               "adaptacion": {
                 "enunciado": "¿Cómo se distingue en el barro la huella de un cánido como el lobo de la de un felino como el lince?",
                 "opciones": [
-                  {
-                    "id": "unas",
-                    "nombre": "El lobo marca las puntas de las uñas delante de los dedos y el lince las guarda"
-                  },
-                  {
-                    "id": "casco",
-                    "nombre": "El lobo deja marcado un casco redondo de hueso y el lince una pezuña hendida"
-                  },
-                  {
-                    "id": "alas",
-                    "nombre": "El lobo deja marcas de plumas largas alrededor del talón al posarse en el barro"
-                  }
+                  { "id": "unas", "nombre": "El lobo marca las puntas de las uñas delante de los dedos y el lince las guarda" },
+                  { "id": "casco", "nombre": "El lobo deja marcado un casco redondo de hueso y el lince una pezuña hendida" },
+                  { "id": "alas", "nombre": "El lobo deja marcas de plumas largas alrededor del talón al posarse en el barro" }
                 ],
                 "respuesta": "unas",
                 "frases": {
@@ -2330,18 +2276,9 @@
               "adaptacion": {
                 "enunciado": "¿Para qué sirve la membrana de piel que une los dedos en los animales semiacuáticos como la nutria o el pato?",
                 "opciones": [
-                  {
-                    "id": "trepar",
-                    "nombre": "Sirve para sujetarse a las ramas altas y abrir piñas duras en los bosques"
-                  },
-                  {
-                    "id": "volar",
-                    "nombre": "Sirve para planear entre los árboles igual que las alas de los murciélagos"
-                  },
-                  {
-                    "id": "remo",
-                    "nombre": "Aumenta la superficie de la pata para empujar más agua al nadar sin hundirse"
-                  }
+                  { "id": "trepar", "nombre": "Sirve para sujetarse a las ramas altas y abrir piñas duras en los bosques" },
+                  { "id": "volar", "nombre": "Sirve para planear entre los árboles igual que las alas de los murciélagos" },
+                  { "id": "remo", "nombre": "Aumenta la superficie de la pata para empujar más agua al nadar sin hundirse" }
                 ],
                 "respuesta": "remo",
                 "frases": {
@@ -2366,18 +2303,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué ventaja le da al caballo apoyar la pata sobre un único casco duro?",
                 "opciones": [
-                  {
-                    "id": "trepar",
-                    "nombre": "Le permite sujetarse con fuerza a las cortezas verticales de los grandes árboles"
-                  },
-                  {
-                    "id": "excavar",
-                    "nombre": "Le sirve para cavar galerías profundas y refugios subterráneos durante el invierno"
-                  },
-                  {
-                    "id": "galope",
-                    "nombre": "Le permite correr a gran velocidad por terrenos duros resistiendo el desgaste"
-                  }
+                  { "id": "trepar", "nombre": "Le permite sujetarse con fuerza a las cortezas verticales de los grandes árboles" },
+                  { "id": "excavar", "nombre": "Le sirve para cavar galerías profundas y refugios subterráneos durante el invierno" },
+                  { "id": "galope", "nombre": "Le permite correr a gran velocidad por terrenos duros resistiendo el desgaste" }
                 ],
                 "respuesta": "galope",
                 "frases": {
@@ -2402,18 +2330,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué los felinos como el lince mantienen sus garras guardadas dentro de la pata al caminar?",
                 "opciones": [
-                  {
-                    "id": "nadar",
-                    "nombre": "Para flotar mejor sobre la corriente al cruzar los ríos profundos del bosque"
-                  },
-                  {
-                    "id": "filo",
-                    "nombre": "Para avanzar en silencio sin desgastar la punta afilada de las uñas en el suelo"
-                  },
-                  {
-                    "id": "roer",
-                    "nombre": "Para poder triturar cortezas y bellotas duras usando las almohadillas plantares"
-                  }
+                  { "id": "nadar", "nombre": "Para flotar mejor sobre la corriente al cruzar los ríos profundos del bosque" },
+                  { "id": "filo", "nombre": "Para avanzar en silencio sin desgastar la punta afilada de las uñas en el suelo" },
+                  { "id": "roer", "nombre": "Para poder triturar cortezas y bellotas duras usando las almohadillas plantares" }
                 ],
                 "respuesta": "filo",
                 "frases": {
@@ -2437,14 +2356,8 @@
       "quien": "Natu dice",
       "intro": "Activa el visor de rayos X, la lupa de piel y el contador de patas para clasificar cada especie.",
       "opciones": [
-        {
-          "id": "grupo-vertebrado",
-          "nombre": "Vertebrado"
-        },
-        {
-          "id": "grupo-invertebrado",
-          "nombre": "Invertebrado"
-        }
+        { "id": "grupo-vertebrado", "nombre": "Vertebrado" },
+        { "id": "grupo-invertebrado", "nombre": "Invertebrado" }
       ],
       "retos": [
         {
@@ -2528,14 +2441,8 @@
           "resumen": "Usa los rayos X para distinguir animales vertebrados (con huesos) e invertebrados.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "grupo-vertebrado",
-              "nombre": "Vertebrado"
-            },
-            {
-              "id": "grupo-invertebrado",
-              "nombre": "Invertebrado"
-            }
+            { "id": "grupo-vertebrado", "nombre": "Vertebrado" },
+            { "id": "grupo-invertebrado", "nombre": "Invertebrado" }
           ],
           "retos": [
             {
@@ -2619,18 +2526,9 @@
           "resumen": "Usa la lupa de piel para clasificar los cinco grupos de vertebrados según su cubierta y medio.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "vert-mamifero-ave",
-              "nombre": "Mamíferos y Aves"
-            },
-            {
-              "id": "vert-reptil-anfibio",
-              "nombre": "Reptiles y Anfibios"
-            },
-            {
-              "id": "vert-pez",
-              "nombre": "Peces"
-            }
+            { "id": "vert-mamifero-ave", "nombre": "Mamíferos y Aves" },
+            { "id": "vert-reptil-anfibio", "nombre": "Reptiles y Anfibios" },
+            { "id": "vert-pez", "nombre": "Peces" }
           ],
           "retos": [
             {
@@ -2720,18 +2618,9 @@
           "resumen": "Usa el contador de patas y el escáner para distinguir los principales grupos de invertebrados.",
           "preguntaAdaptacion": true,
           "opciones": [
-            {
-              "id": "inv-artropodo",
-              "nombre": "Artrópodos"
-            },
-            {
-              "id": "inv-molusco",
-              "nombre": "Moluscos"
-            },
-            {
-              "id": "inv-anelido-cnidario",
-              "nombre": "Anélidos y Cnidarios"
-            }
+            { "id": "inv-artropodo", "nombre": "Artrópodos" },
+            { "id": "inv-molusco", "nombre": "Moluscos" },
+            { "id": "inv-anelido-cnidario", "nombre": "Anélidos y Cnidarios" }
           ],
           "retos": [
             {
@@ -2749,18 +2638,9 @@
               "adaptacion": {
                 "enunciado": "¿Cómo distinguimos a un insecto como la abeja de un arácnido como la araña?",
                 "opciones": [
-                  {
-                    "id": "huesos",
-                    "nombre": "Los insectos poseen una columna vertebral interna y las arañas carecen de ella"
-                  },
-                  {
-                    "id": "seis",
-                    "nombre": "Los insectos tienen 6 patas y 2 antenas, y los arácnidos 8 patas sin antenas"
-                  },
-                  {
-                    "id": "concha",
-                    "nombre": "Las arañas protegen su abdomen dentro de una concha calcárea en espiral"
-                  }
+                  { "id": "huesos", "nombre": "Los insectos poseen una columna vertebral interna y las arañas carecen de ella" },
+                  { "id": "seis", "nombre": "Los insectos tienen 6 patas y 2 antenas, y los arácnidos 8 patas sin antenas" },
+                  { "id": "concha", "nombre": "Las arañas protegen su abdomen dentro de una concha calcárea en espiral" }
                 ],
                 "respuesta": "seis",
                 "frases": {
@@ -2785,18 +2665,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué tienen en común el caracol, la almeja y el pulpo para ser todos moluscos?",
                 "opciones": [
-                  {
-                    "id": "blando",
-                    "nombre": "Tienen el cuerpo blando y musculoso, a menudo protegido por una o dos conchas"
-                  },
-                  {
-                    "id": "seis",
-                    "nombre": "Todos caminan sobre seis patas articuladas y tienen dos antenas sensoriales"
-                  },
-                  {
-                    "id": "columna",
-                    "nombre": "Todos poseen una columna vertebral flexible formada por pequeños huesos"
-                  }
+                  { "id": "blando", "nombre": "Tienen el cuerpo blando y musculoso, a menudo protegido por una o dos conchas" },
+                  { "id": "seis", "nombre": "Todos caminan sobre seis patas articuladas y tienen dos antenas sensoriales" },
+                  { "id": "columna", "nombre": "Todos poseen una columna vertebral flexible formada por pequeños huesos" }
                 ],
                 "respuesta": "blando",
                 "frases": {
@@ -2821,18 +2692,9 @@
               "adaptacion": {
                 "enunciado": "¿Para qué utiliza la medusa los tentáculos que cuelgan de su sombrilla?",
                 "opciones": [
-                  {
-                    "id": "caminar",
-                    "nombre": "Para caminar rápido sobre las rocas secas de la costa cuando baja la marea"
-                  },
-                  {
-                    "id": "capturar",
-                    "nombre": "Para defenderse y atrapar pequeño alimento mientras flota en el agua marina"
-                  },
-                  {
-                    "id": "roer",
-                    "nombre": "Para triturar conchas duras y excavar galerías profundas bajo la arena"
-                  }
+                  { "id": "caminar", "nombre": "Para caminar rápido sobre las rocas secas de la costa cuando baja la marea" },
+                  { "id": "capturar", "nombre": "Para defenderse y atrapar pequeño alimento mientras flota en el agua marina" },
+                  { "id": "roer", "nombre": "Para triturar conchas duras y excavar galerías profundas bajo la arena" }
                 ],
                 "respuesta": "capturar",
                 "frases": {
@@ -2857,18 +2719,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué significa la palabra «artrópodo»?",
                 "opciones": [
-                  {
-                    "id": "blando",
-                    "nombre": "Significa «cuerpo gelatinoso con largos tentáculos para flotar en el mar»"
-                  },
-                  {
-                    "id": "plumas",
-                    "nombre": "Significa «animal terrestre cubierto de plumas impermeables y pico duro»"
-                  },
-                  {
-                    "id": "articuladas",
-                    "nombre": "Significa «patas articuladas», unidas a un esqueleto externo protector"
-                  }
+                  { "id": "blando", "nombre": "Significa «cuerpo gelatinoso con largos tentáculos para flotar en el mar»" },
+                  { "id": "plumas", "nombre": "Significa «animal terrestre cubierto de plumas impermeables y pico duro»" },
+                  { "id": "articuladas", "nombre": "Significa «patas articuladas», unidas a un esqueleto externo protector" }
                 ],
                 "respuesta": "articuladas",
                 "frases": {
@@ -2893,18 +2746,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué la lombriz de tierra pertenece al grupo de los anélidos?",
                 "opciones": [
-                  {
-                    "id": "alas",
-                    "nombre": "Porque despliega cuatro alas transparentes cuando sale a la superficie"
-                  },
-                  {
-                    "id": "branquias",
-                    "nombre": "Porque tiene el cuerpo cubierto de escamas duras y aletas para nadar"
-                  },
-                  {
-                    "id": "anillos",
-                    "nombre": "Porque su cuerpo blando y cilíndrico está dividido en muchos anillos"
-                  }
+                  { "id": "alas", "nombre": "Porque despliega cuatro alas transparentes cuando sale a la superficie" },
+                  { "id": "branquias", "nombre": "Porque tiene el cuerpo cubierto de escamas duras y aletas para nadar" },
+                  { "id": "anillos", "nombre": "Porque su cuerpo blando y cilíndrico está dividido en muchos anillos" }
                 ],
                 "respuesta": "anillos",
                 "frases": {
@@ -3306,18 +3150,9 @@
       "quien": "Natu dice",
       "intro": "Usa la lupa floral, el túnel de viento y agua y el vuelo de la abeja para clasificar flores, semillas y plantas.",
       "opciones": [
-        {
-          "id": "flor-caliz-corola",
-          "nombre": "Cáliz y Corola"
-        },
-        {
-          "id": "flor-estambres",
-          "nombre": "Estambres"
-        },
-        {
-          "id": "flor-pistilo",
-          "nombre": "Pistilo"
-        }
+        { "id": "flor-caliz-corola", "nombre": "Cáliz y Corola" },
+        { "id": "flor-estambres", "nombre": "Estambres" },
+        { "id": "flor-pistilo", "nombre": "Pistilo" }
       ],
       "retos": [
         {
@@ -3407,18 +3242,9 @@
           "resumen": "Explora la posición en la flor, la prueba del capullo y la abeja y el paso de flor a fruto para clasificar sus órganos.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "flor-caliz-corola",
-              "nombre": "Cáliz y Corola"
-            },
-            {
-              "id": "flor-estambres",
-              "nombre": "Estambres"
-            },
-            {
-              "id": "flor-pistilo",
-              "nombre": "Pistilo"
-            }
+            { "id": "flor-caliz-corola", "nombre": "Cáliz y Corola" },
+            { "id": "flor-estambres", "nombre": "Estambres" },
+            { "id": "flor-pistilo", "nombre": "Pistilo" }
           ],
           "retos": [
             {
@@ -3508,18 +3334,9 @@
           "resumen": "Prueba el túnel de viento y agua para descubrir cómo viaja cada semilla a nuevos lugares.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "viaje-viento",
-              "nombre": "Por el viento"
-            },
-            {
-              "id": "viaje-agua",
-              "nombre": "Por el agua"
-            },
-            {
-              "id": "viaje-animal",
-              "nombre": "Con animales"
-            }
+            { "id": "viaje-viento", "nombre": "Por el viento" },
+            { "id": "viaje-agua", "nombre": "Por el agua" },
+            { "id": "viaje-animal", "nombre": "Con animales" }
           ],
           "retos": [
             {
@@ -3609,18 +3426,9 @@
           "resumen": "Clasifica las plantas en angiospermas (con fruto), gimnospermas (con piñas) y plantas sin flores (con esporas).",
           "preguntaAdaptacion": true,
           "opciones": [
-            {
-              "id": "planta-angiosperma",
-              "nombre": "Angiospermas (con fruto)"
-            },
-            {
-              "id": "planta-gimnosperma",
-              "nombre": "Gimnospermas (con piñas)"
-            },
-            {
-              "id": "planta-esporas",
-              "nombre": "Sin flores (con esporas)"
-            }
+            { "id": "planta-angiosperma", "nombre": "Angiospermas (con fruto)" },
+            { "id": "planta-gimnosperma", "nombre": "Gimnospermas (con piñas)" },
+            { "id": "planta-esporas", "nombre": "Sin flores (con esporas)" }
           ],
           "retos": [
             {
@@ -3638,18 +3446,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué diferencia principal hay entre una angiosperma como el manzano y una gimnosperma como el pino?",
                 "opciones": [
-                  {
-                    "id": "raices",
-                    "nombre": "Los manzanos absorben toda el agua por las hojas y los pinos no tienen raíces"
-                  },
-                  {
-                    "id": "fruto",
-                    "nombre": "Las angiospermas guardan las semillas en frutos y las gimnospermas en piñas"
-                  },
-                  {
-                    "id": "esporas",
-                    "nombre": "Los manzanos se reproducen por esporas microscópicas sin llegar a dar semillas"
-                  }
+                  { "id": "raices", "nombre": "Los manzanos absorben toda el agua por las hojas y los pinos no tienen raíces" },
+                  { "id": "fruto", "nombre": "Las angiospermas guardan las semillas en frutos y las gimnospermas en piñas" },
+                  { "id": "esporas", "nombre": "Los manzanos se reproducen por esporas microscópicas sin llegar a dar semillas" }
                 ],
                 "respuesta": "fruto",
                 "frases": {
@@ -3674,18 +3473,9 @@
               "adaptacion": {
                 "enunciado": "¿Dónde se encuentran las semillas de un pino?",
                 "opciones": [
-                  {
-                    "id": "pulpa",
-                    "nombre": "Encerradas dentro de un fruto carnoso y muy jugoso como el melocotón"
-                  },
-                  {
-                    "id": "soros",
-                    "nombre": "En diminutos saquitos de esporas alineados bajo las hojas del árbol"
-                  },
-                  {
-                    "id": "pina",
-                    "nombre": "Apoyadas directamente entre las escamas leñosas de las piñas"
-                  }
+                  { "id": "pulpa", "nombre": "Encerradas dentro de un fruto carnoso y muy jugoso como el melocotón" },
+                  { "id": "soros", "nombre": "En diminutos saquitos de esporas alineados bajo las hojas del árbol" },
+                  { "id": "pina", "nombre": "Apoyadas directamente entre las escamas leñosas de las piñas" }
                 ],
                 "respuesta": "pina",
                 "frases": {
@@ -3710,18 +3500,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué son los puntitos oscuros (soros) que aparecen debajo de las hojas de los helechos?",
                 "opciones": [
-                  {
-                    "id": "semillas",
-                    "nombre": "Pequeños piñones leñosos idénticos a los que maduran en las piñas del pino"
-                  },
-                  {
-                    "id": "esporas",
-                    "nombre": "Pequeños saquitos llenos de esporas con las que el helecho se reproduce"
-                  },
-                  {
-                    "id": "flores",
-                    "nombre": "Capullos de flores diminutas que esperan a las abejas para formar frutos"
-                  }
+                  { "id": "semillas", "nombre": "Pequeños piñones leñosos idénticos a los que maduran en las piñas del pino" },
+                  { "id": "esporas", "nombre": "Pequeños saquitos llenos de esporas con las que el helecho se reproduce" },
+                  { "id": "flores", "nombre": "Capullos de flores diminutas que esperan a las abejas para formar frutos" }
                 ],
                 "respuesta": "esporas",
                 "frases": {
@@ -3746,18 +3527,9 @@
               "adaptacion": {
                 "enunciado": "¿Cómo suele polinizarse la mayoría de las gimnospermas como los pinos y abetos?",
                 "opciones": [
-                  {
-                    "id": "viento",
-                    "nombre": "Gracias al viento, que lleva los granos de polen de árbol en árbol"
-                  },
-                  {
-                    "id": "peces",
-                    "nombre": "Gracias a los peces de río, que llevan las piñas bajo la corriente"
-                  },
-                  {
-                    "id": "raices",
-                    "nombre": "Intercambiando el polen bajo la tierra húmeda mediante las raíces"
-                  }
+                  { "id": "viento", "nombre": "Gracias al viento, que lleva los granos de polen de árbol en árbol" },
+                  { "id": "peces", "nombre": "Gracias a los peces de río, que llevan las piñas bajo la corriente" },
+                  { "id": "raices", "nombre": "Intercambiando el polen bajo la tierra húmeda mediante las raíces" }
                 ],
                 "respuesta": "viento",
                 "frases": {
@@ -3782,18 +3554,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué tienen en común los musgos y los helechos?",
                 "opciones": [
-                  {
-                    "id": "frutos",
-                    "nombre": "Ambos producen flores perfumadas en primavera y frutos dulces en verano"
-                  },
-                  {
-                    "id": "pinas",
-                    "nombre": "Ambos guardan sus semillas desnudas entre las escamas duras de una piña"
-                  },
-                  {
-                    "id": "sinflor",
-                    "nombre": "Son plantas sin flores ni semillas que se reproducen mediante esporas"
-                  }
+                  { "id": "frutos", "nombre": "Ambos producen flores perfumadas en primavera y frutos dulces en verano" },
+                  { "id": "pinas", "nombre": "Ambos guardan sus semillas desnudas entre las escamas duras de una piña" },
+                  { "id": "sinflor", "nombre": "Son plantas sin flores ni semillas que se reproducen mediante esporas" }
                 ],
                 "respuesta": "sinflor",
                 "frases": {
@@ -3817,14 +3580,8 @@
       "quien": "Natu dice",
       "intro": "Cambia las estaciones del año, examina la forma de cada hoja con la lupa y descubre cómo se adaptan los bosques al clima.",
       "opciones": [
-        {
-          "id": "arbol-caduco",
-          "nombre": "Hoja caduca"
-        },
-        {
-          "id": "arbol-perenne",
-          "nombre": "Hoja perenne"
-        }
+        { "id": "arbol-caduco", "nombre": "Hoja caduca" },
+        { "id": "arbol-perenne", "nombre": "Hoja perenne" }
       ],
       "retos": [
         {
@@ -3908,14 +3665,8 @@
           "resumen": "Cambia entre primavera, otoño e invierno para clasificar árboles de hoja caduca y de hoja perenne.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "arbol-caduco",
-              "nombre": "Hoja caduca"
-            },
-            {
-              "id": "arbol-perenne",
-              "nombre": "Hoja perenne"
-            }
+            { "id": "arbol-caduco", "nombre": "Hoja caduca" },
+            { "id": "arbol-perenne", "nombre": "Hoja perenne" }
           ],
           "retos": [
             {
@@ -3999,18 +3750,9 @@
           "resumen": "Analiza con la lupa cómo es cada hoja y ponla a prueba frente al calor del verano y el frío del invierno.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "hoja-lobulada-aserrada",
-              "nombre": "Hoja ancha y fina (caduca)"
-            },
-            {
-              "id": "hoja-entera-dura",
-              "nombre": "Hoja dura con cera (perenne)"
-            },
-            {
-              "id": "hoja-aguja",
-              "nombre": "Acícula en aguja (conífera)"
-            }
+            { "id": "hoja-lobulada-aserrada", "nombre": "Hoja ancha y fina (caduca)" },
+            { "id": "hoja-entera-dura", "nombre": "Hoja dura con cera (perenne)" },
+            { "id": "hoja-aguja", "nombre": "Acícula en aguja (conífera)" }
           ],
           "retos": [
             {
@@ -4100,18 +3842,9 @@
           "resumen": "Interpreta el climograma de lluvia y temperatura, la corteza y la estación crítica de cada árbol para descubrir su bosque.",
           "preguntaAdaptacion": true,
           "opciones": [
-            {
-              "id": "bosque-atlantico",
-              "nombre": "Bosque caducifolio húmedo"
-            },
-            {
-              "id": "bosque-mediterraneo",
-              "nombre": "Bosque mediterráneo seco"
-            },
-            {
-              "id": "bosque-montana",
-              "nombre": "Coníferas de alta montaña"
-            }
+            { "id": "bosque-atlantico", "nombre": "Bosque caducifolio húmedo" },
+            { "id": "bosque-mediterraneo", "nombre": "Bosque mediterráneo seco" },
+            { "id": "bosque-montana", "nombre": "Coníferas de alta montaña" }
           ],
           "retos": [
             {
@@ -4129,18 +3862,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué los árboles del bosque caducifolio como el haya tiran todas sus hojas en otoño?",
                 "opciones": [
-                  {
-                    "id": "heladas",
-                    "nombre": "Para ahorrar energía y evitar que el hielo estropee sus hojas tan finas"
-                  },
-                  {
-                    "id": "sequia",
-                    "nombre": "Para que las raíces absorban arena seca del suelo durante todo el invierno"
-                  },
-                  {
-                    "id": "flores",
-                    "nombre": "Porque en invierno transforman todas sus hojas verdes en frutos tropicales"
-                  }
+                  { "id": "heladas", "nombre": "Para ahorrar energía y evitar que el hielo estropee sus hojas tan finas" },
+                  { "id": "sequia", "nombre": "Para que las raíces absorban arena seca del suelo durante todo el invierno" },
+                  { "id": "flores", "nombre": "Porque en invierno transforman todas sus hojas verdes en frutos tropicales" }
                 ],
                 "respuesta": "heladas",
                 "frases": {
@@ -4165,18 +3889,9 @@
               "adaptacion": {
                 "enunciado": "¿Cómo logran las encinas resistir los veranos largos, secos y calurosos del clima mediterráneo?",
                 "opciones": [
-                  {
-                    "id": "caduca",
-                    "nombre": "Pierden el tronco y las raíces cada verano y vuelven a brotar en septiembre"
-                  },
-                  {
-                    "id": "coriacea",
-                    "nombre": "Tienen hojas pequeñas y duras con pelitos debajo que reducen la evaporación"
-                  },
-                  {
-                    "id": "hielo",
-                    "nombre": "Fabrican bloques de hielo bajo las bellotas para enfriar la tierra reseca"
-                  }
+                  { "id": "caduca", "nombre": "Pierden el tronco y las raíces cada verano y vuelven a brotar en septiembre" },
+                  { "id": "coriacea", "nombre": "Tienen hojas pequeñas y duras con pelitos debajo que reducen la evaporación" },
+                  { "id": "hielo", "nombre": "Fabrican bloques de hielo bajo las bellotas para enfriar la tierra reseca" }
                 ],
                 "respuesta": "coriacea",
                 "frases": {
@@ -4201,18 +3916,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué muchos pinos y abetos de alta montaña tienen la copa con forma de cono o pirámide?",
                 "opciones": [
-                  {
-                    "id": "cono",
-                    "nombre": "Para que la nieve resbale hacia el suelo sin acumular peso ni romper ramas"
-                  },
-                  {
-                    "id": "viento",
-                    "nombre": "Para atrapar toda la nieve encima de la copa y tapar la luz todo el año"
-                  },
-                  {
-                    "id": "raiz",
-                    "nombre": "Porque sus raíces crecen hacia arriba buscando las nubes de las montañas"
-                  }
+                  { "id": "cono", "nombre": "Para que la nieve resbale hacia el suelo sin acumular peso ni romper ramas" },
+                  { "id": "viento", "nombre": "Para atrapar toda la nieve encima de la copa y tapar la luz todo el año" },
+                  { "id": "raiz", "nombre": "Porque sus raíces crecen hacia arriba buscando las nubes de las montañas" }
                 ],
                 "respuesta": "cono",
                 "frases": {
@@ -4237,18 +3943,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué ventaja ofrecen las hojas grandes y finas del roble y del haya durante la primavera y el verano?",
                 "opciones": [
-                  {
-                    "id": "nieve",
-                    "nombre": "Acumulan grandes bloques de nieve encima para calentar las ramas en julio"
-                  },
-                  {
-                    "id": "luz",
-                    "nombre": "Presentan una gran superficie verde para captar mucha luz en primavera"
-                  },
-                  {
-                    "id": "sal",
-                    "nombre": "Filtran el agua salada de las olas cuando sube la marea hasta la montaña"
-                  }
+                  { "id": "nieve", "nombre": "Acumulan grandes bloques de nieve encima para calentar las ramas en julio" },
+                  { "id": "luz", "nombre": "Presentan una gran superficie verde para captar mucha luz en primavera" },
+                  { "id": "sal", "nombre": "Filtran el agua salada de las olas cuando sube la marea hasta la montaña" }
                 ],
                 "respuesta": "luz",
                 "frases": {
@@ -4273,18 +3970,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué función cumple la gruesa corteza de corcho del alcornoque en su entorno natural?",
                 "opciones": [
-                  {
-                    "id": "flotar",
-                    "nombre": "Permite que el árbol entero se suelte del suelo y navegue por los arroyos"
-                  },
-                  {
-                    "id": "polen",
-                    "nombre": "Sustituye a las hojas verdes porque el alcornoque nunca tiene ramas altas"
-                  },
-                  {
-                    "id": "corcho",
-                    "nombre": "Aísla y protege el interior del tronco frente al calor extremo y la sequía"
-                  }
+                  { "id": "flotar", "nombre": "Permite que el árbol entero se suelte del suelo y navegue por los arroyos" },
+                  { "id": "polen", "nombre": "Sustituye a las hojas verdes porque el alcornoque nunca tiene ramas altas" },
+                  { "id": "corcho", "nombre": "Aísla y protege el interior del tronco frente al calor extremo y la sequía" }
                 ],
                 "respuesta": "corcho",
                 "frases": {
@@ -4309,18 +3997,9 @@
               "adaptacion": {
                 "enunciado": "¿Cómo soportan las hojas de las coníferas de montaña las heladas del invierno sin congelarse?",
                 "opciones": [
-                  {
-                    "id": "caida",
-                    "nombre": "Se deshacen con la primera lluvia de otoño y dejan el abeto sin corteza"
-                  },
-                  {
-                    "id": "cera",
-                    "nombre": "Son agujas gruesas cubiertas de cera con savia que resiste las heladas"
-                  },
-                  {
-                    "id": "calor",
-                    "nombre": "Calientan el aire del valle desprendiendo vapor hirviendo por las raíces"
-                  }
+                  { "id": "caida", "nombre": "Se deshacen con la primera lluvia de otoño y dejan el abeto sin corteza" },
+                  { "id": "cera", "nombre": "Son agujas gruesas cubiertas de cera con savia que resiste las heladas" },
+                  { "id": "calor", "nombre": "Calientan el aire del valle desprendiendo vapor hirviendo por las raíces" }
                 ],
                 "respuesta": "cera",
                 "frases": {
@@ -4344,18 +4023,9 @@
       "quien": "Natu dice",
       "intro": "Explora el corte de la huerta, examina dónde crece cada alimento en la planta y descubre qué órgano o recurso vegetal aprovechamos.",
       "opciones": [
-        {
-          "id": "huerta-raiz",
-          "nombre": "Raíz"
-        },
-        {
-          "id": "huerta-hoja",
-          "nombre": "Hoja"
-        },
-        {
-          "id": "huerta-fruto",
-          "nombre": "Fruto"
-        }
+        { "id": "huerta-raiz", "nombre": "Raíz" },
+        { "id": "huerta-hoja", "nombre": "Hoja" },
+        { "id": "huerta-fruto", "nombre": "Fruto" }
       ],
       "retos": [
         {
@@ -4445,18 +4115,9 @@
           "resumen": "Mira en qué parte de la planta crece cada verdura o fruta del huerto y clasifícala en raíz, hoja o fruto.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "huerta-raiz",
-              "nombre": "Raíz"
-            },
-            {
-              "id": "huerta-hoja",
-              "nombre": "Hoja"
-            },
-            {
-              "id": "huerta-fruto",
-              "nombre": "Fruto"
-            }
+            { "id": "huerta-raiz", "nombre": "Raíz" },
+            { "id": "huerta-hoja", "nombre": "Hoja" },
+            { "id": "huerta-fruto", "nombre": "Fruto" }
           ],
           "retos": [
             {
@@ -4546,18 +4207,9 @@
           "resumen": "Inspecciona el corte botánico de la huerta para distinguir raíces, tallos, hojas, flores, frutos y semillas comestibles.",
           "preguntaAdaptacion": false,
           "opciones": [
-            {
-              "id": "huerto-raiz-tallo",
-              "nombre": "Raíz o Tallo"
-            },
-            {
-              "id": "huerto-hoja-flor",
-              "nombre": "Hoja o Flor"
-            },
-            {
-              "id": "huerto-fruto-semilla",
-              "nombre": "Fruto o Semilla"
-            }
+            { "id": "huerto-raiz-tallo", "nombre": "Raíz o Tallo" },
+            { "id": "huerto-hoja-flor", "nombre": "Hoja o Flor" },
+            { "id": "huerto-fruto-semilla", "nombre": "Fruto o Semilla" }
           ],
           "retos": [
             {
@@ -4647,18 +4299,9 @@
           "resumen": "Examina los órganos de reserva subterráneos y la transformación de las plantas cultivadas en alimentos, tejidos y aceites.",
           "preguntaAdaptacion": true,
           "opciones": [
-            {
-              "id": "recurso-tuberculo-raiz",
-              "nombre": "Tubérculo o raíz de reserva"
-            },
-            {
-              "id": "recurso-bulbo-cereal",
-              "nombre": "Bulbo o grano de cereal"
-            },
-            {
-              "id": "recurso-fibra-aceite",
-              "nombre": "Fibra textil o aceite"
-            }
+            { "id": "recurso-tuberculo-raiz", "nombre": "Tubérculo o raíz de reserva" },
+            { "id": "recurso-bulbo-cereal", "nombre": "Bulbo o grano de cereal" },
+            { "id": "recurso-fibra-aceite", "nombre": "Fibra textil o aceite" }
           ],
           "retos": [
             {
@@ -4676,18 +4319,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué los botánicos explican que la patata es un tallo subterráneo (tubérculo) y no una raíz?",
                 "opciones": [
-                  {
-                    "id": "yemas",
-                    "nombre": "Porque tiene yemas («ojos») de las que brotan tallos y hojas si germina"
-                  },
-                  {
-                    "id": "flores",
-                    "nombre": "Porque crece colgada de las ramas más altas después de caerse los pétalos"
-                  },
-                  {
-                    "id": "semilla",
-                    "nombre": "Porque cada patata es un fruto hueco lleno de pepitas dulces en el centro"
-                  }
+                  { "id": "yemas", "nombre": "Porque tiene yemas («ojos») de las que brotan tallos y hojas si germina" },
+                  { "id": "flores", "nombre": "Porque crece colgada de las ramas más altas después de caerse los pétalos" },
+                  { "id": "semilla", "nombre": "Porque cada patata es un fruto hueco lleno de pepitas dulces en el centro" }
                 ],
                 "respuesta": "yemas",
                 "frases": {
@@ -4712,18 +4346,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué son en realidad las capas blancas y jugosas que vemos al cortar una cebolla por la mitad?",
                 "opciones": [
-                  {
-                    "id": "cortezas",
-                    "nombre": "Son anillos de madera leñosa idénticos al tronco de los pinos centenarios"
-                  },
-                  {
-                    "id": "frutos",
-                    "nombre": "Son pétalos de colores que se cierran bajo el barro cuando llega el frío"
-                  },
-                  {
-                    "id": "capas",
-                    "nombre": "Son hojas subterráneas modificadas y engrosadas para guardar nutrientes"
-                  }
+                  { "id": "cortezas", "nombre": "Son anillos de madera leñosa idénticos al tronco de los pinos centenarios" },
+                  { "id": "frutos", "nombre": "Son pétalos de colores que se cierran bajo el barro cuando llega el frío" },
+                  { "id": "capas", "nombre": "Son hojas subterráneas modificadas y engrosadas para guardar nutrientes" }
                 ],
                 "respuesta": "capas",
                 "frases": {
@@ -4748,18 +4373,9 @@
               "adaptacion": {
                 "enunciado": "¿Qué función tienen para la propia planta del algodón las fibras blancas que envuelven sus semillas?",
                 "opciones": [
-                  {
-                    "id": "abrigo",
-                    "nombre": "Calientan las raíces bajo la tierra cuando nieva en los prados de montaña"
-                  },
-                  {
-                    "id": "viento",
-                    "nombre": "Envuelven las semillas para que el viento las disperse al abrirse la cápsula"
-                  },
-                  {
-                    "id": "nectar",
-                    "nombre": "Alimentan a las lombrices del suelo con zumo dulce durante la primavera"
-                  }
+                  { "id": "abrigo", "nombre": "Calientan las raíces bajo la tierra cuando nieva en los prados de montaña" },
+                  { "id": "viento", "nombre": "Envuelven las semillas para que el viento las disperse al abrirse la cápsula" },
+                  { "id": "nectar", "nombre": "Alimentan a las lombrices del suelo con zumo dulce durante la primavera" }
                 ],
                 "respuesta": "viento",
                 "frases": {
@@ -4784,18 +4400,9 @@
               "adaptacion": {
                 "enunciado": "¿Para qué engrosan tanto su raíz principal plantas como la remolacha o la zanahoria?",
                 "opciones": [
-                  {
-                    "id": "piedras",
-                    "nombre": "Para empujar las rocas del camino y salir caminando hacia otros terrenos"
-                  },
-                  {
-                    "id": "reserva",
-                    "nombre": "Para almacenar agua y azúcares de reserva que la planta fabricó con sol"
-                  },
-                  {
-                    "id": "polen",
-                    "nombre": "Para atraer abejas bajo la tierra y polinizar las raíces en la oscuridad"
-                  }
+                  { "id": "piedras", "nombre": "Para empujar las rocas del camino y salir caminando hacia otros terrenos" },
+                  { "id": "reserva", "nombre": "Para almacenar agua y azúcares de reserva que la planta fabricó con sol" },
+                  { "id": "polen", "nombre": "Para atraer abejas bajo la tierra y polinizar las raíces en la oscuridad" }
                 ],
                 "respuesta": "reserva",
                 "frases": {
@@ -4820,18 +4427,9 @@
               "adaptacion": {
                 "enunciado": "¿Por qué los granos de cereales como el trigo, el arroz o el maíz son tan importantes en nuestra alimentación?",
                 "opciones": [
-                  {
-                    "id": "almidon",
-                    "nombre": "Sus semillas guardan abundantes hidratos de carbono que nos dan energía"
-                  },
-                  {
-                    "id": "sal",
-                    "nombre": "Sus hojas saladas sirven para fabricar cristal y herramientas de herrería"
-                  },
-                  {
-                    "id": "esporas",
-                    "nombre": "Sus raíces producen leche líquida sin necesidad de moler ni cocer el pan"
-                  }
+                  { "id": "almidon", "nombre": "Sus semillas guardan abundantes hidratos de carbono que nos dan energía" },
+                  { "id": "sal", "nombre": "Sus hojas saladas sirven para fabricar cristal y herramientas de herrería" },
+                  { "id": "esporas", "nombre": "Sus raíces producen leche líquida sin necesidad de moler ni cocer el pan" }
                 ],
                 "respuesta": "almidon",
                 "frases": {
@@ -4856,18 +4454,9 @@
               "adaptacion": {
                 "enunciado": "¿De qué parte del olivo se obtiene el aceite de oliva en la almazara?",
                 "opciones": [
-                  {
-                    "id": "tronco",
-                    "nombre": "De la corteza seca del tronco, raspando la madera vieja durante el otoño"
-                  },
-                  {
-                    "id": "raiz",
-                    "nombre": "De los pelos absorbentes de la raíz, hirviendo la tierra húmeda del olivar"
-                  },
-                  {
-                    "id": "pulpa",
-                    "nombre": "Del fruto maduro del olivo, prensando la pulpa carnosa de la aceituna"
-                  }
+                  { "id": "tronco", "nombre": "De la corteza seca del tronco, raspando la madera vieja durante el otoño" },
+                  { "id": "raiz", "nombre": "De los pelos absorbentes de la raíz, hirviendo la tierra húmeda del olivar" },
+                  { "id": "pulpa", "nombre": "Del fruto maduro del olivo, prensando la pulpa carnosa de la aceituna" }
                 ],
                 "respuesta": "pulpa",
                 "frases": {

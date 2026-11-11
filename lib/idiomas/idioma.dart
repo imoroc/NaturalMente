@@ -226,7 +226,16 @@ class Idioma extends ChangeNotifier {
       return '${numerada[1]}. ${_traducir(numerada[2]!)}';
     }
     // Conserva la puntuación cuando la frase base tiene traducción.
-    final puntuacion = RegExp(r'[.!?;:]+    for (final separador in [' · ', ' • ', '\n', ', ']) {
+    final puntuacion = RegExp(r'[.!?;:]+$').firstMatch(texto);
+    if (puntuacion != null && puntuacion.start > 0) {
+      final base = texto.substring(0, puntuacion.start);
+      final traducida = _traducir(base);
+      if (traducida != base) {
+        return '$traducida${puntuacion.group(0)}';
+      }
+    }
+    // Composiciones de etiquetas y listas.
+    for (final separador in [' · ', ' • ', '\n', ', ']) {
       if (texto.contains(separador)) {
         final partes = texto.split(separador);
         final traducidas = partes.map(_traducir).toList();

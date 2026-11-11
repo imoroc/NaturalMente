@@ -47,4 +47,11 @@ void main() {
     expect(intestinos.alimentacionOProceso, contains('intestino delgado'));
     expect(intestinos.alimentacionOProceso, contains('intestino grueso'));
   });
+
+  test('la ficha del ecosistema no exagera el efecto de perder una especie', () {
+    final ecosistema = DatosEnciclopedicosFicha.de('claro-bosque');
+    expect(ecosistema.datoCientifico, contains('puede alterar la red trófica'));
+    expect(ecosistema.datoCientifico, isNot(contains('todas las demás especies')));
+  });
+
 }

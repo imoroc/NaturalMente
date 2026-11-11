@@ -1222,7 +1222,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'nutrientes',
     pregunta:
-        '¿En qué parte del aparato digestivo se forma el quilo y pasan los nutrientes hacia la sangre?',
+        '¿En qué parte del aparato digestivo se absorbe la mayor parte de los nutrientes?',
     opciones: [
       'En los dientes incisivos al morder',
       'En el intestino grueso al expulsar las heces',
@@ -1230,7 +1230,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Impecable! En el intestino delgado el quimo pasa a ser quilo y los nutrientes pasan a la sangre.',
+        '¡Impecable! En el intestino delgado se completa la digestión y se absorbe la mayor parte de los nutrientes. La mayoría pasa a la sangre; parte de las grasas entra primero en la linfa.',
   ),
   PreguntaExpedicion(
     id: 'd-mariposa',

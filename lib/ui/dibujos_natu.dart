@@ -7060,7 +7060,7 @@ class DatosEnciclopedicosFicha {
       'pulpo' => const DatosEnciclopedicosFicha(
         clasificacion: 'Invertebrado · Molusco cefalópodo',
         habitatOSistema: 'Fondos marinos rocosos y arrecifes',
-        locomocionOFuncion: 'Reptación con 8 tentáculos con ventosas y propulsión a chorro de agua',
+        locomocionOFuncion: 'Se desplaza por el fondo con sus ocho brazos y también puede impulsarse expulsando agua a presión.',
         alimentacionOProceso:
             'Carnívoro marino y ovíparo · Caza cangrejos y almejas de noche',
         datoCientifico: 'Posee tres corazones, sangre azulada y células en la piel para camuflarse al instante.',
@@ -7106,7 +7106,7 @@ class DatosEnciclopedicosFicha {
         habitatOSistema: 'Subsuelo rico en agua y sales minerales',
         locomocionOFuncion: 'Fija la planta al suelo e impide que el viento o la lluvia la arranquen',
         alimentacionOProceso: 'Absorbe agua y sales minerales mediante pelos radicales formando savia bruta',
-        datoCientifico: 'Las raíces crecen siempre hacia abajo buscando humedad gracias a la gravedad.',
+        datoCientifico: 'Las raíces responden a la gravedad y crecen hacia zonas del suelo con agua y nutrientes.',
         tipoMovimiento: 'pulso',
       ),
       'tallo' => const DatosEnciclopedicosFicha(
@@ -7115,14 +7115,14 @@ class DatosEnciclopedicosFicha {
         locomocionOFuncion:
             'Sostiene hojas, flores y frutos y los eleva hacia la luz del sol',
         alimentacionOProceso: 'Transporta savia bruta hacia arriba (xilema) y savia elaborada (floema)',
-        datoCientifico: 'Cada anillo en el interior de un tronco leñoso corresponde a un año de vida del árbol.',
+        datoCientifico: 'En muchas especies de climas templados, cada anillo del tronco suele representar un año de crecimiento.',
         tipoMovimiento: 'pulso',
       ),
       'hoja' => const DatosEnciclopedicosFicha(
         clasificacion: 'Órgano vegetal laminar · Fotosíntesis',
         habitatOSistema: 'Ramas iluminadas en contacto con el aire',
         locomocionOFuncion:
-            'Abre y cierra poros microscópicos llamados estomas para respirar',
+            'Regula el intercambio de gases y la pérdida de vapor de agua mediante poros microscópicos llamados estomas',
         alimentacionOProceso: 'Capta luz solar con la clorofila verde para fabricar el alimento de la planta',
         datoCientifico: 'Al realizar la fotosíntesis durante el día, las hojas liberan el oxígeno que respiramos.',
         tipoMovimiento: 'pulso',
@@ -7131,7 +7131,7 @@ class DatosEnciclopedicosFicha {
         clasificacion: 'Órgano reproductor de las plantas',
         habitatOSistema: 'Brotes florales en primavera y verano',
         locomocionOFuncion: 'Atrae insectos polinizadores con sus pétalos de colores y su aroma',
-        alimentacionOProceso: 'Los estambres producen polen y el pistilo se transforma en fruto al fecundarse',
+        alimentacionOProceso: 'Los estambres producen polen; tras la fecundación, el ovario del pistilo puede desarrollarse y formar el fruto',
         datoCientifico: 'Las abejas transportan el polen de flor en flor mientras recolectan néctar dulce.',
         tipoMovimiento: 'pulso',
       ),
@@ -7139,13 +7139,13 @@ class DatosEnciclopedicosFicha {
         clasificacion: 'Órgano protector y dispersor de semillas',
         habitatOSistema: 'Ramas de árboles, arbustos y plantas de huerto',
         locomocionOFuncion: 'Envuelve y protege las semillas hasta que están maduras para germinar',
-        alimentacionOProceso: 'Nace de la flor tras la polinización y ayuda a dispersar las semillas',
+        alimentacionOProceso: 'Se desarrolla a partir del ovario de la flor después de la fecundación y ayuda a dispersar las semillas',
         datoCientifico: 'Cuando los animales comen frutos carnosos, llevan las semillas lejos para que nazcan nuevas plantas.',
         tipoMovimiento: 'pulso',
       ),
       'semilla' => const DatosEnciclopedicosFicha(
         clasificacion: 'Embrión vegetal en reposo',
-        habitatOSistema: 'Interior del fruto y tierra húmeda del suelo',
+        habitatOSistema: 'Dentro del fruto o, en algunas plantas, sobre las escamas de una piña',
         locomocionOFuncion: 'Viaja con el viento, el agua o los animales hasta encontrar suelo fértil',
         alimentacionOProceso: 'Guarda reservas nutritivas para alimentar al brote hasta que tenga hojas',
         datoCientifico: 'Una semilla puede esperar dormida meses hasta sentir la humedad y el calor adecuados.',
@@ -7163,10 +7163,10 @@ class DatosEnciclopedicosFicha {
         clasificacion: 'Proceso vital · Nutrición autótrofa',
         habitatOSistema: 'Cloroplastos de las hojas verdes bajo el sol',
         locomocionOFuncion:
-            'Transforma agua, sales minerales y dióxido de carbono en alimento',
+            'Usa agua y dióxido de carbono y la energía de la luz para fabricar azúcares; libera oxígeno',
         alimentacionOProceso:
-            'Savia bruta + CO₂ + Luz solar → Savia elaborada + Oxígeno (O₂)',
-        datoCientifico: 'Las plantas son los únicos seres vivos terrestres capaces de fabricar su propio alimento con luz.',
+            'Agua + dióxido de carbono + energía luminosa → azúcares + oxígeno (esquema simplificado)',
+        datoCientifico: 'Las plantas realizan la fotosíntesis: usan la energía de la luz para fabricar azúcares a partir de agua y dióxido de carbono.',
         tipoMovimiento: 'pulso',
       ),
       'encina' => const DatosEnciclopedicosFicha(
@@ -7199,7 +7199,7 @@ class DatosEnciclopedicosFicha {
         locomocionOFuncion:
             'Dirige el pensamiento, la memoria, las emociones y el movimiento',
         alimentacionOProceso: 'Recibe información de los 5 sentidos y envía órdenes por los nervios',
-        datoCientifico: '¡Aunque estés durmiendo, tu cerebro sigue activo controlando tu respiración y tus sueños!',
+        datoCientifico: 'Aunque duermas, tu sistema nervioso sigue activo: el tronco encefálico regula la respiración y el cerebro participa en los sueños.',
         tipoMovimiento: 'pulso',
       ),
       'pulmones' => const DatosEnciclopedicosFicha(
@@ -7233,7 +7233,7 @@ class DatosEnciclopedicosFicha {
         habitatOSistema:
             'Cavidad abdominal (intestino delgado e intestino grueso)',
         locomocionOFuncion: 'Impulsan los alimentos digeridos mediante movimientos suaves en onda',
-        alimentacionOProceso: 'El intestino delgado absorbe los nutrientes a la sangre y el grueso el agua',
+        alimentacionOProceso: 'El intestino delgado absorbe la mayoría de los nutrientes; el intestino grueso recupera parte del agua y contribuye a formar las heces',
         datoCientifico: 'El intestino delgado está muy plegado: si se estirara mediría varios metros de largo.',
         tipoMovimiento: 'pulso',
       ),
@@ -7242,7 +7242,7 @@ class DatosEnciclopedicosFicha {
         habitatOSistema: 'Armazón interno de todo el cuerpo humano',
         locomocionOFuncion: 'Sostiene el cuerpo, da forma y se mueve junto con los músculos y articulaciones',
         alimentacionOProceso: 'Protege órganos delicados: el cráneo al cerebro y las costillas al corazón y pulmones',
-        datoCientifico: 'El cuerpo humano adulto tiene 206 huesos, y el más largo y fuerte es el fémur.',
+        datoCientifico: 'El esqueleto de una persona adulta suele tener 206 huesos; el fémur es el hueso más largo y uno de los más resistentes.',
         tipoMovimiento: 'pulso',
       ),
       _ => const DatosEnciclopedicosFicha(
@@ -7312,7 +7312,7 @@ class TarjetaFichaEnciclopedica extends StatelessWidget {
               const SizedBox(width: 6),
               const Expanded(
                 child: Texto(
-                  'FICHA ENCICLOPÉDica DE CAMPO',
+                  'FICHA ENCICLOPÉDICA DE CAMPO',
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w900,

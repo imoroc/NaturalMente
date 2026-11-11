@@ -831,15 +831,15 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'higiene',
     pregunta:
-        '¿Qué hábito saludable debemos hacer después de comer para cuidar nuestros dientes?',
+        '¿Qué hábito diario ayuda a mantener los dientes limpios y sanos?',
     opciones: [
       'Comer caramelos pegajosos sin parar',
       'No beber nunca agua',
-      'Cepillarnos bien los dientes con el cepillo',
+      'Cepillarnos los dientes dos veces al día con pasta fluorada',
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Muy bien! Cepillarse los dientes después de las comidas evita las caries y cuida la boca.',
+        '¡Muy bien! Cepillarse dos veces al día con pasta con flúor ayuda a prevenir las caries y a cuidar la boca.',
   ),
   PreguntaExpedicion(
     id: 'f-vertebrado',
@@ -927,15 +927,15 @@ const _bancoMedio = <PreguntaExpedicion>[
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'rana',
     pregunta:
-        '¿Por qué la rana necesita vivir siempre cerca de una charca o zona húmeda?',
+        '¿Por qué muchas ranas viven cerca de charcas o zonas húmedas?',
     opciones: [
-      'Porque su piel fina y desnuda necesita mantenerse húmeda',
+      'Porque su piel permeable necesita humedad y muchas especies ponen allí sus huevos',
       'Porque tiene plumas impermeables de ave marina',
       'Porque solo se alimenta de cactus del desierto',
     ],
     indiceCorrecto: 0,
     explicacion:
-        '¡Exacto! Los anfibios tienen la piel desnuda y húmeda; si se seca, no pueden sobrevivir.',
+        '¡Exacto! La piel húmeda facilita el intercambio de gases y muchas especies de anfibios ponen sus huevos en el agua dulce.',
   ),
   PreguntaExpedicion(
     id: 'm-flor',

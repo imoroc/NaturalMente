@@ -194,7 +194,7 @@ const _animalesReserva = <_AnimalReservaInfo>[
     posicionRelativa: Offset(0.81, 0.83),
     activoDeNoche: true,
     conductaDia: 'Durante el día se oculta en su cueva del arrecife marino imitando el color y la textura de las rocas.',
-    conductaNoche: '¡Explorador nocturno del océano! Sale a cazar cangrejos y moluscos palpando el fondo con sus 8 tentáculos.',
+    conductaNoche: '¡Explorador nocturno del océano! Sale a buscar cangrejos y moluscos palpando el fondo con sus ocho brazos.',
   ),
   _AnimalReservaInfo(
     id: 'pinguino',
@@ -1265,7 +1265,7 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
 
   String get _diagnosticoBotanico {
     if (_nivelLuz == 'apagada') {
-      return 'Sin energía solar los estomas se cierran y los cloroplastos no pueden fabricar savia elaborada ni liberar oxígeno.';
+      return 'Sin luz, la fotosíntesis se detiene: la hoja deja de fabricar azúcares y de liberar oxígeno mediante este proceso.';
     }
     if (_nivelAgua == 'seco') {
       return 'La tierra está seca: las raíces no pueden absorber agua ni sales minerales (savia bruta), por lo que la hoja cierra sus estomas.';
@@ -2349,12 +2349,12 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
         'El aire baja por la tráquea y los bronquios hasta los alvéolos. El músculo diafragma sube y baja para ventilar el pecho',
       ),
       ('higado', 'comer') => (
-        'Hígado, Vesícula Biliar y Páncreas (Activos)',
-        'Las glándulas anejas segregan bilis y jugo pancreático al duodeno para descomponer las grasas y los hidratos de carbono',
+        'Hígado y Páncreas (Glándulas digestivas)',
+        'El hígado produce bilis, que la vesícula almacena y libera; el páncreas vierte jugo pancreático al duodeno, donde ayudan a digerir grasas y carbohidratos',
       ),
       ('higado', _) => (
-        'Hígado, Vesícula y Páncreas (Glándulas anejas)',
-        'El hígado produce la bilis, almacena glucosa y filtra sustancias; el páncreas aporta jugos digestivos e insulina',
+        'Hígado, Vesícula y Páncreas (Órganos accesorios)',
+        'El hígado produce bilis, almacena glucógeno y procesa nutrientes; el páncreas libera enzimas digestivas y hormonas como la insulina',
       ),
       ('estomago', 'comer') => (
         'Estómago (Quimo gástrico en acción)',
@@ -2362,7 +2362,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       ('estomago', _) => (
         'Esófago y Estómago',
-        'El tubo digestivo conduce el alimento masticado hasta el estómago en forma de J, donde comienza la digestión química',
+        'El esófago conduce el bolo alimenticio hasta el estómago, donde la digestión continúa con los jugos gástricos',
       ),
       ('intestinos', 'comer') => (
         'Intestino Delgado y Grueso (Absorbiendo nutrientes)',
@@ -2386,7 +2386,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       _ => (
         'Esqueleto, Articulaciones y Musculatura',
-        'Los 206 huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales',
+        'Los huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales',
       ),
     };
   }
@@ -3810,7 +3810,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.85,
           bioma: 'Arrecife submarino',
           accionViva:
-              '¡El pulpo mueve sus 8 tentáculos con ventosas entre las rocas!',
+              '¡El pulpo mueve sus ocho brazos con ventosas entre las rocas!',
           pistaDesbloqueo: 'Descubre al pulpo en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
@@ -3950,7 +3950,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.62,
           bioma: 'Panel Nervioso · Acto reflejo',
           accionViva:
-              '¡La médula espinal dispara respuestas reflejas ultrarrápidas!',
+              '¡La médula espinal coordina algunas respuestas reflejas rápidas!',
           pistaDesbloqueo: 'Supera el nivel Difícil de «Los cinco sentidos».',
         ),
         _SlotHabitat(

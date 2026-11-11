@@ -715,4 +715,17 @@ void main() {
     final reinos = catalogo.fichas.firstWhere((f) => f.id == 'reinos');
     expect(reinos.frase, contains('clasificación escolar sencilla'));
   });
+
+  test('las características generales de los seres vivos no exigen que cada individuo se reproduzca', () {
+    final serVivo = catalogo.fichas.firstWhere((f) => f.id == 'ser-vivo');
+    expect(serVivo.frase, contains('La reproducción permite que su especie continúe'));
+    expect(serVivo.frase, isNot(contains('se reproducen')));
+  });
+
+  test('el aire puede entrar por la nariz o la boca', () {
+    final respiratorio = catalogo.fichas.firstWhere(
+      (f) => f.id == 'aparato-respiratorio',
+    );
+    expect(respiratorio.frase, contains('nariz o la boca'));
+  });
 }

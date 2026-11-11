@@ -764,7 +764,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'delfin',
     pregunta:
-        'El delfín nada en el mar, pero sale a respirar aire y mama leche al nacer. ¿Qué es?',
+        'El delfín nada en el mar, respira aire y sus crías se alimentan de leche materna. ¿Qué es?',
     opciones: ['Un mamífero marino', 'Un insecto con alas', 'Un árbol acuático'],
     indiceCorrecto: 0,
     explicacion:
@@ -783,7 +783,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 1,
     explicacion:
-        '¡Exacto! Con agua y buen temple la semilla despierta y saca su primera raíz.',
+        '¡Exacto! Para germinar, la semilla necesita agua, oxígeno y una temperatura adecuada; después emerge la primera raíz.',
   ),
   PreguntaExpedicion(
     id: 'f-dientes',
@@ -831,15 +831,15 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'higiene',
     pregunta:
-        '¿Qué hábito saludable debemos hacer después de comer para cuidar nuestros dientes?',
+        '¿Qué hábito diario ayuda a mantener los dientes limpios y sanos?',
     opciones: [
       'Comer caramelos pegajosos sin parar',
       'No beber nunca agua',
-      'Cepillarnos bien los dientes con el cepillo',
+      'Cepillarnos los dientes dos veces al día con pasta fluorada',
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Muy bien! Cepillarse los dientes después de las comidas evita las caries y cuida la boca.',
+        '¡Muy bien! Cepillarse dos veces al día con pasta con flúor ayuda a prevenir las caries y a cuidar la boca.',
   ),
   PreguntaExpedicion(
     id: 'f-vertebrado',
@@ -861,11 +861,11 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'abeja-polen',
     pregunta:
-        'Cuando una abeja viaja de flor en flor buscando néctar, ¿qué polvillo amarillo transporta en sus patas?',
+        'Cuando una abeja viaja de flor en flor buscando néctar, ¿qué polvillo amarillo transporta en su cuerpo?',
     opciones: ['Arena de la playa', 'El polen de las flores', 'Copos de nieve'],
     indiceCorrecto: 1,
     explicacion:
-        '¡Fantástico! Las abejas llevan el polen de una flor a otra y ayudan a que nazcan frutos y semillas.',
+        '¡Fantástico! Las abejas transportan polen entre flores y pueden facilitar la fecundación y la formación de frutos y semillas.',
   ),
   PreguntaExpedicion(
     id: 'f-cerebro',
@@ -917,7 +917,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Exacto! Todos los seres vivos realizan las funciones vitales de nutrición, relación y reproducción.',
+        'La nutrición y la relación son funciones vitales; la reproducción permite que las especies continúen, aunque no todos los individuos se reproduzcan.',
   ),
 ];
 
@@ -927,30 +927,30 @@ const _bancoMedio = <PreguntaExpedicion>[
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'rana',
     pregunta:
-        '¿Por qué la rana necesita vivir siempre cerca de una charca o zona húmeda?',
+        '¿Por qué muchas ranas viven cerca de charcas o zonas húmedas?',
     opciones: [
-      'Porque su piel fina y desnuda necesita mantenerse húmeda',
+      'Porque su piel permeable necesita humedad y muchas especies ponen allí sus huevos',
       'Porque tiene plumas impermeables de ave marina',
       'Porque solo se alimenta de cactus del desierto',
     ],
     indiceCorrecto: 0,
     explicacion:
-        '¡Exacto! Los anfibios tienen la piel desnuda y húmeda; si se seca, no pueden sobrevivir.',
+        '¡Exacto! La piel húmeda facilita el intercambio de gases y muchas especies de anfibios ponen sus huevos en el agua dulce.',
   ),
   PreguntaExpedicion(
     id: 'm-flor',
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'flor',
     pregunta:
-        'Cuando la flor de un manzano se transforma tras la polinización, ¿qué se forma alrededor de las semillas?',
+        'Tras la fecundación de una flor de manzano, ¿qué estructura se desarrolla y protege las semillas?',
     opciones: [
       'Una raíz secundaria subterránea',
-      'El fruto, que protege las semillas en su interior',
+      'El ovario de la flor, que se desarrolla en fruto y protege las semillas',
       'El tallo leñoso principal',
     ],
     indiceCorrecto: 1,
     explicacion:
-        '¡Genial! La flor se transforma en el fruto, que guarda y protege las semillas.',
+        '¡Genial! Tras la fecundación, el ovario de la flor puede desarrollarse en fruto y los óvulos fecundados dan lugar a semillas.',
   ),
   PreguntaExpedicion(
     id: 'm-pulmones',
@@ -1222,7 +1222,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'nutrientes',
     pregunta:
-        '¿En qué parte del aparato digestivo se forma el quilo y pasan los nutrientes hacia la sangre?',
+        '¿En qué parte del aparato digestivo se absorbe la mayor parte de los nutrientes?',
     opciones: [
       'En los dientes incisivos al morder',
       'En el intestino grueso al expulsar las heces',
@@ -1230,7 +1230,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Impecable! En el intestino delgado el quimo pasa a ser quilo y los nutrientes pasan a la sangre.',
+        '¡Impecable! En el intestino delgado se completa la digestión y se absorbe la mayor parte de los nutrientes. La mayoría pasa a la sangre; parte de las grasas entra primero en la linfa.',
   ),
   PreguntaExpedicion(
     id: 'd-mariposa',
@@ -1331,7 +1331,7 @@ const _bancoDificil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 0,
     explicacion:
-        '¡Muy bien! Las branquias son láminas muy finas llenas de capilares que captan el oxígeno disuelto en el agua.',
+        '¡Muy bien! Las branquias tienen superficies finas y muchos capilares que permiten que el oxígeno disuelto en el agua pase a la sangre.',
   ),
   PreguntaExpedicion(
     id: 'd-trigo',

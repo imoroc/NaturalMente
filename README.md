@@ -19,7 +19,7 @@
 
 **NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
 
-Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **18 juegos interactivos** con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`, sumando **54 misiones**) y coleccionan **61 cromos** con curiosidades científicas en su álbum personal.
+Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **26 actividades interactivas**, cada una con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`), que suman **78 combinaciones de actividad y nivel**, y coleccionan **85 cromos** con curiosidades científicas en su álbum personal.
 
 ### Principios de diseño pedagógico y técnico
 
@@ -28,14 +28,14 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **18 juegos int
   - **Fácil (1.º-2.º)**: identificación visual directa, vocabulario cercano y mecánicas accesibles.
   - **Medio (3.º-4.º)**: ampliación de elementos y preguntas de comprensión tras resolver cada reto.
   - **Difícil (5.º-6.º)**: vocabulario científico de tercer ciclo (vertebrados e invertebrados, fotosíntesis, aparatos y sistemas, cigoto y multiplicación celular) y retos de razonamiento.
-- **Catálogo desacoplado de la interfaz**: todo el contenido didáctico, pistas, curiosidades y preguntas reside en [`content/catalog.json`](content/catalog.json), separado de las reglas de evaluación (`lib/reglas/`) y de los componentes visuales (`lib/ui/`).
+- **Contenido y traducciones**: el catálogo [`content/catalog.json`](content/catalog.json) reúne las fichas y la configuración de las actividades; [`content/en.json`](content/en.json) contiene sus traducciones al inglés. Los módulos de reglas (`lib/reglas/`) y las pantallas (`lib/ui/`) consumen esos datos. Las mecánicas especializadas también generan algunos mensajes de estado desde su propio código.
 - **Ilustración vectorial e interactividad propia**: escenarios, laboratorio de germinación, modelo anatómico con colocación por arrastre o toque (*drag & drop* + *tap*) y visor de etapas de la vida renderizados mediante `CustomPainter` en Flutter.
 
 ---
 
 ## Mundos, actividades y niveles
 
-| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (61) |
+| Mundo | Actividad | Mecánica principal | Fácil (1.º-2.º) | Medio (3.º-4.º) | Difícil (5.º-6.º) | Cromos (85) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
 | **La reserva**<br>*(Animales)* | **Cada uno a su hogar** (`hogar`) | Clasificación de animales en su hábitat y adaptaciones al medio | 4 hábitats y 4 animales (*camello, delfín, pingüino, oso*) | 6 hábitats (+ *selva, río*) y 6 animales (+ *rana, tucán*) con pregunta de adaptación | 6 ecosistemas y 7 animales (+ *pulpo*, invertebrado marino) con preguntas de clasificación científica | 7 |
 | **La reserva**<br>*(Animales)* | **¿Huevo o barriga?** (`nacimiento`) | Separar animales por cómo nacen y ordenar ciclos de vida, por arrastre o toque | 6 animales al *huevo* o a la *barriga de su madre* (*pingüino, tucán, rana · camello, delfín, oso*) | Ciclos de la *rana* y la *mariposa* en 4 pasos + pregunta de comprensión por ciclo | Metamorfosis de la *rana* en 5 fases y de la *mariposa* (larva, pupa, adulto) + preguntas de razonamiento (anfibio, en qué se parecen) | 3 |
@@ -43,55 +43,68 @@ Guiados por **Natu**, los alumnos exploran **3 mundos**, superan **18 juegos int
 | **La reserva**<br>*(Animales)* | **¿Huesos o caparazón?** (`grupos`) | Clasificar con visor de rayos X, lupa de piel y contador de patas | Vertebrado o invertebrado (6 animales) | Grupos de vertebrados (*mamíferos y aves, reptiles y anfibios, peces*) | Artrópodos, moluscos y anélidos o cnidarios + pregunta extra | 3 |
 | **La reserva**<br>*(Ecosistemas)* | **Monta el ecosistema** (`ecosistemas`) | Dar vida a un claro del bosque y descubrir conexiones | Hierba, conejo y zorro por arrastre o toque | Dos relaciones alimentarias con flechas explicadas | Dos predicciones y comparación antes/después | 1 |
 | **La reserva**<br>*(Seres vivos)* | **¿Vivo o no vivo?** (`vivo`) | Separar lo vivo de lo que no lo está, por arrastre o toque | 6 cosas del entorno (*gato, piedra, árbol, agua, nube, mariquita*) | 6 casos que despistan (*semilla, seta, fuego, robot, musgo, cristal de sal*) + pregunta «¿por qué?» | 6 seres vivos en su reino (*animales, plantas, hongos, seres muy pequeños*) | 3 |
+| **La reserva**<br>*(Animales y conservación)* | **Cuida la reserva** (`cuida-reserva`) | Proteger el bosque y el río, clasificar residuos y conocer especies amenazadas | Recoger residuos de una escena natural | Separar residuos en cuatro contenedores | Identificar amenazas y medidas de protección para cuatro especies | 3 |
+| **La reserva**<br>*(Animales)* | **¿Cómo respira?** (`respiracion`) | Relacionar animales con sus órganos o mecanismos de respiración | Distinguir animales que respiran aire o bajo el agua | Reconocer la respiración por la piel y otras estructuras | Identificar mecanismos como las tráqueas y la respiración cutánea | 3 |
+| **La reserva**<br>*(Animales)* | **¿Quién soy?** (`quien-soy`) | Adivinar animales a partir de pistas sobre su aspecto y su forma de vivir | Identificar mamíferos, aves y peces con tres opciones ilustradas | Relacionar pistas con alimentación, desplazamiento y nacimiento | Clasificar vertebrados e invertebrados a partir de pistas | 3 |
 | **El invernadero**<br>*(Plantas)* | **Haz crecer la semilla** (`germinacion`) | Simulación experimental día a día (Días 1, 3, 5 y 7) en bote transparente | 3 variables (*sustrato, agua, luz*) hasta lograr el brote en tierra o algodón | Experimento de 4 etapas + pregunta final sobre el papel de las sales minerales del suelo | 4 variables (+ *temperatura en °C*) + pregunta científica sobre fotosíntesis y germinación | 3 |
 | **El invernadero**<br>*(Plantas)* | **Herbario desmontable** (`herbario`) | Montaje interactivo de las partes de la planta por arrastre o toque | 3 partes (*raíz, tallo, hoja*) sobre el modelo botánico | 5 partes (+ *flor, fruto*) con sus funciones y curiosidades | 5 partes + cuestionario sobre la función de cada órgano vegetal | 5 |
 | **El invernadero**<br>*(Plantas)* | **Árbol, arbusto o hierba** (`plantas`) | Llevar plantas del entorno a su grupo | Árbol o hierba (*encina, chopo, césped, amapola*) | Árbol, arbusto o hierba | Además, cultivada o silvestre | 3 |
 | **El invernadero**<br>*(Plantas)* | **Polen y semillas viajeras** (`polinizacion`) | Lupa floral, túnel de viento y agua y vuelo de la abeja | Partes de la flor (*cáliz y corola, estambres, pistilo*) | Cómo viaja cada semilla (*viento, agua, animales*) | Con fruto, con piñas o con esporas + pregunta extra | 3 |
 | **El invernadero**<br>*(Plantas)* | **Los árboles y las estaciones** (`estaciones`) | Rueda de estaciones, lupa de hojas y climograma | Hoja caduca o perenne (6 árboles) | Forma y textura de la hoja (ancha, dura con cera, aguja) | A qué bosque pertenece cada árbol según el clima + pregunta extra | 3 |
 | **El invernadero**<br>*(Plantas)* | **Del huerto a la mesa** (`huerta`) | Corte de la huerta para ver qué parte de la planta comemos | Raíz, hoja o fruto (6 alimentos) | Raíz o tallo, hoja o flor, fruto o semilla | Reservas, cereales, fibras y aceites + pregunta extra | 3 |
+| **El invernadero**<br>*(Plantas)* | **El viaje de la savia** (`savia`) | Relacionar las partes de la planta con el transporte de agua y alimento | Reconocer cómo la planta toma agua y fabrica alimento | Identificar qué parte realiza cada función | Distinguir xilema, floema y estomas | 3 |
+| **El invernadero**<br>*(Plantas)* | **Memoria de las plantas** (`memoria-plantas`) | Juego de memoria que empareja dibujos con funciones de la planta | 6 cartas sobre partes de la planta y sus funciones | 10 cartas sobre polinización, savia y hojas | 12 cartas sobre nutrición y reproducción vegetal | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Cada pieza en su sitio** (`piezas`) | Atlas anatómico interactivo: arrastrar o tocar órganos hacia su cavidad | 3 órganos en 3 zonas: *cerebro* (Cabeza), *corazón* (Pecho) y *estómago* (Abdomen) | 5 piezas en 4 zonas (+ *pulmones* en Pecho y *músculos y huesos* en Extremidades) + reto de función | 6 piezas (+ *intestinos* en Abdomen) + preguntas sobre aparatos y sistemas del cuerpo humano | 6 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **El viaje de la comida** (`digestion`) | Llevar un bocado por el aparato digestivo tocando el cuerpo, los botones o arrastrándolo | *Boca* y *barriga*, con tres mordiscos para masticar y el pulmón como despiste | 4 paradas (*boca, esófago, estómago, intestino*) con pulmones y corazón como despistes + pregunta final | 5 partes (+ *intestino delgado y grueso*) + qué pasa en cada parada (*bolo, quimo, absorción, heces*) | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Así empieza una vida** (`vida`) | Línea temporal interactiva con visor de subetapas y explicación biológica | 4 viñetas: *unión de dos células, crecimiento en el útero, nacimiento y cuidados* | 5 fases (*fecundación, embrión con latido, feto con cordón, nacimiento y bebé*) + pregunta vivíparos | 6 fases (*cigoto, multiplicación celular, tejidos y órganos, placenta, parto y crecimiento por etapas*) | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Los cinco sentidos** (`sentidos`) | Unir órganos y situaciones con su sentido | Ojos, orejas, nariz, lengua y piel con su sentido | 6 situaciones de aviso | 5 avisos + pregunta sobre nervios, cerebro y actos reflejos | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **Un plato que cuida** (`plato`) | Llevar alimentos a su sitio, por arrastre o toque, mientras se llena la bandeja | Merienda «para cada día» o «de vez en cuando» (*manzana, bollo, yogur, chuches, bocadillo, refresco*) | Llenar el plato por partes: mitad verduras y frutas, un cuarto proteínas, un cuarto cereales | Leer etiquetas (azúcar, sal y grasa en 100 g) + comparar con otro producto | 3 |
 | **El cuerpo**<br>*(Cuerpo humano)* | **¿Me cuida o no?** (`habitos`) | Separar costumbres en «Me cuida» o «No me cuida» | Higiene, merienda y juego | Sueño, pantallas, actividad física y calma | Oído, vista, postura y descanso + qué parte se cuida | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **¿Qué parte cuido?** (`cuidados`) | Relacionar hábitos de cuidado con la parte del cuerpo a la que protegen | Cabeza, abdomen y extremidades | También el pecho, el corazón y los pulmones | Hábitos relacionados con cerebro, corazón, intestinos y músculos | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **Cada órgano, su trabajo** (`organos`) | Relacionar órganos con las funciones que realizan | Corazón, pulmones y estómago | Ampliar las funciones y relaciones entre órganos | Comprender cómo trabajan juntos los órganos | 3 |
+| **El cuerpo**<br>*(Cuerpo humano)* | **¿Cómo me siento?** (`emociones`) | Reconocer emociones en situaciones cotidianas y pensar cómo apoyar a otras personas | Alegría, tristeza, enfado y miedo | Añadir vergüenza y nervios | Identificar emociones ajenas y elegir formas de ayudar | 3 |
 
 ---
 
 ## Arquitectura del proyecto
 
-El proyecto separa estrictamente los **datos curriculares**, el **modelo de dominio**, las **reglas de negocio puras** (testeables sin necesidad de montar widgets) y la **capa de presentación**.
+El proyecto organiza el contenido curricular y sus traducciones, los modelos de dominio, la lógica de las actividades y la capa de presentación. El catálogo concentra los datos reutilizables; las mecánicas especializadas también pueden generar mensajes específicos desde sus módulos de reglas o de interfaz.
 
 ```mermaid
 flowchart LR
   subgraph Datos["1. Contenido y Persistencia"]
-    JSON["content/catalog.json"]
-    PREFS["SharedPreferences\n(Progreso local)"]
+    JSON["content/catalog.json\n(Fichas y actividades)"]
+    EN["content/en.json\n(Traducciones al inglés)"]
+    PREFS["SharedPreferences\n(Progreso y preferencias locales)"]
   end
 
   subgraph Dominio["2. Modelo y Acceso a Datos"]
     CAT["lib/datos/catalogo.dart"]
     PROG["lib/datos/progreso.dart"]
+    IDIOMA["lib/idiomas/idioma.dart"]
     MOD["lib/modelo/\n(Zona, Actividad, Ficha, Herbario)"]
   end
 
-  subgraph Reglas["3. Lógica Pura (Sin Widgets)"]
-    RES["lib/reglas/resolver.dart\n(Evaluación, pistas, barajado)"]
+  subgraph Reglas["3. Reglas y lógica de las actividades"]
+    RES["lib/reglas/\n(Evaluación y resolución específica)"]
   end
 
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
-    MAPA["lib/ui/mapa.dart\n(Mundos y Álbum de 31 cromos)"]
+    MAPA["lib/ui/mapa.dart\n(Mundos y álbum de 85 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart · herbario.dart · nacimiento.dart · ecosistema.dart · digestion.dart\n(18 juegos · 54 niveles)"]
-    DIB["lib/ui/dibujos.dart · planta.dart\n(CustomPainters e ilustraciones)"]
+    JUEGO["lib/ui/juego.dart y módulos específicos\n(26 actividades · 78 combinaciones de actividad y nivel)"]
+    DIB["lib/ui/dibujos.dart y módulos de ilustración\n(CustomPainters e ilustraciones)"]
   end
 
   JSON --> CAT
+  EN --> IDIOMA
   PREFS <--> PROG
+  PREFS <--> IDIOMA
   CAT --> MOD
   MOD --> RES
   MOD --> Interfaz
   PROG --> Interfaz
+  IDIOMA --> Interfaz
   RES --> JUEGO
   DIB --> JUEGO
   DIB --> MAPA
@@ -101,7 +114,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  A["Mapa principal (MapaPage)\nProgreso global · Estrellas (24) · Álbum (31 cromos)"] --> B["Pantalla de Mundo (ZonaPage)\nLa reserva · El invernadero · El cuerpo"]
+  A["Mapa principal (MapaPage)\nProgreso por nivel · Álbum (85 cromos)"] --> B["Pantalla de Mundo (ZonaPage)\nLa reserva · El invernadero · El cuerpo"]
   A --> C["Álbum de Cromos\nFiltro por mundo · Estado bloqueado/desbloqueado · Curiosidades"]
   B --> D["Selector de dificultad\nFácil (1.º-2.º) · Medio (3.º-4.º) · Difícil (5.º-6.º)"]
   D --> E["Actividad interactiva\nArrastrar / Tocar / Experimentar / Ordenar"]
@@ -182,7 +195,7 @@ flutter test
 
 - `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
 - `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
-- `flutter test`: ejecuta la batería de pruebas unitarias (catálogo, reglas de los 18 juegos, barajador sin repetición, desbloqueo de los 61 cromos) y pruebas de widgets/flujos completos en pantalla.
+- `flutter test`: ejecuta las pruebas del catálogo y las reglas, los recorridos de cierre de las 26 actividades en sus tres niveles y los flujos de progreso, guardado y accesibilidad.
 
 ### 2. Ejecutar la aplicación en local
 
@@ -255,7 +268,7 @@ Google Play requiere configurar la firma de producción y generar un AAB.
 
 ### Idioma de la app
 
-El botón ES/EN permite elegir **Español** o **English** solo en el mapa principal, debajo de la cabecera de NaturalMente y antes de «Mundos para explorar». Traduce también las fichas, las pistas, los juegos y el álbum. La elección se conserva al cerrar y volver a abrir, y se aplica a toda la app sin borrar el progreso. Español es el idioma inicial.
+El menú **Ajustes de Natu**, situado en la cabecera del mapa principal, permite elegir **Español** o **English** y activar o desactivar los efectos de sonido, la música de fondo y la vibración. El idioma elegido se guarda en el dispositivo y se aplica a las fichas, las pistas, las actividades y el álbum sin borrar el progreso. Español es el idioma inicial.
 
 ### Monta el ecosistema
 
@@ -267,4 +280,4 @@ Este comportamiento es obligatorio para todos los juegos y niveles, incluidos lo
 
 Al superar un nivel, la animación del check verde, el sonido y la vibración dan paso automáticamente a una pantalla de resultado. Muestra el resumen y mantiene visibles las opciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. El botón de cerrar permite seguir explorando las explicaciones y curiosidades del ejercicio.
 
-Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de los 18 juegos y del reto diario, además del guardado, la repetición y la accesibilidad del cierre.
+Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de las 26 actividades y el reto diario, además del guardado, la repetición y la accesibilidad del cierre.

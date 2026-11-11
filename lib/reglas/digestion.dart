@@ -87,11 +87,11 @@ class PartidaViaje {
         pendiente == 'estomago'
             ? 'Bolo con jugos gástricos'
             : 'Fase 2: Quimo',
-      'intestino' => 'Fase 3: Quilo y nutrientes',
+      'intestino' => 'Fase 3: Absorción de nutrientes',
       'intestino-delgado' =>
         pendiente == 'intestino-delgado'
             ? 'Quimo en el intestino delgado'
-            : 'Fase 3: Quilo → Nutrientes',
+            : 'Fase 3: Absorción de nutrientes',
       'intestino-grueso' =>
         pendiente == 'intestino-grueso'
             ? 'Restos no digeridos'
@@ -118,9 +118,9 @@ class PartidaViaje {
       'estomago' =>
         'Papilla ácida formada al mezclar el bolo con los jugos gástricos.',
       'intestino' =>
-        'Del quilo pasan los nutrientes a la sangre y los restos continúan.',
+        'En el intestino delgado se absorbe la mayoría de los nutrientes y pasan a la sangre; los restos siguen hacia el intestino grueso.',
       'intestino-delgado' =>
-        'Los jugos digestivos forman el quilo y las vellosidades absorben sus nutrientes.',
+        'En el intestino delgado se completa la digestión y se absorben los nutrientes. La mayoría pasa a la sangre; parte de las grasas entra primero en la linfa.',
       'intestino-grueso' =>
         'Se absorbe el agua sobrante y los restos forman las heces.',
       _ => 'El cuerpo aprovecha los nutrientes del alimento.',

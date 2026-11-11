@@ -251,7 +251,7 @@ class _CabeceraNatu extends StatelessWidget {
                       const SizedBox(width: 5),
                       Flexible(
                         child: Texto(
-                          '${progreso.semillas} Semillas · Armario',
+                          '${progreso.semillas} ${progreso.semillas == 1 ? 'Semilla' : 'Semillas'} · Armario',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -297,7 +297,9 @@ class _CabeceraNatu extends StatelessWidget {
                       Flexible(
                         child: Texto(
                           progreso.rachaActiva() > 0
-                              ? 'Racha: ${progreso.rachaActiva()} d'
+                              ? progreso.rachaActiva() == 1
+                                    ? 'Racha: 1 día'
+                                    : 'Racha: ${progreso.rachaActiva()} días'
                               : 'Reto diario',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

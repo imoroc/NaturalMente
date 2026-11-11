@@ -665,4 +665,67 @@ void main() {
       }
     }
   });
+
+  test('el catálogo describe con precisión la germinación, la fotosíntesis y la reproducción vegetal', () {
+    final semilla = catalogo.fichas.firstWhere((f) => f.id == 'semilla');
+    expect(semilla.frase, contains('oxígeno'));
+    expect(semilla.frase, contains('no necesita tierra al principio'));
+
+    final fotosintesis = catalogo.fichas.firstWhere(
+      (f) => f.id == 'fotosintesis',
+    );
+    expect(fotosintesis.frase, contains('dióxido de carbono'));
+
+    final flor = catalogo.fichas.firstWhere((f) => f.id == 'abeja-polen');
+    expect(flor.frase, contains('el ovario forma el fruto'));
+  });
+
+  test('el catálogo distingue los brazos del pulpo y la columna vertebral', () {
+    final pulpo = catalogo.fichas.firstWhere((f) => f.id == 'pulpo');
+    expect(pulpo.frase, contains('ocho brazos'));
+    expect(pulpo.frase, isNot(contains('tentáculos')));
+
+    final vertebrados = catalogo.fichas.firstWhere(
+      (f) => f.id == 'vertebrado',
+    );
+    expect(vertebrados.frase, contains('columna vertebral'));
+  });
+
+  test('las funciones vitales no excluyen a individuos que no pueden reproducirse', () {
+    final funciones = catalogo.fichas.firstWhere(
+      (f) => f.id == 'funciones-vitales',
+    );
+    expect(funciones.frase, contains('no todos los individuos puedan reproducirse'));
+  });
+
+  test('la ficha de intestinos distingue absorción de nutrientes y agua', () {
+    final intestinos = catalogo.fichas.firstWhere((f) => f.id == 'intestinos');
+    expect(intestinos.frase, contains('intestino delgado'));
+    expect(intestinos.frase, contains('intestino grueso'));
+    expect(intestinos.frase, contains('recupera parte del agua'));
+  });
+
+  test('el acto reflejo se describe como respuesta automática del sistema nervioso', () {
+    final reflejo = catalogo.fichas.firstWhere((f) => f.id == 'reflejo');
+    expect(reflejo.frase, contains('respuesta automática'));
+    expect(reflejo.frase, contains('sistema nervioso'));
+  });
+
+  test('la ficha de reinos identifica la clasificación como modelo escolar simplificado', () {
+    final reinos = catalogo.fichas.firstWhere((f) => f.id == 'reinos');
+    expect(reinos.frase, contains('clasificación escolar sencilla'));
+  });
+
+  test('las características generales de los seres vivos no exigen que cada individuo se reproduzca', () {
+    final serVivo = catalogo.fichas.firstWhere((f) => f.id == 'ser-vivo');
+    expect(serVivo.frase, contains('La reproducción permite que su especie continúe'));
+    expect(serVivo.frase, isNot(contains('se reproducen')));
+  });
+
+  test('el aire puede entrar por la nariz o la boca', () {
+    final respiratorio = catalogo.fichas.firstWhere(
+      (f) => f.id == 'aparato-respiratorio',
+    );
+    expect(respiratorio.frase, contains('nariz o la boca'));
+  });
 }

@@ -194,7 +194,7 @@ const _animalesReserva = <_AnimalReservaInfo>[
     posicionRelativa: Offset(0.81, 0.83),
     activoDeNoche: true,
     conductaDia: 'Durante el día se oculta en su cueva del arrecife marino imitando el color y la textura de las rocas.',
-    conductaNoche: '¡Explorador nocturno del océano! Sale a cazar cangrejos y moluscos palpando el fondo con sus 8 tentáculos.',
+    conductaNoche: '¡Explorador nocturno del océano! Sale a buscar cangrejos y moluscos palpando el fondo con sus ocho brazos.',
   ),
   _AnimalReservaInfo(
     id: 'pinguino',
@@ -1265,18 +1265,18 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
 
   String get _diagnosticoBotanico {
     if (_nivelLuz == 'apagada') {
-      return 'Sin energía solar los estomas se cierran y los cloroplastos no pueden fabricar savia elaborada ni liberar oxígeno.';
+      return 'Sin luz, la hoja no dispone de la energía luminosa que necesita para realizar la fotosíntesis y fabricar azúcares.';
     }
     if (_nivelAgua == 'seco') {
-      return 'La tierra está seca: las raíces no pueden absorber agua ni sales minerales (savia bruta), por lo que la hoja cierra sus estomas.';
+      return 'La tierra está seca: las raíces no absorben suficiente agua y sales minerales. La planta puede cerrar los estomas para reducir la pérdida de agua, y la fotosíntesis disminuye.';
     }
     if (_nivelAgua == 'exceso') {
-      return 'Demasiada agua encharca la tierra y deja sin aire a las raíces. La fotosíntesis va más lenta.';
+      return 'Demasiada agua encharca la tierra y desplaza el aire de sus huecos; las raíces reciben menos oxígeno y la fotosíntesis puede disminuir.';
     }
     if (_nivelLuz == 'media') {
-      return 'Con luz suave la planta realiza la fotosíntesis a ritmo moderado: sube savia bruta y libera burbujas de oxígeno.';
+      return 'Con luz moderada, la fotosíntesis ocurre a un ritmo menor. El agua y las sales minerales ascienden por el xilema y las hojas liberan oxígeno.';
     }
-    return '¡Fotosíntesis al 100 %! La raíz absorbe savia bruta, los estomas toman dióxido de carbono y la hoja con luz solar fabrica savia elaborada y libera oxígeno al aire.';
+    return '¡Fotosíntesis en marcha! Las raíces absorben agua y sales minerales; el dióxido de carbono entra por los estomas y, con la energía de la luz, las hojas fabrican azúcares y liberan oxígeno.';
   }
 
   @override
@@ -1333,7 +1333,7 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
-                              'O₂: $rendimiento %',
+                              context.tr('O₂: $rendimiento %'),
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w900,
@@ -2345,16 +2345,16 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
         'Los bronquios y millones de alvéolos pulmonares aceleran el intercambio de gases: entra O₂ a la sangre y sale CO₂',
       ),
       ('pulmones', _) => (
-        'Pulmones y Árbol Bronquial ($_respiracionesPorMinuto resp/min)',
+        'Pulmones y árbol bronquial ($_respiracionesPorMinuto resp/min)',
         'El aire baja por la tráquea y los bronquios hasta los alvéolos. El músculo diafragma sube y baja para ventilar el pecho',
       ),
       ('higado', 'comer') => (
-        'Hígado, Vesícula Biliar y Páncreas (Activos)',
-        'Las glándulas anejas segregan bilis y jugo pancreático al duodeno para descomponer las grasas y los hidratos de carbono',
+        'Hígado y Páncreas (Glándulas digestivas)',
+        'El hígado produce bilis, que la vesícula almacena y libera; el páncreas vierte jugo pancreático al duodeno, donde ayudan a digerir grasas y carbohidratos',
       ),
       ('higado', _) => (
-        'Hígado, Vesícula y Páncreas (Glándulas anejas)',
-        'El hígado produce la bilis, almacena glucosa y filtra sustancias; el páncreas aporta jugos digestivos e insulina',
+        'Hígado, Vesícula y Páncreas (Órganos accesorios)',
+        'El hígado produce bilis, almacena glucógeno y procesa nutrientes; el páncreas libera enzimas digestivas y hormonas como la insulina',
       ),
       ('estomago', 'comer') => (
         'Estómago (Quimo gástrico en acción)',
@@ -2362,7 +2362,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       ('estomago', _) => (
         'Esófago y Estómago',
-        'El tubo digestivo conduce el alimento masticado hasta el estómago en forma de J, donde comienza la digestión química',
+        'El esófago conduce el bolo alimenticio hasta el estómago, donde la digestión continúa con los jugos gástricos',
       ),
       ('intestinos', 'comer') => (
         'Intestino Delgado y Grueso (Absorbiendo nutrientes)',
@@ -2370,7 +2370,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       ('intestinos', _) => (
         'Intestino Delgado (7 m) e Intestino Grueso',
-        'El intestino delgado absorbe los nutrientes útiles hacia los capilares sanguíneos y el intestino grueso compacta los desechos',
+        'La mayor parte de los nutrientes se absorbe en el intestino delgado y pasa a la sangre; el intestino grueso recupera parte del agua y ayuda a formar las heces.',
       ),
       ('rinones', _) => (
         'Riñones y Aparato Excretor ($_filtradoRenal mL/h)',
@@ -2386,7 +2386,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       _ => (
         'Esqueleto, Articulaciones y Musculatura',
-        'Los 206 huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales',
+        'Los huesos, unidos por articulaciones y movidos por los músculos esqueléticos, sostienen el cuerpo y protegen los órganos vitales',
       ),
     };
   }
@@ -2770,7 +2770,7 @@ class _ChipConstanteVital extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        texto,
+        context.tr(texto),
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w900,
@@ -3810,7 +3810,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.85,
           bioma: 'Arrecife submarino',
           accionViva:
-              '¡El pulpo mueve sus 8 tentáculos con ventosas entre las rocas!',
+              '¡El pulpo mueve sus ocho brazos con ventosas entre las rocas!',
           pistaDesbloqueo: 'Descubre al pulpo en «Cada animal en su hogar».',
         ),
         _SlotHabitat(
@@ -3840,7 +3840,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.24,
           bioma: 'Pradera soleada',
           accionViva:
-              '¡Sus hojas captan la luz solar y liberan oxígeno puro al aire!',
+              '¡Sus hojas captan la luz solar y liberan oxígeno al aire mediante la fotosíntesis!',
           pistaDesbloqueo:
               'Supera el nivel Difícil del «Laboratorio de germinación».',
         ),
@@ -3950,7 +3950,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.62,
           bioma: 'Panel Nervioso · Acto reflejo',
           accionViva:
-              '¡La médula espinal dispara respuestas reflejas ultrarrápidas!',
+              '¡La médula espinal coordina algunas respuestas reflejas rápidas!',
           pistaDesbloqueo: 'Supera el nivel Difícil de «Los cinco sentidos».',
         ),
         _SlotHabitat(
@@ -4017,7 +4017,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.50,
           y: 0.79,
           bioma: 'Abdomen inferior · Intestinos',
-          accionViva: '¡Absorben los nutrientes digeridos hacia los capilares sanguíneos!',
+          accionViva: '¡La mayoría de los nutrientes se absorbe en el intestino delgado y pasa a la sangre; parte de las grasas entra primero en la linfa!',
           pistaDesbloqueo: 'Coloca los intestinos en «Cada pieza en su sitio».',
         ),
 

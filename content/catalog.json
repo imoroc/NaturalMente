@@ -62,7 +62,7 @@
       "curso": "3º-4º",
       "juego": "Cada uno a su hogar",
       "titulo": "Rana",
-      "frase": "Es un anfibio: necesita agua dulce cerca para mantener su piel siempre húmeda.",
+      "frase": "Es un anfibio. Su piel fina y húmeda le ayuda a respirar y suele vivir cerca del agua, donde se reproduce.",
       "curiosidad": "De pequeña nace en el agua como renacuajo con cola y al crecer le salen las patas."
     },
     {
@@ -80,7 +80,7 @@
       "curso": "5º-6º",
       "juego": "Cada uno a su hogar",
       "titulo": "Pulpo",
-      "frase": "Es un molusco invertebrado marino: no tiene huesos ni columna vertebral y posee ocho tentáculos con ventosas.",
+      "frase": "Es un molusco marino invertebrado: no tiene columna vertebral y tiene ocho brazos con ventosas.",
       "curiosidad": "Tiene tres corazones, cambia el color de su piel para camuflarse entre las rocas del mar y lanza tinta para escapar."
     },
     {
@@ -116,7 +116,7 @@
       "curso": "1º-2º",
       "juego": "Laboratorio de germinación",
       "titulo": "Semilla de judía",
-      "frase": "Guarda dentro una plantita en miniatura esperando agua, aire y buena tierra para despertar.",
+      "frase": "Contiene un embrión y reservas de alimento. Para germinar necesita agua, oxígeno y una temperatura adecuada; no necesita tierra al principio.",
       "curiosidad": "Lo primero que asoma al germinar la semilla es una pequeña raíz que busca sujetarse al suelo."
     },
     {
@@ -134,7 +134,7 @@
       "curso": "5º-6º",
       "juego": "Laboratorio de germinación",
       "titulo": "La fotosíntesis",
-      "frase": "Cuando el brote saca sus hojas verdes, usa la luz del sol, el agua y el aire para fabricar su propio alimento.",
+      "frase": "Cuando el brote saca sus hojas verdes, usa la luz del sol, el agua y el dióxido de carbono del aire para fabricar su propio alimento.",
       "curiosidad": "Los primeros días bajo tierra la semilla crece a oscuras usando sus reservas, pero al abrir las hojas necesita luz."
     },
     {
@@ -161,7 +161,7 @@
       "curso": "1º-2º",
       "juego": "Herbario desmontable",
       "titulo": "Hoja",
-      "frase": "La hoja fabrica el alimento para toda la planta utilizando la luz, el agua y el aire.",
+      "frase": "La hoja fabrica alimento para toda la planta utilizando la luz, el agua y el dióxido de carbono del aire.",
       "curiosidad": "Hay hojas muy anchas y otras finas como agujas, como las que tienen los pinos."
     },
     {
@@ -260,7 +260,7 @@
       "curso": "5º-6º",
       "juego": "Cada pieza en su sitio",
       "titulo": "Intestinos",
-      "frase": "Están plegados en el abdomen a continuación del estómago y absorben los nutrientes y el agua de los alimentos.",
+      "frase": "El intestino delgado absorbe la mayor parte de los nutrientes; el intestino grueso recupera parte del agua y ayuda a formar las heces.",
       "curiosidad": "Si pudiéramos estirar el intestino delgado y el grueso, medirían varios metros, pero caben en el abdomen porque están muy bien doblados."
     },
     {
@@ -314,7 +314,7 @@
       "curso": "5º-6º",
       "juego": "Los cinco sentidos",
       "titulo": "Acto reflejo",
-      "frase": "Es una respuesta muy rápida que da la médula espinal sin esperar al cerebro, como apartar la mano de algo que quema.",
+      "frase": "Un reflejo es una respuesta automática y rápida del sistema nervioso, como retirar la mano al tocar algo caliente. Algunos reflejos se coordinan en la médula espinal.",
       "curiosidad": "Cuando el médico te da un golpecito en la rodilla y la pierna se mueve sola, está comprobando un acto reflejo."
     },
     {
@@ -341,7 +341,7 @@
       "curso": "5º-6º",
       "juego": "Así empieza una vida",
       "titulo": "Célula",
-      "frase": "Es la parte viva más pequeña que existe. Todo nuestro cuerpo está formado por millones.",
+      "frase": "Es la unidad viva más pequeña. Nuestro cuerpo está formado por muchísimas células.",
       "curiosidad": "Es tan diminuta que no se ve a simple vista: hace falta mirar por un microscopio."
     },
     {
@@ -413,7 +413,7 @@
       "curso": "1º-2º",
       "juego": "Picos, dientes y huellas",
       "titulo": "Herbívoros, carnívoros y omnívoros",
-      "frase": "Según su alimentación, los animales son herbívoros si comen plantas, carnívoros si cazan otros animales y omnívoros si comen de ambos.",
+      "frase": "Según su alimentación, los animales son herbívoros si comen plantas, carnívoros si se alimentan de otros animales y omnívoros si comen tanto plantas como animales.",
       "curiosidad": "Las muelas de los ciervos son anchas como piedras de molino para machacar hierba y bellotas."
     },
     {
@@ -432,7 +432,7 @@
       "juego": "Picos, dientes y huellas",
       "titulo": "Huellas, pezuñas y garras",
       "frase": "Las huellas que dejan los animales en el barro revelan cómo viven: pezuñas duras para correr y trepar, almohadillas con garras para cazar o membranas para nadar.",
-      "curiosidad": "Los felinos como el lince esconden sus uñas al caminar, por eso en sus huellas solo se marcan las cuatro almohadillas y el cojinete central."
+      "curiosidad": "Los felinos como el lince pueden retraer sus uñas al caminar; por eso, en muchas huellas no aparecen marcadas."
     },
     {
       "id": "vertebrado",
@@ -440,7 +440,7 @@
       "curso": "1º-2º",
       "juego": "¿Huesos o caparazón?",
       "titulo": "Vertebrados e invertebrados",
-      "frase": "Los vertebrados tienen esqueleto interno con columna vertebral; los invertebrados carecen de huesos internos.",
+      "frase": "Los vertebrados tienen columna vertebral; los invertebrados no tienen columna vertebral.",
       "curiosidad": "El pulpo no tiene ni un solo hueso dentro del cuerpo, por eso puede colarse por huecos diminutos entre las rocas."
     },
     {
@@ -467,7 +467,7 @@
       "curso": "1º-2º",
       "juego": "¿Vivo o no vivo?",
       "titulo": "Los seres vivos",
-      "frase": "Los seres vivos nacen, se alimentan, crecen, se reproducen y mueren. Las piedras, el agua o las nubes no.",
+      "frase": "Los seres vivos nacen, crecen, se alimentan y mueren. La reproducción permite que su especie continúe. Las piedras, el agua y las nubes no están vivas.",
       "curiosidad": "Un árbol no se mueve de sitio, pero está vivo: nace de una semilla, toma agua y luz y crece cada año."
     },
     {
@@ -476,7 +476,7 @@
       "curso": "3º-4º",
       "juego": "¿Vivo o no vivo?",
       "titulo": "Las funciones vitales",
-      "frase": "Nutrición, relación y reproducción: lo que no las cumple no es un ser vivo, aunque se mueva o se haga más grande.",
+      "frase": "La nutrición, la relación y la reproducción se consideran funciones vitales. La reproducción permite que una especie continúe, aunque no todos los individuos puedan reproducirse.",
       "curiosidad": "Una semilla puede pasar años dormida y seguir viva hasta que encuentra agua."
     },
     {
@@ -485,7 +485,7 @@
       "curso": "5º-6º",
       "juego": "¿Vivo o no vivo?",
       "titulo": "Los reinos de la vida",
-      "frase": "Los seres vivos se agrupan en reinos: animales, plantas, hongos y seres muy pequeños como las bacterias.",
+      "frase": "En una clasificación escolar sencilla, los seres vivos se agrupan en animales, plantas, hongos y microorganismos, entre ellos las bacterias.",
       "curiosidad": "En una cucharada de tierra del bosque viven millones de bacterias."
     },
     {
@@ -494,7 +494,7 @@
       "curso": "1º-2º",
       "juego": "Polen y semillas viajeras",
       "titulo": "Las partes de la flor",
-      "frase": "El cáliz y la corola envuelven la flor, los estambres fabrican el polen y el pistilo se transforma en fruto al fecundarse.",
+      "frase": "El cáliz y la corola rodean y protegen la flor; los estambres producen el polen y el estigma del pistilo lo recibe. Tras la fecundación, el ovario forma el fruto y los óvulos se convierten en semillas.",
       "curiosidad": "Las abejas visitan las flores buscando néctar dulce y llevan el polen pegado en sus patitas de una flor a otra."
     },
     {
@@ -621,7 +621,7 @@
       "juego": "¿Cómo respira?",
       "titulo": "La rana: pulmones y piel",
       "frase": "De renacuajo respira con branquias; de adulta usa pulmones y también toma oxígeno por su piel húmeda.",
-      "curiosidad": "En invierno, algunas ranas pasan meses bajo el agua de una charca respirando solo por la piel."
+      "curiosidad": "Algunas especies de ranas pasan parte del invierno bajo el agua y pueden absorber oxígeno a través de la piel."
     },
     {
       "id": "savia-planta",
@@ -638,7 +638,7 @@
       "curso": "3º-4º",
       "juego": "El viaje de la savia",
       "titulo": "La hoja fabrica alimento",
-      "frase": "Con la luz del sol, el aire y el agua, las hojas verdes fabrican el alimento de la planta.",
+      "frase": "Con la luz del sol, el agua y el dióxido de carbono del aire, las hojas verdes fabrican el alimento de la planta.",
       "curiosidad": "Al fabricar su alimento, las plantas sueltan oxígeno, el gas que respiramos."
     },
     {
@@ -665,7 +665,7 @@
       "curso": "3º-4º",
       "juego": "Cada órgano, su trabajo",
       "titulo": "Aparato respiratorio",
-      "frase": "Al respirar, el aire entra por la nariz, baja por la tráquea y llena los pulmones, donde el oxígeno pasa a la sangre.",
+      "frase": "Al respirar, el aire puede entrar por la nariz o la boca, baja por la tráquea y llega a los pulmones, donde el oxígeno pasa a la sangre.",
       "curiosidad": "Respiramos muchas veces por minuto sin darnos cuenta: ¡nuestro cuerpo lo hace solo!"
     },
     {
@@ -746,7 +746,7 @@
       "curso": "3º-4º",
       "juego": "Memoria de las plantas",
       "titulo": "Así vive una planta",
-      "frase": "Las abejas llevan el polen, la flor se convierte en fruto y el tallo reparte la savia.",
+      "frase": "Las abejas pueden transportar el polen entre flores. Tras la fecundación, el ovario puede formar el fruto y el tallo transporta la savia.",
       "curiosidad": "Sin abejas y otros insectos, muchas plantas no podrían dar fruto."
     },
     {
@@ -755,7 +755,7 @@
       "curso": "5º-6º",
       "juego": "Memoria de las plantas",
       "titulo": "La flor por dentro",
-      "frase": "Los estambres fabrican el polen y el pistilo lo recibe para formar la semilla y el fruto.",
+      "frase": "Los estambres producen el polen y el estigma del pistilo lo recibe. Tras la fecundación, el ovario forma el fruto y los óvulos fecundados se convierten en semillas.",
       "curiosidad": "Algunas flores tienen colores que nosotros no vemos, pero las abejas sí."
     },
     {
@@ -764,7 +764,7 @@
       "curso": "1º-2º",
       "juego": "¿Quién soy?",
       "titulo": "Pelo, plumas o escamas",
-      "frase": "Los mamíferos tienen pelo, las aves plumas y los peces escamas.",
+      "frase": "Los mamíferos suelen tener pelo, las aves tienen plumas y la mayoría de los peces tiene escamas.",
       "curiosidad": "El erizo también es un mamífero: sus púas son pelos muy duros."
     },
     {
@@ -1495,7 +1495,7 @@
             {
               "id": "pulpo",
               "nombre": "El pulpo",
-              "pregunta": "Molusco invertebrado de cuerpo blando, con branquias y ocho tentáculos cubiertos de ventosas. ¿Cuál es su ecosistema?",
+              "pregunta": "Molusco marino de cuerpo blando, con branquias y ocho brazos cubiertos de ventosas. ¿Cuál es su ecosistema?",
               "respuesta": "mar",
               "pista": "Se esconde entre las rocas del fondo marino, camufla su piel y respira el oxígeno del agua salada.",
               "curiosidad": "Tiene tres corazones, cambia el color y la textura de su piel en segundos para camuflarse y lanza una nube de tinta para escapar.",
@@ -1504,7 +1504,7 @@
                 "desierto": "Con su cuerpo blando y sus branquias necesita vivir sumergido en el agua salada del mar.",
                 "polo": "No vive sobre el hielo polar; se refugia entre las rocas y cuevas submarinas del mar.",
                 "bosque": "No es un animal terrestre forestal; es un molusco estrictamente marino.",
-                "selva": "No vive entre los árboles tropicales; se desplaza por el fondo del mar con sus tentáculos.",
+                "selva": "No vive entre los árboles tropicales; se desplaza por el fondo del mar con sus ocho brazos.",
                 "rio": "El pulpo es un invertebrado de agua salada, por lo que habita en el mar y no en ríos ni charcas."
               },
               "adaptacion": {
@@ -1516,7 +1516,7 @@
                   },
                   {
                     "id": "huesos",
-                    "nombre": "Porque tiene una columna vertebral muy larga y huesos duros dentro de cada tentáculo"
+                    "nombre": "Porque tiene una columna vertebral muy larga y huesos duros dentro de cada brazo"
                   },
                   {
                     "id": "mamifero",
@@ -1526,7 +1526,7 @@
                 "respuesta": "molusco",
                 "frases": {
                   "molusco": "¡Excelente! El pulpo es un molusco invertebrado: como no tiene huesos ni columna vertebral, puede colarse por grietas estrechísimas entre las rocas del mar.",
-                  "huesos": "Sus ocho tentáculos son pura musculatura flexible con ventosas y no tienen ningún hueso por dentro.",
+                  "huesos": "Sus ocho brazos están formados por músculos y tienen ventosas; no poseen huesos ni columna vertebral.",
                   "mamifero": "El pulpo es un molusco ovíparo que respira por branquias bajo el mar, no un mamífero."
                 }
               }
@@ -1562,7 +1562,7 @@
             "pregunta": "¿Cómo nace el pingüino emperador?",
             "respuesta": "huevo",
             "pista": "Fíjate en sus plumas y en su pico: todas las aves nacen así.",
-            "curiosidad": "La madre pone un solo huevo y el padre lo calienta sobre sus patas durante todo el invierno.",
+            "curiosidad": "La hembra pone un solo huevo. El macho lo mantiene sobre sus patas, cubierto por un pliegue de piel, durante unas diez semanas del invierno antártico.",
             "frases": {
               "huevo": "¡Eso es! La pingüina pone un huevo y el polluelo sale rompiendo la cáscara.",
               "barriga": "El pingüino es un ave: tiene plumas y pico. Las aves no crecen dentro de la barriga de su madre."
@@ -2242,7 +2242,7 @@
               "pista": "Observa las cuatro yemas digitales y las marcas de las garras fijas al frente.",
               "curiosidad": "Cuando la manada camina por nieve profunda, los lobos pisan exactamente sobre las huellas del primero para ahorrar energía.",
               "frases": {
-                "huella-garra": "¡Bravo! El lobo tiene almohadillas amortiguadoras y garras no retráctiles que siempre se marcan en el barro.",
+                "huella-garra": "¡Bravo! El lobo tiene almohadillas amortiguadoras y garras no retráctiles, que pueden dejar marcas en el barro.",
                 "huella-pezuna": "El lobo no tiene pezuñas de herbívoro; tiene dedos con cojinetes y uñas fuertes.",
                 "huella-palmeada": "Es un depredador terrestre corredor, sin las anchas membranas de las aves o mamíferos acuáticos."
               },
@@ -3189,7 +3189,7 @@
           "pista": "Es la parte inferior del órgano femenino central de la flor.",
           "curiosidad": "Cuando los pétalos se caen, el ovario del pistilo engorda hasta convertirse en una fruta como la manzana o la cereza.",
           "frases": {
-            "flor-pistilo": "¡Perfecto! El ovario es la base del pistilo y dará origen al fruto.",
+            "flor-pistilo": "¡Perfecto! El ovario está en la base del pistilo y, tras la fecundación, forma el fruto.",
             "flor-caliz-corola": "Está en el centro mismo de la flor, dentro del pistilo.",
             "flor-estambres": "Los estambres rodean al pistilo, pero el ovario forma la base de la botella central."
           }
@@ -3281,7 +3281,7 @@
               "pista": "Es la parte inferior del órgano femenino central de la flor.",
               "curiosidad": "Cuando los pétalos se caen, el ovario del pistilo engorda hasta convertirse en una fruta como la manzana o la cereza.",
               "frases": {
-                "flor-pistilo": "¡Perfecto! El ovario es la base del pistilo y dará origen al fruto.",
+                "flor-pistilo": "¡Perfecto! El ovario está en la base del pistilo y, tras la fecundación, forma el fruto.",
                 "flor-caliz-corola": "Está en el centro mismo de la flor, dentro del pistilo.",
                 "flor-estambres": "Los estambres rodean al pistilo, pero el ovario forma la base de la botella central."
               }
@@ -3617,7 +3617,7 @@
           "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
           "frases": {
             "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
-            "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+            "arbol-perenne": "El roble común es de hoja caduca y pierde sus hojas en otoño; la encina, en cambio, es perenne."
           }
         },
         {
@@ -3702,7 +3702,7 @@
               "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
               "frases": {
                 "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
-                "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+                "arbol-perenne": "El roble común es de hoja caduca y pierde sus hojas en otoño; la encina, en cambio, es perenne."
               }
             },
             {
@@ -3869,7 +3869,7 @@
                 "respuesta": "heladas",
                 "frases": {
                   "heladas": "¡Exacto! Con menos horas de luz y heladas invernales, desprenderse de las hojas finas evita daños y pérdida de agua.",
-                  "sequia": "Las raíces absorben agua y sales minerales, nunca arena seca.",
+                  "sequia": "Las raíces absorben agua y sales minerales disueltas en el suelo; la arena seca no les aporta agua.",
                   "flores": "En invierno el árbol entra en reposo y espera a la primavera para brotar."
                 }
               }
@@ -3896,7 +3896,7 @@
                 "respuesta": "coriacea",
                 "frases": {
                   "coriacea": "¡Sobresaliente! Sus hojas coriáceas y sus raíces profundas evitan que el árbol se seque en verano.",
-                  "caduca": "El tronco y las raíces son permanentes durante toda la vida del árbol.",
+                  "caduca": "El tronco y las raíces principales suelen mantenerse mientras el árbol crece.",
                   "hielo": "Ningún árbol fabrica hielo; se protegen evitando perder humedad por las hojas."
                 }
               }
@@ -4325,7 +4325,7 @@
                 ],
                 "respuesta": "yemas",
                 "frases": {
-                  "yemas": "¡Exacto! Solo los tallos poseen yemas capaces de producir nuevas ramas y hojas; las raíces auténticas nunca tienen yemas.",
+                  "yemas": "¡Exacto! La patata es un tubérculo: un tallo subterráneo con yemas que pueden formar nuevos brotes.",
                   "flores": "Las patatas se forman bajo tierra en los estolones subterráneos.",
                   "semilla": "Por dentro es maciza y acumula almidón, no pepitas."
                 }
@@ -5151,7 +5151,7 @@
               {
                 "id": "intestino",
                 "nombre": "Intestino",
-                "llegada": "En el intestino paso a ser el quilo: el cuerpo aprovecha mis nutrientes y lo que sobra forma las heces.",
+                "llegada": "En el intestino delgado se absorbe la mayor parte de los nutrientes, que pasan a la sangre. Los restos siguen hacia el intestino grueso.",
                 "pista": "Busca el tubo largo y plegado que ocupa casi toda la barriga."
               }
             ],
@@ -5279,7 +5279,7 @@
                   "respuesta": "jugos",
                   "frases": {
                     "jugos": "¡Sobresaliente! El quimo pasa poco a poco al intestino delgado.",
-                    "absorbe": "Absorber casi toda el agua que queda es trabajo del intestino grueso.",
+                    "absorbe": "El intestino grueso absorbe parte del agua que queda y compacta los restos para formar las heces.",
                     "tritura": "El estómago no tiene dientes: mezcla y deshace la comida con sus músculos y sus jugos."
                   }
                 }
@@ -5295,7 +5295,7 @@
                   "opciones": [
                     {
                       "id": "absorcion",
-                      "nombre": "El quimo se convierte en quilo y sus nutrientes pasan a la sangre, que los reparte por todo el cuerpo"
+                      "nombre": "En el intestino delgado se absorben los nutrientes: la mayoría pasa a la sangre y parte de las grasas entra primero en la linfa."
                     },
                     {
                       "id": "respira",
@@ -5308,7 +5308,7 @@
                   ],
                   "respuesta": "absorcion",
                   "frases": {
-                    "absorcion": "¡Exacto! En el intestino delgado se forma el quilo y se produce la absorción de nutrientes.",
+                    "absorcion": "¡Exacto! En el intestino delgado se absorben los nutrientes. La mayoría pasa a la sangre; parte de las grasas entra primero en la linfa.",
                     "respira": "El oxígeno entra por los pulmones, no por el intestino.",
                     "saliva": "La saliva se fabrica en la boca, al principio del viaje."
                   }
@@ -5658,7 +5658,7 @@
               "pregunta": "¿Qué sentido te avisa? El semáforo se pone en rojo.",
               "respuesta": "vista",
               "pista": "Es un color: lo captan los ojos.",
-              "curiosidad": "La luz roja está siempre arriba, para reconocerla aunque cueste distinguir los colores.",
+              "curiosidad": "En los semáforos verticales, la luz roja suele estar arriba; en los horizontales, suele estar a la izquierda.",
               "frases": {
                 "vista": "¡Genial! La vista nos deja ver el color del semáforo para cruzar seguros.",
                 "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
@@ -5747,7 +5747,7 @@
                 "frases": {
                   "nervios": "¡Muy bien! Los nervios llevan el mensaje y el cerebro lo interpreta: ¡peligro, humo!",
                   "sangre": "La sangre reparte oxígeno y nutrientes; los mensajes de los sentidos viajan por los nervios.",
-                  "aire": "El aire solo llega a la nariz y a los pulmones; el mensaje viaja por los nervios."
+                  "aire": "El aire entra por la nariz o la boca y llega a los pulmones; los nervios transmiten señales al cerebro."
                 }
               }
             },
@@ -6095,7 +6095,7 @@
             "frases": {
               "unidad": "¡Exacto! Dividirse en biología significa multiplicarse: la primera célula se duplica una y otra vez para construir tejidos y órganos.",
               "hueso": "La unión no se revierte: el cigoto es una célula nueva que se duplica para crear cada vez más células.",
-              "organo": "Las células son microscópicas; para formar el cuerpo necesitan multiplicarse en millones de copias."
+              "organo": "Las células son microscópicas; para formar el cuerpo, el cigoto se divide repetidamente y produce muchísimas células."
             }
           }
         }
@@ -6787,7 +6787,7 @@
               "pregunta": "¿Qué tipo de planta es la tomatera?",
               "respuesta": "hierba",
               "pista": "Su tallo es verde y tan blando que necesita una caña para sujetarse.",
-              "curiosidad": "La tomatera se seca después de dar sus tomates: vive solo una temporada.",
+              "curiosidad": "En climas templados, la tomatera suele cultivarse como planta anual porque las heladas la dañan.",
               "frases": {
                 "hierba": "¡Así es! La tomatera es una hierba: su tallo es verde y blando.",
                 "arbol": "No tiene tronco de madera; por eso necesita una caña para no caerse.",
@@ -7052,7 +7052,7 @@
           "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
           "frases": {
             "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
-            "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+            "no-vivo": "El gato nace, se alimenta y crece; además, está formado por células. Es un ser vivo."
           }
         },
         {
@@ -7064,7 +7064,7 @@
           "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
           "frases": {
             "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
-            "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+            "vivo": "La piedra no está formada por células ni realiza las funciones vitales. No es un ser vivo."
           }
         },
         {
@@ -7085,7 +7085,7 @@
           "pregunta": "¿El agua está viva?",
           "respuesta": "no-vivo",
           "pista": "El agua corre por el río, pero no nace ni se alimenta.",
-          "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+          "curiosidad": "El agua no está viva, pero los seres vivos la necesitan para realizar sus funciones vitales.",
           "frases": {
             "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
             "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
@@ -7143,7 +7143,7 @@
               "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
               "frases": {
                 "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
-                "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+                "no-vivo": "El gato nace, se alimenta y crece; además, está formado por células. Es un ser vivo."
               }
             },
             {
@@ -7155,7 +7155,7 @@
               "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
               "frases": {
                 "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
-                "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+                "vivo": "La piedra no está formada por células ni realiza las funciones vitales. No es un ser vivo."
               }
             },
             {
@@ -7176,7 +7176,7 @@
               "pregunta": "¿El agua está viva?",
               "respuesta": "no-vivo",
               "pista": "El agua corre por el río, pero no nace ni se alimenta.",
-              "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+              "curiosidad": "El agua no está viva, pero los seres vivos la necesitan para realizar sus funciones vitales.",
               "frases": {
                 "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
                 "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
@@ -8231,13 +8231,13 @@
             {
               "id": "dormir-diez-horas",
               "nombre": "Dormir bien",
-              "pregunta": "Dormir unas diez horas cada noche",
+              "pregunta": "Dormir entre 9 y 12 horas cada noche",
               "respuesta": "me-cuida",
               "pista": "Mientras duermes, el cuerpo descansa y se prepara para el día siguiente.",
               "curiosidad": "Los niños necesitan dormir más horas que los adultos porque todavía están creciendo.",
               "frases": {
                 "me-cuida": "¡Exacto! Dormir lo suficiente te da energía y te ayuda a atender en clase.",
-                "no-me-cuida": "Al dormir, el cuerpo y la mente descansan. A tu edad hacen falta unas diez horas."
+                "no-me-cuida": "Al dormir, el cuerpo y la mente descansan. Entre los 6 y los 12 años se recomiendan de 9 a 12 horas de sueño cada día."
               }
             },
             {
@@ -9190,7 +9190,7 @@
           "frases": {
             "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
             "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
-            "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+            "proceso-savia-elaborada": "Las raíces absorben agua y sales minerales del suelo; las hojas fabrican azúcares mediante la fotosíntesis."
           }
         },
         {
@@ -9252,7 +9252,7 @@
               "frases": {
                 "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
                 "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
-                "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+                "proceso-savia-elaborada": "Las raíces absorben agua y sales minerales del suelo; las hojas fabrican azúcares mediante la fotosíntesis."
               }
             },
             {
@@ -10821,10 +10821,10 @@
                   "dibujo": "flor"
                 },
                 "b": {
-                  "texto": "Se convierte en fruto",
+                  "texto": "El ovario forma el fruto",
                   "dibujo": "fruto"
                 },
-                "frase": "¡Pareja! Después de la polinización, la flor se convierte en fruto."
+                "frase": "¡Pareja! Tras la fecundación, el ovario de la flor forma el fruto."
               },
               {
                 "id": "hoja-caduca",
@@ -10904,10 +10904,10 @@
                   "dibujo": "flor-pistilo"
                 },
                 "b": {
-                  "texto": "Recibe el polen y forma el fruto",
+                  "texto": "Recibe el polen; el ovario forma el fruto",
                   "dibujo": "fruto"
                 },
-                "frase": "¡Pareja! Cuando el polen llega al pistilo, se forman la semilla y el fruto."
+                "frase": "¡Pareja! Tras la fecundación, el ovario forma el fruto y los óvulos se convierten en semillas."
               },
               {
                 "id": "trigo",

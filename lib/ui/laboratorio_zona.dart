@@ -2770,7 +2770,7 @@ class _ChipConstanteVital extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        texto,
+        context.tr(texto),
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w900,

@@ -92,6 +92,11 @@ void main() {
       'Pulmones y árbol bronquial ({0} resp/min)',
       'Espécimen por descubrir · {0}',
       'Cómo conseguirlo: {0}',
+      'O₂ {0} %',
+      '⚡ Glucosa {0} mg/dL',
+      '💧 Riñón {0} mL/h',
+      '♥ {0} LPM',
+      '≈ {0} RPM',
     ];
 
     for (final plantilla in plantillas) {

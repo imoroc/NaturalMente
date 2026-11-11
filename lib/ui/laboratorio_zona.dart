@@ -1265,18 +1265,18 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
 
   String get _diagnosticoBotanico {
     if (_nivelLuz == 'apagada') {
-      return 'Sin luz, la fotosíntesis se detiene: la hoja deja de fabricar azúcares y de liberar oxígeno mediante este proceso.';
+      return 'Sin luz, la hoja no dispone de la energía luminosa que necesita para realizar la fotosíntesis y fabricar azúcares.';
     }
     if (_nivelAgua == 'seco') {
-      return 'La tierra está seca: las raíces no pueden absorber agua ni sales minerales (savia bruta), por lo que la hoja cierra sus estomas.';
+      return 'La tierra está seca: las raíces no absorben suficiente agua y sales minerales. La planta puede cerrar los estomas para reducir la pérdida de agua, y la fotosíntesis disminuye.';
     }
     if (_nivelAgua == 'exceso') {
-      return 'Demasiada agua encharca la tierra y deja sin aire a las raíces. La fotosíntesis va más lenta.';
+      return 'Demasiada agua encharca la tierra y desplaza el aire de sus huecos; las raíces reciben menos oxígeno y la fotosíntesis puede disminuir.';
     }
     if (_nivelLuz == 'media') {
-      return 'Con luz suave la planta realiza la fotosíntesis a ritmo moderado: sube savia bruta y libera burbujas de oxígeno.';
+      return 'Con luz moderada, la fotosíntesis ocurre a un ritmo menor. El agua y las sales minerales ascienden por el xilema y las hojas liberan oxígeno.';
     }
-    return '¡Fotosíntesis al 100 %! La raíz absorbe savia bruta, los estomas toman dióxido de carbono y la hoja con luz solar fabrica savia elaborada y libera oxígeno al aire.';
+    return '¡Fotosíntesis en marcha! Las raíces absorben agua y sales minerales; el dióxido de carbono entra por los estomas y, con la energía de la luz, las hojas fabrican azúcares y liberan oxígeno.';
   }
 
   @override
@@ -2370,7 +2370,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
       ),
       ('intestinos', _) => (
         'Intestino Delgado (7 m) e Intestino Grueso',
-        'El intestino delgado absorbe los nutrientes útiles hacia los capilares sanguíneos y el intestino grueso compacta los desechos',
+        'La mayor parte de los nutrientes se absorbe en el intestino delgado y pasa a la sangre; el intestino grueso recupera parte del agua y ayuda a formar las heces.',
       ),
       ('rinones', _) => (
         'Riñones y Aparato Excretor ($_filtradoRenal mL/h)',
@@ -3840,7 +3840,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           y: 0.24,
           bioma: 'Pradera soleada',
           accionViva:
-              '¡Sus hojas captan la luz solar y liberan oxígeno puro al aire!',
+              '¡Sus hojas captan la luz solar y liberan oxígeno al aire mediante la fotosíntesis!',
           pistaDesbloqueo:
               'Supera el nivel Difícil del «Laboratorio de germinación».',
         ),
@@ -4017,7 +4017,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
           x: 0.50,
           y: 0.79,
           bioma: 'Abdomen inferior · Intestinos',
-          accionViva: '¡Absorben los nutrientes digeridos hacia los capilares sanguíneos!',
+          accionViva: '¡La mayoría de los nutrientes se absorbe en el intestino delgado y pasa a la sangre; parte de las grasas entra primero en la linfa!',
           pistaDesbloqueo: 'Coloca los intestinos en «Cada pieza en su sitio».',
         ),
 

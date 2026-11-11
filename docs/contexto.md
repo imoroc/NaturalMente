@@ -12,7 +12,7 @@ Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base 
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
-Ese es el comportamiento previsto para el producto completo. Actualmente los veintiséis juegos, incluidos Monta el ecosistema, ¿Vivo o no vivo?, Un plato que cuida, Cuida la reserva, ¿Cómo me siento?, Memoria de las plantas y ¿Quién soy?, tienen selector y variantes para los tres niveles.
+El catálogo actual contiene 26 actividades y todas ofrecen selector y contenido diferenciado para los tres niveles. Entre ellas están Monta el ecosistema, ¿Vivo o no vivo?, Un plato que cuida, Cuida la reserva, ¿Cómo me siento?, Memoria de las plantas y ¿Quién soy?.
 
 ## Cómo llegamos aquí
 
@@ -196,7 +196,7 @@ Al abrir se ve un mapa con tres sitios. El orden lo elige el niño.
 | El invernadero | Plantas | La planta |
 | Dentro de mí | Cuerpo | El cuerpo |
 
-En cada sitio hay fichas (nombre, una frase, una curiosidad, curso orientativo) y juegos. Actualmente funcionan los cuatro juegos obligatorios, Herbario desmontable y Monta el ecosistema. Este último conecta plantas y animales desde La reserva con un claro del bosque, relaciones alimentarias y experimentos guiados. Los juegos generales que mezclan bloques siguen pendientes. El resto se añade en esas mismas carpetas.
+En cada sitio hay fichas (nombre, una frase, una curiosidad y curso orientativo) y actividades. El catálogo reúne 26 actividades, todas disponibles en los niveles Fácil, Medio y Difícil. La interfaz reutiliza pantallas compartidas cuando la mecánica encaja y cuenta con módulos específicos para recorridos como germinación, nacimiento, herbario, ecosistema, digestión, rescate, memoria y adivinanzas.
 
 Juegos que tienen que estar para diciembre:
 
@@ -209,7 +209,7 @@ La medalla Explorador NaturalMente sale al superar el hábitat, la germinación 
 
 Las frases de fallo no pueden contener: error, incorrecto, has fallado, mal hecho.
 
-Dibujos: pocos colores, un personaje nuestro. Nada sacado del libro. Si usamos un icono de fuera, la licencia tiene que permitir publicarlo en una tienda, y se anota en `content/licencias.md` el día que se use. Ese archivo todavía no existe.
+Dibujos: pocos colores y un personaje propio. Nada se copia del libro. El inventario de procedencia está en `content/licencias.md`; antes de publicar en las tiendas hay que completar la procedencia y las condiciones de uso del icono y de los sonidos, que siguen marcados como pendientes en ese inventario.
 
 ## Qué tiene que poder decir alguien que no ha abierto los PDF
 

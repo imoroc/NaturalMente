@@ -861,7 +861,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'abeja-polen',
     pregunta:
-        'Cuando una abeja viaja de flor en flor buscando néctar, ¿qué polvillo amarillo transporta en sus patas?',
+        'Cuando una abeja viaja de flor en flor buscando néctar, ¿qué polvillo amarillo transporta en su cuerpo?',
     opciones: ['Arena de la playa', 'El polen de las flores', 'Copos de nieve'],
     indiceCorrecto: 1,
     explicacion:

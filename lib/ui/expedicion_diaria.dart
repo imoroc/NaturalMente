@@ -764,7 +764,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'delfin',
     pregunta:
-        'El delfín nada en el mar, pero sale a respirar aire y mama leche al nacer. ¿Qué es?',
+        'El delfín nada en el mar, respira aire y sus crías se alimentan de leche materna. ¿Qué es?',
     opciones: ['Un mamífero marino', 'Un insecto con alas', 'Un árbol acuático'],
     indiceCorrecto: 0,
     explicacion:
@@ -783,7 +783,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 1,
     explicacion:
-        '¡Exacto! Con agua y buen temple la semilla despierta y saca su primera raíz.',
+        '¡Exacto! Para germinar, la semilla necesita agua, oxígeno y una temperatura adecuada; después emerge la primera raíz.',
   ),
   PreguntaExpedicion(
     id: 'f-dientes',
@@ -917,7 +917,7 @@ const _bancoFacil = <PreguntaExpedicion>[
     ],
     indiceCorrecto: 2,
     explicacion:
-        '¡Exacto! Todos los seres vivos realizan las funciones vitales de nutrición, relación y reproducción.',
+        'La nutrición y la relación son funciones vitales; la reproducción permite que las especies continúen, aunque no todos los individuos se reproduzcan.',
   ),
 ];
 
@@ -942,15 +942,15 @@ const _bancoMedio = <PreguntaExpedicion>[
     zonaNombre: 'Invernadero Botánico',
     fichaIlustracion: 'flor',
     pregunta:
-        'Cuando la flor de un manzano se transforma tras la polinización, ¿qué se forma alrededor de las semillas?',
+        'Tras la fecundación de una flor de manzano, ¿qué estructura se desarrolla y protege las semillas?',
     opciones: [
       'Una raíz secundaria subterránea',
-      'El fruto, que protege las semillas en su interior',
+      'El ovario de la flor, que se desarrolla en fruto y protege las semillas',
       'El tallo leñoso principal',
     ],
     indiceCorrecto: 1,
     explicacion:
-        '¡Genial! La flor se transforma en el fruto, que guarda y protege las semillas.',
+        '¡Genial! Tras la fecundación, el ovario de la flor puede desarrollarse en fruto y los óvulos fecundados dan lugar a semillas.',
   ),
   PreguntaExpedicion(
     id: 'm-pulmones',

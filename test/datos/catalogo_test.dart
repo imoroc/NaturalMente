@@ -665,4 +665,29 @@ void main() {
       }
     }
   });
+
+  test('el catálogo describe con precisión la germinación, la fotosíntesis y la reproducción vegetal', () {
+    final semilla = catalogo.fichas.firstWhere((f) => f.id == 'semilla');
+    expect(semilla.frase, contains('oxígeno'));
+    expect(semilla.frase, contains('no necesita tierra al principio'));
+
+    final fotosintesis = catalogo.fichas.firstWhere(
+      (f) => f.id == 'fotosintesis',
+    );
+    expect(fotosintesis.frase, contains('dióxido de carbono'));
+
+    final flor = catalogo.fichas.firstWhere((f) => f.id == 'abeja-polen');
+    expect(flor.frase, contains('el ovario forma el fruto'));
+  });
+
+  test('el catálogo distingue los brazos del pulpo y la columna vertebral', () {
+    final pulpo = catalogo.fichas.firstWhere((f) => f.id == 'pulpo');
+    expect(pulpo.frase, contains('ocho brazos'));
+    expect(pulpo.frase, isNot(contains('tentáculos')));
+
+    final vertebrados = catalogo.fichas.firstWhere(
+      (f) => f.id == 'vertebrado',
+    );
+    expect(vertebrados.frase, contains('columna vertebral'));
+  });
 }

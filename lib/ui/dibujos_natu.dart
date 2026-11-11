@@ -7098,7 +7098,7 @@ class DatosEnciclopedicosFicha {
         habitatOSistema: 'Bosque mediterráneo con sol, suelo, agua y aire',
         locomocionOFuncion: 'Red trófica en equilibrio entre productores, herbívoros y depredadores',
         alimentacionOProceso: 'La encina produce bellotas, el ratón las come y la culebra y el águila cazan',
-        datoCientifico: 'Si desaparece un solo eslabón del ecosistema, todas las demás especies se ven afectadas.',
+        datoCientifico: 'La desaparición de una especie puede alterar la red trófica y afectar a otras especies del ecosistema.',
         tipoMovimiento: 'paso',
       ),
       'raiz' => const DatosEnciclopedicosFicha(

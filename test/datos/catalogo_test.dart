@@ -690,4 +690,29 @@ void main() {
     );
     expect(vertebrados.frase, contains('columna vertebral'));
   });
+
+  test('las funciones vitales no excluyen a individuos que no pueden reproducirse', () {
+    final funciones = catalogo.fichas.firstWhere(
+      (f) => f.id == 'funciones-vitales',
+    );
+    expect(funciones.frase, contains('no todos los individuos puedan reproducirse'));
+  });
+
+  test('la ficha de intestinos distingue absorción de nutrientes y agua', () {
+    final intestinos = catalogo.fichas.firstWhere((f) => f.id == 'intestinos');
+    expect(intestinos.frase, contains('intestino delgado'));
+    expect(intestinos.frase, contains('intestino grueso'));
+    expect(intestinos.frase, contains('recupera parte del agua'));
+  });
+
+  test('el acto reflejo se describe como respuesta automática del sistema nervioso', () {
+    final reflejo = catalogo.fichas.firstWhere((f) => f.id == 'reflejo');
+    expect(reflejo.frase, contains('respuesta automática'));
+    expect(reflejo.frase, contains('sistema nervioso'));
+  });
+
+  test('la ficha de reinos identifica la clasificación como modelo escolar simplificado', () {
+    final reinos = catalogo.fichas.firstWhere((f) => f.id == 'reinos');
+    expect(reinos.frase, contains('clasificación escolar sencilla'));
+  });
 }

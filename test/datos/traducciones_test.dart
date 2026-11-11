@@ -82,7 +82,9 @@ void main() {
     const plantillas = [
       '¡Ñam! Mordisco {0} de {1}. Sigue masticando.',
       '{0} Semillas',
-      'Racha: {0} d',
+      'Racha: 1 día',
+      'Racha: {0} días',
+      '1 Semilla',
       'Bote: {0}',
       '• Tallo: {0}',
       '• Al viento: {0}',

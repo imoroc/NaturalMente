@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:naturalmente/idiomas/idioma.dart';
+import 'package:naturalmente/ui/dibujos_natu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   test('todos los textos visibles del catálogo tienen traducción al inglés', () {
@@ -108,4 +111,68 @@ void main() {
       );
     }
   });
+
+  test('las fichas enciclopédicas tienen traducción para todos sus campos visibles', () {
+    final traducciones = jsonDecode(
+      File('content/en.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    const ids = [
+      'camello', 'pinguino', 'delfin', 'oso', 'rana', 'tucan', 'pulpo',
+      'huevo', 'renacuajo', 'mariposa', 'claro-bosque', 'raiz', 'tallo',
+      'hoja', 'flor', 'fruto', 'semilla', 'huerto', 'fotosintesis', 'encina',
+      'romero', 'trigo', 'cerebro', 'pulmones', 'corazon', 'estomago',
+      'intestinos', 'esqueleto',
+    ];
+    for (final id in ids) {
+      final ficha = DatosEnciclopedicosFicha.de(id);
+      for (final texto in [
+        ficha.clasificacion,
+        ficha.habitatOSistema,
+        ficha.locomocionOFuncion,
+        ficha.alimentacionOProceso,
+        ficha.datoCientifico,
+      ]) {
+        expect(
+          traducciones[texto],
+          isA<String>(),
+          reason: 'Falta traducir el campo visible "$texto" de la ficha $id.',
+        );
+      }
+    }
+  });
+
+  test('los textos visibles añadidos fuera del catálogo están traducidos', () {
+    final traducciones = jsonDecode(
+      File('content/en.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    const textos = [
+      'El reto diario se juega una vez al día. Si te equivocas de nivel antes de terminarlo, podrás volver atrás para cambiarlo.',
+      'Semilla',
+      'Semillas',
+      '{0} Semilla',
+      'Tres partes con dibujo',
+      'Cinco partes con dibujo',
+    ];
+    for (final texto in textos) {
+      expect(
+        traducciones[texto],
+        isA<String>(),
+        reason: 'Falta la traducción del texto visible "$texto".',
+      );
+    }
+  });
+
+  test('las frases compuestas conservan el punto y traducen sus dos partes', () async {
+    SharedPreferences.setMockInitialValues({'idioma': 'en'});
+    final preferencias = await SharedPreferences.getInstance();
+    final idioma = Idioma(preferencias, {
+      'La flor': 'The flower',
+      'El fruto': 'The fruit',
+    });
+    expect(
+      idioma.traducir('La flor • El fruto.'),
+      'The flower • The fruit.',
+    );
+  });
+
 }

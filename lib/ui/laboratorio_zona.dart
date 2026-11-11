@@ -2345,7 +2345,7 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
         'Los bronquios y millones de alvéolos pulmonares aceleran el intercambio de gases: entra O₂ a la sangre y sale CO₂',
       ),
       ('pulmones', _) => (
-        'Pulmones y Árbol Bronquial ($_respiracionesPorMinuto resp/min)',
+        'Pulmones y árbol bronquial ($_respiracionesPorMinuto resp/min)',
         'El aire baja por la tráquea y los bronquios hasta los alvéolos. El músculo diafragma sube y baja para ventilar el pecho',
       ),
       ('higado', 'comer') => (

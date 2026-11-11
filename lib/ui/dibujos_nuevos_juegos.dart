@@ -317,7 +317,7 @@ String pistaRetoNuevoJuego(String id, [String? actividadId]) => switch (id) {
   'absorcion-raiz' => 'Agua y sales minerales que entran desde el suelo',
   'subida-xilema' || 'ascenso-tallo' => 'Vasos leñosos que suben agua y sales a las hojas',
   'captura-luz-sol' || 'clorofila-sol' => 'Pigmento verde que capta la energía del Sol',
-  'entrada-co2-hoja' || 'estomas-aire' => 'Poros de la hoja que toman CO₂ y sueltan oxígeno',
+  'entrada-co2-hoja' || 'estomas-aire' => 'Poros que permiten el intercambio de dióxido de carbono, oxígeno y vapor de agua',
   'reparto-floema' || 'reparto-planta' => 'Azúcares que viajan desde la hoja a toda la planta',
   _ => 'Observa sus características en el visor interactivo',
 };
@@ -5088,7 +5088,7 @@ class _InspectorInteractivoNuevoJuegoState
         if (resp == 'dieta-carnivoro' ||
             resp == 'boca-carnivoro' ||
             resp == 'adaptacion-desgarrar') {
-          return 'Menú en el plato: caza otros animales (roedores, peces, insectos o presas).';
+          return 'Menú en el plato: se alimenta de otros animales, como roedores, peces o insectos.';
         }
         if (resp == 'adaptacion-filtrar-pescar') {
           return 'Menú en el plato: peces escurridizos, ranas o diminutos crustáceos y algas del agua.';
@@ -5142,7 +5142,7 @@ class _InspectorInteractivoNuevoJuegoState
       if (id == 'abeja-colmena' ||
           id == 'mariposa-flor' ||
           id == 'escarabajo-corteza') {
-        return 'Contador: 6 patas articuladas, 2 antenas y alas (insecto artrópodo).';
+        return 'Contador: 6 patas articuladas y 2 antenas; muchas especies adultas también tienen alas.';
       }
       if (id == 'murcielago-noche' || id == 'murcielago-cueva') {
         return 'Contador: sus alas son dedos largos de hueso unidos por piel; tiene pelo y orejas.';
@@ -5255,7 +5255,7 @@ class _InspectorInteractivoNuevoJuegoState
             ? 'Frío de invierno: tira todas sus hojas en otoño para no helarse y deja las yemas protegidas.'
             : resp == 'hoja-entera-dura'
             ? 'Frío de invierno: conserva sus hojas duras en la copa durante todo el año.'
-            : 'Frío de invierno: su resina anticongelante impide que el hielo rompa sus agujas bajo la nieve.';
+            : 'Frío de invierno: sus hojas aciculares y la forma de su copa ayudan a soportar el frío y la nieve.';
       }
       // dificil de estaciones (bosques y clima)
       if (_modoHerramienta == 0) {

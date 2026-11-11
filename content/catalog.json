@@ -432,7 +432,7 @@
       "juego": "Picos, dientes y huellas",
       "titulo": "Huellas, pezuñas y garras",
       "frase": "Las huellas que dejan los animales en el barro revelan cómo viven: pezuñas duras para correr y trepar, almohadillas con garras para cazar o membranas para nadar.",
-      "curiosidad": "Los felinos como el lince esconden sus uñas al caminar, por eso en sus huellas solo se marcan las cuatro almohadillas y el cojinete central."
+      "curiosidad": "Los felinos como el lince pueden retraer sus uñas al caminar; por eso, en muchas huellas no aparecen marcadas."
     },
     {
       "id": "vertebrado",
@@ -621,7 +621,7 @@
       "juego": "¿Cómo respira?",
       "titulo": "La rana: pulmones y piel",
       "frase": "De renacuajo respira con branquias; de adulta usa pulmones y también toma oxígeno por su piel húmeda.",
-      "curiosidad": "En invierno, algunas ranas pasan meses bajo el agua de una charca respirando solo por la piel."
+      "curiosidad": "Algunas especies de ranas pasan parte del invierno bajo el agua y pueden absorber oxígeno a través de la piel."
     },
     {
       "id": "savia-planta",
@@ -1562,7 +1562,7 @@
             "pregunta": "¿Cómo nace el pingüino emperador?",
             "respuesta": "huevo",
             "pista": "Fíjate en sus plumas y en su pico: todas las aves nacen así.",
-            "curiosidad": "La madre pone un solo huevo y el padre lo calienta sobre sus patas durante todo el invierno.",
+            "curiosidad": "La hembra pone un solo huevo. El macho lo mantiene sobre sus patas, cubierto por un pliegue de piel, durante unas diez semanas del invierno antártico.",
             "frases": {
               "huevo": "¡Eso es! La pingüina pone un huevo y el polluelo sale rompiendo la cáscara.",
               "barriga": "El pingüino es un ave: tiene plumas y pico. Las aves no crecen dentro de la barriga de su madre."
@@ -2242,7 +2242,7 @@
               "pista": "Observa las cuatro yemas digitales y las marcas de las garras fijas al frente.",
               "curiosidad": "Cuando la manada camina por nieve profunda, los lobos pisan exactamente sobre las huellas del primero para ahorrar energía.",
               "frases": {
-                "huella-garra": "¡Bravo! El lobo tiene almohadillas amortiguadoras y garras no retráctiles que siempre se marcan en el barro.",
+                "huella-garra": "¡Bravo! El lobo tiene almohadillas amortiguadoras y garras no retráctiles, que pueden dejar marcas en el barro.",
                 "huella-pezuna": "El lobo no tiene pezuñas de herbívoro; tiene dedos con cojinetes y uñas fuertes.",
                 "huella-palmeada": "Es un depredador terrestre corredor, sin las anchas membranas de las aves o mamíferos acuáticos."
               },
@@ -3617,7 +3617,7 @@
           "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
           "frases": {
             "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
-            "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+            "arbol-perenne": "El roble común es de hoja caduca y pierde sus hojas en otoño; la encina, en cambio, es perenne."
           }
         },
         {
@@ -3702,7 +3702,7 @@
               "curiosidad": "Algunas hojas secas del roble aguantan en la rama hasta que los brotes nuevos de primavera las empujan.",
               "frases": {
                 "arbol-caduco": "¡Exacto! El roble pierde sus hojas en otoño: es de hoja caduca.",
-                "arbol-perenne": "El roble no mantiene su copa verde en invierno; renueva todas sus hojas cada año."
+                "arbol-perenne": "El roble común es de hoja caduca y pierde sus hojas en otoño; la encina, en cambio, es perenne."
               }
             },
             {
@@ -3869,7 +3869,7 @@
                 "respuesta": "heladas",
                 "frases": {
                   "heladas": "¡Exacto! Con menos horas de luz y heladas invernales, desprenderse de las hojas finas evita daños y pérdida de agua.",
-                  "sequia": "Las raíces absorben agua y sales minerales, nunca arena seca.",
+                  "sequia": "Las raíces absorben agua y sales minerales disueltas en el suelo; la arena seca no les aporta agua.",
                   "flores": "En invierno el árbol entra en reposo y espera a la primavera para brotar."
                 }
               }
@@ -3896,7 +3896,7 @@
                 "respuesta": "coriacea",
                 "frases": {
                   "coriacea": "¡Sobresaliente! Sus hojas coriáceas y sus raíces profundas evitan que el árbol se seque en verano.",
-                  "caduca": "El tronco y las raíces son permanentes durante toda la vida del árbol.",
+                  "caduca": "El tronco y las raíces principales suelen mantenerse mientras el árbol crece.",
                   "hielo": "Ningún árbol fabrica hielo; se protegen evitando perder humedad por las hojas."
                 }
               }
@@ -4325,7 +4325,7 @@
                 ],
                 "respuesta": "yemas",
                 "frases": {
-                  "yemas": "¡Exacto! Solo los tallos poseen yemas capaces de producir nuevas ramas y hojas; las raíces auténticas nunca tienen yemas.",
+                  "yemas": "¡Exacto! La patata es un tubérculo: un tallo subterráneo con yemas que pueden formar nuevos brotes.",
                   "flores": "Las patatas se forman bajo tierra en los estolones subterráneos.",
                   "semilla": "Por dentro es maciza y acumula almidón, no pepitas."
                 }
@@ -5279,7 +5279,7 @@
                   "respuesta": "jugos",
                   "frases": {
                     "jugos": "¡Sobresaliente! El quimo pasa poco a poco al intestino delgado.",
-                    "absorbe": "Absorber casi toda el agua que queda es trabajo del intestino grueso.",
+                    "absorbe": "El intestino grueso absorbe parte del agua que queda y compacta los restos para formar las heces.",
                     "tritura": "El estómago no tiene dientes: mezcla y deshace la comida con sus músculos y sus jugos."
                   }
                 }
@@ -5658,7 +5658,7 @@
               "pregunta": "¿Qué sentido te avisa? El semáforo se pone en rojo.",
               "respuesta": "vista",
               "pista": "Es un color: lo captan los ojos.",
-              "curiosidad": "La luz roja está siempre arriba, para reconocerla aunque cueste distinguir los colores.",
+              "curiosidad": "En los semáforos verticales, la luz roja suele estar arriba; en los horizontales, suele estar a la izquierda.",
               "frases": {
                 "vista": "¡Genial! La vista nos deja ver el color del semáforo para cruzar seguros.",
                 "oido": "El oído usa las orejas para escuchar los sonidos. ¿Qué parte de ti lo nota?",
@@ -5747,7 +5747,7 @@
                 "frases": {
                   "nervios": "¡Muy bien! Los nervios llevan el mensaje y el cerebro lo interpreta: ¡peligro, humo!",
                   "sangre": "La sangre reparte oxígeno y nutrientes; los mensajes de los sentidos viajan por los nervios.",
-                  "aire": "El aire solo llega a la nariz y a los pulmones; el mensaje viaja por los nervios."
+                  "aire": "El aire entra por la nariz o la boca y llega a los pulmones; los nervios transmiten señales al cerebro."
                 }
               }
             },
@@ -6787,7 +6787,7 @@
               "pregunta": "¿Qué tipo de planta es la tomatera?",
               "respuesta": "hierba",
               "pista": "Su tallo es verde y tan blando que necesita una caña para sujetarse.",
-              "curiosidad": "La tomatera se seca después de dar sus tomates: vive solo una temporada.",
+              "curiosidad": "En climas templados, la tomatera suele cultivarse como planta anual porque las heladas la dañan.",
               "frases": {
                 "hierba": "¡Así es! La tomatera es una hierba: su tallo es verde y blando.",
                 "arbol": "No tiene tronco de madera; por eso necesita una caña para no caerse.",
@@ -7052,7 +7052,7 @@
           "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
           "frases": {
             "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
-            "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+            "no-vivo": "El gato nace, se alimenta y crece; además, está formado por células. Es un ser vivo."
           }
         },
         {
@@ -7064,7 +7064,7 @@
           "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
           "frases": {
             "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
-            "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+            "vivo": "La piedra no está formada por células ni realiza las funciones vitales. No es un ser vivo."
           }
         },
         {
@@ -7085,7 +7085,7 @@
           "pregunta": "¿El agua está viva?",
           "respuesta": "no-vivo",
           "pista": "El agua corre por el río, pero no nace ni se alimenta.",
-          "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+          "curiosidad": "El agua no está viva, pero los seres vivos la necesitan para realizar sus funciones vitales.",
           "frases": {
             "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
             "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
@@ -7143,7 +7143,7 @@
               "curiosidad": "Un gato duerme entre doce y dieciséis horas al día para guardar energía.",
               "frases": {
                 "vivo": "¡Sí! El gato nace, come, crece y puede tener crías: es un ser vivo.",
-                "no-vivo": "El gato nace de su madre, come y crece. Eso solo lo hacen los seres vivos."
+                "no-vivo": "El gato nace, se alimenta y crece; además, está formado por células. Es un ser vivo."
               }
             },
             {
@@ -7155,7 +7155,7 @@
               "curiosidad": "Algunas piedras del campo llevan en el mismo sitio miles de años.",
               "frases": {
                 "no-vivo": "¡Eso es! La piedra no nace, no come ni crece: no es un ser vivo.",
-                "vivo": "La piedra no come ni crece, y nunca tiene piedras hijas. No es un ser vivo."
+                "vivo": "La piedra no está formada por células ni realiza las funciones vitales. No es un ser vivo."
               }
             },
             {
@@ -7176,7 +7176,7 @@
               "pregunta": "¿El agua está viva?",
               "respuesta": "no-vivo",
               "pista": "El agua corre por el río, pero no nace ni se alimenta.",
-              "curiosidad": "Sin agua no podría vivir ningún ser vivo, aunque ella misma no esté viva.",
+              "curiosidad": "El agua no está viva, pero los seres vivos la necesitan para realizar sus funciones vitales.",
               "frases": {
                 "no-vivo": "¡Exacto! El agua se mueve, pero no nace, no come ni crece como un ser vivo.",
                 "vivo": "El agua corre, pero no nace ni come. Los seres vivos la necesitan, pero ella no está viva."
@@ -9190,7 +9190,7 @@
           "frases": {
             "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
             "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
-            "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+            "proceso-savia-elaborada": "Las raíces absorben agua y sales minerales del suelo; las hojas fabrican azúcares mediante la fotosíntesis."
           }
         },
         {
@@ -9252,7 +9252,7 @@
               "frases": {
                 "proceso-savia-bruta": "¡Eso es! La raíz toma agua y sales del suelo y las manda hacia arriba.",
                 "proceso-fotosintesis": "La fotosíntesis ocurre en las hojas verdes, no en la raíz.",
-                "proceso-savia-elaborada": "El alimento se fabrica en las hojas. La raíz solo bebe agua del suelo."
+                "proceso-savia-elaborada": "Las raíces absorben agua y sales minerales del suelo; las hojas fabrican azúcares mediante la fotosíntesis."
               }
             },
             {

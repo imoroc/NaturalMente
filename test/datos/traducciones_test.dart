@@ -117,18 +117,17 @@ void main() {
     }
   });
 
-  test('las fichas enciclopédicas tienen traducción para todos sus campos visibles', () {
+  test('las 85 fichas tienen traducción para todos los campos enciclopédicos visibles', () {
     final traducciones = jsonDecode(
       File('content/en.json').readAsStringSync(),
     ) as Map<String, dynamic>;
-    const ids = [
-      'camello', 'pinguino', 'delfin', 'oso', 'rana', 'tucan', 'pulpo',
-      'huevo', 'renacuajo', 'mariposa', 'claro-bosque', 'raiz', 'tallo',
-      'hoja', 'flor', 'fruto', 'semilla', 'huerto', 'fotosintesis', 'encina',
-      'romero', 'trigo', 'cerebro', 'pulmones', 'corazon', 'estomago',
-      'intestinos', 'esqueleto',
-    ];
-    for (final id in ids) {
+    final catalogo = jsonDecode(
+      File('content/catalog.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final fichas = catalogo['fichas'] as List<dynamic>;
+
+    for (final entrada in fichas) {
+      final id = entrada['id'] as String;
       final ficha = DatosEnciclopedicosFicha.de(id);
       for (final texto in [
         ficha.clasificacion,

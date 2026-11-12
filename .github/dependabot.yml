@@ -1,0 +1,61 @@
+version: 2
+
+updates:
+  # Paquetes de Dart/Flutter (pubspec.yaml y pubspec.lock)
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
+    groups:
+      pub-menores:          # minor y patch en un solo PR; los major van sueltos
+        update-types: [minor, patch]
+    assignees: [imoroc]
+    commit-message:
+      prefix: Dependencias
+
+  # Build de Android: AGP, Kotlin y Gradle suben juntos en un solo PR
+  - package-ecosystem: gradle
+    directory: /android
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
+    groups:
+      android-build:
+        patterns: ["*"]
+    ignore:
+      # Los saltos de versión mayor se hacen a mano cuando Flutter los soporte
+      - dependency-name: com.android.application
+        update-types: [version-update:semver-major]
+      - dependency-name: org.jetbrains.kotlin.android
+        update-types: [version-update:semver-major]
+      - dependency-name: gradle-wrapper
+        update-types: [version-update:semver-major]
+    assignees: [imoroc]
+    commit-message:
+      prefix: Dependencias
+
+  # Acciones de GitHub usadas en .github/workflows
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+      timezone: Europe/Madrid
+    cooldown:
+      default-days: 7
+    groups:
+      acciones:
+        patterns: ["*"]
+    assignees: [imoroc]
+    commit-message:
+      prefix: Dependencias

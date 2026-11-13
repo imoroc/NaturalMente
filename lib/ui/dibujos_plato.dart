@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -135,9 +137,12 @@ class BandejaPlato extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFD6CFC0), width: 1.3),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFD6CFC0)),
+          width: 1.3,
+        ),
       ),
       child: Row(
         children: [
@@ -160,10 +165,12 @@ class BandejaPlato extends StatelessWidget {
               children: [
                 Texto(
                   medio ? 'Mi plato' : 'Mi merienda',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF334155),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF334155),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),

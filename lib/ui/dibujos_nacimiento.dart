@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
 
 // Ilustraciones de «¿Huevo o barriga?»: los dos destinos de Fácil y cada fase
 // de los ciclos de la rana y la mariposa. Se pintan sobre un lienzo de 100×100.
@@ -32,9 +33,12 @@ class DibujoNacimiento extends StatelessWidget {
       width: tamano,
       height: tamano,
       decoration: BoxDecoration(
-        color: fondo,
+        color: context.coloresNaturales.superficie(fondo),
         borderRadius: BorderRadius.circular(tamano * .28),
-        border: Border.all(color: borde.withValues(alpha: .65), width: 2),
+        border: Border.all(
+          color: context.coloresNaturales.borde(borde.withValues(alpha: .65)),
+          width: 2,
+        ),
       ),
       padding: EdgeInsets.all(tamano * .07),
       child: CustomPaint(painter: _PintorNacimiento(id)),

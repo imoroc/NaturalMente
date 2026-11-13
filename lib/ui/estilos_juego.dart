@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
 
 abstract final class EstilosJuego {
   static const acierto = Color(0xFF2ECC71);
@@ -7,19 +8,25 @@ abstract final class EstilosJuego {
   static const radio = 22.0;
   static const separacion = 12.0;
 
-  static BoxDecoration tarjeta({
+  static BoxDecoration tarjeta(
+    BuildContext context, {
     required Color fondo,
     required Color borde,
     Color? sombra,
     bool destacada = false,
     double radio = EstilosJuego.radio,
   }) => BoxDecoration(
-    color: fondo,
+    color: context.coloresNaturales.superficie(fondo),
     borderRadius: BorderRadius.circular(radio),
-    border: Border.all(color: borde, width: destacada ? 3.5 : 2.5),
+    border: Border.all(
+      color: context.coloresNaturales.borde(borde),
+      width: destacada ? 3.5 : 2.5,
+    ),
     boxShadow: [
       BoxShadow(
-        color: sombra ?? borde.withValues(alpha: .55),
+        color: context.coloresNaturales.sombra(
+          sombra ?? borde.withValues(alpha: .55),
+        ),
         offset: const Offset(0, 4),
         blurRadius: 0,
       ),

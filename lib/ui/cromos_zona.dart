@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -43,7 +45,7 @@ class ResumenCromosZona extends StatelessWidget {
     final total = fichas.length;
 
     return Material(
-      color: _fondoAmbar,
+      color: context.coloresNaturales.superficie(_fondoAmbar),
       borderRadius: BorderRadius.circular(24),
       child: InkWell(
         key: const Key('abrir-cromos-zona'),
@@ -58,7 +60,10 @@ class ResumenCromosZona extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: _ambar, width: 2.2),
+            border: Border.all(
+              color: context.coloresNaturales.borde(_ambar),
+              width: 2.2,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,14 +73,22 @@ class ResumenCromosZona extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFEF3C7),
+                      color: context.coloresNaturales.superficie(
+                        const Color(0xFFFEF3C7),
+                      ),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFFFBBF24)),
+                      border: Border.all(
+                        color: context.coloresNaturales.borde(
+                          const Color(0xFFFBBF24),
+                        ),
+                      ),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.auto_stories_rounded,
                       size: 20,
-                      color: Color(0xFFB45309),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFFB45309),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -83,22 +96,26 @@ class ResumenCromosZona extends StatelessWidget {
                     child: Texto(
                       '4. CROMOS · ${conseguidas.length}/$total',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: _ambarOscuro,
+                        color: context.coloresNaturales.contenido(_ambarOscuro),
                         fontWeight: FontWeight.w900,
                         letterSpacing: 0.4,
                       ),
                     ),
                   ),
-                  const Texto(
+                  Texto(
                     'Ver todos',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFFB45309),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFFB45309),
+                      ),
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.chevron_right_rounded,
-                    color: Color(0xFFB45309),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFFB45309),
+                    ),
                   ),
                 ],
               ),
@@ -108,7 +125,9 @@ class ResumenCromosZona extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: total == 0 ? 0 : conseguidas.length / total,
                   minHeight: 8,
-                  backgroundColor: const Color(0xFFFEF3C7),
+                  backgroundColor: context.coloresNaturales.superficie(
+                    const Color(0xFFFEF3C7),
+                  ),
                   valueColor: const AlwaysStoppedAnimation(Color(0xFF16A34A)),
                 ),
               ),
@@ -125,9 +144,9 @@ class ResumenCromosZona extends StatelessWidget {
                   if (total > muestra.length)
                     Texto(
                       '+${total - muestra.length}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w900,
-                        color: _ambarTexto,
+                        color: context.coloresNaturales.contenido(_ambarTexto),
                       ),
                     ),
                 ],
@@ -137,10 +156,10 @@ class ResumenCromosZona extends StatelessWidget {
                 siguiente == null
                     ? '¡Has descubierto todos los cromos de este mundo!'
                     : 'Próximo cromo: ${Progreso.pistaDesbloqueoFicha(siguiente.id)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w700,
-                  color: _ambarTexto,
+                  color: context.coloresNaturales.contenido(_ambarTexto),
                 ),
               ),
             ],
@@ -164,18 +183,24 @@ class _Miniatura extends StatelessWidget {
       height: 42,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: desbloqueada ? Colors.white : const Color(0xFFE2E8F0),
+        color: context.coloresNaturales.superficie(
+          desbloqueada ? Colors.white : const Color(0xFFE2E8F0),
+        ),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: desbloqueada
-              ? const Color(0xFFFCD34D)
-              : const Color(0xFFCBD5E1),
+          color: context.coloresNaturales.borde(
+            desbloqueada ? const Color(0xFFFCD34D) : const Color(0xFFCBD5E1),
+          ),
           width: 1.5,
         ),
       ),
       child: desbloqueada
           ? IlustracionFicha(id: ficha.id, alto: 32)
-          : const Icon(Icons.lock_rounded, size: 18, color: Color(0xFF64748B)),
+          : Icon(
+              Icons.lock_rounded,
+              size: 18,
+              color: context.coloresNaturales.contenido(Color(0xFF64748B)),
+            ),
     );
   }
 }
@@ -269,7 +294,9 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
                             '$conseguidas de ${fichas.length} descubiertos',
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
-                                  color: _ambarOscuro,
+                                  color: context.coloresNaturales.contenido(
+                                    _ambarOscuro,
+                                  ),
                                   fontWeight: FontWeight.w900,
                                 ),
                           ),
@@ -281,7 +308,8 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
                                   ? 0
                                   : conseguidas / fichas.length,
                               minHeight: 9,
-                              backgroundColor: const Color(0xFFFEF3C7),
+                              backgroundColor: context.coloresNaturales
+                                  .superficie(const Color(0xFFFEF3C7)),
                               valueColor: const AlwaysStoppedAnimation(
                                 Color(0xFF16A34A),
                               ),
@@ -364,16 +392,22 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFFCD34D), width: 1.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFFCD34D)),
+          width: 1.5,
+        ),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<_Orden>(
           key: const Key('orden-cromos'),
           isExpanded: true,
           value: _orden,
-          icon: const Icon(Icons.sort_rounded, color: Color(0xFFB45309)),
+          icon: Icon(
+            Icons.sort_rounded,
+            color: context.coloresNaturales.contenido(Color(0xFFB45309)),
+          ),
           items: [
             for (final orden in _Orden.values)
               DropdownMenuItem(
@@ -382,9 +416,9 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
                   _etiquetas[orden]!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    color: _ambarOscuro,
+                    color: context.coloresNaturales.contenido(_ambarOscuro),
                   ),
                 ),
               ),
@@ -410,7 +444,9 @@ class _TarjetaCuadricula extends StatelessWidget {
   Widget build(BuildContext context) {
     final borde = desbloqueada ? _ambar : const Color(0xFFCBD5E1);
     return Material(
-      color: desbloqueada ? Colors.white : const Color(0xFFF8FAFC),
+      color: context.coloresNaturales.superficie(
+        desbloqueada ? Colors.white : const Color(0xFFF8FAFC),
+      ),
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         key: Key('cromo-${ficha.id}'),
@@ -421,7 +457,10 @@ class _TarjetaCuadricula extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: borde, width: 2),
+            border: Border.all(
+              color: context.coloresNaturales.borde(borde),
+              width: 2,
+            ),
           ),
           child: Column(
             children: [
@@ -429,7 +468,9 @@ class _TarjetaCuadricula extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: desbloqueada ? _fondoAmbar : const Color(0xFFE2E8F0),
+                    color: context.coloresNaturales.superficie(
+                      desbloqueada ? _fondoAmbar : const Color(0xFFE2E8F0),
+                    ),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   alignment: Alignment.center,
@@ -440,10 +481,12 @@ class _TarjetaCuadricula extends StatelessWidget {
                             alto: (c.maxHeight * .72).clamp(32, 96),
                           ),
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.lock_rounded,
                           size: 34,
-                          color: Color(0xFF64748B),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF64748B),
+                          ),
                         ),
                 ),
               ),
@@ -456,16 +499,20 @@ class _TarjetaCuadricula extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 14,
-                  color: desbloqueada ? _ambarOscuro : const Color(0xFF475569),
+                  color: context.coloresNaturales.contenido(
+                    desbloqueada ? _ambarOscuro : const Color(0xFF475569),
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: desbloqueada
-                      ? const Color(0xFFFEF3C7)
-                      : const Color(0xFFE2E8F0),
+                  color: context.coloresNaturales.superficie(
+                    desbloqueada
+                        ? const Color(0xFFFEF3C7)
+                        : const Color(0xFFE2E8F0),
+                  ),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Texto(
@@ -473,9 +520,11 @@ class _TarjetaCuadricula extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
-                    color: desbloqueada
-                        ? const Color(0xFFB45309)
-                        : const Color(0xFF475569),
+                    color: context.coloresNaturales.contenido(
+                      desbloqueada
+                          ? const Color(0xFFB45309)
+                          : const Color(0xFF475569),
+                    ),
                   ),
                 ),
               ),

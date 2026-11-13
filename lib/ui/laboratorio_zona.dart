@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
@@ -35,12 +37,18 @@ class LaboratorioZonaPage extends StatelessWidget {
     final esReserva = zona.id == 'reserva';
 
     return Scaffold(
-      backgroundColor: colorFondo,
+      backgroundColor: context.coloresNaturales.superficie(colorFondo),
       appBar: AppBar(
-        backgroundColor: esReserva ? const Color(0xFF1E293B) : Colors.white,
-        foregroundColor: esReserva ? Colors.white : const Color(0xFF0F172A),
+        backgroundColor: context.coloresNaturales.superficie(
+          esReserva ? const Color(0xFF1E293B) : Colors.white,
+        ),
+        foregroundColor: context.coloresNaturales.contenido(
+          esReserva ? Colors.white : const Color(0xFF0F172A),
+        ),
         iconTheme: IconThemeData(
-          color: esReserva ? Colors.white : const Color(0xFF0F172A),
+          color: context.coloresNaturales.contenido(
+            esReserva ? Colors.white : const Color(0xFF0F172A),
+          ),
         ),
         elevation: 0,
         title: Row(
@@ -49,7 +57,7 @@ class LaboratorioZonaPage extends StatelessWidget {
               'reserva' => Icons.flashlight_on_rounded,
               'invernadero' => Icons.biotech_rounded,
               _ => Icons.monitor_heart_rounded,
-            }, color: colorAcento),
+            }, color: context.coloresNaturales.contenido(colorAcento)),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
@@ -58,7 +66,9 @@ class LaboratorioZonaPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
-                  color: esReserva ? Colors.white : const Color(0xFF0F172A),
+                  color: context.coloresNaturales.contenido(
+                    esReserva ? Colors.white : const Color(0xFF0F172A),
+                  ),
                 ),
               ),
             ),
@@ -285,12 +295,14 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFF1E293B),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFF1E293B),
+              ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: _esNoche
-                    ? const Color(0xFF38BDF8)
-                    : const Color(0xFFFBBF24),
+                color: context.coloresNaturales.borde(
+                  _esNoche ? const Color(0xFF38BDF8) : const Color(0xFFFBBF24),
+                ),
                 width: 2.2,
               ),
             ),
@@ -310,10 +322,12 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                         _esNoche
                             ? context.tr('Modo Noche · Linterna Científica')
                             : context.tr('Modo Día · Observación Solar'),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14.5,
                           fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                          color: context.coloresNaturales.contenido(
+                            Colors.white,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -325,10 +339,12 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                             : context.tr(
                                 'De día observas los 4 ecosistemas completos: Bosque, Río y Charca dulce, Dunas y Océano salado.',
                               ),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFFCBD5E1),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFFCBD5E1),
+                          ),
                           height: 1.2,
                         ),
                       ),
@@ -339,12 +355,14 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                 FilledButton.icon(
                   key: const Key('toggle-dia-noche-reserva'),
                   style: FilledButton.styleFrom(
-                    backgroundColor: _esNoche
-                        ? const Color(0xFFF59E0B)
-                        : const Color(0xFF312E81),
-                    foregroundColor: _esNoche
-                        ? const Color(0xFF0F172A)
-                        : Colors.white,
+                    backgroundColor: context.coloresNaturales.superficie(
+                      _esNoche
+                          ? const Color(0xFFF59E0B)
+                          : const Color(0xFF312E81),
+                    ),
+                    foregroundColor: context.coloresNaturales.contenido(
+                      _esNoche ? const Color(0xFF0F172A) : Colors.white,
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 10,
@@ -379,14 +397,14 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(26),
               border: Border.all(
-                color: _esNoche
-                    ? const Color(0xFF38BDF8)
-                    : const Color(0xFF10B981),
+                color: context.coloresNaturales.borde(
+                  _esNoche ? const Color(0xFF38BDF8) : const Color(0xFF10B981),
+                ),
                 width: 3,
               ),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x55000000),
+                  color: context.coloresNaturales.sombra(Color(0x55000000)),
                   offset: Offset(0, 6),
                   blurRadius: 12,
                 ),
@@ -455,14 +473,19 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                                       vertical: 5,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.70,
-                                      ),
+                                      color: context.coloresNaturales
+                                          .superficie(
+                                            Colors.black.withValues(
+                                              alpha: 0.70,
+                                            ),
+                                          ),
                                       borderRadius: BorderRadius.circular(999),
                                       border: Border.all(
-                                        color: _esNoche
-                                            ? const Color(0xFFFDE047)
-                                            : const Color(0xFF38BDF8),
+                                        color: context.coloresNaturales.borde(
+                                          _esNoche
+                                              ? const Color(0xFFFDE047)
+                                              : const Color(0xFF38BDF8),
+                                        ),
                                         width: 1.5,
                                       ),
                                     ),
@@ -474,15 +497,19 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                                               ? Icons.highlight_rounded
                                               : Icons.wb_sunny_rounded,
                                           size: 15,
-                                          color: const Color(0xFFFDE047),
+                                          color: context.coloresNaturales
+                                              .contenido(
+                                                const Color(0xFFFDE047),
+                                              ),
                                         ),
                                         const SizedBox(width: 6),
                                         Text(
                                           '${context.tr(actual.nombre)} · ${context.tr(actual.habitat)}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 11.5,
                                             fontWeight: FontWeight.w900,
-                                            color: Colors.white,
+                                            color: context.coloresNaturales
+                                                .contenido(Colors.white),
                                           ),
                                         ),
                                       ],
@@ -512,14 +539,20 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                     child: ChoiceChip(
                       label: Text(context.tr(animal.nombre)),
                       selected: _animalSeleccionado == animal.id,
-                      selectedColor: const Color(0xFF10B981),
-                      backgroundColor: const Color(0xFF1E293B),
+                      selectedColor: context.coloresNaturales.contenido(
+                        const Color(0xFF10B981),
+                      ),
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFF1E293B),
+                      ),
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 12,
-                        color: _animalSeleccionado == animal.id
-                            ? const Color(0xFF052E16)
-                            : Colors.white,
+                        color: context.coloresNaturales.contenido(
+                          _animalSeleccionado == animal.id
+                              ? const Color(0xFF052E16)
+                              : Colors.white,
+                        ),
                       ),
                       onSelected: (_) => _enfocarAnimal(animal),
                     ),
@@ -532,12 +565,14 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFF1E293B),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFF1E293B),
+              ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: despierto
-                    ? const Color(0xFF10B981)
-                    : const Color(0xFF60A5FA),
+                color: context.coloresNaturales.borde(
+                  despierto ? const Color(0xFF10B981) : const Color(0xFF60A5FA),
+                ),
                 width: 2.2,
               ),
             ),
@@ -548,12 +583,16 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                   height: 68,
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0F172A),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFF0F172A),
+                    ),
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: despierto
-                          ? const Color(0xFF10B981)
-                          : const Color(0xFF475569),
+                      color: context.coloresNaturales.borde(
+                        despierto
+                            ? const Color(0xFF10B981)
+                            : const Color(0xFF475569),
+                      ),
                       width: 2,
                     ),
                   ),
@@ -574,10 +613,12 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                         children: [
                           Text(
                             context.tr(actual.nombre),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w900,
-                              color: Colors.white,
+                              color: context.coloresNaturales.contenido(
+                                Colors.white,
+                              ),
                             ),
                           ),
                           Container(
@@ -586,9 +627,11 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: despierto
-                                  ? const Color(0xFF065F46)
-                                  : const Color(0xFF1E3A8A),
+                              color: context.coloresNaturales.superficie(
+                                despierto
+                                    ? const Color(0xFF065F46)
+                                    : const Color(0xFF1E3A8A),
+                              ),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
@@ -598,9 +641,11 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                               style: TextStyle(
                                 fontSize: 10.5,
                                 fontWeight: FontWeight.w900,
-                                color: despierto
-                                    ? const Color(0xFF6EE7B7)
-                                    : const Color(0xFF93C5FD),
+                                color: context.coloresNaturales.contenido(
+                                  despierto
+                                      ? const Color(0xFF6EE7B7)
+                                      : const Color(0xFF93C5FD),
+                                ),
                               ),
                             ),
                           ),
@@ -611,10 +656,12 @@ class _SimuladorLinternaReservaState extends State<_SimuladorLinternaReserva>
                         context.tr(
                           '${_esNoche ? actual.conductaNoche : actual.conductaDia} • ${DatosEnciclopedicosFicha.de(actual.id).locomocionOFuncion}.',
                         ),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFFE2E8F0),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFFE2E8F0),
+                          ),
                           height: 1.28,
                         ),
                       ),
@@ -687,13 +734,15 @@ class _MarcadorAnimalEcosistema extends StatelessWidget {
                 height: 62,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: esNoche
-                      ? const Color(0xFFFDE047).withValues(alpha: 0.22)
-                      : Colors.white.withValues(alpha: 0.32),
+                  color: context.coloresNaturales.superficie(
+                    esNoche
+                        ? const Color(0xFFFDE047).withValues(alpha: 0.22)
+                        : Colors.white.withValues(alpha: 0.32),
+                  ),
                   border: Border.all(
-                    color: seleccionado
-                        ? const Color(0xFFFDE047)
-                        : Colors.white54,
+                    color: context.coloresNaturales.borde(
+                      seleccionado ? const Color(0xFFFDE047) : Colors.white54,
+                    ),
                     width: seleccionado ? 2.4 : 1.4,
                   ),
                 ),
@@ -717,12 +766,16 @@ class _MarcadorAnimalEcosistema extends StatelessWidget {
                         Container(
                           width: 6.5,
                           height: 6.5,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFDE047),
+                          decoration: BoxDecoration(
+                            color: context.coloresNaturales.superficie(
+                              Color(0xFFFDE047),
+                            ),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Color(0xFFF59E0B),
+                                color: context.coloresNaturales.sombra(
+                                  Color(0xFFF59E0B),
+                                ),
                                 blurRadius: 6,
                               ),
                             ],
@@ -732,12 +785,16 @@ class _MarcadorAnimalEcosistema extends StatelessWidget {
                         Container(
                           width: 6.5,
                           height: 6.5,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFDE047),
+                          decoration: BoxDecoration(
+                            color: context.coloresNaturales.superficie(
+                              Color(0xFFFDE047),
+                            ),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Color(0xFFF59E0B),
+                                color: context.coloresNaturales.sombra(
+                                  Color(0xFFF59E0B),
+                                ),
                                 blurRadius: 6,
                               ),
                             ],
@@ -745,12 +802,14 @@ class _MarcadorAnimalEcosistema extends StatelessWidget {
                         ),
                       ],
                     )
-                  : const Text(
+                  : Text(
                       'Zzz',
                       style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w900,
-                        color: Color(0xFF93C5FD),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF93C5FD),
+                        ),
                       ),
                     ),
           ],
@@ -1291,9 +1350,12 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFF86EFAC), width: 2.2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF86EFAC)),
+                width: 2.2,
+              ),
             ),
             child: Row(
               children: [
@@ -1314,10 +1376,12 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                               context.tr(
                                 'Laboratorio Vascular y Microscopio de Hoja',
                               ),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF14532D),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF14532D),
+                                ),
                               ),
                             ),
                           ),
@@ -1327,9 +1391,11 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: rendimiento >= 65
-                                  ? const Color(0xFFDCFCE7)
-                                  : const Color(0xFFFEF3C7),
+                              color: context.coloresNaturales.superficie(
+                                rendimiento >= 65
+                                    ? const Color(0xFFDCFCE7)
+                                    : const Color(0xFFFEF3C7),
+                              ),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
@@ -1337,9 +1403,11 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w900,
-                                color: rendimiento >= 65
-                                    ? const Color(0xFF166534)
-                                    : const Color(0xFF92400E),
+                                color: context.coloresNaturales.contenido(
+                                  rendimiento >= 65
+                                      ? const Color(0xFF166534)
+                                      : const Color(0xFF92400E),
+                                ),
                               ),
                             ),
                           ),
@@ -1348,10 +1416,12 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                       const SizedBox(height: 4),
                       Text(
                         context.tr(_diagnosticoBotanico),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF334155),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF334155),
+                          ),
                           height: 1.22,
                         ),
                       ),
@@ -1367,12 +1437,15 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
             key: const Key('visor-fotosintesis'),
             height: 325,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFF22C55E), width: 3),
-              boxShadow: const [
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF22C55E)),
+                width: 3,
+              ),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x2215803D),
+                  color: context.coloresNaturales.sombra(Color(0x2215803D)),
                   offset: Offset(0, 5),
                   blurRadius: 0,
                 ),
@@ -1385,6 +1458,7 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                 builder: (context, _) {
                   return CustomPaint(
                     painter: _PintorReactorFotosintesis(
+                      colores: context.coloresNaturales,
                       nivelLuz: _nivelLuz,
                       nivelAgua: _nivelAgua,
                       verSavia: _verSavia,
@@ -1427,19 +1501,24 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: const Color(0xFFBBF7D0), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFBBF7D0)),
+                width: 2,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   context.tr('1. Energía Luminosa (Sol)'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF14532D),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF14532D),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -1470,10 +1549,12 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                   context.tr(
                     '2. Absorción en la Raíz (Agua y Sales Minerales)',
                   ),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF14532D),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF14532D),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -1500,23 +1581,28 @@ class _SimuladorFotosintesisState extends State<_SimuladorFotosintesis>
                   ],
                 ),
                 const SizedBox(height: 10),
-                SwitchListTile(
-                  key: const Key('switch-lupa-savia'),
-                  contentPadding: EdgeInsets.zero,
-                  dense: true,
-                  activeThumbColor: const Color(0xFF16A34A),
-                  title: Text(
-                    context.tr(
-                      'Activar Rayos X de vasos conductores (Savia bruta y elaborada)',
+                Material(
+                  color: Colors.transparent,
+                  child: SwitchListTile(
+                    key: const Key('switch-lupa-savia'),
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    activeThumbColor: Theme.of(context).colorScheme.primary,
+                    title: Text(
+                      context.tr(
+                        'Activar Rayos X de vasos conductores (Savia bruta y elaborada)',
+                      ),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w800,
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF1E293B),
+                        ),
+                      ),
                     ),
-                    style: const TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF1E293B),
-                    ),
+                    value: _verSavia,
+                    onChanged: (v) => setState(() => _verSavia = v),
                   ),
-                  value: _verSavia,
-                  onChanged: (v) => setState(() => _verSavia = v),
                 ),
               ],
             ),
@@ -1538,9 +1624,12 @@ class _EtiquetaLeyendaBotanica extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: color.withValues(alpha: 0.6), width: 1.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(color.withValues(alpha: 0.6)),
+          width: 1.5,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1548,15 +1637,20 @@ class _EtiquetaLeyendaBotanica extends StatelessWidget {
           Container(
             width: 9,
             height: 9,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: context.coloresNaturales.superficie(color),
+              shape: BoxShape.circle,
+            ),
           ),
           const SizedBox(width: 5),
-          Text(
-            texto,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF1E293B),
+          Flexible(
+            child: Text(
+              texto,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                color: context.coloresNaturales.contenido(Color(0xFF1E293B)),
+              ),
             ),
           ),
         ],
@@ -1566,7 +1660,9 @@ class _EtiquetaLeyendaBotanica extends StatelessWidget {
 }
 
 class _PintorReactorFotosintesis extends CustomPainter {
+  final ColoresNaturales colores;
   const _PintorReactorFotosintesis({
+    required this.colores,
     required this.nivelLuz,
     required this.nivelAgua,
     required this.verSavia,
@@ -1593,7 +1689,7 @@ class _PintorReactorFotosintesis extends CustomPainter {
         style: TextStyle(
           fontSize: 8.5,
           fontWeight: FontWeight.w900,
-          color: colorTexto,
+          color: colores.contenido(colorTexto),
         ),
       ),
       textDirection: TextDirection.ltr,
@@ -1606,7 +1702,7 @@ class _PintorReactorFotosintesis extends CustomPainter {
       ),
       const Radius.circular(999),
     );
-    canvas.drawRRect(r, Paint()..color = fondo);
+    canvas.drawRRect(r, Paint()..color = colores.superficie(fondo));
     tp.paint(
       canvas,
       Offset(centro.dx - tp.width / 2, centro.dy - tp.height / 2),
@@ -2251,6 +2347,7 @@ class _PintorReactorFotosintesis extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PintorReactorFotosintesis oldDelegate) =>
+      oldDelegate.colores != colores ||
       oldDelegate.nivelLuz != nivelLuz ||
       oldDelegate.nivelAgua != nivelAgua ||
       oldDelegate.verSavia != verSavia ||
@@ -2436,9 +2533,14 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF0F172A),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFF0F172A),
+              ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFF38BDF8), width: 2.2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF38BDF8)),
+                width: 2.2,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -2459,10 +2561,12 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                             context.tr(
                               'Monitor Biomédico y Fluoroscopia de 6.º Primaria',
                             ),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w900,
-                              color: Colors.white,
+                              color: context.coloresNaturales.contenido(
+                                Colors.white,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -2470,10 +2574,12 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                             context.tr(
                               'Desliza el haz de rayos X o selecciona un órgano para inspeccionar la nutrición, relación y locomoción en vivo.',
                             ),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF94A3B8),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF94A3B8),
+                              ),
                             ),
                           ),
                         ],
@@ -2488,33 +2594,57 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                   children: [
                     _ChipConstanteVital(
                       texto: '♥ $_pulsacionesPorMinuto LPM',
-                      fondo: const Color(0xFF881337),
-                      colorTexto: const Color(0xFFFDA4AF),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF881337),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFFFDA4AF),
+                      ),
                     ),
                     _ChipConstanteVital(
                       texto: '≈ $_respiracionesPorMinuto RPM',
-                      fondo: const Color(0xFF0C4A6E),
-                      colorTexto: const Color(0xFF7DD3FC),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF0C4A6E),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFF7DD3FC),
+                      ),
                     ),
                     _ChipConstanteVital(
                       texto: 'O₂ $_saturacionOxigeno %',
-                      fondo: const Color(0xFF064E3B),
-                      colorTexto: const Color(0xFF6EE7B7),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF064E3B),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFF6EE7B7),
+                      ),
                     ),
                     _ChipConstanteVital(
                       texto: '🌡️ $_temperaturaCorporal',
-                      fondo: const Color(0xFF78350F),
-                      colorTexto: const Color(0xFFFDE68A),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF78350F),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFFFDE68A),
+                      ),
                     ),
                     _ChipConstanteVital(
                       texto: '⚡ Glucosa $_glucosaSangre mg/dL',
-                      fondo: const Color(0xFF4C1D95),
-                      colorTexto: const Color(0xFFDDD6FE),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF4C1D95),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFFDDD6FE),
+                      ),
                     ),
                     _ChipConstanteVital(
                       texto: '💧 Riñón $_filtradoRenal mL/h',
-                      fondo: const Color(0xFF1E3A8A),
-                      colorTexto: const Color(0xFF93C5FD),
+                      fondo: context.coloresNaturales.superficie(
+                        const Color(0xFF1E3A8A),
+                      ),
+                      colorTexto: context.coloresNaturales.contenido(
+                        const Color(0xFF93C5FD),
+                      ),
                     ),
                   ],
                 ),
@@ -2528,12 +2658,17 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
             key: const Key('visor-rayos-x'),
             height: 365,
             decoration: BoxDecoration(
-              color: const Color(0xFF071022),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFF071022),
+              ),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFF0284C7), width: 3),
-              boxShadow: const [
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF0284C7)),
+                width: 3,
+              ),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x330284C7),
+                  color: context.coloresNaturales.sombra(Color(0x330284C7)),
                   offset: Offset(0, 5),
                   blurRadius: 8,
                 ),
@@ -2623,9 +2758,12 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFF38BDF8), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF38BDF8)),
+                width: 2,
+              ),
             ),
             child: Row(
               children: [
@@ -2637,19 +2775,23 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                     children: [
                       Text(
                         context.tr(tituloOrgano),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF0F172A),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF0F172A),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 3),
                       Text(
                         '${context.tr(detalleOrgano)} • ${DatosEnciclopedicosFicha.de(idEnciclopedia).datoCientifico}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12.2,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF334155),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF334155),
+                          ),
                           height: 1.24,
                         ),
                       ),
@@ -2665,19 +2807,24 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFBAE6FD), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
+                width: 2,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   context.tr('1. ¿Qué está haciendo el cuerpo ahora?'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF0C4A6E),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF0C4A6E),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -2707,10 +2854,12 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                 const SizedBox(height: 12),
                 Text(
                   context.tr('2. Filtro de Aparatos y Sistemas del Cuerpo'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF0C4A6E),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF0C4A6E),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -2729,13 +2878,17 @@ class _LaboratorioRayosXState extends State<_LaboratorioRayosX>
                         key: Key('capa-rayos-$id'),
                         label: Text(context.tr(label)),
                         selected: _capaSistema == id,
-                        selectedColor: const Color(0xFF0284C7),
+                        selectedColor: context.coloresNaturales.contenido(
+                          const Color(0xFF0284C7),
+                        ),
                         labelStyle: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w900,
-                          color: _capaSistema == id
-                              ? Colors.white
-                              : const Color(0xFF1E293B),
+                          color: context.coloresNaturales.contenido(
+                            _capaSistema == id
+                                ? Colors.white
+                                : const Color(0xFF1E293B),
+                          ),
                         ),
                         onSelected: (_) => setState(() => _capaSistema = id),
                       ),
@@ -2766,7 +2919,7 @@ class _ChipConstanteVital extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
       decoration: BoxDecoration(
-        color: fondo,
+        color: context.coloresNaturales.superficie(fondo),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
@@ -2774,7 +2927,7 @@ class _ChipConstanteVital extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w900,
-          color: colorTexto,
+          color: context.coloresNaturales.contenido(colorTexto),
         ),
       ),
     );
@@ -2797,7 +2950,9 @@ class _BotonOrganoEscanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: activo ? const Color(0xFF0284C7) : const Color(0xFF1E293B),
+      color: context.coloresNaturales.superficie(
+        activo ? const Color(0xFF0284C7) : const Color(0xFF1E293B),
+      ),
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
@@ -2807,7 +2962,9 @@ class _BotonOrganoEscanner extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: activo ? const Color(0xFF7DD3FC) : const Color(0xFF334155),
+              color: context.coloresNaturales.borde(
+                activo ? const Color(0xFF7DD3FC) : const Color(0xFF334155),
+              ),
               width: 1.4,
             ),
           ),
@@ -2816,7 +2973,9 @@ class _BotonOrganoEscanner extends StatelessWidget {
             style: TextStyle(
               fontSize: 10.5,
               fontWeight: FontWeight.w900,
-              color: activo ? Colors.white : const Color(0xFFCBD5E1),
+              color: context.coloresNaturales.contenido(
+                activo ? Colors.white : const Color(0xFFCBD5E1),
+              ),
             ),
           ),
         ),
@@ -3480,7 +3639,9 @@ class _BotonControlLaboratorio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: activo ? colorActivo : const Color(0xFFF1F5F9),
+      color: context.coloresNaturales.superficie(
+        activo ? colorActivo : const Color(0xFFF1F5F9),
+      ),
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
@@ -3493,7 +3654,9 @@ class _BotonControlLaboratorio extends StatelessWidget {
               Icon(
                 icono,
                 size: 20,
-                color: activo ? Colors.white : const Color(0xFF475569),
+                color: context.coloresNaturales.contenido(
+                  activo ? Colors.white : const Color(0xFF475569),
+                ),
               ),
               const SizedBox(height: 3),
               Text(
@@ -3504,7 +3667,9 @@ class _BotonControlLaboratorio extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w900,
-                  color: activo ? Colors.white : const Color(0xFF334155),
+                  color: context.coloresNaturales.contenido(
+                    activo ? Colors.white : const Color(0xFF334155),
+                  ),
                 ),
               ),
             ],
@@ -3557,7 +3722,7 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
     };
 
     return Material(
-      color: colorFondo,
+      color: context.coloresNaturales.superficie(colorFondo),
       borderRadius: BorderRadius.circular(22),
       child: InkWell(
         key: Key('laboratorio-${zona.id}'),
@@ -3574,10 +3739,15 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: colorBorde, width: 2.2),
+            border: Border.all(
+              color: context.coloresNaturales.borde(colorBorde),
+              width: 2.2,
+            ),
             boxShadow: [
               BoxShadow(
-                color: colorBorde.withValues(alpha: 0.22),
+                color: context.coloresNaturales.sombra(
+                  colorBorde.withValues(alpha: 0.22),
+                ),
                 offset: const Offset(0, 4),
                 blurRadius: 0,
               ),
@@ -3589,11 +3759,20 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: colorBorde.withValues(alpha: 0.2),
+                  color: context.coloresNaturales.superficie(
+                    colorBorde.withValues(alpha: 0.2),
+                  ),
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: colorBorde, width: 1.5),
+                  border: Border.all(
+                    color: context.coloresNaturales.borde(colorBorde),
+                    width: 1.5,
+                  ),
                 ),
-                child: Icon(icono, color: colorBorde, size: 26),
+                child: Icon(
+                  icono,
+                  color: context.coloresNaturales.contenido(colorBorde),
+                  size: 26,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -3608,15 +3787,19 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: colorBorde,
+                            color: context.coloresNaturales.superficie(
+                              colorBorde,
+                            ),
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          child: const Texto(
+                          child: Texto(
                             'LABORATORIO',
                             style: TextStyle(
                               fontSize: 9.5,
                               fontWeight: FontWeight.w900,
-                              color: Colors.white,
+                              color: context.coloresNaturales.contenido(
+                                Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -3628,7 +3811,7 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w900,
-                        color: colorTexto,
+                        color: context.coloresNaturales.contenido(colorTexto),
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -3637,7 +3820,9 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: colorTexto.withValues(alpha: 0.8),
+                        color: context.coloresNaturales.contenido(
+                          colorTexto.withValues(alpha: 0.8),
+                        ),
                       ),
                     ),
                   ],
@@ -3647,7 +3832,7 @@ class TarjetaAccesoLaboratorio extends StatelessWidget {
               Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 18,
-                color: colorBorde,
+                color: context.coloresNaturales.contenido(colorBorde),
               ),
             ],
           ),
@@ -4130,12 +4315,17 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colorBorde, width: 2.2),
+        border: Border.all(
+          color: context.coloresNaturales.borde(colorBorde),
+          width: 2.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: colorBorde.withValues(alpha: 0.18),
+            color: context.coloresNaturales.sombra(
+              colorBorde.withValues(alpha: 0.18),
+            ),
             offset: const Offset(0, 4),
             blurRadius: 0,
           ),
@@ -4158,7 +4348,9 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: colorBorde.withValues(alpha: 0.14),
+                            color: context.coloresNaturales.superficie(
+                              colorBorde.withValues(alpha: 0.14),
+                            ),
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: Texto(
@@ -4166,7 +4358,9 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                             style: TextStyle(
                               fontSize: 10.5,
                               fontWeight: FontWeight.w900,
-                              color: colorEncabezado,
+                              color: context.coloresNaturales.contenido(
+                                colorEncabezado,
+                              ),
                             ),
                           ),
                         ),
@@ -4178,15 +4372,19 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
-                        color: colorEncabezado,
+                        color: context.coloresNaturales.contenido(
+                          colorEncabezado,
+                        ),
                       ),
                     ),
                     Texto(
                       subtituloHabitat,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF475569),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
@@ -4198,8 +4396,12 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                   FilledButton.tonalIcon(
                     onPressed: _activarInteraccionGlobal,
                     style: FilledButton.styleFrom(
-                      backgroundColor: colorBorde,
-                      foregroundColor: Colors.white,
+                      backgroundColor: context.coloresNaturales.superficie(
+                        colorBorde,
+                      ),
+                      foregroundColor: context.coloresNaturales.contenido(
+                        Colors.white,
+                      ),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
@@ -4233,7 +4435,9 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                           style: TextStyle(
                             fontSize: 10.5,
                             fontWeight: FontWeight.w800,
-                            color: colorEncabezado,
+                            color: context.coloresNaturales.contenido(
+                              colorEncabezado,
+                            ),
                           ),
                         ),
                       ),
@@ -4303,7 +4507,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                         ? 1.22
                                         : escala,
                                     child: GestureDetector(
-                                    onTap: () {
+                                      onTap: () {
                                       if (desbloqueado) {
                                         context.sonidoAcierto();
                                       } else {
@@ -4314,7 +4518,7 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                         _mensajeArrastre = null;
                                       });
                                     },
-                                    onPanStart: esReserva && desbloqueado
+                                      onPanStart: esReserva && desbloqueado
                                         ? (_) {
                                             context.sonidoToque();
                                             setState(() {
@@ -4326,14 +4530,14 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                             });
                                           }
                                         : null,
-                                    onPanUpdate: esReserva && desbloqueado
+                                      onPanUpdate: esReserva && desbloqueado
                                         ? (d) {
                                             setState(() {
                                               _offsetArrastre += d.delta;
                                             });
                                           }
                                         : null,
-                                    onPanEnd: esReserva && desbloqueado
+                                      onPanEnd: esReserva && desbloqueado
                                         ? (_) {
                                             context.sonidoAcierto();
                                             setState(() {
@@ -4344,79 +4548,104 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                             });
                                           }
                                         : null,
-                                    onLongPress: () {
+                                      onLongPress: () {
                                       setState(() {
                                         _seleccionadoId = slot.id;
                                       });
                                     },
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: widget.zona.id == 'cuerpo'
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            width: widget.zona.id == 'cuerpo'
                                               ? 40
                                               : 50,
-                                          height: widget.zona.id == 'cuerpo'
+                                            height: widget.zona.id == 'cuerpo'
                                               ? 34
                                               : 44,
-                                          padding: EdgeInsets.all(
+                                            padding: EdgeInsets.all(
                                             desbloqueado ? 0 : 4,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: desbloqueado
-                                                ? Colors.white.withValues(
-                                                    alpha: seleccionado
-                                                        ? 0.25
-                                                        : 0.0,
-                                                  )
-                                                : const Color(0xFF0F172A)
-                                                      .withValues(alpha: 0.55),
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: seleccionado
-                                                  ? const Color(0xFFF59E0B)
-                                                  : (desbloqueado
-                                                        ? Colors.transparent
-                                                        : Colors.white54),
-                                              width: seleccionado ? 2.6 : 1.6,
+                                            decoration: BoxDecoration(
+                                              color: context.coloresNaturales
+                                                  .superficie(
+                                                    desbloqueado
+                                                        ? Colors.white
+                                                              .withValues(
+                                                                alpha:
+                                                                    seleccionado
+                                                                    ? 0.25
+                                                                    : 0.0,
+                                                              )
+                                                        : const Color(
+                                                            0xFF0F172A,
+                                                          ).withValues(
+                                                            alpha: 0.55,
+                                                          ),
+                                                  ),
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: context.coloresNaturales
+                                                    .borde(
+                                                      seleccionado
+                                                          ? const Color(
+                                                              0xFFF59E0B,
+                                                            )
+                                                          : (desbloqueado
+                                                                ? Colors
+                                                                      .transparent
+                                                                : Colors
+                                                                      .white54),
+                                                    ),
+                                                width: seleccionado ? 2.6 : 1.6,
+                                              ),
                                             ),
-                                          ),
-                                          child: desbloqueado
-                                              ? SpriteEspecieSantuario(
+                                            child: desbloqueado
+                                                ? SpriteEspecieSantuario(
                                                   id: slot.id,
                                                   alto:
                                                       widget.zona.id == 'cuerpo'
                                                       ? 32
                                                       : 42,
                                                 )
-                                              : const Center(
-                                                  child: Icon(
-                                                    Icons.help_outline_rounded,
-                                                    size: 18,
-                                                    color: Colors.white70,
+                                                : Center(
+                                                    child: Icon(
+                                                      Icons
+                                                          .help_outline_rounded,
+                                                      size: 18,
+                                                      color: context
+                                                          .coloresNaturales
+                                                          .contenido(
+                                                            Colors.white70,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
-                                        ),
-                                        const SizedBox(height: 1),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
+                                          ),
+                                          const SizedBox(height: 1),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
                                             horizontal: 5,
                                             vertical: 1,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: desbloqueado
-                                                ? Colors.white.withValues(
-                                                    alpha: 0.92,
-                                                  )
-                                                : Colors.black.withValues(
-                                                    alpha: 0.55,
+                                            decoration: BoxDecoration(
+                                              color: context.coloresNaturales
+                                                  .superficie(
+                                                    desbloqueado
+                                                        ? Colors.white
+                                                              .withValues(
+                                                                alpha: 0.92,
+                                                              )
+                                                        : Colors.black
+                                                              .withValues(
+                                                                alpha: 0.55,
+                                                              ),
                                                   ),
-                                            borderRadius: BorderRadius.circular(
+                                              borderRadius: BorderRadius.circular(
                                               999,
                                             ),
-                                          ),
-                                          child: Texto(
-                                            desbloqueado
+                                            ),
+                                            child: Texto(
+                                              desbloqueado
                                                 ? switch (slot.id) {
                                                     'sentidos' => '5 Sentidos',
                                                     'avisos' => 'Nervios',
@@ -4429,22 +4658,27 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                                       ficha?.titulo ?? slot.id,
                                                   }
                                                 : '¿?',
-                                            style: TextStyle(
-                                              fontSize: 8.5,
-                                              fontWeight: FontWeight.w900,
-                                              color: desbloqueado
-                                                  ? const Color(0xFF0F172A)
-                                                  : Colors.white,
+                                              style: TextStyle(
+                                                fontSize: 8.5,
+                                                fontWeight: FontWeight.w900,
+                                                color: context.coloresNaturales
+                                                    .contenido(
+                                                      desbloqueado
+                                                          ? const Color(
+                                                              0xFF0F172A,
+                                                            )
+                                                          : Colors.white,
+                                                    ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
+                                );
 
-                              if (widget.zona.id == 'cuerpo') {
+                                if (widget.zona.id == 'cuerpo') {
                                 return Positioned(
                                   left: constraints.maxWidth * slot.x - 42,
                                   top: constraints.maxHeight * slot.y - 26,
@@ -4453,23 +4687,23 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                   child: Center(child: nodoWidget),
                                 );
                               }
-                              return Align(
+                                return Align(
                                 alignment: Alignment(
                                   slot.x * 2 - 1,
                                   slot.y * 2 - 1,
                                 ),
                                 child: nodoWidget,
                               );
-                            },
-                          ),
-                      ],
-                    );
-                  },
-                );
-              },
+                              },
+                            ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
-        ),
           const SizedBox(height: 10),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
@@ -4481,25 +4715,33 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF8FAFC),
+                      color: context.coloresNaturales.superficie(
+                        const Color(0xFFF8FAFC),
+                      ),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(
+                        color: context.coloresNaturales.borde(
+                          const Color(0xFFE2E8F0),
+                        ),
+                      ),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           Icons.touch_app_rounded,
                           size: 18,
-                          color: colorBorde,
+                          color: context.coloresNaturales.contenido(colorBorde),
                         ),
                         const SizedBox(width: 8),
-                        const Expanded(
+                        Expanded(
                           child: Texto(
                             'Toca cualquier elemento del escenario para inspeccionarlo o ver cómo desbloquear los misteriosos (¿?).',
                             style: TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF475569),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF475569),
+                              ),
                             ),
                           ),
                         ),
@@ -4510,14 +4752,18 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                     key: ValueKey('slot-${slotSeleccionado.id}'),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: seleccionadoDesbloqueado
-                          ? const Color(0xFFF0FDF4)
-                          : const Color(0xFFFFFBEB),
+                      color: context.coloresNaturales.superficie(
+                        seleccionadoDesbloqueado
+                            ? const Color(0xFFF0FDF4)
+                            : const Color(0xFFFFFBEB),
+                      ),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: seleccionadoDesbloqueado
-                            ? colorBorde
-                            : const Color(0xFFF59E0B),
+                        color: context.coloresNaturales.borde(
+                          seleccionadoDesbloqueado
+                              ? colorBorde
+                              : const Color(0xFFF59E0B),
+                        ),
                         width: 1.8,
                       ),
                     ),
@@ -4528,12 +4774,16 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                           height: 52,
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: context.coloresNaturales.superficie(
+                              Colors.white,
+                            ),
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: seleccionadoDesbloqueado
-                                  ? colorBorde
-                                  : const Color(0xFFF59E0B),
+                              color: context.coloresNaturales.borde(
+                                seleccionadoDesbloqueado
+                                    ? colorBorde
+                                    : const Color(0xFFF59E0B),
+                              ),
                             ),
                           ),
                           child: seleccionadoDesbloqueado
@@ -4541,9 +4791,11 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                   id: slotSeleccionado.id,
                                   alto: 38,
                                 )
-                              : const Icon(
+                              : Icon(
                                   Icons.lock_outline_rounded,
-                                  color: Color(0xFFD97706),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFFD97706),
+                                  ),
                                   size: 26,
                                 ),
                         ),
@@ -4556,10 +4808,12 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                 seleccionadoDesbloqueado
                                     ? '${fichaSeleccionada?.titulo ?? slotSeleccionado.id} · ${slotSeleccionado.bioma}'
                                     : 'Espécimen por descubrir · ${slotSeleccionado.bioma}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12.5,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFF0F172A),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF0F172A),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 2),
@@ -4567,10 +4821,12 @@ class _BannerEvolucionZonaState extends State<BannerEvolucionZona>
                                 seleccionadoDesbloqueado
                                     ? '${_mensajeArrastre ?? slotSeleccionado.accionViva} • ${DatosEnciclopedicosFicha.de(slotSeleccionado.id).clasificacion} (${DatosEnciclopedicosFicha.de(slotSeleccionado.id).locomocionOFuncion}).'
                                     : 'Cómo conseguirlo: ${slotSeleccionado.pistaDesbloqueo}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF334155),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF334155),
+                                  ),
                                 ),
                               ),
                             ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/adivinanza.dart';
@@ -129,23 +131,35 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFFF0FDF4),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFFF0FDF4),
+              ),
               borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: const Color(0xFF4ADE80), width: 2.5),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF4ADE80)),
+                width: 2.5,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.help_rounded, color: Color(0xFF15803D)),
+                    Icon(
+                      Icons.help_rounded,
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF15803D),
+                      ),
+                    ),
                     SizedBox(width: 6),
                     Texto(
                       '¿Quién soy?',
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 18,
-                        color: Color(0xFF15803D),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF15803D),
+                        ),
                       ),
                     ),
                   ],
@@ -159,11 +173,15 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
                       children: [
                         CircleAvatar(
                           radius: 12,
-                          backgroundColor: const Color(0xFF16A34A),
+                          backgroundColor: context.coloresNaturales.superficie(
+                            const Color(0xFF16A34A),
+                          ),
                           child: Text(
                             '${i + 1}',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: context.coloresNaturales.contenido(
+                                Colors.white,
+                              ),
                               fontWeight: FontWeight.w900,
                               fontSize: 12,
                             ),
@@ -174,10 +192,12 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
                           child: Texto(
                             ronda.pistas[i],
                             key: Key('pista-${ronda.id}-$i'),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF14532D),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF14532D),
+                              ),
                             ),
                           ),
                         ),
@@ -254,8 +274,12 @@ class _OpcionAnimal extends StatelessWidget {
         child: TarjetaJuego(
           claveAccion: Key('adivina-${animal.id}'),
           onTap: descartado ? null : onTap,
-          borde: fallo ? EstilosJuego.fallo : const Color(0xFF86EFAC),
-          fondo: descartado ? const Color(0xFFF1F5F9) : Colors.white,
+          borde: context.coloresNaturales.borde(
+            fallo ? EstilosJuego.fallo : const Color(0xFF86EFAC),
+          ),
+          fondo: context.coloresNaturales.superficie(
+            descartado ? const Color(0xFFF1F5F9) : Colors.white,
+          ),
           destacada: fallo,
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -276,10 +300,12 @@ class _OpcionAnimal extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 14,
-                    color: Color(0xFF1E293B),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF1E293B),
+                    ),
                   ),
                 ),
               ],

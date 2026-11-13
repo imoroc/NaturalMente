@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -80,7 +82,9 @@ class _FinJuegoState extends State<FinJuego> {
       canPop: !_guardando,
       child: Dialog.fullscreen(
         key: const Key('fin-juego'),
-        backgroundColor: const Color(0xFFF7F4EB),
+        backgroundColor: context.coloresNaturales.superficie(
+          const Color(0xFFF7F4EB),
+        ),
         child: SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -110,10 +114,12 @@ class _FinJuegoState extends State<FinJuego> {
                             child: Texto(
                               datos.titulo,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF157347),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF157347),
+                                ),
                               ),
                             ),
                           ),
@@ -126,13 +132,16 @@ class _FinJuegoState extends State<FinJuego> {
                           if (datos.nivel.isNotEmpty) ...[
                             const SizedBox(height: 10),
                             Chip(
-                              avatar: const Icon(
+                              avatar: Icon(
                                 Icons.check_circle_rounded,
-                                color: Color(0xFF16864B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF16864B),
+                                ),
                                 size: 20,
                               ),
                               label: Texto(datos.nivel),
-                              backgroundColor: const Color(0xFFDCF5E4),
+                              backgroundColor: context.coloresNaturales
+                                  .superficie(const Color(0xFFDCF5E4)),
                               side: BorderSide.none,
                             ),
                           ],
@@ -172,7 +181,11 @@ class _FinJuegoState extends State<FinJuego> {
                     padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
                     decoration: BoxDecoration(
                       border: Border(
-                        top: BorderSide(color: color.withValues(alpha: .12)),
+                        top: BorderSide(
+                          color: context.coloresNaturales.borde(
+                            color.withValues(alpha: .12),
+                          ),
+                        ),
                       ),
                     ),
                     child: Column(

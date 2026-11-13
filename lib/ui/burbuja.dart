@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -48,12 +50,17 @@ class Burbuja extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: colorFondo,
+        color: context.coloresNaturales.superficie(colorFondo),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: colorBorde, width: 2.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(colorBorde),
+          width: 2.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: colorSombra.withValues(alpha: 0.32),
+            color: context.coloresNaturales.sombra(
+              colorSombra.withValues(alpha: 0.32),
+            ),
             offset: const Offset(0, 4),
             blurRadius: 0,
           ),
@@ -74,17 +81,19 @@ class Burbuja extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 12.5,
-                    color: colorTitulo,
+                    color: context.coloresNaturales.contenido(colorTitulo),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Texto(
                   frase,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 13.5,
                     height: 1.25,
-                    color: Color(0xFF1E293B),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF1E293B),
+                    ),
                   ),
                 ),
               ],

@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/estilos_juego.dart';
 
@@ -53,10 +55,12 @@ class PlantaHerbario extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFFD5DFCB)),
-          boxShadow: const [
+          border: Border.all(
+            color: context.coloresNaturales.borde(const Color(0xFFD5DFCB)),
+          ),
+          boxShadow: [
             BoxShadow(
-              color: Color(0x0C344E41),
+              color: context.coloresNaturales.sombra(Color(0x0C344E41)),
               offset: Offset(0, 4),
               blurRadius: 12,
             ),
@@ -68,6 +72,7 @@ class PlantaHerbario extends StatelessWidget {
               child: ExcludeSemantics(
                 child: CustomPaint(
                   painter: _PlantaPainter(
+                    colores: context.coloresNaturales,
                     partes: nombres.keys.toSet(),
                     colocadas: colocadas,
                   ),
@@ -118,7 +123,9 @@ class PlantaHerbario extends StatelessWidget {
                               : estado,
                         ),
                         child: Material(
-                          color: Colors.transparent,
+                          color: context.coloresNaturales.superficie(
+                            Colors.transparent,
+                          ),
                           child: InkWell(
                             key: Key('destino-${entrada.key}'),
                             borderRadius: BorderRadius.circular(20),
@@ -160,17 +167,22 @@ class PlantaHerbario extends StatelessWidget {
                                       height: 24,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: colocada || fallo || encima
-                                            ? Colors.white
-                                            : Colors.white.withValues(
-                                                alpha: .7,
-                                              ),
+                                        color: context.coloresNaturales
+                                            .superficie(
+                                              colocada || fallo || encima
+                                                  ? Colors.white
+                                                  : Colors.white.withValues(
+                                                      alpha: .7,
+                                                    ),
+                                            ),
                                         border: Border.all(
-                                          color: colocada || fallo || encima
-                                              ? color
-                                              : disponible
-                                              ? const Color(0xFF6B8964)
-                                              : const Color(0xFFB0BDA3),
+                                          color: context.coloresNaturales.borde(
+                                            colocada || fallo || encima
+                                                ? color
+                                                : disponible
+                                                ? const Color(0xFF6B8964)
+                                                : const Color(0xFFB0BDA3),
+                                          ),
                                         ),
                                       ),
                                       child: Icon(
@@ -182,9 +194,12 @@ class PlantaHerbario extends StatelessWidget {
                                             ? Icons.arrow_downward_rounded
                                             : Icons.add_rounded,
                                         size: 16,
-                                        color: colocada || fallo || encima
-                                            ? color
-                                            : const Color(0xFF6B8964),
+                                        color: context.coloresNaturales
+                                            .contenido(
+                                              colocada || fallo || encima
+                                                  ? color
+                                                  : const Color(0xFF6B8964),
+                                            ),
                                       ),
                                     ),
                                   ),
@@ -575,7 +590,12 @@ class _ResaltePartePainter extends CustomPainter {
 }
 
 class _PlantaPainter extends CustomPainter {
-  const _PlantaPainter({required this.partes, required this.colocadas});
+  final ColoresNaturales colores;
+  const _PlantaPainter({
+    required this.colores,
+    required this.partes,
+    required this.colocadas,
+  });
   final Set<String> partes;
   final Set<String> colocadas;
 
@@ -587,17 +607,23 @@ class _PlantaPainter extends CustomPainter {
     canvas.drawRect(
       fondo,
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFF9FBF1), Color(0xFFE9F0DC)],
+          colors: [
+            Color(0xFFF9FBF1),
+            Color(0xFFE9F0DC),
+          ].map(colores.superficie).toList(),
         ).createShader(fondo),
     );
     canvas.drawOval(
       const Rect.fromLTWH(35, 16, 335, 310),
       Paint()
         ..shader = RadialGradient(
-          colors: [Colors.white.withValues(alpha: .8), const Color(0x00FFFFFF)],
+          colors: [
+            colores.superficie(Colors.white).withValues(alpha: .8),
+            const Color(0x00FFFFFF),
+          ],
         ).createShader(const Rect.fromLTWH(35, 16, 335, 310)),
     );
     final suelo = Path()
@@ -610,10 +636,13 @@ class _PlantaPainter extends CustomPainter {
     canvas.drawPath(
       suelo,
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFE6D8BC), Color(0xFFD8C39F)],
+          colors: [
+            Color(0xFFE6D8BC),
+            Color(0xFFD8C39F),
+          ].map(colores.superficie).toList(),
         ).createShader(const Rect.fromLTWH(0, 315, 400, 125)),
     );
     // Grano de papel y tierra determinista: no cambia al colocar piezas.
@@ -658,6 +687,7 @@ class _PlantaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_PlantaPainter oldDelegate) =>
+      oldDelegate.colores != colores ||
       !setEquals(partes, oldDelegate.partes) ||
       !setEquals(colocadas, oldDelegate.colocadas);
 }

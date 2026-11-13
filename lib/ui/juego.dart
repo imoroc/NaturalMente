@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -486,12 +488,16 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
           for (var i = 0; i < niveles.length; i++) ...[
             TarjetaJuego(
               claveAccion: Key('nivel-${niveles[i].id}'),
-              borde: progreso.nivelLugarHecho(widget.actividad, niveles[i].id)
-                  ? EstilosJuego.acierto
-                  : const Color(0xFF38BDF8),
-              sombra: progreso.nivelLugarHecho(widget.actividad, niveles[i].id)
-                  ? const Color(0xFF239E56)
-                  : const Color(0xFF0284C7),
+              borde: context.coloresNaturales.borde(
+                progreso.nivelLugarHecho(widget.actividad, niveles[i].id)
+                    ? EstilosJuego.acierto
+                    : const Color(0xFF38BDF8),
+              ),
+              sombra: context.coloresNaturales.sombra(
+                progreso.nivelLugarHecho(widget.actividad, niveles[i].id)
+                    ? const Color(0xFF239E56)
+                    : const Color(0xFF0284C7),
+              ),
               radio: 20,
               onTap: () => _empezarNivel(i),
               child: Padding(
@@ -504,10 +510,12 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                         Expanded(
                           child: Texto(
                             niveles[i].nombre,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 16,
-                              color: Color(0xFF1B3022),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF1B3022),
+                              ),
                             ),
                           ),
                         ),
@@ -518,12 +526,14 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                               Icon(
                                 Icons.star_rounded,
                                 size: 18,
-                                color: progreso.nivelLugarHecho(
-                                  widget.actividad,
-                                  niveles[i].id,
-                                )
-                                    ? const Color(0xFFF59E0B)
-                                    : const Color(0xFFCBD5E1),
+                                color: context.coloresNaturales.contenido(
+                                  progreso.nivelLugarHecho(
+                                        widget.actividad,
+                                        niveles[i].id,
+                                      )
+                                      ? const Color(0xFFF59E0B)
+                                      : const Color(0xFFCBD5E1),
+                                ),
                               ),
                           ],
                         ),
@@ -549,14 +559,18 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: progreso.fichaDesbloqueada(fichaId)
-                                  ? const Color(0xFFFEF3C7)
-                                  : const Color(0xFFF1F5F9),
+                              color: context.coloresNaturales.superficie(
+                                progreso.fichaDesbloqueada(fichaId)
+                                    ? const Color(0xFFFEF3C7)
+                                    : const Color(0xFFF1F5F9),
+                              ),
                               borderRadius: BorderRadius.circular(999),
                               border: Border.all(
-                                color: progreso.fichaDesbloqueada(fichaId)
-                                    ? const Color(0xFFF59E0B)
-                                    : const Color(0xFFCBD5E1),
+                                color: context.coloresNaturales.borde(
+                                  progreso.fichaDesbloqueada(fichaId)
+                                      ? const Color(0xFFF59E0B)
+                                      : const Color(0xFFCBD5E1),
+                                ),
                               ),
                             ),
                             child: Row(
@@ -567,9 +581,11 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                                       ? Icons.auto_stories_rounded
                                       : Icons.lock_outline_rounded,
                                   size: 13,
-                                  color: progreso.fichaDesbloqueada(fichaId)
-                                      ? const Color(0xFFB45309)
-                                      : const Color(0xFF64748B),
+                                  color: context.coloresNaturales.contenido(
+                                    progreso.fichaDesbloqueada(fichaId)
+                                        ? const Color(0xFFB45309)
+                                        : const Color(0xFF64748B),
+                                  ),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -580,9 +596,11 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                                     style: TextStyle(
                                       fontSize: 11.5,
                                       fontWeight: FontWeight.w800,
-                                      color: progreso.fichaDesbloqueada(fichaId)
-                                          ? const Color(0xFF92400E)
-                                          : const Color(0xFF475569),
+                                      color: context.coloresNaturales.contenido(
+                                        progreso.fichaDesbloqueada(fichaId)
+                                            ? const Color(0xFF92400E)
+                                            : const Color(0xFF475569),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -593,11 +611,13 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                     ),
                     if (progreso.nivelLugarHecho(widget.actividad, niveles[i].id)) ...[
                       const SizedBox(height: 6),
-                      const Texto(
+                      Texto(
                         '✓ Nivel superado',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF15803D),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF15803D),
+                          ),
                         ),
                       ),
                     ],
@@ -917,7 +937,9 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -933,13 +955,15 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -996,7 +1020,9 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -1012,13 +1038,15 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -1234,10 +1262,10 @@ class _CabeceraNivel extends StatelessWidget {
             texto,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF64748B),
+              color: context.coloresNaturales.contenido(Color(0xFF64748B)),
             ),
           ),
         ),
@@ -1285,15 +1313,15 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: const Color(0xFF38BDF8),
+          color: context.coloresNaturales.borde(const Color(0xFF38BDF8)),
           width: 2.5,
         ),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFBAE6FD),
+            color: context.coloresNaturales.sombra(Color(0xFFBAE6FD)),
             offset: Offset(0, 4),
             blurRadius: 0,
           ),
@@ -1312,15 +1340,19 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFDCFCE7),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFDCFCE7),
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Texto(
                     etiquetaSuperior,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 12,
-                      color: Color(0xFF15803D),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF15803D),
+                      ),
                     ),
                   ),
                 ),
@@ -1330,10 +1362,12 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                 child: Texto(
                   subtituloDerecho,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 12,
-                    color: Color(0xFF0284C7),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF0284C7),
+                    ),
                   ),
                 ),
               ),
@@ -1359,13 +1393,17 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                     horizontal: 12,
                     vertical: 10,
                   ),
-                  backgroundColor: elegida == opcion.id
-                      ? const Color(0xFFFFF7ED)
-                      : const Color(0xFFF8FAFC),
+                  backgroundColor: context.coloresNaturales.superficie(
+                    elegida == opcion.id
+                        ? const Color(0xFFFFF7ED)
+                        : const Color(0xFFF8FAFC),
+                  ),
                   side: BorderSide(
-                    color: elegida == opcion.id
-                        ? const Color(0xFFFB923C)
-                        : const Color(0xFFCBD5E1),
+                    color: context.coloresNaturales.borde(
+                      elegida == opcion.id
+                          ? const Color(0xFFFB923C)
+                          : const Color(0xFFCBD5E1),
+                    ),
                     width: 2,
                   ),
                   shape: RoundedRectangleBorder(
@@ -1376,10 +1414,12 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
                 onPressed: () => onResponder(opcion.id),
                 child: Texto(
                   opcion.nombre,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 13.5,
-                    color: Color(0xFF1E293B),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF1E293B),
+                    ),
                   ),
                 ),
               ),
@@ -1492,19 +1532,25 @@ class _Lugar extends StatelessWidget {
             duration: const Duration(milliseconds: 220),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
-              color: retoCompleto ? const Color(0xFFF0FDF4) : Colors.white,
+              color: context.coloresNaturales.superficie(
+                retoCompleto ? const Color(0xFFF0FDF4) : Colors.white,
+              ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: retoCompleto
-                    ? const Color(0xFF22C55E)
-                    : const Color(0xFFE2DEC9),
+                color: context.coloresNaturales.borde(
+                  retoCompleto
+                      ? const Color(0xFF22C55E)
+                      : const Color(0xFFE2DEC9),
+                ),
                 width: 2.2,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: retoCompleto
-                      ? const Color(0xFF86EFAC)
-                      : const Color(0xFFD6CFC0),
+                  color: context.coloresNaturales.sombra(
+                    retoCompleto
+                        ? const Color(0xFF86EFAC)
+                        : const Color(0xFFD6CFC0),
+                  ),
                   offset: const Offset(0, 3),
                   blurRadius: 0,
                 ),
@@ -1517,7 +1563,9 @@ class _Lugar extends StatelessWidget {
                   dragAnchorStrategy: pointerDragAnchorStrategy,
                   onDragStarted: () => context.sonidoSeleccion(),
                   feedback: Material(
-                    color: Colors.transparent,
+                    color: context.coloresNaturales.superficie(
+                      Colors.transparent,
+                    ),
                     child: _Miniatura(id: reto.id),
                   ),
                   childWhenDragging: Opacity(
@@ -1527,14 +1575,18 @@ class _Lugar extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: retoCompleto
-                          ? const Color(0xFFDCFCE7)
-                          : const Color(0xFFF8FAFC),
+                      color: context.coloresNaturales.superficie(
+                        retoCompleto
+                            ? const Color(0xFFDCFCE7)
+                            : const Color(0xFFF8FAFC),
+                      ),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: retoCompleto
-                            ? const Color(0xFF4ADE80)
-                            : const Color(0xFFE2E8F0),
+                        color: context.coloresNaturales.borde(
+                          retoCompleto
+                              ? const Color(0xFF4ADE80)
+                              : const Color(0xFFE2E8F0),
+                        ),
                       ),
                     ),
                     child: _Miniatura(id: reto.id, tamano: 48),
@@ -1556,9 +1608,11 @@ class _Lugar extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: retoCompleto
-                                  ? const Color(0xFFDCFCE7)
-                                  : const Color(0xFFE0F2FE),
+                              color: context.coloresNaturales.superficie(
+                                retoCompleto
+                                    ? const Color(0xFFDCFCE7)
+                                    : const Color(0xFFE0F2FE),
+                              ),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Texto(
@@ -1568,19 +1622,23 @@ class _Lugar extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w900,
-                                color: retoCompleto
-                                    ? const Color(0xFF15803D)
-                                    : const Color(0xFF0369A1),
+                                color: context.coloresNaturales.contenido(
+                                  retoCompleto
+                                      ? const Color(0xFF15803D)
+                                      : const Color(0xFF0369A1),
+                                ),
                               ),
                             ),
                           ),
                           if (pista != null && !retoCompleto)
                             Texto(
                               pista,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF64748B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF64748B),
+                                ),
                               ),
                             ),
                         ],
@@ -1608,20 +1666,26 @@ class _Lugar extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFEF3C7),
+                              color: context.coloresNaturales.superficie(
+                                const Color(0xFFFEF3C7),
+                              ),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: const Color(0xFFF59E0B),
+                                color: context.coloresNaturales.borde(
+                                  const Color(0xFFF59E0B),
+                                ),
                                 width: 1.5,
                               ),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
                                   Icons.auto_awesome_rounded,
                                   size: 15,
-                                  color: Color(0xFFB45309),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFFB45309),
+                                  ),
                                 ),
                                 SizedBox(width: 4),
                                 Flexible(
@@ -1632,7 +1696,9 @@ class _Lugar extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w800,
-                                      color: Color(0xFF92400E),
+                                      color: context.coloresNaturales.contenido(
+                                        Color(0xFF92400E),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -1701,9 +1767,16 @@ class _Lugar extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFF8FAFC),
+                ),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFBAE6FD), width: 1.5),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    const Color(0xFFBAE6FD),
+                  ),
+                  width: 1.5,
+                ),
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -1723,18 +1796,22 @@ class _Lugar extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: organosColocados.contains(r.id)
-                                  ? const Color(0xFFDCFCE7)
-                                  : (r.id == reto.id
-                                        ? const Color(0xFFE0F2FE)
-                                        : Colors.white),
+                              color: context.coloresNaturales.superficie(
+                                organosColocados.contains(r.id)
+                                    ? const Color(0xFFDCFCE7)
+                                    : (r.id == reto.id
+                                          ? const Color(0xFFE0F2FE)
+                                          : Colors.white),
+                              ),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: organosColocados.contains(r.id)
-                                    ? const Color(0xFF22C55E)
-                                    : (r.id == reto.id
-                                          ? const Color(0xFF0284C7)
-                                          : const Color(0xFFCBD5E1)),
+                                color: context.coloresNaturales.borde(
+                                  organosColocados.contains(r.id)
+                                      ? const Color(0xFF22C55E)
+                                      : (r.id == reto.id
+                                            ? const Color(0xFF0284C7)
+                                            : const Color(0xFFCBD5E1)),
+                                ),
                                 width: r.id == reto.id ? 2 : 1.3,
                               ),
                             ),
@@ -1748,19 +1825,23 @@ class _Lugar extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w900,
-                                    color: organosColocados.contains(r.id)
-                                        ? const Color(0xFF15803D)
-                                        : (r.id == reto.id
-                                              ? const Color(0xFF0369A1)
-                                              : const Color(0xFF334155)),
+                                    color: context.coloresNaturales.contenido(
+                                      organosColocados.contains(r.id)
+                                          ? const Color(0xFF15803D)
+                                          : (r.id == reto.id
+                                                ? const Color(0xFF0369A1)
+                                                : const Color(0xFF334155)),
+                                    ),
                                   ),
                                 ),
                                 if (organosColocados.contains(r.id)) ...[
                                   const SizedBox(width: 4),
-                                  const Icon(
+                                  Icon(
                                     Icons.check_circle_rounded,
                                     size: 14,
-                                    color: Color(0xFF16A34A),
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFF16A34A),
+                                    ),
                                   ),
                                 ],
                               ],
@@ -2013,7 +2094,9 @@ class _Lugar extends StatelessWidget {
                     key: const Key('boton-pie-lugar'),
                     onPressed: onPie,
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF16A34A),
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFF16A34A),
+                      ),
                       minimumSize: Size.fromHeight(alturaBoton),
                     ),
                     child: Texto(pie!),
@@ -2027,7 +2110,9 @@ class _Lugar extends StatelessWidget {
             onPressed: onPie,
             icon: const Icon(Icons.arrow_forward_rounded, size: 20),
             style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFF16A34A),
+              backgroundColor: context.coloresNaturales.superficie(
+                const Color(0xFF16A34A),
+              ),
               minimumSize: Size.fromHeight(alturaBoton),
             ),
             label: Texto(pie!),
@@ -2051,8 +2136,12 @@ class _Lugar extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progresoValor.clamp(0.0, 1.0),
                     minHeight: 8,
-                    backgroundColor: const Color(0xFFE5DFCF),
-                    color: const Color(0xFF2ECC71),
+                    backgroundColor: context.coloresNaturales.superficie(
+                      const Color(0xFFE5DFCF),
+                    ),
+                    color: context.coloresNaturales.contenido(
+                      const Color(0xFF2ECC71),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -2094,8 +2183,12 @@ class _Lugar extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progresoValor.clamp(0.0, 1.0),
                   minHeight: 8,
-                  backgroundColor: const Color(0xFFE5DFCF),
-                  color: const Color(0xFF2ECC71),
+                  backgroundColor: context.coloresNaturales.superficie(
+                    const Color(0xFFE5DFCF),
+                  ),
+                  color: context.coloresNaturales.contenido(
+                    const Color(0xFF2ECC71),
+                  ),
                 ),
               ),
               const SizedBox(height: 6),
@@ -2154,12 +2247,15 @@ class _TableroCuerpoHerbario extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFFDFBF6),
+        color: context.coloresNaturales.superficie(const Color(0xFFFDFBF6)),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFD6CBB5), width: 2.5),
-        boxShadow: const [
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFD6CBB5)),
+          width: 2.5,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFD6CFC0),
+            color: context.coloresNaturales.sombra(Color(0xFFD6CFC0)),
             offset: Offset(0, 4),
             blurRadius: 0,
           ),
@@ -2188,9 +2284,14 @@ class _TableroCuerpoHerbario extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(8, 5, 8, 6),
               decoration: BoxDecoration(
-                color: const Color(0xFFF7F3E8).withValues(alpha: 0.96),
-                border: const Border(
-                  top: BorderSide(color: Color(0xFFE2D9C5), width: 1.5),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFF7F3E8).withValues(alpha: 0.96),
+                ),
+                border: Border(
+                  top: BorderSide(
+                    color: context.coloresNaturales.borde(Color(0xFFE2D9C5)),
+                    width: 1.5,
+                  ),
                 ),
               ),
               child: Column(
@@ -2201,21 +2302,25 @@ class _TableroCuerpoHerbario extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 4,
                     children: [
-                      const Texto(
+                      Texto(
                         'BANDEJA DE ÓRGANOS · ARRÁSTRALOS AL CUERPO',
                         style: TextStyle(
                           fontSize: 9.5,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 0.5,
-                          color: Color(0xFF5C4B3B),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF5C4B3B),
+                          ),
                         ),
                       ),
                       Texto(
                         '${organosColocados.length}/${retosNivel.length} en su sitio',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF15803D),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF15803D),
+                          ),
                         ),
                       ),
                     ],
@@ -2267,7 +2372,7 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final badge = Material(
-      color: Colors.transparent,
+      color: context.coloresNaturales.superficie(Colors.transparent),
       child: InkWell(
         key: Key('pieza-cuerpo-${reto.id}'),
         borderRadius: BorderRadius.circular(12),
@@ -2276,22 +2381,26 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: colocado
-                ? const Color(0xFFDCFCE7)
-                : (activo ? const Color(0xFFE0F2FE) : Colors.white),
+            color: context.coloresNaturales.superficie(
+              colocado
+                  ? const Color(0xFFDCFCE7)
+                  : (activo ? const Color(0xFFE0F2FE) : Colors.white),
+            ),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: colocado
-                  ? const Color(0xFF22C55E)
-                  : (activo
-                        ? const Color(0xFF0284C7)
-                        : const Color(0xFFCBD5E1)),
+              color: context.coloresNaturales.borde(
+                colocado
+                    ? const Color(0xFF22C55E)
+                    : (activo
+                          ? const Color(0xFF0284C7)
+                          : const Color(0xFFCBD5E1)),
+              ),
               width: activo ? 2.2 : 1.4,
             ),
             boxShadow: activo && !colocado
-                ? const [
+                ? [
                     BoxShadow(
-                      color: Color(0x330284C7),
+                      color: context.coloresNaturales.sombra(Color(0x330284C7)),
                       offset: Offset(0, 2),
                       blurRadius: 4,
                     ),
@@ -2308,27 +2417,29 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
-                  color: colocado
-                      ? const Color(0xFF166534)
-                      : (activo
-                            ? const Color(0xFF0369A1)
-                            : const Color(0xFF334155)),
+                  color: context.coloresNaturales.contenido(
+                    colocado
+                        ? const Color(0xFF166534)
+                        : (activo
+                              ? const Color(0xFF0369A1)
+                              : const Color(0xFF334155)),
+                  ),
                 ),
               ),
               const SizedBox(width: 4),
               if (colocado)
-                const Icon(
+                Icon(
                   Icons.check_circle_rounded,
                   size: 14,
-                  color: Color(0xFF16A34A),
+                  color: context.coloresNaturales.contenido(Color(0xFF16A34A)),
                 )
               else
                 Icon(
                   Icons.open_with_rounded,
                   size: 13,
-                  color: activo
-                      ? const Color(0xFF0284C7)
-                      : const Color(0xFF94A3B8),
+                  color: context.coloresNaturales.contenido(
+                    activo ? const Color(0xFF0284C7) : const Color(0xFF94A3B8),
+                  ),
                 ),
             ],
           ),
@@ -2342,16 +2453,21 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
       dragAnchorStrategy: pointerDragAnchorStrategy,
       onDragStarted: onTap,
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.96),
+            color: context.coloresNaturales.superficie(
+              Colors.white.withValues(alpha: 0.96),
+            ),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFF0284C7), width: 2.2),
-            boxShadow: const [
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFF0284C7)),
+              width: 2.2,
+            ),
+            boxShadow: [
               BoxShadow(
-                color: Color(0x330F172A),
+                color: context.coloresNaturales.sombra(Color(0x330F172A)),
                 blurRadius: 10,
                 offset: Offset(0, 4),
               ),
@@ -2364,10 +2480,10 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
               const SizedBox(width: 6),
               Texto(
                 reto.nombre,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF0F172A),
+                  color: context.coloresNaturales.contenido(Color(0xFF0F172A)),
                 ),
               ),
             ],
@@ -2408,9 +2524,13 @@ class _Sitio extends StatelessWidget {
       builder: (context, candidatos, _) {
         final encima = candidatos.isNotEmpty;
         return TarjetaJuego(
-          fondo: colorFondo,
-          borde: encima ? EstilosJuego.acierto : colorBorde,
-          sombra: colorBorde.withValues(alpha: .55),
+          fondo: context.coloresNaturales.superficie(colorFondo),
+          borde: context.coloresNaturales.borde(
+            encima ? EstilosJuego.acierto : colorBorde,
+          ),
+          sombra: context.coloresNaturales.sombra(
+            colorBorde.withValues(alpha: .55),
+          ),
           destacada: encima || elegido,
           claveAccion: Key('sitio-${opcion.id}'),
           onTap: onElegir,
@@ -2431,13 +2551,17 @@ class _Sitio extends StatelessWidget {
                             right: -6,
                             top: -6,
                             child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: context.coloresNaturales.superficie(
+                                  Colors.white,
+                                ),
                                 shape: BoxShape.circle,
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.check_circle_rounded,
-                                color: Color(0xFF16A34A),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF16A34A),
+                                ),
                                 size: 20,
                               ),
                             ),
@@ -2451,10 +2575,12 @@ class _Sitio extends StatelessWidget {
                     opcion.nombre,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
-                      color: Color(0xFF1E293B),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF1E293B),
+                      ),
                     ),
                   ),
                   if (subtitulo != null) ...[
@@ -2463,10 +2589,12 @@ class _Sitio extends StatelessWidget {
                       subtitulo,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 11.5,
-                        color: Color(0xFF475569),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
@@ -2767,20 +2895,20 @@ class _BarraProgreso extends StatelessWidget {
                 etiqueta,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF475569),
+                  color: context.coloresNaturales.contenido(Color(0xFF475569)),
                 ),
               ),
             ),
             const SizedBox(width: 8),
             Texto(
               '${(porcentaje * 100).round()}%',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w900,
-                color: Color(0xFF15803D),
+                color: context.coloresNaturales.contenido(Color(0xFF15803D)),
               ),
             ),
           ],
@@ -2791,7 +2919,9 @@ class _BarraProgreso extends StatelessWidget {
           child: LinearProgressIndicator(
             value: porcentaje,
             minHeight: 7,
-            backgroundColor: const Color(0xFFE2E8F0),
+            backgroundColor: context.coloresNaturales.superficie(
+              const Color(0xFFE2E8F0),
+            ),
             valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF22C55E)),
           ),
         ),
@@ -2922,16 +3052,23 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
           duration: const Duration(milliseconds: 160),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: arrastrandoEncima
-                ? const Color(0xFFF0F9FF)
-                : widget.baseCompletada
-                ? const Color(0xFFF0FDF4)
-                : Colors.white,
+            color: context.coloresNaturales.superficie(
+              arrastrandoEncima
+                  ? const Color(0xFFF0F9FF)
+                  : widget.baseCompletada
+                  ? const Color(0xFFF0FDF4)
+                  : Colors.white,
+            ),
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: colorBorde, width: 2.5),
+            border: Border.all(
+              color: context.coloresNaturales.borde(colorBorde),
+              width: 2.5,
+            ),
             boxShadow: [
               BoxShadow(
-                color: colorBorde.withValues(alpha: 0.35),
+                color: context.coloresNaturales.sombra(
+                  colorBorde.withValues(alpha: 0.35),
+                ),
                 offset: const Offset(0, 4),
                 blurRadius: 0,
               ),
@@ -2964,20 +3101,24 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: _etapaVista == _fasesGerminacion[i].$1
-                                ? const Color(0xFF15803D)
-                                : _fasesGerminacion[i].$1 <=
-                                      maxEtapaDesbloqueada
-                                ? const Color(0xFFDCFCE7)
-                                : const Color(0xFFF1F5F9),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: _etapaVista == _fasesGerminacion[i].$1
-                                  ? const Color(0xFF166534)
+                            color: context.coloresNaturales.superficie(
+                              _etapaVista == _fasesGerminacion[i].$1
+                                  ? const Color(0xFF15803D)
                                   : _fasesGerminacion[i].$1 <=
                                         maxEtapaDesbloqueada
-                                  ? const Color(0xFF86EFAC)
-                                  : const Color(0xFFCBD5E1),
+                                  ? const Color(0xFFDCFCE7)
+                                  : const Color(0xFFF1F5F9),
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: context.coloresNaturales.borde(
+                                _etapaVista == _fasesGerminacion[i].$1
+                                    ? const Color(0xFF166534)
+                                    : _fasesGerminacion[i].$1 <=
+                                          maxEtapaDesbloqueada
+                                    ? const Color(0xFF86EFAC)
+                                    : const Color(0xFFCBD5E1),
+                              ),
                             ),
                           ),
                           child: Row(
@@ -2985,10 +3126,12 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                             children: [
                               if (_fasesGerminacion[i].$1 >
                                   maxEtapaDesbloqueada) ...[
-                                const Icon(
+                                Icon(
                                   Icons.lock_outline_rounded,
                                   size: 11,
-                                  color: Color(0xFF94A3B8),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF94A3B8),
+                                  ),
                                 ),
                                 const SizedBox(width: 2),
                               ],
@@ -3001,13 +3144,14 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                   style: TextStyle(
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.w900,
-                                    color:
-                                        _etapaVista == _fasesGerminacion[i].$1
-                                        ? Colors.white
-                                        : _fasesGerminacion[i].$1 <=
-                                              maxEtapaDesbloqueada
-                                        ? const Color(0xFF166534)
-                                        : const Color(0xFF94A3B8),
+                                    color: context.coloresNaturales.contenido(
+                                      _etapaVista == _fasesGerminacion[i].$1
+                                          ? Colors.white
+                                          : _fasesGerminacion[i].$1 <=
+                                                maxEtapaDesbloqueada
+                                          ? const Color(0xFF166534)
+                                          : const Color(0xFF94A3B8),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -3049,10 +3193,12 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                     : 'Bote: ${widget.sujeto}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 14,
-                                  color: Color(0xFF1B3022),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF1B3022),
+                                  ),
                                 ),
                               ),
                             ),
@@ -3061,7 +3207,7 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                 key: const Key('reiniciar-maceta'),
                                 borderRadius: BorderRadius.circular(8),
                                 onTap: widget.onReiniciarBote,
-                                child: const Padding(
+                                child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 6,
                                     vertical: 2,
@@ -3072,7 +3218,8 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                       Icon(
                                         Icons.restart_alt_rounded,
                                         size: 14,
-                                        color: Color(0xFF64748B),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF64748B)),
                                       ),
                                       SizedBox(width: 2),
                                       Texto(
@@ -3080,7 +3227,8 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                         style: TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w800,
-                                          color: Color(0xFF64748B),
+                                          color: context.coloresNaturales
+                                              .contenido(Color(0xFF64748B)),
                                         ),
                                       ),
                                     ],
@@ -3092,11 +3240,13 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                         const SizedBox(height: 3),
                         Texto(
                           descripcionEtapa,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                             height: 1.2,
-                            color: Color(0xFF334155),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF334155),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -3121,19 +3271,25 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFFEF3C7),
+                                color: context.coloresNaturales.superficie(
+                                  const Color(0xFFFEF3C7),
+                                ),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
-                                  color: const Color(0xFFF59E0B),
+                                  color: context.coloresNaturales.borde(
+                                    const Color(0xFFF59E0B),
+                                  ),
                                 ),
                               ),
-                              child: const Row(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(
                                     Icons.auto_awesome_rounded,
                                     size: 14,
-                                    color: Color(0xFFB45309),
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFFB45309),
+                                    ),
                                   ),
                                   SizedBox(width: 4),
                                   Flexible(
@@ -3144,7 +3300,8 @@ class _CabeceraTerrarioState extends State<_CabeceraTerrario> {
                                       style: TextStyle(
                                         fontSize: 11.5,
                                         fontWeight: FontWeight.w900,
-                                        color: Color(0xFF92400E),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF92400E)),
                                       ),
                                     ),
                                   ),
@@ -3176,16 +3333,18 @@ class _InsigniaEstadoBote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.coloresNaturales.superficie(const Color(0xFFF8FAFC)),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFE2E8F0)),
+        ),
       ),
       child: Texto(
         texto,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 10.5,
           fontWeight: FontWeight.w800,
-          color: Color(0xFF475569),
+          color: context.coloresNaturales.contenido(Color(0xFF475569)),
         ),
       ),
     );
@@ -3452,15 +3611,19 @@ class _ContenedorEstacion extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: colorPrincipal.withValues(alpha: 0.4),
+          color: context.coloresNaturales.borde(
+            colorPrincipal.withValues(alpha: 0.4),
+          ),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorPrincipal.withValues(alpha: 0.16),
+            color: context.coloresNaturales.sombra(
+              colorPrincipal.withValues(alpha: 0.16),
+            ),
             offset: const Offset(0, 3),
             blurRadius: 0,
           ),
@@ -3475,13 +3638,19 @@ class _ContenedorEstacion extends StatelessWidget {
                 width: 30,
                 height: 30,
                 decoration: BoxDecoration(
-                  color: colorFondo,
+                  color: context.coloresNaturales.superficie(colorFondo),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: colorPrincipal.withValues(alpha: 0.3),
+                    color: context.coloresNaturales.borde(
+                      colorPrincipal.withValues(alpha: 0.3),
+                    ),
                   ),
                 ),
-                child: Icon(icono, size: 18, color: colorPrincipal),
+                child: Icon(
+                  icono,
+                  size: 18,
+                  color: context.coloresNaturales.contenido(colorPrincipal),
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -3493,15 +3662,19 @@ class _ContenedorEstacion extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 13.5,
-                        color: colorPrincipal,
+                        color: context.coloresNaturales.contenido(
+                          colorPrincipal,
+                        ),
                       ),
                     ),
                     Texto(
                       subtitulo,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF64748B),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF64748B),
+                        ),
                       ),
                     ),
                   ],
@@ -3527,11 +3700,13 @@ class _InsigniaHerramientaArrastre extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: accion.color,
+        color: context.coloresNaturales.superficie(accion.color),
         borderRadius: BorderRadius.circular(999),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: context.coloresNaturales.sombra(
+              Colors.black.withValues(alpha: 0.2),
+            ),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -3540,12 +3715,16 @@ class _InsigniaHerramientaArrastre extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(accion.icono, size: 18, color: Colors.white),
+          Icon(
+            accion.icono,
+            size: 18,
+            color: context.coloresNaturales.contenido(Colors.white),
+          ),
           const SizedBox(width: 6),
           Texto(
             accion.etiqueta,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.coloresNaturales.contenido(Colors.white),
               fontWeight: FontWeight.w900,
               fontSize: 13,
             ),
@@ -3609,7 +3788,9 @@ class _OpcionControl extends StatelessWidget {
       color: colorAcento,
     );
     final tarjeta = Material(
-      color: elegido ? colorAcento : colorFondo,
+      color: context.coloresNaturales.superficie(
+        elegido ? colorAcento : colorFondo,
+      ),
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         onTap: onTap,
@@ -3621,9 +3802,9 @@ class _OpcionControl extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: elegido
-                  ? colorAcento
-                  : colorAcento.withValues(alpha: 0.28),
+              color: context.coloresNaturales.borde(
+                elegido ? colorAcento : colorAcento.withValues(alpha: 0.28),
+              ),
               width: elegido ? 2 : 1.5,
             ),
           ),
@@ -3633,7 +3814,9 @@ class _OpcionControl extends StatelessWidget {
               Icon(
                 icono,
                 size: 18,
-                color: elegido ? Colors.white : colorAcento,
+                color: context.coloresNaturales.contenido(
+                  elegido ? Colors.white : colorAcento,
+                ),
               ),
               const SizedBox(height: 2),
               Texto(
@@ -3645,7 +3828,9 @@ class _OpcionControl extends StatelessWidget {
                   fontSize: 11.5,
                   fontWeight: FontWeight.w900,
                   height: 1.1,
-                  color: elegido ? Colors.white : const Color(0xFF1E293B),
+                  color: context.coloresNaturales.contenido(
+                    elegido ? Colors.white : const Color(0xFF1E293B),
+                  ),
                 ),
               ),
               if (subtitulo.isNotEmpty) ...[
@@ -3658,9 +3843,11 @@ class _OpcionControl extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 9.5,
                     fontWeight: FontWeight.w700,
-                    color: elegido
-                        ? Colors.white.withValues(alpha: 0.9)
-                        : const Color(0xFF64748B),
+                    color: context.coloresNaturales.contenido(
+                      elegido
+                          ? Colors.white.withValues(alpha: 0.9)
+                          : const Color(0xFF64748B),
+                    ),
                   ),
                 ),
               ],
@@ -3698,7 +3885,7 @@ class _OpcionControl extends StatelessWidget {
         }
       },
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: _InsigniaHerramientaArrastre(accion: accion),
       ),
       childWhenDragging: Opacity(opacity: 0.45, child: tarjeta),
@@ -3847,7 +4034,7 @@ class _OrdenState extends State<_Orden> {
                 : const Color(0xFF10B981);
 
             final casilla = Material(
-              color: colorFondo,
+              color: context.coloresNaturales.superficie(colorFondo),
               borderRadius: BorderRadius.circular(13),
               child: InkWell(
                 key: Key('hueco-$i'),
@@ -3866,7 +4053,10 @@ class _OrdenState extends State<_Orden> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(13),
-                    border: Border.all(color: colorBorde, width: 2),
+                    border: Border.all(
+                      color: context.coloresNaturales.borde(colorBorde),
+                      width: 2,
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -3881,9 +4071,11 @@ class _OrdenState extends State<_Orden> {
                             fontSize: compacto ? 10.2 : 11.2,
                             fontWeight: FontWeight.w900,
                             height: 1.08,
-                            color: mostrarPistaCambio
-                                ? const Color(0xFF92400E)
-                                : const Color(0xFF065F46),
+                            color: context.coloresNaturales.contenido(
+                              mostrarPistaCambio
+                                  ? const Color(0xFF92400E)
+                                  : const Color(0xFF065F46),
+                            ),
                           ),
                         ),
                       ),
@@ -3894,9 +4086,11 @@ class _OrdenState extends State<_Orden> {
                             ? Icons.swap_horiz_rounded
                             : Icons.close_rounded,
                         size: compacto ? 14 : 16,
-                        color: mostrarPistaCambio
-                            ? const Color(0xFFD97706)
-                            : const Color(0xFF047857),
+                        color: context.coloresNaturales.contenido(
+                          mostrarPistaCambio
+                              ? const Color(0xFFD97706)
+                              : const Color(0xFF047857),
+                        ),
                       ),
                     ],
                   ),
@@ -3910,7 +4104,7 @@ class _OrdenState extends State<_Orden> {
               dragAnchorStrategy: pointerDragAnchorStrategy,
               onDragStarted: () => context.sonidoSeleccion(),
               feedback: Material(
-                color: Colors.transparent,
+                color: context.coloresNaturales.superficie(Colors.transparent),
                 child: DibujoPasoVida(id: pasoId, tamano: 52),
               ),
               childWhenDragging: Opacity(opacity: 0.4, child: casilla),
@@ -3927,16 +4121,20 @@ class _OrdenState extends State<_Orden> {
               vertical: 3,
             ),
             decoration: BoxDecoration(
-              color: encima
-                  ? const Color(0xFFE0F2FE)
-                  : esSiguiente
-                  ? const Color(0xFFF0F9FF)
-                  : Colors.white,
+              color: context.coloresNaturales.superficie(
+                encima
+                    ? const Color(0xFFE0F2FE)
+                    : esSiguiente
+                    ? const Color(0xFFF0F9FF)
+                    : Colors.white,
+              ),
               borderRadius: BorderRadius.circular(13),
               border: Border.all(
-                color: encima || esSiguiente
-                    ? const Color(0xFF0284C7)
-                    : const Color(0xFFCBD5E1),
+                color: context.coloresNaturales.borde(
+                  encima || esSiguiente
+                      ? const Color(0xFF0284C7)
+                      : const Color(0xFFCBD5E1),
+                ),
                 width: esSiguiente ? 2 : 1.6,
               ),
             ),
@@ -3947,9 +4145,11 @@ class _OrdenState extends State<_Orden> {
                   height: compacto ? 20 : 23,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: esSiguiente
-                        ? const Color(0xFF0284C7)
-                        : const Color(0xFFF1F5F9),
+                    color: context.coloresNaturales.superficie(
+                      esSiguiente
+                          ? const Color(0xFF0284C7)
+                          : const Color(0xFFF1F5F9),
+                    ),
                     shape: BoxShape.circle,
                   ),
                   child: Texto(
@@ -3957,9 +4157,9 @@ class _OrdenState extends State<_Orden> {
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: compacto ? 10.5 : 11.5,
-                      color: esSiguiente
-                          ? Colors.white
-                          : const Color(0xFF475569),
+                      color: context.coloresNaturales.contenido(
+                        esSiguiente ? Colors.white : const Color(0xFF475569),
+                      ),
                     ),
                   ),
                 ),
@@ -3972,9 +4172,11 @@ class _OrdenState extends State<_Orden> {
                     style: TextStyle(
                       fontSize: compacto ? 10.5 : 11.2,
                       fontWeight: FontWeight.w800,
-                      color: esSiguiente
-                          ? const Color(0xFF0284C7)
-                          : const Color(0xFF94A3B8),
+                      color: context.coloresNaturales.contenido(
+                        esSiguiente
+                            ? const Color(0xFF0284C7)
+                            : const Color(0xFF94A3B8),
+                      ),
                     ),
                   ),
                 ),
@@ -3985,12 +4187,12 @@ class _OrdenState extends State<_Orden> {
       );
     }
 
-    Widget flechaPaso() => const Padding(
+    Widget flechaPaso() => Padding(
       padding: EdgeInsets.symmetric(horizontal: 2),
       child: Icon(
         Icons.arrow_forward_rounded,
         size: 13,
-        color: Color(0xFF64748B),
+        color: context.coloresNaturales.contenido(Color(0xFF64748B)),
       ),
     );
 
@@ -4070,9 +4272,12 @@ class _OrdenState extends State<_Orden> {
       return Container(
         padding: const EdgeInsets.fromLTRB(8, 6, 8, 7),
         decoration: BoxDecoration(
-          color: const Color(0xFFF8FAFC),
+          color: context.coloresNaturales.superficie(const Color(0xFFF8FAFC)),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
+          border: Border.all(
+            color: context.coloresNaturales.borde(const Color(0xFFE2E8F0)),
+            width: 1.5,
+          ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -4080,7 +4285,7 @@ class _OrdenState extends State<_Orden> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Flexible(
+                Flexible(
                   child: Texto(
                     'HISTORIA PASO A PASO · TOCA O ARRASTRA EN ORDEN',
                     maxLines: 1,
@@ -4089,17 +4294,21 @@ class _OrdenState extends State<_Orden> {
                       fontSize: 9.8,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 0.4,
-                      color: Color(0xFF0369A1),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF0369A1),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 6),
                 Texto(
                   '${orden.length}/$totalPasos',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF15803D),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF15803D),
+                    ),
                   ),
                 ),
               ],
@@ -4164,14 +4373,18 @@ class _OrdenState extends State<_Orden> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: widget.baseCompletada
-                              ? const Color(0xFFF0FDF4)
-                              : Colors.white,
+                          color: context.coloresNaturales.superficie(
+                            widget.baseCompletada
+                                ? const Color(0xFFF0FDF4)
+                                : Colors.white,
+                          ),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: widget.baseCompletada
-                                ? const Color(0xFF10B981)
-                                : const Color(0xFFBAE6FD),
+                            color: context.coloresNaturales.borde(
+                              widget.baseCompletada
+                                  ? const Color(0xFF10B981)
+                                  : const Color(0xFFBAE6FD),
+                            ),
                             width: 2,
                           ),
                         ),
@@ -4183,10 +4396,12 @@ class _OrdenState extends State<_Orden> {
                                   ? '✓ ¡Historia de la vida completada! Toca cualquier viñeta o pestaña superior para explorar.'
                                   : '¡Las $totalPasos viñetas están colocadas! Pulsa «${actividad.boton}» o toca una viñeta si quieres cambiarla.',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 12.5,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF1E293B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF1E293B),
+                                ),
                               ),
                             ),
                             if (widget.baseCompletada &&
@@ -4210,10 +4425,12 @@ class _OrdenState extends State<_Orden> {
                         padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.swipe_vertical_rounded,
                               size: 14,
-                              color: Color(0xFF0284C7),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF0284C7),
+                              ),
                             ),
                             const SizedBox(width: 4),
                             Expanded(
@@ -4221,10 +4438,12 @@ class _OrdenState extends State<_Orden> {
                                 'Desliza para ver todas las viñetas (${widget.pasosDisponibles.length - orden.length} por colocar)',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF0369A1),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF0369A1),
+                                  ),
                                 ),
                               ),
                             ),
@@ -4239,7 +4458,9 @@ class _OrdenState extends State<_Orden> {
                             dragAnchorStrategy: pointerDragAnchorStrategy,
                             onDragStarted: () => context.sonidoSeleccion(),
                             feedback: Material(
-                              color: Colors.transparent,
+                              color: context.coloresNaturales.superficie(
+                                Colors.transparent,
+                              ),
                               child: DibujoPasoVida(id: paso.id, tamano: 52),
                             ),
                             childWhenDragging: Opacity(
@@ -4306,7 +4527,9 @@ class _OrdenState extends State<_Orden> {
                       key: const Key('volver-orden'),
                       onPressed: widget.onVolver,
                       style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFF16A34A),
+                        backgroundColor: context.coloresNaturales.superficie(
+                          const Color(0xFF16A34A),
+                        ),
                         minimumSize: const Size.fromHeight(48),
                       ),
                       child: const Texto('Volver'),
@@ -4350,7 +4573,7 @@ class _TarjetaPasoVida extends StatelessWidget {
       dragAnchorStrategy: pointerDragAnchorStrategy,
       onDragStarted: () => context.sonidoSeleccion(),
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: DibujoPasoVida(id: paso.id, tamano: 52),
       ),
       childWhenDragging: Opacity(opacity: 0.4, child: hijo),
@@ -4363,9 +4586,11 @@ class _TarjetaPasoVida extends StatelessWidget {
     final miniatura = Container(
       padding: const EdgeInsets.all(2.5),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F9FF),
+        color: context.coloresNaturales.superficie(const Color(0xFFF0F9FF)),
         borderRadius: BorderRadius.circular(11),
-        border: Border.all(color: const Color(0xFFBAE6FD)),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
+        ),
       ),
       child: DibujoPasoVida(id: paso.id, tamano: 36),
     );
@@ -4373,24 +4598,24 @@ class _TarjetaPasoVida extends StatelessWidget {
     final insigniaPaso = Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFE0F2FE),
+        color: context.coloresNaturales.superficie(const Color(0xFFE0F2FE)),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.add_circle_rounded,
-            color: Color(0xFF0284C7),
+            color: context.coloresNaturales.contenido(Color(0xFF0284C7)),
             size: 15,
           ),
           const SizedBox(width: 3),
           Texto(
             'Paso $numeroDestino',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 10.2,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF0369A1),
+              color: context.coloresNaturales.contenido(Color(0xFF0369A1)),
             ),
           ),
         ],
@@ -4398,7 +4623,7 @@ class _TarjetaPasoVida extends StatelessWidget {
     );
 
     return Material(
-      color: Colors.white,
+      color: context.coloresNaturales.superficie(Colors.white),
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
@@ -4407,10 +4632,13 @@ class _TarjetaPasoVida extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFBAE6FD), width: 1.8),
-            boxShadow: const [
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
+              width: 1.8,
+            ),
+            boxShadow: [
               BoxShadow(
-                color: Color(0xFFE2E8F0),
+                color: context.coloresNaturales.sombra(Color(0xFFE2E8F0)),
                 offset: Offset(0, 2),
                 blurRadius: 0,
               ),
@@ -4426,10 +4654,12 @@ class _TarjetaPasoVida extends StatelessWidget {
                   children: [
                     Texto(
                       paso.nombre,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 12.8,
-                        color: Color(0xFF0F172A),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF0F172A),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 1.5),
@@ -4437,11 +4667,13 @@ class _TarjetaPasoVida extends StatelessWidget {
                       explicacion,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10.8,
                         fontWeight: FontWeight.w600,
                         height: 1.15,
-                        color: Color(0xFF475569),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
@@ -4699,7 +4931,6 @@ Color _bordeSitio(String id) {
   }
 }
 
-
 class _InspectorPorteBotanico extends StatefulWidget {
   const _InspectorPorteBotanico({
     required this.reto,
@@ -4858,26 +5089,31 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: const Color(0xFFF0FDF4),
+            color: context.coloresNaturales.superficie(const Color(0xFFF0FDF4)),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFBBF7D0), width: 1.5),
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFFBBF7D0)),
+              width: 1.5,
+            ),
           ),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.biotech_rounded,
                   size: 16,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
                 const SizedBox(width: 6),
-                const Texto(
+                Texto(
                   'Muestras:',
                   style: TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF166534),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF166534),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -4898,18 +5134,22 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: activo
-                                ? const Color(0xFF16A34A)
-                                : (resuelto
-                                      ? const Color(0xFFDCFCE7)
-                                      : Colors.white),
+                            color: context.coloresNaturales.superficie(
+                              activo
+                                  ? const Color(0xFF16A34A)
+                                  : (resuelto
+                                        ? const Color(0xFFDCFCE7)
+                                        : Colors.white),
+                            ),
                             borderRadius: BorderRadius.circular(999),
                             border: Border.all(
-                              color: activo
-                                  ? const Color(0xFF15803D)
-                                  : (resuelto
-                                        ? const Color(0xFF4ADE80)
-                                        : const Color(0xFFCBD5E1)),
+                              color: context.coloresNaturales.borde(
+                                activo
+                                    ? const Color(0xFF15803D)
+                                    : (resuelto
+                                          ? const Color(0xFF4ADE80)
+                                          : const Color(0xFFCBD5E1)),
+                              ),
                               width: activo ? 2 : 1.2,
                             ),
                           ),
@@ -4920,9 +5160,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                 Icon(
                                   Icons.check_circle_rounded,
                                   size: 13,
-                                  color: activo
-                                      ? Colors.white
-                                      : const Color(0xFF16A34A),
+                                  color: context.coloresNaturales.contenido(
+                                    activo
+                                        ? Colors.white
+                                        : const Color(0xFF16A34A),
+                                  ),
                                 ),
                                 const SizedBox(width: 4),
                               ],
@@ -4931,9 +5173,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w900,
-                                  color: activo
-                                      ? Colors.white
-                                      : const Color(0xFF1E293B),
+                                  color: context.coloresNaturales.contenido(
+                                    activo
+                                        ? Colors.white
+                                        : const Color(0xFF1E293B),
+                                  ),
                                 ),
                               ),
                             ],
@@ -4953,13 +5197,19 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xFFE0F2FE), Color(0xFFF0FDF4)],
+                colors: ([
+                  Color(0xFFE0F2FE),
+                  Color(0xFFF0FDF4),
+                ]).map(context.coloresNaturales.superficie).toList(),
               ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFF86EFAC), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF86EFAC)),
+                width: 2,
+              ),
             ),
             child: Row(
               children: [
@@ -4979,35 +5229,47 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.85),
+                            color: context.coloresNaturales.superficie(
+                              Colors.white.withValues(alpha: 0.85),
+                            ),
                             borderRadius: BorderRadius.circular(9),
-                            border: Border.all(color: const Color(0xFFCBD5E1)),
+                            border: Border.all(
+                              color: context.coloresNaturales.borde(
+                                const Color(0xFFCBD5E1),
+                              ),
+                            ),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.straighten_rounded,
                                 size: 13,
-                                color: Color(0xFF0369A1),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF0369A1),
+                                ),
                               ),
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Texto(
                                   altura,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 9.5,
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFF0F172A),
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFF0F172A),
+                                    ),
                                   ),
                                 ),
                               ),
-                              const Texto(
+                              Texto(
                                 '0 m',
                                 style: TextStyle(
                                   fontSize: 8.5,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF64748B),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF64748B),
+                                  ),
                                 ),
                               ),
                             ],
@@ -5026,7 +5288,9 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                             dragAnchorStrategy: pointerDragAnchorStrategy,
                             onDragStarted: () => context.sonidoSeleccion(),
                             feedback: Material(
-                              color: Colors.transparent,
+                              color: context.coloresNaturales.superficie(
+                                Colors.transparent,
+                              ),
                               child: _Miniatura(id: widget.reto.id, tamano: 68),
                             ),
                             child: Padding(
@@ -5069,14 +5333,18 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: _lupaCorteza
-                                      ? const Color(0xFFFEF3C7)
-                                      : Colors.white,
+                                  color: context.coloresNaturales.superficie(
+                                    _lupaCorteza
+                                        ? const Color(0xFFFEF3C7)
+                                        : Colors.white,
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: _lupaCorteza
-                                        ? const Color(0xFFD97706)
-                                        : const Color(0xFFCBD5E1),
+                                    color: context.coloresNaturales.borde(
+                                      _lupaCorteza
+                                          ? const Color(0xFFD97706)
+                                          : const Color(0xFFCBD5E1),
+                                    ),
                                     width: 1.5,
                                   ),
                                 ),
@@ -5086,9 +5354,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                     Icon(
                                       Icons.search_rounded,
                                       size: 15,
-                                      color: _lupaCorteza
-                                          ? const Color(0xFFB45309)
-                                          : const Color(0xFF475569),
+                                      color: context.coloresNaturales.contenido(
+                                        _lupaCorteza
+                                            ? const Color(0xFFB45309)
+                                            : const Color(0xFF475569),
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
                                     const Flexible(
@@ -5121,14 +5391,18 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: _pruebaViento
-                                      ? const Color(0xFFE0F2FE)
-                                      : Colors.white,
+                                  color: context.coloresNaturales.superficie(
+                                    _pruebaViento
+                                        ? const Color(0xFFE0F2FE)
+                                        : Colors.white,
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: _pruebaViento
-                                        ? const Color(0xFF0284C7)
-                                        : const Color(0xFFCBD5E1),
+                                    color: context.coloresNaturales.borde(
+                                      _pruebaViento
+                                          ? const Color(0xFF0284C7)
+                                          : const Color(0xFFCBD5E1),
+                                    ),
                                     width: 1.5,
                                   ),
                                 ),
@@ -5138,9 +5412,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                     Icon(
                                       Icons.air_rounded,
                                       size: 15,
-                                      color: _pruebaViento
-                                          ? const Color(0xFF0369A1)
-                                          : const Color(0xFF475569),
+                                      color: context.coloresNaturales.contenido(
+                                        _pruebaViento
+                                            ? const Color(0xFF0369A1)
+                                            : const Color(0xFF475569),
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
                                     const Flexible(
@@ -5165,9 +5441,15 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.92),
+                          color: context.coloresNaturales.superficie(
+                            Colors.white.withValues(alpha: 0.92),
+                          ),
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFFBBF7D0)),
+                          border: Border.all(
+                            color: context.coloresNaturales.borde(
+                              const Color(0xFFBBF7D0),
+                            ),
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -5176,10 +5458,12 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                               '• Tallo: $talloInfo',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF1E293B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF1E293B),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 2),
@@ -5187,10 +5471,12 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                               '• Al viento: $resistenciaInfo',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 10.5,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF475569),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF475569),
+                                ),
                               ),
                             ),
                           ],
@@ -5224,11 +5510,13 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                         builder: (context, candidatos, _) {
                           final encima = candidatos.isNotEmpty;
                           return Material(
-                            color: esCorrecto
-                                ? const Color(0xFFDCFCE7)
-                                : (encima
-                                      ? colorCat.withValues(alpha: 0.18)
-                                      : Colors.white),
+                            color: context.coloresNaturales.superficie(
+                              esCorrecto
+                                  ? const Color(0xFFDCFCE7)
+                                  : (encima
+                                        ? colorCat.withValues(alpha: 0.18)
+                                        : Colors.white),
+                            ),
                             borderRadius: BorderRadius.circular(18),
                             child: InkWell(
                               key: Key('sitio-${o.id}'),
@@ -5241,11 +5529,13 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(18),
                                   border: Border.all(
-                                    color: esCorrecto
-                                        ? const Color(0xFF16A34A)
-                                        : (elegido
-                                              ? const Color(0xFFF59E0B)
-                                              : colorCat),
+                                    color: context.coloresNaturales.borde(
+                                      esCorrecto
+                                          ? const Color(0xFF16A34A)
+                                          : (elegido
+                                                ? const Color(0xFFF59E0B)
+                                                : colorCat),
+                                    ),
                                     width: (esCorrecto || encima) ? 2.8 : 2.0,
                                   ),
                                 ),
@@ -5255,7 +5545,9 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                     Icon(
                                       _iconoCategoria(o.id),
                                       size: 26,
-                                      color: colorCat,
+                                      color: context.coloresNaturales.contenido(
+                                        colorCat,
+                                      ),
                                     ),
                                     const SizedBox(height: 4),
                                     Texto(
@@ -5263,10 +5555,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                       textAlign: TextAlign.center,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 13.5,
                                         fontWeight: FontWeight.w900,
-                                        color: Color(0xFF0F172A),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF0F172A)),
                                       ),
                                     ),
                                     const SizedBox(height: 2),
@@ -5275,10 +5568,11 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.w700,
-                                        color: Color(0xFF475569),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF475569)),
                                       ),
                                     ),
                                   ],

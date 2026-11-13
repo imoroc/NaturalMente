@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
 
 // Dibujos de «El viaje de la comida». El cuerpo se pinta sobre un lienzo de
 // 300×400; las paradas por las que ya ha pasado la comida se iluminan y el
@@ -634,11 +635,16 @@ class IconoParada extends StatelessWidget {
       width: tamano,
       height: tamano,
       decoration: BoxDecoration(
-        color: sinFondo ? const Color(0x00000000) : const Color(0xFFFFF7F0),
+        color: context.coloresNaturales.superficie(
+          sinFondo ? const Color(0x00000000) : const Color(0xFFFFF7F0),
+        ),
         borderRadius: BorderRadius.circular(tamano * .28),
         border: sinFondo
             ? null
-            : Border.all(color: const Color(0xFFF5C59A), width: 2),
+            : Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFF5C59A)),
+                width: 2,
+              ),
       ),
       padding: sinFondo ? EdgeInsets.zero : EdgeInsets.all(tamano * .08),
       child: CustomPaint(painter: _PintorIconoParada(id)),

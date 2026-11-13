@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
@@ -4752,7 +4754,6 @@ class _PintorNuevoJuego extends CustomPainter {
       oldDelegate.id != id;
 }
 
-
 class _HerramientaLab {
   const _HerramientaLab({
     required this.icono,
@@ -5398,18 +5399,21 @@ class _InspectorInteractivoNuevoJuegoState
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.coloresNaturales.superficie(Colors.white),
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: const Color(0xFFCBD5E1), width: 1.5),
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFFCBD5E1)),
+              width: 1.5,
+            ),
           ),
           child: Row(
             children: [
               Text(
                 context.traducir('Muestras:'),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF475569),
+                  color: context.coloresNaturales.contenido(Color(0xFF475569)),
                 ),
               ),
               const SizedBox(width: 8),
@@ -5434,18 +5438,22 @@ class _InspectorInteractivoNuevoJuegoState
                                 vertical: 5,
                               ),
                               decoration: BoxDecoration(
-                                color: r.id == retoActual.id
-                                    ? const Color(0xFF0284C7)
-                                    : widget.respuestas.containsKey(r.id)
-                                    ? const Color(0xFFDCFCE7)
-                                    : const Color(0xFFF1F5F9),
+                                color: context.coloresNaturales.superficie(
+                                  r.id == retoActual.id
+                                      ? const Color(0xFF0284C7)
+                                      : widget.respuestas.containsKey(r.id)
+                                      ? const Color(0xFFDCFCE7)
+                                      : const Color(0xFFF1F5F9),
+                                ),
                                 borderRadius: BorderRadius.circular(99),
                                 border: Border.all(
-                                  color: r.id == retoActual.id
-                                      ? const Color(0xFF0369A1)
-                                      : widget.respuestas.containsKey(r.id)
-                                      ? const Color(0xFF16A34A)
-                                      : const Color(0xFFCBD5E1),
+                                  color: context.coloresNaturales.borde(
+                                    r.id == retoActual.id
+                                        ? const Color(0xFF0369A1)
+                                        : widget.respuestas.containsKey(r.id)
+                                        ? const Color(0xFF16A34A)
+                                        : const Color(0xFFCBD5E1),
+                                  ),
                                   width: 1.5,
                                 ),
                               ),
@@ -5456,9 +5464,11 @@ class _InspectorInteractivoNuevoJuegoState
                                     Icon(
                                       Icons.check_circle_rounded,
                                       size: 13,
-                                      color: r.id == retoActual.id
-                                          ? Colors.white
-                                          : const Color(0xFF16A34A),
+                                      color: context.coloresNaturales.contenido(
+                                        r.id == retoActual.id
+                                            ? Colors.white
+                                            : const Color(0xFF16A34A),
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
                                   ],
@@ -5467,9 +5477,11 @@ class _InspectorInteractivoNuevoJuegoState
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w800,
-                                      color: r.id == retoActual.id
-                                          ? Colors.white
-                                          : const Color(0xFF1E293B),
+                                      color: context.coloresNaturales.contenido(
+                                        r.id == retoActual.id
+                                            ? Colors.white
+                                            : const Color(0xFF1E293B),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -5492,13 +5504,19 @@ class _InspectorInteractivoNuevoJuegoState
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFF8FAFC), Color(0xFFF0F9FF)],
+              gradient: LinearGradient(
+                colors: ([
+                  Color(0xFFF8FAFC),
+                  Color(0xFFF0F9FF),
+                ]).map(context.coloresNaturales.superficie).toList(),
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFBAE6FD), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
+                width: 2,
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -5515,10 +5533,14 @@ class _InspectorInteractivoNuevoJuegoState
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: context.coloresNaturales.superficie(
+                          Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                          color: herramientaActiva.color.withValues(alpha: 0.55),
+                          color: context.coloresNaturales.borde(
+                            herramientaActiva.color.withValues(alpha: 0.55),
+                          ),
                           width: 2,
                         ),
                       ),
@@ -5529,6 +5551,7 @@ class _InspectorInteractivoNuevoJuegoState
                               padding: const EdgeInsets.fromLTRB(10, 26, 10, 24),
                               child: CustomPaint(
                                 painter: _PintorLaboratorioInteractivo(
+                                  colores: context.coloresNaturales,
                                   actividadId: widget.actividadId,
                                   nivel: widget.nivel,
                                   retoId: retoActual.id,
@@ -5547,7 +5570,9 @@ class _InspectorInteractivoNuevoJuegoState
                                 Icon(
                                   herramientaActiva.icono,
                                   size: 14,
-                                  color: herramientaActiva.color,
+                                  color: context.coloresNaturales.contenido(
+                                    herramientaActiva.color,
+                                  ),
                                 ),
                                 const SizedBox(width: 4),
                                 Expanded(
@@ -5558,7 +5583,9 @@ class _InspectorInteractivoNuevoJuegoState
                                     style: TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w900,
-                                      color: herramientaActiva.color,
+                                      color: context.coloresNaturales.contenido(
+                                        herramientaActiva.color,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -5576,10 +5603,12 @@ class _InspectorInteractivoNuevoJuegoState
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF64748B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFF64748B),
+                                ),
                               ),
                             ),
                           ),
@@ -5611,12 +5640,16 @@ class _InspectorInteractivoNuevoJuegoState
                                   vertical: 5,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: modoSeguro == i
-                                      ? herramientas[i].color
-                                      : Colors.white,
+                                  color: context.coloresNaturales.superficie(
+                                    modoSeguro == i
+                                        ? herramientas[i].color
+                                        : Colors.white,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
-                                    color: herramientas[i].color,
+                                    color: context.coloresNaturales.borde(
+                                      herramientas[i].color,
+                                    ),
                                     width: 1.5,
                                   ),
                                 ),
@@ -5626,9 +5659,11 @@ class _InspectorInteractivoNuevoJuegoState
                                     Icon(
                                       herramientas[i].icono,
                                       size: 13,
-                                      color: modoSeguro == i
-                                          ? Colors.white
-                                          : herramientas[i].color,
+                                      color: context.coloresNaturales.contenido(
+                                        modoSeguro == i
+                                            ? Colors.white
+                                            : herramientas[i].color,
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
                                     Flexible(
@@ -5639,7 +5674,12 @@ class _InspectorInteractivoNuevoJuegoState
                                         style: TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w800,
-                                          color: modoSeguro == i ? Colors.white : const Color(0xFF1E293B),
+                                          color: context.coloresNaturales
+                                              .contenido(
+                                                modoSeguro == i
+                                                    ? Colors.white
+                                                    : const Color(0xFF1E293B),
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -5654,10 +5694,14 @@ class _InspectorInteractivoNuevoJuegoState
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: context.coloresNaturales.superficie(
+                              Colors.white,
+                            ),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: const Color(0xFFE2E8F0),
+                              color: context.coloresNaturales.borde(
+                                const Color(0xFFE2E8F0),
+                              ),
                               width: 1.5,
                             ),
                           ),
@@ -5667,10 +5711,12 @@ class _InspectorInteractivoNuevoJuegoState
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.biotech_rounded,
                                       size: 16,
-                                      color: Color(0xFF0284C7),
+                                      color: context.coloresNaturales.contenido(
+                                        Color(0xFF0284C7),
+                                      ),
                                     ),
                                     const SizedBox(width: 6),
                                     Expanded(
@@ -5678,10 +5724,11 @@ class _InspectorInteractivoNuevoJuegoState
                                         context.traducir(retoActual.nombre),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w900,
-                                          color: Color(0xFF0F172A),
+                                          color: context.coloresNaturales
+                                              .contenido(Color(0xFF0F172A)),
                                         ),
                                       ),
                                     ),
@@ -5692,11 +5739,13 @@ class _InspectorInteractivoNuevoJuegoState
                                   context.traducir(
                                     _observacionHerramienta(retoActual),
                                   ),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11.5,
                                     height: 1.28,
                                     fontWeight: FontWeight.w700,
-                                    color: Color(0xFF334155),
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFF334155),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -5776,20 +5825,24 @@ class _TarjetaDestinoNuevoJuego extends StatelessWidget {
           onTap: bloqueado ? null : alElegir,
           radio: 16,
           destacada: acertado || elegido || encima,
-          fondo: acertado
-              ? const Color(0xFFDCFCE7)
-              : elegido
-              ? const Color(0xFFFEF3C7)
-              : encima
-              ? const Color(0xFFE0F2FE)
-              : fondoBase,
-          borde: acertado
-              ? const Color(0xFF16A34A)
-              : elegido
-              ? const Color(0xFFD97706)
-              : encima
-              ? const Color(0xFF0284C7)
-              : bordeBase,
+          fondo: context.coloresNaturales.superficie(
+            acertado
+                ? const Color(0xFFDCFCE7)
+                : elegido
+                ? const Color(0xFFFEF3C7)
+                : encima
+                ? const Color(0xFFE0F2FE)
+                : fondoBase,
+          ),
+          borde: context.coloresNaturales.borde(
+            acertado
+                ? const Color(0xFF16A34A)
+                : elegido
+                ? const Color(0xFFD97706)
+                : encima
+                ? const Color(0xFF0284C7)
+                : bordeBase,
+          ),
           child: Center(
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
@@ -5804,11 +5857,13 @@ class _TarjetaDestinoNuevoJuego extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       height: 1.12,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF0F172A),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF0F172A),
+                      ),
                     ),
                   ),
                   if (subtitulo.isNotEmpty) ...[
@@ -5818,11 +5873,13 @@ class _TarjetaDestinoNuevoJuego extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         height: 1.1,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF475569),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
@@ -5837,7 +5894,9 @@ class _TarjetaDestinoNuevoJuego extends StatelessWidget {
 }
 
 class _PintorLaboratorioInteractivo extends CustomPainter {
+  final ColoresNaturales colores;
   const _PintorLaboratorioInteractivo({
+    required this.colores,
     required this.actividadId,
     required this.nivel,
     required this.retoId,
@@ -5887,7 +5946,7 @@ class _PintorLaboratorioInteractivo extends CustomPainter {
       Paint()
         ..color = (actividadId == 'grupos' && modo == 0)
             ? const Color(0xFF0F172A)
-            : const Color(0xFFF1F5F9),
+            : colores.superficie(const Color(0xFFF1F5F9)),
     );
 
     canvas.save();
@@ -7589,6 +7648,7 @@ class _PintorLaboratorioInteractivo extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PintorLaboratorioInteractivo oldDelegate) =>
+      oldDelegate.colores != colores ||
       oldDelegate.actividadId != actividadId ||
       oldDelegate.nivel != nivel ||
       oldDelegate.retoId != retoId ||

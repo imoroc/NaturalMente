@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
@@ -413,9 +415,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         for (final nivel in _ecosistema.niveles) ...[
           TarjetaJuego(
             claveAccion: Key('nivel-${nivel.id}'),
-            borde: progreso.nivelEcosistemaHecho(widget.actividad, nivel.id)
-                ? EstilosJuego.acierto
-                : const Color(0xFF38BDF8),
+            borde: context.coloresNaturales.borde(
+              progreso.nivelEcosistemaHecho(widget.actividad, nivel.id)
+                  ? EstilosJuego.acierto
+                  : const Color(0xFF38BDF8),
+            ),
             onTap: () => _empezar(nivel),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -589,9 +593,16 @@ class _EcosistemaPageState extends State<EcosistemaPage>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F8EC),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFF4F8EC),
+                ),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFD5E3C3), width: 1.5),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    const Color(0xFFD5E3C3),
+                  ),
+                  width: 1.5,
+                ),
               ),
               child: Column(
                 children: [
@@ -624,9 +635,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                                   Opacity(opacity: value, child: child),
                               child: Icon(
                                 Icons.arrow_forward_rounded,
-                                color: p.relaciones > i
-                                    ? const Color(0xFF15803D)
-                                    : const Color(0xFF65A30D),
+                                color: context.coloresNaturales.contenido(
+                                  p.relaciones > i
+                                      ? const Color(0xFF15803D)
+                                      : const Color(0xFF65A30D),
+                                ),
                               ),
                             ),
                         ],
@@ -634,13 +647,15 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Texto(
+                  Texto(
                     'La flecha va del alimento a quien lo come.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF3F6212),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF3F6212),
+                      ),
                     ),
                   ),
                 ],
@@ -653,16 +668,23 @@ class _EcosistemaPageState extends State<EcosistemaPage>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFFDF7),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFFFFFDF7),
+              ),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE2DEC9), width: 1.8),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFE2DEC9)),
+                width: 1.8,
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
                   _iconoPuesto(elementoInspeccion.id),
-                  color: const Color(0xFF1F8A4C),
+                  color: context.coloresNaturales.contenido(
+                    const Color(0xFF1F8A4C),
+                  ),
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -672,19 +694,23 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                     children: [
                       Texto(
                         '${elementoInspeccion.nombre} · ${_rolCorto(elementoInspeccion.id)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 13.5,
-                          color: Color(0xFF1B3022),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF1B3022),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 2),
                       Texto(
                         _curiosidadElemento(elementoInspeccion.id),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12.5,
                           height: 1.25,
-                          color: Color(0xFF334155),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF334155),
+                          ),
                         ),
                       ),
                     ],
@@ -715,14 +741,18 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         duration: _duracion(180),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          color: colocado
-              ? (activo ? const Color(0xFFDCFCE7) : Colors.white)
-              : const Color(0xFFE2E8F0).withValues(alpha: 0.6),
+          color: context.coloresNaturales.superficie(
+            colocado
+                ? (activo ? const Color(0xFFDCFCE7) : Colors.white)
+                : const Color(0xFFE2E8F0).withValues(alpha: 0.6),
+          ),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: colocado
-                ? (activo ? const Color(0xFF15803D) : const Color(0xFF86EFAC))
-                : const Color(0xFFCBD5E1),
+            color: context.coloresNaturales.borde(
+              colocado
+                  ? (activo ? const Color(0xFF15803D) : const Color(0xFF86EFAC))
+                  : const Color(0xFFCBD5E1),
+            ),
             width: 1.5,
           ),
         ),
@@ -739,7 +769,9 @@ class _EcosistemaPageState extends State<EcosistemaPage>
               Icon(
                 _iconoPuesto(e.id),
                 size: 18,
-                color: const Color(0xFF64748B),
+                color: context.coloresNaturales.contenido(
+                  const Color(0xFF64748B),
+                ),
               ),
             const SizedBox(width: 6),
             Texto(
@@ -747,9 +779,9 @@ class _EcosistemaPageState extends State<EcosistemaPage>
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
-                color: colocado
-                    ? const Color(0xFF1B3022)
-                    : const Color(0xFF64748B),
+                color: context.coloresNaturales.contenido(
+                  colocado ? const Color(0xFF1B3022) : const Color(0xFF64748B),
+                ),
               ),
             ),
           ],
@@ -788,7 +820,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
             button: disponible || colocado,
             enabled: disponible || colocado,
             child: Material(
-              color: Colors.transparent,
+              color: context.coloresNaturales.superficie(Colors.transparent),
               child: InkWell(
                 key: Key('eco-destino-${e.id}'),
                 borderRadius: BorderRadius.circular(20),
@@ -817,16 +849,25 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                   duration: _duracion(160),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: destacado
-                        ? EstilosJuego.fallo.withValues(alpha: .18)
-                        : esperandoToque
-                        ? const Color(0xFFDCFCE7).withValues(alpha: .38)
-                        : Colors.transparent,
+                    color: context.coloresNaturales.superficie(
+                      destacado
+                          ? EstilosJuego.fallo.withValues(alpha: .18)
+                          : esperandoToque
+                          ? const Color(0xFFDCFCE7).withValues(alpha: .38)
+                          : Colors.transparent,
+                    ),
                     border: destacado
-                        ? Border.all(color: EstilosJuego.fallo, width: 3)
+                        ? Border.all(
+                            color: context.coloresNaturales.borde(
+                              EstilosJuego.fallo,
+                            ),
+                            width: 3,
+                          )
                         : esperandoToque
                         ? Border.all(
-                            color: const Color(0xFF1F8A4C),
+                            color: context.coloresNaturales.borde(
+                              const Color(0xFF1F8A4C),
+                            ),
                             width: 2.2,
                           )
                         : null,
@@ -842,19 +883,23 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                               vertical: compacto ? 3 : 8,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(
-                                0xFFFFFDF7,
-                              ).withValues(alpha: 0.92),
+                              color: context.coloresNaturales.superficie(
+                                const Color(0xFFFFFDF7).withValues(alpha: 0.92),
+                              ),
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color: fallido
-                                    ? const Color(0xFFB96517)
-                                    : const Color(0xFF1F8A4C),
+                                color: context.coloresNaturales.borde(
+                                  fallido
+                                      ? const Color(0xFFB96517)
+                                      : const Color(0xFF1F8A4C),
+                                ),
                                 width: 1.8,
                               ),
-                              boxShadow: const [
+                              boxShadow: [
                                 BoxShadow(
-                                  color: Color(0x22000000),
+                                  color: context.coloresNaturales.sombra(
+                                    Color(0x22000000),
+                                  ),
                                   blurRadius: 4,
                                   offset: Offset(0, 2),
                                 ),
@@ -866,9 +911,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                                 Icon(
                                   _iconoPuesto(e.id),
                                   size: compacto ? 15 : 24,
-                                  color: fallido
-                                      ? const Color(0xFFB96517)
-                                      : const Color(0xFF1F8A4C),
+                                  color: context.coloresNaturales.contenido(
+                                    fallido
+                                        ? const Color(0xFFB96517)
+                                        : const Color(0xFF1F8A4C),
+                                  ),
                                 ),
                                 const SizedBox(height: 2),
                                 Flexible(
@@ -880,7 +927,9 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                                     style: TextStyle(
                                       fontSize: compacto ? 9.5 : 11.5,
                                       fontWeight: FontWeight.w900,
-                                      color: const Color(0xFF1B3022),
+                                      color: context.coloresNaturales.contenido(
+                                        const Color(0xFF1B3022),
+                                      ),
                                       height: 1.05,
                                     ),
                                   ),
@@ -893,10 +942,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                                       textAlign: TextAlign.center,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 10.5,
                                         fontWeight: FontWeight.w700,
-                                        color: Color(0xFF475569),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF475569)),
                                       ),
                                     ),
                                   ),
@@ -929,21 +979,25 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(
-                                0xFFFFFDF7,
-                              ).withValues(alpha: 0.94),
+                              color: context.coloresNaturales.superficie(
+                                const Color(0xFFFFFDF7).withValues(alpha: 0.94),
+                              ),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: const Color(0xFF1F8A4C),
+                                color: context.coloresNaturales.borde(
+                                  const Color(0xFF1F8A4C),
+                                ),
                                 width: 1.4,
                               ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.check_circle_rounded,
-                                  color: Color(0xFF1F8A4C),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF1F8A4C),
+                                  ),
                                   size: 14,
                                 ),
                                 if (!compacto) ...[
@@ -953,10 +1007,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                                       _rolCorto(e.id),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.w800,
-                                        color: Color(0xFF1B3022),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF1B3022)),
                                       ),
                                     ),
                                   ),
@@ -1103,9 +1158,12 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFEAF3DE),
+        color: context.coloresNaturales.superficie(const Color(0xFFEAF3DE)),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFBCD49B), width: 1.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFBCD49B)),
+          width: 1.5,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1159,7 +1217,9 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   Widget _pieza(PartidaEcosistema p, ElementoEcosistema e) {
     final tarjeta = TarjetaJuego(
       claveAccion: Key('eco-pieza-${e.id}'),
-      borde: p.seleccion == e.id ? const Color(0xFF1F8A4C) : EstilosJuego.borde,
+      borde: context.coloresNaturales.borde(
+        p.seleccion == e.id ? const Color(0xFF1F8A4C) : EstilosJuego.borde,
+      ),
       destacada: p.seleccion == e.id,
       onTap: () {
         context.sonidoSeleccion();
@@ -1176,10 +1236,10 @@ class _EcosistemaPageState extends State<EcosistemaPage>
               style: const TextStyle(fontWeight: FontWeight.w800),
             ),
             if (p.seleccion == e.id)
-              const Icon(
+              Icon(
                 Icons.check_circle_rounded,
                 size: 20,
-                color: Color(0xFF1F8A4C),
+                color: context.coloresNaturales.contenido(Color(0xFF1F8A4C)),
               ),
           ],
         ),
@@ -1203,7 +1263,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   }
 
   Widget _dibujoArrastre(String id) => Material(
-    color: Colors.transparent,
+    color: context.coloresNaturales.superficie(Colors.transparent),
     child: SizedBox(
       width: 100,
       height: 110,

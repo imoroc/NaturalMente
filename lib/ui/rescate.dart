@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -163,7 +165,9 @@ class _RescatePageState extends State<RescatePage>
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -179,13 +183,15 @@ class _RescatePageState extends State<RescatePage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -336,8 +342,12 @@ class _RescatePageState extends State<RescatePage>
     ];
     return TarjetaJuego(
       claveAccion: Key('nivel-${nivel.id}'),
-      borde: hecho ? EstilosJuego.acierto : const Color(0xFF4ADE80),
-      sombra: hecho ? const Color(0xFF239E56) : const Color(0xFF15803D),
+      borde: context.coloresNaturales.borde(
+        hecho ? EstilosJuego.acierto : const Color(0xFF4ADE80),
+      ),
+      sombra: context.coloresNaturales.sombra(
+        hecho ? const Color(0xFF239E56) : const Color(0xFF15803D),
+      ),
       radio: 20,
       onTap: () => _empezar(nivel),
       child: Padding(
@@ -357,9 +367,9 @@ class _RescatePageState extends State<RescatePage>
                   Icon(
                     Icons.star_rounded,
                     size: 18,
-                    color: hecho
-                        ? const Color(0xFFF59E0B)
-                        : const Color(0xFFCBD5E1),
+                    color: context.coloresNaturales.contenido(
+                      hecho ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+                    ),
                   ),
               ],
             ),
@@ -392,11 +402,11 @@ class _RescatePageState extends State<RescatePage>
             ),
             if (hecho) ...[
               const SizedBox(height: 6),
-              const Texto(
+              Texto(
                 '✓ Nivel superado',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
               ),
             ],
@@ -410,12 +420,14 @@ class _RescatePageState extends State<RescatePage>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        color: context.coloresNaturales.superficie(
+          desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        ),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(
-          color: desbloqueado
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFFCBD5E1),
+          color: context.coloresNaturales.borde(
+            desbloqueado ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+          ),
         ),
       ),
       child: Row(
@@ -426,9 +438,9 @@ class _RescatePageState extends State<RescatePage>
                 ? Icons.auto_stories_rounded
                 : Icons.lock_outline_rounded,
             size: 13,
-            color: desbloqueado
-                ? const Color(0xFFB45309)
-                : const Color(0xFF64748B),
+            color: context.coloresNaturales.contenido(
+              desbloqueado ? const Color(0xFFB45309) : const Color(0xFF64748B),
+            ),
           ),
           const SizedBox(width: 4),
           Flexible(
@@ -439,9 +451,11 @@ class _RescatePageState extends State<RescatePage>
               style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w800,
-                color: desbloqueado
-                    ? const Color(0xFF92400E)
-                    : const Color(0xFF475569),
+                color: context.coloresNaturales.contenido(
+                  desbloqueado
+                      ? const Color(0xFF92400E)
+                      : const Color(0xFF475569),
+                ),
               ),
             ),
           ),
@@ -573,7 +587,12 @@ class _RescatePageState extends State<RescatePage>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: fallo
-                    ? Border.all(color: EstilosJuego.fallo, width: 3)
+                    ? Border.all(
+                        color: context.coloresNaturales.borde(
+                          EstilosJuego.fallo,
+                        ),
+                        width: 3,
+                      )
                     : null,
               ),
               child: animal == null
@@ -604,7 +623,7 @@ class _RescatePageState extends State<RescatePage>
             data: residuo.id,
             dragAnchorStrategy: pointerDragAnchorStrategy,
             feedback: Material(
-              color: Colors.transparent,
+              color: context.coloresNaturales.superficie(Colors.transparent),
               child: Transform.translate(
                 offset: const Offset(-40, -40),
                 child: DibujoResiduo(id: residuo.id, tamano: 80),
@@ -639,11 +658,17 @@ class _RescatePageState extends State<RescatePage>
       width: 150,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
-        boxShadow: const [
-          BoxShadow(color: Color(0xFFD0C9B8), offset: Offset(0, 4)),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFE2DEC9)),
+          width: 2.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: context.coloresNaturales.sombra(Color(0xFFD0C9B8)),
+            offset: Offset(0, 4),
+          ),
         ],
       ),
       child: Column(
@@ -676,12 +701,16 @@ class _RescatePageState extends State<RescatePage>
           child: TarjetaJuego(
             claveAccion: Key('contenedor-${contenedor.id}'),
             onTap: () => _cambiar((p) => p.tirar(contenedor.id)),
-            borde: fallo
-                ? EstilosJuego.fallo
-                : encima
-                ? EstilosJuego.acierto
-                : oscuro,
-            fondo: claro.withValues(alpha: encima ? .55 : .25),
+            borde: context.coloresNaturales.borde(
+              fallo
+                  ? EstilosJuego.fallo
+                  : encima
+                  ? EstilosJuego.acierto
+                  : oscuro,
+            ),
+            fondo: context.coloresNaturales.superficie(
+              claro.withValues(alpha: encima ? .55 : .25),
+            ),
             destacada: encima || fallo,
             child: Padding(
               padding: const EdgeInsets.all(6),
@@ -695,10 +724,12 @@ class _RescatePageState extends State<RescatePage>
                     contenedor.nombre,
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 12.5,
-                      color: Color(0xFF1E293B),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF1E293B),
+                      ),
                     ),
                   ),
                 ],
@@ -735,9 +766,12 @@ class _RescatePageState extends State<RescatePage>
       Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF0FDF4),
+          color: context.coloresNaturales.superficie(const Color(0xFFF0FDF4)),
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: const Color(0xFF4ADE80), width: 2.5),
+          border: Border.all(
+            color: context.coloresNaturales.borde(const Color(0xFF4ADE80)),
+            width: 2.5,
+          ),
         ),
         child: Row(
           children: [
@@ -762,11 +796,11 @@ class _RescatePageState extends State<RescatePage>
       const SizedBox(height: 12),
       Texto(
         partida.preguntaAyuda ? 'Qué la ayuda' : 'Qué la amenaza',
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w900,
           letterSpacing: .6,
-          color: Color(0xFFB45309),
+          color: context.coloresNaturales.contenido(Color(0xFFB45309)),
         ),
       ),
       const SizedBox(height: 4),

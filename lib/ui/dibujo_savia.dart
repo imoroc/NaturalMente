@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
 
 /// La planta de «El viaje de la savia».
 ///
@@ -59,11 +60,15 @@ class DibujoViajeSavia extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: const Color(0xFFBAE6FD), width: 2),
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
+              width: 2,
+            ),
           ),
           child: CustomPaint(
             size: Size.infinite,
             painter: _PintorSavia(
+              colores: context.coloresNaturales,
               parte: parteDe(retoId),
               viaje: viajeDe(retoId),
               acertado: acertado,
@@ -78,7 +83,9 @@ class DibujoViajeSavia extends StatelessWidget {
 }
 
 class _PintorSavia extends CustomPainter {
+  final ColoresNaturales colores;
   const _PintorSavia({
+    required this.colores,
     required this.parte,
     required this.viaje,
     required this.acertado,
@@ -136,11 +143,11 @@ class _PintorSavia extends CustomPainter {
     // Cielo y tierra.
     canvas.drawRect(
       Rect.fromLTWH(0, 0, w, suelo),
-      Paint()..color = const Color(0xFFE0F2FE),
+      Paint()..color = colores.superficie(const Color(0xFFE0F2FE)),
     );
     canvas.drawRect(
       Rect.fromLTWH(0, suelo, w, h - suelo),
-      Paint()..color = const Color(0xFFD6B98C),
+      Paint()..color = colores.superficie(const Color(0xFFD6B98C)),
     );
 
     // Sol.
@@ -360,6 +367,7 @@ class _PintorSavia extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _PintorSavia oldDelegate) =>
+      oldDelegate.colores != colores ||
       oldDelegate.parte != parte ||
       oldDelegate.viaje != viaje ||
       oldDelegate.acertado != acertado ||

@@ -129,8 +129,11 @@ Future<void> _tocar(WidgetTester tester, String key) async {
 }
 
 Future<void> _idioma(WidgetTester tester, String codigo) async {
-  await _tocar(tester, 'selector-idioma');
+  if (find.byKey(const Key('panel-ajustes')).evaluate().isEmpty) {
+    await _tocar(tester, 'selector-idioma');
+  }
   await _tocar(tester, 'idioma-$codigo');
+  await _tocar(tester, 'listo-ajustes');
 }
 
 Future<void> _atras(WidgetTester tester) async {

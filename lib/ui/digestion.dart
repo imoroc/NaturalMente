@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -198,7 +200,9 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -214,13 +218,15 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -368,8 +374,12 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
     };
     return TarjetaJuego(
       claveAccion: Key('nivel-${nivel.id}'),
-      borde: hecho ? EstilosJuego.acierto : const Color(0xFF38BDF8),
-      sombra: hecho ? const Color(0xFF239E56) : const Color(0xFF0284C7),
+      borde: context.coloresNaturales.borde(
+        hecho ? EstilosJuego.acierto : const Color(0xFF38BDF8),
+      ),
+      sombra: context.coloresNaturales.sombra(
+        hecho ? const Color(0xFF239E56) : const Color(0xFF0284C7),
+      ),
       radio: 20,
       onTap: () => _empezar(nivel),
       child: Padding(
@@ -389,9 +399,9 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                   Icon(
                     Icons.star_rounded,
                     size: 18,
-                    color: hecho
-                        ? const Color(0xFFF59E0B)
-                        : const Color(0xFFCBD5E1),
+                    color: context.coloresNaturales.contenido(
+                      hecho ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+                    ),
                   ),
               ],
             ),
@@ -436,11 +446,11 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             ),
             if (hecho) ...[
               const SizedBox(height: 6),
-              const Texto(
+              Texto(
                 '✓ Nivel superado',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
               ),
             ],
@@ -454,12 +464,14 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        color: context.coloresNaturales.superficie(
+          desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        ),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(
-          color: desbloqueado
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFFCBD5E1),
+          color: context.coloresNaturales.borde(
+            desbloqueado ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+          ),
         ),
       ),
       child: Row(
@@ -470,9 +482,9 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                 ? Icons.auto_stories_rounded
                 : Icons.lock_outline_rounded,
             size: 13,
-            color: desbloqueado
-                ? const Color(0xFFB45309)
-                : const Color(0xFF64748B),
+            color: context.coloresNaturales.contenido(
+              desbloqueado ? const Color(0xFFB45309) : const Color(0xFF64748B),
+            ),
           ),
           const SizedBox(width: 4),
           Flexible(
@@ -483,9 +495,11 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
               style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w800,
-                color: desbloqueado
-                    ? const Color(0xFF92400E)
-                    : const Color(0xFF475569),
+                color: context.coloresNaturales.contenido(
+                  desbloqueado
+                      ? const Color(0xFF92400E)
+                      : const Color(0xFF475569),
+                ),
               ),
             ),
           ),
@@ -537,9 +551,16 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             width: math.min(ancho, 270),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFFDFBF6),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFFDFBF6),
+                ),
                 borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    const Color(0xFFE2DEC9),
+                  ),
+                  width: 2.5,
+                ),
               ),
               padding: const EdgeInsets.all(8),
               child: DiagramaDigestivo(
@@ -569,7 +590,9 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                 dragAnchorStrategy: pointerDragAnchorStrategy,
                 onDragStarted: () => context.sonidoSeleccion(),
                 feedback: Material(
-                  color: Colors.transparent,
+                  color: context.coloresNaturales.superficie(
+                    Colors.transparent,
+                  ),
                   child: Transform.translate(
                     offset: const Offset(-28, -28),
                     child: DibujoBocado(
@@ -713,9 +736,12 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
       key: const Key('estado-bocado'),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFBEB),
+        color: context.coloresNaturales.superficie(const Color(0xFFFFFBEB)),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFFDE68A), width: 1.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFFDE68A)),
+          width: 1.5,
+        ),
       ),
       child: Row(
         children: [
@@ -723,9 +749,12 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFF59E0B), width: 1.8),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFF59E0B)),
+                width: 1.8,
+              ),
             ),
             child: DibujoBocado(estado: partida.estadoBocado, tamano: 40),
           ),
@@ -736,19 +765,23 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
               children: [
                 Texto(
                   partida.nombreFaseBocado,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 13.5,
-                    color: Color(0xFF92400E),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF92400E),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Texto(
                   partida.detalleFaseBocado,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF78350F),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF78350F),
+                    ),
                   ),
                 ),
               ],
@@ -765,9 +798,12 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
       width: 56,
       height: 56,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFF59E0B), width: 2.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFF59E0B)),
+          width: 2.5,
+        ),
       ),
       child: DibujoBocado(estado: partida.estadoBocado, tamano: 52),
     );
@@ -796,18 +832,22 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             child: TarjetaJuego(
               claveAccion: Key('destino-$id'),
               onTap: () => _cambiar((p) => p.mover(id)),
-              borde: arrastrandoEncima
-                  ? const Color(0xFF0EA5E9)
-                  : fallo
-                  ? EstilosJuego.fallo
-                  : alcanzada
-                  ? EstilosJuego.acierto
-                  : EstilosJuego.borde,
-              fondo: arrastrandoEncima
-                  ? const Color(0xFFE0F2FE)
-                  : aqui
-                  ? const Color(0xFFECFDF5)
-                  : Colors.white,
+              borde: context.coloresNaturales.borde(
+                arrastrandoEncima
+                    ? const Color(0xFF0EA5E9)
+                    : fallo
+                    ? EstilosJuego.fallo
+                    : alcanzada
+                    ? EstilosJuego.acierto
+                    : EstilosJuego.borde,
+              ),
+              fondo: context.coloresNaturales.superficie(
+                arrastrandoEncima
+                    ? const Color(0xFFE0F2FE)
+                    : aqui
+                    ? const Color(0xFFECFDF5)
+                    : Colors.white,
+              ),
               destacada: arrastrandoEncima || fallo || aqui,
               child: ConstrainedBox(
                 constraints: const BoxConstraints(minHeight: 60),
@@ -820,23 +860,29 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                       Expanded(
                         child: Texto(
                           nombre,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 14,
-                            color: Color(0xFF0F172A),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF0F172A),
+                            ),
                           ),
                         ),
                       ),
                       if (alcanzada)
-                        const Icon(
+                        Icon(
                           Icons.check_circle_rounded,
-                          color: EstilosJuego.acierto,
+                          color: context.coloresNaturales.contenido(
+                            EstilosJuego.acierto,
+                          ),
                           size: 20,
                         )
                       else if (fallo)
-                        const Icon(
+                        Icon(
                           Icons.replay_rounded,
-                          color: EstilosJuego.fallo,
+                          color: context.coloresNaturales.contenido(
+                            EstilosJuego.fallo,
+                          ),
                           size: 20,
                         ),
                     ],
@@ -861,11 +907,11 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
       const SizedBox(height: 16),
       Texto(
         etiqueta,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w900,
           letterSpacing: .6,
-          color: Color(0xFFB45309),
+          color: context.coloresNaturales.contenido(Color(0xFFB45309)),
         ),
       ),
       const SizedBox(height: 4),

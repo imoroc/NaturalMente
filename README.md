@@ -231,6 +231,10 @@ El [script](run-android-release.sh) usa `--release`, compila solo para la
 arquitectura del dispositivo, elimina iconos sin usar, ofusca Dart y separa sus
 símbolos. Flutter activa R8 y la reducción de recursos en release. Permite
 configurar `FLUTTER_BIN`, `ANDROID_HOME` (o `ANDROID_SDK_ROOT`) y `ANDROID_DEVICE`.
+Busca Flutter en `PATH` y, si no está, en `.fvm/flutter_sdk`,
+`${XDG_DATA_HOME:-$HOME/.local/share}/flutter`, `~/develop/flutter` y `~/flutter`,
+en ese orden. Instala el SDK en una carpeta persistente, fuera de `/tmp`.
+Para otra ubicación, usa `FLUTTER_BIN=/ruta/al/flutter/bin/flutter ./run-android-release.sh`.
 Instala mediante `adb install -r`, conservando el progreso; si falla por firma o
 versión, termina sin desinstalar ni borrar datos.
 

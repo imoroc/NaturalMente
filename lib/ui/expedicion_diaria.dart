@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
@@ -174,7 +176,7 @@ Future<void> mostrarArmarioNatu(
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: Colors.transparent,
+    backgroundColor: context.coloresNaturales.superficie(Colors.transparent),
     builder: (ctx) => _HojaArmarioNatu(
       progreso: prog,
       catalogo: alcance?.catalogo,
@@ -215,11 +217,14 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.88,
           ),
-          decoration: const BoxDecoration(
-            color: Color(0xFFFDF6E2),
+          decoration: BoxDecoration(
+            color: context.coloresNaturales.superficie(Color(0xFFFDF6E2)),
             borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
             border: Border(
-              top: BorderSide(color: Color(0xFF3B2314), width: 3.5),
+              top: BorderSide(
+                color: context.coloresNaturales.borde(Color(0xFF3B2314)),
+                width: 3.5,
+              ),
             ),
           ),
           child: SafeArea(
@@ -233,7 +238,9 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                     width: 48,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFD6C7A9),
+                      color: context.coloresNaturales.superficie(
+                        const Color(0xFFD6C7A9),
+                      ),
                       borderRadius: BorderRadius.circular(99),
                     ),
                   ),
@@ -241,14 +248,19 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [Color(0xFFFEFBF0), Color(0xFFF5EBD0)],
+                        colors: ([
+                          Color(0xFFFEFBF0),
+                          Color(0xFFF5EBD0),
+                        ]).map(context.coloresNaturales.superficie).toList(),
                       ),
                       borderRadius: BorderRadius.circular(22),
                       border: Border.all(
-                        color: const Color(0xFF72B034),
+                        color: context.coloresNaturales.borde(
+                          const Color(0xFF72B034),
+                        ),
                         width: 2.2,
                       ),
                     ),
@@ -274,10 +286,11 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                           context.tr(
                                             'Armario Científico de Natu',
                                           ),
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w900,
-                                            color: Color(0xFF3B2314),
+                                            color: context.coloresNaturales
+                                                .contenido(Color(0xFF3B2314)),
                                           ),
                                         ),
                                       ),
@@ -287,12 +300,14 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                           vertical: 5,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: context.coloresNaturales
+                                              .superficie(Colors.white),
                                           borderRadius: BorderRadius.circular(
                                             999,
                                           ),
                                           border: Border.all(
-                                            color: const Color(0xFFF59E0B),
+                                            color: context.coloresNaturales
+                                                .borde(const Color(0xFFF59E0B)),
                                             width: 2,
                                           ),
                                         ),
@@ -303,10 +318,13 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                             const SizedBox(width: 5),
                                             Text(
                                               '${progreso.semillas}',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w900,
-                                                color: Color(0xFF92400E),
+                                                color: context.coloresNaturales
+                                                    .contenido(
+                                                      Color(0xFF92400E),
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -319,10 +337,12 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                     context.tr(
                                       '¡Combina accesorios de distintas ranuras (Cabeza + Ojos + Emblema) y desbloquea reliquias por logros!',
                                     ),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF54331D),
+                                      color: context.coloresNaturales.contenido(
+                                        Color(0xFF54331D),
+                                      ),
                                       height: 1.25,
                                     ),
                                   ),
@@ -358,19 +378,26 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                                       style: TextStyle(
                                         fontSize: 11.5,
                                         fontWeight: FontWeight.w800,
-                                        color: poseActual == idPose
-                                            ? Colors.white
-                                            : const Color(0xFF3B2314),
+                                        color: context.coloresNaturales
+                                            .contenido(
+                                              poseActual == idPose
+                                                  ? Colors.white
+                                                  : const Color(0xFF3B2314),
+                                            ),
                                       ),
                                     ),
                                     selected: poseActual == idPose,
-                                    selectedColor: const Color(0xFF72B034),
-                                    backgroundColor: const Color(0xFFFDF6E2),
+                                    selectedColor: context.coloresNaturales
+                                        .contenido(const Color(0xFF72B034)),
+                                    backgroundColor: context.coloresNaturales
+                                        .superficie(const Color(0xFFFDF6E2)),
                                     checkmarkColor: Colors.white,
                                     side: BorderSide(
-                                      color: poseActual == idPose
-                                          ? const Color(0xFF3B2314)
-                                          : const Color(0xFFB8C99D),
+                                      color: context.coloresNaturales.borde(
+                                        poseActual == idPose
+                                            ? const Color(0xFF3B2314)
+                                            : const Color(0xFFB8C99D),
+                                      ),
                                       width: 1.6,
                                     ),
                                     visualDensity: VisualDensity.compact,
@@ -443,8 +470,12 @@ class _HojaArmarioNatuState extends State<_HojaArmarioNatu> {
                     child: FilledButton.icon(
                       key: const Key('cerrar-armario-natu'),
                       style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFF1B5E20),
-                        foregroundColor: Colors.white,
+                        backgroundColor: context.coloresNaturales.superficie(
+                          const Color(0xFF1B5E20),
+                        ),
+                        foregroundColor: context.coloresNaturales.contenido(
+                          Colors.white,
+                        ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -482,16 +513,21 @@ class _ChipSlotResumen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
+        color: context.coloresNaturales.superficie(
+          Colors.white.withValues(alpha: 0.9),
+        ),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: const Color(0xFF16A34A), width: 1.4),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFF16A34A)),
+          width: 1.4,
+        ),
       ),
       child: Text(
         '$etiqueta $valor',
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w800,
-          color: Color(0xFF14532D),
+          color: context.coloresNaturales.contenido(Color(0xFF14532D)),
         ),
       ),
     );
@@ -529,7 +565,7 @@ class _TarjetaTrajeNatu extends StatelessWidget {
               : const Color(0xFFF8FAFC));
 
     return Material(
-      color: colorFondo,
+      color: context.coloresNaturales.superficie(colorFondo),
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
@@ -538,10 +574,15 @@ class _TarjetaTrajeNatu extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: colorBorde, width: equipado ? 3 : 2),
+            border: Border.all(
+              color: context.coloresNaturales.borde(colorBorde),
+              width: equipado ? 3 : 2,
+            ),
             boxShadow: [
               BoxShadow(
-                color: colorBorde.withValues(alpha: 0.25),
+                color: context.coloresNaturales.sombra(
+                  colorBorde.withValues(alpha: 0.25),
+                ),
                 offset: const Offset(0, 3),
                 blurRadius: 0,
               ),
@@ -553,9 +594,9 @@ class _TarjetaTrajeNatu extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: esLogro
-                      ? const Color(0xFFFEF3C7)
-                      : const Color(0xFFE2E8F0),
+                  color: context.coloresNaturales.superficie(
+                    esLogro ? const Color(0xFFFEF3C7) : const Color(0xFFE2E8F0),
+                  ),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -563,9 +604,11 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 9.5,
                     fontWeight: FontWeight.w900,
-                    color: esLogro
-                        ? const Color(0xFF92400E)
-                        : const Color(0xFF334155),
+                    color: context.coloresNaturales.contenido(
+                      esLogro
+                          ? const Color(0xFF92400E)
+                          : const Color(0xFF334155),
+                    ),
                   ),
                 ),
               ),
@@ -575,10 +618,10 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF1E293B),
+                  color: context.coloresNaturales.contenido(Color(0xFF1E293B)),
                 ),
               ),
               Text(
@@ -593,9 +636,11 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10.0,
                   fontWeight: FontWeight.w700,
-                  color: !desbloqueado && esLogro
-                      ? const Color(0xFFB45309)
-                      : const Color(0xFF64748B),
+                  color: context.coloresNaturales.contenido(
+                    !desbloqueado && esLogro
+                        ? const Color(0xFFB45309)
+                        : const Color(0xFF64748B),
+                  ),
                   height: 1.15,
                 ),
               ),
@@ -603,15 +648,17 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 6),
                 decoration: BoxDecoration(
-                  color: equipado
-                      ? const Color(0xFF16A34A)
-                      : (desbloqueado
-                            ? const Color(0xFFE2E8F0)
-                            : (esLogro
-                                  ? const Color(0xFFFEF3C7)
-                                  : (puedeComprar
-                                        ? const Color(0xFFFEF3C7)
-                                        : const Color(0xFFF1F5F9)))),
+                  color: context.coloresNaturales.superficie(
+                    equipado
+                        ? const Color(0xFF16A34A)
+                        : (desbloqueado
+                              ? const Color(0xFFE2E8F0)
+                              : (esLogro
+                                    ? const Color(0xFFFEF3C7)
+                                    : (puedeComprar
+                                          ? const Color(0xFFFEF3C7)
+                                          : const Color(0xFFF1F5F9)))),
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -623,10 +670,12 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                       const SizedBox(width: 4),
                     ],
                     if (!desbloqueado && esLogro) ...[
-                      const Icon(
+                      Icon(
                         Icons.emoji_events_rounded,
                         size: 13,
-                        color: Color(0xFFB45309),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFFB45309),
+                        ),
                       ),
                       const SizedBox(width: 4),
                     ],
@@ -645,15 +694,17 @@ class _TarjetaTrajeNatu extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w900,
-                          color: equipado
-                              ? Colors.white
-                              : (desbloqueado
-                                    ? const Color(0xFF334155)
-                                    : (esLogro
-                                          ? const Color(0xFF92400E)
-                                          : (puedeComprar
-                                                ? const Color(0xFF92400E)
-                                                : const Color(0xFF94A3B8)))),
+                          color: context.coloresNaturales.contenido(
+                            equipado
+                                ? Colors.white
+                                : (desbloqueado
+                                      ? const Color(0xFF334155)
+                                      : (esLogro
+                                            ? const Color(0xFF92400E)
+                                            : (puedeComprar
+                                                  ? const Color(0xFF92400E)
+                                                  : const Color(0xFF94A3B8)))),
+                          ),
                         ),
                       ),
                     ),
@@ -1705,10 +1756,16 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF5),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF5),
+      ),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFF3D6),
-        foregroundColor: const Color(0xFF7C2D12),
+        backgroundColor: context.coloresNaturales.superficie(
+          const Color(0xFFFFF3D6),
+        ),
+        foregroundColor: context.coloresNaturales.contenido(
+          const Color(0xFF7C2D12),
+        ),
         elevation: 0,
         title: Row(
           children: [
@@ -1728,17 +1785,17 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             TextButton.icon(
               key: const Key('cambiar-dificultad-reto'),
               onPressed: _volverAlSelectorDificultad,
-              icon: const Icon(
+              icon: Icon(
                 Icons.tune_rounded,
                 size: 16,
-                color: Color(0xFF9A3412),
+                color: context.coloresNaturales.contenido(Color(0xFF9A3412)),
               ),
               label: Text(
                 context.tr('Nivel'),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF9A3412),
+                  color: context.coloresNaturales.contenido(Color(0xFF9A3412)),
                 ),
               ),
             ),
@@ -1803,12 +1860,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           ),
           const SizedBox(height: 16),
           Container(
-
-      padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFE2DEC9)),
+                width: 2.5,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1823,10 +1882,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                         children: [
                           Text(
                             context.tr('Elige la dificultad del reto de hoy'),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w900,
-                              color: Color(0xFF1E293B),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF1E293B),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -1834,10 +1895,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                             context.tr(
                               'El reto diario se juega una vez al día. Si te equivocas de nivel antes de terminarlo, podrás volver atrás para cambiarlo.',
                             ),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF475569),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF475569),
+                              ),
                               height: 1.3,
                             ),
                           ),
@@ -1852,7 +1915,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Material(
-                      color: fondo,
+                      color: context.coloresNaturales.superficie(fondo),
                       borderRadius: BorderRadius.circular(18),
                       child: InkWell(
                         key: Key('dificultad-reto-$id'),
@@ -1862,7 +1925,10 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: color, width: 2.4),
+                            border: Border.all(
+                              color: context.coloresNaturales.borde(color),
+                              width: 2.4,
+                            ),
                           ),
                           child: Row(
                             children: [
@@ -1875,16 +1941,18 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w900,
-                                        color: color,
+                                        color: context.coloresNaturales
+                                            .contenido(color),
                                       ),
                                     ),
                                     const SizedBox(height: 3),
                                     Text(
                                       context.tr(desc),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 12.5,
                                         fontWeight: FontWeight.w700,
-                                        color: Color(0xFF334155),
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF334155)),
                                       ),
                                     ),
                                   ],
@@ -1897,9 +1965,16 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: context.coloresNaturales.superficie(
+                                    Colors.white,
+                                  ),
                                   borderRadius: BorderRadius.circular(999),
-                                  border: Border.all(color: color, width: 1.8),
+                                  border: Border.all(
+                                    color: context.coloresNaturales.borde(
+                                      color,
+                                    ),
+                                    width: 1.8,
+                                  ),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1911,7 +1986,8 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w900,
-                                        color: color,
+                                        color: context.coloresNaturales
+                                            .contenido(color),
                                       ),
                                     ),
                                   ],
@@ -1951,9 +2027,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFFED7AA), width: 2.2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFFED7AA)),
+                width: 2.2,
+              ),
             ),
             child: Column(
               children: [
@@ -1965,10 +2044,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                     Text(
                       key: const Key('progreso-expedicion-diaria'),
                       '${context.tr('Reto')} ${_pasoActual + 1} / ${_mision.length}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13.5,
                         fontWeight: FontWeight.w900,
-                        color: Color(0xFF9A3412),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF9A3412),
+                        ),
                       ),
                     ),
                     InkWell(
@@ -1980,16 +2061,24 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFF7ED),
+                          color: context.coloresNaturales.superficie(
+                            const Color(0xFFFFF7ED),
+                          ),
                           borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: const Color(0xFFFB923C)),
+                          border: Border.all(
+                            color: context.coloresNaturales.borde(
+                              const Color(0xFFFB923C),
+                            ),
+                          ),
                         ),
                         child: Text(
                           '${context.tr(etiquetaDif)} ↺',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFF9A3412),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF9A3412),
+                            ),
                           ),
                         ),
                       ),
@@ -2000,10 +2089,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFECFDF5),
+                        color: context.coloresNaturales.superficie(
+                          const Color(0xFFECFDF5),
+                        ),
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(
-                          color: const Color(0xFF6EE7B7),
+                          color: context.coloresNaturales.borde(
+                            const Color(0xFF6EE7B7),
+                          ),
                           width: 1.5,
                         ),
                       ),
@@ -2011,10 +2104,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                         context.tr(pregunta.zonaNombre),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF065F46),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF065F46),
+                          ),
                         ),
                       ),
                     ),
@@ -2030,7 +2125,9 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                     builder: (context, valor, _) => LinearProgressIndicator(
                       value: valor,
                       minHeight: 12,
-                      backgroundColor: const Color(0xFFF1F5F9),
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFFF1F5F9),
+                      ),
                       valueColor: const AlwaysStoppedAnimation<Color>(
                         Color(0xFF22C55E),
                       ),
@@ -2042,15 +2139,17 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           ),
           const SizedBox(height: 14),
           Container(
-
-      padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFFE2DEC9), width: 2.5),
-              boxShadow: const [
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFE2DEC9)),
+                width: 2.5,
+              ),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0xFFD0C9B8),
+                  color: context.coloresNaturales.sombra(Color(0xFFD0C9B8)),
                   offset: Offset(0, 4),
                   blurRadius: 0,
                 ),
@@ -2070,10 +2169,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                     Expanded(
                       child: Text(
                         context.tr(pregunta.pregunta),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16.5,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF1E293B),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF1E293B),
+                          ),
                           height: 1.25,
                         ),
                       ),
@@ -2087,10 +2188,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                     horizontal: 24,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFF8FAFC),
+                    ),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: const Color(0xFFE2E8F0),
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFFE2E8F0),
+                      ),
                       width: 2,
                     ),
                   ),
@@ -2119,18 +2224,25 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFFBEB),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFFFFBEB),
+                ),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFF59E0B), width: 2),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    const Color(0xFFF59E0B),
+                  ),
+                  width: 2,
+                ),
               ),
               child: Text(
                 context.tr(
                   '¡Casi! Fíjate bien en la ilustración y prueba con otra opción.',
                 ),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF92400E),
+                  color: context.coloresNaturales.contenido(Color(0xFF92400E)),
                 ),
               ),
             ),
@@ -2138,19 +2250,28 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFFECFDF5),
+                color: context.coloresNaturales.superficie(
+                  const Color(0xFFECFDF5),
+                ),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFF10B981), width: 2.2),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    const Color(0xFF10B981),
+                  ),
+                  width: 2.2,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     context.tr(pregunta.explicacion),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF065F46),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF065F46),
+                      ),
                     ),
                   ),
                 ],
@@ -2170,12 +2291,15 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
         key: const Key('expedicion-completada'),
         padding: const EdgeInsets.all(22),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.coloresNaturales.superficie(Colors.white),
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: const Color(0xFFF59E0B), width: 3),
-          boxShadow: const [
+          border: Border.all(
+            color: context.coloresNaturales.borde(const Color(0xFFF59E0B)),
+            width: 3,
+          ),
+          boxShadow: [
             BoxShadow(
-              color: Color(0x33F59E0B),
+              color: context.coloresNaturales.sombra(Color(0x33F59E0B)),
               offset: Offset(0, 6),
               blurRadius: 0,
             ),
@@ -2194,10 +2318,10 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             Text(
               context.tr('¡Desafío diario completado!'),
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w900,
-                color: Color(0xFF1B4332),
+                color: context.coloresNaturales.contenido(Color(0xFF1B4332)),
               ),
             ),
             const SizedBox(height: 6),
@@ -2206,10 +2330,10 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                 'Ya has superado la expedición de hoy. ¡Vuelve mañana para desbloquear un nuevo reto diario y seguir aumentando tu racha!',
               ),
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13.5,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF475569),
+                color: context.coloresNaturales.contenido(Color(0xFF475569)),
               ),
             ),
             const SizedBox(height: 16),
@@ -2225,9 +2349,13 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                 Expanded(
                   child: OutlinedButton.icon(
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xFF1B5E20),
-                      side: const BorderSide(
-                        color: Color(0xFF1B5E20),
+                      foregroundColor: context.coloresNaturales.contenido(
+                        const Color(0xFF1B5E20),
+                      ),
+                      side: BorderSide(
+                        color: context.coloresNaturales.borde(
+                          Color(0xFF1B5E20),
+                        ),
                         width: 2,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -2247,8 +2375,12 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                 Expanded(
                   child: FilledButton.icon(
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF1B5E20),
-                      foregroundColor: Colors.white,
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFF1B5E20),
+                      ),
+                      foregroundColor: context.coloresNaturales.contenido(
+                        Colors.white,
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
@@ -2309,7 +2441,7 @@ class _BotonOpcionExpedicion extends StatelessWidget {
     }
 
     return Material(
-      color: fondo,
+      color: context.coloresNaturales.superficie(fondo),
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -2318,10 +2450,15 @@ class _BotonOpcionExpedicion extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: borde, width: 2.5),
+            border: Border.all(
+              color: context.coloresNaturales.borde(borde),
+              width: 2.5,
+            ),
             boxShadow: [
               BoxShadow(
-                color: borde.withValues(alpha: 0.25),
+                color: context.coloresNaturales.sombra(
+                  borde.withValues(alpha: 0.25),
+                ),
                 offset: const Offset(0, 3),
                 blurRadius: 0,
               ),
@@ -2329,7 +2466,11 @@ class _BotonOpcionExpedicion extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icono, color: textoColor, size: 22),
+              Icon(
+                icono,
+                color: context.coloresNaturales.contenido(textoColor),
+                size: 22,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -2337,7 +2478,7 @@ class _BotonOpcionExpedicion extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
-                    color: textoColor,
+                    color: context.coloresNaturales.contenido(textoColor),
                   ),
                 ),
               ),

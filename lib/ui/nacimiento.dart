@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -252,7 +254,9 @@ class _NacimientoPageState extends State<NacimientoPage>
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -268,13 +272,15 @@ class _NacimientoPageState extends State<NacimientoPage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -419,8 +425,12 @@ class _NacimientoPageState extends State<NacimientoPage>
     };
     return TarjetaJuego(
       claveAccion: Key('nivel-${nivel.id}'),
-      borde: hecho ? EstilosJuego.acierto : const Color(0xFF38BDF8),
-      sombra: hecho ? const Color(0xFF239E56) : const Color(0xFF0284C7),
+      borde: context.coloresNaturales.borde(
+        hecho ? EstilosJuego.acierto : const Color(0xFF38BDF8),
+      ),
+      sombra: context.coloresNaturales.sombra(
+        hecho ? const Color(0xFF239E56) : const Color(0xFF0284C7),
+      ),
       radio: 20,
       onTap: () => _empezar(nivel),
       child: Padding(
@@ -443,9 +453,11 @@ class _NacimientoPageState extends State<NacimientoPage>
                       Icon(
                         Icons.star_rounded,
                         size: 18,
-                        color: hecho
-                            ? const Color(0xFFF59E0B)
-                            : const Color(0xFFCBD5E1),
+                        color: context.coloresNaturales.contenido(
+                          hecho
+                              ? const Color(0xFFF59E0B)
+                              : const Color(0xFFCBD5E1),
+                        ),
                       ),
                   ],
                 ),
@@ -492,11 +504,11 @@ class _NacimientoPageState extends State<NacimientoPage>
             ),
             if (hecho) ...[
               const SizedBox(height: 6),
-              const Texto(
+              Texto(
                 '✓ Nivel superado',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
               ),
             ],
@@ -516,12 +528,14 @@ class _NacimientoPageState extends State<NacimientoPage>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        color: context.coloresNaturales.superficie(
+          desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        ),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(
-          color: desbloqueado
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFFCBD5E1),
+          color: context.coloresNaturales.borde(
+            desbloqueado ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+          ),
         ),
       ),
       child: Row(
@@ -532,9 +546,9 @@ class _NacimientoPageState extends State<NacimientoPage>
                 ? Icons.auto_stories_rounded
                 : Icons.lock_outline_rounded,
             size: 13,
-            color: desbloqueado
-                ? const Color(0xFFB45309)
-                : const Color(0xFF64748B),
+            color: context.coloresNaturales.contenido(
+              desbloqueado ? const Color(0xFFB45309) : const Color(0xFF64748B),
+            ),
           ),
           const SizedBox(width: 4),
           Flexible(
@@ -545,9 +559,11 @@ class _NacimientoPageState extends State<NacimientoPage>
               style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w800,
-                color: desbloqueado
-                    ? const Color(0xFF92400E)
-                    : const Color(0xFF475569),
+                color: context.coloresNaturales.contenido(
+                  desbloqueado
+                      ? const Color(0xFF92400E)
+                      : const Color(0xFF475569),
+                ),
               ),
             ),
           ),
@@ -721,12 +737,16 @@ class _NacimientoPageState extends State<NacimientoPage>
           child: TarjetaJuego(
             claveAccion: Key('nido-${nido.id}'),
             onTap: () => _tocarNido(nido.id),
-            borde: fallo
-                ? EstilosJuego.fallo
-                : encima || partida.seleccionado != null
-                ? Theme.of(context).colorScheme.primary
-                : borde,
-            fondo: encima ? Colors.white : fondo,
+            borde: context.coloresNaturales.borde(
+              fallo
+                  ? EstilosJuego.fallo
+                  : encima || partida.seleccionado != null
+                  ? Theme.of(context).colorScheme.primary
+                  : borde,
+            ),
+            fondo: context.coloresNaturales.superficie(
+              encima ? Colors.white : fondo,
+            ),
             destacada: encima || partida.seleccionado != null,
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 170),
@@ -739,16 +759,19 @@ class _NacimientoPageState extends State<NacimientoPage>
                       children: [
                         DibujoNacimiento(id: nido.id, tamano: 76),
                         if (fallo)
-                          const Positioned(
+                          Positioned(
                             right: -6,
                             top: -6,
                             child: CircleAvatar(
                               radius: 13,
-                              backgroundColor: EstilosJuego.fallo,
+                              backgroundColor: context.coloresNaturales
+                                  .superficie(EstilosJuego.fallo),
                               child: Icon(
                                 Icons.replay_rounded,
                                 size: 16,
-                                color: Colors.white,
+                                color: context.coloresNaturales.contenido(
+                                  Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -758,10 +781,12 @@ class _NacimientoPageState extends State<NacimientoPage>
                     Texto(
                       nido.nombre,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 15,
-                        color: Color(0xFF1B3022),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF1B3022),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -788,7 +813,7 @@ class _NacimientoPageState extends State<NacimientoPage>
     return Tooltip(
       message: context.traducir(animal.nombre),
       child: Material(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           key: Key('colocado-${animal.id}'),
@@ -822,12 +847,16 @@ class _NacimientoPageState extends State<NacimientoPage>
       child: TarjetaJuego(
         claveAccion: clave,
         onTap: onTap,
-        borde: seleccionado
-            ? Theme.of(context).colorScheme.primary
-            : EstilosJuego.borde,
-        fondo: seleccionado
-            ? Theme.of(context).colorScheme.primaryContainer
-            : Colors.white,
+        borde: context.coloresNaturales.borde(
+          seleccionado
+              ? Theme.of(context).colorScheme.primary
+              : EstilosJuego.borde,
+        ),
+        fondo: context.coloresNaturales.superficie(
+          seleccionado
+              ? Theme.of(context).colorScheme.primaryContainer
+              : Colors.white,
+        ),
         destacada: seleccionado,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
@@ -857,7 +886,9 @@ class _NacimientoPageState extends State<NacimientoPage>
                 const SizedBox(width: 6),
                 Icon(
                   seleccionado ? Icons.check_circle : Icons.touch_app_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: context.coloresNaturales.contenido(
+                    Theme.of(context).colorScheme.primary,
+                  ),
                   size: 20,
                 ),
               ],
@@ -874,7 +905,7 @@ class _NacimientoPageState extends State<NacimientoPage>
         setState(() => partida.seleccionar(animal.id));
       },
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: Transform.translate(
           offset: const Offset(-48, -48),
           child: IlustracionFicha(id: animal.id, alto: 96),
@@ -932,11 +963,11 @@ class _NacimientoPageState extends State<NacimientoPage>
       ),
       if (partida.cicloOrdenado) ...[
         const SizedBox(height: 8),
-        const Texto(
+        Texto(
           '↻ El adulto pone huevos y el ciclo vuelve a empezar.',
           style: TextStyle(
             fontWeight: FontWeight.w800,
-            color: Color(0xFF15803D),
+            color: context.coloresNaturales.contenido(Color(0xFF15803D)),
           ),
         ),
       ] else ...[
@@ -978,13 +1009,13 @@ class _NacimientoPageState extends State<NacimientoPage>
             _burbuja(partida.resultado, ciclo.intro),
             if (partida.cicloOrdenado && !partida.preguntaAcertada) ...[
               const SizedBox(height: 16),
-              const Texto(
+              Texto(
                 'Pregunta del ciclo',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
                   letterSpacing: .6,
-                  color: Color(0xFFB45309),
+                  color: context.coloresNaturales.contenido(Color(0xFFB45309)),
                 ),
               ),
               const SizedBox(height: 4),
@@ -1061,12 +1092,14 @@ class _NacimientoPageState extends State<NacimientoPage>
                     setState(() => partida.quitar(indice));
                     context.sonidoQuitar();
                   },
-            borde: borde,
-            fondo: ordenado
-                ? const Color(0xFFECFDF5)
-                : encima
-                ? const Color(0xFFE0F2FE)
-                : Colors.white,
+            borde: context.coloresNaturales.borde(borde),
+            fondo: context.coloresNaturales.superficie(
+              ordenado
+                  ? const Color(0xFFECFDF5)
+                  : encima
+                  ? const Color(0xFFE0F2FE)
+                  : Colors.white,
+            ),
             destacada: encima || fallo,
             radio: 18,
             child: ConstrainedBox(
@@ -1082,17 +1115,21 @@ class _NacimientoPageState extends State<NacimientoPage>
                       children: [
                         CircleAvatar(
                           radius: 13,
-                          backgroundColor: ordenado
-                              ? EstilosJuego.acierto
-                              : const Color(0xFFF1F5F9),
+                          backgroundColor: context.coloresNaturales.superficie(
+                            ordenado
+                                ? EstilosJuego.acierto
+                                : const Color(0xFFF1F5F9),
+                          ),
                           child: Texto(
                             '${indice + 1}',
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 12,
-                              color: ordenado
-                                  ? Colors.white
-                                  : const Color(0xFF475569),
+                              color: context.coloresNaturales.contenido(
+                                ordenado
+                                    ? Colors.white
+                                    : const Color(0xFF475569),
+                              ),
                             ),
                           ),
                         ),
@@ -1112,9 +1149,11 @@ class _NacimientoPageState extends State<NacimientoPage>
                                       ? Icons.replay_rounded
                                       : Icons.close_rounded,
                                   size: 18,
-                                  color: fallo
-                                      ? EstilosJuego.fallo
-                                      : const Color(0xFF64748B),
+                                  color: context.coloresNaturales.contenido(
+                                    fallo
+                                        ? EstilosJuego.fallo
+                                        : const Color(0xFF64748B),
+                                  ),
                                 ),
                         ),
                       ],
@@ -1128,9 +1167,11 @@ class _NacimientoPageState extends State<NacimientoPage>
                             ? FontWeight.w700
                             : FontWeight.w800,
                         fontSize: 13.5,
-                        color: nombre == null
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFF0F172A),
+                        color: context.coloresNaturales.contenido(
+                          nombre == null
+                              ? const Color(0xFF94A3B8)
+                              : const Color(0xFF0F172A),
+                        ),
                       ),
                     ),
                   ],
@@ -1153,7 +1194,7 @@ class _NacimientoPageState extends State<NacimientoPage>
       child: TarjetaJuego(
         claveAccion: clave,
         onTap: onTap,
-        borde: const Color(0xFFBAE6FD),
+        borde: context.coloresNaturales.borde(const Color(0xFFBAE6FD)),
         radio: 18,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
@@ -1166,17 +1207,19 @@ class _NacimientoPageState extends State<NacimientoPage>
                 Expanded(
                   child: Texto(
                     paso.nombre,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 13.5,
-                      color: Color(0xFF0F172A),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF0F172A),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Icon(
+                Icon(
                   Icons.add_circle_rounded,
-                  color: Color(0xFF0284C7),
+                  color: context.coloresNaturales.contenido(Color(0xFF0284C7)),
                   size: 22,
                 ),
               ],
@@ -1190,7 +1233,7 @@ class _NacimientoPageState extends State<NacimientoPage>
       onDragStarted: () => context.sonidoSeleccion(),
       dragAnchorStrategy: pointerDragAnchorStrategy,
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: Transform.translate(
           offset: const Offset(-36, -36),
           child: DibujoNacimiento(id: paso.id, tamano: 72),

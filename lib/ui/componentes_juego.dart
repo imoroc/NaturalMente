@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos_natu.dart';
@@ -34,22 +36,22 @@ class TarjetaJuego extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: fondo,
+        color: context.coloresNaturales.superficie(fondo),
         borderRadius: BorderRadius.circular(radio),
         border: Border.all(
-          color: borde,
+          color: context.coloresNaturales.borde(borde),
           width: destacada ? 3.0 : 2.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorSombra,
+            color: context.coloresNaturales.sombra(colorSombra),
             offset: Offset(0, destacada ? 5 : 3),
             blurRadius: 0,
           ),
         ],
       ),
       child: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         borderRadius: BorderRadius.circular(radio),
         child: InkWell(
           key: claveAccion,
@@ -180,13 +182,20 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: gradienteCombo,
+                    colors: (gradienteCombo)
+                        .map(context.coloresNaturales.superficie)
+                        .toList(),
                   ),
                   borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: colorBorde, width: 2.2),
+                  border: Border.all(
+                    color: context.coloresNaturales.borde(colorBorde),
+                    width: 2.2,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: colorBorde.withValues(alpha: activo ? 0.38 : 0.15),
+                      color: context.coloresNaturales.sombra(
+                        colorBorde.withValues(alpha: activo ? 0.38 : 0.15),
+                      ),
                       offset: const Offset(0, 3),
                       blurRadius: enFuego ? 8 : 0,
                     ),
@@ -206,7 +215,7 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13.5,
                         fontWeight: FontWeight.w900,
-                        color: colorTexto,
+                        color: context.coloresNaturales.contenido(colorTexto),
                       ),
                     ),
                     if (mostrarHito) ...[
@@ -217,19 +226,23 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
                           vertical: 1.5,
                         ),
                         decoration: BoxDecoration(
-                          color: supernova
-                              ? const Color(0xFFE11D48)
-                              : (enFuego
-                                    ? const Color(0xFFEA580C)
-                                    : const Color(0xFFD97706)),
+                          color: context.coloresNaturales.superficie(
+                            supernova
+                                ? const Color(0xFFE11D48)
+                                : (enFuego
+                                      ? const Color(0xFFEA580C)
+                                      : const Color(0xFFD97706)),
+                          ),
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
                           context.tr(hito),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 9.5,
                             fontWeight: FontWeight.w900,
-                            color: Colors.white,
+                            color: context.coloresNaturales.contenido(
+                              Colors.white,
+                            ),
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -254,19 +267,26 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Color(0xFFECFDF5), Color(0xFFD1FAE5)],
+                      colors: ([
+                        Color(0xFFECFDF5),
+                        Color(0xFFD1FAE5),
+                      ]).map(context.coloresNaturales.superficie).toList(),
                     ),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: const Color(0xFF059669),
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFF059669),
+                      ),
                       width: 2.0,
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Color(0x33059669),
+                        color: context.coloresNaturales.sombra(
+                          Color(0x33059669),
+                        ),
                         offset: Offset(0, 3),
                         blurRadius: 0,
                       ),
@@ -279,10 +299,12 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '+$semillasSesion',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF065F46),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF065F46),
+                          ),
                         ),
                       ),
                     ],
@@ -375,16 +397,23 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
         return Container(
           padding: EdgeInsets.all(compacto ? 12 : 16),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xFFFFF7ED), Color(0xFFFEF3C7), Color(0xFFFFEDD5)],
+              colors: ([
+                Color(0xFFFFF7ED),
+                Color(0xFFFEF3C7),
+                Color(0xFFFFEDD5),
+              ]).map(context.coloresNaturales.superficie).toList(),
             ),
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: const Color(0xFFF97316), width: 2.6),
-            boxShadow: const [
+            border: Border.all(
+              color: context.coloresNaturales.borde(const Color(0xFFF97316)),
+              width: 2.6,
+            ),
+            boxShadow: [
               BoxShadow(
-                color: Color(0x38EA580C),
+                color: context.coloresNaturales.sombra(Color(0x38EA580C)),
                 offset: Offset(0, 4),
                 blurRadius: 0,
               ),
@@ -408,15 +437,20 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                         height: compacto ? 54 : 68,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: const RadialGradient(
-                            colors: [
-                              Color(0xFFFEF08A),
-                              Color(0xFFFED7AA),
-                              Color(0x00FED7AA),
-                            ],
+                          gradient: RadialGradient(
+                            colors:
+                                ([
+                                      Color(0xFFFEF08A),
+                                      Color(0xFFFED7AA),
+                                      Color(0x00FED7AA),
+                                    ])
+                                    .map(context.coloresNaturales.superficie)
+                                    .toList(),
                           ),
                           border: Border.all(
-                            color: const Color(0xFFFB923C),
+                            color: context.coloresNaturales.borde(
+                              const Color(0xFFFB923C),
+                            ),
                             width: 2,
                           ),
                         ),
@@ -444,7 +478,9 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: compacto ? 28 : 34,
                                 fontWeight: FontWeight.w900,
-                                color: const Color(0xFFEA580C),
+                                color: context.coloresNaturales.contenido(
+                                  const Color(0xFFEA580C),
+                                ),
                                 height: 1.0,
                               ),
                             ),
@@ -457,7 +493,9 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: compacto ? 15 : 17,
                                   fontWeight: FontWeight.w900,
-                                  color: const Color(0xFF9A3412),
+                                  color: context.coloresNaturales.contenido(
+                                    const Color(0xFF9A3412),
+                                  ),
                                 ),
                               ),
                             ),
@@ -472,10 +510,12 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                               : context.tr(
                                   '¡Completa los 3 retos de hoy para encender tu llama diaria!',
                                 ),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF7C2D12),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF7C2D12),
+                            ),
                           ),
                         ),
                       ],
@@ -490,10 +530,14 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.88),
+                  color: context.coloresNaturales.superficie(
+                    Colors.white.withValues(alpha: 0.88),
+                  ),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: const Color(0xFFFED7AA),
+                    color: context.coloresNaturales.borde(
+                      const Color(0xFFFED7AA),
+                    ),
                     width: 1.8,
                   ),
                 ),
@@ -540,9 +584,9 @@ class _CapsulaDiaRacha extends StatelessWidget {
           style: TextStyle(
             fontSize: 10.5,
             fontWeight: FontWeight.w900,
-            color: encendido
-                ? const Color(0xFF9A3412)
-                : const Color(0xFF94A3B8),
+            color: context.coloresNaturales.contenido(
+              encendido ? const Color(0xFF9A3412) : const Color(0xFF94A3B8),
+            ),
           ),
         ),
         const SizedBox(height: 4),
@@ -552,33 +596,40 @@ class _CapsulaDiaRacha extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: encendido
-                ? const LinearGradient(
+                ? LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFB923C), Color(0xFFEA580C)],
+                    colors: ([
+                      Color(0xFFFB923C),
+                      Color(0xFFEA580C),
+                    ]).map(context.coloresNaturales.superficie).toList(),
                   )
                 : null,
-            color: encendido ? null : const Color(0xFFF1F5F9),
+            color: context.coloresNaturales.superficieOpcional(
+              encendido ? null : const Color(0xFFF1F5F9),
+            ),
             border: Border.all(
-              color: esHoy
-                  ? const Color(0xFFFACC15)
-                  : (encendido
-                        ? const Color(0xFFC2410C)
-                        : const Color(0xFFCBD5E1)),
+              color: context.coloresNaturales.borde(
+                esHoy
+                    ? const Color(0xFFFACC15)
+                    : (encendido
+                          ? const Color(0xFFC2410C)
+                          : const Color(0xFFCBD5E1)),
+              ),
               width: esHoy ? 2.4 : 1.6,
             ),
           ),
           alignment: Alignment.center,
           child: encendido
-              ? const Icon(
+              ? Icon(
                   Icons.local_fire_department_rounded,
                   size: 15,
-                  color: Color(0xFFFEF08A),
+                  color: context.coloresNaturales.contenido(Color(0xFFFEF08A)),
                 )
-              : const Icon(
+              : Icon(
                   Icons.circle,
                   size: 6,
-                  color: Color(0xFFCBD5E1),
+                  color: context.coloresNaturales.contenido(Color(0xFFCBD5E1)),
                 ),
         ),
       ],
@@ -624,23 +675,26 @@ class ResumenPrecisionFinal extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: perfecto
-              ? const [Color(0xFFFEF9C3), Color(0xFFFFEDD5)]
-              : const [Color(0xFFF0FDF4), Color(0xFFDCFCE7)],
+          colors:
+              (perfecto
+                      ? const [Color(0xFFFEF9C3), Color(0xFFFFEDD5)]
+                      : const [Color(0xFFF0FDF4), Color(0xFFDCFCE7)])
+                  .map(context.coloresNaturales.superficie)
+                  .toList(),
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: perfecto
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFF22C55E),
+          color: context.coloresNaturales.borde(
+            perfecto ? const Color(0xFFF59E0B) : const Color(0xFF22C55E),
+          ),
           width: 2.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (perfecto
-                    ? const Color(0xFFF59E0B)
-                    : const Color(0xFF22C55E))
-                .withValues(alpha: 0.25),
+            color: context.coloresNaturales.sombra(
+              (perfecto ? const Color(0xFFF59E0B) : const Color(0xFF22C55E))
+                  .withValues(alpha: 0.25),
+            ),
             offset: const Offset(0, 4),
             blurRadius: 0,
           ),
@@ -651,17 +705,17 @@ class ResumenPrecisionFinal extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: perfecto
-                  ? const Color(0xFFD97706)
-                  : const Color(0xFF15803D),
+              color: context.coloresNaturales.superficie(
+                perfecto ? const Color(0xFFD97706) : const Color(0xFF15803D),
+              ),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
               context.tr(tituloHito),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w900,
-                color: Colors.white,
+                color: context.coloresNaturales.contenido(Colors.white),
                 letterSpacing: 0.5,
               ),
             ),
@@ -673,15 +727,19 @@ class ResumenPrecisionFinal extends StatelessWidget {
             alignment: WrapAlignment.center,
             children: [
               _PildoraEstadisticaDuolingo(
-                icono: const Icon(
+                icono: Icon(
                   Icons.gps_fixed_rounded,
                   size: 18,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
                 etiqueta: context.tr('Precisión'),
                 valor: '$porcentaje %',
-                colorBorde: const Color(0xFF22C55E),
-                colorTexto: const Color(0xFF14532D),
+                colorBorde: context.coloresNaturales.borde(
+                  const Color(0xFF22C55E),
+                ),
+                colorTexto: context.coloresNaturales.contenido(
+                  const Color(0xFF14532D),
+                ),
               ),
               _PildoraEstadisticaDuolingo(
                 icono: IconoLlamaRacha(
@@ -691,15 +749,23 @@ class ResumenPrecisionFinal extends StatelessWidget {
                 ),
                 etiqueta: context.tr('Mejor racha'),
                 valor: 'x${math.max(1, mejorComboSesion)}',
-                colorBorde: const Color(0xFFEA580C),
-                colorTexto: const Color(0xFF9A3412),
+                colorBorde: context.coloresNaturales.borde(
+                  const Color(0xFFEA580C),
+                ),
+                colorTexto: context.coloresNaturales.contenido(
+                  const Color(0xFF9A3412),
+                ),
               ),
               _PildoraEstadisticaDuolingo(
                 icono: const IconoSemilla(tamano: 18),
                 etiqueta: context.tr('Semillas'),
                 valor: '+$semillasGanadas',
-                colorBorde: const Color(0xFFD97706),
-                colorTexto: const Color(0xFF78350F),
+                colorBorde: context.coloresNaturales.borde(
+                  const Color(0xFFD97706),
+                ),
+                colorTexto: context.coloresNaturales.contenido(
+                  const Color(0xFF78350F),
+                ),
               ),
             ],
           ),
@@ -729,12 +795,17 @@ class _PildoraEstadisticaDuolingo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.coloresNaturales.superficie(Colors.white),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: colorBorde, width: 2),
+        border: Border.all(
+          color: context.coloresNaturales.borde(colorBorde),
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: colorBorde.withValues(alpha: 0.18),
+            color: context.coloresNaturales.sombra(
+              colorBorde.withValues(alpha: 0.18),
+            ),
             offset: const Offset(0, 2),
             blurRadius: 0,
           ),
@@ -754,10 +825,12 @@ class _PildoraEstadisticaDuolingo extends StatelessWidget {
                   etiqueta,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF64748B),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF64748B),
+                    ),
                   ),
                 ),
                 Text(
@@ -767,7 +840,7 @@ class _PildoraEstadisticaDuolingo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w900,
-                    color: colorTexto,
+                    color: context.coloresNaturales.contenido(colorTexto),
                   ),
                 ),
               ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
@@ -33,10 +35,12 @@ class MapaPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.public_rounded,
                               size: 20,
-                              color: Color(0xFF15803D),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF15803D),
+                              ),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
@@ -44,7 +48,9 @@ class MapaPage extends StatelessWidget {
                                 'MUNDOS PARA EXPLORAR',
                                 style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
-                                      color: const Color(0xFF334155),
+                                      color: context.coloresNaturales.contenido(
+                                        const Color(0xFF334155),
+                                      ),
                                       fontWeight: FontWeight.w900,
                                       letterSpacing: 0.6,
                                     ),
@@ -112,16 +118,22 @@ class _CabeceraNatu extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFFFFF), Color(0xFFF5FBF7)],
+        gradient: LinearGradient(
+          colors: ([
+            Color(0xFFFFFFFF),
+            Color(0xFFF5FBF7),
+          ]).map(context.coloresNaturales.superficie).toList(),
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: const Color(0xFF86EFAC), width: 2.5),
-        boxShadow: const [
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFF86EFAC)),
+          width: 2.5,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFF4ADE80),
+            color: context.coloresNaturales.sombra(Color(0xFF4ADE80)),
             offset: Offset(0, 5),
             blurRadius: 0,
           ),
@@ -141,16 +153,20 @@ class _CabeceraNatu extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFDCFCE7),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFDCFCE7),
+                    ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.eco_rounded,
                         size: 14,
-                        color: Color(0xFF15803D),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF15803D),
+                        ),
                       ),
                       const SizedBox(width: 5),
                       Flexible(
@@ -158,11 +174,13 @@ class _CabeceraNatu extends StatelessWidget {
                           rango,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.6,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                       ),
@@ -185,10 +203,14 @@ class _CabeceraNatu extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFECFDF5),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFECFDF5),
+                    ),
                     borderRadius: BorderRadius.circular(22),
                     border: Border.all(
-                      color: const Color(0xFF86EFAC),
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFF86EFAC),
+                      ),
                       width: 2,
                     ),
                   ),
@@ -214,10 +236,12 @@ class _CabeceraNatu extends StatelessWidget {
                     const SizedBox(height: 3),
                     Texto(
                       saludo,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 13.5,
-                        color: Color(0xFF334155),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF334155),
+                        ),
                         height: 1.25,
                       ),
                     ),
@@ -240,9 +264,15 @@ class _CabeceraNatu extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFFBEB),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFFFFBEB),
+                    ),
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: const Color(0xFFF59E0B)),
+                    border: Border.all(
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFFF59E0B),
+                      ),
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -254,10 +284,12 @@ class _CabeceraNatu extends StatelessWidget {
                           '${progreso.semillas} ${progreso.semillas == 1 ? 'Semilla' : 'Semillas'} · Armario',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFF92400E),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF92400E),
+                            ),
                           ),
                         ),
                       ),
@@ -281,17 +313,25 @@ class _CabeceraNatu extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF0D6),
+                    color: context.coloresNaturales.superficie(
+                      const Color(0xFFFFF0D6),
+                    ),
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: const Color(0xFFFF9F1C)),
+                    border: Border.all(
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFFFF9F1C),
+                      ),
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.local_fire_department_rounded,
                         size: 15,
-                        color: Color(0xFFE66A00),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFFE66A00),
+                        ),
                       ),
                       const SizedBox(width: 4),
                       Flexible(
@@ -303,10 +343,12 @@ class _CabeceraNatu extends StatelessWidget {
                               : 'Reto diario',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFFB45309),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFFB45309),
+                            ),
                           ),
                         ),
                       ),
@@ -320,16 +362,21 @@ class _CabeceraNatu extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.coloresNaturales.superficie(Colors.white),
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFE2E8F0), width: 2),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFFE2E8F0)),
+                width: 2,
+              ),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: _InsigniaResumen(
                     icono: Icons.star_rounded,
-                    colorIcono: const Color(0xFFF59E0B),
+                    colorIcono: context.coloresNaturales.contenido(
+                      const Color(0xFFF59E0B),
+                    ),
                     colorFondo: const Color(0xFFFFFBEB),
                     valor: '$estrellas/$maxEstrellas',
                     etiqueta: 'Estrellas',
@@ -338,12 +385,16 @@ class _CabeceraNatu extends StatelessWidget {
                 Container(
                   width: 1.5,
                   height: 32,
-                  color: const Color(0xFFE2E8F0),
+                  color: context.coloresNaturales.superficie(
+                    const Color(0xFFE2E8F0),
+                  ),
                 ),
                 Expanded(
                   child: _InsigniaResumen(
                     icono: Icons.flag_rounded,
-                    colorIcono: const Color(0xFF16A34A),
+                    colorIcono: context.coloresNaturales.contenido(
+                      const Color(0xFF16A34A),
+                    ),
                     colorFondo: const Color(0xFFF0FDF4),
                     valor: '$misionesHechas/$totalMisiones',
                     etiqueta: 'Misiones',
@@ -352,7 +403,9 @@ class _CabeceraNatu extends StatelessWidget {
                 Container(
                   width: 1.5,
                   height: 32,
-                  color: const Color(0xFFE2E8F0),
+                  color: context.coloresNaturales.superficie(
+                    const Color(0xFFE2E8F0),
+                  ),
                 ),
                 Expanded(
                   child: InkWell(
@@ -364,7 +417,9 @@ class _CabeceraNatu extends StatelessWidget {
                     },
                     child: _InsigniaResumen(
                       icono: Icons.auto_stories_rounded,
-                      colorIcono: const Color(0xFFD97706),
+                      colorIcono: context.coloresNaturales.contenido(
+                        const Color(0xFFD97706),
+                      ),
                       colorFondo: const Color(0xFFFFFBEB),
                       valor: '$cromos/$totalCromos',
                       etiqueta: 'Ver álbum',
@@ -409,10 +464,14 @@ class _InsigniaResumen extends StatelessWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: colorFondo,
+              color: context.coloresNaturales.superficie(colorFondo),
               shape: BoxShape.circle,
             ),
-            child: Icon(icono, color: colorIcono, size: 19),
+            child: Icon(
+              icono,
+              color: context.coloresNaturales.contenido(colorIcono),
+              size: 19,
+            ),
           ),
           const SizedBox(width: 7),
           Flexible(
@@ -423,10 +482,12 @@ class _InsigniaResumen extends StatelessWidget {
                   valor,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 13.5,
-                    color: Color(0xFF1E293B),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF1E293B),
+                    ),
                   ),
                 ),
                 Texto(
@@ -436,9 +497,11 @@ class _InsigniaResumen extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 11,
-                    color: destacado
-                        ? const Color(0xFFB45309)
-                        : const Color(0xFF64748B),
+                    color: context.coloresNaturales.contenido(
+                      destacado
+                          ? const Color(0xFFB45309)
+                          : const Color(0xFF64748B),
+                    ),
                   ),
                 ),
               ],
@@ -482,19 +545,22 @@ class _ZonaTarjeta extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: estilo.fondo,
+        color: context.coloresNaturales.superficie(estilo.fondo),
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: estilo.borde, width: 2.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(estilo.borde),
+          width: 2.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: estilo.sombra,
+            color: context.coloresNaturales.sombra(estilo.sombra),
             offset: const Offset(0, 5),
             blurRadius: 0,
           ),
         ],
       ),
       child: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: InkWell(
           key: Key('zona-${zona.id}'),
           borderRadius: BorderRadius.circular(24),
@@ -516,11 +582,24 @@ class _ZonaTarjeta extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: context.coloresNaturales.superficie(
+                          Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: estilo.borde, width: 2),
+                        border: Border.all(
+                          color: context.coloresNaturales.borde(estilo.borde),
+                          width: 2,
+                        ),
                       ),
-                      child: zona.id.isEmpty ? Icon(estilo.icono, color: estilo.acento, size: 30) : InsigniaIlustradaZona(id: zona.id, tamano: 52),
+                      child: zona.id.isEmpty
+                          ? Icon(
+                              estilo.icono,
+                              color: context.coloresNaturales.contenido(
+                                estilo.acento,
+                              ),
+                              size: 30,
+                            )
+                          : InsigniaIlustradaZona(id: zona.id, tamano: 52),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -536,7 +615,9 @@ class _ZonaTarjeta extends StatelessWidget {
                                     vertical: 3,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.9),
+                                    color: context.coloresNaturales.superficie(
+                                      Colors.white.withValues(alpha: 0.9),
+                                    ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Texto(
@@ -546,7 +627,9 @@ class _ZonaTarjeta extends StatelessWidget {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       fontSize: 12,
-                                      color: estilo.acento,
+                                      color: context.coloresNaturales.contenido(
+                                        estilo.acento,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -558,11 +641,12 @@ class _ZonaTarjeta extends StatelessWidget {
                                   vertical: 3,
                                 ),
                                 decoration: BoxDecoration(
-                                  color:
-                                      hechas == actividades.length &&
-                                          actividades.isNotEmpty
-                                      ? const Color(0xFF2ECC71)
-                                      : Colors.white.withValues(alpha: 0.9),
+                                  color: context.coloresNaturales.superficie(
+                                    hechas == actividades.length &&
+                                            actividades.isNotEmpty
+                                        ? const Color(0xFF2ECC71)
+                                        : Colors.white.withValues(alpha: 0.9),
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Texto(
@@ -570,11 +654,12 @@ class _ZonaTarjeta extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     fontSize: 12,
-                                    color:
-                                        hechas == actividades.length &&
-                                            actividades.isNotEmpty
-                                        ? Colors.white
-                                        : estilo.acento,
+                                    color: context.coloresNaturales.contenido(
+                                      hechas == actividades.length &&
+                                              actividades.isNotEmpty
+                                          ? Colors.white
+                                          : estilo.acento,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -588,8 +673,10 @@ class _ZonaTarjeta extends StatelessWidget {
                           const SizedBox(height: 3),
                           Texto(
                             zona.resumen,
-                            style: const TextStyle(
-                              color: Color(0xFF334155),
+                            style: TextStyle(
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF334155),
+                              ),
                               fontWeight: FontWeight.w600,
                               height: 1.3,
                             ),
@@ -606,10 +693,14 @@ class _ZonaTarjeta extends StatelessWidget {
                     vertical: 9,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.88),
+                    color: context.coloresNaturales.superficie(
+                      Colors.white.withValues(alpha: 0.88),
+                    ),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: estilo.borde.withValues(alpha: 0.45),
+                      color: context.coloresNaturales.borde(
+                        estilo.borde.withValues(alpha: 0.45),
+                      ),
                       width: 1.5,
                     ),
                   ),
@@ -631,11 +722,13 @@ class _ZonaTarjeta extends StatelessWidget {
                                   height: 34,
                                   padding: const EdgeInsets.all(3),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: context.coloresNaturales.superficie(
+                                      Colors.white,
+                                    ),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: estilo.borde.withValues(
-                                        alpha: 0.5,
+                                      color: context.coloresNaturales.borde(
+                                        estilo.borde.withValues(alpha: 0.5),
                                       ),
                                     ),
                                   ),
@@ -651,34 +744,42 @@ class _ZonaTarjeta extends StatelessWidget {
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.star_rounded,
                                 size: 16,
-                                color: Color(0xFFF59E0B),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFFF59E0B),
+                                ),
                               ),
                               const SizedBox(width: 3),
                               Texto(
                                 '$estrellasZona/$maxEstrellasZona',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFF334155),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF334155),
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 10),
                               Icon(
                                 Icons.style_rounded,
                                 size: 15,
-                                color: estilo.acento,
+                                color: context.coloresNaturales.contenido(
+                                  estilo.acento,
+                                ),
                               ),
                               const SizedBox(width: 3),
                               Flexible(
                                 child: Texto(
                                   '$cromosZona/${fichasZona.length} cromos',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w800,
-                                    color: Color(0xFF334155),
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFF334155),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -690,16 +791,20 @@ class _ZonaTarjeta extends StatelessWidget {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: estilo.acento,
+                              color: context.coloresNaturales.superficie(
+                                estilo.acento,
+                              ),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Texto(
                                   'Explorar',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: context.coloresNaturales.contenido(
+                                      Colors.white,
+                                    ),
                                     fontWeight: FontWeight.w900,
                                     fontSize: 12,
                                   ),
@@ -708,7 +813,9 @@ class _ZonaTarjeta extends StatelessWidget {
                                 Icon(
                                   Icons.arrow_forward_rounded,
                                   size: 15,
-                                  color: Colors.white,
+                                  color: context.coloresNaturales.contenido(
+                                    Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
@@ -722,7 +829,8 @@ class _ZonaTarjeta extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: fraccionZona,
                             minHeight: 6,
-                            backgroundColor: estilo.fondo,
+                            backgroundColor: context.coloresNaturales
+                                .superficie(estilo.fondo),
                             valueColor: AlwaysStoppedAnimation<Color>(
                               estilo.borde,
                             ),
@@ -748,7 +856,9 @@ void _mostrarAlbumCompleto(BuildContext context) {
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: true,
-    backgroundColor: const Color(0xFFF6F1E6),
+    backgroundColor: context.coloresNaturales.superficie(
+      const Color(0xFFF6F1E6),
+    ),
     builder: (context) => DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.88,
@@ -779,9 +889,11 @@ void _mostrarAlbumCompleto(BuildContext context) {
                         ),
                         Texto(
                           'Has descubierto $desbloqueadas de $total cromos naturales.',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF475569),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF475569),
+                            ),
                           ),
                         ),
                       ],
@@ -795,11 +907,13 @@ void _mostrarAlbumCompleto(BuildContext context) {
                   padding: const EdgeInsets.only(top: 6, bottom: 8),
                   child: Texto(
                     '${zona.nombre.toUpperCase()} · ${zona.bloque.toUpperCase()}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 0.6,
-                      color: Color(0xFF15803D),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF15803D),
+                      ),
                     ),
                   ),
                 ),
@@ -896,19 +1010,22 @@ class _TarjetaExpedicionDiaria extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8EC),
+        color: context.coloresNaturales.superficie(const Color(0xFFFFF8EC)),
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: const Color(0xFFFF9F1C), width: 2.5),
-        boxShadow: const [
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFFF9F1C)),
+          width: 2.5,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFD97706),
+            color: context.coloresNaturales.sombra(Color(0xFFD97706)),
             offset: Offset(0, 5),
             blurRadius: 0,
           ),
         ],
       ),
       child: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: InkWell(
           key: const Key('abrir-expedicion-diaria'),
           borderRadius: BorderRadius.circular(24),
@@ -928,16 +1045,20 @@ class _TarjetaExpedicionDiaria extends StatelessWidget {
                   width: 56,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.coloresNaturales.superficie(Colors.white),
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: const Color(0xFFFF9F1C),
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFFFF9F1C),
+                      ),
                       width: 2,
                     ),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.local_fire_department_rounded,
-                    color: Color(0xFFE66A00),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFFE66A00),
+                    ),
                     size: 32,
                   ),
                 ),
@@ -956,17 +1077,21 @@ class _TarjetaExpedicionDiaria extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: context.coloresNaturales.superficie(
+                                Colors.white,
+                              ),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Texto(
                               hechaHoy
                                   ? '✓ EXPEDICIÓN DE HOY SUPERADA'
                                   : 'RETO DIARIO · ELIGE DIFICULTAD',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 10.5,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFFB45309),
+                                color: context.coloresNaturales.contenido(
+                                  Color(0xFFB45309),
+                                ),
                               ),
                             ),
                           ),
@@ -977,15 +1102,19 @@ class _TarjetaExpedicionDiaria extends StatelessWidget {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFFFEDD5),
+                                color: context.coloresNaturales.superficie(
+                                  const Color(0xFFFFEDD5),
+                                ),
                                 borderRadius: BorderRadius.circular(999),
                               ),
                               child: Texto(
                                 'Racha: $racha ${racha == 1 ? 'día' : 'días'}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFF9A3412),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF9A3412),
+                                  ),
                                 ),
                               ),
                             ),
@@ -998,21 +1127,23 @@ class _TarjetaExpedicionDiaria extends StatelessWidget {
                             ?.copyWith(fontWeight: FontWeight.w900),
                       ),
                       const SizedBox(height: 2),
-                      const Texto(
+                      Texto(
                         'Repasa los tres mundos con retos rápidos, gana Semillas de Sabiduría y mantén viva tu racha.',
                         style: TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF475569),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF475569),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_rounded,
-                  color: Color(0xFFB45309),
+                  color: context.coloresNaturales.contenido(Color(0xFFB45309)),
                 ),
               ],
             ),
@@ -1039,19 +1170,22 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFBEB),
+        color: context.coloresNaturales.superficie(const Color(0xFFFFFBEB)),
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: const Color(0xFFF59E0B), width: 2.5),
-        boxShadow: const [
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFF59E0B)),
+          width: 2.5,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFFD97706),
+            color: context.coloresNaturales.sombra(Color(0xFFD97706)),
             offset: Offset(0, 5),
             blurRadius: 0,
           ),
         ],
       ),
       child: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: InkWell(
           key: const Key('tarjeta-album-principal'),
           borderRadius: BorderRadius.circular(24),
@@ -1072,16 +1206,22 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                       width: 54,
                       height: 54,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEF3C7),
+                        color: context.coloresNaturales.superficie(
+                          const Color(0xFFFEF3C7),
+                        ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFFF59E0B),
+                          color: context.coloresNaturales.borde(
+                            const Color(0xFFF59E0B),
+                          ),
                           width: 2,
                         ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.auto_stories_rounded,
-                        color: Color(0xFFB45309),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFFB45309),
+                        ),
                         size: 28,
                       ),
                     ),
@@ -1099,7 +1239,8 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(
-                                        color: const Color(0xFF78350F),
+                                        color: context.coloresNaturales
+                                            .contenido(const Color(0xFF78350F)),
                                         fontWeight: FontWeight.w900,
                                       ),
                                 ),
@@ -1111,37 +1252,45 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                                   vertical: 3,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF15803D),
+                                  color: context.coloresNaturales.superficie(
+                                    const Color(0xFF15803D),
+                                  ),
                                   borderRadius: BorderRadius.circular(999),
                                 ),
                                 child: Texto(
                                   '$desbloqueados/$total',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w900,
-                                    color: Colors.white,
+                                    color: context.coloresNaturales.contenido(
+                                      Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 4),
-                          const Texto(
+                          Texto(
                             'Colecciona animales, plantas y órganos en Fácil, Medio y Difícil y lee sus curiosidades.',
                             style: TextStyle(
                               fontSize: 13,
                               height: 1.3,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF92400E),
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF92400E),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(
+                    Icon(
                       Icons.chevron_right_rounded,
-                      color: Color(0xFFB45309),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFFB45309),
+                      ),
                       size: 28,
                     ),
                   ],
@@ -1150,10 +1299,12 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.coloresNaturales.superficie(Colors.white),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: const Color(0xFFFCD34D),
+                      color: context.coloresNaturales.borde(
+                        const Color(0xFFFCD34D),
+                      ),
                       width: 1.5,
                     ),
                   ),
@@ -1162,7 +1313,9 @@ class _TarjetaAlbumPrincipal extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: fraccion,
                       minHeight: 9,
-                      backgroundColor: const Color(0xFFFEF3C7),
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFFFEF3C7),
+                      ),
                       valueColor: const AlwaysStoppedAnimation<Color>(
                         Color(0xFF16A34A),
                       ),

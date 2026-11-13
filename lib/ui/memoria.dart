@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/memoria.dart';
@@ -54,7 +56,11 @@ class DibujoCartaMemoria extends StatelessWidget {
     if (icono == null) return SizedBox.square(dimension: tamano);
     return SizedBox.square(
       dimension: tamano,
-      child: Icon(icono.$1, size: tamano * .8, color: icono.$2),
+      child: Icon(
+        icono.$1,
+        size: tamano * .8,
+        color: context.coloresNaturales.contenido(icono.$2),
+      ),
     );
   }
 }
@@ -224,9 +230,14 @@ class _Carta extends StatelessWidget {
       key: ValueKey('cara-$cartaId-$visible'),
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: encontrada ? const Color(0xFFF0FDF4) : Colors.white,
+        color: context.coloresNaturales.superficie(
+          encontrada ? const Color(0xFFF0FDF4) : Colors.white,
+        ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borde, width: 2.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(borde),
+          width: 2.5,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -247,11 +258,11 @@ class _Carta extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11.5,
               height: 1.15,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF1E293B),
+              color: context.coloresNaturales.contenido(Color(0xFF1E293B)),
             ),
           ),
         ],
@@ -260,19 +271,32 @@ class _Carta extends StatelessWidget {
     final dorso = Container(
       key: ValueKey('dorso-$cartaId'),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF4ADE80), Color(0xFF15803D)],
+        gradient: LinearGradient(
+          colors: ([
+            Color(0xFF4ADE80),
+            Color(0xFF15803D),
+          ]).map(context.coloresNaturales.superficie).toList(),
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white, width: 3),
-        boxShadow: const [
-          BoxShadow(color: Color(0xFF166534), offset: Offset(0, 3)),
+        border: Border.all(
+          color: context.coloresNaturales.borde(Colors.white),
+          width: 3,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: context.coloresNaturales.sombra(Color(0xFF166534)),
+            offset: Offset(0, 3),
+          ),
         ],
       ),
-      child: const Center(
-        child: Icon(Icons.eco_rounded, color: Colors.white, size: 34),
+      child: Center(
+        child: Icon(
+          Icons.eco_rounded,
+          color: context.coloresNaturales.contenido(Colors.white),
+          size: 34,
+        ),
       ),
     );
     return Semantics(

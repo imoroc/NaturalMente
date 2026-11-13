@@ -15,6 +15,7 @@ import 'package:naturalmente/ui/expedicion_diaria.dart';
 import 'package:naturalmente/ui/fin_juego.dart';
 import 'package:naturalmente/ui/herbario.dart';
 import 'package:naturalmente/ui/juego.dart';
+import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
 import 'package:naturalmente/ui/adivinanza.dart';
@@ -231,7 +232,11 @@ void main() {
     progreso = await Progreso.abrir();
   });
 
-  Future<void> abrir(WidgetTester tester, Widget juego) async {
+  Future<void> abrir(
+    WidgetTester tester,
+    Widget juego,
+    Brightness brillo,
+  ) async {
     await tester.binding.setSurfaceSize(const Size(430, 900));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final idioma = Idioma(await SharedPreferences.getInstance(), const {});
@@ -242,6 +247,7 @@ void main() {
           catalogo: catalogo,
           progreso: progreso,
           child: MaterialApp(
+            theme: TemaNatural.crear(brillo),
             home: Builder(
               builder: (context) => Scaffold(
                 body: Center(
@@ -264,74 +270,91 @@ void main() {
     await _tocar(tester, 'abrir');
   }
 
-  for (final actividad in catalogo.actividades) {
-    testWidgets(
-      '${actividad.id}: cierre automático y acciones en los tres niveles',
-      (tester) async {
-        await abrir(tester, _pagina(actividad));
-        for (final nivel in ['facil', 'medio', 'dificil']) {
-          await _tocar(tester, 'nivel-$nivel');
-          await _jugar(tester, actividad, nivel);
-          expect(find.byType(FinJuego), findsOneWidget);
-          expect(find.byKey(const Key('check-acierto')), findsNothing);
-          for (final clave in ['fin-nivel', 'fin-repetir', 'fin-volver']) {
-            expect(find.byKey(Key(clave)), findsOneWidget);
-          }
-          expect(progreso.nivelJuegoHecho(actividad, nivel), isTrue);
-          if (nivel == 'dificil') {
-            await _tocar(tester, 'fin-repetir');
-            expect(find.byType(FinJuego), findsNothing);
+  for (final brillo in Brightness.values) {
+    group(brillo.name, () {
+      for (final actividad in catalogo.actividades) {
+        testWidgets(
+          '${actividad.id}: cierre automático y acciones en los tres niveles',
+          (tester) async {
+            await abrir(tester, _pagina(actividad), brillo);
+            for (final nivel in ['facil', 'medio', 'dificil']) {
+              await _tocar(tester, 'nivel-$nivel');
+              await _jugar(tester, actividad, nivel);
+              expect(find.byType(FinJuego), findsOneWidget);
+              expect(find.byKey(const Key('check-acierto')), findsNothing);
+              for (final clave in ['fin-nivel', 'fin-repetir', 'fin-volver']) {
+                expect(find.byKey(Key(clave)), findsOneWidget);
+              }
+              expect(progreso.nivelJuegoHecho(actividad, nivel), isTrue);
+              if (nivel == 'dificil') {
+                await _tocar(tester, 'fin-repetir');
+                expect(find.byType(FinJuego), findsNothing);
 
-            await _jugar(tester, actividad, nivel);
-            expect(find.byType(FinJuego), findsOneWidget);
-            await _tocar(tester, 'fin-volver');
-            expect(find.text('Mapa de prueba'), findsOneWidget);
-          } else {
-            await _tocar(tester, 'fin-nivel');
-            expect(find.byKey(const Key('nivel-dificil')), findsOneWidget);
-          }
-        }
-        expect(tester.takeException(), isNull);
-      },
-    );
-  }
-
-  for (final dificultad in ['facil', 'medio', 'dificil']) {
-    testWidgets(
-      'reto diario $dificultad: cierre sin repetir una misión ya guardada',
-      (tester) async {
-        final fecha = DateTime(2026, 10, 28);
-        await abrir(
-          tester,
-          ExpedicionDiariaPage(progreso: progreso, fechaReferencia: fecha),
+                await _jugar(tester, actividad, nivel);
+                expect(find.byType(FinJuego), findsOneWidget);
+                await _tocar(tester, 'fin-volver');
+                expect(find.text('Mapa de prueba'), findsOneWidget);
+              } else {
+                await _tocar(tester, 'fin-nivel');
+                expect(find.byKey(const Key('nivel-dificil')), findsOneWidget);
+              }
+            }
+            expect(tester.takeException(), isNull);
+          },
         );
-        await _tocar(tester, 'dificultad-reto-$dificultad');
-        for (final pregunta in ExpedicionDiariaPage.generarMisionDelDia(
-          fecha,
-          dificultad,
-        )) {
-          await _tocar(tester, 'opcion-expedicion-${pregunta.indiceCorrecto}');
-        }
-        expect(find.byType(FinJuego), findsOneWidget);
-        expect(find.byKey(const Key('fin-repetir')), findsNothing);
-        expect(find.byKey(const Key('fin-nivel')), findsNothing);
-        expect(progreso.expedicionHoyHecha(fecha), isTrue);
-        if (dificultad == 'facil') {
-          await _tocar(tester, 'fin-extra');
-          expect(find.byKey(const Key('cerrar-armario-natu')), findsOneWidget);
-          await _tocar(tester, 'cerrar-armario-natu');
-        } else {
-          final semillas = progreso.semillas;
-          await _tocar(tester, 'fin-volver');
-          expect(find.text('Mapa de prueba'), findsOneWidget);
-          await _tocar(tester, 'abrir');
-          expect(find.byType(FinJuego), findsNothing);
-          expect(find.byKey(Key('dificultad-reto-$dificultad')), findsNothing);
-          expect(progreso.semillas, semillas);
-        }
-        expect(find.byKey(const Key('expedicion-completada')), findsOneWidget);
-        expect(tester.takeException(), isNull);
-      },
-    );
+      }
+
+      for (final dificultad in ['facil', 'medio', 'dificil']) {
+        testWidgets(
+          'reto diario $dificultad: cierre sin repetir una misión ya guardada',
+          (tester) async {
+            final fecha = DateTime(2026, 10, 28);
+            await abrir(
+              tester,
+              ExpedicionDiariaPage(progreso: progreso, fechaReferencia: fecha),
+              brillo,
+            );
+            await _tocar(tester, 'dificultad-reto-$dificultad');
+            for (final pregunta in ExpedicionDiariaPage.generarMisionDelDia(
+              fecha,
+              dificultad,
+            )) {
+              await _tocar(
+                tester,
+                'opcion-expedicion-${pregunta.indiceCorrecto}',
+              );
+            }
+            expect(find.byType(FinJuego), findsOneWidget);
+            expect(find.byKey(const Key('fin-repetir')), findsNothing);
+            expect(find.byKey(const Key('fin-nivel')), findsNothing);
+            expect(progreso.expedicionHoyHecha(fecha), isTrue);
+            if (dificultad == 'facil') {
+              await _tocar(tester, 'fin-extra');
+              expect(
+                find.byKey(const Key('cerrar-armario-natu')),
+                findsOneWidget,
+              );
+              await _tocar(tester, 'cerrar-armario-natu');
+            } else {
+              final semillas = progreso.semillas;
+              await _tocar(tester, 'fin-volver');
+              expect(find.text('Mapa de prueba'), findsOneWidget);
+              await _tocar(tester, 'abrir');
+              expect(find.byType(FinJuego), findsNothing);
+              expect(
+                find.byKey(Key('dificultad-reto-$dificultad')),
+                findsNothing,
+              );
+              expect(progreso.semillas, semillas);
+            }
+            expect(
+              find.byKey(const Key('expedicion-completada')),
+              findsOneWidget,
+            );
+            expect(tester.takeException(), isNull);
+          },
+        );
+      }
+    });
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
 
 /// Una misma fuente vectorial para escena, bandeja y cuaderno.
 class DibujoEcosistema extends StatelessWidget {
@@ -17,7 +18,12 @@ class DibujoEcosistema extends StatelessWidget {
   Widget build(BuildContext context) => ExcludeSemantics(
     child: RepaintBoundary(
       child: CustomPaint(
-        painter: _ClaroPainter(elemento, colocados, cambio),
+        painter: _ClaroPainter(
+          elemento,
+          colocados,
+          cambio,
+          context.coloresNaturales,
+        ),
         child: const SizedBox.expand(),
       ),
     ),
@@ -25,7 +31,8 @@ class DibujoEcosistema extends StatelessWidget {
 }
 
 class _ClaroPainter extends CustomPainter {
-  const _ClaroPainter(this.elemento, this.colocados, this.cambio);
+  const _ClaroPainter(this.elemento, this.colocados, this.cambio, this.colores);
+  final ColoresNaturales colores;
   final String? elemento;
   final Set<String> colocados;
   final String? cambio;
@@ -64,9 +71,12 @@ class _ClaroPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: menosHierba
-              ? const [Color(0xFFEFE6C8), Color(0xFFF7E7B4)]
-              : const [Color(0xFFDAEEE0), Color(0xFFF6F1CD)],
+          colors:
+              (menosHierba
+                      ? const [Color(0xFFEFE6C8), Color(0xFFF7E7B4)]
+                      : const [Color(0xFFDAEEE0), Color(0xFFF6F1CD)])
+                  .map(colores.superficie)
+                  .toList(),
         ).createShader(const Rect.fromLTWH(0, 0, 600, 360)),
     );
     // Luz entre los árboles: fondo quieto, sin distracciones animadas.
@@ -672,6 +682,7 @@ class _ClaroPainter extends CustomPainter {
   );
   @override
   bool shouldRepaint(_ClaroPainter old) =>
+      old.colores != colores ||
       old.elemento != elemento ||
       old.cambio != cambio ||
       !old.colocados.containsAll(colocados) ||

@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -308,14 +310,16 @@ class _HerbarioPageState extends State<HerbarioPage>
           for (var i = 0; i < niveles.length; i++) ...[
             TarjetaJuego(
               claveAccion: Key('nivel-${niveles[i].id}'),
-              borde:
-                  progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
-                  ? EstilosJuego.acierto
-                  : const Color(0xFF38BDF8),
-              sombra:
-                  progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
-                  ? const Color(0xFF239E56)
-                  : const Color(0xFF0284C7),
+              borde: context.coloresNaturales.borde(
+                progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
+                    ? EstilosJuego.acierto
+                    : const Color(0xFF38BDF8),
+              ),
+              sombra: context.coloresNaturales.sombra(
+                progreso.nivelHerbarioHecho(widget.actividad, niveles[i].id)
+                    ? const Color(0xFF239E56)
+                    : const Color(0xFF0284C7),
+              ),
               radio: 20,
               onTap: () => _empezar(niveles[i]),
               child: Padding(
@@ -338,13 +342,14 @@ class _HerbarioPageState extends State<HerbarioPage>
                               Icon(
                                 Icons.star_rounded,
                                 size: 18,
-                                color:
-                                    progreso.nivelHerbarioHecho(
-                                      widget.actividad,
-                                      niveles[i].id,
-                                    )
-                                    ? const Color(0xFFF59E0B)
-                                    : const Color(0xFFCBD5E1),
+                                color: context.coloresNaturales.contenido(
+                                  progreso.nivelHerbarioHecho(
+                                        widget.actividad,
+                                        niveles[i].id,
+                                      )
+                                      ? const Color(0xFFF59E0B)
+                                      : const Color(0xFFCBD5E1),
+                                ),
                               ),
                           ],
                         ),
@@ -375,14 +380,18 @@ class _HerbarioPageState extends State<HerbarioPage>
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: progreso.fichaDesbloqueada(fichaId)
-                                  ? const Color(0xFFFEF3C7)
-                                  : const Color(0xFFF1F5F9),
+                              color: context.coloresNaturales.superficie(
+                                progreso.fichaDesbloqueada(fichaId)
+                                    ? const Color(0xFFFEF3C7)
+                                    : const Color(0xFFF1F5F9),
+                              ),
                               borderRadius: BorderRadius.circular(999),
                               border: Border.all(
-                                color: progreso.fichaDesbloqueada(fichaId)
-                                    ? const Color(0xFFF59E0B)
-                                    : const Color(0xFFCBD5E1),
+                                color: context.coloresNaturales.borde(
+                                  progreso.fichaDesbloqueada(fichaId)
+                                      ? const Color(0xFFF59E0B)
+                                      : const Color(0xFFCBD5E1),
+                                ),
                               ),
                             ),
                             child: Row(
@@ -393,9 +402,11 @@ class _HerbarioPageState extends State<HerbarioPage>
                                       ? Icons.auto_stories_rounded
                                       : Icons.lock_outline_rounded,
                                   size: 13,
-                                  color: progreso.fichaDesbloqueada(fichaId)
-                                      ? const Color(0xFFB45309)
-                                      : const Color(0xFF64748B),
+                                  color: context.coloresNaturales.contenido(
+                                    progreso.fichaDesbloqueada(fichaId)
+                                        ? const Color(0xFFB45309)
+                                        : const Color(0xFF64748B),
+                                  ),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -406,9 +417,11 @@ class _HerbarioPageState extends State<HerbarioPage>
                                     style: TextStyle(
                                       fontSize: 11.5,
                                       fontWeight: FontWeight.w800,
-                                      color: progreso.fichaDesbloqueada(fichaId)
-                                          ? const Color(0xFF92400E)
-                                          : const Color(0xFF475569),
+                                      color: context.coloresNaturales.contenido(
+                                        progreso.fichaDesbloqueada(fichaId)
+                                            ? const Color(0xFF92400E)
+                                            : const Color(0xFF475569),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -422,11 +435,13 @@ class _HerbarioPageState extends State<HerbarioPage>
                       niveles[i].id,
                     )) ...[
                       const SizedBox(height: 6),
-                      const Texto(
+                      Texto(
                         '✓ Nivel superado',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF15803D),
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF15803D),
+                          ),
                         ),
                       ),
                     ],
@@ -640,12 +655,16 @@ class _HerbarioPageState extends State<HerbarioPage>
       child: TarjetaJuego(
         claveAccion: clave,
         onTap: onTap,
-        borde: seleccionada
-            ? Theme.of(context).colorScheme.primary
-            : EstilosJuego.borde,
-        fondo: seleccionada
-            ? Theme.of(context).colorScheme.primaryContainer
-            : Colors.white,
+        borde: context.coloresNaturales.borde(
+          seleccionada
+              ? Theme.of(context).colorScheme.primary
+              : EstilosJuego.borde,
+        ),
+        fondo: context.coloresNaturales.superficie(
+          seleccionada
+              ? Theme.of(context).colorScheme.primaryContainer
+              : Colors.white,
+        ),
         destacada: seleccionada,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 56),
@@ -677,7 +696,9 @@ class _HerbarioPageState extends State<HerbarioPage>
                 const SizedBox(width: 8),
                 Icon(
                   seleccionada ? Icons.check_circle : Icons.touch_app_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: context.coloresNaturales.contenido(
+                    Theme.of(context).colorScheme.primary,
+                  ),
                   size: 20,
                 ),
               ],
@@ -696,7 +717,7 @@ class _HerbarioPageState extends State<HerbarioPage>
         setState(() => partida.seleccionar(parte.id));
       },
       feedback: Material(
-        color: Colors.transparent,
+        color: context.coloresNaturales.superficie(Colors.transparent),
         child: rotulo
             ? tarjeta()
             : Transform.translate(
@@ -704,11 +725,15 @@ class _HerbarioPageState extends State<HerbarioPage>
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .94),
+                    color: context.coloresNaturales.superficie(
+                      Colors.white.withValues(alpha: .94),
+                    ),
                     borderRadius: BorderRadius.circular(24),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Color(0x25344E41),
+                        color: context.coloresNaturales.sombra(
+                          Color(0x25344E41),
+                        ),
                         blurRadius: 16,
                         offset: Offset(0, 6),
                       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -292,8 +294,12 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
   }) {
     return TarjetaJuego(
       claveAccion: Key('nivel-${nivel.id}'),
-      borde: hecho ? EstilosJuego.acierto : const Color(0xFF4ADE80),
-      sombra: hecho ? const Color(0xFF239E56) : const Color(0xFF15803D),
+      borde: context.coloresNaturales.borde(
+        hecho ? EstilosJuego.acierto : const Color(0xFF4ADE80),
+      ),
+      sombra: context.coloresNaturales.sombra(
+        hecho ? const Color(0xFF239E56) : const Color(0xFF15803D),
+      ),
       radio: 20,
       onTap: () => empezar(nivel.id),
       child: Padding(
@@ -313,9 +319,9 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
                   Icon(
                     Icons.star_rounded,
                     size: 18,
-                    color: hecho
-                        ? const Color(0xFFF59E0B)
-                        : const Color(0xFFCBD5E1),
+                    color: context.coloresNaturales.contenido(
+                      hecho ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+                    ),
                   ),
               ],
             ),
@@ -351,11 +357,11 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
             ),
             if (hecho) ...[
               const SizedBox(height: 6),
-              const Texto(
+              Texto(
                 '✓ Nivel superado',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF15803D),
+                  color: context.coloresNaturales.contenido(Color(0xFF15803D)),
                 ),
               ),
             ],
@@ -369,12 +375,14 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        color: context.coloresNaturales.superficie(
+          desbloqueado ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        ),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(
-          color: desbloqueado
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFFCBD5E1),
+          color: context.coloresNaturales.borde(
+            desbloqueado ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+          ),
         ),
       ),
       child: Row(
@@ -385,9 +393,9 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
                 ? Icons.auto_stories_rounded
                 : Icons.lock_outline_rounded,
             size: 13,
-            color: desbloqueado
-                ? const Color(0xFFB45309)
-                : const Color(0xFF64748B),
+            color: context.coloresNaturales.contenido(
+              desbloqueado ? const Color(0xFFB45309) : const Color(0xFF64748B),
+            ),
           ),
           const SizedBox(width: 4),
           Flexible(
@@ -398,9 +406,11 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
               style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w800,
-                color: desbloqueado
-                    ? const Color(0xFF92400E)
-                    : const Color(0xFF475569),
+                color: context.coloresNaturales.contenido(
+                  desbloqueado
+                      ? const Color(0xFF92400E)
+                      : const Color(0xFF475569),
+                ),
               ),
             ),
           ),
@@ -423,7 +433,9 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: context.coloresNaturales.superficie(
+        const Color(0xFFFDFBF7),
+      ),
       builder: (context) => SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 24),
@@ -439,13 +451,15 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Texto(
+                        Texto(
                           'CUADERNO DE NATU',
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.7,
-                            color: Color(0xFF15803D),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF15803D),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 2),

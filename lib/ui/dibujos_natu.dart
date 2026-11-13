@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/tema.dart';
+
 import 'package:naturalmente/ui/texto.dart';
 
 /// Icono vectorial de Semilla de Sabiduría (sustituye cualquier emoji de bellota/semilla).
@@ -1606,12 +1608,14 @@ class LogoNaturalMente extends StatelessWidget {
                 style: TextStyle(
                   fontSize: tamTitulo,
                   fontWeight: FontWeight.w900,
-                  color: const Color(0xFF3B2314),
+                  color: context.coloresNaturales.contenido(
+                    const Color(0xFF3B2314),
+                  ),
                   letterSpacing: -0.4,
                   height: 1.02,
-                  shadows: const [
+                  shadows: [
                     Shadow(
-                      color: Color(0xFFFDF6E2),
+                      color: context.coloresNaturales.sombra(Color(0xFFFDF6E2)),
                       offset: Offset(0, 1.5),
                       blurRadius: 0,
                     ),
@@ -1626,7 +1630,9 @@ class LogoNaturalMente extends StatelessWidget {
                     width: compacto ? 10 : 14,
                     height: 2,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF72B034),
+                      color: context.coloresNaturales.superficie(
+                        const Color(0xFF72B034),
+                      ),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -1637,7 +1643,9 @@ class LogoNaturalMente extends StatelessWidget {
                       style: TextStyle(
                         fontSize: tamSubtitulo,
                         fontWeight: FontWeight.w800,
-                        color: const Color(0xFF54331D),
+                        color: context.coloresNaturales.contenido(
+                          const Color(0xFF54331D),
+                        ),
                         letterSpacing: 0.3,
                         height: 1.05,
                       ),
@@ -1648,7 +1656,9 @@ class LogoNaturalMente extends StatelessWidget {
                     width: compacto ? 10 : 14,
                     height: 2,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF72B034),
+                      color: context.coloresNaturales.superficie(
+                        const Color(0xFF72B034),
+                      ),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -5759,12 +5769,17 @@ class InsigniaIlustradaZona extends StatelessWidget {
       height: tamano,
       padding: EdgeInsets.all(tamano * 0.10),
       decoration: BoxDecoration(
-        color: fondo,
+        color: context.coloresNaturales.superficie(fondo),
         borderRadius: BorderRadius.circular(tamano * 0.32),
-        border: Border.all(color: borde, width: 2.2),
+        border: Border.all(
+          color: context.coloresNaturales.borde(borde),
+          width: 2.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: borde.withValues(alpha: 0.22),
+            color: context.coloresNaturales.sombra(
+              borde.withValues(alpha: 0.22),
+            ),
             offset: const Offset(0, 3),
             blurRadius: 0,
           ),
@@ -6852,9 +6867,12 @@ class BandejaHabitosInteractiva extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.coloresNaturales.superficie(const Color(0xFFF8FAFC)),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withValues(alpha: 0.35), width: 1.5),
+        border: Border.all(
+          color: context.coloresNaturales.borde(color.withValues(alpha: 0.35)),
+          width: 1.5,
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -6862,7 +6880,11 @@ class BandejaHabitosInteractiva extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icono, size: 16, color: color),
+              Icon(
+                icono,
+                size: 16,
+                color: context.coloresNaturales.contenido(color),
+              ),
               const SizedBox(width: 6),
               Expanded(
                 child: Texto(
@@ -6872,7 +6894,7 @@ class BandejaHabitosInteractiva extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
-                    color: color,
+                    color: context.coloresNaturales.contenido(color),
                   ),
                 ),
               ),
@@ -6880,24 +6902,30 @@ class BandejaHabitosInteractiva extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFDCFCE7),
+                  color: context.coloresNaturales.superficie(
+                    const Color(0xFFDCFCE7),
+                  ),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.favorite_rounded,
                       size: 12,
-                      color: Color(0xFF16A34A),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF16A34A),
+                      ),
                     ),
                     const SizedBox(width: 3),
                     Texto(
                       '${(progresoVital * 100).round()}%',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.w900,
-                        color: Color(0xFF15803D),
+                        color: context.coloresNaturales.contenido(
+                          Color(0xFF15803D),
+                        ),
                       ),
                     ),
                   ],
@@ -6927,16 +6955,22 @@ class BandejaHabitosInteractiva extends StatelessWidget {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: hecho
-                                ? const Color(0xFFDCFCE7)
-                                : (activo
-                                      ? color.withValues(alpha: 0.14)
-                                      : Colors.white),
+                            color: context.coloresNaturales.superficie(
+                              hecho
+                                  ? const Color(0xFFDCFCE7)
+                                  : (activo
+                                        ? color.withValues(alpha: 0.14)
+                                        : Colors.white),
+                            ),
                             borderRadius: BorderRadius.circular(999),
                             border: Border.all(
-                              color: hecho
-                                  ? const Color(0xFF22C55E)
-                                  : (activo ? color : const Color(0xFFCBD5E1)),
+                              color: context.coloresNaturales.borde(
+                                hecho
+                                    ? const Color(0xFF22C55E)
+                                    : (activo
+                                          ? color
+                                          : const Color(0xFFCBD5E1)),
+                              ),
                               width: activo ? 1.8 : 1.1,
                             ),
                           ),
@@ -6944,10 +6978,12 @@ class BandejaHabitosInteractiva extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               if (hecho) ...[
-                                const Icon(
+                                Icon(
                                   Icons.check_circle_rounded,
                                   size: 12,
-                                  color: Color(0xFF16A34A),
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF16A34A),
+                                  ),
                                 ),
                                 const SizedBox(width: 3),
                               ],
@@ -6956,11 +6992,13 @@ class BandejaHabitosInteractiva extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w900,
-                                  color: hecho
-                                      ? const Color(0xFF15803D)
-                                      : (activo
-                                            ? color
-                                            : const Color(0xFF334155)),
+                                  color: context.coloresNaturales.contenido(
+                                    hecho
+                                        ? const Color(0xFF15803D)
+                                        : (activo
+                                              ? color
+                                              : const Color(0xFF334155)),
+                                  ),
                                 ),
                               ),
                             ],
@@ -7295,29 +7333,34 @@ class TarjetaFichaEnciclopedica extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.coloresNaturales.superficie(const Color(0xFFF8FAFC)),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFCBD5E1), width: 1.8),
+        border: Border.all(
+          color: context.coloresNaturales.borde(const Color(0xFFCBD5E1)),
+          width: 1.8,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.science_rounded,
                 size: 18,
-                color: Color(0xFF0F172A),
+                color: context.coloresNaturales.contenido(Color(0xFF0F172A)),
               ),
               const SizedBox(width: 6),
-              const Expanded(
+              Expanded(
                 child: Texto(
                   'FICHA ENCICLOPÉDICA DE CAMPO',
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 0.5,
-                    color: Color(0xFF0F172A),
+                    color: context.coloresNaturales.contenido(
+                      Color(0xFF0F172A),
+                    ),
                   ),
                 ),
               ),
@@ -7328,14 +7371,22 @@ class TarjetaFichaEnciclopedica extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.coloresNaturales.superficie(Colors.white),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: items[i].$4.withValues(alpha: 0.35)),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
+                    items[i].$4.withValues(alpha: 0.35),
+                  ),
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(items[i].$1, size: 17, color: items[i].$4),
+                  Icon(
+                    items[i].$1,
+                    size: 17,
+                    color: context.coloresNaturales.contenido(items[i].$4),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -7346,17 +7397,21 @@ class TarjetaFichaEnciclopedica extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 9.5,
                             fontWeight: FontWeight.w900,
-                            color: items[i].$4,
+                            color: context.coloresNaturales.contenido(
+                              items[i].$4,
+                            ),
                             letterSpacing: 0.4,
                           ),
                         ),
                         const SizedBox(height: 1),
                         Texto(
                           items[i].$3,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF1E293B),
+                            color: context.coloresNaturales.contenido(
+                              Color(0xFF1E293B),
+                            ),
                             height: 1.25,
                           ),
                         ),
@@ -7372,26 +7427,32 @@ class TarjetaFichaEnciclopedica extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
-              color: const Color(0xFFEFF6FF),
+              color: context.coloresNaturales.superficie(
+                const Color(0xFFEFF6FF),
+              ),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF93C5FD)),
+              border: Border.all(
+                color: context.coloresNaturales.borde(const Color(0xFF93C5FD)),
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
+                Icon(
                   Icons.verified_rounded,
                   size: 16,
-                  color: Color(0xFF1D4ED8),
+                  color: context.coloresNaturales.contenido(Color(0xFF1D4ED8)),
                 ),
                 const SizedBox(width: 7),
                 Expanded(
                   child: Texto(
                     datos.datoCientifico,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11.5,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF1E3A8A),
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF1E3A8A),
+                      ),
                       height: 1.25,
                     ),
                   ),

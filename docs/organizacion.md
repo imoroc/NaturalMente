@@ -86,3 +86,16 @@ El selector ES/EN está solo en el mapa principal, debajo de la cabecera de Natu
 Al añadir un texto visible, añade su traducción a `content/en.json`. Las claves son las frases originales completas; para textos variables se usan `{0}`, `{1}`, etc., en el mismo orden que los valores del original. Las frases más específicas se resuelven antes que sus prefijos. Los contadores, listas, títulos en mayúsculas y respuestas con pista se componen con las mismas traducciones. Los nombres de idioma se muestran siempre como Español y English.
 
 Comprobaciones: `flutter analyze`, `flutter test` y `flutter build web`. `test/datos/idioma_test.dart` comprueba la persistencia, las composiciones y la cobertura del catálogo; `test/ui/idioma_test.dart` recorre los cinco juegos, el álbum y los cambios de idioma durante una partida en tamaño móvil. La revisión final en teléfono o Chrome por Diego sigue formando parte de la revisión del equipo.
+
+## Apariencia
+
+Los ajustes del mapa incluyen Claro, Oscuro y Según el teléfono; esta última es la opción inicial. `lib/datos/apariencia.dart` contiene `ModoApariencia`, el controlador `Apariencia` y `AparienciaScope`. La clave local `apariencia` guarda `claro`, `oscuro` o `sistema` en SharedPreferences. El controlador serializa escrituras y notifica únicamente las elecciones guardadas. No modifica el idioma, el audio, la vibración ni el progreso.
+
+`lib/ui/tema.dart` define los dos temas Material y `ColoresNaturales`. Los componentes consultan `context.coloresNaturales` y resuelven los matices de la interfaz según su función: `superficie`, `contenido`, `borde` o `sombra`. Así se conservan las paletas de cada zona en claro y se obtienen superficies oscuras con contenido claro. Los colores del dibujo científico no pasan por estas funciones. Los pintores con fondos o rótulos adaptables reciben la extensión y comparan su cambio en `shouldRepaint`.
+
+`NaturalmenteApp` mantiene un único `MaterialApp` durante carga, errores y uso normal. Flutter gestiona el cambio automático con `ThemeMode.system`. La preferencia se lee antes del arranque normal; el splash nativo sigue al teléfono y tiene recursos claros/oscuros en Android e iOS.
+
+Las pruebas de apariencia están en `test/datos/apariencia_test.dart` y `test/ui/apariencia_test.dart`. Las capturas de referencia se guardan en `test/ui/goldens/apariencia/`; se actualizan deliberadamente con `flutter test --update-goldens test/ui/apariencia_test.dart`. Las pruebas de feedback, resultado y cierres recorren ambos temas. Véase [el plan y registro de comprobación](plan-modos-apariencia.md).
+
+
+El acceso ES/EN abre un panel de ajustes que permanece abierto al elegir opciones. Apariencia ofrece tres botones con iconos en la misma fila (Claro, Oscuro y Auto); el nombre completo del modo automático sigue disponible como ayuda y etiqueta accesible. Los botones de idioma y los tres interruptores se actualizan dentro del panel. La selección tiene un check y una respuesta de pulsación breve, que respeta el movimiento reducido. «Listo», la X, atrás y tocar fuera cierran el panel; los errores de guardado se explican dentro de él y permiten volver a elegir. Las operaciones pendientes bloquean únicamente el grupo que se está guardando.

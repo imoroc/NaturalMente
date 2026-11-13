@@ -71,3 +71,14 @@ Los textos originales siguen en español en el catálogo y en las reglas; sus tr
 **Las opciones aparecen automáticamente tras la victoria.** El resultado usa `FinJuego` con resumen, repetición, selector de nivel y vuelta al mundo. Se puede cerrar para seguir explorando las explicaciones. El reto diario conserva su límite diario y ofrece vuelta al mapa y armario, sin repetir una misión ya completada.
 
 **El guardado no repite la jugada.** Las acciones esperan a que se guarde el progreso y, si falla, se ofrece reintentar solo la persistencia, sin volver a puntuar. Se reutilizan `FeedbackAcierto`, `DatosFinJuego` y `registrarGuardadoFinal`; no se duplican los efectos ni se encadenan mediante temporizadores por juego. La referencia de implementación es [feedback-y-cierre.md](feedback-y-cierre.md).
+
+## 13 de noviembre de 2026
+
+**Tres modos de apariencia en toda la app.** Los ajustes de Natu ofrecen Claro, Oscuro y Según el teléfono. El modo inicial es Según el teléfono; las elecciones manuales prevalecen sobre el sistema y se guardan localmente, aparte del idioma y del progreso. Un fallo de guardado conserva la última elección confirmada y muestra una explicación traducida. Cambiar de apariencia mantiene las rutas, las partidas y sus recompensas.
+
+**La interfaz sigue el tema y las ilustraciones conservan su significado.** Fondos, tarjetas, texto, bordes, menús, ayudas y cierres usan los temas comunes. Los colores de animales, plantas, órganos y experimentos se conservan cuando enseñan algo. La luz de los simuladores de día/noche y fotosíntesis depende del experimento; los rayos X conservan su escena oscura. Los controles y rótulos que los rodean sí se adaptan a la apariencia elegida.
+
+**El arranque nativo sigue al sistema.** El splash de Android e iOS usa las variantes del teléfono, antes de leer las preferencias Dart. La primera pantalla Flutter aplica la elección guardada. No se duplica la preferencia en almacenamiento nativo. Los detalles de implementación y comprobación están en [plan-modos-apariencia.md](plan-modos-apariencia.md).
+
+
+**Los ajustes permanecen abiertos al cambiar una opción.** Apariencia se elige mediante tres botones pequeños con iconos en una sola fila: Claro, Oscuro y Auto (Según el teléfono). Idioma, sonido, música y vibración se pueden cambiar consecutivamente en el mismo panel. Se cierra mediante Listo, la X, atrás o tocando fuera. La selección y los errores de guardado se muestran en el propio panel, con texto ES/EN y soporte de texto ampliado y movimiento reducido.

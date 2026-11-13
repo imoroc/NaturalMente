@@ -18,11 +18,24 @@ project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd -- "$project_dir"
 export ANDROID_HOME="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/home/david/Android/Sdk}}"
 flutter_bin="${FLUTTER_BIN:-$(command -v flutter || true)}"
-flutter_bin="${flutter_bin:-/tmp/naturalmente-flutter/bin/flutter}"
+if [[ -z "$flutter_bin" ]]; then
+  # El SDK no debe depender de /tmp, que puede vaciarse al reiniciar.
+  for sdk_dir in \
+    "$project_dir/.fvm/flutter_sdk" \
+    "${XDG_DATA_HOME:-$HOME/.local/share}/flutter" \
+    "$HOME/develop/flutter" \
+    "$HOME/flutter"; do
+    if [[ -x "$sdk_dir/bin/flutter" ]]; then
+      flutter_bin="$sdk_dir/bin/flutter"
+      break
+    fi
+  done
+fi
 adb_bin="$ANDROID_HOME/platform-tools/adb"
 
 if [[ ! -x "$flutter_bin" ]]; then
   echo "No encuentro Flutter. Configura FLUTTER_BIN con la ruta a bin/flutter." >&2
+  echo 'Ejemplo: FLUTTER_BIN="$HOME/develop/flutter/bin/flutter" ./run-android-release.sh' >&2
   exit 1
 fi
 if [[ ! -x "$adb_bin" ]]; then

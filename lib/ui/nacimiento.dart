@@ -34,6 +34,7 @@ class _NacimientoPageState extends State<NacimientoPage>
   PartidaClasificar? _clasificar;
   PartidaCiclos? _ciclos;
   final _pregunta = GlobalKey();
+  bool _preguntaCicloVisible = false;
   bool _guardando = false;
   bool _guardado = false;
   int _ronda = 0;
@@ -71,6 +72,7 @@ class _NacimientoPageState extends State<NacimientoPage>
     setState(() {
       _ronda += 1;
       _nivel = nivel;
+      _preguntaCicloVisible = false;
       _clasificar = nivel.ordenaCiclos
           ? null
           : PartidaClasificar(nacimiento: _nacimiento, nivel: nivel);
@@ -86,6 +88,7 @@ class _NacimientoPageState extends State<NacimientoPage>
         ..clear()
         ..addAll(opciones);
       final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
+      _guardando = false;
       _guardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
@@ -110,7 +113,8 @@ class _NacimientoPageState extends State<NacimientoPage>
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -120,7 +124,7 @@ class _NacimientoPageState extends State<NacimientoPage>
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
@@ -135,44 +139,32 @@ class _NacimientoPageState extends State<NacimientoPage>
   }
 
   Future<void> _guardarSiCompleta() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
-    final nivel = _nivel;
-    if (nivel == null || !_completa || _guardando || _guardado) return;
+    final partida = _nivel;
+    if (partida == null || !_completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = widget.actividad;
+    final nivelGuardado = partida.id;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelJuego(widget.actividad, nivel.id);
-      if (mounted) setState(() => _guardado = true);
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted) setState(() => _guardando = false);
-    }
-  }
-
-  void _verPregunta() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final contexto = _pregunta.currentContext;
-      if (mounted && contexto != null) {
-        Scrollable.ensureVisible(
-          contexto,
-          duration: const Duration(milliseconds: 250),
-          alignment: .1,
-        );
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelJuego(actividadGuardada, nivelGuardado);
+        if (mounted && identical(partida, _nivel)) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && identical(partida, _nivel)) setState(() => _guardando = false);
       }
     });
+    if (mounted && identical(partida, _nivel)) setState(() => _guardando = false);
   }
+
+  void _verPregunta() => mostrarDestinoPaso(_pregunta);
 
   // ----- Fácil: separar animales -----
 
   void _colocarAnimal(String animal, String nido) {
+    if (!iniciarPasoEvaluado()) return;
     setState(() => _clasificar!.colocar(animal, nido));
     final acierto = _clasificar!.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
@@ -180,16 +172,17 @@ class _NacimientoPageState extends State<NacimientoPage>
       if (_completa) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(alContinuar: () {}, conservarTablero: true);
       }
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
-    _verPregunta();
     _guardarSiCompleta();
   }
 
   void _tocarNido(String nido) {
+    if (pasoBloqueado) return;
     final partida = _clasificar!;
     final elegido = partida.seleccionado;
     if (elegido == null) {
@@ -210,38 +203,48 @@ class _NacimientoPageState extends State<NacimientoPage>
   // ----- Medio y Difícil: ordenar ciclos -----
 
   void _comprobarCiclo() {
+    if (_ciclos!.cicloOrdenado || !iniciarPasoEvaluado()) return;
     setState(() => _ciclos!.comprobar());
     final acierto = _ciclos!.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
     if (acierto) {
-      mostrarAcierto();
+      confirmarPaso(
+        alContinuar: () {
+          _preguntaCicloVisible = true;
+          _verPregunta();
+        },
+        conservarTablero: true,
+      );
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
-    _verPregunta();
   }
 
   void _responder(String opcion) {
-    var acierto = false;
-    setState(() {
-      _ciclos!.responder(opcion);
-      acierto = _ciclos!.resultado?.acierto ?? false;
-      if (acierto && _ciclos!.cicloTerminado && _ciclos!.hayOtroCiclo) {
-        _ciclos!.siguiente();
-      }
-    });
+    final ciclos = _ciclos!;
+    if (!ciclos.cicloOrdenado ||
+        ciclos.preguntaAcertada ||
+        !iniciarPasoEvaluado()) {
+      return;
+    }
+    setState(() => ciclos.responder(opcion));
+    final acierto = ciclos.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
-    if (acierto) {
-      if (_completa) {
-        mostrarAcierto(finalDeNivel: true);
-      } else {
-        mostrarAcierto();
-      }
+    if (acierto && _completa) {
+      mostrarAcierto(finalDeNivel: true);
+      _guardarSiCompleta();
+    } else if (acierto) {
+      confirmarPaso(
+        alContinuar: () {
+          ciclos.siguiente();
+          _preguntaCicloVisible = false;
+        },
+      );
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
-    _verPregunta();
-    _guardarSiCompleta();
   }
 
   void _mostrarCuriosidad({
@@ -347,26 +350,29 @@ class _NacimientoPageState extends State<NacimientoPage>
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            // Al cambiar de nivel, de ronda o de ciclo la pantalla vuelve arriba.
-            key: ValueKey(
-              '${nivel?.id ?? 'selector'}-$_ronda-${_ciclos?.indice ?? 0}',
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: nivel == null
-                    ? _selector()
-                    : _juego(nivel, math.min(constraints.maxWidth - 32, 780)),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              // Al cambiar de nivel, de ronda o de ciclo la pantalla vuelve arriba.
+              key: ValueKey(
+                '${nivel?.id ?? 'selector'}-$_ronda-${_ciclos?.indice ?? 0}',
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 780),
+                  child: nivel == null
+                      ? _selector()
+                      : _juego(nivel, math.min(constraints.maxWidth - 32, 780)),
+                ),
               ),
             ),
           ),
@@ -397,10 +403,7 @@ class _NacimientoPageState extends State<NacimientoPage>
             _tarjetaNivel(
               niveles[i],
               estrellas: i + 1,
-              hecho: progreso.nivelJuegoHecho(
-                widget.actividad,
-                niveles[i].id,
-              ),
+              hecho: progreso.nivelJuegoHecho(widget.actividad, niveles[i].id),
               progreso: progreso,
               fichasCatalogo: fichasCatalogo,
             ),
@@ -587,8 +590,7 @@ class _NacimientoPageState extends State<NacimientoPage>
           ..._juegoCiclos(_ciclos!, ancho),
         if (_completa) ...[
           const SizedBox(height: 16),
-          Semantics(
-            liveRegion: true,
+          AnuncioPaso(
             child: Texto(
               _clasificar != null
                   ? '¡Has separado a todos los animales!'
@@ -630,17 +632,19 @@ class _NacimientoPageState extends State<NacimientoPage>
     );
   }
 
-  Widget _barra(double valor) => LinearProgressIndicator(
-    key: const Key('nacimiento-progreso'),
-    value: valor,
-    minHeight: 10,
-    borderRadius: BorderRadius.circular(10),
-    semanticsLabel: context.traducir('Progreso de ¿Huevo o barriga?'),
-    semanticsValue: '${(valor * 100).round()} %',
+  Widget _barra(double valor) => ProgresoPaso(
+    child: LinearProgressIndicator(
+      key: const Key('nacimiento-progreso'),
+      value: valor,
+      minHeight: 10,
+      borderRadius: BorderRadius.circular(10),
+      semanticsLabel: context.traducir('Progreso de ¿Huevo o barriga?'),
+      semanticsValue: '${(valor * 100).round()} %',
+    ),
   );
 
-  Widget _burbuja(Resultado? resultado, String inicial) => Semantics(
-    liveRegion: true,
+  Widget _burbuja(Resultado? resultado, String inicial) => AnuncioPaso(
+    anunciar: true,
     child: Burbuja(
       quien: widget.actividad.quien,
       frase: resultado?.frase ?? inicial,
@@ -659,8 +663,7 @@ class _NacimientoPageState extends State<NacimientoPage>
         style: Theme.of(context).textTheme.titleLarge,
       ),
       const SizedBox(height: 8),
-      Semantics(
-        liveRegion: true,
+      AnuncioPaso(
         child: Texto(
           'Animales colocados: ${partida.colocados.length} de ${nivel.animales.length}',
           style: const TextStyle(fontWeight: FontWeight.w800),
@@ -902,7 +905,7 @@ class _NacimientoPageState extends State<NacimientoPage>
       dragAnchorStrategy: pointerDragAnchorStrategy,
       onDragStarted: () {
         context.sonidoSeleccion();
-        setState(() => partida.seleccionar(animal.id));
+        if (!pasoBloqueado) setState(() => partida.seleccionar(animal.id));
       },
       feedback: Material(
         color: context.coloresNaturales.superficie(Colors.transparent),
@@ -919,7 +922,7 @@ class _NacimientoPageState extends State<NacimientoPage>
           clave: Key('animal-${animal.id}'),
           onTap: () {
             context.sonidoSeleccion();
-            setState(() => partida.seleccionar(animal.id));
+            if (!pasoBloqueado) setState(() => partida.seleccionar(animal.id));
           },
         ),
       ),
@@ -943,8 +946,7 @@ class _NacimientoPageState extends State<NacimientoPage>
       const SizedBox(height: 4),
       Texto(ciclo.intro),
       const SizedBox(height: 8),
-      Semantics(
-        liveRegion: true,
+      AnuncioPaso(
         child: Texto(
           'Pasos colocados: ${partida.colocados} de ${ciclo.pasos.length}',
           style: const TextStyle(fontWeight: FontWeight.w800),
@@ -1007,7 +1009,7 @@ class _NacimientoPageState extends State<NacimientoPage>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _burbuja(partida.resultado, ciclo.intro),
-            if (partida.cicloOrdenado && !partida.preguntaAcertada) ...[
+            if (_preguntaCicloVisible) ...[
               const SizedBox(height: 16),
               Texto(
                 'Pregunta del ciclo',

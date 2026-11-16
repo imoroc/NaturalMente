@@ -31,6 +31,8 @@ class ViajePage extends StatefulWidget {
 class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
   PartidaViaje? _partida;
   final _pregunta = GlobalKey();
+  String? _preguntaPresentada;
+  bool _finalPresentada = false;
   bool _guardando = false;
   bool _guardado = false;
   int _ronda = 0;
@@ -69,6 +71,8 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
     final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
       _ronda += 1;
+      _preguntaPresentada = null;
+      _finalPresentada = false;
       _partida = PartidaViaje(viaje: _viaje, nivel: nivel);
       _destinos = BarajadorOpciones.barajarIds(
         clave: 'viaje-destinos-${nivel.id}',
@@ -77,6 +81,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
       _opciones
         ..clear()
         ..addAll(opciones);
+      _guardando = false;
       _guardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
@@ -101,7 +106,8 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -111,75 +117,68 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
-  void _cambiar(void Function(PartidaViaje partida) accion) {
-    final estabaCompleta = _partida?.completa ?? false;
-    setState(() => accion(_partida!));
+  void _cambiar(
+    void Function(PartidaViaje partida) accion, {
+    bool masticando = false,
+  }) {
     final partida = _partida!;
-    if (partida.resultado?.acierto == true &&
-        partida.resultado?.estado != 'masticar') {
-      _registrarPasoPrecision(true);
-    } else if (partida.resultado?.acierto == false &&
-        partida.resultado?.estado != 'masticar') {
-      _registrarPasoPrecision(false);
+    if (partida.completa || !iniciarPasoEvaluado()) return;
+    final anterior = partida.resultado;
+    setState(() => accion(partida));
+    final resultado = partida.resultado;
+    if (identical(anterior, resultado) || resultado == null) {
+      terminarIntentoConPista();
+      return;
     }
-    if (partida.completa && !estabaCompleta) {
-      mostrarAcierto(finalDeNivel: true);
-    } else if (partida.resultado?.acierto == true) {
-      mostrarAcierto();
-    } else if (partida.resultado?.estado == 'masticar') {
+    if (masticando) {
+      terminarIntentoConPista();
       context.sonidoPaso(partida.mordiscos);
-    } else if (partida.resultado?.acierto == false &&
-        partida.resultado?.estado != 'masticar') {
+      setState(_presentarPregunta);
+      return;
+    }
+    _registrarPasoPrecision(resultado.acierto);
+    if (partida.completa) {
+      mostrarAcierto(finalDeNivel: true);
+      _guardarSiCompleta();
+    } else if (resultado.acierto) {
+      confirmarPaso(alContinuar: _presentarPregunta, conservarTablero: true);
+    } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
-    if (partida.preguntaPendiente != null ||
-        partida.mostrarPreguntaFinal ||
-        partida.completa) {
-      _verPregunta();
-    }
-    _guardarSiCompleta();
   }
 
-  void _verPregunta() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final contexto = _pregunta.currentContext;
-      if (mounted && contexto != null) {
-        Scrollable.ensureVisible(
-          contexto,
-          duration: const Duration(milliseconds: 250),
-          alignment: .1,
-        );
-      }
-    });
+  void _presentarPregunta() {
+    _preguntaPresentada = _partida!.preguntaPendiente;
+    _finalPresentada = _partida!.mostrarPreguntaFinal;
+    if (_preguntaPresentada != null || _finalPresentada) {
+      mostrarDestinoPaso(_pregunta);
+    }
   }
 
   Future<void> _guardarSiCompleta() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
     final partida = _partida;
-    if (partida == null || !partida.completa || _guardando || _guardado) {
-      return;
-    }
+    if (partida == null || !partida.completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = widget.actividad;
+    final nivelGuardado = partida.nivel.id;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelJuego(widget.actividad, partida.nivel.id);
-      if (mounted) setState(() => _guardado = true);
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted) setState(() => _guardando = false);
-    }
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelJuego(actividadGuardada, nivelGuardado);
+        if (mounted && identical(partida, _partida)) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
+      }
+    });
+    if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
   }
 
   String _nombre(NivelViaje nivel, String id) => nivel.ruta.contains(id)
@@ -295,24 +294,30 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            // Al cambiar de nivel o de ronda la pantalla vuelve arriba.
-            key: ValueKey('${partida?.nivel.id ?? 'selector'}-$_ronda'),
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: partida == null
-                    ? _selector()
-                    : _juego(partida, math.min(constraints.maxWidth - 32, 780)),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              // Al cambiar de nivel o de ronda la pantalla vuelve arriba.
+              key: ValueKey('${partida?.nivel.id ?? 'selector'}-$_ronda'),
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 780),
+                  child: partida == null
+                      ? _selector()
+                      : _juego(
+                          partida,
+                          math.min(constraints.maxWidth - 32, 780),
+                        ),
+                ),
               ),
             ),
           ),
@@ -510,7 +515,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
 
   Widget _juego(PartidaViaje partida, double ancho) {
     final nivel = partida.nivel;
-    final pendiente = partida.preguntaPendiente;
+    final pendiente = _preguntaPresentada;
     final posicion = partida.posicion;
     final activas = [...nivel.ruta, ...nivel.despistes];
     final libre = !partida.recorridoTerminado;
@@ -529,21 +534,22 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
           child: Texto(
             'Paradas recorridas: ${partida.paradasAlcanzadas} de ${nivel.ruta.length}',
             style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
         const SizedBox(height: 8),
-        LinearProgressIndicator(
-          key: const Key('viaje-progreso'),
-          value: partida.progreso,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(10),
-          semanticsLabel: context.traducir('Progreso del viaje de la comida'),
-          semanticsValue: '${(partida.progreso * 100).round()} %',
+        ProgresoPaso(
+          child: LinearProgressIndicator(
+            key: const Key('viaje-progreso'),
+            value: partida.progreso,
+            minHeight: 10,
+            borderRadius: BorderRadius.circular(10),
+            semanticsLabel: context.traducir('Progreso del viaje de la comida'),
+            semanticsValue: '${(partida.progreso * 100).round()} %',
+          ),
         ),
         const SizedBox(height: 12),
         Center(
@@ -624,7 +630,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             FilledButton.icon(
               key: const Key('masticar'),
               style: EstilosJuego.accion,
-              onPressed: () => _cambiar((p) => p.masticar()),
+              onPressed: () => _cambiar((p) => p.masticar(), masticando: true),
               icon: const Icon(Icons.restaurant_rounded),
               label: Texto(
                 'Masticar (${partida.mordiscos}/$mordiscosNecesarios)',
@@ -647,8 +653,8 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Semantics(
-                liveRegion: true,
+              AnuncioPaso(
+                anunciar: true,
                 child: Burbuja(
                   quien: widget.actividad.quien,
                   frase: partida.resultado?.frase ?? nivel.intro,
@@ -663,7 +669,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
                   opciones: _opciones[pendiente],
                   onResponder: (o) => _cambiar((p) => p.responder(o)),
                 ),
-              if (partida.mostrarPreguntaFinal)
+              if (_finalPresentada)
                 ..._bloquePregunta(
                   etiqueta: 'Pregunta final',
                   pregunta: nivel.preguntaFinal!,
@@ -684,8 +690,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
             label: const Texto('Ver curiosidad'),
           ),
           const SizedBox(height: 16),
-          Semantics(
-            liveRegion: true,
+          AnuncioPaso(
             child: Texto(
               '¡Has completado el viaje de la comida!',
               key: const Key('viaje-completo'),

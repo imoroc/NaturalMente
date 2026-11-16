@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:naturalmente/modelo/actividad.dart';
@@ -5,7 +7,101 @@ import 'package:naturalmente/modelo/actividad.dart';
 // Lo que el niño ya ha superado. El resto de la app no sabe si está
 // en memoria o en el teléfono.
 class Progreso extends ChangeNotifier {
-  Progreso(this._prefs, Set<String> hechos) : _hechos = hechos;
+  Progreso(this._prefs, Set<String> hechos)
+    : _hechos = hechos,
+      _semillasActuales = _prefs.getInt(_claveSemillas) ?? 0,
+      _comboActual = _prefs.getInt(_claveComboActual) ?? 0,
+      _mejorCombo = _prefs.getInt(_claveMejorCombo) ?? 0 {
+    final pendiente = _leerCierreDiario();
+    if (pendiente != null) {
+      _cierresPreparados[pendiente.fecha] = pendiente;
+      if (_semillasActuales < pendiente.semillasObjetivo) {
+        _semillasActuales = pendiente.semillasObjetivo;
+      }
+      _comboActual = pendiente.comboGlobal;
+      if (_mejorCombo < pendiente.mejorGlobal) {
+        _mejorCombo = pendiente.mejorGlobal;
+      }
+    }
+  }
+
+  int _semillasActuales, _comboActual, _mejorCombo;
+  Future<void>? _colaEconomia;
+  final Map<String, GuardadoExpedicion> _cierresPreparados = {};
+  static const _claveCierrePendiente = 'expedicion/cierre-pendiente';
+
+  GuardadoExpedicion? _leerCierreDiario() {
+    try {
+      final texto = _prefs.getString(_claveCierrePendiente);
+      if (texto == null) return null;
+      final cierre = GuardadoExpedicion.desdeJson(
+        jsonDecode(texto) as Map<String, dynamic>,
+      );
+      return hecho('expedicion/${cierre.fecha}') ? null : cierre;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  GuardadoExpedicion? cierreExpedicionPendiente([DateTime? fecha]) =>
+      hecho('expedicion/${formatearFecha(fecha ?? DateTime.now())}')
+      ? null
+      : _cierresPreparados[formatearFecha(fecha ?? DateTime.now())];
+
+  Future<T> _serializarEconomia<T>(Future<T> Function() guardar) {
+    final tarea = _colaEconomia?.then((_) => guardar()) ?? guardar();
+    _colaEconomia = tarea.then<void>(
+      (_) {},
+      onError: (Object _, StackTrace _) {},
+    );
+    return tarea;
+  }
+
+  Future<void> _exigirGuardado(Future<bool> escritura) async {
+    if (!await escritura) {
+      throw StateError('No se ha podido guardar el progreso.');
+    }
+  }
+
+  Future<void> _escribirPrecision() async {
+    final semillas = _semillasActuales,
+        combo = _comboActual,
+        mejor = _mejorCombo;
+    for (final cierre in _cierresPreparados.values.toList()) {
+      if (!hecho('expedicion/${cierre.fecha}')) {
+        await _exigirGuardado(
+          _prefs.setString(_claveCierrePendiente, jsonEncode(cierre.toJson())),
+        );
+      }
+    }
+    await _exigirGuardado(_prefs.setInt(_claveSemillas, semillas));
+    await _exigirGuardado(_prefs.setInt(_claveComboActual, combo));
+    await _exigirGuardado(_prefs.setInt(_claveMejorCombo, mejor));
+  }
+
+  Future<bool> guardarPrecision() => _serializarEconomia(() async {
+    try {
+      await _escribirPrecision();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  });
+
+  int aplicarAciertoPrecision({required bool aLaPrimera, int? comboActual}) {
+    final combo = comboActual ?? (aLaPrimera ? _comboActual + 1 : 1);
+    final ganadas = aLaPrimera ? (combo >= 3 ? 3 : (combo == 2 ? 2 : 1)) : 1;
+    _comboActual = combo;
+    if (combo > _mejorCombo) _mejorCombo = combo;
+    _semillasActuales += ganadas;
+    notifyListeners();
+    return ganadas;
+  }
+
+  void aplicarFalloPrecision() {
+    _comboActual = 0;
+    notifyListeners();
+  }
 
   static const _clave = 'hechos';
 
@@ -554,9 +650,9 @@ class Progreso extends ChangeNotifier {
       'memoria',
       'adivinanza',
     }.contains(actividad.tipo)) {
-      return _nivelesJuego(
-        actividad,
-      ).where((n) => nivelJuegoHecho(actividad, n)).length;
+      return _nivelesJuego(actividad)
+          .where((n) => nivelJuegoHecho(actividad, n))
+          .length;
     }
     if (actividad.nivelesLugar.isNotEmpty) {
       final superados = actividad.nivelesLugar
@@ -636,54 +732,39 @@ class Progreso extends ChangeNotifier {
     'leyenda_natu',
   };
 
-  int get semillas => _prefs.getInt(_claveSemillas) ?? 0;
+  int get semillas => _semillasActuales;
 
-  int get comboActual => _prefs.getInt(_claveComboActual) ?? 0;
+  int get comboActual => _comboActual;
 
-  int get mejorCombo => _prefs.getInt(_claveMejorCombo) ?? 0;
+  int get mejorCombo => _mejorCombo;
 
-  Future<int> sumarSemillas(int cantidad) async {
+  Future<int> sumarSemillas(int cantidad) => _serializarEconomia(() async {
     if (cantidad <= 0) return 0;
-    final nuevoTotal = semillas + cantidad;
+    _semillasActuales += cantidad;
     try {
-      await _prefs.setInt(_claveSemillas, nuevoTotal);
+      await _escribirPrecision();
     } catch (_) {
+      _semillasActuales -= cantidad;
       return 0;
     }
     notifyListeners();
     return cantidad;
-  }
+  });
 
   Future<void> romperComboPrecision() async {
-    try {
-      await _prefs.setInt(_claveComboActual, 0);
-    } catch (_) {
-      return;
-    }
-    notifyListeners();
+    aplicarFalloPrecision();
+    await guardarPrecision();
   }
 
   Future<int> registrarAciertoPrecision({
     required bool aLaPrimera,
     int? comboActual,
   }) async {
-    final comboEfectivo =
-        comboActual ?? (aLaPrimera ? (this.comboActual + 1) : 1);
-    final ganadas = aLaPrimera
-        ? (comboEfectivo >= 3 ? 3 : (comboEfectivo == 2 ? 2 : 1))
-        : 1;
-    final nuevoTotal = semillas + ganadas;
-    try {
-      await _prefs.setInt(_claveSemillas, nuevoTotal);
-      await _prefs.setInt(_claveComboActual, comboEfectivo);
-      if (comboEfectivo > mejorCombo) {
-        await _prefs.setInt(_claveMejorCombo, comboEfectivo);
-      }
-    } catch (_) {
-      return 0;
-    }
-    notifyListeners();
-    return ganadas;
+    final ganadas = aplicarAciertoPrecision(
+      aLaPrimera: aLaPrimera,
+      comboActual: comboActual,
+    );
+    return await guardarPrecision() ? ganadas : 0;
   }
 
   // --- Logros de Maestría por Zona y Juego Completo ---
@@ -708,9 +789,7 @@ class Progreso extends ChangeNotifier {
       'maestro_invernadero' => zonaDominada(
         lista.where((a) => a.zona == 'invernadero'),
       ),
-      'maestro_cuerpo' => zonaDominada(
-        lista.where((a) => a.zona == 'cuerpo'),
-      ),
+      'maestro_cuerpo' => zonaDominada(lista.where((a) => a.zona == 'cuerpo')),
       'racha_fuego' => rachaDias >= 3 || mejorCombo >= 8,
       'leyenda_natu' => zonaDominada(lista),
       _ => false,
@@ -787,19 +866,30 @@ class Progreso extends ChangeNotifier {
       if (hecho('traje/$id')) id,
   };
 
-  Future<bool> desbloquearTraje(String trajeId, int coste) async {
+  Future<bool> desbloquearTraje(String trajeId, int coste) =>
+      _serializarEconomia(() => _desbloquearTraje(trajeId, coste));
+
+  Future<bool> _desbloquearTraje(String trajeId, int coste) async {
+    // Antes de gastar un bono pendiente se hace duradero su cierre. Así un
+    // reinicio no puede restaurar un saldo anterior a la compra.
+    for (final cierre in _cierresPreparados.values.toList()) {
+      if (!hecho('expedicion/${cierre.fecha}') &&
+          !await _guardarExpedicionSinCola(cierre)) {
+        return false;
+      }
+    }
     if (!trajesDisponibles.contains(trajeId)) return false;
     if (trajeDesbloqueado(trajeId)) {
       return equiparTraje(trajeId);
     }
     if (coste < 0 || semillas < coste) return false;
-    final resto = semillas - coste;
+    _semillasActuales -= coste;
     try {
-      final okSemillas = await _prefs.setInt(_claveSemillas, resto);
-      if (!okSemillas) return false;
+      await _escribirPrecision();
       await _marcar('traje/$trajeId');
       await _guardarTrajeEnSlot(trajeId, alternarSiYaEsta: false);
     } catch (_) {
+      _semillasActuales += coste;
       return false;
     }
     notifyListeners();
@@ -916,6 +1006,7 @@ class Progreso extends ChangeNotifier {
   bool expedicionHoyHecha([DateTime? referencia]) {
     final hoy = formatearFecha(referencia ?? DateTime.now());
     if (hecho('expedicion/$hoy')) return true;
+    if (_cierresPreparados.containsKey(hoy)) return false;
     final ultima = ultimaFechaRacha;
     if (ultima == null) return false;
     return ultima == hoy;
@@ -941,6 +1032,102 @@ class Progreso extends ChangeNotifier {
     return _prefs.getInt('expedicion/semillas/$hoy') ?? 10;
   }
 
+  GuardadoExpedicion prepararExpedicionDiaria({
+    DateTime? fecha,
+    int semillasRecompensa = 10,
+    String? dificultad,
+    int? aciertosALaPrimera,
+    int? mejorComboSesion,
+    int? semillasTotalesSesion,
+  }) {
+    final ref = fecha ?? DateTime.now();
+    final hoy = formatearFecha(ref);
+    final previo = _cierresPreparados[hoy];
+    if (previo != null) return previo;
+    final cierre = _cierresPreparados.putIfAbsent(hoy, () {
+      final ayer = formatearFecha(DateTime(ref.year, ref.month, ref.day - 1));
+      final ultima = ultimaFechaRacha;
+      final previa = _prefs.getInt(_claveRachaDias) ?? 0;
+      final yaHecha = expedicionHoyHecha(ref) || (ultima == hoy && previa > 0);
+      final premio = yaHecha ? 0 : semillasRecompensa;
+      final racha = yaHecha
+          ? previa
+          : (ultima == ayer && previa > 0 ? previa + 1 : 1);
+      _semillasActuales += premio;
+      return GuardadoExpedicion._(
+        hoy,
+        previa,
+        racha,
+        premio,
+        dificultad,
+        aciertosALaPrimera,
+        mejorComboSesion,
+        semillasTotalesSesion,
+        _semillasActuales,
+        _comboActual,
+        _mejorCombo,
+      );
+    });
+    notifyListeners();
+    return cierre;
+  }
+
+  /// Solo escribe el cierre preparado: reintentar no calcula ni entrega bonos.
+  Future<bool> guardarExpedicionDiaria(GuardadoExpedicion cierre) =>
+      _serializarEconomia(() => _guardarExpedicionSinCola(cierre));
+
+  Future<bool> _guardarExpedicionSinCola(GuardadoExpedicion cierre) async {
+    try {
+      // El diario conserva el destino del bono antes de escribir el saldo.
+      // Se recupera únicamente el resultado, nunca las respuestas del juego.
+      await _exigirGuardado(
+        _prefs.setString(_claveCierrePendiente, jsonEncode(cierre.toJson())),
+      );
+      await _escribirPrecision();
+      if (ultimaFechaRacha == null ||
+          cierre.fecha.compareTo(ultimaFechaRacha!) >= 0) {
+        await _exigirGuardado(_prefs.setInt(_claveRachaDias, cierre.racha));
+        await _exigirGuardado(
+          _prefs.setString(_claveUltimaFechaRacha, cierre.fecha),
+        );
+      }
+      if (cierre.dificultad != null) {
+        await _exigirGuardado(
+          _prefs.setString(
+            'expedicion/dificultad/${cierre.fecha}',
+            cierre.dificultad!,
+          ),
+        );
+      }
+      if (cierre.aciertos != null) {
+        await _exigirGuardado(
+          _prefs.setInt(
+            'expedicion/aciertos/${cierre.fecha}',
+            cierre.aciertos!,
+          ),
+        );
+      }
+      if (cierre.combo != null) {
+        await _exigirGuardado(
+          _prefs.setInt('expedicion/combo/${cierre.fecha}', cierre.combo!),
+        );
+      }
+      if (cierre.semillasSesion != null) {
+        await _exigirGuardado(
+          _prefs.setInt(
+            'expedicion/semillas/${cierre.fecha}',
+            cierre.semillasSesion! + cierre.bono,
+          ),
+        );
+      }
+      await _marcar('expedicion/${cierre.fecha}');
+      notifyListeners();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<int> completarExpedicionDiaria({
     DateTime? fecha,
     int semillasRecompensa = 10,
@@ -949,53 +1136,17 @@ class Progreso extends ChangeNotifier {
     int? mejorComboSesion,
     int? semillasTotalesSesion,
   }) async {
-    final ref = fecha ?? DateTime.now();
-    final hoy = formatearFecha(ref);
-    final ayer = formatearFecha(DateTime(ref.year, ref.month, ref.day - 1));
-    final ultima = ultimaFechaRacha;
-    final rachaPrevia = _prefs.getInt(_claveRachaDias) ?? 0;
-
-    int nuevaRacha;
-    int premio;
-    if (ultima == hoy && rachaPrevia > 0) {
-      nuevaRacha = rachaPrevia;
-      // Repetir el reto diario el mismo día no entrega semillas extra.
-      premio = 0;
-    } else if (ultima == ayer && rachaPrevia > 0) {
-      nuevaRacha = rachaPrevia + 1;
-      premio = semillasRecompensa;
-    } else {
-      nuevaRacha = 1;
-      premio = semillasRecompensa;
-    }
-
-    try {
-      await _prefs.setInt(_claveRachaDias, nuevaRacha);
-      await _prefs.setString(_claveUltimaFechaRacha, hoy);
-      if (premio > 0) {
-        await _prefs.setInt(_claveSemillas, semillas + premio);
-      }
-      if (dificultad != null) {
-        await _prefs.setString('expedicion/dificultad/$hoy', dificultad);
-      }
-      if (aciertosALaPrimera != null) {
-        await _prefs.setInt('expedicion/aciertos/$hoy', aciertosALaPrimera);
-      }
-      if (mejorComboSesion != null) {
-        await _prefs.setInt('expedicion/combo/$hoy', mejorComboSesion);
-      }
-      if (semillasTotalesSesion != null) {
-        await _prefs.setInt(
-          'expedicion/semillas/$hoy',
-          semillasTotalesSesion + premio,
-        );
-      }
-      await _marcar('expedicion/$hoy');
-    } catch (_) {
-      return rachaPrevia;
-    }
-    notifyListeners();
-    return nuevaRacha;
+    final cierre = prepararExpedicionDiaria(
+      fecha: fecha,
+      semillasRecompensa: semillasRecompensa,
+      dificultad: dificultad,
+      aciertosALaPrimera: aciertosALaPrimera,
+      mejorComboSesion: mejorComboSesion,
+      semillasTotalesSesion: semillasTotalesSesion,
+    );
+    return await guardarExpedicionDiaria(cierre)
+        ? cierre.racha
+        : cierre.rachaAnterior;
   }
 
   Future<void> _marcar(String id) async {
@@ -1011,4 +1162,54 @@ class Progreso extends ChangeNotifier {
   }
 
   String _reto(Actividad actividad, Reto reto) => '${actividad.id}/${reto.id}';
+}
+
+/// Datos inmutables de un cierre aceptado, conservados durante sus reintentos.
+class GuardadoExpedicion {
+  const GuardadoExpedicion._(
+    this.fecha,
+    this.rachaAnterior,
+    this.racha,
+    this.bono,
+    this.dificultad,
+    this.aciertos,
+    this.combo,
+    this.semillasSesion,
+    this.semillasObjetivo,
+    this.comboGlobal,
+    this.mejorGlobal,
+  );
+  final String fecha;
+  final int rachaAnterior, racha, bono;
+  final String? dificultad;
+  final int? aciertos, combo, semillasSesion;
+  final int semillasObjetivo, comboGlobal, mejorGlobal;
+
+  Map<String, Object?> toJson() => {
+    'fecha': fecha,
+    'anterior': rachaAnterior,
+    'racha': racha,
+    'bono': bono,
+    'dificultad': dificultad,
+    'aciertos': aciertos,
+    'combo': combo,
+    'sesion': semillasSesion,
+    'saldo': semillasObjetivo,
+    'comboGlobal': comboGlobal,
+    'mejor': mejorGlobal,
+  };
+  factory GuardadoExpedicion.desdeJson(Map<String, dynamic> json) =>
+      GuardadoExpedicion._(
+        json['fecha'] as String,
+        json['anterior'] as int,
+        json['racha'] as int,
+        json['bono'] as int,
+        json['dificultad'] as String?,
+        json['aciertos'] as int?,
+        json['combo'] as int?,
+        json['sesion'] as int?,
+        json['saldo'] as int,
+        json['comboGlobal'] as int,
+        json['mejor'] as int,
+      );
 }

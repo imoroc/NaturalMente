@@ -74,6 +74,10 @@ void main() {
     partida.adivinar(ronda.respuesta);
     expect(partida.resultado!.acierto, isTrue);
     expect(partida.pistasUltimoAcierto, 3);
+    expect(partida.indiceRonda, 0);
+    expect(partida.ronda, ronda);
+    expect(partida.resuelta, isTrue);
+    partida.siguiente();
     expect(partida.indiceRonda, 1);
     expect(partida.pistasVistas, 1);
   });
@@ -88,6 +92,7 @@ void main() {
       final partida = PartidaAdivinanza(adivinanza: adivinanza, nivel: nivel);
       for (final ronda in nivel.rondas) {
         partida.adivinar(ronda.respuesta);
+        partida.siguiente();
       }
       expect(partida.completa, isTrue);
       expect(partida.resultado!.frase, contains(nivel.despedida));

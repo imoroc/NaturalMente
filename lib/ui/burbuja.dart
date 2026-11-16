@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/atencion_paso.dart';
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/tema.dart';
 
@@ -46,7 +47,7 @@ class Burbuja extends StatelessWidget {
     };
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
+      duration: duracionSeleccionPaso(context),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(

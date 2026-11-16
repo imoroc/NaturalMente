@@ -62,6 +62,9 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
   bool get partidaCompleta => _partida?.completa ?? false;
 
   @override
+  String? get explicacionFinal => _partida?.resultado?.frase;
+
+  @override
   void iniciarPartida(String nivelId) {
     final nivel = _adivinanza.niveles.firstWhere((n) => n.id == nivelId);
     _partida = PartidaAdivinanza(adivinanza: _adivinanza, nivel: nivel);
@@ -84,17 +87,24 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
   void _adivinar(String animalId) {
     final partida = _partida!;
     final estabaCompleta = partida.completa;
-    if (estabaCompleta || partida.descartado(animalId)) return;
+    if (estabaCompleta ||
+        partida.descartado(animalId) ||
+        !iniciarPasoEvaluado()) {
+      return;
+    }
     setState(() => partida.adivinar(animalId));
     registrarJugada(
       acierto: partida.resultado!.acierto,
       estabaCompleta: estabaCompleta,
+      alContinuar: partida.siguiente,
+      observar: true,
+      conservarTablero: false,
     );
   }
 
   void _otraPista() {
     final partida = _partida!;
-    if (!partida.quedanPistas) return;
+    if (pasoBloqueado || !partida.quedanPistas) return;
     context.sonidoToque();
     setState(partida.otraPista);
     usarAyuda();
@@ -119,12 +129,14 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 8),
-        LinearProgressIndicator(
-          key: const Key('adivinanza-progreso'),
-          value: partida.progreso,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(10),
-          semanticsLabel: context.traducir('Progreso de ¿Quién soy?'),
+        ProgresoPaso(
+          child: LinearProgressIndicator(
+            key: const Key('adivinanza-progreso'),
+            value: partida.progreso,
+            minHeight: 10,
+            borderRadius: BorderRadius.circular(10),
+            semanticsLabel: context.traducir('Progreso de ¿Quién soy?'),
+          ),
         ),
         const SizedBox(height: 12),
         if (ronda != null) ...[
@@ -228,6 +240,7 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
               for (final id in _opciones[ronda.id] ?? ronda.opciones)
                 _OpcionAnimal(
                   animal: _adivinanza.animal(id),
+                  acertado: partida.resuelta && id == ronda.respuesta,
                   descartado: partida.descartado(id),
                   fallo:
                       partida.resultado?.acierto == false &&
@@ -238,8 +251,8 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
           ),
         ],
         const SizedBox(height: 12),
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
+          anunciar: true,
           child: Burbuja(
             quien: actividad.quien,
             frase: partida.resultado?.frase ?? nivel.intro,
@@ -256,12 +269,14 @@ class _OpcionAnimal extends StatelessWidget {
     required this.animal,
     required this.descartado,
     required this.fallo,
+    required this.acertado,
     required this.onTap,
   });
 
   final AnimalAdivinanza animal;
   final bool descartado;
   final bool fallo;
+  final bool acertado;
   final VoidCallback onTap;
 
   @override
@@ -280,35 +295,39 @@ class _OpcionAnimal extends StatelessWidget {
           fondo: context.coloresNaturales.superficie(
             descartado ? const Color(0xFFF1F5F9) : Colors.white,
           ),
-          destacada: fallo,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, c) => Center(
-                      child: DibujoNuevoJuego(
-                        id: animal.dibujo,
-                        tamano: (c.maxHeight * .95).clamp(40, 120),
+          destacada: fallo || acertado,
+          child: AsentamientoPaso(
+            confirmado: acertado,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, c) => Center(
+                        child: DibujoNuevoJuego(
+                          id: animal.dibujo,
+                          tamano: (c.maxHeight * .95).clamp(40, 120),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Texto(
-                  animal.nombre,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 14,
-                    color: context.coloresNaturales.contenido(
-                      Color(0xFF1E293B),
+                  if (acertado) const Icon(Icons.check_circle_rounded),
+                  Texto(
+                    animal.nombre,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 14,
+                      color: context.coloresNaturales.contenido(
+                        Color(0xFF1E293B),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,8 +1,23 @@
 import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/fin_juego.dart';
+import 'package:naturalmente/ui/texto.dart';
+import 'package:naturalmente/ui/atencion_paso.dart';
+import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/datos/progreso.dart';
+export 'package:naturalmente/ui/atencion_paso.dart';
+
+enum FasePaso {
+  interactivo,
+  evaluando,
+  confirmando,
+  observando,
+  transicionando,
+  victoria,
+}
 
 /// Un único acierto sobre toda la pantalla, ligado a la vida del juego.
 mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
@@ -12,19 +27,273 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
   bool _victoriaEnCurso = false;
   Future<bool>? _guardadoFinal;
   Future<bool> Function()? _guardarDeNuevo;
+  FasePaso _fasePaso = FasePaso.interactivo;
+  int _revisionPaso = 0;
+  VoidCallback? _avancePendiente;
+  int _comboMostrado = 0;
+  int _sesionGuardado = 0;
+  int _numeroPaso = 0;
+  Future<void> _colaGuardados = Future.value();
+  Map<String, Future<bool>> _guardadosPaso = {};
+  Map<String, Future<bool> Function()> _fallosPaso = {};
+  bool _reintentandoPaso = false;
+
+  /// Se aplica una vez fuera de los callbacks de persistencia.
+  int guardarPrecisionPaso({
+    required bool acierto,
+    bool aLaPrimera = false,
+    int? comboActual,
+    Progreso? progreso,
+  }) {
+    progreso ??= Alcance.maybeOf(context)?.progreso;
+    if (progreso == null) return 0;
+    final ganadas = acierto
+        ? progreso.aplicarAciertoPrecision(
+            aLaPrimera: aLaPrimera,
+            comboActual: comboActual,
+          )
+        : 0;
+    if (!acierto) progreso.aplicarFalloPrecision();
+    unawaited(
+      registrarGuardadoIntermedio(
+        'precision/$_numeroPaso',
+        progreso.guardarPrecision,
+      ),
+    );
+    return ganadas;
+  }
+
+  /// Serializa escrituras y conserva la operación original para reintentar.
+  Future<bool> registrarGuardadoIntermedio(
+    String id,
+    Future<bool> Function() guardar,
+  ) {
+    return _guardadosPaso.putIfAbsent(id, () {
+      final sesion = _sesionGuardado;
+      final fallos = _fallosPaso;
+      final tarea = _colaGuardados.then((_) async {
+        bool guardado;
+        try {
+          guardado = await guardar();
+        } catch (_) {
+          guardado = false;
+        }
+        if (guardado) { fallos.remove(id); } else { fallos[id] = guardar; }
+        if (mounted && sesion == _sesionGuardado) setState(() {});
+        return guardado;
+      });
+      _colaGuardados = tarea.then((_) {});
+      return tarea;
+    });
+  }
+
+  Future<bool> _reintentarGuardadosPaso() async {
+    await _colaGuardados;
+    final sesion = _sesionGuardado;
+    for (final fallo in Map.of(_fallosPaso).entries) {
+      if (sesion != _sesionGuardado) return false;
+      _guardadosPaso.remove(fallo.key);
+      if (!await registrarGuardadoIntermedio(fallo.key, fallo.value)) {
+        return false;
+      }
+    }
+    return sesion == _sesionGuardado;
+  }
+
+  int presentarCombo(int actual) {
+    if (!const {FasePaso.evaluando, FasePaso.confirmando}.contains(_fasePaso) &&
+        !_victoriaEnCurso) {
+      _comboMostrado = actual;
+    }
+    return _comboMostrado;
+  }
+
+  /// El destino se busca tras presentar el nuevo contenido, nunca bajo el check.
+  void mostrarDestinoPaso(GlobalKey clave) {
+    final version = _version;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || version != _version) return;
+      final destino = clave.currentContext;
+      if (destino == null) return;
+      final caja = destino.findRenderObject();
+      if (caja is! RenderBox || !caja.hasSize) return;
+      final arriba = caja.localToGlobal(Offset.zero).dy;
+      final abajo = arriba + caja.size.height;
+      if (arriba >= 80 && abajo <= MediaQuery.sizeOf(context).height - 80) {
+        return;
+      }
+      Scrollable.ensureVisible(
+        destino,
+        duration: Duration(
+          milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 160,
+        ),
+        alignment: .1,
+      );
+    });
+  }
+
+  FasePaso get fasePaso => _fasePaso;
+  bool get pasoBloqueado => _fasePaso != FasePaso.interactivo || _finAbierto;
+
+  /// Adquiere el paso antes de evaluar o iniciar cualquier operación asíncrona.
+  /// Los eventos repetidos se descartan, nunca se encolan para el próximo reto.
+  bool iniciarPasoEvaluado() {
+    if (!mounted || pasoBloqueado) return false;
+    _numeroPaso++;
+    setState(() => _fasePaso = FasePaso.evaluando);
+    return true;
+  }
+
+  void terminarIntentoConPista() {
+    if (!mounted || _fasePaso != FasePaso.evaluando) return;
+    setState(() => _fasePaso = FasePaso.interactivo);
+  }
+
+  /// Confirma el resultado actual antes de abrir la siguiente acción.
+  /// [alContinuar] solo cambia la presentación; no puntúa, evalúa ni guarda.
+  void confirmarPaso({
+    required VoidCallback alContinuar,
+    bool esperarContinuar = false,
+    bool conservarTablero = false,
+  }) {
+    if (_fasePaso != FasePaso.evaluando) return;
+    void continuar() => _avanzarPaso(alContinuar, animar: !conservarTablero);
+    mostrarAcierto(
+      alTerminar: () {
+        if (esperarContinuar) {
+          setState(() {
+            _avancePendiente = continuar;
+            _fasePaso = FasePaso.observando;
+          });
+        } else {
+          continuar();
+        }
+      },
+    );
+  }
+
+  void _avanzarPaso(VoidCallback avanzar, {bool animar = true}) {
+    setState(() {
+      _avancePendiente = null;
+      _fasePaso = animar ? FasePaso.transicionando : FasePaso.interactivo;
+      if (animar) _revisionPaso++;
+      avanzar();
+    });
+  }
+
+  /// Envuelve el cuerpo del ejercicio, dejando disponible la navegación.
+  /// AbsorbPointer retira las acciones táctiles y semánticas del tablero;
+  /// ExcludeFocus impide responder mediante un foco de teclado anterior.
+  Widget construirContenidoPaso(Widget contenido) => Column(
+    children: [
+      Expanded(
+        child: ExcludeFocus(
+          excluding: pasoBloqueado,
+          child: AbsorbPointer(
+            absorbing: pasoBloqueado,
+            child: AtencionPaso(
+              confirmando:
+                  const {
+                    FasePaso.evaluando,
+                    FasePaso.confirmando,
+                  }.contains(_fasePaso) ||
+                  _victoriaEnCurso,
+              transicionando: _fasePaso == FasePaso.transicionando,
+              anunciosSuspendidos: const {
+                FasePaso.evaluando,
+                FasePaso.confirmando,
+                FasePaso.transicionando,
+                FasePaso.victoria,
+              }.contains(_fasePaso),
+              child: _TransicionPaso(
+                revision: _revisionPaso,
+                alTerminar: () {
+                  if (!mounted || _fasePaso != FasePaso.transicionando) return;
+                  setState(() => _fasePaso = FasePaso.interactivo);
+                },
+                child: contenido,
+              ),
+            ),
+          ),
+        ),
+      ),
+      if (_fasePaso == FasePaso.observando)
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: FilledButton(
+              key: const Key('continuar-paso'),
+              onPressed: () {
+                final avanzar = _avancePendiente;
+                avanzar?.call();
+              },
+              child: const Texto('Continuar'),
+            ),
+          ),
+        ),
+      if (_fallosPaso.isNotEmpty && _fasePaso != FasePaso.victoria)
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: Texto(
+                    'Tu respuesta está resuelta. Falta guardar el progreso.',
+                  ),
+                ),
+                TextButton(
+                  onPressed: _reintentandoPaso
+                      ? null
+                      : () async {
+                          final sesion = _sesionGuardado;
+                          setState(() => _reintentandoPaso = true);
+                          await _reintentarGuardadosPaso();
+                          if (mounted && sesion == _sesionGuardado) {
+                            setState(() => _reintentandoPaso = false);
+                          }
+                        },
+                  child: const Texto('Guardar de nuevo'),
+                ),
+              ],
+            ),
+          ),
+        ),
+    ],
+  );
 
   DatosFinJuego? construirFinJuego() => null;
+
+  /// Recupera un resultado ya aceptado que aún necesita guardarse, sin
+  /// volver a celebrar, evaluar ni entregar su recompensa.
+  void mostrarCierrePendiente() {
+    if (!mounted || _finAbierto) return;
+    setState(() => _fasePaso = FasePaso.victoria);
+    _mostrarFinJuego(_version);
+  }
 
   /// Captura solo el guardado, para reintentarlo sin repetir puntos ni respuestas.
   Future<bool> registrarGuardadoFinal(Future<bool> Function() guardar) {
     _guardarDeNuevo = guardar;
-    return _guardadoFinal = () async {
+    final fallos = _fallosPaso;
+    final guardados = _guardadosPaso;
+    final tarea = _colaGuardados.then((_) async {
       try {
+        for (final fallo in Map.of(fallos).entries) {
+          if (!await fallo.value()) return false;
+          fallos.remove(fallo.key);
+          guardados[fallo.key] = Future.value(true);
+        }
         return await guardar();
       } catch (_) {
         return false;
       }
-    }();
+    });
+    // La salida cancela la presentación, no una respuesta ya aceptada.
+    _colaGuardados = tarea.then((_) {});
+    return _guardadoFinal = tarea;
   }
 
   @override
@@ -34,11 +303,17 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
     IdiomaScope.of(context)?.prepararAciertos();
   }
 
-  void mostrarAcierto({bool finalDeNivel = false}) {
+  void mostrarAcierto({bool finalDeNivel = false, VoidCallback? alTerminar}) {
     if (!mounted) return;
     if (finalDeNivel && (_victoriaEnCurso || _finAbierto)) return;
-    ocultarAcierto();
+    _cancelarPaso(nuevaSesion: false);
     _victoriaEnCurso = finalDeNivel;
+    if (finalDeNivel || alTerminar != null) {
+      setState(
+        () =>
+            _fasePaso = finalDeNivel ? FasePaso.victoria : FasePaso.confirmando,
+      );
+    }
     final version = _version;
     if (finalDeNivel) {
       _guardadoFinal = null;
@@ -63,8 +338,16 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
           alTerminar: () {
             if (!identical(_acierto, entrada)) return;
             _retirarAcierto();
-            _victoriaEnCurso = false;
-            if (finalDeNivel) _mostrarFinJuego(version);
+            setState(() => _victoriaEnCurso = false);
+            if (finalDeNivel) {
+              _mostrarFinJuego(version);
+            } else if (mounted && version == _version && alTerminar != null) {
+              if (ModalRoute.of(context)?.isCurrent == true) {
+                alTerminar();
+              } else {
+                ocultarAcierto();
+              }
+            }
           },
         );
         return Positioned.fill(
@@ -73,7 +356,9 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
                   fit: StackFit.expand,
                   children: [
                     // Evita reiniciar o abrir otra ruta antes de presentar
-                    // las opciones. Los aciertos intermedios siguen libres.
+                    // las opciones. En los pasos coordinados, el tablero
+                    // se protege con construirContenidoPaso, no con una
+                    // barrera modal que también bloquee la navegación.
                     const ModalBarrier(
                       dismissible: false,
                       color: Colors.transparent,
@@ -90,8 +375,22 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
   }
 
   void ocultarAcierto() {
+    _cancelarPaso();
+    if (mounted) setState(() {});
+  }
+
+  void _cancelarPaso({bool nuevaSesion = true}) {
+    if (nuevaSesion) {
+      _sesionGuardado++;
+      _guardadosPaso = {};
+      _fallosPaso = {};
+      _reintentandoPaso = false;
+      _numeroPaso = 0;
+    }
     _version++;
     _victoriaEnCurso = false;
+    _fasePaso = FasePaso.interactivo;
+    _avancePendiente = null;
     _retirarAcierto();
   }
 
@@ -136,6 +435,7 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
     );
     _finAbierto = false;
     if (!mounted || version != _version) return;
+    setState(() => _fasePaso = FasePaso.interactivo);
     final datos = construirFinJuego();
     if (datos == null) return;
     switch (accion) {
@@ -155,9 +455,90 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
-    ocultarAcierto();
+    _cancelarPaso();
     super.dispose();
   }
+}
+
+/// La transición depende del reloj de Flutter y no de esperas por juego.
+class _TransicionPaso extends StatefulWidget {
+  const _TransicionPaso({
+    required this.revision,
+    required this.alTerminar,
+    required this.child,
+  });
+
+  final int revision;
+  final VoidCallback alTerminar;
+  final Widget child;
+
+  @override
+  State<_TransicionPaso> createState() => _TransicionPasoState();
+}
+
+class _TransicionPasoState extends State<_TransicionPaso>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  late final AnimationController _controlador;
+  static const duracion = Duration(milliseconds: 160);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _controlador =
+        AnimationController(vsync: this, duration: duracion, value: 1)
+          ..addStatusListener((estado) {
+            if (estado == AnimationStatus.completed) widget.alTerminar();
+          });
+  }
+
+  @override
+  void didUpdateWidget(covariant _TransicionPaso oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.revision == widget.revision) return;
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _controlador.stop();
+      final revision = widget.revision;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || revision != widget.revision) return;
+        if (_controlador.value < 1) {
+          _controlador.value = 1;
+        } else {
+          widget.alTerminar();
+        }
+      });
+    } else {
+      _controlador.forward(from: 0);
+      if (WidgetsBinding.instance.lifecycleState != null &&
+          WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
+        _controlador.stop(canceled: false);
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) {
+      _controlador.stop(canceled: false);
+    } else if (_controlador.value < 1) {
+      _controlador.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _controlador.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => FadeTransition(
+    opacity: MediaQuery.disableAnimationsOf(context)
+        ? const AlwaysStoppedAnimation(1)
+        : _controlador.drive(CurveTween(curve: Curves.easeOutCubic)),
+    child: widget.child,
+  );
 }
 
 /// Pop breve y salida suave; la victoria acompaña la fanfarria completa.
@@ -183,7 +564,7 @@ class AnimacionAcierto extends StatefulWidget {
 }
 
 class _AnimacionAciertoState extends State<AnimacionAcierto>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   static final _entradaSuave = TweenSequence<double>([
     TweenSequenceItem(
       tween: Tween(
@@ -202,10 +583,12 @@ class _AnimacionAciertoState extends State<AnimacionAcierto>
   ]);
   late final AnimationController _controlador;
   bool _iniciada = false;
+  bool _efectosReproducidos = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controlador =
         AnimationController(
           vsync: this,
@@ -225,15 +608,35 @@ class _AnimacionAciertoState extends State<AnimacionAcierto>
     super.didChangeDependencies();
     if (_iniciada) return;
     _iniciada = true;
+    if (WidgetsBinding.instance.lifecycleState == null ||
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed) {
+      _reanudar();
+    }
+  }
+
+  void _reanudar() {
     // Audio, vibración y reloj visual comienzan en el mismo fotograma.
-    widget.alAparecer();
+    if (!_efectosReproducidos) {
+      _efectosReproducidos = true;
+      widget.alAparecer();
+    }
     _controlador.forward();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controlador.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) {
+      _controlador.stop(canceled: false);
+    } else if (_iniciada && _controlador.value < 1) {
+      _reanudar();
+    }
   }
 
   @override

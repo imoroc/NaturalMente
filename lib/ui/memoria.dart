@@ -125,7 +125,7 @@ class _MemoriaPageState extends State<MemoriaPage>
   void _tocar(String cartaId) {
     final partida = _partida!;
     final estabaCompleta = partida.completa;
-    if (estabaCompleta) return;
+    if (estabaCompleta || !iniciarPasoEvaluado()) return;
     late bool evaluada;
     setState(() => evaluada = partida.tocar(cartaId));
     if (evaluada) {
@@ -134,6 +134,7 @@ class _MemoriaPageState extends State<MemoriaPage>
         estabaCompleta: estabaCompleta,
       );
     } else {
+      terminarIntentoConPista();
       context.sonidoToque();
     }
   }
@@ -155,17 +156,19 @@ class _MemoriaPageState extends State<MemoriaPage>
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 8),
-        LinearProgressIndicator(
-          key: const Key('memoria-progreso'),
-          value: partida.progreso,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(10),
-          semanticsLabel: context.traducir('Progreso de la memoria'),
+        ProgresoPaso(
+          child: LinearProgressIndicator(
+            key: const Key('memoria-progreso'),
+            value: partida.progreso,
+            minHeight: 10,
+            borderRadius: BorderRadius.circular(10),
+            semanticsLabel: context.traducir('Progreso de la memoria'),
+          ),
         ),
         const SizedBox(height: 12),
         // Natu habla encima de las cartas para que se lea sin bajar.
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
+          anunciar: true,
           child: Burbuja(
             quien: actividad.quien,
             frase: partida.resultado?.frase ?? nivel.intro,

@@ -57,6 +57,7 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
   Widget construirJuego(BuildContext context, double ancho);
 
   String get volverA;
+  String? get explicacionFinal => null;
 
   bool _guardando = false;
   bool _guardado = false;
@@ -76,6 +77,7 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
     setState(() {
       _vuelta += 1;
       iniciarPartida(nivelId);
+      _guardando = false;
       _guardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
@@ -95,7 +97,13 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
   }
 
   /// Se llama después de cada jugada evaluada, con la partida ya cambiada.
-  void registrarJugada({required bool acierto, required bool estabaCompleta}) {
+  void registrarJugada({
+    required bool acierto,
+    required bool estabaCompleta,
+    VoidCallback? alContinuar,
+    bool observar = false,
+    bool conservarTablero = true,
+  }) {
     final prog = Alcance.maybeOf(context)?.progreso;
     final baseCombo = prog?.comboActual ?? _comboActual;
     if (acierto) {
@@ -110,7 +118,8 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -120,39 +129,42 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
     if (partidaCompleta && !estabaCompleta) {
       mostrarAcierto(finalDeNivel: true);
       _guardarSiCompleta();
     } else if (acierto) {
-      mostrarAcierto();
+      confirmarPaso(
+        alContinuar: alContinuar ?? () {},
+        esperarContinuar: observar,
+        conservarTablero: conservarTablero,
+      );
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
   }
 
   Future<void> _guardarSiCompleta() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
-    final nivelId = nivelActual;
-    if (nivelId == null || !partidaCompleta || _guardando || _guardado) return;
+    final partida = nivelActual;
+    if (partida == null || !partidaCompleta || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = actividad;
+    final nivelGuardado = partida;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelJuego(actividad, nivelId);
-      if (mounted) setState(() => _guardado = true);
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted) setState(() => _guardando = false);
-    }
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelJuego(actividadGuardada, nivelGuardado);
+        if (mounted && partida == nivelActual) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && partida == nivelActual) setState(() => _guardando = false);
+      }
+    });
+    if (mounted && partida == nivelActual) setState(() => _guardando = false);
   }
 
   void _cambiarNivel() {
@@ -167,10 +179,19 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
     return DatosFinJuego(
       actividad: actividad.titulo,
       nivel: _nivel.nombre,
-      resumen: ResumenPrecisionFinal(
-        semillasGanadas: _semillasSesion,
-        mejorComboSesion: _mejorComboSesion,
-        sinPistas: _pistasSesion == 0,
+      resumen: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ResumenPrecisionFinal(
+            semillasGanadas: _semillasSesion,
+            mejorComboSesion: _mejorComboSesion,
+            sinPistas: _pistasSesion == 0,
+          ),
+          if (explicacionFinal != null) ...[
+            const SizedBox(height: 12),
+            Texto(explicacionFinal!, textAlign: TextAlign.center),
+          ],
+        ],
       ),
       onRepetir: () => empezar(nivelId),
       onCambiarNivel: _cambiarNivel,
@@ -190,23 +211,26 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            key: ValueKey('${nivelActual ?? 'selector'}-$_vuelta'),
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: enJuego
-                    ? _juego(context, constraints.maxWidth - 32)
-                    : _selector(context),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              key: ValueKey('${nivelActual ?? 'selector'}-$_vuelta'),
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 780),
+                  child: enJuego
+                      ? _juego(context, constraints.maxWidth - 32)
+                      : _selector(context),
+                ),
               ),
             ),
           ),

@@ -77,12 +77,17 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
     this.comboActual,
     this.combo,
     required this.semillasSesion,
+    this.discreta = false,
     super.key,
   });
 
   final int? comboActual;
   final int? combo;
   final int semillasSesion;
+
+  /// El coordinador proporciona el número presentado, sin escuchar el combo
+  /// global ni celebrar cambios mientras se está resolviendo el ejercicio.
+  final bool discreta;
 
   int get _comboLocal => comboActual ?? combo ?? 0;
 
@@ -95,14 +100,41 @@ class InsigniaPrecisionAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (discreta) {
+      return SizedBox(
+        key: const Key('precision-discreta'),
+        width: 80,
+        child: Semantics(
+          label: '${context.traducir('Aciertos seguidos')}: $_comboLocal',
+          excludeSemantics: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.check_circle_outline_rounded,
+                size: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  '$_comboLocal',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     final progreso = Alcance.maybeOf(context)?.progreso;
     if (progreso != null) {
       return ListenableBuilder(
         listenable: progreso,
-        builder: (context, _) => _construirContenido(
-          context,
-          progreso.comboActual,
-        ),
+        builder: (context, _) =>
+            _construirContenido(context, progreso.comboActual),
       );
     }
     return _construirContenido(context, _comboLocal);

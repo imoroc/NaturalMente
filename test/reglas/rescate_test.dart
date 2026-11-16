@@ -55,6 +55,7 @@ void main() {
 
     for (var i = 0; i < partida.nivel.residuos.length; i++) {
       partida.tirar(partida.residuoActual!.contenedor);
+      partida.siguiente();
     }
     expect(partida.completa, isTrue);
     expect(partida.resultado!.frase, contains(partida.nivel.despedida));
@@ -76,15 +77,20 @@ void main() {
     );
 
     partida.responder(lince.amenaza.respuesta);
+    expect(partida.preguntaAyuda, isFalse);
+    partida.siguiente();
     expect(partida.preguntaAyuda, isTrue);
     expect(partida.completa, isFalse);
     partida.responder(lince.ayuda.respuesta);
+    partida.siguiente();
     expect(partida.especiesAyudadas, 1);
 
     while (partida.especieActual != null) {
       final especie = partida.especieActual!;
       partida.responder(especie.amenaza.respuesta);
+      partida.siguiente();
       partida.responder(especie.ayuda.respuesta);
+      partida.siguiente();
     }
     expect(partida.completa, isTrue);
     expect(partida.progreso, 1);

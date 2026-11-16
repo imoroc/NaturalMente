@@ -2,6 +2,12 @@
 
 Aquí van las decisiones de alcance que ya están tomadas, con la fecha. Si una choca con otro documento, manda esta. Si alguien cambia una, añade una línea nueva con la fecha en vez de borrar la anterior.
 
+## 16 de noviembre de 2026
+
+**Confirmar antes de avanzar.** Todos los juegos conservan el reto acertado durante el feedback común y presentan después su siguiente acción. Las explicaciones necesarias pueden esperar a Continuar; la última respuesta, incluidas sus preguntas finales, mantiene la victoria y el cierre automáticos. Seleccionar o preparar una pieza no celebra un acierto.
+
+**La recompensa se acepta una vez y su guardado se puede reintentar.** El reintento persiste datos ya calculados, sin reevaluar ni sumar puntos. El reto diario conserva un cierre pendiente para recuperar una escritura parcial sin repetir el bono ni las preguntas. Se mantienen el límite diario, los ajustes independientes de sonido/vibración y el movimiento reducido. La implementación se documenta en [feedback-y-cierre.md](feedback-y-cierre.md) y [el plan de transiciones](plan-feedback-y-transiciones.md).
+
 ## 8 de octubre de 2026
 
 **El contenido lo marca el material del colegio.** Es Ciencias de la Naturaleza de 1º a 6º (resumido en `docs/contexto.md`). Encima añadimos un bloque nuestro del cuerpo humano. La idea 9 del colegio (animales, plantas, Tierra y universo) se adapta a ese material, no al revés.

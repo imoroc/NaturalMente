@@ -70,6 +70,7 @@ class _RescatePageState extends State<RescatePage>
       _opciones
         ..clear()
         ..addAll(opciones);
+      _guardando = false;
       _guardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
@@ -94,7 +95,8 @@ class _RescatePageState extends State<RescatePage>
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -104,51 +106,56 @@ class _RescatePageState extends State<RescatePage>
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
   void _cambiar(void Function(PartidaRescate partida) accion) {
     final partida = _partida!;
     final estabaCompleta = partida.completa;
-    if (estabaCompleta) return;
+    if (estabaCompleta || !iniciarPasoEvaluado()) return;
+    final anterior = partida.resultado;
     setState(() => accion(partida));
     final resultado = partida.resultado;
-    if (resultado == null) return;
+    if (resultado == null || identical(resultado, anterior)) {
+      terminarIntentoConPista();
+      return;
+    }
     _registrarPasoPrecision(resultado.acierto);
     if (partida.completa && !estabaCompleta) {
       mostrarAcierto(finalDeNivel: true);
       _guardarSiCompleta();
     } else if (resultado.acierto) {
-      mostrarAcierto();
+      confirmarPaso(
+        alContinuar: partida.siguiente,
+        esperarContinuar: partida.nivel.esEspecies,
+        conservarTablero: partida.nivel.esEscena,
+      );
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
   }
 
   Future<void> _guardarSiCompleta() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
     final partida = _partida;
-    if (partida == null || !partida.completa || _guardando || _guardado) {
-      return;
-    }
+    if (partida == null || !partida.completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = widget.actividad;
+    final nivelGuardado = partida.nivel.id;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelJuego(widget.actividad, partida.nivel.id);
-      if (mounted) setState(() => _guardado = true);
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted) setState(() => _guardando = false);
-    }
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelJuego(actividadGuardada, nivelGuardado);
+        if (mounted && identical(partida, _partida)) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
+      }
+    });
+    if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
   }
 
   void _mostrarCuriosidad(NivelRescate nivel) {
@@ -260,24 +267,30 @@ class _RescatePageState extends State<RescatePage>
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            // Al cambiar de nivel o de vuelta la pantalla vuelve arriba.
-            key: ValueKey('${partida?.nivel.id ?? 'selector'}-$_vuelta'),
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: partida == null
-                    ? _selector()
-                    : _juego(partida, math.min(constraints.maxWidth - 32, 780)),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              // Al cambiar de nivel o de vuelta la pantalla vuelve arriba.
+              key: ValueKey('${partida?.nivel.id ?? 'selector'}-$_vuelta'),
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 780),
+                  child: partida == null
+                      ? _selector()
+                      : _juego(
+                          partida,
+                          math.min(constraints.maxWidth - 32, 780),
+                        ),
+                ),
               ),
             ),
           ),
@@ -474,21 +487,23 @@ class _RescatePageState extends State<RescatePage>
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 8),
-        LinearProgressIndicator(
-          key: const Key('rescate-progreso'),
-          value: partida.progreso,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(10),
-          semanticsLabel: context.traducir('Progreso de la reserva'),
-          semanticsValue: '${(partida.progreso * 100).round()} %',
+        ProgresoPaso(
+          child: LinearProgressIndicator(
+            key: const Key('rescate-progreso'),
+            value: partida.progreso,
+            minHeight: 10,
+            borderRadius: BorderRadius.circular(10),
+            semanticsLabel: context.traducir('Progreso de la reserva'),
+            semanticsValue: '${(partida.progreso * 100).round()} %',
+          ),
         ),
         const SizedBox(height: 12),
         if (nivel.esEscena) ..._escena(partida, ancho),
         if (nivel.esContenedores) ..._contenedores(partida, ancho),
         if (nivel.esEspecies) ..._especies(partida),
         const SizedBox(height: 12),
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
+          anunciar: true,
           child: Burbuja(
             quien: widget.actividad.quien,
             frase: partida.resultado?.frase ?? nivel.intro,

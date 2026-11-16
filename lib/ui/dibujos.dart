@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/atencion_paso.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -2452,7 +2453,7 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                   ? null
                   : () => widget.onColocarEnZona?.call(opcion.id),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
+                duration: duracionSeleccionPaso(context),
                 decoration: BoxDecoration(
                   color: context.coloresNaturales.superficie(
                     encima
@@ -2478,7 +2479,7 @@ class _CuerpoHerbarioState extends State<CuerpoHerbario> {
                       : Alignment.centerRight,
                   child: AnimatedScale(
                     scale: encima ? 1.07 : 1.0,
-                    duration: const Duration(milliseconds: 140),
+                    duration: duracionSeleccionPaso(context),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Container(

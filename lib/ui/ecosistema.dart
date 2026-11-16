@@ -32,6 +32,8 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   bool _guardando = false, _guardado = false;
   bool _permitirSalir = false;
   bool _verAntes = false;
+  bool _comparacionVisible = false;
+  String? _instruccionConfirmada;
   String? _inspeccionado;
   int _comboActual = 0;
   int _mejorComboSesion = 0;
@@ -91,7 +93,10 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     }
     final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
+      _comparacionVisible = false;
+      _instruccionConfirmada = null;
       _partida = PartidaEcosistema(_ecosistema, nivel);
+      _guardando = false;
       _guardando = false;
       _guardado = false;
       _verAntes = false;
@@ -138,7 +143,8 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -148,38 +154,69 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
   void _colocar(String pieza, String destino) {
-    var acierto = false;
+    final p = _partida!;
+    if (p.completa || p.confirmado || !iniciarPasoEvaluado()) return;
+    final instruccion = p.elementoActual?.instruccion;
     setState(() {
-      _partida!.colocar(pieza, destino);
-      acierto = _partida!.acierto == true;
-      if (acierto) {
-        _inspeccionado = destino;
-        _verAntes = false;
-        _partida!.seguir();
-      }
+      p.colocar(pieza, destino);
+      _instruccionConfirmada = instruccion;
+      _inspeccionado = destino;
     });
+    _confirmarEcosistema();
+  }
+
+  void _responderEco(String opcion) {
+    final p = _partida!;
+    if (p.completa || p.confirmado || !iniciarPasoEvaluado()) return;
+    final instruccion = p.retoActual?.pregunta;
+    setState(() {
+      p.responder(opcion);
+      _instruccionConfirmada = instruccion;
+    });
+    _confirmarEcosistema();
+  }
+
+  void _confirmarEcosistema() {
+    final p = _partida!;
+    final acierto = p.acierto == true;
     _registrarPasoPrecision(acierto);
-    if (acierto) {
-      if (_partida!.completa) {
-        mostrarAcierto(finalDeNivel: true);
-        _guardar();
-      } else {
-        mostrarAcierto();
-      }
-      _arriba();
-    } else {
+    if (!acierto) {
+      _instruccionConfirmada = null;
+      terminarIntentoConPista();
       context.sonidoPista();
+      return;
+    }
+    if (p.ultimoPaso && p.cambio == null) {
+      p.completa = true;
+      mostrarAcierto(finalDeNivel: true);
+      _guardar();
+    } else {
+      confirmarPaso(
+        alContinuar: () {
+          _instruccionConfirmada = null;
+          _verAntes = false;
+          if (p.cambio != null) {
+            _comparacionVisible = true;
+          } else {
+            p.seguir();
+          }
+        },
+        conservarTablero: true,
+      );
     }
   }
 
   void _seguir() {
+    if (pasoBloqueado || !_partida!.confirmado) return;
     setState(() {
       _verAntes = false;
+      _comparacionVisible = false;
+      _instruccionConfirmada = null;
       _partida!.seguir();
     });
     if (_partida!.completa) {
@@ -192,30 +229,24 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   }
 
   Future<void> _guardar() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
-    final partida = _partida!;
-    if (_guardando || _guardado || !partida.completa) return;
+    final partida = _partida;
+    if (partida == null || !partida.completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = widget.actividad;
+    final nivelGuardado = partida.nivel.id;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelEcosistema(widget.actividad, partida.nivel.id);
-      if (mounted && identical(partida, _partida)) {
-        setState(() => _guardado = true);
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelEcosistema(actividadGuardada, nivelGuardado);
+        if (mounted && identical(partida, _partida)) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
       }
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted && identical(partida, _partida)) {
-        setState(() => _guardando = false);
-      }
-    }
+    });
+    if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
   }
 
   Future<bool> _confirmarSalida() async {
@@ -357,20 +388,23 @@ class _EcosistemaPageState extends State<EcosistemaPage>
           leading: BackButton(onPressed: _salir),
           actions: [
             InsigniaPrecisionAppBar(
-              combo: _comboActual,
+              combo: presentarCombo(_comboActual),
+              discreta: true,
               semillasSesion: _semillasSesion,
             ),
           ],
         ),
-        body: SafeArea(
-          top: false,
-          child: SingleChildScrollView(
-            controller: _scroll,
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 900),
-                child: p == null ? _selector() : _juego(p),
+        body: construirContenidoPaso(
+          SafeArea(
+            top: false,
+            child: SingleChildScrollView(
+              controller: _scroll,
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 900),
+                  child: p == null ? _selector() : _juego(p),
+                ),
               ),
             ),
           ),
@@ -474,11 +508,13 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   }
 
   Widget _juego(PartidaEcosistema p) {
-    final instruccion = p.completa
-        ? '¡El claro está lleno de conexiones!'
-        : p.confirmado
-        ? '¡Un nuevo descubrimiento!'
-        : p.elementoActual?.instruccion ?? p.retoActual!.pregunta;
+    final instruccion =
+        _instruccionConfirmada ??
+        (p.completa
+            ? '¡El claro está lleno de conexiones!'
+            : p.confirmado
+            ? '¡Un nuevo descubrimiento!'
+            : p.elementoActual?.instruccion ?? p.retoActual!.pregunta);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -502,10 +538,12 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         ),
         Semantics(
           label: context.traducir('Descubrimientos: ${p.pasos} de ${p.total}'),
-          child: LinearProgressIndicator(
-            value: p.pasos / p.total,
-            minHeight: 8,
-            borderRadius: BorderRadius.circular(8),
+          child: ProgresoPaso(
+            child: LinearProgressIndicator(
+              value: p.pasos / p.total,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         ),
         const SizedBox(height: 8),
@@ -730,12 +768,10 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     return InkWell(
       borderRadius: BorderRadius.circular(14),
       onTap: colocado
-          ? () => setState(
-              () {
-                context.sonidoSeleccion();
-                _inspeccionado = _inspeccionado == e.id ? null : e.id;
-              },
-            )
+          ? () => setState(() {
+              context.sonidoSeleccion();
+              _inspeccionado = _inspeccionado == e.id ? null : e.id;
+            })
           : null,
       child: AnimatedContainer(
         duration: _duracion(180),
@@ -1064,34 +1100,14 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         ),
         const SizedBox(height: 14),
       ],
-      if (!p.completa && !p.montando && !p.confirmado) ...[
+      if (!p.completa &&
+          !p.montando &&
+          (!p.confirmado || fasePaso == FasePaso.confirmando)) ...[
         for (final o in _opciones[p.retoActual!.id]!) ...[
           FilledButton.tonal(
             key: Key('eco-respuesta-${o.id}'),
             style: EstilosJuego.respuesta,
-            onPressed: () {
-              var acierto = false;
-              setState(() {
-                p.responder(o.id);
-                acierto = p.acierto == true;
-                if (acierto && p.cambio == null) {
-                  _verAntes = false;
-                  p.seguir();
-                }
-              });
-              _registrarPasoPrecision(acierto);
-              if (acierto) {
-                if (p.completa) {
-                  mostrarAcierto(finalDeNivel: true);
-                  _guardar();
-                } else {
-                  mostrarAcierto();
-                }
-                if (!p.confirmado) _arriba();
-              } else {
-                context.sonidoPista();
-              }
-            },
+            onPressed: () => _responderEco(o.id),
             child: Row(
               children: [
                 if (const ['hierba', 'conejo', 'zorro'].contains(o.id)) ...[
@@ -1114,8 +1130,8 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         ],
       ],
       if (p.frase != null)
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
+          anunciar: true,
           child: Burbuja(
             quien: widget.actividad.quien,
             frase: p.frase!,
@@ -1126,7 +1142,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                 : 'pensando',
           ),
         ),
-      if (p.cambio != null) ...[
+      if (p.cambio != null && _comparacionVisible) ...[
         const SizedBox(height: 14),
         const Texto(
           'Así podría cambiar el claro',
@@ -1223,7 +1239,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
       destacada: p.seleccion == e.id,
       onTap: () {
         context.sonidoSeleccion();
-        setState(() => p.seleccionar(e.id));
+        if (!pasoBloqueado) setState(() => p.seleccionar(e.id));
       },
       child: Padding(
         padding: const EdgeInsets.all(8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/main.dart';
+import 'package:naturalmente/ui/feedback_acierto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'soporte_cierre.dart';
@@ -157,6 +158,11 @@ Future<void> _esperar(WidgetTester tester) async {
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 500));
   await tester.pump(const Duration(milliseconds: 500));
+  // El recorrido espera la confirmación y su transición, sin asumir que
+  // la siguiente pregunta aparece debajo de un check todavía abierto.
+  if (find.byType(AnimacionAcierto).evaluate().isNotEmpty) {
+    await tester.pumpAndSettle();
+  }
 }
 
 Future<void> _hasta(WidgetTester tester, Finder finder) async {

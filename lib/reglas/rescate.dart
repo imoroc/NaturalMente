@@ -15,6 +15,27 @@ class PartidaRescate {
   var _residuo = 0;
   var _especie = 0;
   var _pasoAyuda = false;
+  bool _avancePendiente = false;
+
+  void siguiente() {
+    if (!_avancePendiente) return;
+    if (nivel.esContenedores) {
+      _residuo++;
+    } else if (nivel.esEspecies) {
+      if (_pasoAyuda) {
+        _especie++;
+        _pasoAyuda = false;
+      } else {
+        _pasoAyuda = true;
+      }
+    }
+    _avancePendiente = false;
+    if (!completa) {
+      ultimaEleccion = null;
+      resultado = null;
+    }
+  }
+
   final Map<String, int> _intentos = {};
   Resultado? resultado;
 
@@ -57,14 +78,14 @@ class PartidaRescate {
 
   Residuo? get residuoActual =>
       _residuo < nivel.residuos.length ? nivel.residuos[_residuo] : null;
-  int get residuosColocados => _residuo;
+  int get residuosColocados => _residuo + (_avancePendiente ? 1 : 0);
 
   void tirar(String contenedorId) {
     final residuo = residuoActual;
-    if (!nivel.esContenedores || residuo == null) return;
+    if (!nivel.esContenedores || residuo == null || _avancePendiente) return;
     ultimaEleccion = contenedorId;
     if (residuo.contenedor == contenedorId) {
-      _residuo += 1;
+      _avancePendiente = true;
       resultado = Resultado(
         acierto: true,
         frase: completa ? '${residuo.bien} ${nivel.despedida}' : residuo.bien,
@@ -87,14 +108,15 @@ class PartidaRescate {
 
   Especie? get especieActual =>
       _especie < nivel.especies.length ? nivel.especies[_especie] : null;
-  int get especiesAyudadas => _especie;
+  int get especiesAyudadas =>
+      _especie + (_pasoAyuda && _avancePendiente ? 1 : 0);
 
   /// True cuando ya se sabe qué la amenaza y falta decir qué la ayuda.
   bool get preguntaAyuda => _pasoAyuda;
 
   void responder(String opcionId) {
     final especie = especieActual;
-    if (!nivel.esEspecies || especie == null) return;
+    if (!nivel.esEspecies || especie == null || _avancePendiente) return;
     ultimaEleccion = opcionId;
     final pregunta = _pasoAyuda ? especie.ayuda : especie.amenaza;
     final respuesta = resolverPreguntaExtra(
@@ -102,13 +124,7 @@ class PartidaRescate {
       eleccion: opcionId,
     );
     if (respuesta.acierto) {
-      if (_pasoAyuda) {
-        _pasoAyuda = false;
-        _especie += 1;
-      } else {
-        _pasoAyuda = true;
-      }
-      ultimaEleccion = null;
+      _avancePendiente = true;
     }
     resultado = respuesta.acierto && completa
         ? Resultado(
@@ -124,13 +140,21 @@ class PartidaRescate {
 
   bool get completa {
     if (nivel.esEscena) return basuraRecogida == basuraTotal;
-    if (nivel.esContenedores) return _residuo == nivel.residuos.length;
-    return _especie == nivel.especies.length;
+    if (nivel.esContenedores) {
+      return _residuo + (_avancePendiente ? 1 : 0) == nivel.residuos.length;
+    }
+    return _especie == nivel.especies.length ||
+        (_especie == nivel.especies.length - 1 &&
+            _pasoAyuda &&
+            _avancePendiente);
   }
 
   double get progreso {
     if (nivel.esEscena) return basuraRecogida / basuraTotal;
-    if (nivel.esContenedores) return _residuo / nivel.residuos.length;
-    return (_especie * 2 + (_pasoAyuda ? 1 : 0)) / (nivel.especies.length * 2);
+    if (nivel.esContenedores) {
+      return (_residuo + (_avancePendiente ? 1 : 0)) / nivel.residuos.length;
+    }
+    return (_especie * 2 + (_pasoAyuda ? 1 : 0) + (_avancePendiente ? 1 : 0)) /
+        (nivel.especies.length * 2);
   }
 }

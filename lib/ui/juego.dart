@@ -34,9 +34,11 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   String? _sitioElegido;
   bool _lugarAcertado = false;
   bool _adaptacionAcertada = false;
+  bool _adaptacionVisible = false;
   String? _adaptacionElegida;
   Reto? _ultimoRetoCompletado;
   bool _baseCompletada = false;
+  bool _finalVisible = false;
   bool _preguntaFinalAcertada = false;
   String? _preguntaFinalElegida;
   int _etapaGerminacion = 1;
@@ -53,6 +55,31 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   int _semillasSesion = 0;
   bool _pistaEnPaso = false;
   int _pistasSesion = 0;
+  double? _progresoAntesDelPaso;
+
+  bool get _conservarTablero =>
+      widget.actividad.id == 'piezas' ||
+      widget.actividad.id == 'sentidos' ||
+      (widget.actividad.id == 'plato' && _nivelActual?.id != 'dificil');
+
+  double get _progresoLugar =>
+      (_retosResueltosNivel.length +
+          (_retoCompleto ? 0 : (_lugarAcertado ? .65 : .25))) /
+      _retosLugar.length;
+
+  /// Cambia únicamente el reto presentado, después de confirmar el anterior.
+  void _presentarSiguienteReto() {
+    final siguiente = _siguienteRetoPendiente();
+    if (siguiente == null) return;
+    _reto = siguiente;
+    _intento = 1;
+    _resultado = null;
+    _sitioElegido = null;
+    _lugarAcertado = false;
+    _adaptacionAcertada = false;
+    _adaptacionElegida = null;
+    _prepararBarajadoReto();
+  }
 
   void _registrarPasoPrecision(bool acierto) {
     if (acierto) {
@@ -69,7 +96,8 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      Alcance.maybeOf(context)?.progreso.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -79,7 +107,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      Alcance.maybeOf(context)?.progreso.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
@@ -174,6 +202,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   };
 
   void _prepararBarajadoReto() {
+    _adaptacionVisible = false;
     final retos = _retosLugar;
     if (retos.isEmpty || _reto >= retos.length) {
       _sitiosBarajados = _opcionesLugar;
@@ -303,165 +332,169 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
             semillasSesion: _semillasSesion,
+            discreta: !enSelector,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: enSelector
-            ? SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 780),
-                    child: _selector(),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: enSelector
+              ? SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 780),
+                      child: _selector(),
+                    ),
                   ),
-                ),
-              )
-            : switch (actividad.tipo) {
-                'lugar' => _Lugar(
-                  actividad: actividad,
-                  nivelActual: _nivelActual,
-                  curso: _cursoActual,
-                  opciones: _sitiosBarajados.isNotEmpty
-                      ? _sitiosBarajados
-                      : _opcionesLugar,
-                  retosNivel: retos,
-                  organosColocados: {
-                    ..._retosResueltosNivel,
-                    if (_lugarAcertado) retos[_reto].id,
-                  },
-                  reto: retos[_reto],
-                  ultimoRetoCompletado: _ultimoRetoCompletado,
-                  preguntaAdaptacion: _adaptacionActualBarajada,
-                  indice: _reto,
-                  total: retos.length,
-                  sitioElegido: _sitioElegido,
-                  lugarAcertado: _lugarAcertado,
-                  mostrarPreguntaAdaptacion:
-                      _lugarAcertado && _pideAdaptacion && !_adaptacionAcertada,
-                  adaptacionElegida: _adaptacionElegida,
-                  retoCompleto: _retoCompleto,
-                  resultado: _resultado,
-                  pie: (_retoCompleto && !hayMasRetos) ? 'Volver' : null,
-                  onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
-                  onSoltar: _soltar,
-                  onSeleccionarReto: _seleccionarReto,
-                  onResponderAdaptacion: _responderAdaptacion,
-                  onCuriosidad: () => _mostrarCuriosidad(retos[_reto]),
-                  onOtraVez: (_retoCompleto && !hayMasRetos)
-                      ? () => _empezarNivel(_nivelIdx ?? 0)
-                      : null,
-                  onPie: _volver,
-                ),
-                'controles' => _Controles(
-                  actividad: actividad,
-                  nivelActual: _nivelActual,
-                  curso: _cursoActual,
-                  controles: _controlesBarajados.isNotEmpty
-                      ? _controlesBarajados
-                      : _controlesActuales,
-                  valores: _valores,
-                  etapaActual: _etapaGerminacion,
-                  resultado: _resultado,
-                  baseCompletada: _baseCompletada,
-                  frase: _fraseControles(),
-                  mostrarPreguntaFinal:
-                      _baseCompletada &&
-                      _nivelActual?.preguntaFinal != null &&
-                      !_preguntaFinalAcertada,
-                  preguntaFinal: _preguntaFinalActualBarajada,
-                  preguntaFinalElegida: _preguntaFinalElegida,
-                  onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
-                  onElegir: (control, opcion) {
-                    context.sonidoSeleccion();
-                    setState(() {
-                      _valores[control] = opcion;
-                      if (_baseCompletada) {
-                        _baseCompletada = false;
-                        _preguntaFinalAcertada = false;
-                        _preguntaFinalElegida = null;
-                      }
-                      _resultado = null;
-                    });
-                  },
-                  onAvanzar: _avanzar,
-                  onReiniciarBote: _otraVez,
-                  onResponderFinal: _responderPreguntaFinal,
-                  onCuriosidad:
-                      (_nivelActual?.curiosidad.isNotEmpty == true)
-                      ? _mostrarCuriosidadControles
-                      : null,
-                  onOtraVez:
-                      (_baseCompletada &&
-                          (_nivelActual?.preguntaFinal == null ||
-                              _preguntaFinalAcertada))
-                      ? _otraVez
-                      : null,
-                  onVolver: _volver,
-                ),
-                _ => _Orden(
-                  actividad: actividad,
-                  nivelActual: _nivelActual,
-                  curso: _cursoActual,
-                  pasosTotales: _pasosActuales,
-                  pasosDisponibles: _pasosBarajados.isNotEmpty
-                      ? _pasosBarajados
-                      : _pasosActuales,
-                  respuestaCorrecta: _respuestaOrdenActual,
-                  orden: _orden,
-                  resultado: _resultado,
-                  baseCompletada:
-                      _baseCompletada &&
-                      (_nivelActual?.preguntaFinal == null ||
-                          _preguntaFinalAcertada),
-                  mostrarPreguntaFinal:
-                      _baseCompletada &&
-                      _nivelActual?.preguntaFinal != null &&
-                      !_preguntaFinalAcertada,
-                  preguntaFinal: _preguntaFinalActualBarajada,
-                  preguntaFinalElegida: _preguntaFinalElegida,
-                  onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
-                  onAnadir: (id) {
-                    setState(() {
-                      if (!_orden.contains(id)) {
-                        _orden.add(id);
+                )
+              : switch (actividad.tipo) {
+                  'lugar' => _Lugar(
+                    actividad: actividad,
+                    nivelActual: _nivelActual,
+                    curso: _cursoActual,
+                    opciones: _sitiosBarajados.isNotEmpty
+                        ? _sitiosBarajados
+                        : _opcionesLugar,
+                    retosNivel: retos,
+                    organosColocados: {
+                      ..._retosResueltosNivel,
+                      if (_lugarAcertado) retos[_reto].id,
+                    },
+                    reto: retos[_reto],
+                    ultimoRetoCompletado: _ultimoRetoCompletado,
+                    preguntaAdaptacion: _adaptacionActualBarajada,
+                    indice: _reto,
+                    total: retos.length,
+                    sitioElegido: _sitioElegido,
+                    lugarAcertado: _lugarAcertado,
+                    mostrarPreguntaAdaptacion: _adaptacionVisible,
+                    adaptacionElegida: _adaptacionElegida,
+                    retoCompleto: _retoCompleto,
+                    resultado: _resultado,
+                    progresoPresentado: fasePaso == FasePaso.confirmando
+                        ? _progresoAntesDelPaso
+                        : _progresoLugar,
+                    pie: (_retoCompleto && !hayMasRetos) ? 'Volver' : null,
+                    onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
+                    onSoltar: _soltar,
+                    onSeleccionarReto: _seleccionarReto,
+                    onResponderAdaptacion: _responderAdaptacion,
+                    onCuriosidad: () => _mostrarCuriosidad(retos[_reto]),
+                    onOtraVez: (_retoCompleto && !hayMasRetos)
+                        ? () => _empezarNivel(_nivelIdx ?? 0)
+                        : null,
+                    onPie: _volver,
+                  ),
+                  'controles' => _Controles(
+                    actividad: actividad,
+                    nivelActual: _nivelActual,
+                    curso: _cursoActual,
+                    controles: _controlesBarajados.isNotEmpty
+                        ? _controlesBarajados
+                        : _controlesActuales,
+                    valores: _valores,
+                    etapaActual: _etapaGerminacion,
+                    resultado: _resultado,
+                    baseCompletada: _baseCompletada,
+                    frase: _fraseControles(),
+                    mostrarPreguntaFinal:
+                        _finalVisible &&
+                        _nivelActual?.preguntaFinal != null &&
+                        !_preguntaFinalAcertada,
+                    preguntaFinal: _preguntaFinalActualBarajada,
+                    preguntaFinalElegida: _preguntaFinalElegida,
+                    onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
+                    onElegir: (control, opcion) {
+                      context.sonidoSeleccion();
+                      setState(() {
+                        _valores[control] = opcion;
+                        if (_baseCompletada) {
+                          _baseCompletada = false;
+                          _finalVisible = false;
+                          _preguntaFinalAcertada = false;
+                          _preguntaFinalElegida = null;
+                        }
                         _resultado = null;
-                      }
-                    });
-                    context.sonidoPaso(_orden.length);
-                  },
-                  onColocarEnHueco: (id, indice) {
-                    setState(() {
-                      final posActual = _orden.indexOf(id);
-                      if (posActual >= 0) {
-                        _orden.removeAt(posActual);
-                      }
-                      final destino = indice.clamp(0, _orden.length);
-                      _orden.insert(destino, id);
-                      _resultado = null;
-                    });
-                    context.sonidoPaso(_orden.length);
-                  },
-                  onQuitar: (indice) {
-                    context.sonidoQuitar();
-                    setState(() {
-                      _orden.removeAt(indice);
-                      _resultado = null;
-                    });
-                  },
-                  onComprobar: _comprobar,
-                  onResponderFinal: _responderPreguntaFinal,
-                  onCuriosidad:
-                      (_nivelActual?.curiosidad.isNotEmpty == true)
-                      ? _mostrarCuriosidadControles
-                      : null,
-                  onOtraVez: _otraVez,
-                  onVolver: _volver,
-                ),
-              },
+                      });
+                    },
+                    onAvanzar: _avanzar,
+                    onReiniciarBote: _otraVez,
+                    onResponderFinal: _responderPreguntaFinal,
+                    onCuriosidad: (_nivelActual?.curiosidad.isNotEmpty == true)
+                        ? _mostrarCuriosidadControles
+                        : null,
+                    onOtraVez:
+                        (_baseCompletada &&
+                            (_nivelActual?.preguntaFinal == null ||
+                                _preguntaFinalAcertada))
+                        ? _otraVez
+                        : null,
+                    onVolver: _volver,
+                  ),
+                  _ => _Orden(
+                    actividad: actividad,
+                    nivelActual: _nivelActual,
+                    curso: _cursoActual,
+                    pasosTotales: _pasosActuales,
+                    pasosDisponibles: _pasosBarajados.isNotEmpty
+                        ? _pasosBarajados
+                        : _pasosActuales,
+                    respuestaCorrecta: _respuestaOrdenActual,
+                    orden: _orden,
+                    resultado: _resultado,
+                    baseCompletada:
+                        _baseCompletada &&
+                        (_nivelActual?.preguntaFinal == null ||
+                            _preguntaFinalAcertada),
+                    mostrarPreguntaFinal:
+                        _finalVisible &&
+                        _nivelActual?.preguntaFinal != null &&
+                        !_preguntaFinalAcertada,
+                    preguntaFinal: _preguntaFinalActualBarajada,
+                    preguntaFinalElegida: _preguntaFinalElegida,
+                    onSalirNivel: _tieneNiveles ? _salirAlSelector : null,
+                    onAnadir: (id) {
+                      setState(() {
+                        if (!_orden.contains(id)) {
+                          _orden.add(id);
+                          _resultado = null;
+                        }
+                      });
+                      context.sonidoPaso(_orden.length);
+                    },
+                    onColocarEnHueco: (id, indice) {
+                      setState(() {
+                        final posActual = _orden.indexOf(id);
+                        if (posActual >= 0) {
+                          _orden.removeAt(posActual);
+                        }
+                        final destino = indice.clamp(0, _orden.length);
+                        _orden.insert(destino, id);
+                        _resultado = null;
+                      });
+                      context.sonidoPaso(_orden.length);
+                    },
+                    onQuitar: (indice) {
+                      context.sonidoQuitar();
+                      setState(() {
+                        _orden.removeAt(indice);
+                        _resultado = null;
+                      });
+                    },
+                    onComprobar: _comprobar,
+                    onResponderFinal: _responderPreguntaFinal,
+                    onCuriosidad: (_nivelActual?.curiosidad.isNotEmpty == true)
+                        ? _mostrarCuriosidadControles
+                        : null,
+                    onOtraVez: _otraVez,
+                    onVolver: _volver,
+                  ),
+                },
+        ),
       ),
     );
   }
@@ -609,7 +642,10 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                           ),
                       ],
                     ),
-                    if (progreso.nivelLugarHecho(widget.actividad, niveles[i].id)) ...[
+                    if (progreso.nivelLugarHecho(
+                      widget.actividad,
+                      niveles[i].id,
+                    )) ...[
                       const SizedBox(height: 6),
                       Texto(
                         '✓ Nivel superado',
@@ -679,6 +715,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       _adaptacionElegida = null;
       _ultimoRetoCompletado = null;
       _baseCompletada = false;
+      _finalVisible = false;
       _preguntaFinalAcertada = false;
       _preguntaFinalElegida = null;
       _etapaGerminacion = 1;
@@ -708,6 +745,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       _adaptacionElegida = null;
       _ultimoRetoCompletado = null;
       _baseCompletada = false;
+      _finalVisible = false;
       _preguntaFinalAcertada = false;
       _preguntaFinalElegida = null;
       _etapaGerminacion = 1;
@@ -718,6 +756,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   }
 
   void _seleccionarReto(String retoId) {
+    if (pasoBloqueado) return;
     if (_lugarAcertado && !_retoCompleto) return;
     final retos = _retosLugar;
     final idx = retos.indexWhere((r) => r.id == retoId);
@@ -741,6 +780,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   }
 
   Future<void> _soltar(String sitio, {String? organoArrastrado}) async {
+    if (pasoBloqueado) return;
     final actividad = widget.actividad;
     final retos = _retosLugar;
     if (_lugarAcertado) {
@@ -779,6 +819,8 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       }
     }
     final reto = retos[_reto];
+    _progresoAntesDelPaso = _progresoLugar;
+    if (!iniciarPasoEvaluado()) return;
     final resultado = resolverLugar(
       reto: reto,
       eleccion: sitio,
@@ -793,17 +835,6 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
           _adaptacionAcertada = true;
           _retosResueltosNivel.add(reto.id);
           _ultimoRetoCompletado = reto;
-          final siguienteIdx = _siguienteRetoPendiente();
-          if (siguienteIdx != null) {
-            _reto = siguienteIdx;
-            _intento = 1;
-            _resultado = null;
-            _sitioElegido = null;
-            _lugarAcertado = false;
-            _adaptacionAcertada = false;
-            _adaptacionElegida = null;
-            _prepararBarajadoReto();
-          }
         }
       } else {
         _intento += 1;
@@ -815,15 +846,25 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       if (terminaNivel) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          conservarTablero: _conservarTablero,
+          alContinuar: () {
+            if (_pideAdaptacion) {
+              _adaptacionVisible = true;
+            } else {
+              _presentarSiguienteReto();
+            }
+          },
+        );
       }
       final nivelGuardado = _nivelActual;
+      final pideAdaptacion = _pideAdaptacion;
+      final progreso = Alcance.of(context).progreso;
       Future<bool> guardar() async {
-        final progreso = Alcance.of(context).progreso;
         if (nivelGuardado == null || nivelGuardado.id == 'facil') {
           await progreso.marcarReto(actividad, reto);
         }
-        if (!_pideAdaptacion &&
+        if (!pideAdaptacion &&
             !const {
               'sentidos',
               'porte-planta',
@@ -848,19 +889,23 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         }
         return true;
       }
+
       if (terminaNivel) {
         await registrarGuardadoFinal(guardar);
       } else {
-        await guardar();
+        await registrarGuardadoIntermedio('lugar/${reto.id}', guardar);
       }
     } else {
       _registrarPasoPrecision(false);
+      terminarIntentoConPista();
       context.sonidoPista();
     }
   }
 
   Future<void> _responderAdaptacion(String eleccion) async {
-    if (!_lugarAcertado || _adaptacionAcertada) return;
+    if (!_lugarAcertado || _adaptacionAcertada || pasoBloqueado) return;
+    _progresoAntesDelPaso = _progresoLugar;
+    if (!iniciarPasoEvaluado()) return;
     final actividad = widget.actividad;
     final reto = _retosLugar[_reto];
     final resultado = resolverAdaptacion(reto: reto, eleccion: eleccion);
@@ -871,17 +916,6 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         _adaptacionAcertada = true;
         _retosResueltosNivel.add(reto.id);
         _ultimoRetoCompletado = reto;
-        final siguienteIdx = _siguienteRetoPendiente();
-        if (siguienteIdx != null) {
-          _reto = siguienteIdx;
-          _intento = 1;
-          _resultado = null;
-          _sitioElegido = null;
-          _lugarAcertado = false;
-          _adaptacionAcertada = false;
-          _adaptacionElegida = null;
-          _prepararBarajadoReto();
-        }
       }
     });
     if (resultado.acierto) {
@@ -890,11 +924,14 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       if (terminaNivel) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          alContinuar: _presentarSiguienteReto,
+          conservarTablero: _conservarTablero,
+        );
       }
       final nivelGuardado = _nivelActual;
+      final progreso = Alcance.of(context).progreso;
       Future<bool> guardar() async {
-        final progreso = Alcance.of(context).progreso;
         if (!const {
           'sentidos',
           'porte-planta',
@@ -919,13 +956,15 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
         }
         return true;
       }
+
       if (terminaNivel) {
         await registrarGuardadoFinal(guardar);
       } else {
-        await guardar();
+        await registrarGuardadoIntermedio('adaptacion/${reto.id}', guardar);
       }
     } else {
       _registrarPasoPrecision(false);
+      terminarIntentoConPista();
       context.sonidoPista();
     }
   }
@@ -1091,6 +1130,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   }
 
   Future<void> _avanzar() async {
+    if (_baseCompletada || !iniciarPasoEvaluado()) return;
     final actividad = widget.actividad;
     final paso = resolverPasoGerminacion(
       actividad: actividad,
@@ -1110,7 +1150,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       if (paso.avanzaEtapa && paso.etapaAlcanzada < 4) {
         // Al crecer entre días, la semilla bebe el agua del bote
         // para que el alumno vuelva a regarla en el nuevo día.
-        _valores['agua'] = 'poca';
+        // El nuevo riego se solicita después de confirmar la etapa.
       }
       if (paso.experimentoCompletado) {
         _baseCompletada = true;
@@ -1124,25 +1164,37 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       if (!pideFinal) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          alContinuar: () {
+            _finalVisible = true;
+          },
+          conservarTablero: true,
+        );
       }
     } else if (paso.avanzaEtapa) {
       _registrarPasoPrecision(true);
-      mostrarAcierto();
+      confirmarPaso(
+        alContinuar: () {
+          if (paso.etapaAlcanzada < 4) _valores['agua'] = 'poca';
+        },
+        conservarTablero: true,
+      );
     } else {
       _registrarPasoPrecision(false);
+      terminarIntentoConPista();
       context.sonidoPista();
     }
     if (paso.experimentoCompletado && !pideFinal) {
       final nivelGuardado = _nivelActual;
+      final progreso = Alcance.of(context).progreso;
       Future<bool> guardar() async {
-        final progreso = Alcance.of(context).progreso;
         if (nivelGuardado != null) {
           await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
         }
         await progreso.marcarActividad(actividad);
         return true;
       }
+
       await registrarGuardadoFinal(guardar);
     }
   }
@@ -1155,6 +1207,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       _orden.clear();
       _resultado = null;
       _baseCompletada = false;
+      _finalVisible = false;
       _preguntaFinalAcertada = false;
       _preguntaFinalElegida = null;
       _etapaGerminacion = 1;
@@ -1163,6 +1216,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
   }
 
   Future<void> _comprobar() async {
+    if (_baseCompletada || !iniciarPasoEvaluado()) return;
     final actividad = widget.actividad;
     final resultado = resolverOrden(
       actividad: actividad,
@@ -1184,29 +1238,41 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       if (!pideFinal) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          alContinuar: () {
+            _finalVisible = true;
+          },
+          conservarTablero: true,
+        );
       }
     } else {
       _registrarPasoPrecision(false);
+      terminarIntentoConPista();
       context.sonidoPista();
     }
     if (resultado.acierto && !pideFinal) {
       final nivelGuardado = _nivelActual;
+      final progreso = Alcance.of(context).progreso;
       Future<bool> guardar() async {
-        final progreso = Alcance.of(context).progreso;
         if (nivelGuardado != null) {
           await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
         }
         await progreso.marcarActividad(actividad);
         return true;
       }
+
       await registrarGuardadoFinal(guardar);
     }
   }
 
   Future<void> _responderPreguntaFinal(String eleccion) async {
     final pregunta = _nivelActual?.preguntaFinal;
-    if (!_baseCompletada || _preguntaFinalAcertada || pregunta == null) return;
+    if (!_baseCompletada ||
+        _preguntaFinalAcertada ||
+        pregunta == null ||
+        !iniciarPasoEvaluado()) {
+      return;
+    }
     final actividad = widget.actividad;
     final resultado = resolverPreguntaExtra(
       pregunta: pregunta,
@@ -1223,17 +1289,19 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
       _registrarPasoPrecision(true);
       mostrarAcierto(finalDeNivel: true);
       final nivelGuardado = _nivelActual;
+      final progreso = Alcance.of(context).progreso;
       Future<bool> guardar() async {
-        final progreso = Alcance.of(context).progreso;
         if (nivelGuardado != null) {
           await progreso.marcarNivelLugar(actividad, nivelGuardado.id);
         }
         await progreso.marcarActividad(actividad);
         return true;
       }
+
       await registrarGuardadoFinal(guardar);
     } else {
       _registrarPasoPrecision(false);
+      terminarIntentoConPista();
       context.sonidoPista();
     }
   }
@@ -1377,9 +1445,8 @@ class _TarjetaPreguntaExtra extends StatelessWidget {
           Texto(
             pregunta.enunciado,
             key: Key('pregunta-$prefijoKey'),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 10),
           for (final opcion in pregunta.opciones) ...[
@@ -1458,6 +1525,7 @@ class _Lugar extends StatelessWidget {
     required this.onCuriosidad,
     required this.onPie,
     this.onOtraVez,
+    this.progresoPresentado,
   });
 
   final Actividad actividad;
@@ -1476,6 +1544,7 @@ class _Lugar extends StatelessWidget {
   final bool mostrarPreguntaAdaptacion;
   final String? adaptacionElegida;
   final bool retoCompleto;
+  final double? progresoPresentado;
   final Resultado? resultado;
   final String? pie;
   final VoidCallback? onSalirNivel;
@@ -1516,6 +1585,7 @@ class _Lugar extends StatelessWidget {
             outerConstraints.maxHeight < 540 || escalaTexto > 1.25 || ((esPortePlanta || esJuegoInspector) && outerConstraints.maxHeight < 750) ||
             (actividad.id == 'savia' && outerConstraints.maxHeight < 800);
         final progresoValor =
+            progresoPresentado ??
             (organosColocados.length +
                 (retoCompleto ? 0.0 : (lugarAcertado ? 0.65 : 0.25))) /
             total;
@@ -1528,189 +1598,191 @@ class _Lugar extends StatelessWidget {
                     ? 'Estímulo'
                     : ((esPortePlanta || esJuegoInspector) ? 'Espécimen' : 'Reto'));
           final retoCuriosidad = (retoCompleto || lugarAcertado) ? reto : null;
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-            decoration: BoxDecoration(
-              color: context.coloresNaturales.superficie(
-                retoCompleto ? const Color(0xFFF0FDF4) : Colors.white,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: context.coloresNaturales.borde(
-                  retoCompleto
-                      ? const Color(0xFF22C55E)
-                      : const Color(0xFFE2DEC9),
+          return AnuncioPaso(
+            anunciar: resultado?.acierto != false,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              decoration: BoxDecoration(
+                color: context.coloresNaturales.superficie(
+                  retoCompleto ? const Color(0xFFF0FDF4) : Colors.white,
                 ),
-                width: 2.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: context.coloresNaturales.sombra(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: context.coloresNaturales.borde(
                     retoCompleto
-                        ? const Color(0xFF86EFAC)
-                        : const Color(0xFFD6CFC0),
+                        ? const Color(0xFF22C55E)
+                        : const Color(0xFFE2DEC9),
                   ),
-                  offset: const Offset(0, 3),
-                  blurRadius: 0,
+                  width: 2.2,
                 ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Draggable<String>(
-                  data: reto.id,
-                  dragAnchorStrategy: pointerDragAnchorStrategy,
-                  onDragStarted: () => context.sonidoSeleccion(),
-                  feedback: Material(
-                    color: context.coloresNaturales.superficie(
-                      Colors.transparent,
+                boxShadow: [
+                  BoxShadow(
+                    color: context.coloresNaturales.sombra(
+                      retoCompleto
+                          ? const Color(0xFF86EFAC)
+                          : const Color(0xFFD6CFC0),
                     ),
-                    child: _Miniatura(id: reto.id),
+                    offset: const Offset(0, 3),
+                    blurRadius: 0,
                   ),
-                  childWhenDragging: Opacity(
-                    opacity: 0.35,
-                    child: _Miniatura(id: reto.id, tamano: 48),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                ],
+              ),
+              child: Row(
+                children: [
+                  Draggable<String>(
+                    data: reto.id,
+                    dragAnchorStrategy: pointerDragAnchorStrategy,
+                    onDragStarted: () => context.sonidoSeleccion(),
+                    feedback: Material(
                       color: context.coloresNaturales.superficie(
-                        retoCompleto
-                            ? const Color(0xFFDCFCE7)
-                            : const Color(0xFFF8FAFC),
+                        Colors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: context.coloresNaturales.borde(
+                      child: _Miniatura(id: reto.id),
+                    ),
+                    childWhenDragging: Opacity(
+                      opacity: 0.35,
+                      child: _Miniatura(id: reto.id, tamano: 48),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: context.coloresNaturales.superficie(
                           retoCompleto
-                              ? const Color(0xFF4ADE80)
-                              : const Color(0xFFE2E8F0),
+                              ? const Color(0xFFDCFCE7)
+                              : const Color(0xFFF8FAFC),
+                        ),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: context.coloresNaturales.borde(
+                            retoCompleto
+                                ? const Color(0xFF4ADE80)
+                                : const Color(0xFFE2E8F0),
+                          ),
                         ),
                       ),
+                      child: _Miniatura(id: reto.id, tamano: 48),
                     ),
-                    child: _Miniatura(id: reto.id, tamano: 48),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        spacing: 6,
-                        runSpacing: 4,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                retoCompleto
-                                    ? const Color(0xFFDCFCE7)
-                                    : const Color(0xFFE0F2FE),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 4,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
                               ),
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Texto(
-                              retoCompleto
-                                  ? '✓ ¡Muy bien! · ${reto.nombre}'
-                                  : '$etiquetaTipo ${indice + 1} de $total · ${reto.nombre}',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w900,
-                                color: context.coloresNaturales.contenido(
+                              decoration: BoxDecoration(
+                                color: context.coloresNaturales.superficie(
                                   retoCompleto
-                                      ? const Color(0xFF15803D)
-                                      : const Color(0xFF0369A1),
+                                      ? const Color(0xFFDCFCE7)
+                                      : const Color(0xFFE0F2FE),
                                 ),
+                                borderRadius: BorderRadius.circular(999),
                               ),
-                            ),
-                          ),
-                          if (pista != null && !retoCompleto)
-                            Texto(
-                              pista,
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFF64748B),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Texto(
-                        reto.pregunta,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.w900,
-                              fontSize: esCuerpo ? 14.5 : null,
-                              height: 1.15,
-                            ),
-                      ),
-                      if (retoCuriosidad != null &&
-                          retoCuriosidad.curiosidad.isNotEmpty) ...[
-                        const SizedBox(height: 5),
-                        InkWell(
-                          key: Key('curiosidad-${retoCuriosidad.id}'),
-                          borderRadius: BorderRadius.circular(12),
-                          onTap: onCuriosidad,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                const Color(0xFFFEF3C7),
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: context.coloresNaturales.borde(
-                                  const Color(0xFFF59E0B),
-                                ),
-                                width: 1.5,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.auto_awesome_rounded,
-                                  size: 15,
+                              child: Texto(
+                                retoCompleto
+                                    ? '✓ ¡Muy bien! · ${reto.nombre}'
+                                    : '$etiquetaTipo ${indice + 1} de $total · ${reto.nombre}',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w900,
                                   color: context.coloresNaturales.contenido(
-                                    Color(0xFFB45309),
+                                    retoCompleto
+                                        ? const Color(0xFF15803D)
+                                        : const Color(0xFF0369A1),
                                   ),
                                 ),
-                                SizedBox(width: 4),
-                                Flexible(
-                                  child: Texto(
-                                    'Ver curiosidad',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w800,
-                                      color: context.coloresNaturales.contenido(
-                                        Color(0xFF92400E),
+                              ),
+                            ),
+                            if (pista != null && !retoCompleto)
+                              Texto(
+                                pista,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF64748B),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Texto(
+                          reto.pregunta,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w900,
+                                fontSize: esCuerpo ? 14.5 : null,
+                                height: 1.15,
+                              ),
+                        ),
+                        if (retoCuriosidad != null &&
+                            retoCuriosidad.curiosidad.isNotEmpty) ...[
+                          const SizedBox(height: 5),
+                          InkWell(
+                            key: Key('curiosidad-${retoCuriosidad.id}'),
+                            borderRadius: BorderRadius.circular(12),
+                            onTap: onCuriosidad,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.coloresNaturales.superficie(
+                                  const Color(0xFFFEF3C7),
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: context.coloresNaturales.borde(
+                                    const Color(0xFFF59E0B),
+                                  ),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.auto_awesome_rounded,
+                                    size: 15,
+                                    color: context.coloresNaturales.contenido(
+                                      Color(0xFFB45309),
+                                    ),
+                                  ),
+                                  SizedBox(width: 4),
+                                  Flexible(
+                                    child: Texto(
+                                      'Ver curiosidad',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w800,
+                                        color: context.coloresNaturales
+                                            .contenido(Color(0xFF92400E)),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
@@ -1790,7 +1862,7 @@ class _Lugar extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           onTap: () => onSeleccionarReto?.call(r.id),
                           child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 180),
+                            duration: duracionSeleccionPaso(context),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
@@ -2068,10 +2140,13 @@ class _Lugar extends StatelessWidget {
           return rejillaSitios();
         }
 
-        final burbujaWidget = Burbuja(
-          quien: actividad.quien,
-          frase: resultado?.frase ?? fraseInicial,
-          gesto: resultado?.gesto ?? 'hola',
+        final burbujaWidget = AnuncioPaso(
+          anunciar: resultado?.acierto == false,
+          child: Burbuja(
+            quien: actividad.quien,
+            frase: resultado?.frase ?? fraseInicial,
+            gesto: resultado?.gesto ?? 'hola',
+          ),
         );
 
         Widget botoneraPie(double alturaBoton) {
@@ -2133,14 +2208,16 @@ class _Lugar extends StatelessWidget {
                 const SizedBox(height: 4),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: progresoValor.clamp(0.0, 1.0),
-                    minHeight: 8,
-                    backgroundColor: context.coloresNaturales.superficie(
-                      const Color(0xFFE5DFCF),
-                    ),
-                    color: context.coloresNaturales.contenido(
-                      const Color(0xFF2ECC71),
+                  child: ProgresoPaso(
+                    child: LinearProgressIndicator(
+                      value: progresoValor.clamp(0.0, 1.0),
+                      minHeight: 8,
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFFE5DFCF),
+                      ),
+                      color: context.coloresNaturales.contenido(
+                        const Color(0xFF2ECC71),
+                      ),
                     ),
                   ),
                 ),
@@ -2180,14 +2257,16 @@ class _Lugar extends StatelessWidget {
               const SizedBox(height: 4),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: progresoValor.clamp(0.0, 1.0),
-                  minHeight: 8,
-                  backgroundColor: context.coloresNaturales.superficie(
-                    const Color(0xFFE5DFCF),
-                  ),
-                  color: context.coloresNaturales.contenido(
-                    const Color(0xFF2ECC71),
+                child: ProgresoPaso(
+                  child: LinearProgressIndicator(
+                    value: progresoValor.clamp(0.0, 1.0),
+                    minHeight: 8,
+                    backgroundColor: context.coloresNaturales.superficie(
+                      const Color(0xFFE5DFCF),
+                    ),
+                    color: context.coloresNaturales.contenido(
+                      const Color(0xFF2ECC71),
+                    ),
                   ),
                 ),
               ),
@@ -2206,10 +2285,7 @@ class _Lugar extends StatelessWidget {
               Expanded(child: zonaCentral(usarAlturaFija: false)),
               const SizedBox(height: 6),
               burbujaWidget,
-              if (pie != null) ...[
-                const SizedBox(height: 6),
-                botoneraPie(48),
-              ],
+              if (pie != null) ...[const SizedBox(height: 6), botoneraPie(48)],
             ],
           ),
         );
@@ -2378,7 +2454,7 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         onTap: (!colocado && !bloqueado) ? onTap : null,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+          duration: duracionSeleccionPaso(context),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             color: context.coloresNaturales.superficie(
@@ -2447,7 +2523,9 @@ class _FichaMiniOrganoHerbario extends StatelessWidget {
       ),
     );
 
-    if (colocado || bloqueado) return badge;
+    if (colocado || bloqueado) {
+      return AsentamientoPaso(confirmado: colocado, child: badge);
+    }
     return Draggable<String>(
       data: reto.id,
       dragAnchorStrategy: pointerDragAnchorStrategy,
@@ -2523,82 +2601,85 @@ class _Sitio extends StatelessWidget {
       onAcceptWithDetails: (_) => onElegir(),
       builder: (context, candidatos, _) {
         final encima = candidatos.isNotEmpty;
-        return TarjetaJuego(
-          fondo: context.coloresNaturales.superficie(colorFondo),
-          borde: context.coloresNaturales.borde(
-            encima ? EstilosJuego.acierto : colorBorde,
-          ),
-          sombra: context.coloresNaturales.sombra(
-            colorBorde.withValues(alpha: .55),
-          ),
-          destacada: encima || elegido,
-          claveAccion: Key('sitio-${opcion.id}'),
-          onTap: onElegir,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (elegido)
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        _Miniatura(id: criatura, tamano: 48),
-                        if (acierto)
-                          Positioned(
-                            right: -6,
-                            top: -6,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: context.coloresNaturales.superficie(
-                                  Colors.white,
+        return AsentamientoPaso(
+          confirmado: acierto,
+          child: TarjetaJuego(
+            fondo: context.coloresNaturales.superficie(colorFondo),
+            borde: context.coloresNaturales.borde(
+              encima ? EstilosJuego.acierto : colorBorde,
+            ),
+            sombra: context.coloresNaturales.sombra(
+              colorBorde.withValues(alpha: .55),
+            ),
+            destacada: encima || elegido,
+            claveAccion: Key('sitio-${opcion.id}'),
+            onTap: onElegir,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (elegido)
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          _Miniatura(id: criatura, tamano: 48),
+                          if (acierto)
+                            Positioned(
+                              right: -6,
+                              top: -6,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: context.coloresNaturales.superficie(
+                                    Colors.white,
+                                  ),
+                                  shape: BoxShape.circle,
                                 ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.check_circle_rounded,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFF16A34A),
+                                child: Icon(
+                                  Icons.check_circle_rounded,
+                                  color: context.coloresNaturales.contenido(
+                                    Color(0xFF16A34A),
+                                  ),
+                                  size: 20,
                                 ),
-                                size: 20,
                               ),
                             ),
-                          ),
-                      ],
-                    )
-                  else
-                    IconoSitio(id: opcion.id),
-                  const SizedBox(height: 5),
-                  Texto(
-                    opcion.nombre,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 16,
-                      color: context.coloresNaturales.contenido(
-                        Color(0xFF1E293B),
-                      ),
-                    ),
-                  ),
-                  if (subtitulo != null) ...[
-                    const SizedBox(height: 2),
+                        ],
+                      )
+                    else
+                      IconoSitio(id: opcion.id),
+                    const SizedBox(height: 5),
                     Texto(
-                      subtitulo,
+                      opcion.nombre,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 11.5,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
                         color: context.coloresNaturales.contenido(
-                          Color(0xFF475569),
+                          Color(0xFF1E293B),
                         ),
                       ),
                     ),
+                    if (subtitulo != null) ...[
+                      const SizedBox(height: 2),
+                      Texto(
+                        subtitulo,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11.5,
+                          color: context.coloresNaturales.contenido(
+                            Color(0xFF475569),
+                          ),
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),
@@ -2873,10 +2954,7 @@ class _AccionHerramienta {
 }
 
 class _BarraProgreso extends StatelessWidget {
-  const _BarraProgreso({
-    required this.progreso,
-    required this.etiqueta,
-  });
+  const _BarraProgreso({required this.progreso, required this.etiqueta});
 
   final double progreso;
   final String etiqueta;
@@ -2916,13 +2994,17 @@ class _BarraProgreso extends StatelessWidget {
         const SizedBox(height: 4),
         ClipRRect(
           borderRadius: BorderRadius.circular(999),
-          child: LinearProgressIndicator(
-            value: porcentaje,
-            minHeight: 7,
-            backgroundColor: context.coloresNaturales.superficie(
-              const Color(0xFFE2E8F0),
+          child: ProgresoPaso(
+            child: LinearProgressIndicator(
+              value: porcentaje,
+              minHeight: 7,
+              backgroundColor: context.coloresNaturales.superficie(
+                const Color(0xFFE2E8F0),
+              ),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF22C55E),
+              ),
             ),
-            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF22C55E)),
           ),
         ),
       ],
@@ -3866,7 +3948,7 @@ class _OpcionControl extends StatelessWidget {
         if (scrollable != null && scrollable.position.pixels > 0) {
           scrollable.position.animateTo(
             0.0,
-            duration: const Duration(milliseconds: 280),
+            duration: duracionSeleccionPaso(context),
             curve: Curves.easeOutCubic,
           );
         }
@@ -4784,11 +4866,14 @@ String? _subtituloSitio(String id) => switch (id) {
   'olfato' => 'Nariz · Aromas y olores del aire',
   'gusto' => 'Lengua · Sabores dulces o ácidos',
   'tacto' => 'Piel · Frío, calor y texturas',
-  final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(otro),
+  final otro when idsNuevosJuegos.contains(otro) => subtituloSitioNuevoJuego(
+    otro,
+  ),
   final otro when idsSitiosVivo.contains(otro) => subtituloSitioVivo(otro),
   final otro when idsSitiosPlato.contains(otro) => subtituloSitioPlato(otro),
-  final otro when idsSitiosEmocion.contains(otro) =>
-    subtituloSitioEmocion(otro),
+  final otro when idsSitiosEmocion.contains(otro) => subtituloSitioEmocion(
+    otro,
+  ),
   // Fin sentidos
   _ => null,
 };
@@ -5128,7 +5213,7 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                         onTap: () => widget.onSeleccionarReto?.call(r.id),
                         borderRadius: BorderRadius.circular(999),
                         child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
+                          duration: duracionSeleccionPaso(context),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 4,
@@ -5277,12 +5362,20 @@ class _InspectorPorteBotanicoState extends State<_InspectorPorteBotanico> {
                         ),
                       ),
                       AnimatedRotation(
-                        turns: _pruebaViento ? 0.035 : 0.0,
-                        duration: const Duration(milliseconds: 350),
+                        turns:
+                            _pruebaViento &&
+                                !MediaQuery.disableAnimationsOf(context)
+                            ? 0.035
+                            : 0.0,
+                        duration: duracionSeleccionPaso(context),
                         curve: Curves.easeInOut,
                         child: AnimatedScale(
-                          scale: _lupaCorteza ? 1.18 : 1.0,
-                          duration: const Duration(milliseconds: 280),
+                          scale:
+                              _lupaCorteza &&
+                                  !MediaQuery.disableAnimationsOf(context)
+                              ? 1.18
+                              : 1.0,
+                          duration: duracionSeleccionPaso(context),
                           child: Draggable<String>(
                             data: widget.reto.id,
                             dragAnchorStrategy: pointerDragAnchorStrategy,

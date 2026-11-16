@@ -27,6 +27,41 @@ Este comportamiento forma parte de cada juego, tanto existente como nuevo, en F�
 
 Si el juego usa `JuegoPage`, la integración ya está en la pantalla compartida. Una pantalla de juego propia debe incorporar el mismo mixin y los mismos contratos. No copies el pintor ni crees una animación o un diálogo de final alternativos.
 
+## Coordinar un paso antes de presentar el siguiente
+
+La coordinación descrita en [el plan de transiciones](plan-feedback-y-transiciones.md) se aplica a los 26 juegos y al reto diario. La clasificación sencilla avanza automáticamente; los montajes conservan el tablero; las adivinanzas, las explicaciones de especies y el reto diario esperan a **Continuar** cuando aún quedan pasos. El último paso conduce directamente al cierre automático.
+
+El mismo mixin proporciona estas operaciones adicionales:
+
+| API | Contrato |
+| --- | --- |
+| `iniciarPasoEvaluado()` | Adquiere el paso sincrónicamente. Devuelve `false` si ya se está evaluando, confirmando, observando o avanzando; el evento se descarta. Llamar antes del primer `await`. |
+| `confirmarPaso(alContinuar: ..., esperarContinuar: false)` | Ejecuta `mostrarAcierto()` y conserva la escena evaluada hasta que termina el check. Después ejecuta el cambio de presentación dentro de `setState` e inicia un desvanecimiento de 160 ms. |
+| `esperarContinuar: true` | Al terminar el check conserva el resultado sin límite de lectura y ofrece **Continuar**. No usar en el último paso, que conduce directamente al cierre obligatorio. |
+| `conservarTablero: true` | Retira el check y devuelve el control sin desvanecer el tablero acumulativo. Se usa en las piezas del cuerpo, sentidos y montaje del plato. |
+| `terminarIntentoConPista()` | Libera un intento evaluado que necesita una pista, sin check ni avance. |
+| `construirContenidoPaso(widget)` | Envuelve el cuerpo del ejercicio, con altura disponible acotada. Bloquea acciones táctiles, semánticas y foco de teclado del tablero durante el paso, dejando fuera la navegación de la cabecera. También presenta la transición y Continuar. |
+| `fasePaso` y `pasoBloqueado` | Permiten conservar en pantalla los datos del paso y proteger los manejadores frente a eventos que llegan antes de reconstruir los widgets. |
+| `guardarPrecisionPaso(...)` | Aplica una única jugada a la precisión y encola su persistencia. Se llama después de adquirir el paso, fuera de los callbacks de guardado. Devuelve las semillas aceptadas para el resumen. |
+| `registrarGuardadoIntermedio(id, guardar)` | Serializa una escritura del paso y conserva el callback original si falla. Un identificador se ejecuta una sola vez dentro de la sesión, salvo el reintento explícito. |
+| `presentarCombo(actual)` | Conserva la cifra anterior durante el check; se utiliza con la variante `discreta` de la insignia para evitar celebraciones simultáneas. |
+| `mostrarDestinoPaso(clave)` | Busca el destino después de presentar la pregunta, comprueba su visibilidad y respeta el movimiento reducido. No llamarlo al iniciar el check. |
+| `mostrarCierrePendiente()` | Recupera exclusivamente un resultado ya aceptado cuyo guardado sigue pendiente. Se registra antes su persistencia; no repite la victoria ni las recompensas. |
+
+`alContinuar` solo modifica la presentación: no evalúa, puntúa ni guarda. No debe llamar de nuevo a `setState`, pues el coordinador ya lo hace. Una pregunta de comprensión se abre desde este callback, después del check, y sigue siendo parte del nivel.
+
+El guardado comienza al aceptar la respuesta, independientemente de la animación. En el último paso se sigue llamando a `mostrarAcierto(finalDeNivel: true)` y a `registrarGuardadoFinal(...)` inmediatamente después. No usar `confirmarPaso` para añadir un check normal antes de esa victoria.
+
+`ocultarAcierto()` y la destrucción de la pantalla cancelan el callback pendiente, sin ejecutarlo. El reloj del check y de la transición se pausa al salir a segundo plano y se reanuda sin repetir los efectos iniciales. El modo de movimiento reducido conserva el tiempo de confirmación, pero omite el desvanecimiento del nuevo contenido.
+
+Las llamadas antiguas a `mostrarAcierto()` siguen disponibles para compatibilidad y pruebas del componente. Los juegos coordinan todos sus aciertos intermedios mediante `confirmarPaso`: una llamada visual aislada no protege por sí sola el tablero.
+
+`registrarGuardadoFinal` espera a las escrituras del paso y reintenta las que fallaron antes de persistir el cierre. La cancelación de una animación no cancela un guardado ya aceptado. Captura los datos y el objeto Progreso **antes** de registrar el callback; no busques `context` ni leas la partida nueva dentro de una escritura que puede terminar después de salir.
+
+Los componentes [ProgresoPaso, AnuncioPaso y AsentamientoPaso](../lib/ui/atencion_paso.dart) comparten la atención del ejercicio: conservan el progreso bajo el check, animan el nuevo valor durante 160 ms, asientan localmente la elección confirmada y suspenden los anuncios del contenido mientras habla la confirmación. Los contadores siguen siendo accesibles, pero no compiten como regiones automáticas con la explicación.
+
+El reto diario prepara un `GuardadoExpedicion` en [Progreso](../lib/datos/progreso.dart) antes de la victoria. Su callback solo llama a `guardarExpedicionDiaria(cierre)`. Un registro local conserva el destino del bono antes de escribir el saldo; si una escritura parcial falla, se recupera únicamente ese resultado para guardar de nuevo, sin reconstruir las preguntas ni conceder el bono otra vez.
+
 ## Integrar una pantalla propia
 
 Importa los componentes y añade `with FeedbackAcierto<TuPagina>` al `State<TuPagina>`. Toma [`HerbarioPage`](../lib/ui/herbario.dart), [`ViajePage`](../lib/ui/digestion.dart) o [`NacimientoPage`](../lib/ui/nacimiento.dart) como referencias completas.
@@ -54,7 +89,7 @@ if (partida.resultado?.acierto == true) {
 
 Inicia la victoria y registra el guardado en el mismo manejador, sin un `await` entre ambos. `mostrarAcierto(finalDeNivel: true)` prepara una nueva celebración y reinicia el registro anterior. El mixin convierte una excepción del guardado en un resultado fallido; si tu método ya captura las excepciones, devuelve su estado real de éxito, no `true` incondicionalmente.
 
-Calcula los puntos y las recompensas una sola vez, fuera del callback de persistencia. Captura la partida o el nivel que se está guardando. Protege los guardados en curso para que un doble toque no sustituya su resultado por otro prematuro. El ejemplo completo del herbario conserva estas protecciones en `_guardarSiCompleta()` y `_persistirFinal()`.
+Calcula los puntos y las recompensas una sola vez, fuera del callback de persistencia. Captura la partida o el nivel que se está guardando. Protege los guardados en curso para que un doble toque no sustituya su resultado por otro prematuro. El ejemplo completo del herbario conserva estas protecciones en `_guardarSiCompleta()`, que captura actividad, nivel y Progreso antes de cualquier espera.
 
 Proporciona el cierre desde la pantalla del juego:
 

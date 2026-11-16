@@ -31,6 +31,7 @@ class _HerbarioPageState extends State<HerbarioPage>
     with FeedbackAcierto<HerbarioPage> {
   PartidaHerbario? _partida;
   final _pregunta = GlobalKey();
+  String? _preguntaPresentada;
   bool _guardando = false;
   bool _guardado = false;
   List<String> _partesBandeja = const [];
@@ -57,6 +58,7 @@ class _HerbarioPageState extends State<HerbarioPage>
     }
     final comboGlobal = Alcance.maybeOf(context)?.progreso.comboActual ?? 0;
     setState(() {
+      _preguntaPresentada = null;
       _partida = PartidaHerbario(herbario: _herbario, nivel: nivel);
       _partesBandeja = BarajadorOpciones.barajarIds(
         clave: 'herbario-bandeja-${nivel.id}',
@@ -65,6 +67,7 @@ class _HerbarioPageState extends State<HerbarioPage>
       _opcionesFuncion
         ..clear()
         ..addAll(opcionesPorParte);
+      _guardando = false;
       _guardado = false;
       _comboActual = comboGlobal;
       _mejorComboSesion = comboGlobal;
@@ -89,7 +92,8 @@ class _HerbarioPageState extends State<HerbarioPage>
         _semillasSesion += ganadas;
         _pistaEnPaso = false;
       });
-      prog?.registrarAciertoPrecision(
+      guardarPrecisionPaso(
+        acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
@@ -99,12 +103,13 @@ class _HerbarioPageState extends State<HerbarioPage>
         _pistaEnPaso = true;
         _pistasSesion++;
       });
-      prog?.romperComboPrecision();
+      guardarPrecisionPaso(acierto: false);
     }
   }
 
   void _colocar(String pieza, String destino) {
     final partida = _partida!;
+    if (partida.colocadas.contains(pieza) || !iniciarPasoEvaluado()) return;
     setState(() => partida.colocar(pieza, destino));
     final acierto = partida.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
@@ -112,21 +117,31 @@ class _HerbarioPageState extends State<HerbarioPage>
       if (partida.completa) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          alContinuar: () {
+            _preguntaPresentada = partida.preguntaActual;
+            _mostrarPregunta();
+          },
+          conservarTablero: true,
+        );
       }
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
     if (partida.puedeConsultar(destino)) {
-      Alcance.of(context).progreso.desbloquearFicha(destino);
+      final progreso = Alcance.of(context).progreso;
+      registrarGuardadoIntermedio('ficha/$destino', () async {
+        await progreso.desbloquearFicha(destino);
+        return true;
+      });
     }
-    _mostrarPregunta();
     _guardarSiCompleta();
   }
 
   void _responder(String parte, String opcion) {
     final partida = _partida!;
-    if (partida.preguntaActual != parte) return;
+    if (partida.preguntaActual != parte || !iniciarPasoEvaluado()) return;
     setState(() => partida.responder(opcion));
     final acierto = partida.resultado?.acierto ?? false;
     _registrarPasoPrecision(acierto);
@@ -134,53 +149,51 @@ class _HerbarioPageState extends State<HerbarioPage>
       if (partida.completa) {
         mostrarAcierto(finalDeNivel: true);
       } else {
-        mostrarAcierto();
+        confirmarPaso(
+          alContinuar: () {
+            _preguntaPresentada = partida.preguntaActual;
+            _mostrarPregunta();
+          },
+          conservarTablero: true,
+        );
       }
     } else {
+      terminarIntentoConPista();
       context.sonidoPista();
     }
     if (partida.puedeConsultar(parte)) {
-      Alcance.of(context).progreso.desbloquearFicha(parte);
+      final progreso = Alcance.of(context).progreso;
+      registrarGuardadoIntermedio('ficha/$parte', () async {
+        await progreso.desbloquearFicha(parte);
+        return true;
+      });
     }
-    _mostrarPregunta();
     _guardarSiCompleta();
   }
 
   void _mostrarPregunta() {
-    if (_partida!.preguntaActual == null) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final contexto = _pregunta.currentContext;
-      if (mounted && contexto != null) {
-        Scrollable.ensureVisible(
-          contexto,
-          duration: const Duration(milliseconds: 250),
-          alignment: 0,
-        );
-      }
-    });
+    if (_preguntaPresentada != null) mostrarDestinoPaso(_pregunta);
   }
 
   Future<void> _guardarSiCompleta() async {
-    if (_guardando || _guardado) return;
-    await registrarGuardadoFinal(() async {
-      await _persistirFinal();
-      return _guardado;
-    });
-  }
-
-  Future<void> _persistirFinal() async {
-    final partida = _partida!;
-    if (!partida.completa || _guardando || _guardado) return;
+    final partida = _partida;
+    if (partida == null || !partida.completa || _guardando || _guardado) return;
     final progreso = Alcance.of(context).progreso;
+    final actividadGuardada = widget.actividad;
+    final nivelGuardado = partida.nivel.id;
     setState(() => _guardando = true);
-    try {
-      await progreso.marcarNivelHerbario(widget.actividad, partida.nivel.id);
-      if (mounted) setState(() => _guardado = true);
-    } catch (_) {
-      // El componente común FinJuego gestiona el reintento si falla el guardado.
-    } finally {
-      if (mounted) setState(() => _guardando = false);
-    }
+    await registrarGuardadoFinal(() async {
+      try {
+        await progreso.marcarNivelHerbario(actividadGuardada, nivelGuardado);
+        if (mounted && identical(partida, _partida)) setState(() => _guardado = true);
+        return true;
+      } catch (_) {
+        return false;
+      } finally {
+        if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
+      }
+    });
+    if (mounted && identical(partida, _partida)) setState(() => _guardando = false);
   }
 
   void _consultar(String id) {
@@ -265,22 +278,28 @@ class _HerbarioPageState extends State<HerbarioPage>
         ),
         actions: [
           InsigniaPrecisionAppBar(
-            combo: _comboActual,
+            combo: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: partida == null
-                    ? _selector()
-                    : _juego(partida, math.min(constraints.maxWidth - 32, 780)),
+      body: construirContenidoPaso(
+        SafeArea(
+          top: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 780),
+                  child: partida == null
+                      ? _selector()
+                      : _juego(
+                          partida,
+                          math.min(constraints.maxWidth - 32, 780),
+                        ),
+                ),
               ),
             ),
           ),
@@ -458,7 +477,7 @@ class _HerbarioPageState extends State<HerbarioPage>
 
   Widget _juego(PartidaHerbario partida, double ancho) {
     final nivel = partida.nivel;
-    final idPregunta = partida.preguntaActual;
+    final idPregunta = _preguntaPresentada;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -468,7 +487,8 @@ class _HerbarioPageState extends State<HerbarioPage>
         ),
         const SizedBox(height: 8),
         Texto(
-          partida.colocacionTerminada
+          (partida.colocacionTerminada &&
+                  (_preguntaPresentada != null || partida.completa))
               ? (partida.completa
                     ? '¡Todas las partes descubiertas!'
                     : 'Ahora descubre para qué sirve cada parte.')
@@ -476,8 +496,7 @@ class _HerbarioPageState extends State<HerbarioPage>
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
-        Semantics(
-          liveRegion: true,
+        AnuncioPaso(
           child: Texto(
             'Partes colocadas: ${partida.colocadas.length} de ${nivel.partes.length}',
             style: const TextStyle(fontWeight: FontWeight.w800),
@@ -489,13 +508,15 @@ class _HerbarioPageState extends State<HerbarioPage>
             style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         const SizedBox(height: 8),
-        LinearProgressIndicator(
-          key: const Key('herbario-progreso'),
-          value: partida.progreso,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(10),
-          semanticsLabel: context.traducir('Progreso del herbario'),
-          semanticsValue: '${(partida.progreso * 100).round()} %',
+        ProgresoPaso(
+          child: LinearProgressIndicator(
+            key: const Key('herbario-progreso'),
+            value: partida.progreso,
+            minHeight: 10,
+            borderRadius: BorderRadius.circular(10),
+            semanticsLabel: context.traducir('Progreso del herbario'),
+            semanticsValue: '${(partida.progreso * 100).round()} %',
+          ),
         ),
         const SizedBox(height: 16),
         Center(
@@ -547,8 +568,8 @@ class _HerbarioPageState extends State<HerbarioPage>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 12),
-            Semantics(
-              liveRegion: true,
+            AnuncioPaso(
+              anunciar: true,
               child: Burbuja(
                 quien: widget.actividad.quien,
                 frase: partida.resultado?.frase ?? widget.actividad.intro,
@@ -596,8 +617,7 @@ class _HerbarioPageState extends State<HerbarioPage>
         ],
         if (partida.completa) ...[
           const SizedBox(height: 16),
-          Semantics(
-            liveRegion: true,
+          AnuncioPaso(
             child: Texto(
               '¡Has completado el herbario!',
               key: const Key('herbario-completo'),
@@ -714,7 +734,7 @@ class _HerbarioPageState extends State<HerbarioPage>
           : pointerDragAnchorStrategy,
       onDragStarted: () {
         context.sonidoSeleccion();
-        setState(() => partida.seleccionar(parte.id));
+        if (!pasoBloqueado) setState(() => partida.seleccionar(parte.id));
       },
       feedback: Material(
         color: context.coloresNaturales.superficie(Colors.transparent),
@@ -751,7 +771,7 @@ class _HerbarioPageState extends State<HerbarioPage>
           clave: Key('pieza-${parte.id}'),
           onTap: () {
             context.sonidoSeleccion();
-            setState(() => partida.seleccionar(parte.id));
+            if (!pasoBloqueado) setState(() => partida.seleccionar(parte.id));
           },
         ),
       ),

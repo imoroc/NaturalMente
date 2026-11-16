@@ -14,6 +14,7 @@ class PartidaAdivinanza {
 
   var _ronda = 0;
   var _pistasVistas = 1;
+  bool resuelta = false;
   final Set<String> _descartados = {};
   Resultado? resultado;
 
@@ -31,12 +32,22 @@ class PartidaAdivinanza {
 
   bool get quedanPistas {
     final actual = ronda;
-    return actual != null && _pistasVistas < actual.pistas.length;
+    return !resuelta && actual != null && _pistasVistas < actual.pistas.length;
   }
 
-  bool get completa => _ronda == nivel.rondas.length;
+  bool get completa => resuelta && _ronda == nivel.rondas.length - 1;
 
-  double get progreso => _ronda / nivel.rondas.length;
+  double get progreso => (_ronda + (resuelta ? 1 : 0)) / nivel.rondas.length;
+
+  void siguiente() {
+    if (!resuelta || completa) return;
+    _ronda++;
+    _pistasVistas = 1;
+    _descartados.clear();
+    ultimaEleccion = null;
+    resultado = null;
+    resuelta = false;
+  }
 
   void otraPista() {
     if (!quedanPistas) return;
@@ -47,16 +58,14 @@ class PartidaAdivinanza {
 
   void adivinar(String animalId) {
     final actual = ronda;
-    if (actual == null || descartado(animalId)) return;
+    if (resuelta || actual == null || descartado(animalId)) return;
     if (!actual.opciones.contains(animalId)) {
       throw ArgumentError('$animalId no es una opción de ${actual.id}.');
     }
     ultimaEleccion = animalId;
     if (animalId == actual.respuesta) {
       pistasUltimoAcierto = _pistasVistas;
-      _ronda += 1;
-      _pistasVistas = 1;
-      _descartados.clear();
+      resuelta = true;
       resultado = Resultado(
         acierto: true,
         frase: completa ? '${actual.frase} ${nivel.despedida}' : actual.frase,

@@ -33,6 +33,12 @@ class PartidaEcosistema {
           ? 1
           : 0);
   int get total => ecosistema.elementos.length + nivel.retos.length;
+  bool get ultimoPaso =>
+      confirmado &&
+      !montando &&
+      (ultimoDestino != null
+          ? nivel.retos.isEmpty
+          : _reto == nivel.retos.length - 1);
   String? get cambio =>
       retoActual?.id.startsWith('menos-') == true && confirmado
       ? retoActual!.id

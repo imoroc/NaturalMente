@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/atencion_paso.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -160,9 +161,7 @@ class PlantaHerbario extends StatelessWidget {
                                   top: 0,
                                   child: ExcludeSemantics(
                                     child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 180,
-                                      ),
+                                      duration: duracionSeleccionPaso(context),
                                       width: 24,
                                       height: 24,
                                       decoration: BoxDecoration(

@@ -164,10 +164,7 @@ const catalogoTrajesNatu = <InfoTrajeNatu>[
   ),
 ];
 
-Future<void> mostrarArmarioNatu(
-  BuildContext context, [
-  Progreso? progreso,
-]) {
+Future<void> mostrarArmarioNatu(BuildContext context, [Progreso? progreso]) {
   final alcance = Alcance.maybeOf(context);
   final prog = progreso ?? alcance!.progreso;
   if (alcance != null) {
@@ -177,10 +174,8 @@ Future<void> mostrarArmarioNatu(
     context: context,
     isScrollControlled: true,
     backgroundColor: context.coloresNaturales.superficie(Colors.transparent),
-    builder: (ctx) => _HojaArmarioNatu(
-      progreso: prog,
-      catalogo: alcance?.catalogo,
-    ),
+    builder: (ctx) =>
+        _HojaArmarioNatu(progreso: prog, catalogo: alcance?.catalogo),
   );
 }
 
@@ -814,9 +809,12 @@ const _bancoFacil = <PreguntaExpedicion>[
     id: 'f-delfin',
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'delfin',
-    pregunta:
-        'El delfín nada en el mar, respira aire y sus crías se alimentan de leche materna. ¿Qué es?',
-    opciones: ['Un mamífero marino', 'Un insecto con alas', 'Un árbol acuático'],
+    pregunta: 'El delfín nada en el mar, respira aire y sus crías se alimentan de leche materna. ¿Qué es?',
+    opciones: [
+      'Un mamífero marino',
+      'Un insecto con alas',
+      'Un árbol acuático',
+    ],
     indiceCorrecto: 0,
     explicacion:
         '¡Muy bien! Aunque vive en el mar, el delfín es un mamífero vivíparo que respira con pulmones.',
@@ -933,9 +931,12 @@ const _bancoFacil = <PreguntaExpedicion>[
     id: 'f-pinguino',
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'pinguino',
-    pregunta:
-        'El pingüino tiene plumas y pico, pone huevos y usa sus alas como aletas para nadar. ¿Qué es?',
-    opciones: ['Un ave marina que no vuela', 'Un pez con escamas', 'Un anfibio de charca'],
+    pregunta: 'El pingüino tiene plumas y pico, pone huevos y usa sus alas como aletas para nadar. ¿Qué es?',
+    opciones: [
+      'Un ave marina que no vuela',
+      'Un pez con escamas',
+      'Un anfibio de charca',
+    ],
     indiceCorrecto: 0,
     explicacion:
         '¡Excelente! Aunque no vuela por el aire, el pingüino es un ave adaptada a nadar en aguas muy frías.',
@@ -959,13 +960,8 @@ const _bancoFacil = <PreguntaExpedicion>[
     id: 'f-una-vida',
     zonaNombre: 'Nuestro Cuerpo',
     fichaIlustracion: 'una-vida',
-    pregunta:
-        'Las personas, los animales y las plantas nacen, crecen, se alimentan y se relacionan. ¿Qué son?',
-    opciones: [
-      'Objetos inertes sin vida',
-      'Juguetes de cuerda',
-      'Seres vivos',
-    ],
+    pregunta: 'Las personas, los animales y las plantas nacen, crecen, se alimentan y se relacionan. ¿Qué son?',
+    opciones: ['Objetos inertes sin vida', 'Juguetes de cuerda', 'Seres vivos'],
     indiceCorrecto: 2,
     explicacion:
         'La nutrición y la relación son funciones vitales; la reproducción permite que las especies continúen, aunque no todos los individuos se reproduzcan.',
@@ -1414,9 +1410,12 @@ const _bancoDificil = <PreguntaExpedicion>[
     id: 'd-pulpo',
     zonaNombre: 'Reserva de Animales',
     fichaIlustracion: 'pulpo',
-    pregunta:
-        'El pulpo, el calamar, la almeja y el caracol tienen el cuerpo blando y musculoso. ¿A qué grupo de invertebrados pertenecen?',
-    opciones: ['A los moluscos', 'A los vertebrados anfibios', 'A los insectos con seis patas'],
+    pregunta: 'El pulpo, el calamar, la almeja y el caracol tienen el cuerpo blando y musculoso. ¿A qué grupo de invertebrados pertenecen?',
+    opciones: [
+      'A los moluscos',
+      'A los vertebrados anfibios',
+      'A los insectos con seis patas',
+    ],
     indiceCorrecto: 0,
     explicacion:
         '¡Genial! Todos ellos son moluscos, aunque unos tengan concha externa y otros como el pulpo no.',
@@ -1568,6 +1567,31 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       _inicializado = true;
       _comboActual = _progreso.comboActual;
       _mejorComboSesion = _comboActual;
+      final pendiente = _progreso.cierreExpedicionPendiente(
+        widget.fechaReferencia,
+      );
+      if (pendiente != null) {
+        _dificultad = pendiente.dificultad ?? 'facil';
+        _mision = ExpedicionDiariaPage.generarMisionDelDia(
+          widget.fechaReferencia,
+          _dificultad,
+        );
+        _pasoActual = _mision.length - 1;
+        _pasoResuelto = true;
+        _completada = true;
+        _enSelectorDificultad = false;
+        _aciertosALaPrimera = pendiente.aciertos ?? 0;
+        _mejorComboSesion = pendiente.combo ?? 0;
+        _semillasSesion = (pendiente.semillasSesion ?? 0) + pendiente.bono;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          registrarGuardadoFinal(
+            () => _progreso.guardarExpedicionDiaria(pendiente),
+          );
+          mostrarCierrePendiente();
+        });
+        return;
+      }
       final hechaHoy = _progreso.expedicionHoyHecha(widget.fechaReferencia);
       if (hechaHoy) {
         _completadaAlAbrir = true;
@@ -1640,85 +1664,63 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
   };
 
   Future<void> _elegirOpcion(int indice) async {
-    if (_pasoResuelto || _completada) return;
+    if (_pasoResuelto || _completada || !iniciarPasoEvaluado()) return;
     final pregunta = _mision[_pasoActual];
-    if (indice == pregunta.indiceCorrecto) {
-      final aLaPrimera = !_falloEnPasoActual;
-      final nuevoCombo = aLaPrimera ? _progreso.comboActual + 1 : 1;
-      int ganadas = 0;
-      if (!_progreso.expedicionHoyHecha(widget.fechaReferencia)) {
-        ganadas = await _progreso.registrarAciertoPrecision(
-          aLaPrimera: aLaPrimera,
-          comboActual: nuevoCombo,
-        );
-      }
-      if (!mounted) return;
-      setState(() {
-        _opcionElegida = indice;
-        _pasoResuelto = true;
-        _comboActual = _progreso.comboActual;
-        if (_comboActual > _mejorComboSesion) {
-          _mejorComboSesion = _comboActual;
-        }
-        if (aLaPrimera) {
-          _aciertosALaPrimera++;
-        }
-        _semillasSesion += ganadas;
-      });
-      if (_pasoActual + 1 >= _mision.length) {
-        mostrarAcierto(finalDeNivel: true);
-      } else {
-        mostrarAcierto();
-      }
-      if (_pasoActual + 1 >= _mision.length) {
-        await registrarGuardadoFinal(() async {
-          await _siguientePaso();
-          return _completada;
-        });
-      } else {
-        await _siguientePaso();
-      }
-    } else {
-      await _progreso.romperComboPrecision();
-      if (!mounted) return;
-      context.sonidoPista();
+    if (indice != pregunta.indiceCorrecto) {
+      guardarPrecisionPaso(acierto: false, progreso: _progreso);
       setState(() {
         _opcionElegida = indice;
         _falloEnPasoActual = true;
         _comboActual = 0;
       });
+      terminarIntentoConPista();
+      context.sonidoPista();
+      return;
     }
+    final aLaPrimera = !_falloEnPasoActual;
+    final nuevoCombo = aLaPrimera ? _progreso.comboActual + 1 : 1;
+    final ganadas = guardarPrecisionPaso(
+      acierto: true,
+      aLaPrimera: aLaPrimera,
+      comboActual: nuevoCombo,
+      progreso: _progreso,
+    );
+    setState(() {
+      _opcionElegida = indice;
+      _pasoResuelto = true;
+      _comboActual = _progreso.comboActual;
+      if (_comboActual > _mejorComboSesion) _mejorComboSesion = _comboActual;
+      if (aLaPrimera) _aciertosALaPrimera++;
+      _semillasSesion += ganadas;
+    });
+    if (_pasoActual + 1 < _mision.length) {
+      confirmarPaso(alContinuar: _siguientePaso, esperarContinuar: true);
+      return;
+    }
+    final cierre = _progreso.prepararExpedicionDiaria(
+      fecha: widget.fechaReferencia,
+      semillasRecompensa: _premioBaseDificultad,
+      dificultad: _dificultad,
+      aciertosALaPrimera: _aciertosALaPrimera,
+      mejorComboSesion: _mejorComboSesion,
+      semillasTotalesSesion: _semillasSesion,
+    );
+    setState(() {
+      _semillasSesion += cierre.bono;
+      _completada = true;
+      _enSelectorDificultad = false;
+    });
+    mostrarAcierto(finalDeNivel: true);
+    await registrarGuardadoFinal(
+      () => _progreso.guardarExpedicionDiaria(cierre),
+    );
   }
 
-  Future<void> _siguientePaso() async {
-    if (_pasoActual + 1 < _mision.length) {
-      setState(() {
-        _pasoActual++;
-        _opcionElegida = null;
-        _pasoResuelto = false;
-        _falloEnPasoActual = false;
-      });
-    } else {
-      final antes = _progreso.semillas;
-      final bonoBase = _progreso.expedicionHoyHecha(widget.fechaReferencia)
-          ? 0
-          : _premioBaseDificultad;
-      await _progreso.completarExpedicionDiaria(
-        fecha: widget.fechaReferencia,
-        semillasRecompensa: bonoBase,
-        dificultad: _dificultad,
-        aciertosALaPrimera: _aciertosALaPrimera,
-        mejorComboSesion: _mejorComboSesion,
-        semillasTotalesSesion: _semillasSesion,
-      );
-      final bonoFinal = _progreso.semillas - antes;
-      if (!mounted) return;
-      setState(() {
-        _semillasSesion += bonoFinal;
-        _completada = true;
-        _enSelectorDificultad = false;
-      });
-    }
+  void _siguientePaso() {
+    _pasoActual++;
+    _opcionElegida = null;
+    _pasoResuelto = false;
+    _falloEnPasoActual = false;
   }
 
   @override
@@ -1739,11 +1741,16 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
           ),
           const SizedBox(height: 12),
           ResumenPrecisionFinal(
-        aciertosALaPrimera: _aciertosALaPrimera,
-        totalPasos: _mision.length,
-        mejorComboSesion: _mejorComboSesion,
-        semillasGanadas: _semillasSesion,
-      ),
+            aciertosALaPrimera: _aciertosALaPrimera,
+            totalPasos: _mision.length,
+            mejorComboSesion: _mejorComboSesion,
+            semillasGanadas: _semillasSesion,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            context.tr(_mision.last.explicacion),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
       textoVolver: 'Volver al mapa',
@@ -1800,20 +1807,23 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
               ),
             ),
           InsigniaPrecisionAppBar(
-            comboActual: _comboActual,
+            comboActual: presentarCombo(_comboActual),
+            discreta: true,
             semillasSesion: _semillasSesion,
           ),
         ],
       ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 680),
-            child: _completadaAlAbrir
-                ? _construirPantallaFinal(context)
-                : (_enSelectorDificultad
-                      ? _construirPantallaSeleccionDificultad(context)
-                      : _construirReto(context)),
+      body: construirContenidoPaso(
+        SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 680),
+              child: _completadaAlAbrir
+                  ? _construirPantallaFinal(context)
+                  : (_enSelectorDificultad
+                        ? _construirPantallaSeleccionDificultad(context)
+                        : _construirReto(context)),
+            ),
           ),
         ),
       ),
@@ -2122,14 +2132,16 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                     tween: Tween<double>(begin: 0, end: progresoFraccion),
                     duration: const Duration(milliseconds: 350),
                     curve: Curves.easeOutCubic,
-                    builder: (context, valor, _) => LinearProgressIndicator(
-                      value: valor,
-                      minHeight: 12,
-                      backgroundColor: context.coloresNaturales.superficie(
-                        const Color(0xFFF1F5F9),
-                      ),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Color(0xFF22C55E),
+                    builder: (context, valor, _) => ProgresoPaso(
+                      child: LinearProgressIndicator(
+                        value: valor,
+                        minHeight: 12,
+                        backgroundColor: context.coloresNaturales.superficie(
+                          const Color(0xFFF1F5F9),
+                        ),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          Color(0xFF22C55E),
+                        ),
                       ),
                     ),
                   ),
@@ -2246,7 +2258,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                 ),
               ),
             ),
-          if (_pasoResuelto) ...[
+          if (_pasoResuelto && fasePaso != FasePaso.confirmando) ...[
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(

@@ -35,4 +35,13 @@ flutter:
     - content/en.json
     - assets/icono/
     - assets/sonidos/
+    - assets/inicio/
+    - assets/fuentes/Nunito-OFL.txt
+  fonts:
+    - family: NunitoInicio
+      fonts:
+        - asset: assets/fuentes/Nunito-600.ttf
+          weight: 600
+        - asset: assets/fuentes/Nunito-900.ttf
+          weight: 900
 

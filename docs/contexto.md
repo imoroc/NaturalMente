@@ -188,7 +188,7 @@ Materia, energía, fuerzas y máquinas son la ampliación si sobra tiempo tras e
 
 ## La app, en concreto
 
-Al abrir se ve un mapa con tres sitios. El orden lo elige el niño.
+Al abrir se ven los tres mundos: Animales, Plantas y Mi cuerpo. Cada tarjeta lleva un dibujo y se puede tocar entera. El orden lo elige el niño. La cabecera muestra la racha diaria y permite abrir el reto. Debajo de los mundos están Reto de hoy, Mis cromos y Vestir a Natu, seguidos del botón Ajustes. Las semillas se consultan en el armario y el progreso de estrellas y misiones dentro de cada mundo.
 
 | Sitio | Bloque | Quién habla si no encaja |
 | --- | --- | --- |

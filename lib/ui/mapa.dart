@@ -1,5 +1,5 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -7,6 +7,7 @@ import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/expedicion_diaria.dart';
 import 'package:naturalmente/ui/selector_idioma.dart';
+import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
 
@@ -16,1317 +17,572 @@ class MapaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alcance = Alcance.of(context);
-    return Scaffold(
-      body: SafeArea(
-        child: ListenableBuilder(
-          listenable: alcance.progreso,
-          builder: (context, _) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 780),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(18, 14, 18, 28),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const _CabeceraNatu(),
-                      const SizedBox(height: 18),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.public_rounded,
-                              size: 20,
-                              color: context.coloresNaturales.contenido(
-                                Color(0xFF15803D),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Texto(
-                                'MUNDOS PARA EXPLORAR',
-                                style: Theme.of(context).textTheme.labelLarge
-                                    ?.copyWith(
-                                      color: context.coloresNaturales.contenido(
-                                        const Color(0xFF334155),
-                                      ),
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 0.6,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      for (final zona in alcance.catalogo.zonas) ...[
-                        _ZonaTarjeta(zona: zona),
-                        const SizedBox(height: 14),
-                      ],
-                      const _TarjetaExpedicionDiaria(),
-                      const SizedBox(height: 14),
-                      const _TarjetaAlbumPrincipal(),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class _CabeceraNatu extends StatelessWidget {
-  const _CabeceraNatu();
-
-  @override
-  Widget build(BuildContext context) {
-    final alcance = Alcance.of(context);
-    final catalogo = alcance.catalogo;
     final progreso = alcance.progreso;
+    final colores = context.coloresNaturales;
 
-    final totalMisiones = catalogo.actividades.length;
-    final misionesHechas = catalogo.actividades
-        .where(progreso.actividadHecha)
-        .length;
-    final estrellas = progreso.totalNivelesSuperados(catalogo.actividades);
-    final maxEstrellas = progreso.totalMaxNiveles(catalogo.actividades);
-    final totalCromos = catalogo.fichas.length;
-    final cromos = catalogo.fichas
-        .where((f) => progreso.fichaDesbloqueada(f.id))
-        .length;
-    final albumCompleto = totalCromos > 0 && cromos == totalCromos;
+    return Scaffold(
+      backgroundColor: colores.oscuro ? colores.fondo : const Color(0xFFFAF5EC),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, espacio) => ListenableBuilder(
+            listenable: progreso,
+            builder: (context, _) {
+              void abrir(Widget destino) {
+                context.sonidoToque();
+                Navigator.of(context)
+                    .push(MaterialPageRoute<void>(builder: (_) => destino));
+              }
 
-    final String rango;
-    final String saludo;
-    if (albumCompleto) {
-      rango = 'GUARDIÁN DE LA NATURALEZA';
-      saludo =
-          '¡Increíble! Has completado todos los cromos del álbum de Natu.';
-    } else if (estrellas > 0 || cromos > 0) {
-      rango = 'EXPLORADOR EN RUTA';
-      saludo =
-          '¡Vas genial! Elige cualquier mundo para seguir sumando estrellas y cromos a tu álbum.';
-    } else {
-      rango = 'CUADERNO DE CAMPO DE NATU';
-      saludo = 'Elige por dónde empezar. No hay un orden.';
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: ([
-            Color(0xFFFFFFFF),
-            Color(0xFFF5FBF7),
-          ]).map(context.coloresNaturales.superficie).toList(),
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: context.coloresNaturales.borde(const Color(0xFF86EFAC)),
-          width: 2.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.coloresNaturales.sombra(Color(0xFF4ADE80)),
-            offset: Offset(0, 5),
-            blurRadius: 0,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      const Color(0xFFDCFCE7),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.eco_rounded,
-                        size: 14,
-                        color: context.coloresNaturales.contenido(
-                          Color(0xFF15803D),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Flexible(
-                        child: Texto(
-                          rango,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 0.6,
-                            color: context.coloresNaturales.contenido(
-                              Color(0xFF15803D),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              final cromos = _AccesoSecundario(
+                key: const Key('tarjeta-album-principal'),
+                titulo: 'Mis cromos',
+                fondo: const Color(0xFFEDF2DE),
+                borde: const Color(0xFFF59E0B),
+                dibujo: const _IlustracionInicio(
+                  'cromos',
+                  ancho: 112,
+                  alto: 76,
                 ),
-              ),
-              const SizedBox(width: 10),
-              const SelectorIdioma(),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
+                onTap: () => abrir(const AlbumPage()),
+              );
+              final armario = _AccesoSecundario(
                 key: const Key('abrir-armario-natu'),
-                borderRadius: BorderRadius.circular(22),
-                onTap: () => mostrarArmarioNatu(context),
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      const Color(0xFFECFDF5),
-                    ),
-                    borderRadius: BorderRadius.circular(22),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        const Color(0xFF86EFAC),
-                      ),
-                      width: 2,
-                    ),
-                  ),
-                  child: DibujoMascota(
-                    gesto: progreso.tienePosePersonalizada
-                        ? progreso.poseEquipada
-                        : (albumCompleto ? 'feliz' : 'hola'),
-                    tamano: 64,
-                  ),
+                titulo: 'Vestir a Natu',
+                fondo: const Color(0xFFFFEDD4),
+                borde: const Color(0xFF40BE70),
+                dibujo: const _IlustracionInicio(
+                  'armario',
+                  ancho: 120,
+                  alto: 76,
                 ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Texto(
+                onTap: () {
+                  context.sonidoToque();
+                  mostrarArmarioNatu(context);
+                },
+              );
+              final diasRacha = progreso.rachaActiva();
+              final marca = Row(
+                children: [
+                  ExcludeSemantics(
+                    child:
+                        progreso.tienePosePersonalizada ||
+                            progreso.trajeEquipado != 'ninguno'
+                        ? DibujoMascota(
+                            gesto: progreso.poseEquipada,
+                            tamano: 58,
+                          )
+                        : const _IlustracionInicio('natu', ancho: 58, alto: 58),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Texto(
                       'NaturalMente',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: TextStyle(
+                        color: colores.tinta,
+                        fontFamily: 'NunitoInicio',
+                        fontSize: 24,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    const SizedBox(height: 3),
-                    Texto(
-                      saludo,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 13.5,
-                        color: context.coloresNaturales.contenido(
-                          Color(0xFF334155),
+                  ),
+                ],
+              );
+              final textoGrande =
+                  MediaQuery.textScalerOf(context).scale(16) > 24;
+              final compacto = espacio.maxWidth <= 360;
+              final espacioTitulo = compacto ? 15.0 : 23.0;
+
+              return Align(
+                alignment: Alignment.topCenter,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(
+                      10,
+                      compacto ? 12 : 18,
+                      10,
+                      24,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: marca),
+                            const SizedBox(width: 8),
+                            _AccesoRacha(
+                              dias: diasRacha,
+                              onTap: () => abrir(const ExpedicionDiariaPage()),
+                            ),
+                          ],
                         ),
-                        height: 1.25,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              InkWell(
-                borderRadius: BorderRadius.circular(999),
-                onTap: () => mostrarArmarioNatu(context),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      const Color(0xFFFFFBEB),
-                    ),
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        const Color(0xFFF59E0B),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const IconoSemilla(tamano: 15),
-                      const SizedBox(width: 5),
-                      Flexible(
-                        child: Texto(
-                          '${progreso.semillas} ${progreso.semillas == 1 ? 'Semilla' : 'Semillas'} · Armario',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w900,
-                            color: context.coloresNaturales.contenido(
-                              Color(0xFF92400E),
+                        SizedBox(height: espacioTitulo),
+                        Semantics(
+                          header: true,
+                          child: Texto(
+                            '¿A qué jugamos?',
+                            style: TextStyle(
+                              color: colores.tinta,
+                              fontFamily: 'NunitoInicio',
+                              fontSize: 36,
+                              fontWeight: FontWeight.w900,
+                              height: 1.15,
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(999),
-                onTap: () {
-                  context.sonidoToque();
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ExpedicionDiariaPage(),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      const Color(0xFFFFF0D6),
-                    ),
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        const Color(0xFFFF9F1C),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.local_fire_department_rounded,
-                        size: 15,
-                        color: context.coloresNaturales.contenido(
-                          Color(0xFFE66A00),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Flexible(
-                        child: Texto(
-                          progreso.rachaActiva() > 0
-                              ? progreso.rachaActiva() == 1
-                                    ? 'Racha: 1 día'
-                                    : 'Racha: ${progreso.rachaActiva()} días'
-                              : 'Reto diario',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w900,
-                            color: context.coloresNaturales.contenido(
-                              Color(0xFFB45309),
-                            ),
+                        SizedBox(height: espacioTitulo),
+                        for (final zona in alcance.catalogo.zonas) ...[
+                          _TarjetaMundo(
+                            zona: zona,
+                            compacto: compacto,
+                            onTap: () => abrir(ZonaPage(zona: zona)),
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                        SizedBox(height: compacto ? 16 : 22),
+                        _AccesoInicio(
+                          key: const Key('abrir-expedicion-diaria'),
+                          fondo: colores.tarjeta,
+                          borde: colores.borde(const Color(0xFFF29026)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          onTap: () => abrir(const ExpedicionDiariaPage()),
+                          child: Row(
+                            children: [
+                              const _IlustracionInicio(
+                                'reto',
+                                ancho: 76,
+                                alto: 54,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: _TextoAcceso(
+                                  titulo: 'Reto de hoy',
+                                  descripcion: progreso.expedicionHoyHecha()
+                                      ? 'Completado por hoy'
+                                      : null,
+                                ),
+                              ),
+                              const _FlechaInicio(tono: Color(0xFFEAF0D8)),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 18),
+                        LayoutBuilder(
+                          builder: (context, medidas) {
+                            if (medidas.maxWidth < 280 || textoGrande) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  cromos,
+                                  const SizedBox(height: 10),
+                                  armario,
+                                ],
+                              );
+                            }
+                            return IntrinsicHeight(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(child: cromos),
+                                  const SizedBox(width: 10),
+                                  Expanded(child: armario),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        const Align(child: SelectorIdioma()),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
-          const SizedBox(height: 14),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-              color: context.coloresNaturales.superficie(Colors.white),
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(
-                color: context.coloresNaturales.borde(const Color(0xFFE2E8F0)),
-                width: 2,
-              ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _InsigniaResumen(
-                    icono: Icons.star_rounded,
-                    colorIcono: context.coloresNaturales.contenido(
-                      const Color(0xFFF59E0B),
-                    ),
-                    colorFondo: const Color(0xFFFFFBEB),
-                    valor: '$estrellas/$maxEstrellas',
-                    etiqueta: 'Estrellas',
-                  ),
-                ),
-                Container(
-                  width: 1.5,
-                  height: 32,
-                  color: context.coloresNaturales.superficie(
-                    const Color(0xFFE2E8F0),
-                  ),
-                ),
-                Expanded(
-                  child: _InsigniaResumen(
-                    icono: Icons.flag_rounded,
-                    colorIcono: context.coloresNaturales.contenido(
-                      const Color(0xFF16A34A),
-                    ),
-                    colorFondo: const Color(0xFFF0FDF4),
-                    valor: '$misionesHechas/$totalMisiones',
-                    etiqueta: 'Misiones',
-                  ),
-                ),
-                Container(
-                  width: 1.5,
-                  height: 32,
-                  color: context.coloresNaturales.superficie(
-                    const Color(0xFFE2E8F0),
-                  ),
-                ),
-                Expanded(
-                  child: InkWell(
-                    key: const Key('abrir-album'),
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {
-                      context.sonidoToque();
-                      _mostrarAlbumCompleto(context);
-                    },
-                    child: _InsigniaResumen(
-                      icono: Icons.auto_stories_rounded,
-                      colorIcono: context.coloresNaturales.contenido(
-                        const Color(0xFFD97706),
-                      ),
-                      colorFondo: const Color(0xFFFFFBEB),
-                      valor: '$cromos/$totalCromos',
-                      etiqueta: 'Ver álbum',
-                      destacado: true,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _InsigniaResumen extends StatelessWidget {
-  const _InsigniaResumen({
-    required this.icono,
-    required this.colorIcono,
-    required this.colorFondo,
-    required this.valor,
-    required this.etiqueta,
-    this.destacado = false,
+class _AccesoRacha extends StatelessWidget {
+  const _AccesoRacha({required this.dias, required this.onTap});
+
+  final int dias;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return Tooltip(
+      message: context.tr(dias == 1 ? 'Racha: 1 día' : 'Racha: $dias días'),
+      child: _AccesoInicio(
+        key: const Key('abrir-racha-inicio'),
+        fondo: colores.superficie(const Color(0xFFFFEBD2)),
+        borde: colores.borde(const Color(0xFFEA9C42)),
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 8),
+        onTap: onTap,
+        child: ExcludeSemantics(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const _IlustracionInicio('racha', ancho: 27, alto: 32),
+              const SizedBox(width: 4),
+              Text(
+                '$dias',
+                style: TextStyle(
+                  color: colores.tinta,
+                  fontFamily: 'NunitoInicio',
+                  fontSize: 19,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TarjetaMundo extends StatelessWidget {
+  const _TarjetaMundo({
+    required this.zona,
+    required this.onTap,
+    required this.compacto,
   });
 
-  final IconData icono;
-  final Color colorIcono;
-  final Color colorFondo;
-  final String valor;
-  final String etiqueta;
-  final bool destacado;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: context.coloresNaturales.superficie(colorFondo),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              icono,
-              color: context.coloresNaturales.contenido(colorIcono),
-              size: 19,
-            ),
-          ),
-          const SizedBox(width: 7),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Texto(
-                  valor,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 13.5,
-                    color: context.coloresNaturales.contenido(
-                      Color(0xFF1E293B),
-                    ),
-                  ),
-                ),
-                Texto(
-                  etiqueta,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 11,
-                    color: context.coloresNaturales.contenido(
-                      destacado
-                          ? const Color(0xFFB45309)
-                          : const Color(0xFF64748B),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ZonaTarjeta extends StatelessWidget {
-  const _ZonaTarjeta({required this.zona});
-
   final Zona zona;
+  final bool compacto;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final alcance = Alcance.of(context);
-    final catalogo = alcance.catalogo;
-    final progreso = alcance.progreso;
-    final actividades = catalogo.actividadesDe(zona.id);
-    final hechas = actividades.where(progreso.actividadHecha).length;
-    final estrellasZona = actividades.fold<int>(
-      0,
-      (acc, a) => acc + progreso.nivelesSuperadosDe(a),
-    );
-    final maxEstrellasZona = actividades.fold<int>(
-      0,
-      (acc, a) => acc + progreso.maxNivelesDe(a),
-    );
-    final fichasZona = catalogo.fichasDe(zona.id);
-    final cromosZona = fichasZona
-        .where((f) => progreso.fichaDesbloqueada(f.id))
-        .length;
-    final estilo = _estiloZona(zona.id);
-    final muestras = _muestrasZona(zona.id);
-    final fraccionZona = maxEstrellasZona == 0
-        ? 0.0
-        : estrellasZona / maxEstrellasZona;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: context.coloresNaturales.superficie(estilo.fondo),
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: context.coloresNaturales.borde(estilo.borde),
-          width: 2.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.coloresNaturales.sombra(estilo.sombra),
-            offset: const Offset(0, 5),
-            blurRadius: 0,
-          ),
-        ],
+    final colores = context.coloresNaturales;
+    final (
+      titulo,
+      descripcion,
+      dibujo,
+      fondo,
+      borde,
+      sombra,
+    ) = switch (zona.id) {
+      'reserva' => (
+        'Animales',
+        'Conoce a los animales',
+        const _IlustracionInicio('animales', ancho: 77, alto: 76),
+        const Color(0xFFE1ECCD),
+        const Color(0xFF2ECC71),
+        const Color(0xFF239E56),
       ),
-      child: Material(
-        color: context.coloresNaturales.superficie(Colors.transparent),
-        child: InkWell(
-          key: Key('zona-${zona.id}'),
-          borderRadius: BorderRadius.circular(24),
-          onTap: () {
-            context.sonidoToque();
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => ZonaPage(zona: zona)),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        color: context.coloresNaturales.superficie(
-                          Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: context.coloresNaturales.borde(estilo.borde),
-                          width: 2,
-                        ),
-                      ),
-                      child: zona.id.isEmpty
-                          ? Icon(
-                              estilo.icono,
-                              color: context.coloresNaturales.contenido(
-                                estilo.acento,
-                              ),
-                              size: 30,
-                            )
-                          : InsigniaIlustradaZona(id: zona.id, tamano: 52),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 3,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: context.coloresNaturales.superficie(
-                                      Colors.white.withValues(alpha: 0.9),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Texto(
-                                    zona.bloque,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 12,
-                                      color: context.coloresNaturales.contenido(
-                                        estilo.acento,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: context.coloresNaturales.superficie(
-                                    hechas == actividades.length &&
-                                            actividades.isNotEmpty
-                                        ? const Color(0xFF2ECC71)
-                                        : Colors.white.withValues(alpha: 0.9),
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Texto(
-                                  '$hechas/${actividades.length}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 12,
-                                    color: context.coloresNaturales.contenido(
-                                      hechas == actividades.length &&
-                                              actividades.isNotEmpty
-                                          ? Colors.white
-                                          : estilo.acento,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Texto(
-                            zona.nombre,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 3),
-                          Texto(
-                            zona.resumen,
-                            style: TextStyle(
-                              color: context.coloresNaturales.contenido(
-                                Color(0xFF334155),
-                              ),
-                              fontWeight: FontWeight.w600,
-                              height: 1.3,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 9,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      Colors.white.withValues(alpha: 0.88),
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        estilo.borde.withValues(alpha: 0.45),
-                      ),
-                      width: 1.5,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 8,
-                        alignment: WrapAlignment.spaceBetween,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              for (final idMuestra in muestras) ...[
-                                Container(
-                                  width: 34,
-                                  height: 34,
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                    color: context.coloresNaturales.superficie(
-                                      Colors.white,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: context.coloresNaturales.borde(
-                                        estilo.borde.withValues(alpha: 0.5),
-                                      ),
-                                    ),
-                                  ),
-                                  child: IlustracionFicha(
-                                    id: idMuestra,
-                                    alto: 26,
-                                  ),
-                                ),
-                                const SizedBox(width: 6),
-                              ],
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.star_rounded,
-                                size: 16,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFFF59E0B),
-                                ),
-                              ),
-                              const SizedBox(width: 3),
-                              Texto(
-                                '$estrellasZona/$maxEstrellasZona',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w900,
-                                  color: context.coloresNaturales.contenido(
-                                    Color(0xFF334155),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Icon(
-                                Icons.style_rounded,
-                                size: 15,
-                                color: context.coloresNaturales.contenido(
-                                  estilo.acento,
-                                ),
-                              ),
-                              const SizedBox(width: 3),
-                              Flexible(
-                                child: Texto(
-                                  '$cromosZona/${fichasZona.length} cromos',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w800,
-                                    color: context.coloresNaturales.contenido(
-                                      Color(0xFF334155),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 11,
-                              vertical: 6,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                estilo.acento,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Texto(
-                                  'Explorar',
-                                  style: TextStyle(
-                                    color: context.coloresNaturales.contenido(
-                                      Colors.white,
-                                    ),
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(width: 3),
-                                Icon(
-                                  Icons.arrow_forward_rounded,
-                                  size: 15,
-                                  color: context.coloresNaturales.contenido(
-                                    Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (estrellasZona > 0) ...[
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(999),
-                          child: LinearProgressIndicator(
-                            value: fraccionZona,
-                            minHeight: 6,
-                            backgroundColor: context.coloresNaturales
-                                .superficie(estilo.fondo),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              estilo.borde,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ],
+      'invernadero' => (
+        'Plantas',
+        'Mira cómo crecen',
+        const _IlustracionInicio('plantas', ancho: 78, alto: 74),
+        const Color(0xFFFFE4C1),
+        const Color(0xFFFF9F1C),
+        const Color(0xFFD97706),
+      ),
+      'cuerpo' => (
+        'Mi cuerpo',
+        'Descubre tu cuerpo',
+        const _IlustracionInicio('cuerpo', ancho: 78, alto: 82),
+        const Color(0xFFC7E7F4),
+        const Color(0xFF38BDF8),
+        const Color(0xFF0284C7),
+      ),
+      _ => (
+        zona.nombre,
+        zona.resumen,
+        InsigniaIlustradaZona(id: zona.id),
+        const Color(0xFFF6F1E6),
+        const Color(0xFFD6CFC0),
+        const Color(0xFFB8B0A0),
+      ),
+    };
+
+    return _AccesoInicio(
+      key: Key('zona-${zona.id}'),
+      fondo: colores.superficie(fondo),
+      borde: colores.borde(borde),
+      sombra: colores.sombra(sombra),
+      onTap: onTap,
+      child: Row(
+        children: [
+          ExcludeSemantics(
+            child: Container(
+              width: compacto ? 84 : 94,
+              height: compacto ? 84 : 94,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: colores.superficie(const Color(0xFFFFF8E9)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: dibujo,
             ),
           ),
-        ),
+          SizedBox(width: compacto ? 10 : 14),
+          Expanded(
+            child: _TextoAcceso(
+              titulo: titulo,
+              descripcion: descripcion,
+              tamano: 26,
+            ),
+          ),
+          const SizedBox(width: 6),
+          const _FlechaInicio(),
+        ],
       ),
     );
   }
 }
 
-void _mostrarAlbumCompleto(BuildContext context) {
-  final alcance = Alcance.of(context);
-  showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    showDragHandle: true,
-    backgroundColor: context.coloresNaturales.superficie(
-      const Color(0xFFF6F1E6),
-    ),
-    builder: (context) => DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.88,
-      minChildSize: 0.5,
-      maxChildSize: 0.96,
-      builder: (context, scrollController) => ListenableBuilder(
-        listenable: alcance.progreso,
-        builder: (context, _) {
-          final total = alcance.catalogo.fichas.length;
-          final desbloqueadas = alcance.catalogo.fichas
-              .where((f) => alcance.progreso.fichaDesbloqueada(f.id))
-              .length;
-          return ListView(
-            controller: scrollController,
-            padding: const EdgeInsets.fromLTRB(18, 4, 18, 28),
-            children: [
-              Row(
-                children: [
-                  const DibujoMascota(gesto: 'estudio', tamano: 56),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Texto(
-                          'Álbum de cromos de Natu',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        Texto(
-                          'Has descubierto $desbloqueadas de $total cromos naturales.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: context.coloresNaturales.contenido(
-                              Color(0xFF475569),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              for (final zona in alcance.catalogo.zonas) ...[
-                Padding(
-                  padding: const EdgeInsets.only(top: 6, bottom: 8),
-                  child: Texto(
-                    '${zona.nombre.toUpperCase()} · ${zona.bloque.toUpperCase()}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0.6,
-                      color: context.coloresNaturales.contenido(
-                        Color(0xFF15803D),
-                      ),
-                    ),
-                  ),
-                ),
-                for (final ficha in alcance.catalogo.fichasDe(zona.id)) ...[
-                  TarjetaCromoFicha(
-                    ficha: ficha,
-                    desbloqueada: alcance.progreso.fichaDesbloqueada(ficha.id),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ],
-            ],
-          );
-        },
-      ),
-    ),
-  );
-}
-
-List<String> _muestrasZona(String id) {
-  switch (id) {
-    case 'reserva':
-      return const ['camello', 'delfin', 'tucan'];
-    case 'invernadero':
-      return const ['semilla', 'flor', 'fruto'];
-    case 'cuerpo':
-      return const ['cerebro', 'corazon', 'pulmones'];
-    default:
-      return const [];
-  }
-}
-
-class _EstiloZona {
-  const _EstiloZona({
+class _AccesoSecundario extends StatelessWidget {
+  const _AccesoSecundario({
+    required this.titulo,
     required this.fondo,
     required this.borde,
-    required this.sombra,
-    required this.acento,
-    required this.icono,
+    required this.dibujo,
+    required this.onTap,
+    super.key,
+  });
+
+  final String titulo;
+  final Color fondo;
+  final Color borde;
+  final Widget dibujo;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return _AccesoInicio(
+      fondo: colores.superficie(fondo),
+      borde: colores.borde(borde),
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 76,
+            child: Center(child: ExcludeSemantics(child: dibujo)),
+          ),
+          const SizedBox(height: 6),
+          Texto(
+            titulo,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: colores.tinta,
+              fontFamily: 'NunitoInicio',
+              fontSize: 19,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AccesoInicio extends StatefulWidget {
+  const _AccesoInicio({
+    required this.fondo,
+    required this.borde,
+    required this.onTap,
+    required this.child,
+    this.sombra,
+    this.padding = const EdgeInsets.all(11),
+    super.key,
   });
 
   final Color fondo;
   final Color borde;
-  final Color sombra;
-  final Color acento;
-  final IconData icono;
+  final Color? sombra;
+  final EdgeInsetsGeometry padding;
+  final VoidCallback onTap;
+  final Widget child;
+
+  @override
+  State<_AccesoInicio> createState() => _AccesoInicioState();
 }
 
-_EstiloZona _estiloZona(String id) {
-  switch (id) {
-    case 'reserva':
-      return const _EstiloZona(
-        fondo: Color(0xFFE8F8EE),
-        borde: Color(0xFF2ECC71),
-        sombra: Color(0xFF239E56),
-        acento: Color(0xFF15803D),
-        icono: Icons.pets_rounded,
-      );
-    case 'invernadero':
-      return const _EstiloZona(
-        fondo: Color(0xFFFFF5E5),
-        borde: Color(0xFFFF9F1C),
-        sombra: Color(0xFFD97706),
-        acento: Color(0xFFB45309),
-        icono: Icons.local_florist_rounded,
-      );
-    case 'cuerpo':
-      return const _EstiloZona(
-        fondo: Color(0xFFE8F4FD),
-        borde: Color(0xFF38BDF8),
-        sombra: Color(0xFF0284C7),
-        acento: Color(0xFF0369A1),
-        icono: Icons.accessibility_new_rounded,
-      );
-    default:
-      return const _EstiloZona(
-        fondo: Color(0xFFF6F1E6),
-        borde: Color(0xFFD6CFC0),
-        sombra: Color(0xFFB8B0A0),
-        acento: Color(0xFF334155),
-        icono: Icons.explore_rounded,
-      );
+class _AccesoInicioState extends State<_AccesoInicio> {
+  int? _puntero;
+  Offset _origen = Offset.zero;
+
+  void _iniciarPresion(PointerDownEvent evento) {
+    if (_puntero != null || evento.buttons != kPrimaryButton) return;
+    _origen = evento.position;
+    setState(() => _puntero = evento.pointer);
   }
-}
 
-class _TarjetaExpedicionDiaria extends StatelessWidget {
-  const _TarjetaExpedicionDiaria();
+  void _terminarPresion(PointerEvent evento) {
+    if (evento.pointer == _puntero) setState(() => _puntero = null);
+  }
+
+  void _moverPuntero(PointerMoveEvent evento) {
+    if ((evento.position - _origen).distanceSquared > kTouchSlop * kTouchSlop) {
+      _terminarPresion(evento);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final progreso = Alcance.of(context).progreso;
-    final hechaHoy = progreso.expedicionHoyHecha();
-    final racha = progreso.rachaActiva();
+    final sombra = widget.sombra;
+    final radio = BorderRadius.circular(sombra == null ? 20 : 24);
+    final recorrido = sombra == null ? 3.0 : 4.0;
+    final movimientoReducido = MediaQuery.disableAnimationsOf(context);
+    final pulsado = _puntero != null;
+    final base =
+        sombra ?? Color.alphaBlend(const Color(0x40000000), widget.borde);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: context.coloresNaturales.superficie(const Color(0xFFFFF8EC)),
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: context.coloresNaturales.borde(const Color(0xFFFF9F1C)),
-          width: 2.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.coloresNaturales.sombra(Color(0xFFD97706)),
-            offset: Offset(0, 5),
-            blurRadius: 0,
+    return Stack(
+      fit: StackFit.passthrough,
+      children: [
+        Positioned.fill(
+          top: recorrido,
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: base, borderRadius: radio),
           ),
-        ],
-      ),
-      child: Material(
-        color: context.coloresNaturales.superficie(Colors.transparent),
-        child: InkWell(
-          key: const Key('abrir-expedicion-diaria'),
-          borderRadius: BorderRadius.circular(24),
-          onTap: () {
-            context.sonidoToque();
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => const ExpedicionDiariaPage(),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: recorrido),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(end: pulsado && !movimientoReducido ? recorrido : 0),
+            duration: movimientoReducido
+                ? Duration.zero
+                : Duration(milliseconds: pulsado ? 55 : 105),
+            curve: Curves.easeOut,
+            builder: (context, desplazamiento, child) => Transform.translate(
+              offset: Offset(0, movimientoReducido ? 0 : desplazamiento),
+              transformHitTests: false,
+              child: child,
+            ),
+            child: Material(
+              color: widget.fondo,
+              shape: RoundedRectangleBorder(
+                borderRadius: radio,
+                side: BorderSide(
+                  color: widget.borde,
+                  width: sombra == null ? 1.5 : 2.5,
+                ),
               ),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(Colors.white),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        const Color(0xFFFF9F1C),
-                      ),
-                      width: 2,
+              clipBehavior: Clip.antiAlias,
+              child: Semantics(
+                button: true,
+                child: Listener(
+                  onPointerDown: _iniciarPresion,
+                  onPointerMove: _moverPuntero,
+                  onPointerUp: _terminarPresion,
+                  onPointerCancel: _terminarPresion,
+                  child: InkWell(
+                    onTap: widget.onTap,
+                    child: Padding(
+                      padding: widget.padding,
+                      child: widget.child,
                     ),
                   ),
-                  child: Icon(
-                    Icons.local_fire_department_rounded,
-                    color: context.coloresNaturales.contenido(
-                      Color(0xFFE66A00),
-                    ),
-                    size: 32,
-                  ),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                Colors.white,
-                              ),
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Texto(
-                              hechaHoy
-                                  ? '✓ EXPEDICIÓN DE HOY SUPERADA'
-                                  : 'RETO DIARIO · ELIGE DIFICULTAD',
-                              style: TextStyle(
-                                fontSize: 10.5,
-                                fontWeight: FontWeight.w900,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFFB45309),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (racha > 0)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.coloresNaturales.superficie(
-                                  const Color(0xFFFFEDD5),
-                                ),
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                              child: Texto(
-                                'Racha: $racha ${racha == 1 ? 'día' : 'días'}',
-                                style: TextStyle(
-                                  fontSize: 10.5,
-                                  fontWeight: FontWeight.w900,
-                                  color: context.coloresNaturales.contenido(
-                                    Color(0xFF9A3412),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Texto(
-                        'Expedición del Día con Natu',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w900),
-                      ),
-                      const SizedBox(height: 2),
-                      Texto(
-                        'Repasa los tres mundos con retos rápidos, gana Semillas de Sabiduría y mantén viva tu racha.',
-                        style: TextStyle(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w600,
-                          color: context.coloresNaturales.contenido(
-                            Color(0xFF475569),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Icon(
-                  Icons.arrow_forward_rounded,
-                  color: context.coloresNaturales.contenido(Color(0xFFB45309)),
-                ),
-              ],
+              ),
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TextoAcceso extends StatelessWidget {
+  const _TextoAcceso({
+    required this.titulo,
+    this.descripcion,
+    this.tamano = 23,
+  });
+
+  final String titulo;
+  final String? descripcion;
+  final double tamano;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Texto(
+          titulo,
+          style: TextStyle(
+            color: colores.tinta,
+            fontFamily: 'NunitoInicio',
+            fontSize: tamano,
+            height: 1.15,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        if (descripcion case final frase?) ...[
+          const SizedBox(height: 3),
+          Texto(
+            frase,
+            style: TextStyle(
+              color: colores.tenue,
+              fontFamily: 'NunitoInicio',
+              fontSize: 16,
+              height: 1.2,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _FlechaInicio extends StatelessWidget {
+  const _FlechaInicio({this.tono = const Color(0xFFFFF8E9)});
+
+  final Color tono;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colores.superficie(tono),
+        shape: BoxShape.circle,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Icon(
+          Icons.arrow_forward_rounded,
+          color: colores.tinta,
+          size: 18,
         ),
       ),
     );
   }
 }
 
-class _TarjetaAlbumPrincipal extends StatelessWidget {
-  const _TarjetaAlbumPrincipal();
+class _IlustracionInicio extends StatelessWidget {
+  const _IlustracionInicio(
+    this.nombre, {
+    required this.ancho,
+    required this.alto,
+  });
+
+  final String nombre;
+  final double ancho;
+  final double alto;
 
   @override
-  Widget build(BuildContext context) {
-    final alcance = Alcance.of(context);
-    final catalogo = alcance.catalogo;
-    final progreso = alcance.progreso;
-    final total = catalogo.fichas.length;
-    final desbloqueados = catalogo.fichas
-        .where((f) => progreso.fichaDesbloqueada(f.id))
-        .length;
-    final fraccion = total == 0 ? 0.0 : desbloqueados / total;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: context.coloresNaturales.superficie(const Color(0xFFFFFBEB)),
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: context.coloresNaturales.borde(const Color(0xFFF59E0B)),
-          width: 2.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.coloresNaturales.sombra(Color(0xFFD97706)),
-            offset: Offset(0, 5),
-            blurRadius: 0,
-          ),
-        ],
-      ),
-      child: Material(
-        color: context.coloresNaturales.superficie(Colors.transparent),
-        child: InkWell(
-          key: const Key('tarjeta-album-principal'),
-          borderRadius: BorderRadius.circular(24),
-          onTap: () {
-            context.sonidoToque();
-            Navigator.of(
-              context,
-            ).push(MaterialPageRoute<void>(builder: (_) => const AlbumPage()));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 54,
-                      height: 54,
-                      decoration: BoxDecoration(
-                        color: context.coloresNaturales.superficie(
-                          const Color(0xFFFEF3C7),
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: context.coloresNaturales.borde(
-                            const Color(0xFFF59E0B),
-                          ),
-                          width: 2,
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.auto_stories_rounded,
-                        color: context.coloresNaturales.contenido(
-                          Color(0xFFB45309),
-                        ),
-                        size: 28,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Texto(
-                                  'Álbum de cromos de Natu',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.titleMedium
-                                      ?.copyWith(
-                                        color: context.coloresNaturales
-                                            .contenido(const Color(0xFF78350F)),
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 9,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: context.coloresNaturales.superficie(
-                                    const Color(0xFF15803D),
-                                  ),
-                                  borderRadius: BorderRadius.circular(999),
-                                ),
-                                child: Texto(
-                                  '$desbloqueados/$total',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w900,
-                                    color: context.coloresNaturales.contenido(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Texto(
-                            'Colecciona animales, plantas y órganos en Fácil, Medio y Difícil y lee sus curiosidades.',
-                            style: TextStyle(
-                              fontSize: 13,
-                              height: 1.3,
-                              fontWeight: FontWeight.w700,
-                              color: context.coloresNaturales.contenido(
-                                Color(0xFF92400E),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    Icon(
-                      Icons.chevron_right_rounded,
-                      color: context.coloresNaturales.contenido(
-                        Color(0xFFB45309),
-                      ),
-                      size: 28,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(Colors.white),
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        const Color(0xFFFCD34D),
-                      ),
-                      width: 1.5,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: fraccion,
-                      minHeight: 9,
-                      backgroundColor: context.coloresNaturales.superficie(
-                        const Color(0xFFFEF3C7),
-                      ),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Color(0xFF16A34A),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Image.asset(
+    'assets/inicio/$nombre.webp',
+    width: ancho,
+    height: alto,
+    fit: BoxFit.contain,
+    excludeFromSemantics: true,
+  );
 }

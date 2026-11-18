@@ -14,19 +14,22 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(360, 740));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await _abrir(tester);
-    expect(find.text('La reserva'), findsOneWidget);
+    expect(find.text('Animales'), findsOneWidget);
     final selector = find.byKey(const Key('selector-idioma'));
     expect(selector, findsOneWidget);
+    expect(find.text('Ajustes'), findsOneWidget);
     expect(
-      tester.getBottomLeft(selector).dy,
-      lessThan(tester.getTopLeft(find.text('MUNDOS PARA EXPLORAR')).dy),
+      tester.getTopLeft(selector).dy,
+      greaterThan(tester.getBottomLeft(find.text('Vestir a Natu')).dy),
     );
     await _tocar(tester, 'selector-idioma');
     expect(find.text('Efectos de sonido'), findsOneWidget);
     await _tocar(tester, 'ajuste-sonido');
     await _idioma(tester, 'en');
-    expect(find.text('The reserve'), findsOneWidget);
-    expect(find.text('WORLDS TO EXPLORE'), findsOneWidget);
+    expect(find.text('Animals'), findsOneWidget);
+    expect(find.text('What shall we play?'), findsOneWidget);
+    expect(find.byTooltip('Natu settings'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
     expect(
       tester.widget<MaterialApp>(find.byType(MaterialApp)).locale,
       const Locale('en'),
@@ -67,7 +70,7 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(360, 740));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await _abrir(tester);
-    expect(find.text('The greenhouse'), findsOneWidget);
+    expect(find.text('Plants'), findsOneWidget);
     await _tocar(tester, 'zona-invernadero');
     await _tocar(tester, 'juego-germinacion');
     await _tocar(tester, 'nivel-facil');

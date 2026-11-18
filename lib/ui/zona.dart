@@ -113,6 +113,25 @@ class ZonaPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      children: [
+                        Chip(
+                          avatar: const Icon(Icons.star_rounded, size: 18),
+                          label: Texto(
+                            'Estrellas: ${progreso.totalNivelesSuperados(actividades)}/${progreso.totalMaxNiveles(actividades)}',
+                          ),
+                        ),
+                        Chip(
+                          avatar: const Icon(Icons.flag_rounded, size: 18),
+                          label: Texto(
+                            'Misiones: ${actividades.where(progreso.actividadHecha).length}/${actividades.length}',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,

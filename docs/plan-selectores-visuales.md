@@ -21,7 +21,7 @@ Se mantienen las decisiones de [contexto](contexto.md), [decisiones](decisiones.
 5. Si un nivel está completado, un check pequeño y la etiqueta accesible «Nivel superado». No sustituir su nombre ni bloquearlo. El estado no depende únicamente del verde.
 6. Pie: **«Todos los niveles están abiertos.»** y enlace **«Sobre los niveles»**. No usar «abiertos» para implicar que el reto diario se puede repetir después de completarlo.
 
-Las tarjetas tienen el mismo peso visual. No se selecciona ni recomienda automáticamente una dificultad. Eliminar de su superficie cursos, párrafos, estrellas de dificultad, listas de cromos y candados. Evitar que un ejemplo ilustrado parezca un cromo bloqueado o una recompensa por tocarlo.
+Las tarjetas tienen el mismo peso visual. No se selecciona automáticamente una dificultad. La única recomendación es la etiqueta «Recomendado para ti» del curso elegido (`EtiquetaRecomendado`, véase [decisiones](decisiones.md)), que debe conservarse en las tarjetas nuevas. Eliminar de su superficie cursos, párrafos, estrellas de dificultad, listas de cromos y candados. Evitar que un ejemplo ilustrado parezca un cromo bloqueado o una recompensa por tocarlo.
 
 ### Información secundaria
 

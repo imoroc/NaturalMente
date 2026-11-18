@@ -88,3 +88,9 @@ Los textos originales siguen en español en el catálogo y en las reglas; sus tr
 
 
 **Los ajustes permanecen abiertos al cambiar una opción.** Apariencia se elige mediante tres botones pequeños con iconos en una sola fila: Claro, Oscuro y Auto (Según el teléfono). Idioma, sonido, música y vibración se pueden cambiar consecutivamente en el mismo panel. Se cierra mediante Listo, la X, atrás o tocando fuera. La selección y los errores de guardado se muestran en el propio panel, con texto ES/EN y soporte de texto ampliado y movimiento reducido.
+
+## 18 de noviembre de 2026
+
+**Bienvenida con Natu y curso del niño.** La primera vez que se abre la app, Natu presenta en tres pantallas los mundos, los cromos y las semillas, y pide el curso (1º a 6º de primaria). Se puede saltar; entonces no se guarda curso y la app funciona como antes. La bienvenida no vuelve a salir. El curso se guarda localmente con el progreso (`perfil/curso`) y se cambia en Ajustes de Natu, en «Mi curso».
+
+**El curso recomienda, no bloquea.** 1º-2º recomienda Fácil, 3º-4º Medio y 5º-6º Difícil (`Progreso.nivelRecomendado`). Los selectores de nivel y el reto diario muestran «Recomendado para ti» en esa tarjeta; todos los niveles siguen abiertos y nada se elige automáticamente. Más adelante el curso servirá para ajustar un temporizador en los juegos.

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -573,6 +574,7 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
                       ],
                     ),
                     Texto('Pensado para ${niveles[i].curso}'),
+                    EtiquetaRecomendado(nivelId: niveles[i].id),
                     if (niveles[i].resumen.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Texto(niveles[i].resumen),

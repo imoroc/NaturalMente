@@ -976,6 +976,52 @@ class Progreso extends ChangeNotifier {
     return true;
   }
 
+  // --- Perfil: curso del niño y bienvenida ---
+
+  static const _claveCurso = 'perfil/curso';
+  static const _claveBienvenida = 'perfil/bienvenida-vista';
+
+  /// Curso de primaria elegido (1 a 6) o `null` si todavía no lo ha elegido.
+  int? get curso {
+    final valor = _prefs.getInt(_claveCurso);
+    return valor != null && valor >= 1 && valor <= 6 ? valor : null;
+  }
+
+  /// Nivel que se recomienda según el curso: 1º-2º fácil, 3º-4º medio y
+  /// 5º-6º difícil. Solo es una recomendación: todos los niveles siguen
+  /// abiertos.
+  String? get nivelRecomendado => nivelParaCurso(curso);
+
+  static String? nivelParaCurso(int? curso) => switch (curso) {
+    1 || 2 => 'facil',
+    3 || 4 => 'medio',
+    5 || 6 => 'dificil',
+    _ => null,
+  };
+
+  bool get bienvenidaVista => _prefs.getBool(_claveBienvenida) ?? false;
+
+  Future<bool> guardarCurso(int curso) async {
+    if (curso < 1 || curso > 6) return false;
+    try {
+      if (!await _prefs.setInt(_claveCurso, curso)) return false;
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> marcarBienvenidaVista() async {
+    try {
+      if (!await _prefs.setBool(_claveBienvenida, true)) return false;
+    } catch (_) {
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
   // --- Racha Diaria y Expedición del Día ---
 
   static String formatearFecha(DateTime fecha) {

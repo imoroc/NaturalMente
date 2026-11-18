@@ -96,7 +96,7 @@ void main() {
   testWidgets('el juego se abre desde La reserva con sus tres niveles', (
     tester,
   ) async {
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     for (var i = 0; i < 40; i++) {
       await tester.pump(const Duration(milliseconds: 50));
       if (find.byKey(const Key('zona-reserva')).evaluate().isNotEmpty) break;

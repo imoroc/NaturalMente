@@ -18,7 +18,7 @@ void main() {
   Future<void> abrirJuego(WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 740));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     for (var i = 0; i < 40; i++) {
       await tester.pump(const Duration(milliseconds: 50));
       if (find.byKey(const Key('zona-cuerpo')).evaluate().isNotEmpty) break;

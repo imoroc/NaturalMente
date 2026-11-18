@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -1955,6 +1956,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                                             .contenido(color),
                                       ),
                                     ),
+                                    EtiquetaRecomendado(nivelId: id),
                                     const SizedBox(height: 3),
                                     Text(
                                       context.tr(desc),

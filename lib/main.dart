@@ -6,6 +6,7 @@ import 'package:naturalmente/datos/apariencia.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
+import 'package:naturalmente/ui/bienvenida.dart';
 import 'package:naturalmente/ui/mapa.dart';
 import 'package:naturalmente/ui/tema.dart';
 
@@ -23,8 +24,16 @@ class _Carga {
 }
 
 class NaturalmenteApp extends StatefulWidget {
-  const NaturalmenteApp({this.apariencia, super.key});
+  const NaturalmenteApp({
+    this.apariencia,
+    this.conBienvenida = true,
+    super.key,
+  });
   final Apariencia? apariencia;
+
+  /// Muestra la bienvenida con Natu si todavía no se ha visto. Las pruebas que
+  /// empiezan directamente en el mapa la desactivan.
+  final bool conBienvenida;
 
   @override
   State<NaturalmenteApp> createState() => _NaturalmenteAppState();
@@ -122,7 +131,9 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
                   );
                 },
                 home: carga != null
-                    ? const MapaPage()
+                    ? (widget.conBienvenida && !carga.progreso.bienvenidaVista
+                          ? const BienvenidaPage()
+                          : const MapaPage())
                     : Scaffold(
                         body: Center(
                           child: snapshot.hasError

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -414,6 +415,7 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
               'Pensado para ${nivel.curso}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
+            EtiquetaRecomendado(nivelId: nivel.id),
             const SizedBox(height: 8),
             Row(
               children: [

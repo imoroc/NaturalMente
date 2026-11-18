@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -353,6 +354,7 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
               'Pensado para ${nivel.curso}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
+            EtiquetaRecomendado(nivelId: nivel.id),
             const SizedBox(height: 8),
             Row(
               children: [

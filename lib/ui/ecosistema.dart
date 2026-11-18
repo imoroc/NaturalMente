@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -480,6 +481,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Texto('Pensado para ${nivel.curso}'),
+                        EtiquetaRecomendado(nivelId: nivel.id),
                         const SizedBox(height: 6),
                         Texto(nivel.resumen),
                         if (progreso.ultimoNivelEcosistema == nivel.id)

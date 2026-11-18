@@ -17,7 +17,7 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(360, 700));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     await _hasta(tester, find.byKey(const Key('zona-reserva')));
 
     await _tocar(tester, const Key('zona-reserva'));
@@ -100,7 +100,7 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(360, 700));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     await _hasta(tester, find.byKey(const Key('zona-reserva')));
 
     await _tocar(tester, const Key('tarjeta-album-principal'));

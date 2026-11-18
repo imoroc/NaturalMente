@@ -203,7 +203,7 @@ void main() {
 }
 
 Future<void> abrir(WidgetTester t) async {
-  await t.pumpWidget(const NaturalmenteApp());
+  await t.pumpWidget(const NaturalmenteApp(conBienvenida: false));
   for (var i = 0; i < 60; i++) {
     await t.pump(const Duration(milliseconds: 50));
     if (find.byKey(const Key('zona-reserva')).evaluate().isNotEmpty) break;

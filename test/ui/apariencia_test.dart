@@ -50,6 +50,17 @@ Future<Apariencia> _abrir(
     if (find.byKey(const Key('zona-reserva')).evaluate().isNotEmpty) break;
   }
   expect(find.byKey(const Key('zona-reserva')), findsOneWidget);
+  final mapa = tester.element(find.byKey(const Key('zona-reserva')));
+  final imagenes = tester
+      .widgetList<Image>(find.byType(Image))
+      .map((imagen) => imagen.image)
+      .toSet();
+  await tester.runAsync(() async {
+    for (final imagen in imagenes) {
+      await precacheImage(imagen, mapa);
+    }
+  });
+  await tester.pumpAndSettle();
   return apariencia;
 }
 

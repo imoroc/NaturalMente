@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/apariencia.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
@@ -135,6 +136,7 @@ class _PanelAjustesState extends State<_PanelAjustes> {
     builder: (context, _) {
       final colores = context.coloresNaturales;
       final apariencia = widget.apariencia;
+      final progreso = Alcance.maybeOf(context)?.progreso;
       return Dialog(
         key: const Key('panel-ajustes'),
         insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -182,6 +184,41 @@ class _PanelAjustesState extends State<_PanelAjustes> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (progreso != null) ...[
+                      const _TituloSeccion('Mi curso'),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (var curso = 1; curso <= 6; curso++) ...[
+                            if (curso > 1) const SizedBox(width: 6),
+                            Expanded(
+                              child: _OpcionAjuste(
+                                key: Key('curso-$curso'),
+                                etiqueta: '$cursoº',
+                                ayuda: '$cursoº de primaria',
+                                seleccionada: progreso.curso == curso,
+                                habilitada: !_guardando.contains('curso'),
+                                onTap: () {
+                                  if (progreso.curso == curso) return;
+                                  _guardar(
+                                    'curso',
+                                    () => progreso.guardarCurso(curso),
+                                    error: 'No se ha podido guardar el curso. Inténtalo de nuevo.',
+                                    sonidoSeleccion: true,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: 9),
+                      Texto(
+                        textoCursoRecomendado(progreso.curso),
+                        style: TextStyle(fontSize: 12.5, color: colores.tenue),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                     if (apariencia != null) ...[
                       const _TituloSeccion('Apariencia'),
                       const SizedBox(height: 10),
@@ -392,6 +429,14 @@ class _PanelAjustesState extends State<_PanelAjustes> {
     );
   }
 }
+
+/// Frase corta que explica qué nivel se recomienda con el curso elegido.
+String textoCursoRecomendado(int? curso) => switch (curso) {
+  1 || 2 => 'Te recomendaremos el nivel Fácil. Puedes jugar todos.',
+  3 || 4 => 'Te recomendaremos el nivel Medio. Puedes jugar todos.',
+  5 || 6 => 'Te recomendaremos el nivel Difícil. Puedes jugar todos.',
+  _ => 'Elige tu curso y te recomendaremos un nivel.',
+};
 
 class _TituloSeccion extends StatelessWidget {
   const _TituloSeccion(this.titulo);

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -378,6 +379,7 @@ class _HerbarioPageState extends State<HerbarioPage>
                       'Pensado para ${niveles[i].curso}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
+                    EtiquetaRecomendado(nivelId: niveles[i].id),
                     const SizedBox(height: 8),
                     Texto(
                       niveles[i].preguntaFunciones

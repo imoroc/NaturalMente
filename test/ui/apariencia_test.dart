@@ -42,7 +42,7 @@ Future<Apariencia> _abrir(
   await tester.pumpWidget(
     RepaintBoundary(
       key: const Key('captura-apariencia'),
-      child: NaturalmenteApp(apariencia: apariencia),
+      child: NaturalmenteApp(apariencia: apariencia, conBienvenida: false),
     ),
   );
   for (var i = 0; i < 60; i++) {

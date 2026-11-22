@@ -24,7 +24,7 @@ void main() {
       addTearDown(() => tester.binding.setSurfaceSize(null));
       addTearDown(tester.view.resetPadding);
       tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
-      await tester.pumpWidget(const NaturalmenteApp());
+      await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
       await _hasta(tester, find.byKey(const Key('zona-reserva')));
 
       for (final id in ['reserva', 'invernadero', 'cuerpo']) {
@@ -45,7 +45,7 @@ void main() {
   testWidgets('la tarjeta se hunde y vuelve al cancelar el toque', (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 700));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     final tarjeta = find.byKey(const Key('zona-reserva'));
     await _hasta(tester, tarjeta);
     final titulo = find.text('Animales');
@@ -67,7 +67,7 @@ void main() {
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     tester.platformDispatcher.textScaleFactorTestValue = 2;
 
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     await _hasta(tester, find.byKey(const Key('zona-reserva')));
     for (final id in [
       'zona-cuerpo',
@@ -89,7 +89,7 @@ void main() {
   ) async {
     await tester.binding.setSurfaceSize(const Size(360, 700));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(const NaturalmenteApp());
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
     final mundo = find.byKey(const Key('zona-cuerpo'));
     await _hasta(tester, mundo);
     final progreso = Alcance.of(tester.element(mundo)).progreso;

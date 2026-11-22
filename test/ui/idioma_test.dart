@@ -36,7 +36,10 @@ void main() {
     );
 
     await _tocar(tester, 'zona-reserva');
-    expect(find.text('MISSIONS IN THIS AREA'), findsOneWidget);
+    expect(
+      find.text('Play and learn with nature reserve challenges.'),
+      findsOneWidget,
+    );
     expect(find.byKey(const Key('selector-idioma')), findsNothing);
     await _tocar(tester, 'juego-hogar');
     expect(find.text('Easy'), findsOneWidget);

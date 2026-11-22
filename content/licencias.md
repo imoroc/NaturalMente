@@ -1,10 +1,10 @@
 # Procedencia de los recursos
 
-Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 2 de noviembre de 2026.
+Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 18 de noviembre de 2026.
 
 ## Ilustraciones dibujadas con código
 
-Todas las ilustraciones de la app (Natu, animales, plantas, cuerpo humano, escenas, cromos e iconos de los sitios) se dibujaron expresamente para NaturalMente con código vectorial de Flutter. No incorporan imágenes, trazados ni material de terceros, y no requieren atribución ni dependencias nuevas. Su fuente está en el repositorio:
+Las ilustraciones vectoriales de Natu, los juegos y las fichas se dibujaron expresamente para NaturalMente con código Flutter. No incorporan material de terceros. Las ilustraciones rasterizadas del inicio se registran aparte. El código de los dibujos vectoriales está en el repositorio:
 
 | Archivo | Qué dibuja |
 | --- | --- |
@@ -25,6 +25,8 @@ Todas las ilustraciones de la app (Natu, animales, plantas, cuerpo humano, escen
 | --- | --- | --- |
 | `assets/icono/icono.png` | 23 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
 | `assets/sonidos/*.mp3` (acierto, celebracion, descubrimiento, musica, paso1 a paso6, pista, quitar, seleccion, toque) | 23 y 26 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
+| `assets/inicio/*.webp` | 18 de noviembre de 2026 | Ilustraciones creadas con OpenAI ImageGen a partir del boceto aprobado de NaturalMente, incluida la llama de racha. Siluetas recortadas y exportadas a WebP con transparencia para ambos temas. |
+| `assets/fuentes/Nunito-*.ttf` | 18 de noviembre de 2026 | Nunito, descargada del repositorio Google Fonts y convertida en pesos estáticos 600 y 900 para el inicio. SIL Open Font License 1.1, incluida en [Nunito-OFL.txt](../assets/fuentes/Nunito-OFL.txt). |
 
 Antes de subir la app a las tiendas hay que completar las dos filas pendientes: de dónde salen el icono y los sonidos, con qué licencia y si piden atribución.
 

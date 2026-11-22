@@ -6,7 +6,7 @@ import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
 
-/// Conserva el acceso ES/EN del mapa; el panel permite varios cambios seguidos.
+/// Abre los ajustes del mapa, incluido el selector de idioma.
 class SelectorIdioma extends StatelessWidget {
   const SelectorIdioma({super.key});
 
@@ -44,31 +44,37 @@ class SelectorIdioma extends StatelessWidget {
       child: Material(
         color: colores.fondoAcierto,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(
-            color: colores.acierto.withValues(alpha: .65),
-            width: 1.5,
-          ),
+          borderRadius: BorderRadius.circular(18),
+          side: BorderSide(color: colores.acierto, width: 2),
         ),
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           key: const Key('selector-idioma'),
-          borderRadius: BorderRadius.circular(16),
           onTap: () => _abrir(context, idioma),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 48),
+            constraints: const BoxConstraints(minWidth: 150, minHeight: 52),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.tune_rounded, color: colores.acierto, size: 20),
-                  const SizedBox(width: 7),
-                  Text(
-                    idioma.codigo.toUpperCase(),
-                    style: TextStyle(
-                      color: colores.acierto,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
+                  Icon(
+                    Icons.settings_rounded,
+                    color: colores.acierto,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Texto(
+                      'Ajustes',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colores.acierto,
+                        fontFamily: 'NunitoInicio',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
                 ],

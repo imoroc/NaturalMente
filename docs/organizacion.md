@@ -79,7 +79,7 @@ La implementación y sus comprobaciones se describen en `docs/plan-herbario.md`.
 
 ## Idiomas
 
-El selector ES/EN está solo en el mapa principal, debajo de la cabecera de NaturalMente y antes de «Mundos para explorar». `lib/idiomas/idioma.dart` lee `content/en.json` y guarda la preferencia `idioma` mediante SharedPreferences, aparte del progreso. Español es el idioma inicial. No necesita conexión.
+El selector de idioma se abre con el botón **Ajustes**, debajo de Mis cromos y Vestir a Natu en el mapa principal. `lib/idiomas/idioma.dart` lee `content/en.json` y guarda la preferencia `idioma` mediante SharedPreferences, aparte del progreso. Español es el idioma inicial. No necesita conexión.
 
 `Texto` presenta los textos traducidos y conserva los estilos existentes. Las etiquetas de accesibilidad y ayudas usan `context.traducir`. El catálogo y las reglas conservan sus textos originales e identificadores: al cambiar de idioma se actualiza la presentación de las rutas abiertas sin reiniciar las partidas.
 
@@ -98,4 +98,4 @@ Los ajustes del mapa incluyen Claro, Oscuro y Según el teléfono; esta última 
 Las pruebas de apariencia están en `test/datos/apariencia_test.dart` y `test/ui/apariencia_test.dart`. Las capturas de referencia se guardan en `test/ui/goldens/apariencia/`; se actualizan deliberadamente con `flutter test --update-goldens test/ui/apariencia_test.dart`. Las pruebas de feedback, resultado y cierres recorren ambos temas. Véase [el plan y registro de comprobación](plan-modos-apariencia.md).
 
 
-El acceso ES/EN abre un panel de ajustes que permanece abierto al elegir opciones. Apariencia ofrece tres botones con iconos en la misma fila (Claro, Oscuro y Auto); el nombre completo del modo automático sigue disponible como ayuda y etiqueta accesible. Los botones de idioma y los tres interruptores se actualizan dentro del panel. La selección tiene un check y una respuesta de pulsación breve, que respeta el movimiento reducido. «Listo», la X, atrás y tocar fuera cierran el panel; los errores de guardado se explican dentro de él y permiten volver a elegir. Las operaciones pendientes bloquean únicamente el grupo que se está guardando.
+El panel de ajustes permanece abierto al elegir opciones. Apariencia ofrece tres botones con iconos en la misma fila (Claro, Oscuro y Auto); el nombre completo del modo automático sigue disponible como ayuda y etiqueta accesible. Los botones de idioma y los tres interruptores se actualizan dentro del panel. La selección tiene un check y una respuesta de pulsación breve, que respeta el movimiento reducido. «Listo», la X, atrás y tocar fuera cierran el panel; los errores de guardado se explican dentro de él y permiten volver a elegir. Las operaciones pendientes bloquean únicamente el grupo que se está guardando.

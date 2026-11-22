@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/datos/apariencia.dart';
 import 'package:naturalmente/datos/alcance.dart';
@@ -87,6 +88,14 @@ class _DiscoLleno extends Fake implements SharedPreferences {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() async {
+    final nunito = FontLoader('NunitoInicio')
+      ..addFont(rootBundle.load('assets/fuentes/Nunito-600.ttf'))
+      ..addFont(rootBundle.load('assets/fuentes/Nunito-900.ttf'));
+    await nunito.load();
+  });
+
   test('paletas y adaptación de textos tienen contraste y transición', () {
     for (final brillo in Brightness.values) {
       final tema = TemaNatural.crear(brillo);

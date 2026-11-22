@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/main.dart';
 import 'package:naturalmente/ui/feedback_acierto.dart';
+import 'package:naturalmente/ui/zona.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'soporte_cierre.dart';
@@ -11,6 +13,105 @@ void main() {
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+  });
+
+  for (final idioma in ['es', 'en']) {
+    testWidgets('los tres mundos se abren sin desplazar ($idioma)', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({'idioma': idioma});
+      await tester.binding.setSurfaceSize(const Size(360, 700));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      addTearDown(tester.view.resetPadding);
+      tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
+      await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
+      await _hasta(tester, find.byKey(const Key('zona-reserva')));
+
+      for (final id in ['reserva', 'invernadero', 'cuerpo']) {
+        final tarjeta = find.byKey(Key('zona-$id'));
+        final rect = tester.getRect(tarjeta);
+        expect(rect.top, greaterThanOrEqualTo(24));
+        expect(rect.bottom, lessThanOrEqualTo(676));
+        expect(tarjeta.hitTestable(), findsOneWidget);
+        await tester.tap(tarjeta);
+        await _esperar(tester);
+        expect(tester.widget<ZonaPage>(find.byType(ZonaPage)).zona.id, id);
+        await _atras(tester);
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('la tarjeta se hunde y vuelve al cancelar el toque', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(360, 700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
+    final tarjeta = find.byKey(const Key('zona-reserva'));
+    await _hasta(tester, tarjeta);
+    final titulo = find.text('Animales');
+    final reposo = tester.getTopLeft(titulo);
+
+    final gesto = await tester.startGesture(tester.getCenter(tarjeta));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
+    expect(tester.getTopLeft(titulo).dy, reposo.dy + 4);
+    await gesto.cancel();
+    await tester.pumpAndSettle();
+    expect(tester.getTopLeft(titulo), reposo);
+    expect(find.byType(ZonaPage), findsNothing);
+  });
+
+  testWidgets('se puede recorrer el inicio con texto grande', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(320, 590));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
+    await _hasta(tester, find.byKey(const Key('zona-reserva')));
+    for (final id in [
+      'zona-cuerpo',
+      'abrir-expedicion-diaria',
+      'tarjeta-album-principal',
+      'abrir-armario-natu',
+      'selector-idioma',
+    ]) {
+      final acceso = find.byKey(Key(id));
+      await tester.ensureVisible(acceso);
+      await tester.pump();
+      expect(acceso.hitTestable(), findsOneWidget);
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('el reto de hoy y el armario muestran el progreso guardado', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(360, 700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
+    final mundo = find.byKey(const Key('zona-cuerpo'));
+    await _hasta(tester, mundo);
+    final progreso = Alcance.of(tester.element(mundo)).progreso;
+    expect(find.text('Completado por hoy'), findsNothing);
+    expect(find.byTooltip('Racha: 0 días'), findsOneWidget);
+    await _tocar(tester, const Key('abrir-racha-inicio'));
+    expect(find.byKey(const Key('dificultad-reto-facil')), findsOneWidget);
+    await _atras(tester);
+
+    await tester.runAsync(() => progreso.completarExpedicionDiaria());
+    await tester.pump();
+    expect(find.text('Completado por hoy'), findsOneWidget);
+    expect(find.byTooltip('Racha: 1 día'), findsOneWidget);
+    await _tocar(tester, const Key('abrir-expedicion-diaria'));
+    expect(find.byKey(const Key('expedicion-completada')), findsOneWidget);
+    expect(find.byKey(const Key('dificultad-reto-facil')), findsNothing);
+    await _atras(tester);
+
+    await _tocar(tester, const Key('abrir-armario-natu'));
+    expect(find.byKey(const Key('cerrar-armario-natu')), findsOneWidget);
+    await _atras(tester);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('se puede fallar, seguir y no quedarse atascado', (tester) async {
@@ -36,7 +137,9 @@ void main() {
 
     await _atras(tester);
     await _atras(tester);
-    expect(find.text('1/85', skipOffstage: false), findsNWidgets(2));
+    await _tocar(tester, const Key('tarjeta-album-principal'));
+    expect(find.textContaining('Cromos conseguidos: 1 de '), findsOneWidget);
+    await _atras(tester);
 
     await _tocar(tester, const Key('zona-invernadero'));
     await _tocar(tester, const Key('juego-germinacion'));

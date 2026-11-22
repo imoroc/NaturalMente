@@ -50,6 +50,17 @@ Future<Apariencia> _abrir(
     if (find.byKey(const Key('zona-reserva')).evaluate().isNotEmpty) break;
   }
   expect(find.byKey(const Key('zona-reserva')), findsOneWidget);
+  final mapa = tester.element(find.byKey(const Key('zona-reserva')));
+  final imagenes = tester
+      .widgetList<Image>(find.byType(Image))
+      .map((imagen) => imagen.image)
+      .toSet();
+  await tester.runAsync(() async {
+    for (final imagen in imagenes) {
+      await precacheImage(imagen, mapa);
+    }
+  });
+  await tester.pumpAndSettle();
   return apariencia;
 }
 
@@ -337,6 +348,19 @@ void main() {
 
   testWidgets('zonas y fichas usan las dos paletas', (tester) async {
     final apariencia = await _abrir(tester);
+    final contextoMapa = tester.element(find.byType(Scaffold).last);
+    final actividades = Alcance.of(contextoMapa).catalogo
+        .actividadesDe('reserva');
+    await tester.runAsync(() async {
+      for (final id in [
+        'paisaje-reserva',
+        'jugar',
+        'explorar',
+        ...actividades.map((a) => a.id),
+      ]) {
+        await precacheImage(AssetImage('assets/mundos/$id.webp'), contextoMapa);
+      }
+    });
     for (final modo in [ModoApariencia.claro, ModoApariencia.oscuro]) {
       await apariencia.elegir(modo);
       await tester.pumpAndSettle();
@@ -351,6 +375,33 @@ void main() {
       Navigator.of(context).pop();
       await tester.pumpAndSettle();
     }
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Jugar y Explorar conservan cabecera y posición propia', (
+    tester,
+  ) async {
+    await _abrir(tester);
+    await tester.binding.setSurfaceSize(const Size(360, 700));
+    await _tocar(tester, 'zona-reserva');
+    final jugar = find.byKey(const Key('mundo-jugar'));
+    final primera = find.byKey(const Key('juego-hogar'));
+    final segunda = find.byKey(const Key('juego-nacimiento'));
+    expect(primera.hitTestable(), findsOneWidget);
+    expect(segunda.hitTestable(), findsOneWidget);
+    expect(tester.getTopLeft(primera).dy, tester.getTopLeft(segunda).dy);
+    final cabecera = tester.getTopLeft(jugar);
+    final lista = find.byKey(const PageStorageKey('mundo-reserva-jugar'));
+    await tester.drag(lista, const Offset(0, -260));
+    await tester.pumpAndSettle();
+    final posicion = tester.getTopLeft(primera).dy;
+    expect(posicion, lessThan(cabecera.dy));
+    await _tocar(tester, 'mundo-explorar');
+    expect(primera, findsNothing);
+    expect(find.byKey(const Key('laboratorio-reserva')), findsOneWidget);
+    await _tocar(tester, 'mundo-jugar');
+    expect(tester.getTopLeft(jugar), cabecera);
+    expect(tester.getTopLeft(primera).dy, closeTo(posicion, 1));
     expect(tester.takeException(), isNull);
   });
 

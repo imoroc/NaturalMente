@@ -24,6 +24,7 @@ Las ilustraciones vectoriales de Natu, los juegos y las fichas se dibujaron expr
 | Archivo | Añadido | Procedencia y licencia |
 | --- | --- | --- |
 | `assets/icono/icono.png` | 23 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
+| `assets/mundos/*.webp` | 22 de noviembre de 2026 | Ilustraciones de OpenAI ImageGen. El paisaje de La reserva, los botones de pestaña y cuatro portadas se recortaron de los bocetos seleccionados. Los otros paisajes y portadas se generaron con la misma referencia visual. |
 | `assets/sonidos/*.mp3` (acierto, celebracion, descubrimiento, musica, paso1 a paso6, pista, quitar, seleccion, toque) | 23 y 26 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
 | `assets/inicio/*.webp` | 18 de noviembre de 2026 | Ilustraciones creadas con OpenAI ImageGen a partir del boceto aprobado de NaturalMente, incluida la llama de racha. Siluetas recortadas y exportadas a WebP con transparencia para ambos temas. |
 | `assets/fuentes/Nunito-*.ttf` | 18 de noviembre de 2026 | Nunito, descargada del repositorio Google Fonts y convertida en pesos estáticos 600 y 900 para el inicio. SIL Open Font License 1.1, incluida en [Nunito-OFL.txt](../assets/fuentes/Nunito-OFL.txt). |

@@ -300,6 +300,12 @@ class _JuegoPageState extends State<JuegoPage> with FeedbackAcierto<JuegoPage> {
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: _nivelActual?.nombre ?? '',
+      siguiente: prepararSiguienteNivel(
+        widget.actividad.nivelesLugar,
+        _nivelActual,
+        (nivel) => nivel.nombre,
+        (nivel) => _empezarNivel(widget.actividad.nivelesLugar.indexOf(nivel)),
+      ),
       resumen: ResumenPrecisionFinal(
         semillasGanadas: _semillasSesion,
         mejorComboSesion: _mejorComboSesion,

@@ -8,6 +8,7 @@ import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/atencion_paso.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/modelo/ficha.dart';
 export 'package:naturalmente/ui/atencion_paso.dart';
 
 enum FasePaso {
@@ -37,6 +38,16 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
   Map<String, Future<bool>> _guardadosPaso = {};
   Map<String, Future<bool> Function()> _fallosPaso = {};
   bool _reintentandoPaso = false;
+  Set<String> _cromosPartida = {};
+
+  Future<bool> Function() _observarCromos(Future<bool> Function() guardar) {
+    final alcance = Alcance.maybeOf(context);
+    if (alcance == null) return guardar;
+    final ids = alcance.catalogo.fichas.map((ficha) => ficha.id).toList();
+    final descubiertos = _cromosPartida;
+    return () =>
+        alcance.progreso.observarCromosDePartida(ids, descubiertos, guardar);
+  }
 
   /// Se aplica una vez fuera de los callbacks de persistencia.
   int guardarPrecisionPaso({
@@ -71,14 +82,19 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
     return _guardadosPaso.putIfAbsent(id, () {
       final sesion = _sesionGuardado;
       final fallos = _fallosPaso;
+      final guardarConCromos = _observarCromos(guardar);
       final tarea = _colaGuardados.then((_) async {
         bool guardado;
         try {
-          guardado = await guardar();
+          guardado = await guardarConCromos();
         } catch (_) {
           guardado = false;
         }
-        if (guardado) { fallos.remove(id); } else { fallos[id] = guardar; }
+        if (guardado) {
+          fallos.remove(id);
+        } else {
+          fallos[id] = guardarConCromos;
+        }
         if (mounted && sesion == _sesionGuardado) setState(() {});
         return guardado;
       });
@@ -277,6 +293,7 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
   /// Captura solo el guardado, para reintentarlo sin repetir puntos ni respuestas.
   Future<bool> registrarGuardadoFinal(Future<bool> Function() guardar) {
     _guardarDeNuevo = guardar;
+    final guardarConCromos = _observarCromos(guardar);
     final fallos = _fallosPaso;
     final guardados = _guardadosPaso;
     final tarea = _colaGuardados.then((_) async {
@@ -286,7 +303,7 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
           fallos.remove(fallo.key);
           guardados[fallo.key] = Future.value(true);
         }
-        return await guardar();
+        return await guardarConCromos();
       } catch (_) {
         return false;
       }
@@ -386,6 +403,7 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
       _fallosPaso = {};
       _reintentandoPaso = false;
       _numeroPaso = 0;
+      _cromosPartida = {};
     }
     _version++;
     _victoriaEnCurso = false;
@@ -411,6 +429,13 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
     _finAbierto = true;
     var ultimosDatos = construirFinJuego()!;
     final reducido = MediaQuery.disableAnimationsOf(context);
+    final catalogo = Alcance.maybeOf(context)?.catalogo;
+    final ids = _cromosPartida;
+    List<Ficha> cromos() => [
+      if (catalogo != null)
+        for (final ficha in catalogo.fichas)
+          if (ids.contains(ficha.id)) ficha,
+    ];
     final accion = await showGeneralDialog<AccionFinJuego>(
       context: context,
       useRootNavigator: false,
@@ -421,6 +446,7 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
         // haya empezado otro nivel como respuesta a una de las acciones.
         datos: () => ultimosDatos = construirFinJuego() ?? ultimosDatos,
         guardado: _guardadoFinal ?? Future.value(true),
+        cromosNuevos: cromos,
         onGuardarDeNuevo: () => registrarGuardadoFinal(_guardarDeNuevo!),
       ),
       transitionBuilder: (_, animacion, _, child) => FadeTransition(
@@ -441,6 +467,8 @@ mixin FeedbackAcierto<T extends StatefulWidget> on State<T> {
     switch (accion) {
       case AccionFinJuego.repetir:
         datos.onRepetir?.call();
+      case AccionFinJuego.siguiente:
+        datos.siguiente?.empezar();
       case AccionFinJuego.nivel:
         datos.onCambiarNivel?.call();
       case AccionFinJuego.volver:

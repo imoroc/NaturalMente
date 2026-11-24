@@ -36,6 +36,7 @@ flutter:
     - assets/icono/
     - assets/sonidos/
     - assets/mundos/
+    - assets/cromos/
     - assets/inicio/
     - assets/fuentes/Nunito-OFL.txt
   fonts:

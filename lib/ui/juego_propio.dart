@@ -180,6 +180,12 @@ mixin JuegoPropio<T extends StatefulWidget> on State<T>, FeedbackAcierto<T> {
     return DatosFinJuego(
       actividad: actividad.titulo,
       nivel: _nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        nivelesJuego,
+        _nivel,
+        (nivel) => nivel.nombre,
+        (nivel) => empezar(nivel.id),
+      ),
       resumen: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

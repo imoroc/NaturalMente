@@ -16,7 +16,7 @@ void main() {
   );
 
   testWidgets(
-    'el resumen abre los cromos del mundo, que se ordenan y se ven en lista o cuadrícula',
+    'el resumen abre una cuadrícula por estado y la carta conserva la ficha',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(400, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -54,33 +54,30 @@ void main() {
       await tester.tap(find.byKey(const Key('abrir-cromos-zona')));
       await tester.pumpAndSettle();
       expect(find.text('1 de ${fichas.length} descubiertos'), findsOneWidget);
-      expect(find.byType(GridView), findsNothing);
-      final primeraAntes = tester.getTopLeft(
-        find.byKey(Key('cromo-${fichas.first.id}')),
-      );
-
-      // «Descubiertos primero» sube el único cromo conseguido al principio.
-      await tester.tap(find.byKey(const Key('orden-cromos')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Descubiertos primero').last);
-      await tester.pumpAndSettle();
+      final conseguida = find.byKey(Key('cromo-${ultima.id}'));
+      final pendiente = find.byKey(Key('cromo-${fichas.first.id}'));
       expect(
-        tester.getTopLeft(find.byKey(Key('cromo-${ultima.id}'))),
-        primeraAntes,
+        tester.getTopLeft(conseguida).dy,
+        lessThan(tester.getTopLeft(pendiente).dy),
       );
-
-      // En la cuadrícula hay dos por fila; en la lista, uno.
-      final segunda = fichas.first;
-      expect(
-        tester.getTopLeft(find.byKey(Key('cromo-${segunda.id}'))).dy,
-        primeraAntes.dy,
-      );
-      await tester.tap(find.byIcon(Icons.view_list_rounded));
+      await tester.tap(conseguida);
+      await tester.pump(const Duration(milliseconds: 100));
       await tester.pumpAndSettle();
-      expect(
-        tester.getTopLeft(find.byKey(Key('cromo-${segunda.id}'))).dy,
-        greaterThan(primeraAntes.dy),
-      );
+      expect(find.text('Cromo conseguido'), findsOneWidget);
+      expect(find.text('¡Nuevo cromo!'), findsNothing);
+      await tester.tap(find.byKey(const Key('sobre-este-cromo')));
+      await tester.pumpAndSettle();
+      final cerrarFicha = find.byKey(const Key('cerrar-detalle-ficha'));
+      expect(cerrarFicha, findsOneWidget);
+      await tester.ensureVisible(cerrarFicha);
+      await tester.tap(cerrarFicha);
+      await tester.pumpAndSettle();
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(pendiente);
+      await tester.tap(pendiente);
+      await tester.pumpAndSettle();
+      expect(find.text('Ir al juego'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

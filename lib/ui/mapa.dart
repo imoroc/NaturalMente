@@ -10,6 +10,7 @@ import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
+import 'package:naturalmente/ui/cromos_zona.dart';
 
 class MapaPage extends StatelessWidget {
   const MapaPage({super.key});

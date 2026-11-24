@@ -241,6 +241,12 @@ class _RescatePageState extends State<RescatePage>
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        _rescate.niveles,
+        nivel,
+        (nivel) => nivel.nombre,
+        _empezar,
+      ),
       resumen: ResumenPrecisionFinal(
         semillasGanadas: _semillasSesion,
         mejorComboSesion: _mejorComboSesion,

@@ -207,7 +207,9 @@ void main() {
     await _hasta(tester, find.byKey(const Key('zona-reserva')));
 
     await _tocar(tester, const Key('tarjeta-album-principal'));
-    expect(find.textContaining('Todos ('), findsOneWidget);
+    expect(find.byKey(const Key('album-reserva')), findsOneWidget);
+    expect(find.byKey(const Key('album-invernadero')), findsOneWidget);
+    expect(find.byKey(const Key('album-cuerpo')), findsOneWidget);
     await _atras(tester);
 
     await _tocar(tester, const Key('zona-reserva'));

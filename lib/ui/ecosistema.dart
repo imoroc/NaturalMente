@@ -350,6 +350,12 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        _ecosistema.niveles,
+        nivel,
+        (nivel) => nivel.nombre,
+        _empezar,
+      ),
       resumen: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

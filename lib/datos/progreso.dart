@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -1195,8 +1196,31 @@ class Progreso extends ChangeNotifier {
         : cierre.rachaAnterior;
   }
 
+  static final _claveCromosDePartida = Object();
+
+  /// Observa únicamente las escrituras de la partida que llamó al guardado.
+  Future<bool> observarCromosDePartida(
+    List<String> ids,
+    Set<String> nuevos,
+    Future<bool> Function() guardar,
+  ) => runZoned(
+    guardar,
+    zoneValues: {_claveCromosDePartida: (this, ids, nuevos)},
+  );
+
   Future<void> _marcar(String id) async {
-    if (!_hechos.add(id)) return;
+    if (_hechos.contains(id)) return;
+    final registro = Zone.current[_claveCromosDePartida];
+    final cromos =
+        registro is (Progreso, List<String>, Set<String>) &&
+            identical(registro.$1, this)
+        ? registro
+        : null;
+    final pendientes = cromos?.$2
+        .where((id) => !fichaDesbloqueada(id))
+        .toList();
+    _hechos.add(id);
+    final nuevos = pendientes?.where(fichaDesbloqueada).toList();
     try {
       final guardado = await _prefs.setStringList(_clave, _hechos.toList());
       if (!guardado) throw StateError('No se ha podido guardar el progreso.');
@@ -1204,6 +1228,7 @@ class Progreso extends ChangeNotifier {
       _hechos.remove(id);
       rethrow;
     }
+    if (nuevos != null) cromos!.$3.addAll(nuevos);
     notifyListeners();
   }
 

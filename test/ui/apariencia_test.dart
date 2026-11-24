@@ -496,6 +496,13 @@ void main() {
             .skip(1)) {
       await _tocar(tester, 'sitio-${reto.respuesta}');
     }
+    await tester.runAsync(() async {
+      final resultado = tester.element(find.byKey(const Key('fin-repetir')));
+      for (final id in ['natu-victoria', 'siguiente', 'repetir', 'volver']) {
+        await precacheImage(AssetImage('assets/cromos/$id.webp'), resultado);
+      }
+    });
+    await tester.pumpAndSettle();
     await _capturar(tester, 'resultado-oscuro');
     expect(tester.takeException(), isNull);
   });

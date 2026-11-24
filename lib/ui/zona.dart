@@ -22,6 +22,24 @@ import 'package:naturalmente/ui/adivinanza.dart';
 import 'package:naturalmente/ui/memoria.dart';
 import 'package:naturalmente/ui/texto.dart';
 
+void abrirActividad(BuildContext context, Actividad actividad) {
+  context.sonidoToque();
+  Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => switch (actividad.tipo) {
+        'ecosistema' => EcosistemaPage(actividad: actividad),
+        'herbario' => HerbarioPage(actividad: actividad),
+        'nacimiento' => NacimientoPage(actividad: actividad),
+        'viaje' => ViajePage(actividad: actividad),
+        'rescate' => RescatePage(actividad: actividad),
+        'memoria' => MemoriaPage(actividad: actividad),
+        'adivinanza' => AdivinanzaPage(actividad: actividad),
+        _ => JuegoPage(actividad: actividad),
+      },
+    ),
+  );
+}
+
 class ZonaPage extends StatefulWidget {
   const ZonaPage({required this.zona, super.key});
 
@@ -54,24 +72,6 @@ class _ZonaPageState extends State<ZonaPage> {
         ...actividades.where((actividad) => actividad.id == id),
       ...actividades.where((actividad) => !_destacados.contains(actividad.id)),
     ];
-  }
-
-  void _abrirJuego(Actividad actividad) {
-    context.sonidoToque();
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => switch (actividad.tipo) {
-          'ecosistema' => EcosistemaPage(actividad: actividad),
-          'herbario' => HerbarioPage(actividad: actividad),
-          'nacimiento' => NacimientoPage(actividad: actividad),
-          'viaje' => ViajePage(actividad: actividad),
-          'rescate' => RescatePage(actividad: actividad),
-          'memoria' => MemoriaPage(actividad: actividad),
-          'adivinanza' => AdivinanzaPage(actividad: actividad),
-          _ => JuegoPage(actividad: actividad),
-        },
-      ),
-    );
   }
 
   @override
@@ -174,7 +174,8 @@ class _ZonaPageState extends State<ZonaPage> {
                           actividades: actividades,
                           fichas: fichas,
                           progreso: alcance.progreso,
-                          abrirJuego: _abrirJuego,
+                          abrirJuego: (actividad) =>
+                              abrirActividad(context, actividad),
                         ),
                       ),
                     ),
@@ -574,182 +575,6 @@ class _ArteMundo extends StatelessWidget {
   );
 }
 
-class TarjetaCromoFicha extends StatelessWidget {
-  const TarjetaCromoFicha({
-    required this.ficha,
-    required this.desbloqueada,
-    super.key,
-  });
-
-  final Ficha ficha;
-  final bool desbloqueada;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorBorde = desbloqueada
-        ? const Color(0xFFF59E0B)
-        : const Color(0xFFCBD5E1);
-    final colorFondo = desbloqueada ? Colors.white : const Color(0xFFF8FAFC);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: context.coloresNaturales.superficie(colorFondo),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: context.coloresNaturales.borde(colorBorde),
-          width: 2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.coloresNaturales.sombra(
-              desbloqueada ? const Color(0xFFFDE68A) : const Color(0xFFE2E8F0),
-            ),
-            offset: const Offset(0, 3),
-            blurRadius: 0,
-          ),
-        ],
-      ),
-      child: Material(
-        color: context.coloresNaturales.superficie(Colors.transparent),
-        child: InkWell(
-          key: Key('cromo-${ficha.id}'),
-          borderRadius: BorderRadius.circular(16),
-          onTap: () =>
-              mostrarDetalleFicha(context, ficha, desbloqueada: desbloqueada),
-          child: Padding(
-            padding: const EdgeInsets.all(11),
-            child: Row(
-              children: [
-                Container(
-                  width: 58,
-                  height: 58,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: context.coloresNaturales.superficie(
-                      desbloqueada
-                          ? const Color(0xFFFFFBEB)
-                          : const Color(0xFFE2E8F0),
-                    ),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: context.coloresNaturales.borde(
-                        desbloqueada
-                            ? const Color(0xFFFCD34D)
-                            : const Color(0xFFCBD5E1),
-                      ),
-                      width: 1.8,
-                    ),
-                  ),
-                  child: desbloqueada
-                      ? IlustracionFicha(id: ficha.id, alto: 44)
-                      : Center(
-                          child: Icon(
-                            Icons.lock_rounded,
-                            color: context.coloresNaturales.contenido(
-                              Color(0xFF64748B),
-                            ),
-                            size: 24,
-                          ),
-                        ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Texto(
-                              ficha.titulo,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 15,
-                                color: context.coloresNaturales.contenido(
-                                  desbloqueada
-                                      ? const Color(0xFF78350F)
-                                      : const Color(0xFF475569),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                desbloqueada
-                                    ? const Color(0xFFFEF3C7)
-                                    : const Color(0xFFE2E8F0),
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: context.coloresNaturales.borde(
-                                  desbloqueada
-                                      ? const Color(0xFFF59E0B)
-                                      : const Color(0xFFCBD5E1),
-                                ),
-                              ),
-                            ),
-                            child: Texto(
-                              desbloqueada ? '¡Cromo!' : 'Por descubrir',
-                              style: TextStyle(
-                                fontSize: 10.5,
-                                fontWeight: FontWeight.w900,
-                                color: context.coloresNaturales.contenido(
-                                  desbloqueada
-                                      ? const Color(0xFFB45309)
-                                      : const Color(0xFF475569),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 3),
-                      Texto(
-                        desbloqueada
-                            ? ficha.frase
-                            : Progreso.pistaDesbloqueoFicha(ficha.id),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12.2,
-                          fontWeight: FontWeight.w600,
-                          color: context.coloresNaturales.contenido(
-                            desbloqueada
-                                ? const Color(0xFF334155)
-                                : const Color(0xFF64748B),
-                          ),
-                          height: 1.25,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Icon(
-                  desbloqueada
-                      ? Icons.menu_book_rounded
-                      : Icons.info_outline_rounded,
-                  color: context.coloresNaturales.contenido(
-                    desbloqueada
-                        ? const Color(0xFFD97706)
-                        : const Color(0xFF94A3B8),
-                  ),
-                  size: 20,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 void mostrarDetalleFicha(
   BuildContext context,
   Ficha ficha, {
@@ -904,236 +729,4 @@ void mostrarDetalleFicha(
       ),
     ),
   );
-}
-
-class AlbumPage extends StatefulWidget {
-  const AlbumPage({super.key});
-
-  @override
-  State<AlbumPage> createState() => _AlbumPageState();
-}
-
-class _AlbumPageState extends State<AlbumPage> {
-  String _filtroZona = 'todas';
-
-  @override
-  Widget build(BuildContext context) {
-    final alcance = Alcance.of(context);
-    final catalogo = alcance.catalogo;
-    final progreso = alcance.progreso;
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: const Texto(
-          'Álbum de cromos de Natu',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      body: ListenableBuilder(
-        listenable: progreso,
-        builder: (context, _) {
-          final todas = catalogo.fichas;
-          final desbloqueadasTotal = todas
-              .where((f) => progreso.fichaDesbloqueada(f.id))
-              .length;
-          final fichasVisibles = _filtroZona == 'todas'
-              ? todas
-              : todas.where((f) => f.zona == _filtroZona).toList();
-
-          return Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 680),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(18, 6, 18, 28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: context.coloresNaturales.superficie(
-                          const Color(0xFFFFFBEB),
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: context.coloresNaturales.borde(
-                            const Color(0xFFF59E0B),
-                          ),
-                          width: 2.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.coloresNaturales.sombra(
-                              Color(0xFFD97706),
-                            ),
-                            offset: Offset(0, 4),
-                            blurRadius: 0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              const ExcludeSemantics(
-                                child: DibujoMascota(
-                                  gesto: 'feliz',
-                                  tamano: 52,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Texto(
-                                      'Cromos conseguidos: $desbloqueadasTotal de ${todas.length}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            color: context.coloresNaturales
-                                                .contenido(
-                                                  const Color(0xFF78350F),
-                                                ),
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Texto(
-                                      'Supera los niveles Fácil, Medio y Difícil de cada juego para completar toda la colección.',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        height: 1.3,
-                                        fontWeight: FontWeight.w700,
-                                        color: context.coloresNaturales
-                                            .contenido(Color(0xFF92400E)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              color: context.coloresNaturales.superficie(
-                                Colors.white,
-                              ),
-                              borderRadius: BorderRadius.circular(999),
-                              border: Border.all(
-                                color: context.coloresNaturales.borde(
-                                  const Color(0xFFFCD34D),
-                                ),
-                                width: 1.5,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(999),
-                              child: LinearProgressIndicator(
-                                value: todas.isEmpty
-                                    ? 0
-                                    : desbloqueadasTotal / todas.length,
-                                minHeight: 9,
-                                backgroundColor: context.coloresNaturales
-                                    .superficie(const Color(0xFFFEF3C7)),
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Color(0xFF16A34A),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          _FiltroAlbumChip(
-                            etiqueta: 'Todos (${todas.length})',
-                            activo: _filtroZona == 'todas',
-                            alTocar: () =>
-                                setState(() => _filtroZona = 'todas'),
-                          ),
-                          const SizedBox(width: 8),
-                          for (final z in catalogo.zonas) ...[
-                            _FiltroAlbumChip(
-                              etiqueta: z.bloque,
-                              activo: _filtroZona == z.id,
-                              alTocar: () => setState(() => _filtroZona = z.id),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    for (final ficha in fichasVisibles) ...[
-                      TarjetaCromoFicha(
-                        ficha: ficha,
-                        desbloqueada: progreso.fichaDesbloqueada(ficha.id),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _FiltroAlbumChip extends StatelessWidget {
-  const _FiltroAlbumChip({
-    required this.etiqueta,
-    required this.activo,
-    required this.alTocar,
-  });
-
-  final String etiqueta;
-  final bool activo;
-  final VoidCallback alTocar;
-
-  @override
-  Widget build(BuildContext context) {
-    return ChoiceChip(
-      label: Texto(
-        etiqueta,
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          color: context.coloresNaturales.contenido(
-            activo ? Colors.white : const Color(0xFF78350F),
-          ),
-        ),
-      ),
-      selected: activo,
-      selectedColor: context.coloresNaturales.contenido(
-        const Color(0xFFD97706),
-      ),
-      backgroundColor: context.coloresNaturales.superficie(
-        const Color(0xFFFFFBEB),
-      ),
-      checkmarkColor: Colors.white,
-      side: BorderSide(
-        color: context.coloresNaturales.borde(
-          activo ? const Color(0xFFB45309) : const Color(0xFFFCD34D),
-        ),
-        width: 1.5,
-      ),
-      onSelected: (_) {
-        context.sonidoSeleccion();
-        alTocar();
-      },
-    );
-  }
 }

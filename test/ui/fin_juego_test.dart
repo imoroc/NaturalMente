@@ -208,7 +208,17 @@ void main() {
           expect(find.byType(FinJuego), findsNothing);
           await completar(tester);
           expect(find.byType(FinJuego), findsOneWidget);
-          expect(find.text('Aciertos: 2'), findsNWidgets(2));
+          final resumen = find.text('Resumen de la partida');
+          await tester.ensureVisible(resumen);
+          await tester.tap(resumen);
+          await tester.pumpAndSettle();
+          expect(
+            find.descendant(
+              of: find.byType(FinJuego),
+              matching: find.text('Aciertos: 2'),
+            ),
+            findsOneWidget,
+          );
         },
       );
 
@@ -226,16 +236,26 @@ void main() {
           expect(find.byType(FinJuego), findsOneWidget);
           expect(
             tester
-                .widget<FilledButton>(find.byKey(const Key('fin-nivel')))
-                .onPressed,
+                .widget<InkWell>(
+                  find.descendant(
+                    of: find.byKey(const Key('fin-nivel')),
+                    matching: find.byType(InkWell),
+                  ),
+                )
+                .onTap,
             isNull,
           );
           guardado.complete(true);
           await tester.pumpAndSettle();
           expect(
             tester
-                .widget<FilledButton>(find.byKey(const Key('fin-nivel')))
-                .onPressed,
+                .widget<InkWell>(
+                  find.descendant(
+                    of: find.byKey(const Key('fin-nivel')),
+                    matching: find.byType(InkWell),
+                  ),
+                )
+                .onTap,
             isNotNull,
           );
         },
@@ -257,8 +277,13 @@ void main() {
           expect(find.text('Guardando tu progreso…'), findsOneWidget);
           expect(
             tester
-                .widget<FilledButton>(find.byKey(const Key('fin-nivel')))
-                .onPressed,
+                .widget<InkWell>(
+                  find.descendant(
+                    of: find.byKey(const Key('fin-nivel')),
+                    matching: find.byType(InkWell),
+                  ),
+                )
+                .onTap,
             isNull,
           );
           guardado.complete(false);
@@ -266,18 +291,35 @@ void main() {
           expect(find.byKey(const Key('fin-guardar')), findsOneWidget);
           expect(
             tester
-                .widget<OutlinedButton>(find.byKey(const Key('fin-repetir')))
-                .onPressed,
+                .widget<InkWell>(
+                  find.descendant(
+                    of: find.byKey(const Key('fin-repetir')),
+                    matching: find.byType(InkWell),
+                  ),
+                )
+                .onTap,
             isNull,
           );
           await tester.tap(find.byKey(const Key('fin-guardar')));
           await tester.pumpAndSettle();
           expect(intentos, 2);
-          expect(find.text('Aciertos: 1'), findsNWidgets(2));
           expect(
             tester
-                .widget<FilledButton>(find.byKey(const Key('fin-nivel')))
-                .onPressed,
+                .state<_JuegoFinalState>(
+                  find.byType(_JuegoFinal, skipOffstage: false),
+                )
+                .aciertos,
+            1,
+          );
+          expect(
+            tester
+                .widget<InkWell>(
+                  find.descendant(
+                    of: find.byKey(const Key('fin-nivel')),
+                    matching: find.byType(InkWell),
+                  ),
+                )
+                .onTap,
             isNotNull,
           );
           await tester.tap(find.byKey(const Key('fin-seguir')));
@@ -322,7 +364,10 @@ void main() {
             expect(find.text('Level complete!'), findsOneWidget);
             expect(find.text('Your progress is saved.'), findsOneWidget);
             for (final key in ['fin-nivel', 'fin-repetir', 'fin-volver']) {
-              final rect = tester.getRect(find.byKey(Key(key)));
+              final accion = find.byKey(Key(key));
+              await tester.ensureVisible(accion);
+              await tester.pumpAndSettle();
+              final rect = tester.getRect(accion);
               expect(rect.left, greaterThanOrEqualTo(0));
               expect(rect.right, lessThanOrEqualTo(size.width));
               expect(rect.top, greaterThanOrEqualTo(0));

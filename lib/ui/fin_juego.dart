@@ -4,8 +4,25 @@ import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/texto.dart';
+import 'package:naturalmente/modelo/ficha.dart';
+import 'package:naturalmente/ui/cromos_zona.dart';
 
-enum AccionFinJuego { repetir, nivel, volver, explorar, extra }
+enum AccionFinJuego { repetir, siguiente, nivel, volver, explorar, extra }
+
+typedef SiguienteNivel = ({String nombre, VoidCallback empezar});
+
+SiguienteNivel? prepararSiguienteNivel<T>(
+  List<T> niveles,
+  T? actual,
+  String Function(T) nombre,
+  ValueChanged<T> empezar,
+) {
+  if (actual == null) return null;
+  final indice = niveles.indexOf(actual);
+  if (indice < 0 || indice + 1 >= niveles.length) return null;
+  final siguiente = niveles[indice + 1];
+  return (nombre: nombre(siguiente), empezar: () => empezar(siguiente));
+}
 
 class DatosFinJuego {
   const DatosFinJuego({
@@ -16,6 +33,7 @@ class DatosFinJuego {
     this.titulo = '¡Nivel superado!',
     this.onRepetir,
     this.onCambiarNivel,
+    this.siguiente,
     this.onExtra,
     this.textoExtra,
     this.textoVolver = 'Volver al mundo',
@@ -28,23 +46,26 @@ class DatosFinJuego {
   final VoidCallback onVolver;
   final VoidCallback? onRepetir;
   final VoidCallback? onCambiarNivel;
+  final SiguienteNivel? siguiente;
   final VoidCallback? onExtra;
   final String? textoExtra;
   final String textoVolver;
 }
 
-/// Las acciones quedan a la vista incluso si el resumen necesita desplazarse.
+/// Resultado compartido de los niveles y del reto diario.
 class FinJuego extends StatefulWidget {
   const FinJuego({
     required this.datos,
     required this.guardado,
     required this.onGuardarDeNuevo,
+    this.cromosNuevos,
     super.key,
   });
 
   final DatosFinJuego Function() datos;
   final Future<bool> guardado;
   final Future<bool> Function() onGuardarDeNuevo;
+  final List<Ficha> Function()? cromosNuevos;
 
   @override
   State<FinJuego> createState() => _FinJuegoState();
@@ -78,6 +99,12 @@ class _FinJuegoState extends State<FinJuego> {
   Widget build(BuildContext context) {
     final datos = widget.datos();
     final color = Theme.of(context).colorScheme.primary;
+    final esPartida = datos.onRepetir != null;
+    final siguiente = datos.siguiente;
+    final nuevos = esPartida && _guardado
+        ? widget.cromosNuevos?.call() ?? const <Ficha>[]
+        : const <Ficha>[];
+    final habilitado = _guardado && !_guardando;
     return PopScope(
       canPop: !_guardando,
       child: Dialog.fullscreen(
@@ -107,7 +134,15 @@ class _FinJuegoState extends State<FinJuego> {
                       padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
                       child: Column(
                         children: [
-                          const DibujoMascota(gesto: 'feliz', tamano: 76),
+                          if (esPartida)
+                            Image.asset(
+                              'assets/cromos/natu-victoria.webp',
+                              height: 118,
+                              fit: BoxFit.contain,
+                              excludeFromSemantics: true,
+                            )
+                          else
+                            const DibujoMascota(gesto: 'feliz', tamano: 76),
                           const SizedBox(height: 12),
                           Semantics(
                             header: true,
@@ -115,6 +150,7 @@ class _FinJuegoState extends State<FinJuego> {
                               datos.titulo,
                               textAlign: TextAlign.center,
                               style: TextStyle(
+                                fontFamily: esPartida ? 'NunitoInicio' : null,
                                 fontSize: 28,
                                 fontWeight: FontWeight.w900,
                                 color: context.coloresNaturales.contenido(
@@ -146,7 +182,21 @@ class _FinJuegoState extends State<FinJuego> {
                             ),
                           ],
                           const SizedBox(height: 18),
-                          datos.resumen,
+                          if (nuevos.isNotEmpty) ...[
+                            FilledButton.tonalIcon(
+                              key: const Key('fin-cromos-nuevos'),
+                              icon: const Icon(Icons.auto_awesome_rounded),
+                              label: Texto(
+                                nuevos.length == 1
+                                    ? 'Ver tu nuevo cromo'
+                                    : 'Ver tus nuevos cromos',
+                              ),
+                              onPressed: () =>
+                                  abrirCelebracionCromos(context, nuevos),
+                            ),
+                            const SizedBox(height: 6),
+                          ],
+                          if (!esPartida) datos.resumen,
                           const SizedBox(height: 12),
                           if (_guardando)
                             Semantics(
@@ -154,7 +204,10 @@ class _FinJuegoState extends State<FinJuego> {
                               child: const Texto('Guardando tu progreso…'),
                             )
                           else if (_guardado)
-                            const Texto('Tu progreso está guardado.')
+                            const Texto(
+                              'Tu progreso está guardado.',
+                              textAlign: TextAlign.center,
+                            )
                           else ...[
                             Semantics(
                               liveRegion: true,
@@ -173,69 +226,235 @@ class _FinJuegoState extends State<FinJuego> {
                               label: const Texto('Guardar de nuevo'),
                             ),
                           ],
+                          if (esPartida) ...[
+                            const SizedBox(height: 14),
+                            Texto(
+                              '¿Qué quieres hacer?',
+                              style: TextStyle(
+                                fontFamily: 'NunitoInicio',
+                                fontSize: 24,
+                                fontWeight: FontWeight.w900,
+                                color: context.coloresNaturales.tinta,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (siguiente != null) ...[
+                                  _TarjetaFin(
+                                    key: const Key('fin-siguiente'),
+                                    arte: 'siguiente',
+                                    titulo: 'Probar el siguiente nivel',
+                                    detalle: siguiente.nombre,
+                                    fondo: const Color(0xFFE5F5D8),
+                                    borde: const Color(0xFF24A85D),
+                                    onTap: habilitado
+                                        ? () =>
+                                              _elegir(AccionFinJuego.siguiente)
+                                        : null,
+                                  ),
+                                  const SizedBox(height: 9),
+                                ] else if (datos.onCambiarNivel != null) ...[
+                                  _TarjetaFin(
+                                    key: const Key('fin-nivel'),
+                                    arte: 'siguiente',
+                                    titulo: 'Elegir nivel',
+                                    fondo: const Color(0xFFE5F5D8),
+                                    borde: const Color(0xFF24A85D),
+                                    onTap: habilitado
+                                        ? () => _elegir(AccionFinJuego.nivel)
+                                        : null,
+                                  ),
+                                  const SizedBox(height: 9),
+                                ],
+                                _TarjetaFin(
+                                  key: const Key('fin-repetir'),
+                                  arte: 'repetir',
+                                  titulo: 'Jugar otra vez',
+                                  fondo: const Color(0xFFFFEAD0),
+                                  borde: const Color(0xFFE49029),
+                                  onTap: habilitado
+                                      ? () => _elegir(AccionFinJuego.repetir)
+                                      : null,
+                                ),
+                                const SizedBox(height: 9),
+                                _TarjetaFin(
+                                  key: const Key('fin-volver'),
+                                  arte: 'volver',
+                                  titulo: datos.textoVolver,
+                                  fondo: const Color(0xFFDDF2FC),
+                                  borde: const Color(0xFF249ACD),
+                                  onTap: habilitado
+                                      ? () => _elegir(AccionFinJuego.volver)
+                                      : null,
+                                ),
+                                if (siguiente != null &&
+                                    datos.onCambiarNivel != null)
+                                  TextButton(
+                                    key: const Key('fin-nivel'),
+                                    onPressed: habilitado
+                                        ? () => _elegir(AccionFinJuego.nivel)
+                                        : null,
+                                    child: const Texto('Elegir nivel'),
+                                  ),
+                              ],
+                            ),
+                            ExpansionTile(
+                              title: const Texto('Resumen de la partida'),
+                              children: [datos.resumen],
+                            ),
+                          ],
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: context.coloresNaturales.borde(
-                            color.withValues(alpha: .12),
+                  if (!esPartida)
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            color: context.coloresNaturales.borde(
+                              color.withValues(alpha: .12),
+                            ),
                           ),
                         ),
                       ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (datos.onCambiarNivel != null) ...[
+                            FilledButton.icon(
+                              key: const Key('fin-nivel'),
+                              onPressed: _guardado && !_guardando
+                                  ? () => _elegir(AccionFinJuego.nivel)
+                                  : null,
+                              icon: const Icon(Icons.explore_rounded),
+                              label: const Texto('Cambiar nivel'),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                          if (datos.onRepetir != null) ...[
+                            OutlinedButton.icon(
+                              key: const Key('fin-repetir'),
+                              onPressed: _guardado && !_guardando
+                                  ? () => _elegir(AccionFinJuego.repetir)
+                                  : null,
+                              icon: const Icon(Icons.replay_rounded),
+                              label: const Texto('Otra vez'),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                          if (datos.onExtra != null) ...[
+                            OutlinedButton.icon(
+                              key: const Key('fin-extra'),
+                              onPressed: _guardado && !_guardando
+                                  ? () => _elegir(AccionFinJuego.extra)
+                                  : null,
+                              icon: const Icon(Icons.checkroom_rounded),
+                              label: Texto(datos.textoExtra!),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                          FilledButton.tonalIcon(
+                            key: const Key('fin-volver'),
+                            onPressed: _guardado && !_guardando
+                                ? () => _elegir(AccionFinJuego.volver)
+                                : null,
+                            icon: const Icon(Icons.map_rounded),
+                            label: Texto(datos.textoVolver),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (datos.onCambiarNivel != null) ...[
-                          FilledButton.icon(
-                            key: const Key('fin-nivel'),
-                            onPressed: _guardado && !_guardando
-                                ? () => _elegir(AccionFinJuego.nivel)
-                                : null,
-                            icon: const Icon(Icons.explore_rounded),
-                            label: const Texto('Cambiar nivel'),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                        if (datos.onRepetir != null) ...[
-                          OutlinedButton.icon(
-                            key: const Key('fin-repetir'),
-                            onPressed: _guardado && !_guardando
-                                ? () => _elegir(AccionFinJuego.repetir)
-                                : null,
-                            icon: const Icon(Icons.replay_rounded),
-                            label: const Texto('Otra vez'),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                        if (datos.onExtra != null) ...[
-                          OutlinedButton.icon(
-                            key: const Key('fin-extra'),
-                            onPressed: _guardado && !_guardando
-                                ? () => _elegir(AccionFinJuego.extra)
-                                : null,
-                            icon: const Icon(Icons.checkroom_rounded),
-                            label: Texto(datos.textoExtra!),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                        FilledButton.tonalIcon(
-                          key: const Key('fin-volver'),
-                          onPressed: _guardado && !_guardando
-                              ? () => _elegir(AccionFinJuego.volver)
-                              : null,
-                          icon: const Icon(Icons.map_rounded),
-                          label: Texto(datos.textoVolver),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TarjetaFin extends StatelessWidget {
+  const _TarjetaFin({
+    required this.arte,
+    required this.titulo,
+    required this.fondo,
+    required this.borde,
+    required this.onTap,
+    this.detalle,
+    super.key,
+  });
+
+  final String arte;
+  final String titulo;
+  final String? detalle;
+  final Color fondo;
+  final Color borde;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final radio = BorderRadius.circular(19);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colores.sombra(borde),
+        borderRadius: radio,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 3),
+        child: Material(
+          color: colores.superficie(fondo),
+          shape: RoundedRectangleBorder(
+            borderRadius: radio,
+            side: BorderSide(color: colores.borde(borde), width: 2),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onTap,
+            child: Opacity(
+              opacity: onTap == null ? .55 : 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 5,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/cromos/$arte.webp',
+                      width: 62,
+                      height: 49,
+                      excludeFromSemantics: true,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Texto(
+                            titulo,
+                            style: TextStyle(
+                              fontFamily: 'NunitoInicio',
+                              color: colores.tinta,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                            ),
+                          ),
+                          if (detalle case final nivel?)
+                            Texto(
+                              nivel,
+                              style: TextStyle(color: colores.tenue),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

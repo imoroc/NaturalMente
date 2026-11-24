@@ -280,6 +280,48 @@ void main() {
     await _tocar(tester, 'abrir');
   }
 
+  testWidgets('cromos nuevos se muestran tras guardar y no se repiten', (
+    tester,
+  ) async {
+    final prefs = PreferenciasControladas();
+    progreso = Progreso(prefs, {});
+    final actividad = catalogo.actividades.firstWhere((a) => a.id == 'hogar');
+    final retos = actividad.nivelesLugar.first.retos;
+    await abrir(tester, _pagina(actividad), Brightness.light);
+    await _tocar(tester, 'nivel-facil');
+    for (final reto in retos.take(retos.length - 1)) {
+      await _tocar(tester, 'sitio-${reto.respuesta}');
+    }
+    prefs.falloEnClave = 'hechos';
+    await _tocar(tester, 'sitio-${retos.last.respuesta}');
+    expect(find.byKey(const Key('fin-cromos-nuevos')), findsNothing);
+    expect(find.byKey(const Key('fin-guardar')), findsOneWidget);
+    prefs.falloEnClave = null;
+    await _tocar(tester, 'fin-guardar');
+    final semillas = progreso.semillas;
+    await _tocar(tester, 'fin-cromos-nuevos');
+    expect(find.text('¡Nuevo cromo!'), findsOneWidget);
+    expect(find.text('Camello'), findsOneWidget);
+    await _tocar(tester, 'cromo-nuevo-siguiente');
+    expect(find.text('Delfín'), findsOneWidget);
+    await _tocar(tester, 'celebracion-abrir-album');
+    expect(find.byKey(const Key('cromo-delfin')), findsOneWidget);
+    expect(find.text('Recién conseguido'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(progreso.semillas, semillas);
+    await _tocar(tester, 'fin-repetir');
+    await _jugar(tester, actividad, 'facil');
+    expect(find.byKey(const Key('fin-cromos-nuevos')), findsNothing);
+    await _tocar(tester, 'fin-siguiente');
+    expect(find.byType(FinJuego), findsNothing);
+    expect(find.byKey(const Key('nivel-medio')), findsNothing);
+    expect(find.byKey(const Key('sitio-selva')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   for (final brillo in Brightness.values) {
     group(brillo.name, () {
       for (final actividad in catalogo.actividades) {

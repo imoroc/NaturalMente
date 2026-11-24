@@ -268,6 +268,12 @@ class _ViajePageState extends State<ViajePage> with FeedbackAcierto<ViajePage> {
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        _viaje.niveles,
+        nivel,
+        (nivel) => nivel.nombre,
+        _empezar,
+      ),
       resumen: ResumenPrecisionFinal(
         semillasGanadas: _semillasSesion,
         mejorComboSesion: _mejorComboSesion,

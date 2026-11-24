@@ -253,6 +253,12 @@ class _HerbarioPageState extends State<HerbarioPage>
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        _herbario.niveles,
+        nivel,
+        (nivel) => nivel.nombre,
+        _empezar,
+      ),
       resumen: ResumenPrecisionFinal(
         semillasGanadas: _semillasSesion,
         mejorComboSesion: _mejorComboSesion,

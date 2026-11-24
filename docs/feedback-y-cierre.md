@@ -7,9 +7,10 @@ Este comportamiento forma parte de cada juego, tanto existente como nuevo, en F�
 - Al resolver correctamente una sección evaluada, aparece brevemente un check verde sobre un círculo verde, centrado sobre todo el contenido. La entrada es suave y la salida se desvanece. Lo acompañan el sonido de acierto y la vibración, si están activados.
 - Seleccionar, arrastrar o colocar provisionalmente una pieza sin comprobarla no activa un acierto. Tampoco lo activa una respuesta fallida.
 - Al completar realmente el nivel, se usa la variante de victoria: mayor tamaño, destellos, fanfarria y vibración de final. Las preguntas de comprensión y la pregunta final forman parte del nivel: no se celebra su final antes de resolverlas.
-- Cuando termina la animación de victoria, aparece automáticamente una pantalla de resultado con el resumen y las acciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. Las acciones permanecen visibles aunque el resumen necesite desplazamiento.
+- Cuando termina la animación de victoria, aparece automáticamente el resultado con **Probar el siguiente nivel**, **Jugar otra vez** y **Volver al mundo**. **Elegir nivel** abre el selector completo y ocupa la primera tarjeta al terminar el último nivel. Las estadísticas aparecen en **Resumen de la partida**.
 - Cerrar esa pantalla permite seguir explorando las explicaciones y curiosidades. Los botones que queden en el ejercicio pueden mantenerse, pero no sustituyen la presentación automática de las opciones.
 - Mientras se guarda, las acciones de salida y reinicio esperan. Si guardar falla, se ofrece **Guardar de nuevo** sin volver a evaluar la respuesta ni sumar recompensas.
+- Tras confirmar el guardado de un juego, **Ver tu nuevo cromo** abre la celebración si la partida desbloqueó algún cromo. Desde allí se puede consultar su carta o ir a su mundo en el álbum.
 - El reto diario ofrece **Volver al mapa** y **Armario de Natu**. No permite repetir ni cambiar la dificultad de una misión diaria ya completada.
 
 ## Componentes que hay que reutilizar
@@ -21,6 +22,7 @@ Este comportamiento forma parte de cada juego, tanto existente como nuevo, en F�
 | `mostrarAcierto(finalDeNivel: true)` | Iniciar la victoria del nivel y presentar el cierre al acabar la animación. |
 | `registrarGuardadoFinal(Future<bool> Function())` | Seguir la persistencia y conservar una operación que se pueda reintentar sin repetir la jugada. |
 | `construirFinJuego()` | Proporcionar los datos y callbacks del cierre; devolver `null` si todavía no corresponde mostrarlo. |
+| `prepararSiguienteNivel(niveles, actual, nombre, empezar)` | Preparar el nombre y la acción del siguiente nivel a partir de los datos del juego. El último nivel devuelve `null`. |
 | [`DatosFinJuego` y `FinJuego`](../lib/ui/fin_juego.dart) | Compartir la presentación del resultado y las acciones; gestionar la espera y el reintento del guardado. |
 | [`ResumenPrecisionFinal`](../lib/ui/componentes_juego.dart) | Presentar las estadísticas de la partida terminada. |
 | [`Idioma`](../lib/idiomas/idioma.dart) | Respetar los ajustes de sonido/vibración y traducir los textos. |
@@ -57,6 +59,8 @@ El guardado comienza al aceptar la respuesta, independientemente de la animació
 Las llamadas antiguas a `mostrarAcierto()` siguen disponibles para compatibilidad y pruebas del componente. Los juegos coordinan todos sus aciertos intermedios mediante `confirmarPaso`: una llamada visual aislada no protege por sí sola el tablero.
 
 `registrarGuardadoFinal` espera a las escrituras del paso y reintenta las que fallaron antes de persistir el cierre. La cancelación de una animación no cancela un guardado ya aceptado. Captura los datos y el objeto Progreso **antes** de registrar el callback; no busques `context` ni leas la partida nueva dentro de una escritura que puede terminar después de salir.
+
+El mixin reúne los cromos durante las escrituras registradas de la partida. Cada desbloqueo se añade cuando se guarda su progreso y la celebración espera a que se confirme el cierre.
 
 Los componentes [ProgresoPaso, AnuncioPaso y AsentamientoPaso](../lib/ui/atencion_paso.dart) comparten la atención del ejercicio: conservan el progreso bajo el check, animan el nuevo valor durante 160 ms, asientan localmente la elección confirmada y suspenden los anuncios del contenido mientras habla la confirmación. Los contadores siguen siendo accesibles, pero no compiten como regiones automáticas con la explicación.
 
@@ -102,6 +106,12 @@ DatosFinJuego? construirFinJuego() {
   return DatosFinJuego(
     actividad: widget.actividad.titulo,
     nivel: nivel.nombre,
+    siguiente: prepararSiguienteNivel(
+      _herbario.niveles,
+      nivel,
+      (nivel) => nivel.nombre,
+      _empezar,
+    ),
     resumen: ResumenPrecisionFinal(
       semillasGanadas: _semillasSesion,
       mejorComboSesion: _mejorComboSesion,
@@ -134,7 +144,7 @@ Android tiene un canal nativo de vibración y el permiso `VIBRATE`; los demás c
 1. Una sección acertada muestra el check normal; una selección sin evaluar y un fallo no lo muestran.
 2. Las preguntas intermedias y finales pendientes impiden presentar el cierre de victoria.
 3. El final encadena una sola celebración y una sola pantalla de resultado, también con toques rápidos.
-4. Repetir limpia la partida y vuelve a ofrecer el cierre cuando se completa; cambiar de nivel abre el selector y volver regresa al mundo correcto.
+4. Repetir limpia la partida y vuelve a ofrecer el cierre cuando se completa. Prueba el acceso directo al siguiente nivel, el selector y el regreso al mundo correcto.
 5. Un guardado lento mantiene las acciones a la espera; uno fallido permite reintentar sin duplicar puntos, semillas, estrellas ni cromos.
 6. Salir o reiniciar durante una celebración no deja overlays, relojes o pantallas pendientes.
 7. Las opciones funcionan con texto ampliado, pantalla pequeña u horizontal, español e inglés, movimiento reducido y los ajustes independientes de audio/vibración.

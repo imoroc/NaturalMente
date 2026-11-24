@@ -327,6 +327,12 @@ class _NacimientoPageState extends State<NacimientoPage>
     return DatosFinJuego(
       actividad: widget.actividad.titulo,
       nivel: nivel.nombre,
+      siguiente: prepararSiguienteNivel(
+        _nacimiento.niveles,
+        nivel,
+        (nivel) => nivel.nombre,
+        _empezar,
+      ),
       resumen: ResumenPrecisionFinal(
         semillasGanadas: _semillasSesion,
         mejorComboSesion: _mejorComboSesion,

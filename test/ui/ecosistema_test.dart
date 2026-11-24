@@ -190,6 +190,10 @@ void main() {
       await tocar(t, 'eco-restaurar');
       await tocar(t, 'eco-respuesta-menos-presas');
       await tocar(t, 'eco-restaurar');
+      await t.ensureVisible(find.text('Game summary'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('Game summary'));
+      await t.pumpAndSettle();
       expect(
         find.text(
           'Your woodland sticker is in Natu’s album.',

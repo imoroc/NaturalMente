@@ -59,9 +59,9 @@ void main() {
     await _atras(tester);
     await _atras(tester);
     await _tocar(tester, 'tarjeta-album-principal');
-    expect(find.text("Natu's sticker album"), findsOneWidget);
+    expect(find.text('My stickers'), findsOneWidget);
     expect(find.byKey(const Key('selector-idioma')), findsNothing);
-    expect(find.textContaining('All ('), findsOneWidget);
+    await _tocar(tester, 'album-reserva');
     expect(find.text('Camel'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

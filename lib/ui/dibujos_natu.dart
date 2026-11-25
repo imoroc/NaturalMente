@@ -1770,9 +1770,18 @@ class _PintorHojasLogoNaturalMente extends CustomPainter {
 /// - `'estudio'`: Pose de lectura sentada con su libro abierto de Ciencias Naturales.
 /// - `'pista'`: Pose de motivación señalando con entusiasmo («¡Tú puedes!»).
 class PintorMascotaNatu extends CustomPainter {
-  const PintorMascotaNatu({required this.gesto});
+  const PintorMascotaNatu({required this.gesto, this.colorPanuelo});
 
   final String gesto;
+
+  /// Color del pañuelo de la Natu de cada perfil. Sin él, el naranja original.
+  final Color? colorPanuelo;
+
+  Color get _panuelo => colorPanuelo ?? _cPanuelo;
+  // El naranja de siempre conserva su sombra original.
+  Color get _panueloSombra => colorPanuelo == null || colorPanuelo == _cPanuelo
+      ? _cPanueloSombra
+      : Color.lerp(colorPanuelo, const Color(0xFF000000), 0.18)!;
 
   static const Color _cTrazo = Color(0xFF3B2314);
   static const Color _cPiel = Color(0xFFA8D152);
@@ -2842,7 +2851,7 @@ class PintorMascotaNatu extends CustomPainter {
       ..lineTo(cuello.dx + ancho * 0.22, cuello.dy + alto * 0.76)
       ..lineTo(cuello.dx + ancho * 0.20, cuello.dy + alto * 0.05)
       ..close();
-    canvas.drawPath(puntas, Paint()..color = _cPanueloSombra);
+    canvas.drawPath(puntas, Paint()..color = _panueloSombra);
     canvas.drawPath(puntas, pTrazo);
 
     // Banda principal alrededor del cuello
@@ -2867,7 +2876,7 @@ class PintorMascotaNatu extends CustomPainter {
         cuello.dy - alto * 0.22,
       )
       ..close();
-    canvas.drawPath(banda, Paint()..color = _cPanuelo);
+    canvas.drawPath(banda, Paint()..color = _panuelo);
     canvas.drawPath(banda, pTrazo);
 
     // Nudo central redondeado del pañuelo
@@ -2879,7 +2888,7 @@ class PintorMascotaNatu extends CustomPainter {
       ),
       Radius.circular(ancho * 0.09),
     );
-    canvas.drawRRect(nudoRect, Paint()..color = _cPanuelo);
+    canvas.drawRRect(nudoRect, Paint()..color = _panuelo);
     canvas.drawRRect(nudoRect, pTrazo);
   }
 
@@ -3134,7 +3143,7 @@ class PintorMascotaNatu extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant PintorMascotaNatu oldDelegate) =>
-      oldDelegate.gesto != gesto;
+      oldDelegate.gesto != gesto || oldDelegate.colorPanuelo != colorPanuelo;
 }
 
 class DibujoAnimalDetallado extends StatelessWidget {

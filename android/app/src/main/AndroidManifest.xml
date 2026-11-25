@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Aula y el progreso en la nube. Todo lo demás funciona sin conexión. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="NaturalMente"
         android:name="${applicationName}"

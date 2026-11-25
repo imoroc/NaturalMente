@@ -8,7 +8,7 @@ Los PDF y los Word del profesor no están en el repositorio. Aquí está resumid
 
 NaturalMente es la práctica de Sistemas Móviles. Es una app para niños de primaria, en español e inglés, sobre animales, plantas y el cuerpo humano.
 
-Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base de código, en Flutter. No hay servidor ni registro. Si el niño se equivoca, el juego le explica qué pasa. No le pone un cartel de error.
+Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base de código, en Flutter. Los minijuegos no necesitan servidor ni registro; la sección Aula usa una nube opcional sin cuentas de niños (ver la decisión del 25 de noviembre en [decisiones.md](decisiones.md)). Si el niño se equivoca, el juego le explica qué pasa. No le pone un cartel de error.
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
@@ -218,5 +218,5 @@ Dibujos: pocos colores y un personaje propio. Nada se copia del libro. El invent
 - Tierra y universo no se mencionan. El suelo de la planta sí.
 - Materia, energía y fuerzas no entran en el MVP. Son ampliación si da tiempo.
 - Cada juego tiene selector de nivel: Fácil, Medio y Difícil.
-- Flutter, Android e iOS, sin servidor.
+- Flutter, Android e iOS. Sin servidor para jugar; Aula usa Supabase (opcional).
 - Diciembre de 2026.

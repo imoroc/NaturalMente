@@ -30,6 +30,54 @@ jobs:
       - run: dart analyze --no-fatal-warnings
       - run: flutter test
 
+  base-de-datos:
+    name: Supabase (permisos e integración)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector
+      - name: Permisos y reglas (pgTAP)
+        run: supabase test db
+      - name: La app contra Supabase
+        run: |
+          flutter pub get
+          eval "$(supabase status -o env             --override-name api.url=SUPABASE_PRUEBAS_URL             --override-name auth.anon_key=SUPABASE_PRUEBAS_ANON             --override-name auth.service_role_key=SUPABASE_PRUEBAS_SERVICE             | grep SUPABASE_PRUEBAS_)"
+          export SUPABASE_PRUEBAS_URL SUPABASE_PRUEBAS_ANON SUPABASE_PRUEBAS_SERVICE
+          flutter test test/integracion
+
+  panel:
+    name: Panel web del profe
+    needs: verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      # La URL y la clave publicable de producción irán en variables del
+      # repositorio cuando se despliegue el panel. La clave publicable no es secreta.
+      - run: >
+          flutter build web --release -t lib/main_panel.dart -o build/panel
+          --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL }}
+          --dart-define=SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: panel
+          path: build/panel
+          if-no-files-found: error
+          retention-days: 7
+
   android:
     name: APK
     needs: verificar
@@ -47,7 +95,10 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter build apk --release
+      # Sin estas variables la app funciona igual, pero Aula dice que no está disponible.
+      - run: >
+          flutter build apk --release
+          --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
       - run: cp build/app/outputs/flutter-apk/app-release.apk naturalmente.apk
       - uses: actions/upload-artifact@v7
         with:
@@ -68,7 +119,10 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
+      # Sin estas variables la app funciona igual, pero Aula dice que no está disponible.
+      - run: >
+          flutter build ios --release --no-codesign
+          --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
       - run: |
           mkdir Payload
           cp -r build/ios/iphoneos/Runner.app Payload/

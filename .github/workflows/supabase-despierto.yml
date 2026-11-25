@@ -1,0 +1,25 @@
+name: Supabase despierto
+
+# El plan gratuito de Supabase pausa el proyecto tras 7 días sin uso (por
+# ejemplo, en vacaciones). Una consulta diaria lo mantiene activo.
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  consultar:
+    if: vars.SUPABASE_URL != '' && vars.SUPABASE_ANON_KEY != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Leer los ajustes de Aula
+        env:
+          URL: ${{ vars.SUPABASE_URL }}
+          CLAVE: ${{ vars.SUPABASE_ANON_KEY }}
+        run: |
+          curl --fail --silent --show-error --max-time 30 \
+            -H "apikey: $CLAVE" \
+            "$URL/rest/v1/ajustes?select=ranking_activo" > /dev/null

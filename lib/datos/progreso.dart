@@ -109,8 +109,11 @@ class Progreso extends ChangeNotifier {
   final SharedPreferences _prefs;
   final Set<String> _hechos;
 
-  static Future<Progreso> abrir() async {
-    final prefs = await SharedPreferences.getInstance();
+  static Future<Progreso> abrir() async =>
+      leer(await SharedPreferences.getInstance());
+
+  /// Progreso guardado en [prefs], que puede ser la vista de un perfil.
+  static Progreso leer(SharedPreferences prefs) {
     final guardados = prefs.getStringList(_clave) ?? const <String>[];
     return Progreso(prefs, guardados.toSet());
   }
@@ -611,6 +614,17 @@ class Progreso extends ChangeNotifier {
 
   bool nivelJuegoHecho(Actividad actividad, String nivel) =>
       hecho('${actividad.id}/$nivel/completo');
+
+  /// Juegos de Aula. Se marca cada versión: las semillas solo se dan la
+  /// primera vez que se completa una versión.
+  bool juegoAulaHecho(String juegoId, int version) =>
+      hecho('aula/$juegoId/v$version');
+
+  bool juegoAulaJugado(String juegoId) =>
+      _hechos.any((h) => h.startsWith('aula/$juegoId/'));
+
+  Future<void> marcarJuegoAula(String juegoId, int version) =>
+      _marcar('aula/$juegoId/v$version');
 
   bool nivelNacimientoHecho(Actividad actividad, String nivel) =>
       nivelJuegoHecho(actividad, nivel);

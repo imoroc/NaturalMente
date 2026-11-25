@@ -24,6 +24,11 @@ import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../soporte/preferencias_controladas.dart';
+import '../soporte/repositorio_aula_falso.dart';
+import 'package:naturalmente/datos/aula/aula.dart';
+import 'package:naturalmente/datos/perfiles.dart';
+import 'package:naturalmente/modelo/aula/juego_aula.dart';
+import 'package:naturalmente/ui/aula/juego_aula_page.dart';
 
 import 'package:naturalmente/ui/feedback_acierto.dart';
 
@@ -937,6 +942,157 @@ void main() {
           },
         );
       }
+    });
+  }
+
+  // Juegos de Aula: los crea el profesor desde el panel con plantillas.
+  for (final brillo in Brightness.values) {
+    group('aula ${brillo.name}', () {
+      late PreferenciasControladas prefs;
+      late Perfiles perfiles;
+      late Aula aula;
+      late RepositorioAulaFalso repositorio;
+
+      setUp(() {
+        prefs = PreferenciasControladas();
+        progreso = Progreso(prefs, {});
+        perfiles = Perfiles.leer(prefs);
+        repositorio = RepositorioAulaFalso();
+        aula = Aula(repositorio: repositorio, perfiles: perfiles, prefs: prefs);
+      });
+
+      Widget pagina(JuegoAula juego, {bool vistaPrevia = false}) => PerfilesScope(
+        perfiles: perfiles,
+        child: AulaScope(
+          aula: aula,
+          child: JuegoAulaPage(juego: juego, vistaPrevia: vistaPrevia),
+        ),
+      );
+
+      Future<void> responderBien(WidgetTester tester, JuegoAula juego) async {
+        for (final pregunta in juego.preguntas) {
+          expect(find.byType(FinJuego), findsNothing);
+          await _tocar(tester, 'opcion-aula-${pregunta.correcta}');
+          if (pregunta.explicacion.isNotEmpty && pregunta != juego.preguntas.last) {
+            await _tocar(tester, 'continuar-paso');
+          }
+        }
+      }
+
+      testWidgets('opción múltiple: pista, explicación, cierre, repetir y volver', (
+        tester,
+      ) async {
+        final juego = juegoDePrueba();
+        await abrir(tester, pagina(juego), brillo);
+        expect(find.text('¡Vamos a repasar los vertebrados!'), findsOneWidget);
+
+        // Un fallo no celebra ni avanza: enseña la pista del profesor.
+        await _tocar(tester, 'opcion-aula-1');
+        expect(find.byKey(const Key('check-acierto')), findsNothing);
+        expect(find.text('Piensa en cuál respira por pulmones.'), findsOneWidget);
+        expect(find.text(juego.preguntas.first.enunciado), findsOneWidget);
+
+        // El acierto espera a Continuar para que se lea la explicación.
+        await _tocar(tester, 'opcion-aula-0');
+        expect(find.text('El delfín respira aire y amamanta a sus crías.'), findsOneWidget);
+        expect(find.text(juego.preguntas.first.enunciado), findsOneWidget);
+        await _tocar(tester, 'continuar-paso');
+        await _tocar(tester, 'opcion-aula-1');
+        expect(find.byType(FinJuego), findsNothing);
+        await _tocar(tester, 'opcion-aula-0');
+
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(find.byKey(const Key('check-acierto')), findsNothing);
+        expect(find.byKey(const Key('fin-repetir')), findsOneWidget);
+        expect(find.byKey(const Key('fin-volver')), findsOneWidget);
+        expect(find.byKey(const Key('fin-nivel')), findsNothing);
+        expect(progreso.juegoAulaHecho(juego.id, juego.version), isTrue);
+        final semillas = progreso.semillas;
+        expect(semillas, greaterThan(0));
+        expect(aula.pendientes(Perfiles.idPrincipal), isEmpty,
+            reason: 'con conexión el resultado ya se ha enviado');
+        expect(repositorio.totalRecibidos, 1);
+        final enviado = repositorio.recibidos.values.single.values.single;
+        expect((enviado.aciertos, enviado.total), (2, 3));
+        expect(enviado.respuestas, [false, true, true]);
+
+        // Repetir se puede, pero las semillas solo se dan la primera vez.
+        await _tocar(tester, 'fin-repetir');
+        expect(find.byType(FinJuego), findsNothing);
+        await responderBien(tester, juego);
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(progreso.semillas, semillas);
+        expect(repositorio.totalRecibidos, 2);
+
+        await _tocar(tester, 'fin-volver');
+        expect(find.text('Mapa de prueba'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      });
+
+      testWidgets('una versión nueva del juego vuelve a dar semillas', (tester) async {
+        final juego = juegoDePrueba();
+        await progreso.marcarJuegoAula(juego.id, 1);
+        await abrir(tester, pagina(juegoDePrueba(version: 2)), brillo);
+        await responderBien(tester, juego);
+        expect(progreso.semillas, greaterThan(0));
+        expect(progreso.juegoAulaHecho(juego.id, 2), isTrue);
+      });
+
+      testWidgets('verdadero o falso se cierra igual', (tester) async {
+        final juego = juegoDePrueba(plantilla: PlantillaAula.verdaderoFalso);
+        await abrir(tester, pagina(juego), brillo);
+        expect(find.text('Verdadero'), findsOneWidget);
+        await responderBien(tester, juego);
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(progreso.juegoAulaHecho(juego.id, juego.version), isTrue);
+      });
+
+      testWidgets('sin conexión el resultado espera y se envía una sola vez', (
+        tester,
+      ) async {
+        repositorio.sinConexion = true;
+        final juego = juegoDePrueba();
+        await abrir(tester, pagina(juego), brillo);
+        await responderBien(tester, juego);
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(aula.pendientes(Perfiles.idPrincipal), hasLength(1));
+        expect(repositorio.totalRecibidos, 0);
+
+        repositorio.sinConexion = false;
+        await tester.runAsync(aula.enviarPendientes);
+        await tester.runAsync(aula.enviarPendientes);
+        expect(aula.pendientes(Perfiles.idPrincipal), isEmpty);
+        expect(repositorio.totalRecibidos, 1);
+        expect(repositorio.perfilesCreados, hasLength(1));
+      });
+
+      testWidgets('un guardado fallido se reintenta sin duplicar semillas ni resultados', (
+        tester,
+      ) async {
+        final juego = juegoDePrueba();
+        await abrir(tester, pagina(juego), brillo);
+        prefs.falloEnClave = 'aula/pendientes';
+        await responderBien(tester, juego);
+        expect(find.byKey(const Key('fin-guardar')), findsOneWidget);
+        final semillas = progreso.semillas;
+        prefs.falloEnClave = null;
+        await _tocar(tester, 'fin-guardar');
+        expect(find.byKey(const Key('fin-guardar')), findsNothing);
+        expect(progreso.semillas, semillas);
+        await tester.runAsync(aula.enviarPendientes);
+        expect(repositorio.totalRecibidos, 1);
+      });
+
+      testWidgets('la vista previa del panel no guarda ni da semillas', (tester) async {
+        final juego = juegoDePrueba();
+        await abrir(tester, pagina(juego, vistaPrevia: true), brillo);
+        await responderBien(tester, juego);
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(progreso.semillas, 0);
+        expect(progreso.juegoAulaHecho(juego.id, juego.version), isFalse);
+        expect(repositorio.totalRecibidos, 0);
+        expect(find.text('Volver al editor'), findsOneWidget);
+      });
     });
   }
 }

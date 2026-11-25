@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/ui/dibujos_digestion.dart';
 import 'package:naturalmente/ui/dibujos_emociones.dart';
@@ -32,12 +33,16 @@ class DibujoMascota extends StatelessWidget {
     this.gesto = 'hola',
     this.tamano = 56,
     this.traje,
+    this.colorPanuelo,
     super.key,
   });
 
   final String gesto;
   final double tamano;
   final String? traje;
+
+  /// Sin él, el color de la Natu del perfil que juega.
+  final Color? colorPanuelo;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,12 @@ class DibujoMascota extends StatelessWidget {
         children: [
           ClipOval(
             child: CustomPaint(
-              painter: PintorMascotaNatu(gesto: gesto),
+              painter: PintorMascotaNatu(
+                gesto: gesto,
+                colorPanuelo:
+                    colorPanuelo ??
+                    PerfilesScope.maybeOf(context)?.activo.colorPanuelo,
+              ),
             ),
           ),
           if (trajeEfectivo != 'ninguno' || gesto == 'racha')

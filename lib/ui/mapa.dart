@@ -2,10 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/aula/aula_page.dart';
 import 'package:naturalmente/ui/expedicion_diaria.dart';
+import 'package:naturalmente/ui/perfiles/quien_juega.dart';
 import 'package:naturalmente/ui/selector_idioma.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -62,35 +65,73 @@ class MapaPage extends StatelessWidget {
                 },
               );
               final diasRacha = progreso.rachaActiva();
+              final perfiles = PerfilesScope.maybeOf(context);
+              final perfil = perfiles?.activo;
+              // Con un solo jugador y Natu sin personalizar se mantiene la
+              // ilustración de siempre.
+              final natuPropia =
+                  progreso.tienePosePersonalizada ||
+                  progreso.trajeEquipado != 'ninguno' ||
+                  (perfil != null &&
+                      (perfil.color != 'naranja' || perfiles!.lista.length > 1));
+              final natu = ExcludeSemantics(
+                child: natuPropia
+                    ? DibujoMascota(gesto: progreso.poseEquipada, tamano: 58)
+                    : const _IlustracionInicio('natu', ancho: 58, alto: 58),
+              );
               final marca = Row(
                 children: [
-                  ExcludeSemantics(
-                    child:
-                        progreso.tienePosePersonalizada ||
-                            progreso.trajeEquipado != 'ninguno'
-                        ? DibujoMascota(
-                            gesto: progreso.poseEquipada,
-                            tamano: 58,
-                          )
-                        : const _IlustracionInicio('natu', ancho: 58, alto: 58),
-                  ),
+                  if (perfil == null)
+                    natu
+                  else
+                    Semantics(
+                      button: true,
+                      label: context.tr('¿Quién juega?'),
+                      child: InkResponse(
+                        key: const Key('abrir-quien-juega'),
+                        radius: 34,
+                        onTap: () {
+                          context.sonidoToque();
+                          mostrarQuienJuega(context);
+                        },
+                        child: natu,
+                      ),
+                    ),
                   const SizedBox(width: 8),
                   Expanded(
                     // Con el curso y la racha al lado, el nombre se encoge
                     // en pantallas estrechas en lugar de partirse en dos.
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Texto(
-                        'NaturalMente',
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: colores.tinta,
-                          fontFamily: 'NunitoInicio',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Texto(
+                            'NaturalMente',
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: colores.tinta,
+                              fontFamily: 'NunitoInicio',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                         ),
-                      ),
+                        if (perfil != null && perfiles!.lista.length > 1)
+                          Text(
+                            moteDe(context, perfil),
+                            key: const Key('mote-inicio'),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: colores.tenue,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -182,6 +223,46 @@ class MapaPage extends StatelessWidget {
                                 ),
                               ),
                               const _FlechaInicio(tono: Color(0xFFEAF0D8)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _AccesoInicio(
+                          key: const Key('abrir-aula'),
+                          fondo: colores.tarjeta,
+                          borde: colores.borde(const Color(0xFF4F9BD9)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          onTap: () => abrir(const AulaPage()),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 76,
+                                height: 54,
+                                decoration: BoxDecoration(
+                                  color: colores.superficie(
+                                    const Color(0xFFE3F1FB),
+                                  ),
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: Icon(
+                                  Icons.co_present_rounded,
+                                  size: 34,
+                                  color: colores.contenido(
+                                    const Color(0xFF2F78B7),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              const Expanded(
+                                child: _TextoAcceso(
+                                  titulo: 'Aula',
+                                  descripcion: 'Los juegos de tu profe',
+                                ),
+                              ),
+                              const _FlechaInicio(tono: Color(0xFFE3F1FB)),
                             ],
                           ),
                         ),

@@ -3,12 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/apariencia.dart';
+import 'package:naturalmente/datos/aula/aula.dart';
+import 'package:naturalmente/datos/aula/repositorio_aula.dart';
 import 'package:naturalmente/datos/catalogo.dart';
-import 'package:naturalmente/datos/progreso.dart';
+import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/bienvenida.dart';
 import 'package:naturalmente/ui/mapa.dart';
 import 'package:naturalmente/ui/tema.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +20,10 @@ Future<void> main() async {
 }
 
 class _Carga {
-  const _Carga(this.catalogo, this.progreso, this.idioma);
+  const _Carga(this.catalogo, this.perfiles, this.aula, this.idioma);
   final Catalogo catalogo;
-  final Progreso progreso;
+  final Perfiles perfiles;
+  final Aula aula;
   final Idioma idioma;
 }
 
@@ -27,9 +31,17 @@ class NaturalmenteApp extends StatefulWidget {
   const NaturalmenteApp({
     this.apariencia,
     this.conBienvenida = true,
+    this.repositorioAula,
+    this.usarNube = true,
     super.key,
   });
   final Apariencia? apariencia;
+
+  /// Para las pruebas: Aula con datos en memoria en vez de la nube.
+  final RepositorioAula? repositorioAula;
+
+  /// Conecta Aula con Supabase si la app se compiló con sus claves.
+  final bool usarNube;
 
   /// Muestra la bienvenida con Natu si todavía no se ha visto. Las pruebas que
   /// empiezan directamente en el mapa la desactivan.
@@ -45,6 +57,8 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
       : Future.value(widget.apariencia);
   late final Future<_Carga> _carga = _abrir();
   Idioma? _idioma;
+  Perfiles? _perfiles;
+  Aula? _aula;
   bool _cerrada = false;
 
   Future<_Carga> _abrir() async {
@@ -53,8 +67,14 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
     _idioma = idioma;
     if (_cerrada) idioma.dispose();
     final catalogo = await Catalogo.cargar();
-    final progreso = await Progreso.abrir();
-    return _Carga(catalogo, progreso, idioma);
+    final prefs = await SharedPreferences.getInstance();
+    final perfiles = Perfiles.leer(prefs);
+    _perfiles = perfiles;
+    final repositorio =
+        widget.repositorioAula ?? (widget.usarNube ? await Nube.abrir() : null);
+    final aula = Aula(repositorio: repositorio, perfiles: perfiles, prefs: prefs);
+    _aula = aula;
+    return _Carga(catalogo, perfiles, aula, idioma);
   }
 
   @override
@@ -63,6 +83,8 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
     // También limpia una carga que termine después de desmontar la app.
     _apariencia.then((a) => a.dispose());
     _idioma?.dispose();
+    _perfiles?.dispose();
+    _aula?.dispose();
     super.dispose();
   }
 
@@ -80,7 +102,7 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
           builder: (context, snapshot) {
             final carga = snapshot.data;
             return ListenableBuilder(
-              listenable: Listenable.merge([apariencia, ?_idioma]),
+              listenable: Listenable.merge([apariencia, ?_idioma, ?_perfiles]),
               builder: (context, _) => MaterialApp(
                 title: 'NaturalMente',
                 debugShowCheckedModeBanner: false,
@@ -107,10 +129,18 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
                     contenido = IdiomaScope(idioma: _idioma!, child: contenido);
                   }
                   if (carga != null) {
-                    contenido = Alcance(
-                      catalogo: carga.catalogo,
-                      progreso: carga.progreso,
-                      child: contenido,
+                    // Al cambiar de perfil, todo el árbol pasa a leer el
+                    // progreso del niño que juega ahora.
+                    contenido = PerfilesScope(
+                      perfiles: carga.perfiles,
+                      child: AulaScope(
+                        aula: carga.aula,
+                        child: Alcance(
+                          catalogo: carga.catalogo,
+                          progreso: carga.perfiles.progreso,
+                          child: contenido,
+                        ),
+                      ),
                     );
                   }
                   final oscuro =
@@ -131,7 +161,7 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
                   );
                 },
                 home: carga != null
-                    ? (widget.conBienvenida && !carga.progreso.bienvenidaVista
+                    ? (widget.conBienvenida && !carga.perfiles.progreso.bienvenidaVista
                           ? const BienvenidaPage()
                           : const MapaPage())
                     : Scaffold(

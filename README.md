@@ -9,7 +9,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-Stable-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.13%2B-0175C2?logo=dart&logoColor=white)](https://dart.dev)
 [![Plataformas](https://img.shields.io/badge/Plataformas-Android%20%7C%20iOS%20%7C%20Web-2E7D32)](#comandos-de-desarrollo-y-compilación)
-[![Modo](https://img.shields.io/badge/Arquitectura-100%25%20Offline%20%C2%B7%20Sin%20cuentas-15803D)](#arquitectura-del-proyecto)
+[![Modo](https://img.shields.io/badge/Arquitectura-Sin%20conexi%C3%B3n%20%C2%B7%20Ni%C3%B1os%20sin%20cuentas-15803D)](#arquitectura-del-proyecto)
 
 </div>
 
@@ -17,7 +17,7 @@
 
 ## Descripción general
 
-**NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
+**NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Todos los minijuegos funcionan **sin conexión** y sin cuentas, sin anuncios y sin recoger datos personales de los niños. La sección opcional **Aula** se conecta a Supabase (alojado en la UE) para mostrar los juegos que crea el profesor y un ranking por curso. Los niños aparecen solo con un mote generado y su Natu. Ver [`docs/aula.md`](docs/aula.md).
 
 Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **26 actividades interactivas**, cada una con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`), que suman **78 combinaciones de actividad y nivel**, y coleccionan **85 cromos** con curiosidades científicas en su álbum personal.
 
@@ -155,7 +155,7 @@ flowchart TD
 
 ## Requisitos previos e instalación
 
-No es necesario configurar ninguna base de datos ni servidor externo. Basta con disponer de **Flutter** y, según dónde se quiera ejecutar, **Google Chrome** o el **SDK de Android**.
+Para la app sin Aula no hace falta ninguna base de datos ni servidor externo. Basta con disponer de **Flutter** y, según dónde se quiera ejecutar, **Google Chrome** o el **SDK de Android**. Para Aula y el panel del profesor, consulta [`docs/aula.md`](docs/aula.md).
 
 1. **Git** instalado en el sistema.
 2. **Flutter SDK** (canal `stable`, con Dart `^3.13.5`). Guía oficial: [docs.flutter.dev/install](https://docs.flutter.dev/install).

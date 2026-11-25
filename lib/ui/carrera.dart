@@ -688,7 +688,7 @@ class _CarreraPageState extends State<CarreraPage>
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Texto(
-                  partida.descubierto ? '' : '¡Todos en su sitio!',
+                  '¡Todos en su sitio!',
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),

@@ -19,6 +19,7 @@ import 'package:naturalmente/ui/juego.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
+import 'package:naturalmente/ui/carrera.dart';
 import 'package:naturalmente/ui/adivinanza.dart';
 import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +34,7 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   'viaje' => ViajePage(actividad: actividad),
   'ecosistema' => EcosistemaPage(actividad: actividad),
   'rescate' => RescatePage(actividad: actividad),
+  'carrera' => CarreraPage(actividad: actividad),
   'memoria' => MemoriaPage(actividad: actividad),
   'adivinanza' => AdivinanzaPage(actividad: actividad),
   _ => JuegoPage(actividad: actividad),
@@ -204,6 +206,22 @@ Future<void> _jugar(
         );
         if (especie != nivel.especies.last) {
           await _tocar(tester, 'continuar-paso');
+        }
+      }
+    case 'carrera':
+      final nivel = actividad.carrera!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final ronda in nivel.rondas) {
+        for (final corredor in ronda.corredores) {
+          await _tocar(tester, 'corredor-${corredor.id}');
+          await _tocar(tester, 'tramo-${corredor.tramo}');
+        }
+        expect(find.byType(FinJuego), findsNothing);
+        await _tocar(tester, 'carrera-ya');
+        if (ronda != nivel.rondas.last) {
+          expect(find.byType(FinJuego), findsNothing);
+          if (nivel.lupa) await _tocar(tester, 'continuar-paso');
         }
       }
     case 'memoria':

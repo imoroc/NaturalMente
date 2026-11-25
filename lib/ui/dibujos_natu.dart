@@ -7283,6 +7283,39 @@ class DatosEnciclopedicosFicha {
         datoCientifico: 'El esqueleto de una persona adulta suele tener 206 huesos; el fémur es el hueso más largo y uno de los más resistentes.',
         tipoMovimiento: 'pulso',
       ),
+      'vuela-nada-anda' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Animales · Formas de moverse',
+        habitatOSistema: 'Cielo, prado y agua',
+        locomocionOFuncion:
+            'Las aves vuelan con alas, los peces nadan con aletas y muchos mamíferos andan o corren con patas',
+        alimentacionOProceso:
+            'Cada animal busca su comida moviéndose por el medio en el que vive',
+        datoCientifico:
+            'El pato sabe andar, nadar y volar: por eso puede vivir junto al agua y viajar lejos.',
+        tipoMovimiento: 'vuelo',
+      ),
+      'formas-de-moverse' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Animales · Desplazamiento',
+        habitatOSistema: 'Árboles, rocas, suelo, túneles y agua',
+        locomocionOFuncion:
+            'Volar, nadar, andar, trepar, saltar y reptar',
+        alimentacionOProceso:
+            'Moverse bien ayuda a buscar comida, huir de un peligro y encontrar refugio',
+        datoCientifico:
+            'La lombriz no tiene patas: avanza estirando y encogiendo los anillos de su cuerpo.',
+        tipoMovimiento: 'salto',
+      ),
+      'cuerpo-movimiento' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Vertebrados e invertebrados · Adaptaciones',
+        habitatOSistema: 'Cada animal en su medio: aire, tierra o agua',
+        locomocionOFuncion:
+            'Alas con plumas o de piel, aletas, patas largas, uñas curvas, anillos o un pie con baba',
+        alimentacionOProceso:
+            'La forma del cuerpo está adaptada al movimiento que necesita cada animal para vivir',
+        datoCientifico:
+            'El pingüino es un ave, pero sus alas cortas y duras funcionan como aletas bajo el agua.',
+        tipoMovimiento: 'nado',
+      ),
       _ => const DatosEnciclopedicosFicha(
         clasificacion: 'Ciencias de la Naturaleza · Salud y Vida',
         habitatOSistema: 'Cuerpo humano y funciones vitales',

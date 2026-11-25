@@ -11,9 +11,18 @@ La decisión y su alcance están en [decisiones.md](decisiones.md) (25 de noviem
 | Plantillas | `lib/modelo/aula/juego_aula.dart` | Opción múltiple y verdadero o falso. La validación es la misma en el panel y en la app. |
 | Panel del profe | `lib/main_panel.dart`, `lib/panel/` | Web en Flutter: entrar, crear, publicar, ver resultados y apagar el ranking. La vista previa es la pantalla real del juego. |
 | Base de datos | `supabase/migrations/` | Tablas, permisos (RLS), llave mágica y ranking. |
-| Pruebas de la base | `supabase/tests/aula_test.sql` | 42 comprobaciones de permisos y versiones con pgTAP. |
+| Pruebas de la base | `supabase/tests/aula_test.sql` | 54 comprobaciones de permisos, versiones, fotos y sincronización con pgTAP. |
 
 Cada juego de Aula usa `FeedbackAcierto` y `FinJuego` como el resto. Las semillas se dan solo la primera vez que se completa cada versión del juego. La versión solo sube cuando el profe cambia el contenido de un juego ya publicado: los autoguardados de un borrador no cuentan. Su recorrido de cierre está en `test/ui/cierres_juegos_test.dart` (grupo `aula`).
+
+## Fondos, fotos, llave y progreso en varios dispositivos
+
+- **Fondos**: hay 12 escenas dibujadas con código (`lib/ui/aula/escenas.dart`): pradera, bosque, selva, fondo del mar, playa, desierto, polo, montaña, otoño, granja, jardín y noche. Se adaptan a cualquier pantalla y no gastan datos. Además están las fotos de `assets/mundos` y las que suba el profe.
+- **Fotos del profe**: el panel las reduce en el navegador a JPEG de 1600 px como máximo (unos 200 KB) y las sube a Supabase Storage, cada profe a su carpeta. La app las guarda en el dispositivo al abrir Aula, para jugar sin conexión. Al borrar un juego se borran sus fotos si ningún otro las usa. Con el plan gratuito (1 GB) caben unas 5.000.
+- **Llave mágica**: en «¿Quién juega?» → «Cambiar mi Natu» → «Crear mi llave». En otra tablet: «Tengo una llave de otra tablet», se elige el mote y se tocan los tres dibujos y el número.
+- **Sincronización**: al entrar en Aula se junta el progreso de todas las tablets del niño (`sincronizar_progreso`). Lo conseguido se suma y las semillas se cuentan por dispositivo, sin duplicar nada. La ropa y el curso siguen el último cambio. Las pruebas están en `test/datos/sincronizacion_test.dart` y en pgTAP.
+- **Pantallas adaptables**: en tablets apaisadas y en web, el juego pone la pregunta a un lado y las respuestas al otro, y Aula muestra los juegos en dos o tres columnas.
+- **Privacidad**: `web/privacidad.html`, publicada con el panel en `/privacidad.html`.
 
 ## Probarlo en local
 

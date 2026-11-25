@@ -25,7 +25,20 @@ class _AulaPageState extends State<AulaPage> {
   bool _verRanking = false;
   int? _cursoCargado;
 
+  bool _sincronizado = false;
+
   void _refrescarSiHaceFalta(Aula aula, int? curso) {
+    // Al entrar en Aula se trae el progreso de las otras tablets del niño.
+    // Aquí no hay ningún juego abierto que pueda estar guardando a la vez.
+    final perfil = PerfilesScope.maybeOf(context)?.activo;
+    if (!_sincronizado &&
+        perfil != null &&
+        aula.perfilNube(perfil.id) != null) {
+      _sincronizado = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) aula.sincronizar(perfil.id);
+      });
+    }
     if (curso == null || curso == _cursoCargado) return;
     _cursoCargado = curso;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -50,20 +63,18 @@ class _AulaPageState extends State<AulaPage> {
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 640),
+            constraints: const BoxConstraints(maxWidth: 1080),
             child: aula == null || !aula.disponible
                 ? const _Mensaje(
                     clave: 'aula-no-disponible',
                     gesto: 'pensando',
-                    texto:
-                        'Aula todavía no está disponible en esta versión de la app.',
+                    texto: 'Aula todavía no está disponible en esta versión de la app.',
                   )
                 : curso == null
                 ? _Mensaje(
                     clave: 'aula-sin-curso',
                     gesto: 'hola',
-                    texto:
-                        'Dime en qué curso estás y te enseño los juegos de tu profe.',
+                    texto: 'Dime en qué curso estás y te enseño los juegos de tu profe.',
                     accion: FilledButton.icon(
                       key: const Key('aula-elegir-curso'),
                       onPressed: () => mostrarSelectorCurso(context),
@@ -105,7 +116,15 @@ class _AulaPageState extends State<AulaPage> {
                       ),
                       Expanded(
                         child: _verRanking
-                            ? _Ranking(aula: aula, curso: curso)
+                            ? Align(
+                                alignment: Alignment.topCenter,
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 640,
+                                  ),
+                                  child: _Ranking(aula: aula, curso: curso),
+                                ),
+                              )
                             : _ListaJuegos(aula: aula, curso: curso),
                       ),
                     ],
@@ -148,8 +167,7 @@ class _ListaJuegos extends StatelessWidget {
                 ? _Mensaje(
                     clave: 'aula-sin-conexion',
                     gesto: 'pensando',
-                    texto:
-                        'No hay conexión y todavía no tengo juegos guardados. Vuelve a intentarlo con internet.',
+                    texto: 'No hay conexión y todavía no tengo juegos guardados. Vuelve a intentarlo con internet.',
                     accion: OutlinedButton.icon(
                       key: const Key('aula-reintentar'),
                       onPressed: () => aula.refrescar(curso),
@@ -187,22 +205,37 @@ class _ListaJuegos extends StatelessWidget {
                   ? 'Hay 1 partida esperando conexión para enviarse.'
                   : 'Hay $pendientes partidas esperando conexión para enviarse.',
             ),
-          for (final juego in juegos) ...[
-            _TarjetaJuegoAula(
-              juego: juego,
-              hecho: progreso.juegoAulaHecho(juego.id, juego.version),
-              jugado: progreso.juegoAulaJugado(juego.id),
-              onTap: () {
-                context.sonidoToque();
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => JuegoAulaPage(juego: juego),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
-          ],
+          // Una columna en el móvil; dos o tres en tablets y ordenadores.
+          LayoutBuilder(
+            builder: (context, medidas) {
+              final columnas = (medidas.maxWidth / 340).floor().clamp(1, 3);
+              final ancho = (medidas.maxWidth - 12 * (columnas - 1)) / columnas;
+              return Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  for (final juego in juegos)
+                    SizedBox(
+                      width: ancho,
+                      child: _TarjetaJuegoAula(
+                        juego: juego,
+                        hecho: progreso.juegoAulaHecho(juego.id, juego.version),
+                        jugado: progreso.juegoAulaJugado(juego.id),
+                        onTap: () {
+                          context.sonidoToque();
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => JuegoAulaPage(juego: juego),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: 12),
           if (estado == EstadoAula.cargando)
             const Center(child: CircularProgressIndicator()),
           Padding(
@@ -335,10 +368,7 @@ class _RankingState extends State<_Ranking> {
     final activo = await widget.aula.rankingActivo();
     if (activo != true) return (activo, const <FilaRanking>[]);
     try {
-      return (
-        true,
-        await widget.aula.ranking(widget.curso, semana: _semana),
-      );
+      return (true, await widget.aula.ranking(widget.curso, semana: _semana));
     } catch (_) {
       return (null, const <FilaRanking>[]);
     }

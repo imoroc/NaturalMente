@@ -146,8 +146,7 @@ class _PantallaEntrarState extends State<PantallaEntrar> {
     } catch (_) {
       if (mounted) {
         setState(
-          () => _error =
-              'Ese botón todavía no está activado. Entra con tu usuario y contraseña.',
+          () => _error = 'Ese botón todavía no está activado. Entra con tu usuario y contraseña.',
         );
       }
     }
@@ -211,7 +210,8 @@ class _PantallaEntrarState extends State<PantallaEntrar> {
                         style: const TextStyle(fontSize: 18),
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
-                          helperText: 'Son cuatro palabras y un número, con guiones.',
+                          helperText:
+                              'Son cuatro palabras y un número, con guiones.',
                           prefixIcon: const Icon(Icons.key_rounded),
                           border: const OutlineInputBorder(),
                           suffixIcon: IconButton(
@@ -285,6 +285,12 @@ class _PantallaEntrarState extends State<PantallaEntrar> {
                       const SizedBox(height: 18),
                       Text(
                         '¿Has olvidado la contraseña? Escríbenos y te damos una nueva.',
+                        textAlign: TextAlign.center,
+                        style: estilo.bodySmall,
+                      ),
+                      const SizedBox(height: 6),
+                      SelectableText(
+                        'Privacidad: ${Uri.base.resolve('privacidad.html')}',
                         textAlign: TextAlign.center,
                         style: estilo.bodySmall,
                       ),

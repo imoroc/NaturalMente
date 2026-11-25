@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -7,6 +9,7 @@ import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/feedback_acierto.dart';
@@ -20,11 +23,18 @@ class ImagenDeAula extends StatelessWidget {
   final ImagenAula imagen;
   final BoxFit ajuste;
 
+  /// Cómo se cargan las fotos subidas por el profe. En la app se guardan en
+  /// el dispositivo para jugar sin conexión. En el panel web ya las guarda el
+  /// navegador (se suben con caché de un año). Las pruebas lo sustituyen.
+  static ImageProvider Function(String url) proveedorRed = (url) =>
+      kIsWeb ? NetworkImage(url) : CachedNetworkImageProvider(url);
+
   @override
   Widget build(BuildContext context) => switch (imagen) {
+    ImagenEscena(:final id) => EscenaAula(id),
     ImagenGaleria(:final asset) => Image.asset(asset, fit: ajuste),
-    ImagenSubida(:final url) => Image.network(
-      url,
+    ImagenSubida(:final url) => Image(
+      image: proveedorRed(url),
       fit: ajuste,
       errorBuilder: (_, _, _) => const Center(
         child: Icon(Icons.image_not_supported_outlined, size: 32),
@@ -173,7 +183,8 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
     final perfilId = PerfilesScope.maybeOf(context)?.activo.id;
     final juego = _juego;
     final resultado = ResultadoAula(
-      idLocal: aula?.nuevoIdPartida() ?? '${DateTime.now().microsecondsSinceEpoch}',
+      idLocal:
+          aula?.nuevoIdPartida() ?? '${DateTime.now().microsecondsSinceEpoch}',
       juegoId: juego.id,
       version: juego.version,
       aciertos: _aLaPrimera.where((a) => a).length,
@@ -237,25 +248,60 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          if (fondo != null)
-            ExcludeSemantics(
-              child: Opacity(
-                opacity: colores.oscuro ? 0.25 : 0.4,
-                child: ImagenDeAula(fondo, ajuste: BoxFit.cover),
-              ),
+          if (fondo != null) ...[
+            ExcludeSemantics(child: ImagenDeAula(fondo, ajuste: BoxFit.cover)),
+            // Velo para que el texto se lea sobre cualquier fondo.
+            ColoredBox(
+              color: colores.oscuro
+                  ? const Color(0x73000000)
+                  : (fondo is ImagenEscena
+                        ? const Color(0x00000000)
+                        : const Color(0x4DFFFFFF)),
             ),
+          ],
           construirContenidoPaso(
             SafeArea(
               top: false,
-              child: SingleChildScrollView(
-                key: ValueKey('aula-${_juego.id}-$_vuelta-$_paso'),
-                padding: const EdgeInsets.all(16),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 680),
-                    child: _construirPregunta(context),
-                  ),
-                ),
+              child: LayoutBuilder(
+                builder: (context, medidas) {
+                  // En tablets apaisadas y en el panel, la pregunta a un lado
+                  // y las respuestas al otro: todo cabe sin desplazar.
+                  final ancho = medidas.maxWidth >= 760;
+                  return SingleChildScrollView(
+                    key: ValueKey('aula-${_juego.id}-$_vuelta-$_paso'),
+                    padding: EdgeInsets.all(medidas.maxWidth < 380 ? 12 : 20),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: ancho ? 1100 : 640,
+                        ),
+                        child: ancho
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: _columnaPregunta(context, medidas),
+                                  ),
+                                  const SizedBox(width: 24),
+                                  Expanded(
+                                    flex: 4,
+                                    child: _columnaRespuestas(context),
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  _columnaPregunta(context, medidas),
+                                  const SizedBox(height: 14),
+                                  _columnaRespuestas(context),
+                                ],
+                              ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -264,34 +310,45 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
     );
   }
 
-  Widget _construirPregunta(BuildContext context) {
+  Widget _columnaPregunta(BuildContext context, BoxConstraints medidas) {
     final colores = context.coloresNaturales;
     final pregunta = _pregunta;
     final total = _juego.preguntas.length;
     final estilo = Theme.of(context).textTheme;
+    final altoImagen = (medidas.maxHeight * 0.3).clamp(120.0, 260.0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Semantics(
           label: context.tr('Pregunta ${_paso + 1} de $total'),
           child: ExcludeSemantics(
-            child: Row(
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(99),
-                    child: LinearProgressIndicator(
-                      value: (_paso + (_resuelto ? 1 : 0)) / total,
-                      minHeight: 10,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: colores.tarjeta.withValues(alpha: 0.92),
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(99),
+                      child: LinearProgressIndicator(
+                        value: (_paso + (_resuelto ? 1 : 0)) / total,
+                        minHeight: 10,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  '${_paso + 1}/$total',
-                  style: const TextStyle(fontWeight: FontWeight.w900),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Text(
+                    '${_paso + 1}/$total',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      color: colores.tinta,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -302,23 +359,40 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
             color: colores.tarjeta,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: colores.contorno, width: 2),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x22000000),
+                blurRadius: 12,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_juego.mostrarNatu && _paso == 0 && _juego.intro.isNotEmpty) ...[
+              if (_juego.mostrarNatu &&
+                  _paso == 0 &&
+                  _juego.intro.isNotEmpty) ...[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const DibujoMascota(gesto: 'hola', tamano: 46),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(_juego.intro, style: estilo.bodyLarge)),
+                    Expanded(
+                      child: Text(_juego.intro, style: estilo.bodyLarge),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
               ],
               if (pregunta.imagen case final imagen?) ...[
-                SizedBox(height: 170, child: ImagenDeAula(imagen)),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: SizedBox(
+                    height: altoImagen,
+                    child: ImagenDeAula(imagen),
+                  ),
+                ),
                 const SizedBox(height: 12),
               ],
               if (pregunta.enunciado.isNotEmpty)
@@ -326,13 +400,42 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                   pregunta.enunciado,
                   key: const Key('enunciado-aula'),
                   textAlign: TextAlign.center,
-                  style: estilo.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+                  style: estilo.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        if (_fallo && !_resuelto && _elegida != null) ...[
+          const SizedBox(height: 12),
+          _Aviso(
+            key: const Key('pista-aula'),
+            gesto: 'pista',
+            texto: pregunta.pista.isNotEmpty
+                ? pregunta.pista
+                : context.tr('Casi. Piénsalo otra vez.'),
+          ),
+        ],
+        if (_resuelto && pregunta.explicacion.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          _Aviso(
+            key: const Key('explicacion-aula'),
+            gesto: 'feliz',
+            texto: pregunta.explicacion,
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _columnaRespuestas(BuildContext context) {
+    final pregunta = _pregunta;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
         for (var i = 0; i < pregunta.opciones.length; i++) ...[
+          if (i > 0) const SizedBox(height: 10),
           _BotonOpcion(
             key: Key('opcion-aula-$i'),
             opcion: pregunta.opciones[i],
@@ -344,22 +447,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                       : _EstadoOpcion.normal),
             onTap: () => _elegir(i),
           ),
-          const SizedBox(height: 10),
         ],
-        if (_fallo && !_resuelto && _elegida != null)
-          _Aviso(
-            key: const Key('pista-aula'),
-            gesto: 'pista',
-            texto: pregunta.pista.isNotEmpty
-                ? pregunta.pista
-                : context.tr('Casi. Piénsalo otra vez.'),
-          ),
-        if (_resuelto && pregunta.explicacion.isNotEmpty)
-          _Aviso(
-            key: const Key('explicacion-aula'),
-            gesto: 'feliz',
-            texto: pregunta.explicacion,
-          ),
       ],
     );
   }

@@ -89,6 +89,67 @@ class Progreso extends ChangeNotifier {
     }
   });
 
+  /// Todo lo conseguido, para enviarlo al sincronizar con la nube.
+  Set<String> get hechos => Set.unmodifiable(_hechos);
+
+  /// Aplica lo que devuelve la nube al sincronizar.
+  ///
+  /// Va por la misma cola que las semillas: si mientras tanto el niño ganó o
+  /// gastó semillas, se conservan ([semillasEnviadas] es el saldo que se
+  /// mandó). Se actualiza este mismo objeto, así que nadie se queda con un
+  /// progreso viejo.
+  Future<bool> aplicarSincronizacion({
+    required Set<String> hechosNube,
+    required int semillasNube,
+    required int semillasEnviadas,
+    required int mejorComboNube,
+    int? rachaDias,
+    String? rachaUltima,
+    List<String>? equipados,
+    String? pose,
+    int? curso,
+  }) => _serializarEconomia(() async {
+    try {
+      final nuevos = hechosNube.difference(_hechos);
+      if (nuevos.isNotEmpty) {
+        _hechos.addAll(nuevos);
+        await _exigirGuardado(_prefs.setStringList(_clave, _hechos.toList()));
+      }
+      final saldo = semillasNube + (_semillasActuales - semillasEnviadas);
+      _semillasActuales = saldo < 0 ? 0 : saldo;
+      if (mejorComboNube > _mejorCombo) _mejorCombo = mejorComboNube;
+      await _exigirGuardado(_prefs.setInt(_claveSemillas, _semillasActuales));
+      await _exigirGuardado(_prefs.setInt(_claveMejorCombo, _mejorCombo));
+      if (rachaDias != null && rachaUltima != null) {
+        await _exigirGuardado(_prefs.setInt(_claveRachaDias, rachaDias));
+        await _exigirGuardado(
+          _prefs.setString(_claveUltimaFechaRacha, rachaUltima),
+        );
+      }
+      if (equipados != null) {
+        await _exigirGuardado(
+          _prefs.setStringList(_claveTrajesEquipados, equipados),
+        );
+        await _exigirGuardado(
+          _prefs.setString(
+            _claveTrajeEquipado,
+            equipados.isEmpty ? 'ninguno' : equipados.last,
+          ),
+        );
+      }
+      if (pose != null) {
+        await _exigirGuardado(_prefs.setString(_clavePoseEquipada, pose));
+      }
+      if (curso != null && curso >= 1 && curso <= 6) {
+        await _exigirGuardado(_prefs.setInt(_claveCurso, curso));
+      }
+      notifyListeners();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  });
+
   int aplicarAciertoPrecision({required bool aLaPrimera, int? comboActual}) {
     final combo = comboActual ?? (aLaPrimera ? _comboActual + 1 : 1);
     final ganadas = aLaPrimera ? (combo >= 3 ? 3 : (combo == 2 ? 2 : 1)) : 1;

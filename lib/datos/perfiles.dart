@@ -207,9 +207,8 @@ class Perfiles extends ChangeNotifier {
       : PreferenciasConPrefijo(_prefs, 'perfiles/$id/');
 
   /// Un mote que no repite el de otro perfil de este dispositivo.
-  (String, String) proponerMote() => _moteAlAzar(_azar, {
-    for (final p in _lista) (p.animal, p.adjetivo),
-  });
+  (String, String) proponerMote() =>
+      _moteAlAzar(_azar, {for (final p in _lista) (p.animal, p.adjetivo)});
 
   static (String, String) _moteAlAzar(
     Random azar,
@@ -257,6 +256,34 @@ class Perfiles extends ChangeNotifier {
     await progreso.marcarBienvenidaVista();
     if (curso != null) await progreso.guardarCurso(curso);
     await elegir(id);
+    return perfil;
+  }
+
+  /// Crea un perfil para un niño que ya existe en la nube (al canjear su
+  /// llave). No cambia de jugador: eso se hace después de traer su progreso.
+  Future<Perfil?> crearDesdeNube(Perfil nube, {int? curso}) async {
+    if (lleno) return null;
+    String id;
+    do {
+      id = _azar.nextInt(0x7fffffff).toRadixString(36);
+    } while (id == idPrincipal || _lista.any((p) => p.id == id));
+    final perfil = Perfil(
+      id: id,
+      animal: nube.animal,
+      adjetivo: nube.adjetivo,
+      color: nube.color,
+    );
+    final nueva = [..._lista, perfil];
+    try {
+      if (!await _prefs.setString(_claveLista, _codificar(nueva))) return null;
+    } catch (_) {
+      return null;
+    }
+    _lista = nueva;
+    final progreso = progresoDe(id);
+    await progreso.marcarBienvenidaVista();
+    if (curso != null) await progreso.guardarCurso(curso);
+    notifyListeners();
     return perfil;
   }
 
@@ -323,9 +350,8 @@ class PerfilesScope extends InheritedNotifier<Perfiles> {
     super.key,
   }) : super(notifier: perfiles);
 
-  static Perfiles? maybeOf(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<PerfilesScope>()
-      ?.notifier;
+  static Perfiles? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<PerfilesScope>()?.notifier;
 
   static Perfiles of(BuildContext context) {
     final perfiles = maybeOf(context);

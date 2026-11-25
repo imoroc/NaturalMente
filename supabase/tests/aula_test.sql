@@ -1,7 +1,7 @@
 -- Pruebas de permisos y reglas de Aula. Se ejecutan con `supabase test db`.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(42);
+select plan(54);
 
 -- Identidades de prueba ----------------------------------------------------
 insert into auth.users (id, email) values
@@ -165,6 +165,66 @@ select is(
   'cualquier dispositivo vinculado cambia el color de Natu'
 );
 
+-- Progreso en varios dispositivos -------------------------------------------
+-- La tablet de clase y la de casa juegan sin conexión y luego sincronizan.
+select pg_temp.como('00000000-0000-0000-0000-0000000000d1');
+insert into guardado select 'sync1', public.sincronizar_progreso(
+  (select valor::uuid from guardado where clave = 'perfil'),
+  '{"hechos": ["hogar/facil/completo", "ficha/camello"], "ganadas": 30, "gastadas": 0,
+    "mejorCombo": 4, "racha": {"dias": 2, "ultima": "2026-11-20"},
+    "equipados": ["explorador"], "pose": "feliz"}')::text;
+select pg_temp.como('00000000-0000-0000-0000-0000000000d2');
+insert into guardado select 'sync2', public.sincronizar_progreso(
+  (select valor::uuid from guardado where clave = 'perfil'),
+  '{"hechos": ["ficha/camello", "traje/gafas"], "ganadas": 10, "gastadas": 25,
+    "mejorCombo": 6, "racha": {"dias": 1, "ultima": "2026-11-22"}, "curso": "3"}')::text;
+select is(
+  (select valor::jsonb -> 'hechos' from guardado where clave = 'sync2'),
+  '["ficha/camello", "hogar/facil/completo", "traje/gafas"]'::jsonb,
+  'lo conseguido en cada dispositivo se suma'
+);
+select is(
+  (select (valor::jsonb ->> 'semillas')::int from guardado where clave = 'sync2'), 15,
+  'semillas: 30 ganadas en clase + 10 en casa - 25 gastadas en casa'
+);
+select is(
+  (select (valor::jsonb ->> 'mejorCombo')::int from guardado where clave = 'sync2'), 6,
+  'el mejor combo es el mayor'
+);
+select is(
+  (select valor::jsonb -> 'racha' from guardado where clave = 'sync2'),
+  '{"dias": 1, "ultima": "2026-11-22"}'::jsonb,
+  'la racha es la del día más reciente'
+);
+select is(
+  (select (valor::jsonb -> 'equipados', valor::jsonb ->> 'pose', (valor::jsonb ->> 'curso')::int)
+   from guardado where clave = 'sync2'),
+  ('["explorador"]'::jsonb, 'feliz'::text, 3),
+  'la ropa se conserva si este dispositivo no la cambió, y el curso nuevo se guarda'
+);
+select pg_temp.como('00000000-0000-0000-0000-0000000000d1');
+select is(
+  (public.sincronizar_progreso(
+    (select valor::uuid from guardado where clave = 'perfil'),
+    '{"hechos": [], "ganadas": 30, "gastadas": 0}') ->> 'semillas')::int, 15,
+  'reenviar los mismos totales no duplica semillas'
+);
+select is(
+  (public.sincronizar_progreso(
+    (select valor::uuid from guardado where clave = 'perfil'),
+    '{"ganadas": 20, "gastadas": 0}') ->> 'semillas')::int, 15,
+  'un total menor (un reenvío antiguo) no resta'
+);
+select lives_ok($$
+  update public.perfiles set traje = 'explorador,gafas'
+  where id = (select valor::uuid from guardado where clave = 'perfil')
+$$, 'un niño puede llevar varios trajes a la vez');
+select pg_temp.como('00000000-0000-0000-0000-0000000000d3');
+select throws_ok($$
+  select public.sincronizar_progreso(
+    (select valor::uuid from guardado where clave = 'perfil'), '{"ganadas": 999}')
+$$, '42501', null, 'nadie sincroniza un perfil que no tiene');
+
 select pg_temp.como('00000000-0000-0000-0000-0000000000d3');
 select lives_ok($$
   select public.canjear_llave('zorro', 'veloz', 'sol-sol-sol-0' || n) from generate_series(1, 4) n
@@ -243,6 +303,25 @@ reset role;
 set local role anon;
 select is(public.correo_profesor(' Profe.Luis '), 'luis@colegio.es',
   'el panel traduce el nombre de usuario a su correo');
+
+-- Imágenes: cada profesor sube solo a su carpeta -----------------------------
+reset role;
+select pg_temp.como('00000000-0000-0000-0000-0000000000a1');
+select lives_ok($$
+  insert into storage.objects (bucket_id, name, owner_id)
+  values ('imagenes', '00000000-0000-0000-0000-0000000000a1/1.jpg',
+          '00000000-0000-0000-0000-0000000000a1')
+$$, 'el profesor sube a su carpeta');
+select throws_ok($$
+  insert into storage.objects (bucket_id, name, owner_id)
+  values ('imagenes', 'otra-carpeta/1.jpg', '00000000-0000-0000-0000-0000000000a1')
+$$, '42501', null, 'pero no a la de otro');
+select pg_temp.como('00000000-0000-0000-0000-0000000000d1');
+select throws_ok($$
+  insert into storage.objects (bucket_id, name, owner_id)
+  values ('imagenes', '00000000-0000-0000-0000-0000000000d1/1.jpg',
+          '00000000-0000-0000-0000-0000000000d1')
+$$, '42501', null, 'un dispositivo no sube imágenes');
 
 -- Cambiar la llave expulsa a los demás dispositivos -------------------------
 reset role;

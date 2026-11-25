@@ -23,16 +23,41 @@ sealed class ImagenAula {
 
   static ImagenAula? desdeJson(Object? json) {
     if (json is! Map) return null;
+    final escena = json['escena'];
+    if (escena is String && escenasAula.containsKey(escena)) {
+      return ImagenEscena(escena);
+    }
     final galeria = json['galeria'];
     if (galeria is String && galeriaAula.containsKey(galeria)) {
       return ImagenGaleria(galeria);
     }
     final url = json['url'];
-    if (url is String && url.startsWith('https://')) return ImagenSubida(url);
+    if (url is String && _direccionValida(url)) return ImagenSubida(url);
     return null;
   }
 
+  /// Solo https, salvo el Supabase local de desarrollo (ordenador o emulador).
+  static bool _direccionValida(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasAuthority) return false;
+    if (uri.scheme == 'https') return true;
+    return uri.scheme == 'http' &&
+        const {'127.0.0.1', 'localhost', '10.0.2.2'}.contains(uri.host);
+  }
+
   Map<String, dynamic> toJson();
+}
+
+/// Escena dibujada con código: se adapta a cualquier pantalla y no gasta datos.
+class ImagenEscena extends ImagenAula {
+  const ImagenEscena(this.id);
+  final String id;
+  @override
+  Map<String, dynamic> toJson() => {'escena': id};
+  @override
+  bool operator ==(Object other) => other is ImagenEscena && other.id == id;
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class ImagenGaleria extends ImagenAula {
@@ -58,10 +83,34 @@ class ImagenSubida extends ImagenAula {
   int get hashCode => url.hashCode;
 }
 
+/// Fondos dibujados con código para los juegos de Aula. No ocupan espacio,
+/// no gastan datos y se adaptan a cualquier tamaño y proporción de pantalla.
+/// id → nombre que ve el profe.
+const escenasAula = <String, String>{
+  'pradera': 'Pradera',
+  'bosque': 'Bosque',
+  'selva': 'Selva',
+  'fondo-marino': 'Fondo del mar',
+  'playa': 'Playa',
+  'desierto': 'Desierto',
+  'polar': 'Polo',
+  'montana': 'Montaña y lago',
+  'otono': 'Otoño',
+  'granja': 'Granja',
+  'jardin': 'Jardín',
+  'noche': 'Noche en el campo',
+};
+
 /// Fondos e ilustraciones que ya trae la app: id → (asset, nombre).
 const galeriaAula = <String, (String, String)>{
-  'paisaje-reserva': ('assets/mundos/paisaje-reserva.webp', 'Paisaje de animales'),
-  'paisaje-invernadero': ('assets/mundos/paisaje-invernadero.webp', 'Paisaje de plantas'),
+  'paisaje-reserva': (
+    'assets/mundos/paisaje-reserva.webp',
+    'Paisaje de animales',
+  ),
+  'paisaje-invernadero': (
+    'assets/mundos/paisaje-invernadero.webp',
+    'Paisaje de plantas',
+  ),
   'paisaje-cuerpo': ('assets/mundos/paisaje-cuerpo.webp', 'Paisaje del cuerpo'),
   'hogar': ('assets/mundos/hogar.webp', '¿Dónde vive?'),
   'dieta': ('assets/mundos/dieta.webp', '¿Qué come?'),

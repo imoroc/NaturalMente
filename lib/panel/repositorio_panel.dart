@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:naturalmente/datos/perfiles.dart';
@@ -63,7 +65,11 @@ abstract class RepositorioPanel {
   /// Crea el juego si su id está vacío. Devuelve la ficha guardada.
   Future<FichaJuego> guardar(JuegoAula juego, EstadoJuego estado);
 
+  /// Borra el juego y las fotos suyas que no use ningún otro juego.
   Future<void> borrar(String juegoId);
+
+  /// Sube una foto ya comprimida (JPEG) y devuelve su dirección pública.
+  Future<ImagenSubida> subirImagen(Uint8List jpg);
 
   Future<bool> rankingActivo();
 
@@ -175,7 +181,9 @@ class RepositorioPanelSupabase implements RepositorioPanel {
       if (errores.isNotEmpty) throw ErrorPanel(errores.first);
     }
     final datos = {
-      'titulo': juego.titulo.trim().isEmpty ? 'Sin título' : juego.titulo.trim(),
+      'titulo': juego.titulo.trim().isEmpty
+          ? 'Sin título'
+          : juego.titulo.trim(),
       'plantilla': juego.plantilla.id,
       'cursos': juego.cursos.isEmpty ? [1] : juego.cursos,
       'contenido': juego.contenidoJson(),
@@ -193,13 +201,80 @@ class RepositorioPanelSupabase implements RepositorioPanel {
     return _ficha(fila);
   }
 
+  static const _bucket = 'imagenes';
+
   @override
-  Future<void> borrar(String juegoId) =>
-      _cliente.from('juegos').delete().eq('id', juegoId);
+  Future<ImagenSubida> subirImagen(Uint8List jpg) async {
+    final usuario = _cliente.auth.currentUser;
+    if (usuario == null) throw const ErrorPanel('Vuelve a entrar en el panel.');
+    // Cada profesor sube a su carpeta; el nombre no se repite nunca.
+    final ruta =
+        '${usuario.id}/${DateTime.now().toUtc().microsecondsSinceEpoch}.jpg';
+    try {
+      await _cliente.storage
+          .from(_bucket)
+          .uploadBinary(
+            ruta,
+            jpg,
+            fileOptions: const FileOptions(
+              contentType: 'image/jpeg',
+              // Nunca cambia: la app y el navegador la guardan un año.
+              cacheControl: '31536000',
+            ),
+          );
+    } on StorageException {
+      throw const ErrorPanel(
+        'No se ha podido subir la imagen. Prueba otra vez.',
+      );
+    }
+    return ImagenSubida(_cliente.storage.from(_bucket).getPublicUrl(ruta));
+  }
+
+  /// Ruta dentro del bucket de una foto subida por nosotros, o `null`.
+  String? _rutaPropia(String url) {
+    final marca = '/storage/v1/object/public/$_bucket/';
+    final i = url.indexOf(marca);
+    return i < 0 ? null : Uri.decodeComponent(url.substring(i + marca.length));
+  }
+
+  static Iterable<String> _urls(JuegoAula juego) sync* {
+    if (juego.fondo case ImagenSubida(:final url)) yield url;
+    for (final p in juego.preguntas) {
+      if (p.imagen case ImagenSubida(:final url)) yield url;
+      for (final o in p.opciones) {
+        if (o.imagen case ImagenSubida(:final url)) yield url;
+      }
+    }
+  }
+
+  @override
+  Future<void> borrar(String juegoId) async {
+    final juegos = await misJuegos();
+    final borrado = juegos.where((f) => f.juego.id == juegoId).firstOrNull;
+    await _cliente.from('juegos').delete().eq('id', juegoId);
+    if (borrado == null) return;
+    final enUso = {
+      for (final f in juegos)
+        if (f.juego.id != juegoId) ..._urls(f.juego),
+    };
+    final rutas = [
+      for (final url in _urls(borrado.juego).toSet())
+        if (!enUso.contains(url)) ?_rutaPropia(url),
+    ];
+    if (rutas.isEmpty) return;
+    try {
+      await _cliente.storage.from(_bucket).remove(rutas);
+    } catch (_) {
+      // El juego ya está borrado; una foto suelta no molesta a nadie.
+    }
+  }
 
   @override
   Future<bool> rankingActivo() async {
-    final fila = await _cliente.from('ajustes').select('ranking_activo').single();
+    final fila = await _cliente
+        .from('ajustes')
+        .select('ranking_activo')
+        .single();
     return fila['ranking_activo'] as bool;
   }
 

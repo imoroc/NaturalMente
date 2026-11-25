@@ -4,6 +4,7 @@ import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/ui/perfiles/llave_page.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
 
@@ -85,7 +86,8 @@ class _HojaQuienJuegaState extends State<_HojaQuienJuega> {
     navegador.pop();
     navegador.push(
       MaterialPageRoute<void>(
-        builder: (_) => EditorPerfilPage(perfiles: widget.perfiles, perfil: perfil),
+        builder: (_) =>
+            EditorPerfilPage(perfiles: widget.perfiles, perfil: perfil),
       ),
     );
   }
@@ -177,6 +179,27 @@ class _HojaQuienJuegaState extends State<_HojaQuienJuega> {
                   icon: const Icon(Icons.palette_rounded),
                   label: Texto('Cambiar mi Natu'),
                 ),
+                if (AulaScope.maybeOf(context) case final aula?
+                    when aula.disponible && !perfiles.lleno) ...[
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    key: const Key('tengo-llave'),
+                    onPressed: _ocupada
+                        ? null
+                        : () {
+                            context.sonidoToque();
+                            final navegador = Navigator.of(context);
+                            navegador.pop();
+                            navegador.push(
+                              MaterialPageRoute<void>(
+                                builder: (_) => CanjearLlavePage(aula: aula),
+                              ),
+                            );
+                          },
+                    icon: const Text('🔑', style: TextStyle(fontSize: 18)),
+                    label: Texto('Tengo una llave de otra tablet'),
+                  ),
+                ],
               ],
             ),
           ),
@@ -389,8 +412,7 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
       if (!mounted) return;
       setState(() {
         _guardando = false;
-        _aviso =
-            'Para borrar a este jugador hace falta conexión, porque también se borran sus resultados de Aula.';
+        _aviso = 'Para borrar a este jugador hace falta conexión, porque también se borran sus resultados de Aula.';
       });
       return;
     }
@@ -531,7 +553,8 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
                             selected: _curso == c,
                             onSelected: _guardando
                                 ? null
-                                : (sel) => setState(() => _curso = sel ? c : null),
+                                : (sel) =>
+                                      setState(() => _curso = sel ? c : null),
                           ),
                         ),
                       ],
@@ -562,7 +585,13 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
                     ),
                   ),
                 ),
-                if (widget.perfil case final perfil? when !perfil.principal) ...[
+                if ((widget.perfil, AulaScope.maybeOf(context))
+                    case (final perfil?, final aula?) when aula.disponible) ...[
+                  const SizedBox(height: 26),
+                  SeccionMiLlave(aula: aula, perfilId: perfil.id),
+                ],
+                if (widget.perfil case final perfil?
+                    when !perfil.principal) ...[
                   const SizedBox(height: 12),
                   TextButton.icon(
                     key: const Key('borrar-perfil'),

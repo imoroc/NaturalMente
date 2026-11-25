@@ -10,11 +10,25 @@ class PerfilNube {
   final String llave;
 
   Map<String, dynamic> toJson() => {'id': id, 'llave': llave};
-  static PerfilNube? desdeJson(Object? json) => json is Map &&
-          json['id'] is String &&
-          json['llave'] is String
+  static PerfilNube? desdeJson(Object? json) =>
+      json is Map && json['id'] is String && json['llave'] is String
       ? PerfilNube(id: json['id'] as String, llave: json['llave'] as String)
       : null;
+}
+
+/// Perfil encontrado al canjear una llave mágica.
+class PerfilCanjeado {
+  const PerfilCanjeado({required this.id, required this.perfil, this.curso});
+  final String id;
+
+  /// Mote y color de su Natu (el id es el de la nube).
+  final Perfil perfil;
+  final int? curso;
+}
+
+/// Se han hecho demasiados intentos con llaves equivocadas en poco tiempo.
+class LlaveBloqueada implements Exception {
+  const LlaveBloqueada();
 }
 
 /// Resultado de una partida de Aula pendiente de enviar.
@@ -57,7 +71,9 @@ class ResultadoAula {
     aciertos: json['aciertos'] as int,
     total: json['total'] as int,
     jugado: DateTime.parse(json['jugado'] as String),
-    respuestas: [for (final r in json['respuestas'] as List<dynamic>) r as bool],
+    respuestas: [
+      for (final r in json['respuestas'] as List<dynamic>) r as bool,
+    ],
   );
 }
 
@@ -97,6 +113,23 @@ abstract class RepositorioAula {
     required String pose,
   });
 
+  /// `null` si el mote y la llave no coinciden con ningún perfil.
+  /// Lanza [LlaveBloqueada] tras muchos intentos fallidos.
+  Future<PerfilCanjeado?> canjearLlave(
+    String animal,
+    String adjetivo,
+    String llave,
+  );
+
+  /// Llave nueva. Los demás dispositivos dejan de tener el perfil.
+  Future<String> cambiarLlave(String perfilNube);
+
+  /// Envía el progreso de este dispositivo y devuelve el de todos juntos.
+  Future<Map<String, dynamic>> sincronizar(
+    String perfilNube,
+    Map<String, dynamic> local,
+  );
+
   /// Borra el perfil y, en cascada, todos sus resultados.
   Future<void> borrarPerfil(String perfilNube);
 
@@ -130,10 +163,7 @@ class RepositorioAulaSupabase implements RepositorioAula {
         .eq('estado', 'publicado')
         .contains('cursos', [curso])
         .order('actualizado', ascending: false);
-    return [
-      for (final fila in filas)
-        ?JuegoAula.desdeFila(fila),
-    ];
+    return [for (final fila in filas) ?JuegoAula.desdeFila(fila)];
   }
 
   @override
@@ -175,13 +205,65 @@ class RepositorioAulaSupabase implements RepositorioAula {
   }
 
   @override
+  Future<PerfilCanjeado?> canjearLlave(
+    String animal,
+    String adjetivo,
+    String llave,
+  ) async {
+    await _sesion();
+    final List<dynamic> filas;
+    try {
+      filas = await _cliente.rpc<List<dynamic>>(
+        'canjear_llave',
+        params: {'p_animal': animal, 'p_adjetivo': adjetivo, 'p_llave': llave},
+      );
+    } on PostgrestException catch (e) {
+      if (e.message.contains('demasiados_intentos'))
+        throw const LlaveBloqueada();
+      rethrow;
+    }
+    if (filas.isEmpty) return null;
+    final f = filas.first as Map<String, dynamic>;
+    return PerfilCanjeado(
+      id: f['id'] as String,
+      perfil: Perfil.desdeJson({...f, 'id': f['id']}),
+      curso: f['curso'] as int?,
+    );
+  }
+
+  @override
+  Future<String> cambiarLlave(String perfilNube) async {
+    await _sesion();
+    return _cliente.rpc<String>(
+      'cambiar_llave',
+      params: {'p_perfil': perfilNube},
+    );
+  }
+
+  @override
+  Future<Map<String, dynamic>> sincronizar(
+    String perfilNube,
+    Map<String, dynamic> local,
+  ) async {
+    await _sesion();
+    final respuesta = await _cliente.rpc<dynamic>(
+      'sincronizar_progreso',
+      params: {'p_perfil': perfilNube, 'p_local': local},
+    );
+    return Map<String, dynamic>.from(respuesta as Map);
+  }
+
+  @override
   Future<void> borrarPerfil(String perfilNube) async {
     await _sesion();
     await _cliente.from('perfiles').delete().eq('id', perfilNube);
   }
 
   @override
-  Future<void> enviarResultado(String perfilNube, ResultadoAula resultado) async {
+  Future<void> enviarResultado(
+    String perfilNube,
+    ResultadoAula resultado,
+  ) async {
     await _sesion();
     await _cliente
         .from('resultados')
@@ -195,7 +277,10 @@ class RepositorioAulaSupabase implements RepositorioAula {
   @override
   Future<bool> rankingActivo() async {
     await _sesion();
-    final fila = await _cliente.from('ajustes').select('ranking_activo').single();
+    final fila = await _cliente
+        .from('ajustes')
+        .select('ranking_activo')
+        .single();
     return fila['ranking_activo'] as bool;
   }
 

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidad · NaturalMente</title>
+  <meta name="description" content="Qué datos usa NaturalMente, para qué y cómo borrarlos.">
+  <style>
+    :root { color-scheme: light dark; --verde: #2f7a57; --tinta: #1d3528; --fondo: #faf5ec; --tarjeta: #ffffff; --tenue: #4b6155; }
+    @media (prefers-color-scheme: dark) { :root { --tinta: #ecf5ee; --fondo: #101e19; --tarjeta: #18291f; --tenue: #bfcec4; --verde: #7fd3a5; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--tinta); background: var(--fondo); }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+    h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 4px; }
+    h2 { font-size: 1.25rem; margin: 36px 0 8px; color: var(--verde); }
+    .fecha { color: var(--tenue); margin: 0 0 24px; }
+    .resumen { background: var(--tarjeta); border-radius: 16px; padding: 16px 20px; border: 2px solid color-mix(in srgb, var(--verde) 35%, transparent); }
+    .resumen li { margin: 4px 0; }
+    table { width: 100%; border-collapse: collapse; background: var(--tarjeta); border-radius: 12px; overflow: hidden; }
+    th, td { text-align: left; padding: 10px 12px; vertical-align: top; border-bottom: 1px solid color-mix(in srgb, var(--tinta) 12%, transparent); }
+    th { font-size: .95rem; }
+    a { color: var(--verde); }
+    .en { margin-top: 48px; padding-top: 16px; border-top: 2px solid color-mix(in srgb, var(--tinta) 15%, transparent); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Privacidad en NaturalMente</h1>
+  <p class="fecha">Última actualización: 28 de noviembre de 2026</p>
+
+  <div class="resumen">
+    <strong>En pocas palabras</strong>
+    <ul>
+      <li>Para jugar no hace falta cuenta y no se envía nada: todo se guarda en el dispositivo.</li>
+      <li>La sección opcional <strong>Aula</strong> usa internet para mostrar los juegos del profesor, el ranking del curso y guardar el progreso del niño.</li>
+      <li>Nunca pedimos el nombre real, el correo, fotos ni la ubicación del niño. Aparece solo con un <strong>mote</strong> generado (por ejemplo, «Zorro Veloz») y su tortuga Natu.</li>
+      <li>No hay anuncios, ni compras, ni analítica de terceros.</li>
+      <li>Al borrar un jugador en la app se borran también todos sus datos de la nube.</li>
+    </ul>
+  </div>
+
+  <h2>Quién es el responsable</h2>
+  <p>NaturalMente es una app educativa gratuita creada por un equipo de estudiantes de Ingeniería Informática de la Universidad de Valladolid, en colaboración con un colegio de Castilla y León. Para cualquier duda o para ejercer tus derechos, escríbenos a <a href="mailto:ivan.moro22@estudiantes.uva.es">ivan.moro22@estudiantes.uva.es</a>.</p>
+
+  <h2>Qué datos se usan y para qué</h2>
+  <table>
+    <thead><tr><th>Dato</th><th>Para qué</th><th>Dónde se guarda</th></tr></thead>
+    <tbody>
+      <tr><td>Progreso del juego: niveles superados, cromos, semillas, racha, ropa de Natu y curso elegido</td><td>Que el niño continúe donde lo dejó</td><td>En el dispositivo. Si se crea una llave mágica, también en la nube.</td></tr>
+      <tr><td>Mote generado y color del pañuelo de Natu</td><td>Distinguir a cada jugador en «¿Quién juega?» y en el ranking</td><td>En el dispositivo y, si usa Aula, en la nube</td></tr>
+      <tr><td>Identificador anónimo del dispositivo</td><td>Saber qué jugadores tiene vinculados cada dispositivo. No contiene datos de la persona.</td><td>En la nube, solo si se usa Aula</td></tr>
+      <tr><td>Resultados de los juegos de Aula (aciertos por pregunta y fecha)</td><td>Que el profesor vea qué preguntas cuestan más y calcular el ranking del curso</td><td>En la nube</td></tr>
+      <tr><td>Llave mágica (tres dibujos y un número)</td><td>Recuperar el jugador en otro dispositivo</td><td>Se guarda cifrada; ni el equipo ni el profesor pueden leerla</td></tr>
+      <tr><td>Datos del profesor: nombre, usuario, correo, juegos creados y fotos que sube</td><td>Crear y publicar los juegos de Aula</td><td>En la nube</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Quién puede ver cada cosa</h2>
+  <ul>
+    <li><strong>El profesor</strong> ve el mote de quien ha jugado a sus juegos y sus resultados. No sabe quién es cada niño, salvo que el niño se lo diga.</li>
+    <li><strong>Otros niños del mismo curso</strong> ven en el ranking el mote, la Natu y los puntos de cada jugador. El profesor puede desactivar el ranking.</li>
+    <li><strong>Nadie más.</strong> Las reglas de la base de datos impiden que un dispositivo vea los jugadores de otro.</li>
+  </ul>
+
+  <h2>Servicios que usamos</h2>
+  <ul>
+    <li><strong>Supabase</strong> guarda los datos de Aula en servidores de la Unión Europea (Frankfurt, Alemania), con conexión cifrada.</li>
+    <li><strong>Cloudflare</strong> sirve la web del panel del profesor. No recibe datos de los niños.</li>
+  </ul>
+  <p>No vendemos ni cedemos datos a nadie.</p>
+
+  <h2>Menores de edad</h2>
+  <p>NaturalMente está pensada para niños de 6 a 12 años. Para usar Aula, el niño no da ningún dato personal. Aun así, como menor de 14 años, debe usarla con el permiso de su madre, padre o tutor, o dentro de la actividad de su centro educativo.</p>
+
+  <h2>Cuánto tiempo se guardan y cómo borrarlos</h2>
+  <ul>
+    <li>Los datos del dispositivo se borran al borrar el jugador o al desinstalar la app.</li>
+    <li>Los datos de la nube se guardan mientras exista el jugador. En la app, entra en «¿Quién juega?», luego en «Cambiar mi Natu» y pulsa «Borrar este jugador»: se borran su perfil y todos sus resultados de la nube.</li>
+    <li>Los juegos del profesor se borran cuando él los elimina, junto con sus resultados y fotos.</li>
+  </ul>
+
+  <h2>Tus derechos</h2>
+  <p>Puedes pedirnos acceder a los datos, corregirlos, borrarlos o limitar su uso escribiendo a <a href="mailto:ivan.moro22@estudiantes.uva.es">ivan.moro22@estudiantes.uva.es</a>. Si crees que no los tratamos bien, puedes reclamar ante la <a href="https://www.aepd.es">Agencia Española de Protección de Datos</a>.</p>
+
+  <section class="en" lang="en">
+    <h2>Summary in English</h2>
+    <p>NaturalMente works fully offline without accounts. The optional <strong>Classroom</strong> section uses Supabase (servers in Frankfurt, EU) to show the teacher's games, a leaderboard per grade and to keep progress across devices. Children never provide their real name, email, photos or location: they appear only with a generated nickname and their Natu. There are no ads, purchases or third-party analytics. Deleting a player in the app also deletes all their cloud data. Contact: <a href="mailto:ivan.moro22@estudiantes.uva.es">ivan.moro22@estudiantes.uva.es</a>.</p>
+  </section>
+</main>
+</body>
+</html>

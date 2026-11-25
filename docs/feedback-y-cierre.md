@@ -31,7 +31,7 @@ Si el juego usa `JuegoPage`, la integración ya está en la pantalla compartida.
 
 ## Coordinar un paso antes de presentar el siguiente
 
-La coordinación descrita en [el plan de transiciones](plan-feedback-y-transiciones.md) se aplica a los 26 juegos y al reto diario. La clasificación sencilla avanza automáticamente; los montajes conservan el tablero; las adivinanzas, las explicaciones de especies y el reto diario esperan a **Continuar** cuando aún quedan pasos. El último paso conduce directamente al cierre automático.
+La coordinación descrita en [el plan de transiciones](plan-feedback-y-transiciones.md) se aplica a los 27 juegos y al reto diario. La clasificación sencilla avanza automáticamente; los montajes conservan el tablero; la carrera de relevos avanza sola en Fácil y Medio y espera a **Continuar** en Difícil para descubrir los animales; las adivinanzas, las explicaciones de especies y el reto diario esperan a **Continuar** cuando aún quedan pasos. El último paso conduce directamente al cierre automático.
 
 El mismo mixin proporciona estas operaciones adicionales:
 

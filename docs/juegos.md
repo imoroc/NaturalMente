@@ -59,6 +59,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Así se mueve
 - **Prioridad**: Extra.
+- **Estado**: implementado como «Carrera de relevos» (`carrera`, tipo `carrera`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (Vuela, nada o anda; Formas de moverse; Cada cuerpo, su movimiento) y textos en español e inglés. Modelo en `lib/modelo/carrera.dart`, reglas sin widgets en `lib/reglas/carrera.dart`, pantalla en `lib/ui/carrera.dart` y fondos de los tramos y lupa en `lib/ui/dibujos_carrera.dart`. No cuenta para la medalla.
+- **Cómo se juega**: una pista con tramos que no cambian de sitio (cielo arriba, agua abajo). Se arrastra cada corredor a un tramo, o se toca el corredor y luego el tramo, y se pulsa «¡Ya!». El relevo recorre la pista en orden: colocar no se evalúa, solo la salida. Tres relevos por nivel; el orden de la salida se baraja en cada uno para que la respuesta no caiga siempre en el mismo hueco.
+- **Niveles**: Fácil (1º-2º, «Todos somos animales»), tres tramos: vuela, anda y nada. Medio (3º «Cómo viven los animales»), cinco tramos: vuela, trepa, salta, repta y nada, con despistes como el murciélago o el pingüino. Difícil (5º-6º, vertebrados e invertebrados y adaptaciones), los mismos cinco tramos, pero cada corredor es una parte del cuerpo vista con lupa (alas de piel, uñas curvas, anillos con pelillos…); al llegar a la meta se descubre de qué animal era.
+- **Si no acierta (lo que hay en la app)**: el primero que no encaja se atasca, tiembla y vuelve a la salida. Natu dice qué pide el tramo y cómo se mueve ese corredor («Este tramo es el cielo: hay que volar. Yo nado moviendo la cola y las aletas.»); a la segunda añade su pista. Los demás se quedan donde estaban.
 - **Mecánica**: unir cada animal con su forma de moverse (vuela, nada, repta, salta, anda). En Difícil, unir la parte del cuerpo con el movimiento (aletas, alas, patas palmeadas).
 - **Si no acierta**: una animación corta del animal intentándolo. «La serpiente no tiene patas para saltar. Mira cómo se mueve».
 

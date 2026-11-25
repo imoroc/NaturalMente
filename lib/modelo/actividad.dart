@@ -7,6 +7,7 @@ import 'package:naturalmente/modelo/adivinanza.dart';
 import 'package:naturalmente/modelo/memoria.dart';
 import 'package:naturalmente/modelo/nacimiento.dart';
 import 'package:naturalmente/modelo/rescate.dart';
+import 'package:naturalmente/modelo/carrera.dart';
 
 
 class Opcion {
@@ -213,6 +214,7 @@ class Actividad {
     this.nacimiento,
     this.viaje,
     this.rescate,
+    this.carrera,
     this.memoria,
     this.adivinanza,
   });
@@ -241,6 +243,7 @@ class Actividad {
   final Nacimiento? nacimiento;
   final Viaje? viaje;
   final Rescate? rescate;
+  final Carrera? carrera;
   final Memoria? memoria;
   final Adivinanza? adivinanza;
 
@@ -251,6 +254,7 @@ class Actividad {
     if (tipo == 'nacimiento') return nacimiento != null;
     if (tipo == 'viaje') return viaje != null;
     if (tipo == 'rescate') return rescate != null;
+    if (tipo == 'carrera') return carrera != null;
     if (tipo == 'memoria') return memoria != null;
     if (tipo == 'adivinanza') return adivinanza != null;
     if (tipo == 'lugar') {
@@ -303,6 +307,9 @@ class Actividad {
       rescate: mapa['rescate'] == null
           ? null
           : Rescate.desdeMapa(mapa['rescate'] as Map<String, dynamic>),
+      carrera: mapa['carrera'] == null
+          ? null
+          : Carrera.desdeMapa(mapa['carrera'] as Map<String, dynamic>),
       memoria: mapa['memoria'] == null
           ? null
           : Memoria.desdeMapa(mapa['memoria'] as Map<String, dynamic>),
@@ -329,6 +336,7 @@ class Actividad {
       'nacimiento',
       'viaje',
       'rescate',
+      'carrera',
       'memoria',
       'adivinanza',
     ].contains(tipo)) {

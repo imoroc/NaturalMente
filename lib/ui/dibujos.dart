@@ -4180,6 +4180,13 @@ class _Ovalo extends StatelessWidget {
   }
 }
 
+/// Dibujo de cada cromo de «Carrera de relevos».
+const cromosCarrera = {
+  'vuela-nada-anda': 'gorrion-rama',
+  'formas-de-moverse': 'saltamontes-prado',
+  'cuerpo-movimiento': 'murcielago-noche',
+};
+
 class SpriteEspecieSantuario extends StatelessWidget {
   const SpriteEspecieSantuario({
     required this.id,
@@ -4277,6 +4284,8 @@ class SpriteEspecieSantuario extends StatelessWidget {
     if (id == 'nutrientes') {
       return DibujoBocado(estado: 'nutrientes', tamano: t);
     }
+    final corredor = cromosCarrera[id];
+    if (corredor != null) return DibujoNuevoJuego(id: corredor, tamano: t);
     if (idsNuevosJuegos.contains(id)) {
       return DibujoNuevoJuego(id: id, tamano: t);
     }
@@ -4342,6 +4351,13 @@ class IlustracionFicha extends StatelessWidget {
         return DibujoNuevoJuego(id: 'ardilla-pinar', tamano: alto);
       case 'vertebrados-invertebrados':
         return DibujoNuevoJuego(id: 'arana-tela', tamano: alto);
+      // Cromos de «Carrera de relevos».
+      case 'vuela-nada-anda':
+        return DibujoNuevoJuego(id: 'gorrion-rama', tamano: alto);
+      case 'formas-de-moverse':
+        return DibujoNuevoJuego(id: 'saltamontes-prado', tamano: alto);
+      case 'cuerpo-movimiento':
+        return DibujoNuevoJuego(id: 'murcielago-noche', tamano: alto);
     }
     // Cromos de «¿Cómo me siento?».
     final emocion = switch (id) {

@@ -59,6 +59,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Así se mueve
 - **Prioridad**: Extra.
+- **Estado**: implementado como «Carrera de relevos» (`carrera`, tipo `carrera`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (Vuela, nada o anda; Formas de moverse; Cada cuerpo, su movimiento) y textos en español e inglés. Modelo en `lib/modelo/carrera.dart`, reglas sin widgets en `lib/reglas/carrera.dart`, pantalla en `lib/ui/carrera.dart` y fondos de los tramos y lupa en `lib/ui/dibujos_carrera.dart`. No cuenta para la medalla.
+- **Cómo se juega**: una pista con tramos que no cambian de sitio (cielo arriba, agua abajo). Se arrastra cada corredor a un tramo, o se toca el corredor y luego el tramo, y se pulsa «¡Ya!». El relevo recorre la pista en orden: colocar no se evalúa, solo la salida. Tres relevos por nivel; el orden de la salida se baraja en cada uno para que la respuesta no caiga siempre en el mismo hueco.
+- **Niveles**: Fácil (1º-2º, «Todos somos animales»), tres tramos: vuela, anda y nada. Medio (3º «Cómo viven los animales»), cinco tramos: vuela, trepa, salta, repta y nada, con despistes como el murciélago o el pingüino. Difícil (5º-6º, vertebrados e invertebrados y adaptaciones), los mismos cinco tramos, pero cada corredor es una parte del cuerpo vista con lupa (alas de piel, uñas curvas, anillos con pelillos…); al llegar a la meta se descubre de qué animal era.
+- **Si no acierta (lo que hay en la app)**: el primero que no encaja se atasca, tiembla y vuelve a la salida. Natu dice qué pide el tramo y cómo se mueve ese corredor («Este tramo es el cielo: hay que volar. Yo nado moviendo la cola y las aletas.»); a la segunda añade su pista. Los demás se quedan donde estaban.
 - **Mecánica**: unir cada animal con su forma de moverse (vuela, nada, repta, salta, anda). En Difícil, unir la parte del cuerpo con el movimiento (aletas, alas, patas palmeadas).
 - **Si no acierta**: una animación corta del animal intentándolo. «La serpiente no tiene patas para saltar. Mira cómo se mueve».
 
@@ -230,6 +234,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Zoom: de la célula al cuerpo
 - **Prioridad**: Extra.
+- **Estado**: implementado como «Linterna y microscopio» (`linterna`, tipo `linterna`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (Las partes del cuerpo; Huesos y articulaciones; Las partes de la célula) y textos en español e inglés. Modelo en `lib/modelo/linterna.dart`, reglas sin widgets en `lib/reglas/linterna.dart`, pantalla en `lib/ui/linterna.dart` y escenas en `lib/ui/dibujos_linterna.dart`. No cuenta para la medalla.
+- **Cómo se juega**: un dibujo a oscuras y una luz que se arrastra por él. Arriba, la lista de lo que hay que buscar, siempre en el mismo orden; se busca de uno en uno. Mover la luz no se evalúa: se toca el dibujo donde está lo que se pide. Lo encontrado se queda encendido y, al terminar la escena, se enciende la luz entera y se espera a **Continuar**. Tres escenas por nivel. La respuesta está cada vez en un sitio distinto del dibujo, así que no cae siempre en el mismo hueco.
+- **Niveles**: Fácil (1º-2º, partes grandes del cuerpo) con una linterna: cabeza, tronco, brazos y piernas; cuello, manos y pies; ojos, nariz, boca y orejas. Medio (3º-4º) con rayos X: cráneo, costillas y columna; hombro, codo y rodilla; cerebro, corazón y pulmones, y qué hueso los protege. Difícil (5º-6º, la célula) con un microscopio: membrana, citoplasma y núcleo de una célula animal; pared celular, cloroplastos, vacuola y núcleo de una célula vegetal; y célula, tejido, órgano y aparato.
+- **Si no acierta (lo que hay en la app)**: tocar donde no hay nada de la lista no cuenta y Natu pide seguir buscando. Tocar otra cosa de la lista cuenta como intento: Natu dice qué es («Eso es el tronco.») y a la segunda añade dónde buscar («Busca arriba del todo, encima del cuello.»).
 - **Mecánica**: pellizcando la pantalla se pasa de célula a tejido, órgano, aparato y cuerpo. Después, ordenar esos niveles.
 - **Niveles**: solo Difícil.
 

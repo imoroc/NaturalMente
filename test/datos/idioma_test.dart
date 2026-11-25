@@ -81,6 +81,8 @@ void main() {
       'dibujo',
       'icono',
       'candidatos',
+      'tramo',
+      'herramienta',
     };
     void comprobar(Object? valor, [String campo = '']) {
       if (valor is Map) {

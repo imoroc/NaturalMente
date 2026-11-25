@@ -7292,6 +7292,72 @@ class DatosEnciclopedicosFicha {
         datoCientifico: 'El esqueleto de una persona adulta suele tener 206 huesos; el fémur es el hueso más largo y uno de los más resistentes.',
         tipoMovimiento: 'pulso',
       ),
+      'vuela-nada-anda' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Animales · Formas de moverse',
+        habitatOSistema: 'Cielo, prado y agua',
+        locomocionOFuncion:
+            'Las aves vuelan con alas, los peces nadan con aletas y muchos mamíferos andan o corren con patas',
+        alimentacionOProceso:
+            'Cada animal busca su comida moviéndose por el medio en el que vive',
+        datoCientifico:
+            'El pato sabe andar, nadar y volar: por eso puede vivir junto al agua y viajar lejos.',
+        tipoMovimiento: 'vuelo',
+      ),
+      'formas-de-moverse' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Animales · Desplazamiento',
+        habitatOSistema: 'Árboles, rocas, suelo, túneles y agua',
+        locomocionOFuncion:
+            'Volar, nadar, andar, trepar, saltar y reptar',
+        alimentacionOProceso:
+            'Moverse bien ayuda a buscar comida, huir de un peligro y encontrar refugio',
+        datoCientifico:
+            'La lombriz no tiene patas: avanza estirando y encogiendo los anillos de su cuerpo.',
+        tipoMovimiento: 'salto',
+      ),
+      'cuerpo-movimiento' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Vertebrados e invertebrados · Adaptaciones',
+        habitatOSistema: 'Cada animal en su medio: aire, tierra o agua',
+        locomocionOFuncion:
+            'Alas con plumas o de piel, aletas, patas largas, uñas curvas, anillos o un pie con baba',
+        alimentacionOProceso:
+            'La forma del cuerpo está adaptada al movimiento que necesita cada animal para vivir',
+        datoCientifico:
+            'El pingüino es un ave, pero sus alas cortas y duras funcionan como aletas bajo el agua.',
+        tipoMovimiento: 'nado',
+      ),
+      'partes-del-cuerpo' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Cuerpo humano · Partes del cuerpo',
+        habitatOSistema: 'Cabeza, tronco y extremidades',
+        locomocionOFuncion:
+            'Los brazos y las piernas son las extremidades: con ellas nos movemos, cogemos cosas y andamos',
+        alimentacionOProceso:
+            'El cuello une la cabeza con el tronco y deja girarla',
+        datoCientifico:
+            'Cada mano tiene cinco dedos y cada pie también: en total, veinte dedos.',
+        tipoMovimiento: 'paso',
+      ),
+      'huesos-articulaciones' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Cuerpo humano · Aparato locomotor',
+        habitatOSistema: 'Esqueleto: cráneo, columna, costillas y huesos de brazos y piernas',
+        locomocionOFuncion:
+            'Las articulaciones, como el hombro, el codo y la rodilla, dejan doblar el cuerpo',
+        alimentacionOProceso:
+            'El cráneo protege el cerebro y las costillas protegen el corazón y los pulmones',
+        datoCientifico:
+            'Un bebé nace con unos 300 huesos; al crecer, algunos se unen y quedan 206.',
+        tipoMovimiento: 'salto',
+      ),
+      'partes-de-la-celula' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Seres vivos · La célula',
+        habitatOSistema: 'Célula, tejido, órgano y aparato',
+        locomocionOFuncion:
+            'Membrana, citoplasma y núcleo; las células vegetales tienen además pared celular, cloroplastos y una vacuola grande',
+        alimentacionOProceso:
+            'Muchas células iguales forman un tejido, varios tejidos forman un órgano y varios órganos forman un aparato',
+        datoCientifico:
+            'El microscopio permitió ver las células por primera vez hace más de 350 años, en un trozo de corcho.',
+        tipoMovimiento: 'pulso',
+      ),
       _ => const DatosEnciclopedicosFicha(
         clasificacion: 'Ciencias de la Naturaleza · Salud y Vida',
         habitatOSistema: 'Cuerpo humano y funciones vitales',

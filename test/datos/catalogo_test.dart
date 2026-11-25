@@ -209,6 +209,16 @@ void main() {
           actividad.rescate!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.tipo == 'linterna') {
+        expect(
+          actividad.linterna!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
+      } else if (actividad.tipo == 'carrera') {
+        expect(
+          actividad.carrera!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
       } else if (actividad.tipo == 'viaje') {
         expect(
           actividad.viaje!.niveles.map((n) => n.id).toList(),
@@ -277,11 +287,11 @@ void main() {
     }
   });
 
-  test('el álbum tiene 85 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 85);
-    expect(catalogo.fichasDe('reserva').length, 29);
+  test('el álbum tiene 91 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 91);
+    expect(catalogo.fichasDe('reserva').length, 32);
     expect(catalogo.fichasDe('invernadero').length, 26);
-    expect(catalogo.fichasDe('cuerpo').length, 30);
+    expect(catalogo.fichasDe('cuerpo').length, 33);
 
     SharedPreferences.setMockInitialValues({});
     final progreso = await Progreso.abrir();
@@ -398,6 +408,8 @@ void main() {
     for (final (juegoId, cromos) in const [
       ('memoria-plantas', ['cada-parte-su-trabajo', 'asi-vive-una-planta', 'la-flor-por-dentro']),
       ('quien-soy', ['pelo-plumas-escamas', 'como-viven-animales', 'vertebrados-invertebrados']),
+      ('carrera', ['vuela-nada-anda', 'formas-de-moverse', 'cuerpo-movimiento']),
+      ('linterna', ['partes-del-cuerpo', 'huesos-articulaciones', 'partes-de-la-celula']),
     ]) {
       final juego = catalogo.actividades.firstWhere((a) => a.id == juegoId);
       await progreso.marcarNivelJuego(juego, 'facil');

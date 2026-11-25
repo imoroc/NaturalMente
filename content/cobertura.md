@@ -10,14 +10,14 @@ No se copia una frase de las guías. Lo de Tierra y universo no está aquí a pr
 
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
-| Cómo se desplazan | 1º-2º | Picos, dientes y huellas (Difícil): huellas y patas | dieta; branquias |
+| Cómo se desplazan | 1º-2º | Carrera de relevos (Fácil y Medio): volar, andar, nadar, trepar, saltar y reptar. Picos, dientes y huellas (Difícil): huellas y patas | carrera; vuela-nada-anda, formas-de-moverse. dieta; branquias |
 | Cómo nacen y qué comen, muy simple | 1º-2º | ¿Huevo o barriga? (Fácil): cómo nacen. Picos, dientes y huellas (Fácil): qué comen | nacimiento; huevo. dieta; herbivoro |
 | Cuidar a los animales, plásticos | 1º-2º | Cuida la reserva (Fácil y Medio): recoger basura y separar residuos | cuida-reserva; menos-plasticos, separar-residuos |
 | Mamíferos y aves | 1º-2º | ¿Huesos o caparazón? (Medio) | grupos; anfibio |
 | Peces, reptiles y anfibios | 3º-4º | ¿Huesos o caparazón? (Medio) | grupos; anfibio |
 | Invertebrados e insectos | 3º-4º | ¿Huesos o caparazón? (Fácil y Difícil) | grupos; vertebrado, artropodo |
 | Hábitat: desierto, mar, polo, bosque | 1º-2º | Cada uno a su hogar | |
-| Adaptaciones (frío, agua, comida) | 3º-4º | Cada uno a su hogar (Medio y Difícil); Picos, dientes y huellas (Medio) | hogar; dieta; pico-garra |
+| Adaptaciones (frío, agua, comida) | 3º-4º | Cada uno a su hogar (Medio y Difícil); Picos, dientes y huellas (Medio); Carrera de relevos (Difícil): la parte del cuerpo y su movimiento | hogar; dieta; pico-garra; carrera; cuerpo-movimiento |
 | Ciclo de vida | 3º-4º | ¿Huevo o barriga? (Medio y Difícil): ciclos de la rana y la mariposa | nacimiento; renacuajo, mariposa |
 | Vertebrados e invertebrados con ejemplos | 5º-6º | ¿Huesos o caparazón? | grupos; vertebrado, artropodo |
 | Especies del entorno y cuidado | 5º-6º | Cuida la reserva (Difícil): especies amenazadas | cuida-reserva; especies-amenazadas |
@@ -43,15 +43,16 @@ El juego principal es «Laboratorio de germinación». La luz como energía y el
 
 | Tema | Curso | Título nuestro | Id cuando exista |
 | --- | --- | --- | --- |
-| Partes grandes del cuerpo | 1º-2º | | |
+| Partes grandes del cuerpo | 1º-2º | Linterna y microscopio (Fácil): cabeza, tronco, extremidades, cuello, manos, pies y la cara | linterna; partes-del-cuerpo |
 | Los cinco sentidos | 1º-2º | Los cinco sentidos | sentidos; sentidos, avisos |
 | Higiene y hábitos | 1º-2º | ¿Me cuida o no? (Fácil): manos, dientes, merienda y juego | habitos; higiene |
 | Un plato que cuida | 1º-2º | Un plato que cuida (Fácil y Medio): merienda de cada día y plato por partes | plato; merienda, plato-equilibrado |
 | Corazón, pulmones y estómago | 3º-4º | Cada pieza en su sitio | |
+| Huesos y articulaciones | 3º-4º | Linterna y microscopio (Medio): cráneo, costillas, columna, hombro, codo, rodilla y qué protege cada hueso | linterna; huesos-articulaciones |
 | Camino de la comida | 3º-4º | El viaje de la comida | digestion; dientes, aparato-digestivo, nutrientes |
 | Descanso y movimiento | 3º-4º | ¿Me cuida o no? (Medio): sueño, pantallas, actividad física y calma | habitos; descanso |
 | Emociones, en una ficha corta | 3º-4º | ¿Cómo me siento? (los tres niveles) | emociones; emociones, nombrar-emociones, empatia |
-| La célula | 5º-6º | | |
+| La célula | 5º-6º | Linterna y microscopio (Difícil): célula animal y vegetal; célula, tejido, órgano y aparato | linterna; partes-de-la-celula |
 | El cerebro y los sentidos | 5º-6º | Los cinco sentidos (Difícil) | sentidos; reflejo |
 | Leer una etiqueta de alimento | 5º-6º | Un plato que cuida (Difícil): azúcar, sal y grasa en 100 g | plato; etiqueta |
 | Reproducción: células, útero, nacimiento, cuidados | 5º-6º | Así empieza una vida | |

@@ -15,6 +15,7 @@ import 'package:naturalmente/ui/dibujos_sentidos.dart';
 import 'package:naturalmente/ui/dibujos_plato.dart';
 import 'package:naturalmente/ui/dibujos_rescate.dart';
 import 'package:naturalmente/ui/dibujos_vivo.dart';
+import 'package:naturalmente/ui/dibujos_linterna.dart';
 import 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 export 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 export 'package:naturalmente/ui/dibujos_plato.dart';
@@ -4190,6 +4191,20 @@ class _Ovalo extends StatelessWidget {
   }
 }
 
+/// Escena de cada cromo de «Linterna y microscopio».
+const cromosLinterna = {
+  'partes-del-cuerpo': 'nino',
+  'huesos-articulaciones': 'esqueleto',
+  'partes-de-la-celula': 'celula-animal',
+};
+
+/// Dibujo de cada cromo de «Carrera de relevos».
+const cromosCarrera = {
+  'vuela-nada-anda': 'gorrion-rama',
+  'formas-de-moverse': 'saltamontes-prado',
+  'cuerpo-movimiento': 'murcielago-noche',
+};
+
 class SpriteEspecieSantuario extends StatelessWidget {
   const SpriteEspecieSantuario({
     required this.id,
@@ -4287,6 +4302,10 @@ class SpriteEspecieSantuario extends StatelessWidget {
     if (id == 'nutrientes') {
       return DibujoBocado(estado: 'nutrientes', tamano: t);
     }
+    final corredor = cromosCarrera[id];
+    if (corredor != null) return DibujoNuevoJuego(id: corredor, tamano: t);
+    final escena = cromosLinterna[id];
+    if (escena != null) return MiniaturaLinterna(dibujo: escena, alto: t);
     if (idsNuevosJuegos.contains(id)) {
       return DibujoNuevoJuego(id: id, tamano: t);
     }
@@ -4352,6 +4371,18 @@ class IlustracionFicha extends StatelessWidget {
         return DibujoNuevoJuego(id: 'ardilla-pinar', tamano: alto);
       case 'vertebrados-invertebrados':
         return DibujoNuevoJuego(id: 'arana-tela', tamano: alto);
+      // Cromos de «Carrera de relevos».
+      case 'vuela-nada-anda':
+        return DibujoNuevoJuego(id: 'gorrion-rama', tamano: alto);
+      case 'formas-de-moverse':
+        return DibujoNuevoJuego(id: 'saltamontes-prado', tamano: alto);
+      case 'cuerpo-movimiento':
+        return DibujoNuevoJuego(id: 'murcielago-noche', tamano: alto);
+      // Cromos de «Linterna y microscopio».
+      case 'partes-del-cuerpo' ||
+          'huesos-articulaciones' ||
+          'partes-de-la-celula':
+        return MiniaturaLinterna(dibujo: cromosLinterna[id]!, alto: alto);
     }
     // Cromos de «¿Cómo me siento?».
     final emocion = switch (id) {

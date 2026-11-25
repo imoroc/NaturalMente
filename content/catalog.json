@@ -732,6 +732,33 @@
       "curiosidad": "Un gesto pequeño, como invitar a alguien a jugar, puede cambiarle el día."
     },
     {
+      "id": "partes-del-cuerpo",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Las partes del cuerpo",
+      "frase": "El cuerpo tiene tres partes grandes: la cabeza, el tronco y las extremidades, que son los brazos y las piernas.",
+      "curiosidad": "El cuello une la cabeza con el tronco y te deja girarla para mirar a los lados."
+    },
+    {
+      "id": "huesos-articulaciones",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Huesos y articulaciones",
+      "frase": "Los huesos forman el esqueleto, que sostiene el cuerpo y protege el cerebro, el corazón y los pulmones.",
+      "curiosidad": "Donde se unen dos huesos hay una articulación. Gracias a ella puedes doblar el codo o la rodilla."
+    },
+    {
+      "id": "partes-de-la-celula",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Las partes de la célula",
+      "frase": "La célula tiene membrana, citoplasma y núcleo. Muchas células forman tejidos, los tejidos forman órganos y los órganos forman aparatos.",
+      "curiosidad": "Las células de las plantas tienen además una pared dura y cloroplastos verdes, que fabrican su alimento con la luz."
+    },
+    {
       "id": "cada-parte-su-trabajo",
       "zona": "invernadero",
       "curso": "1º-2º",
@@ -784,6 +811,33 @@
       "titulo": "Vertebrados e invertebrados",
       "frase": "Los vertebrados tienen columna vertebral; los invertebrados, como insectos, arañas o caracoles, no.",
       "curiosidad": "El pulpo es un invertebrado muy listo: sabe abrir frascos con sus brazos."
+    },
+    {
+      "id": "vuela-nada-anda",
+      "zona": "reserva",
+      "curso": "1º-2º",
+      "juego": "Carrera de relevos",
+      "titulo": "Vuela, nada o anda",
+      "frase": "Los animales se mueven de formas distintas: unos vuelan, otros nadan y otros andan o corren.",
+      "curiosidad": "El pato sabe andar, nadar y volar."
+    },
+    {
+      "id": "formas-de-moverse",
+      "zona": "reserva",
+      "curso": "3º-4º",
+      "juego": "Carrera de relevos",
+      "titulo": "Formas de moverse",
+      "frase": "Además de volar, nadar y andar, hay animales que trepan, saltan o reptan.",
+      "curiosidad": "La culebra no tiene patas, pero puede subir a un árbol enroscándose en el tronco."
+    },
+    {
+      "id": "cuerpo-movimiento",
+      "zona": "reserva",
+      "curso": "5º-6º",
+      "juego": "Carrera de relevos",
+      "titulo": "Cada cuerpo, su movimiento",
+      "frase": "Alas, aletas, patas largas o un pie con baba: el cuerpo de cada animal está adaptado a su forma de moverse.",
+      "curiosidad": "El pingüino es un ave que no vuela: sus alas se han convertido en aletas."
     }
   ],
   "actividades": [
@@ -11330,6 +11384,1261 @@
                   "lombriz"
                 ],
                 "frase": "¡Sí, soy la abeja! Soy un insecto y ayudo a polinizar las flores."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "carrera",
+      "zona": "reserva",
+      "tipo": "carrera",
+      "titulo": "Carrera de relevos",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Coloca a cada corredor en el tramo donde mejor se mueve y pulsa «¡Ya!».",
+      "carrera": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Tres tramos: cielo, prado y agua. ¿Quién vuela, quién anda y quién nada?",
+            "intro": "Arrastra cada animal a su tramo, o tócalo y después toca el tramo. Cuando estén todos, pulsa «¡Ya!».",
+            "curiosidad": "El pato sabe hacer las tres cosas: anda por la orilla, nada en el estanque y vuela muy lejos.",
+            "despedida": "¡Carrera terminada! Cada animal se mueve como mejor sabe.",
+            "tramos": [
+              {
+                "id": "vuela",
+                "nombre": "Vuela",
+                "reto": "Este tramo es el cielo: hay que volar."
+              },
+              {
+                "id": "anda",
+                "nombre": "Anda",
+                "reto": "Este tramo es el prado: hay que andar o correr."
+              },
+              {
+                "id": "nada",
+                "nombre": "Nada",
+                "reto": "Este tramo es el agua: hay que nadar."
+              }
+            ],
+            "rondas": [
+              {
+                "id": "facil-1",
+                "bien": "¡Relevo completado! El gorrión vuela, el caballo corre y la trucha nada.",
+                "corredores": [
+                  {
+                    "id": "gorrion-rama",
+                    "nombre": "Gorrión",
+                    "dibujo": "gorrion-rama",
+                    "tramo": "vuela",
+                    "como": "Yo muevo mis alas para volar.",
+                    "pista": "Busca un tramo donde pueda abrir las alas."
+                  },
+                  {
+                    "id": "caballo-galope",
+                    "nombre": "Caballo",
+                    "dibujo": "caballo-galope",
+                    "tramo": "anda",
+                    "como": "Yo corro con mis cuatro patas.",
+                    "pista": "Busca suelo firme para mis patas."
+                  },
+                  {
+                    "id": "trucha-arroyo",
+                    "nombre": "Trucha",
+                    "dibujo": "trucha-arroyo",
+                    "tramo": "nada",
+                    "como": "Yo nado moviendo la cola y las aletas.",
+                    "pista": "Sin agua no puedo moverme."
+                  }
+                ]
+              },
+              {
+                "id": "facil-2",
+                "bien": "¡Relevo completado! La mariposa vuela, el ciervo corre y el delfín nada.",
+                "corredores": [
+                  {
+                    "id": "mariposa-flor",
+                    "nombre": "Mariposa",
+                    "dibujo": "mariposa-flor",
+                    "tramo": "vuela",
+                    "como": "Yo vuelo con cuatro alas de colores.",
+                    "pista": "Necesito aire para batir las alas."
+                  },
+                  {
+                    "id": "ciervo-bellota",
+                    "nombre": "Ciervo",
+                    "dibujo": "ciervo-bellota",
+                    "tramo": "anda",
+                    "como": "Yo camino y corro con mis patas largas.",
+                    "pista": "Busca hierba y suelo firme."
+                  },
+                  {
+                    "id": "delfin",
+                    "nombre": "Delfín",
+                    "dibujo": "delfin",
+                    "tramo": "nada",
+                    "como": "Yo nado con mi cola y subo a respirar.",
+                    "pista": "Busca un tramo con mucha agua."
+                  }
+                ]
+              },
+              {
+                "id": "facil-3",
+                "bien": "¡Relevo completado! La cigüeña vuela, el oso anda y la sardina nada.",
+                "corredores": [
+                  {
+                    "id": "ciguena-nido",
+                    "nombre": "Cigüeña",
+                    "dibujo": "ciguena-nido",
+                    "tramo": "vuela",
+                    "como": "Yo vuelo muy alto con mis alas grandes.",
+                    "pista": "Mis alas me llevan por el aire."
+                  },
+                  {
+                    "id": "oso-pardo",
+                    "nombre": "Oso pardo",
+                    "dibujo": "oso-pardo",
+                    "tramo": "anda",
+                    "como": "Yo camino con mis patas fuertes.",
+                    "pista": "Busca un tramo de tierra."
+                  },
+                  {
+                    "id": "sardina-banco",
+                    "nombre": "Sardina",
+                    "dibujo": "sardina-banco",
+                    "tramo": "nada",
+                    "como": "Yo nado en grupo con mis aletas.",
+                    "pista": "Vivo siempre dentro del agua."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Cinco tramos: volar, trepar, saltar, reptar y nadar. Hay animales que despistan.",
+            "intro": "Coloca a los cinco corredores y pulsa «¡Ya!». Ojo: algunos animales se mueven de forma sorprendente.",
+            "curiosidad": "La pulga puede saltar más de cien veces lo que mide su cuerpo.",
+            "despedida": "¡Carrera terminada! Volar, trepar, saltar, reptar y nadar: cada animal tiene su forma de moverse.",
+            "tramos": [
+              {
+                "id": "vuela",
+                "nombre": "Vuela",
+                "reto": "Este tramo es el cielo: hay que volar."
+              },
+              {
+                "id": "trepa",
+                "nombre": "Trepa",
+                "reto": "Este tramo sube muy empinado: hay que trepar."
+              },
+              {
+                "id": "salta",
+                "nombre": "Salta",
+                "reto": "Este tramo tiene charcos y piedras: hay que saltar."
+              },
+              {
+                "id": "repta",
+                "nombre": "Repta",
+                "reto": "Este tramo es un túnel muy bajo: hay que reptar."
+              },
+              {
+                "id": "nada",
+                "nombre": "Nada",
+                "reto": "Este tramo es el agua: hay que nadar."
+              }
+            ],
+            "rondas": [
+              {
+                "id": "medio-1",
+                "bien": "¡Relevo completado! El murciélago vuela aunque es un mamífero, y el pingüino nada aunque es un ave.",
+                "corredores": [
+                  {
+                    "id": "murcielago-noche",
+                    "nombre": "Murciélago",
+                    "dibujo": "murcielago-noche",
+                    "tramo": "vuela",
+                    "como": "Soy un mamífero, pero vuelo con alas de piel.",
+                    "pista": "Mis brazos son alas: busca el aire."
+                  },
+                  {
+                    "id": "ardilla-pinar",
+                    "nombre": "Ardilla",
+                    "dibujo": "ardilla-pinar",
+                    "tramo": "trepa",
+                    "como": "Yo subo por los troncos con mis uñas.",
+                    "pista": "Busca un sitio alto para agarrarme."
+                  },
+                  {
+                    "id": "saltamontes-prado",
+                    "nombre": "Saltamontes",
+                    "dibujo": "saltamontes-prado",
+                    "tramo": "salta",
+                    "como": "Yo doy grandes saltos con mis patas de atrás.",
+                    "pista": "Mis patas traseras son mis muelles."
+                  },
+                  {
+                    "id": "serpiente",
+                    "nombre": "Culebra",
+                    "dibujo": "serpiente",
+                    "tramo": "repta",
+                    "como": "Yo no tengo patas: me arrastro moviendo el cuerpo.",
+                    "pista": "Busca un tramo pegado al suelo."
+                  },
+                  {
+                    "id": "pinguino",
+                    "nombre": "Pingüino",
+                    "dibujo": "pinguino",
+                    "tramo": "nada",
+                    "como": "Soy un ave, pero no vuelo: nado con mis alas.",
+                    "pista": "Mis alas son como remos."
+                  }
+                ]
+              },
+              {
+                "id": "medio-2",
+                "bien": "¡Relevo completado! La rana y la lombriz no tienen alas, pero cada una avanza a su manera.",
+                "corredores": [
+                  {
+                    "id": "aguila-real",
+                    "nombre": "Águila",
+                    "dibujo": "aguila-real",
+                    "tramo": "vuela",
+                    "como": "Yo planeo muy alto con mis alas.",
+                    "pista": "Mis alas me sostienen en el aire."
+                  },
+                  {
+                    "id": "cabra-montes",
+                    "nombre": "Cabra montés",
+                    "dibujo": "cabra-montes",
+                    "tramo": "trepa",
+                    "como": "Yo subo por las rocas con mis pezuñas.",
+                    "pista": "Me gustan los sitios empinados."
+                  },
+                  {
+                    "id": "rana-charca",
+                    "nombre": "Rana",
+                    "dibujo": "rana-charca",
+                    "tramo": "salta",
+                    "como": "Yo salto con mis patas de atrás, que son muy largas.",
+                    "pista": "Mis patas traseras me lanzan lejos."
+                  },
+                  {
+                    "id": "lombriz-tierra",
+                    "nombre": "Lombriz",
+                    "dibujo": "lombriz-tierra",
+                    "tramo": "repta",
+                    "como": "Yo me estiro y me encojo para avanzar.",
+                    "pista": "Avanzo pegada al suelo."
+                  },
+                  {
+                    "id": "salmon-rio",
+                    "nombre": "Salmón",
+                    "dibujo": "salmon-rio",
+                    "tramo": "nada",
+                    "como": "Yo nado contra la corriente del río.",
+                    "pista": "Necesito agua para moverme."
+                  }
+                ]
+              },
+              {
+                "id": "medio-3",
+                "bien": "¡Relevo completado! El caballito de mar también es un pez, aunque nade de pie.",
+                "corredores": [
+                  {
+                    "id": "abeja-colmena",
+                    "nombre": "Abeja",
+                    "dibujo": "abeja-colmena",
+                    "tramo": "vuela",
+                    "como": "Yo vuelo de flor en flor con alas finas.",
+                    "pista": "Mis alas zumban en el aire."
+                  },
+                  {
+                    "id": "escarabajo-corteza",
+                    "nombre": "Escarabajo",
+                    "dibujo": "escarabajo-corteza",
+                    "tramo": "trepa",
+                    "como": "Yo subo por la corteza con mis seis patas.",
+                    "pista": "Mis patas tienen ganchitos para agarrarme."
+                  },
+                  {
+                    "id": "conejo-prado",
+                    "nombre": "Conejo",
+                    "dibujo": "conejo-prado",
+                    "tramo": "salta",
+                    "como": "Yo avanzo a saltos con mis patas de atrás.",
+                    "pista": "Mis patas traseras son largas y fuertes."
+                  },
+                  {
+                    "id": "caracol-huerta",
+                    "nombre": "Caracol",
+                    "dibujo": "caracol-huerta",
+                    "tramo": "repta",
+                    "como": "Yo me deslizo despacio sobre mi baba.",
+                    "pista": "Mi pie resbala pegado al suelo."
+                  },
+                  {
+                    "id": "caballito-mar",
+                    "nombre": "Caballito de mar",
+                    "dibujo": "caballito-mar",
+                    "tramo": "nada",
+                    "como": "Yo nado de pie moviendo una aleta pequeña.",
+                    "pista": "Vivo en el mar."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "lupa": true,
+            "resumen": "Con la lupa solo ves una parte del cuerpo. ¿Para qué movimiento sirve?",
+            "intro": "Mira cada parte del cuerpo con la lupa y llévala al tramo donde le sirve. Al terminar el relevo sabrás de quién era.",
+            "curiosidad": "Las alas del murciélago son sus manos: tiene los mismos huesos que nosotros, pero con dedos larguísimos.",
+            "despedida": "¡Carrera terminada! La forma del cuerpo de cada animal explica cómo se mueve.",
+            "tramos": [
+              {
+                "id": "vuela",
+                "nombre": "Vuela",
+                "reto": "Este tramo es el cielo: hay que volar."
+              },
+              {
+                "id": "trepa",
+                "nombre": "Trepa",
+                "reto": "Este tramo sube muy empinado: hay que trepar."
+              },
+              {
+                "id": "salta",
+                "nombre": "Salta",
+                "reto": "Este tramo tiene charcos y piedras: hay que saltar."
+              },
+              {
+                "id": "repta",
+                "nombre": "Repta",
+                "reto": "Este tramo es un túnel muy bajo: hay que reptar."
+              },
+              {
+                "id": "nada",
+                "nombre": "Nada",
+                "reto": "Este tramo es el agua: hay que nadar."
+              }
+            ],
+            "rondas": [
+              {
+                "id": "dificil-1",
+                "bien": "¡Relevo completado! Era el equipo del águila, la ardilla, la rana, la culebra y la trucha. Cada cuerpo está hecho para moverse en su medio.",
+                "corredores": [
+                  {
+                    "id": "aguila-real",
+                    "nombre": "Águila",
+                    "dibujo": "aguila-real",
+                    "tramo": "vuela",
+                    "como": "Mis plumas largas atrapan el aire y me sostienen.",
+                    "pista": "Las plumas largas sirven para volar.",
+                    "parte": "Alas con plumas largas",
+                    "lupa": {
+                      "x": 0.15,
+                      "y": 0.3,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "ardilla-pinar",
+                    "nombre": "Ardilla",
+                    "dibujo": "ardilla-pinar",
+                    "tramo": "trepa",
+                    "como": "Mis uñas curvas se clavan en la corteza.",
+                    "pista": "Las uñas curvas sirven para agarrarse.",
+                    "parte": "Uñas curvas y afiladas",
+                    "lupa": {
+                      "x": 0.42,
+                      "y": 0.76,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "rana-charca",
+                    "nombre": "Rana",
+                    "dibujo": "rana-charca",
+                    "tramo": "salta",
+                    "como": "Mis patas largas se estiran como un muelle.",
+                    "pista": "Unas patas muy largas impulsan el cuerpo.",
+                    "parte": "Patas traseras muy largas",
+                    "lupa": {
+                      "x": 0.16,
+                      "y": 0.82,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "serpiente",
+                    "nombre": "Culebra",
+                    "dibujo": "serpiente",
+                    "tramo": "repta",
+                    "como": "Las escamas de mi vientre se apoyan en el suelo para empujar.",
+                    "pista": "Sin patas, el vientre es lo que toca el suelo.",
+                    "parte": "Escamas en el vientre",
+                    "lupa": {
+                      "x": 0.4,
+                      "y": 0.62,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "trucha-arroyo",
+                    "nombre": "Trucha",
+                    "dibujo": "trucha-arroyo",
+                    "tramo": "nada",
+                    "como": "Mi cola empuja el agua y las aletas me guían.",
+                    "pista": "Las aletas solo sirven dentro del agua.",
+                    "parte": "Aletas y cola",
+                    "lupa": {
+                      "x": 0.12,
+                      "y": 0.42,
+                      "zoom": 2.2
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "dificil-2",
+                "bien": "¡Relevo completado! Era el equipo del murciélago, la cabra montés, el saltamontes, la lombriz y el pingüino. Unas alas también pueden servir para nadar.",
+                "corredores": [
+                  {
+                    "id": "murcielago-noche",
+                    "nombre": "Murciélago",
+                    "dibujo": "murcielago-noche",
+                    "tramo": "vuela",
+                    "como": "La piel tensa entre mis dedos largos forma un ala.",
+                    "pista": "Es un ala, aunque no tenga plumas.",
+                    "parte": "Alas de piel entre los dedos",
+                    "lupa": {
+                      "x": 0.17,
+                      "y": 0.38,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "cabra-montes",
+                    "nombre": "Cabra montés",
+                    "dibujo": "cabra-montes",
+                    "tramo": "trepa",
+                    "como": "Mis pezuñas tienen un borde duro y una almohadilla que no resbala.",
+                    "pista": "Para subir por las rocas, lo importante es no resbalar.",
+                    "parte": "Pezuñas con almohadilla",
+                    "lupa": {
+                      "x": 0.3,
+                      "y": 0.66,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "saltamontes-prado",
+                    "nombre": "Saltamontes",
+                    "dibujo": "saltamontes-prado",
+                    "tramo": "salta",
+                    "como": "Mis patas de atrás son gruesas y están llenas de músculo.",
+                    "pista": "Unas patas fuertes lanzan el cuerpo hacia arriba.",
+                    "parte": "Patas traseras gruesas",
+                    "lupa": {
+                      "x": 0.2,
+                      "y": 0.5,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "lombriz-tierra",
+                    "nombre": "Lombriz",
+                    "dibujo": "lombriz-tierra",
+                    "tramo": "repta",
+                    "como": "Mis anillos se estiran y se encogen, y mis pelillos se agarran a la tierra.",
+                    "pista": "Es un cuerpo blando y sin patas.",
+                    "parte": "Anillos con pelillos",
+                    "lupa": {
+                      "x": 0.45,
+                      "y": 0.36,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "pinguino",
+                    "nombre": "Pingüino",
+                    "dibujo": "pinguino",
+                    "tramo": "nada",
+                    "como": "Mis alas cortas no me sostienen en el aire, pero son remos bajo el agua.",
+                    "pista": "Unas alas tan cortas no sirven para volar.",
+                    "parte": "Alas cortas y duras",
+                    "lupa": {
+                      "x": 0.16,
+                      "y": 0.55,
+                      "zoom": 2.2
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "dificil-3",
+                "bien": "¡Relevo completado! Era el equipo de la abeja, el escarabajo, el conejo, el caracol y el delfín. Vertebrados e invertebrados se mueven con cuerpos muy distintos.",
+                "corredores": [
+                  {
+                    "id": "abeja-colmena",
+                    "nombre": "Abeja",
+                    "dibujo": "abeja-colmena",
+                    "tramo": "vuela",
+                    "como": "Mis alas finas se mueven tan rápido que zumban.",
+                    "pista": "Muchos insectos vuelan con alas transparentes.",
+                    "parte": "Dos pares de alas finas",
+                    "lupa": {
+                      "x": 0.48,
+                      "y": 0.2,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "escarabajo-corteza",
+                    "nombre": "Escarabajo",
+                    "dibujo": "escarabajo-corteza",
+                    "tramo": "trepa",
+                    "como": "Los ganchitos de mis patas se enganchan a la corteza.",
+                    "pista": "Engancharse sirve para subir por un tronco.",
+                    "parte": "Patas con ganchitos",
+                    "lupa": {
+                      "x": 0.17,
+                      "y": 0.58,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "conejo-prado",
+                    "nombre": "Conejo",
+                    "dibujo": "conejo-prado",
+                    "tramo": "salta",
+                    "como": "Empujo con mis patas de atrás y avanzo a saltos.",
+                    "pista": "Las patas traseras largas sirven para saltar.",
+                    "parte": "Patas de atrás largas y peludas",
+                    "lupa": {
+                      "x": 0.27,
+                      "y": 0.73,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "caracol-huerta",
+                    "nombre": "Caracol",
+                    "dibujo": "caracol-huerta",
+                    "tramo": "repta",
+                    "como": "Mi pie es un músculo que se desliza sobre la baba.",
+                    "pista": "La baba ayuda a resbalar pegado al suelo.",
+                    "parte": "Un pie con baba",
+                    "lupa": {
+                      "x": 0.25,
+                      "y": 0.76,
+                      "zoom": 2.2
+                    }
+                  },
+                  {
+                    "id": "delfin",
+                    "nombre": "Delfín",
+                    "dibujo": "delfin",
+                    "tramo": "nada",
+                    "como": "Muevo la cola de arriba abajo, no de lado como los peces.",
+                    "pista": "Una cola así solo empuja dentro del agua.",
+                    "parte": "Cola que sube y baja",
+                    "lupa": {
+                      "x": 0.13,
+                      "y": 0.74,
+                      "zoom": 2.2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "linterna",
+      "zona": "cuerpo",
+      "tipo": "linterna",
+      "titulo": "Linterna y microscopio",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Mueve la luz por el dibujo a oscuras y toca lo que te pido.",
+      "linterna": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Una linterna en un cuarto a oscuras. Encuentra las partes del cuerpo.",
+            "intro": "Arrastra la linterna por el dibujo. Cuando encuentres lo que te pido, tócalo.",
+            "curiosidad": "Los brazos y las piernas se llaman extremidades. ¡Tienes cuatro!",
+            "despedida": "¡Luces encendidas! Ya conoces las partes de tu cuerpo.",
+            "herramienta": "linterna",
+            "luz": 0.2,
+            "escenas": [
+              {
+                "id": "facil-1",
+                "dibujo": "nino",
+                "bien": "¡Se enciende la luz! Cabeza, tronco y extremidades: las tres partes grandes del cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "cabeza",
+                    "nombre": "La cabeza",
+                    "como": "¡La cabeza! Está arriba del todo.",
+                    "aviso": "Eso es la cabeza.",
+                    "pista": "Busca arriba del todo, encima del cuello.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.175,
+                        "r": 0.14
+                      }
+                    ]
+                  },
+                  {
+                    "id": "tronco",
+                    "nombre": "El tronco",
+                    "como": "¡El tronco! Es la parte del medio.",
+                    "aviso": "Eso es el tronco.",
+                    "pista": "Está en el medio, entre la cabeza y las piernas.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.4,
+                        "r": 0.13
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.54,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "brazos",
+                    "nombre": "Los brazos",
+                    "como": "¡Un brazo! Tenemos dos, uno a cada lado.",
+                    "aviso": "Eso es un brazo.",
+                    "pista": "Salen de los hombros, a los dos lados del tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.28,
+                        "y": 0.47,
+                        "r": 0.09
+                      },
+                      {
+                        "x": 0.72,
+                        "y": 0.47,
+                        "r": 0.09
+                      }
+                    ]
+                  },
+                  {
+                    "id": "piernas",
+                    "nombre": "Las piernas",
+                    "como": "¡Una pierna! Con las piernas andamos y saltamos.",
+                    "aviso": "Eso es una pierna.",
+                    "pista": "Busca abajo, debajo del tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.44,
+                        "y": 0.75,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.56,
+                        "y": 0.75,
+                        "r": 0.08
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "facil-2",
+                "dibujo": "nino",
+                "bien": "¡Luz! El cuello, las manos y los pies también son partes del cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "cuello",
+                    "nombre": "El cuello",
+                    "como": "¡El cuello! Une la cabeza con el tronco.",
+                    "aviso": "Eso es el cuello.",
+                    "pista": "Está justo debajo de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.29,
+                        "r": 0.06
+                      }
+                    ]
+                  },
+                  {
+                    "id": "manos",
+                    "nombre": "Las manos",
+                    "como": "¡Una mano! Está al final del brazo.",
+                    "aviso": "Eso es una mano.",
+                    "pista": "Sigue el brazo hasta el final.",
+                    "zonas": [
+                      {
+                        "x": 0.193,
+                        "y": 0.625,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.807,
+                        "y": 0.625,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "pies",
+                    "nombre": "Los pies",
+                    "como": "¡Un pie! Está al final de la pierna.",
+                    "aviso": "Eso es un pie.",
+                    "pista": "Baja por la pierna hasta el suelo.",
+                    "zonas": [
+                      {
+                        "x": 0.407,
+                        "y": 0.93,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.593,
+                        "y": 0.93,
+                        "r": 0.07
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "facil-3",
+                "dibujo": "cara",
+                "bien": "¡Luz! En la cara están los ojos, la nariz y la boca. Las orejas, a los lados.",
+                "objetivos": [
+                  {
+                    "id": "ojos",
+                    "nombre": "Los ojos",
+                    "como": "¡Los ojos! Con ellos vemos.",
+                    "aviso": "Eso es un ojo.",
+                    "pista": "Están arriba, uno a cada lado de la nariz.",
+                    "zonas": [
+                      {
+                        "x": 0.35,
+                        "y": 0.4375,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.65,
+                        "y": 0.4375,
+                        "r": 0.08
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nariz",
+                    "nombre": "La nariz",
+                    "como": "¡La nariz! Con ella olemos y respiramos.",
+                    "aviso": "Eso es la nariz.",
+                    "pista": "Está en el centro de la cara.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.565,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "boca",
+                    "nombre": "La boca",
+                    "como": "¡La boca! Con ella comemos y hablamos.",
+                    "aviso": "Eso es la boca.",
+                    "pista": "Está debajo de la nariz.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.7,
+                        "r": 0.09
+                      }
+                    ]
+                  },
+                  {
+                    "id": "orejas",
+                    "nombre": "Las orejas",
+                    "como": "¡Una oreja! Con las orejas oímos.",
+                    "aviso": "Eso es una oreja.",
+                    "pista": "Busca a los lados de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.1,
+                        "y": 0.51,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.9,
+                        "y": 0.51,
+                        "r": 0.08
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Una linterna de rayos X. Encuentra huesos y articulaciones.",
+            "intro": "Mueve los rayos X por el cuerpo y toca lo que te pido.",
+            "curiosidad": "El hueso más largo del cuerpo es el fémur, el del muslo.",
+            "despedida": "¡Radiografía terminada! Huesos y articulaciones trabajan juntos para movernos.",
+            "herramienta": "rayos",
+            "luz": 0.18,
+            "escenas": [
+              {
+                "id": "medio-1",
+                "dibujo": "esqueleto",
+                "bien": "¡Radiografía completa! El esqueleto sostiene el cuerpo y protege lo que hay dentro.",
+                "objetivos": [
+                  {
+                    "id": "craneo",
+                    "nombre": "El cráneo",
+                    "como": "¡El cráneo! Es una caja de hueso que protege el cerebro.",
+                    "aviso": "Eso es el cráneo.",
+                    "pista": "Está dentro de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.17,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "costillas",
+                    "nombre": "Las costillas",
+                    "como": "¡Las costillas! Forman una jaula que protege el corazón y los pulmones.",
+                    "aviso": "Eso son las costillas.",
+                    "pista": "Son huesos curvos en el pecho.",
+                    "zonas": [
+                      {
+                        "x": 0.4,
+                        "y": 0.425,
+                        "r": 0.075
+                      },
+                      {
+                        "x": 0.6,
+                        "y": 0.425,
+                        "r": 0.075
+                      }
+                    ]
+                  },
+                  {
+                    "id": "columna",
+                    "nombre": "La columna",
+                    "como": "¡La columna! Son muchos huesos pequeños, las vértebras, uno encima de otro.",
+                    "aviso": "Eso es la columna.",
+                    "pista": "Baja por el centro de la espalda, debajo de las costillas.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.565,
+                        "r": 0.05
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "medio-2",
+                "dibujo": "esqueleto",
+                "bien": "¡Radiografía completa! Las articulaciones son las uniones que nos dejan doblarnos.",
+                "objetivos": [
+                  {
+                    "id": "hombro",
+                    "nombre": "El hombro",
+                    "como": "¡El hombro! Deja mover el brazo en círculo.",
+                    "aviso": "Eso es el hombro.",
+                    "pista": "Está donde el brazo se une al tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.367,
+                        "y": 0.33,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.633,
+                        "y": 0.33,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "codo",
+                    "nombre": "El codo",
+                    "como": "¡El codo! Dobla el brazo por la mitad.",
+                    "aviso": "Eso es el codo.",
+                    "pista": "Está en la mitad del brazo.",
+                    "zonas": [
+                      {
+                        "x": 0.293,
+                        "y": 0.48,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.707,
+                        "y": 0.48,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "rodilla",
+                    "nombre": "La rodilla",
+                    "como": "¡La rodilla! Dobla la pierna para andar y saltar.",
+                    "aviso": "Eso es la rodilla.",
+                    "pista": "Está en la mitad de la pierna.",
+                    "zonas": [
+                      {
+                        "x": 0.437,
+                        "y": 0.795,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.563,
+                        "y": 0.795,
+                        "r": 0.055
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "medio-3",
+                "dibujo": "por-dentro",
+                "bien": "¡Radiografía completa! Los huesos protegen los órganos más importantes.",
+                "objetivos": [
+                  {
+                    "id": "cerebro",
+                    "nombre": "El cerebro",
+                    "como": "¡El cerebro! Lo protege el cráneo.",
+                    "aviso": "Eso es el cerebro.",
+                    "pista": "Está dentro del cráneo.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.16,
+                        "r": 0.11
+                      }
+                    ]
+                  },
+                  {
+                    "id": "corazon",
+                    "nombre": "El corazón",
+                    "como": "¡El corazón! Lo protegen las costillas.",
+                    "aviso": "Eso es el corazón.",
+                    "pista": "Está en el pecho, entre los dos pulmones.",
+                    "zonas": [
+                      {
+                        "x": 0.527,
+                        "y": 0.4625,
+                        "r": 0.045
+                      }
+                    ]
+                  },
+                  {
+                    "id": "pulmones",
+                    "nombre": "Los pulmones",
+                    "como": "¡Un pulmón! Tenemos dos, detrás de las costillas.",
+                    "aviso": "Eso es un pulmón.",
+                    "pista": "Son dos, a los lados del corazón.",
+                    "zonas": [
+                      {
+                        "x": 0.393,
+                        "y": 0.4125,
+                        "r": 0.065
+                      },
+                      {
+                        "x": 0.613,
+                        "y": 0.4,
+                        "r": 0.065
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Un microscopio. Encuentra las partes de la célula y de qué está hecho el cuerpo.",
+            "intro": "Mueve el microscopio y toca lo que te pido.",
+            "curiosidad": "Tu cuerpo tiene billones de células. Cada una es tan pequeña que no se ve sin microscopio.",
+            "despedida": "¡Observación terminada! Todo el cuerpo está hecho de células.",
+            "herramienta": "microscopio",
+            "luz": 0.2,
+            "escenas": [
+              {
+                "id": "dificil-1",
+                "dibujo": "celula-animal",
+                "bien": "¡Luz! Esta es una célula animal, como las de tu cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "membrana",
+                    "nombre": "La membrana",
+                    "como": "¡La membrana! Es la capa fina que rodea la célula.",
+                    "aviso": "Eso es la membrana.",
+                    "pista": "Está en el borde, rodeando toda la célula.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.125,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.917,
+                        "y": 0.5,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.875,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.083,
+                        "y": 0.5,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.793,
+                        "y": 0.235,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.207,
+                        "y": 0.765,
+                        "r": 0.06
+                      }
+                    ]
+                  },
+                  {
+                    "id": "citoplasma",
+                    "nombre": "El citoplasma",
+                    "como": "¡El citoplasma! Es el líquido de dentro, donde trabaja la célula.",
+                    "aviso": "Eso es el citoplasma.",
+                    "pista": "Llena la célula entre el borde y el núcleo.",
+                    "zonas": [
+                      {
+                        "x": 0.317,
+                        "y": 0.35,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.3,
+                        "y": 0.6625,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.683,
+                        "y": 0.7125,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nucleo",
+                    "nombre": "El núcleo",
+                    "como": "¡El núcleo! Dirige lo que hace la célula.",
+                    "aviso": "Eso es el núcleo.",
+                    "pista": "Es la bola grande de dentro.",
+                    "zonas": [
+                      {
+                        "x": 0.55,
+                        "y": 0.4625,
+                        "r": 0.12
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "dificil-2",
+                "dibujo": "celula-vegetal",
+                "bien": "¡Luz! Esta es una célula vegetal, de una hoja.",
+                "objetivos": [
+                  {
+                    "id": "pared",
+                    "nombre": "La pared celular",
+                    "como": "¡La pared celular! Es dura y da forma a la célula de la planta.",
+                    "aviso": "Eso es la pared celular.",
+                    "pista": "Es el borde grueso, como una caja.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.15,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.85,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.133,
+                        "y": 0.5,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.867,
+                        "y": 0.5,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "cloroplastos",
+                    "nombre": "Los cloroplastos",
+                    "como": "¡Un cloroplasto! Es verde y fabrica alimento con la luz.",
+                    "aviso": "Eso es un cloroplasto.",
+                    "pista": "Busca las bolitas verdes.",
+                    "zonas": [
+                      {
+                        "x": 0.267,
+                        "y": 0.275,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.75,
+                        "y": 0.75,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.25,
+                        "y": 0.725,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.8,
+                        "y": 0.425,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "vacuola",
+                    "nombre": "La vacuola",
+                    "como": "¡La vacuola! Guarda agua y otras sustancias.",
+                    "aviso": "Eso es la vacuola.",
+                    "pista": "Es la bolsa grande del centro.",
+                    "zonas": [
+                      {
+                        "x": 0.45,
+                        "y": 0.5375,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nucleo",
+                    "nombre": "El núcleo",
+                    "como": "¡El núcleo! Las células de las plantas también lo tienen.",
+                    "aviso": "Eso es el núcleo.",
+                    "pista": "Es la bola pequeña de un lado.",
+                    "zonas": [
+                      {
+                        "x": 0.7,
+                        "y": 0.2875,
+                        "r": 0.085
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "dificil-3",
+                "dibujo": "organizacion",
+                "bien": "¡Luz! Las células forman tejidos, los tejidos forman órganos y los órganos forman aparatos.",
+                "objetivos": [
+                  {
+                    "id": "celula",
+                    "nombre": "Una célula",
+                    "como": "¡Una célula! Es la parte viva más pequeña.",
+                    "aviso": "Eso es una célula.",
+                    "pista": "Está en el círculo más ampliado.",
+                    "zonas": [
+                      {
+                        "x": 0.75,
+                        "y": 0.75,
+                        "r": 0.17
+                      }
+                    ]
+                  },
+                  {
+                    "id": "tejido",
+                    "nombre": "Un tejido",
+                    "como": "¡Un tejido! Son muchas células iguales juntas.",
+                    "aviso": "Eso es un tejido.",
+                    "pista": "Busca muchas células juntas, en el círculo de arriba.",
+                    "zonas": [
+                      {
+                        "x": 0.75,
+                        "y": 0.3375,
+                        "r": 0.19
+                      }
+                    ]
+                  },
+                  {
+                    "id": "organo",
+                    "nombre": "Un órgano",
+                    "como": "¡El estómago! Es un órgano hecho de varios tejidos.",
+                    "aviso": "Eso es el estómago, un órgano.",
+                    "pista": "Busca el estómago dentro del cuerpo.",
+                    "zonas": [
+                      {
+                        "x": 0.313,
+                        "y": 0.4125,
+                        "r": 0.065
+                      }
+                    ]
+                  },
+                  {
+                    "id": "aparato",
+                    "nombre": "Un aparato",
+                    "como": "¡El aparato digestivo! Varios órganos trabajan juntos.",
+                    "aviso": "Eso es el aparato digestivo.",
+                    "pista": "Son los tubos que llevan la comida por el cuerpo.",
+                    "zonas": [
+                      {
+                        "x": 0.267,
+                        "y": 0.57,
+                        "r": 0.1
+                      },
+                      {
+                        "x": 0.273,
+                        "y": 0.3125,
+                        "r": 0.04
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

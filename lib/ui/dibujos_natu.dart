@@ -7316,6 +7316,39 @@ class DatosEnciclopedicosFicha {
             'El pingüino es un ave, pero sus alas cortas y duras funcionan como aletas bajo el agua.',
         tipoMovimiento: 'nado',
       ),
+      'partes-del-cuerpo' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Cuerpo humano · Partes del cuerpo',
+        habitatOSistema: 'Cabeza, tronco y extremidades',
+        locomocionOFuncion:
+            'Los brazos y las piernas son las extremidades: con ellas nos movemos, cogemos cosas y andamos',
+        alimentacionOProceso:
+            'El cuello une la cabeza con el tronco y deja girarla',
+        datoCientifico:
+            'Cada mano tiene cinco dedos y cada pie también: en total, veinte dedos.',
+        tipoMovimiento: 'paso',
+      ),
+      'huesos-articulaciones' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Cuerpo humano · Aparato locomotor',
+        habitatOSistema: 'Esqueleto: cráneo, columna, costillas y huesos de brazos y piernas',
+        locomocionOFuncion:
+            'Las articulaciones, como el hombro, el codo y la rodilla, dejan doblar el cuerpo',
+        alimentacionOProceso:
+            'El cráneo protege el cerebro y las costillas protegen el corazón y los pulmones',
+        datoCientifico:
+            'Un bebé nace con unos 300 huesos; al crecer, algunos se unen y quedan 206.',
+        tipoMovimiento: 'salto',
+      ),
+      'partes-de-la-celula' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Seres vivos · La célula',
+        habitatOSistema: 'Célula, tejido, órgano y aparato',
+        locomocionOFuncion:
+            'Membrana, citoplasma y núcleo; las células vegetales tienen además pared celular, cloroplastos y una vacuola grande',
+        alimentacionOProceso:
+            'Muchas células iguales forman un tejido, varios tejidos forman un órgano y varios órganos forman un aparato',
+        datoCientifico:
+            'El microscopio permitió ver las células por primera vez hace más de 350 años, en un trozo de corcho.',
+        tipoMovimiento: 'pulso',
+      ),
       _ => const DatosEnciclopedicosFicha(
         clasificacion: 'Ciencias de la Naturaleza · Salud y Vida',
         habitatOSistema: 'Cuerpo humano y funciones vitales',

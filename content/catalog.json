@@ -732,6 +732,33 @@
       "curiosidad": "Un gesto pequeño, como invitar a alguien a jugar, puede cambiarle el día."
     },
     {
+      "id": "partes-del-cuerpo",
+      "zona": "cuerpo",
+      "curso": "1º-2º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Las partes del cuerpo",
+      "frase": "El cuerpo tiene tres partes grandes: la cabeza, el tronco y las extremidades, que son los brazos y las piernas.",
+      "curiosidad": "El cuello une la cabeza con el tronco y te deja girarla para mirar a los lados."
+    },
+    {
+      "id": "huesos-articulaciones",
+      "zona": "cuerpo",
+      "curso": "3º-4º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Huesos y articulaciones",
+      "frase": "Los huesos forman el esqueleto, que sostiene el cuerpo y protege el cerebro, el corazón y los pulmones.",
+      "curiosidad": "Donde se unen dos huesos hay una articulación. Gracias a ella puedes doblar el codo o la rodilla."
+    },
+    {
+      "id": "partes-de-la-celula",
+      "zona": "cuerpo",
+      "curso": "5º-6º",
+      "juego": "Linterna y microscopio",
+      "titulo": "Las partes de la célula",
+      "frase": "La célula tiene membrana, citoplasma y núcleo. Muchas células forman tejidos, los tejidos forman órganos y los órganos forman aparatos.",
+      "curiosidad": "Las células de las plantas tienen además una pared dura y cloroplastos verdes, que fabrican su alimento con la luz."
+    },
+    {
       "id": "cada-parte-su-trabajo",
       "zona": "invernadero",
       "curso": "1º-2º",
@@ -11930,6 +11957,686 @@
                       "y": 0.74,
                       "zoom": 2.2
                     }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "linterna",
+      "zona": "cuerpo",
+      "tipo": "linterna",
+      "titulo": "Linterna y microscopio",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Mueve la luz por el dibujo a oscuras y toca lo que te pido.",
+      "linterna": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Una linterna en un cuarto a oscuras. Encuentra las partes del cuerpo.",
+            "intro": "Arrastra la linterna por el dibujo. Cuando encuentres lo que te pido, tócalo.",
+            "curiosidad": "Los brazos y las piernas se llaman extremidades. ¡Tienes cuatro!",
+            "despedida": "¡Luces encendidas! Ya conoces las partes de tu cuerpo.",
+            "herramienta": "linterna",
+            "luz": 0.2,
+            "escenas": [
+              {
+                "id": "facil-1",
+                "dibujo": "nino",
+                "bien": "¡Se enciende la luz! Cabeza, tronco y extremidades: las tres partes grandes del cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "cabeza",
+                    "nombre": "La cabeza",
+                    "como": "¡La cabeza! Está arriba del todo.",
+                    "aviso": "Eso es la cabeza.",
+                    "pista": "Busca arriba del todo, encima del cuello.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.175,
+                        "r": 0.14
+                      }
+                    ]
+                  },
+                  {
+                    "id": "tronco",
+                    "nombre": "El tronco",
+                    "como": "¡El tronco! Es la parte del medio.",
+                    "aviso": "Eso es el tronco.",
+                    "pista": "Está en el medio, entre la cabeza y las piernas.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.4,
+                        "r": 0.13
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.54,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "brazos",
+                    "nombre": "Los brazos",
+                    "como": "¡Un brazo! Tenemos dos, uno a cada lado.",
+                    "aviso": "Eso es un brazo.",
+                    "pista": "Salen de los hombros, a los dos lados del tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.28,
+                        "y": 0.47,
+                        "r": 0.09
+                      },
+                      {
+                        "x": 0.72,
+                        "y": 0.47,
+                        "r": 0.09
+                      }
+                    ]
+                  },
+                  {
+                    "id": "piernas",
+                    "nombre": "Las piernas",
+                    "como": "¡Una pierna! Con las piernas andamos y saltamos.",
+                    "aviso": "Eso es una pierna.",
+                    "pista": "Busca abajo, debajo del tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.44,
+                        "y": 0.75,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.56,
+                        "y": 0.75,
+                        "r": 0.08
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "facil-2",
+                "dibujo": "nino",
+                "bien": "¡Luz! El cuello, las manos y los pies también son partes del cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "cuello",
+                    "nombre": "El cuello",
+                    "como": "¡El cuello! Une la cabeza con el tronco.",
+                    "aviso": "Eso es el cuello.",
+                    "pista": "Está justo debajo de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.29,
+                        "r": 0.06
+                      }
+                    ]
+                  },
+                  {
+                    "id": "manos",
+                    "nombre": "Las manos",
+                    "como": "¡Una mano! Está al final del brazo.",
+                    "aviso": "Eso es una mano.",
+                    "pista": "Sigue el brazo hasta el final.",
+                    "zonas": [
+                      {
+                        "x": 0.193,
+                        "y": 0.625,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.807,
+                        "y": 0.625,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "pies",
+                    "nombre": "Los pies",
+                    "como": "¡Un pie! Está al final de la pierna.",
+                    "aviso": "Eso es un pie.",
+                    "pista": "Baja por la pierna hasta el suelo.",
+                    "zonas": [
+                      {
+                        "x": 0.407,
+                        "y": 0.93,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.593,
+                        "y": 0.93,
+                        "r": 0.07
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "facil-3",
+                "dibujo": "cara",
+                "bien": "¡Luz! En la cara están los ojos, la nariz y la boca. Las orejas, a los lados.",
+                "objetivos": [
+                  {
+                    "id": "ojos",
+                    "nombre": "Los ojos",
+                    "como": "¡Los ojos! Con ellos vemos.",
+                    "aviso": "Eso es un ojo.",
+                    "pista": "Están arriba, uno a cada lado de la nariz.",
+                    "zonas": [
+                      {
+                        "x": 0.35,
+                        "y": 0.4375,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.65,
+                        "y": 0.4375,
+                        "r": 0.08
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nariz",
+                    "nombre": "La nariz",
+                    "como": "¡La nariz! Con ella olemos y respiramos.",
+                    "aviso": "Eso es la nariz.",
+                    "pista": "Está en el centro de la cara.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.565,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "boca",
+                    "nombre": "La boca",
+                    "como": "¡La boca! Con ella comemos y hablamos.",
+                    "aviso": "Eso es la boca.",
+                    "pista": "Está debajo de la nariz.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.7,
+                        "r": 0.09
+                      }
+                    ]
+                  },
+                  {
+                    "id": "orejas",
+                    "nombre": "Las orejas",
+                    "como": "¡Una oreja! Con las orejas oímos.",
+                    "aviso": "Eso es una oreja.",
+                    "pista": "Busca a los lados de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.1,
+                        "y": 0.51,
+                        "r": 0.08
+                      },
+                      {
+                        "x": 0.9,
+                        "y": 0.51,
+                        "r": 0.08
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Una linterna de rayos X. Encuentra huesos y articulaciones.",
+            "intro": "Mueve los rayos X por el cuerpo y toca lo que te pido.",
+            "curiosidad": "El hueso más largo del cuerpo es el fémur, el del muslo.",
+            "despedida": "¡Radiografía terminada! Huesos y articulaciones trabajan juntos para movernos.",
+            "herramienta": "rayos",
+            "luz": 0.18,
+            "escenas": [
+              {
+                "id": "medio-1",
+                "dibujo": "esqueleto",
+                "bien": "¡Radiografía completa! El esqueleto sostiene el cuerpo y protege lo que hay dentro.",
+                "objetivos": [
+                  {
+                    "id": "craneo",
+                    "nombre": "El cráneo",
+                    "como": "¡El cráneo! Es una caja de hueso que protege el cerebro.",
+                    "aviso": "Eso es el cráneo.",
+                    "pista": "Está dentro de la cabeza.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.17,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "costillas",
+                    "nombre": "Las costillas",
+                    "como": "¡Las costillas! Forman una jaula que protege el corazón y los pulmones.",
+                    "aviso": "Eso son las costillas.",
+                    "pista": "Son huesos curvos en el pecho.",
+                    "zonas": [
+                      {
+                        "x": 0.4,
+                        "y": 0.425,
+                        "r": 0.075
+                      },
+                      {
+                        "x": 0.6,
+                        "y": 0.425,
+                        "r": 0.075
+                      }
+                    ]
+                  },
+                  {
+                    "id": "columna",
+                    "nombre": "La columna",
+                    "como": "¡La columna! Son muchos huesos pequeños, las vértebras, uno encima de otro.",
+                    "aviso": "Eso es la columna.",
+                    "pista": "Baja por el centro de la espalda, debajo de las costillas.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.565,
+                        "r": 0.05
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "medio-2",
+                "dibujo": "esqueleto",
+                "bien": "¡Radiografía completa! Las articulaciones son las uniones que nos dejan doblarnos.",
+                "objetivos": [
+                  {
+                    "id": "hombro",
+                    "nombre": "El hombro",
+                    "como": "¡El hombro! Deja mover el brazo en círculo.",
+                    "aviso": "Eso es el hombro.",
+                    "pista": "Está donde el brazo se une al tronco.",
+                    "zonas": [
+                      {
+                        "x": 0.367,
+                        "y": 0.33,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.633,
+                        "y": 0.33,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "codo",
+                    "nombre": "El codo",
+                    "como": "¡El codo! Dobla el brazo por la mitad.",
+                    "aviso": "Eso es el codo.",
+                    "pista": "Está en la mitad del brazo.",
+                    "zonas": [
+                      {
+                        "x": 0.293,
+                        "y": 0.48,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.707,
+                        "y": 0.48,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "rodilla",
+                    "nombre": "La rodilla",
+                    "como": "¡La rodilla! Dobla la pierna para andar y saltar.",
+                    "aviso": "Eso es la rodilla.",
+                    "pista": "Está en la mitad de la pierna.",
+                    "zonas": [
+                      {
+                        "x": 0.437,
+                        "y": 0.795,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.563,
+                        "y": 0.795,
+                        "r": 0.055
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "medio-3",
+                "dibujo": "por-dentro",
+                "bien": "¡Radiografía completa! Los huesos protegen los órganos más importantes.",
+                "objetivos": [
+                  {
+                    "id": "cerebro",
+                    "nombre": "El cerebro",
+                    "como": "¡El cerebro! Lo protege el cráneo.",
+                    "aviso": "Eso es el cerebro.",
+                    "pista": "Está dentro del cráneo.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.16,
+                        "r": 0.11
+                      }
+                    ]
+                  },
+                  {
+                    "id": "corazon",
+                    "nombre": "El corazón",
+                    "como": "¡El corazón! Lo protegen las costillas.",
+                    "aviso": "Eso es el corazón.",
+                    "pista": "Está en el pecho, entre los dos pulmones.",
+                    "zonas": [
+                      {
+                        "x": 0.527,
+                        "y": 0.4625,
+                        "r": 0.045
+                      }
+                    ]
+                  },
+                  {
+                    "id": "pulmones",
+                    "nombre": "Los pulmones",
+                    "como": "¡Un pulmón! Tenemos dos, detrás de las costillas.",
+                    "aviso": "Eso es un pulmón.",
+                    "pista": "Son dos, a los lados del corazón.",
+                    "zonas": [
+                      {
+                        "x": 0.393,
+                        "y": 0.4125,
+                        "r": 0.065
+                      },
+                      {
+                        "x": 0.613,
+                        "y": 0.4,
+                        "r": 0.065
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Un microscopio. Encuentra las partes de la célula y de qué está hecho el cuerpo.",
+            "intro": "Mueve el microscopio y toca lo que te pido.",
+            "curiosidad": "Tu cuerpo tiene billones de células. Cada una es tan pequeña que no se ve sin microscopio.",
+            "despedida": "¡Observación terminada! Todo el cuerpo está hecho de células.",
+            "herramienta": "microscopio",
+            "luz": 0.2,
+            "escenas": [
+              {
+                "id": "dificil-1",
+                "dibujo": "celula-animal",
+                "bien": "¡Luz! Esta es una célula animal, como las de tu cuerpo.",
+                "objetivos": [
+                  {
+                    "id": "membrana",
+                    "nombre": "La membrana",
+                    "como": "¡La membrana! Es la capa fina que rodea la célula.",
+                    "aviso": "Eso es la membrana.",
+                    "pista": "Está en el borde, rodeando toda la célula.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.125,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.917,
+                        "y": 0.5,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.875,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.083,
+                        "y": 0.5,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.793,
+                        "y": 0.235,
+                        "r": 0.06
+                      },
+                      {
+                        "x": 0.207,
+                        "y": 0.765,
+                        "r": 0.06
+                      }
+                    ]
+                  },
+                  {
+                    "id": "citoplasma",
+                    "nombre": "El citoplasma",
+                    "como": "¡El citoplasma! Es el líquido de dentro, donde trabaja la célula.",
+                    "aviso": "Eso es el citoplasma.",
+                    "pista": "Llena la célula entre el borde y el núcleo.",
+                    "zonas": [
+                      {
+                        "x": 0.317,
+                        "y": 0.35,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.3,
+                        "y": 0.6625,
+                        "r": 0.07
+                      },
+                      {
+                        "x": 0.683,
+                        "y": 0.7125,
+                        "r": 0.07
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nucleo",
+                    "nombre": "El núcleo",
+                    "como": "¡El núcleo! Dirige lo que hace la célula.",
+                    "aviso": "Eso es el núcleo.",
+                    "pista": "Es la bola grande de dentro.",
+                    "zonas": [
+                      {
+                        "x": 0.55,
+                        "y": 0.4625,
+                        "r": 0.12
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "dificil-2",
+                "dibujo": "celula-vegetal",
+                "bien": "¡Luz! Esta es una célula vegetal, de una hoja.",
+                "objetivos": [
+                  {
+                    "id": "pared",
+                    "nombre": "La pared celular",
+                    "como": "¡La pared celular! Es dura y da forma a la célula de la planta.",
+                    "aviso": "Eso es la pared celular.",
+                    "pista": "Es el borde grueso, como una caja.",
+                    "zonas": [
+                      {
+                        "x": 0.5,
+                        "y": 0.15,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.85,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.133,
+                        "y": 0.5,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.867,
+                        "y": 0.5,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "cloroplastos",
+                    "nombre": "Los cloroplastos",
+                    "como": "¡Un cloroplasto! Es verde y fabrica alimento con la luz.",
+                    "aviso": "Eso es un cloroplasto.",
+                    "pista": "Busca las bolitas verdes.",
+                    "zonas": [
+                      {
+                        "x": 0.267,
+                        "y": 0.275,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.75,
+                        "y": 0.75,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.25,
+                        "y": 0.725,
+                        "r": 0.055
+                      },
+                      {
+                        "x": 0.8,
+                        "y": 0.425,
+                        "r": 0.055
+                      }
+                    ]
+                  },
+                  {
+                    "id": "vacuola",
+                    "nombre": "La vacuola",
+                    "como": "¡La vacuola! Guarda agua y otras sustancias.",
+                    "aviso": "Eso es la vacuola.",
+                    "pista": "Es la bolsa grande del centro.",
+                    "zonas": [
+                      {
+                        "x": 0.45,
+                        "y": 0.5375,
+                        "r": 0.13
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nucleo",
+                    "nombre": "El núcleo",
+                    "como": "¡El núcleo! Las células de las plantas también lo tienen.",
+                    "aviso": "Eso es el núcleo.",
+                    "pista": "Es la bola pequeña de un lado.",
+                    "zonas": [
+                      {
+                        "x": 0.7,
+                        "y": 0.2875,
+                        "r": 0.085
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "dificil-3",
+                "dibujo": "organizacion",
+                "bien": "¡Luz! Las células forman tejidos, los tejidos forman órganos y los órganos forman aparatos.",
+                "objetivos": [
+                  {
+                    "id": "celula",
+                    "nombre": "Una célula",
+                    "como": "¡Una célula! Es la parte viva más pequeña.",
+                    "aviso": "Eso es una célula.",
+                    "pista": "Está en el círculo más ampliado.",
+                    "zonas": [
+                      {
+                        "x": 0.75,
+                        "y": 0.75,
+                        "r": 0.17
+                      }
+                    ]
+                  },
+                  {
+                    "id": "tejido",
+                    "nombre": "Un tejido",
+                    "como": "¡Un tejido! Son muchas células iguales juntas.",
+                    "aviso": "Eso es un tejido.",
+                    "pista": "Busca muchas células juntas, en el círculo de arriba.",
+                    "zonas": [
+                      {
+                        "x": 0.75,
+                        "y": 0.3375,
+                        "r": 0.19
+                      }
+                    ]
+                  },
+                  {
+                    "id": "organo",
+                    "nombre": "Un órgano",
+                    "como": "¡El estómago! Es un órgano hecho de varios tejidos.",
+                    "aviso": "Eso es el estómago, un órgano.",
+                    "pista": "Busca el estómago dentro del cuerpo.",
+                    "zonas": [
+                      {
+                        "x": 0.313,
+                        "y": 0.4125,
+                        "r": 0.065
+                      }
+                    ]
+                  },
+                  {
+                    "id": "aparato",
+                    "nombre": "Un aparato",
+                    "como": "¡El aparato digestivo! Varios órganos trabajan juntos.",
+                    "aviso": "Eso es el aparato digestivo.",
+                    "pista": "Son los tubos que llevan la comida por el cuerpo.",
+                    "zonas": [
+                      {
+                        "x": 0.267,
+                        "y": 0.57,
+                        "r": 0.1
+                      },
+                      {
+                        "x": 0.273,
+                        "y": 0.3125,
+                        "r": 0.04
+                      }
+                    ]
                   }
                 ]
               }

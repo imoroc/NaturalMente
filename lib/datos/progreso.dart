@@ -240,6 +240,7 @@ class Progreso extends ChangeNotifier {
     'memoria-plantas': ['facil', 'medio', 'dificil'],
     'quien-soy': ['facil', 'medio', 'dificil'],
     'carrera': ['facil', 'medio', 'dificil'],
+    'linterna': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -329,6 +330,9 @@ class Progreso extends ChangeNotifier {
       ('carrera', 'facil') => const ['vuela-nada-anda'],
       ('carrera', 'medio') => const ['formas-de-moverse'],
       ('carrera', 'dificil') => const ['cuerpo-movimiento'],
+      ('linterna', 'facil') => const ['partes-del-cuerpo'],
+      ('linterna', 'medio') => const ['huesos-articulaciones'],
+      ('linterna', 'dificil') => const ['partes-de-la-celula'],
       _ => const <String>[],
     };
   }
@@ -502,6 +506,12 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Carrera de relevos» a partir del nivel Medio (3º-4º).',
       'cuerpo-movimiento' =>
         'Se consigue en «Carrera de relevos» en el nivel Difícil (5º-6º).',
+      'partes-del-cuerpo' =>
+        'Se consigue en «Linterna y microscopio» desde el nivel Fácil (1º-2º).',
+      'huesos-articulaciones' =>
+        'Se consigue en «Linterna y microscopio» a partir del nivel Medio (3º-4º).',
+      'partes-de-la-celula' =>
+        'Se consigue en «Linterna y microscopio» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -613,6 +623,9 @@ class Progreso extends ChangeNotifier {
     'viaje' => [for (final n in actividad.viaje?.niveles ?? const []) n.id],
     'rescate' => [for (final n in actividad.rescate?.niveles ?? const []) n.id],
     'carrera' => [for (final n in actividad.carrera?.niveles ?? const []) n.id],
+    'linterna' => [
+      for (final n in actividad.linterna?.niveles ?? const []) n.id,
+    ],
     'memoria' => [for (final n in actividad.memoria?.niveles ?? const []) n.id],
     'adivinanza' => [
       for (final n in actividad.adivinanza?.niveles ?? const []) n.id,
@@ -660,6 +673,7 @@ class Progreso extends ChangeNotifier {
       'viaje',
       'rescate',
       'carrera',
+      'linterna',
       'memoria',
       'adivinanza',
     }.contains(actividad.tipo)) {
@@ -689,6 +703,7 @@ class Progreso extends ChangeNotifier {
       'viaje',
       'rescate',
       'carrera',
+      'linterna',
       'memoria',
       'adivinanza',
     }.contains(actividad.tipo)) {

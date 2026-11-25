@@ -20,6 +20,7 @@ import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
 import 'package:naturalmente/ui/carrera.dart';
+import 'package:naturalmente/ui/linterna.dart';
 import 'package:naturalmente/ui/adivinanza.dart';
 import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +36,7 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   'ecosistema' => EcosistemaPage(actividad: actividad),
   'rescate' => RescatePage(actividad: actividad),
   'carrera' => CarreraPage(actividad: actividad),
+  'linterna' => LinternaPage(actividad: actividad),
   'memoria' => MemoriaPage(actividad: actividad),
   'adivinanza' => AdivinanzaPage(actividad: actividad),
   _ => JuegoPage(actividad: actividad),
@@ -205,6 +207,20 @@ Future<void> _jugar(
           'respuesta-${especie.id}-${especie.ayuda.respuesta}',
         );
         if (especie != nivel.especies.last) {
+          await _tocar(tester, 'continuar-paso');
+        }
+      }
+    case 'linterna':
+      final nivel = actividad.linterna!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final escena in nivel.escenas) {
+        for (final objetivo in escena.objetivos) {
+          expect(find.byType(FinJuego), findsNothing);
+          await _tocar(tester, 'zona-${objetivo.id}-0');
+        }
+        if (escena != nivel.escenas.last) {
+          expect(find.byType(FinJuego), findsNothing);
           await _tocar(tester, 'continuar-paso');
         }
       }

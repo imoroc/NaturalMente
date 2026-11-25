@@ -39,6 +39,7 @@ void main() {
       'contenedor',
       'candidatos',
       'tramo',
+      'herramienta',
     };
 
     final sinTraduccion = <String>{};
@@ -118,7 +119,7 @@ void main() {
     }
   });
 
-  test('las 88 fichas tienen traducción para todos los campos enciclopédicos visibles', () {
+  test('las 91 fichas tienen traducción para todos los campos enciclopédicos visibles', () {
     final traducciones = jsonDecode(
       File('content/en.json').readAsStringSync(),
     ) as Map<String, dynamic>;

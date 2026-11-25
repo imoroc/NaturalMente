@@ -19,7 +19,7 @@
 
 **NaturalMente** es una aplicación educativa de Ciencias de la Naturaleza para niños y niñas de Educación Primaria (**6 a 12 años**), desarrollada en **Flutter** con una única base de código para **Android** e **iOS** (y soporte en navegador para desarrollo). Funciona **100 % en local**, sin servidores, sin cuentas de usuario, sin anuncios y sin recogida de datos personales.
 
-Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **27 actividades interactivas**, cada una con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`), que suman **81 combinaciones de actividad y nivel**, y coleccionan **88 cromos** con curiosidades científicas en su álbum personal.
+Guiados por **Natu**, los alumnos exploran **3 mundos**, recorren **28 actividades interactivas**, cada una con **3 niveles de dificultad adaptados por ciclo** (`Fácil · 1.º-2.º`, `Medio · 3.º-4.º` y `Difícil · 5.º-6.º`), que suman **84 combinaciones de actividad y nivel**, y coleccionan **91 cromos** con curiosidades científicas en su álbum personal.
 
 ### Principios de diseño pedagógico y técnico
 
@@ -92,7 +92,7 @@ flowchart LR
   subgraph Interfaz["4. Interfaz Gráfica (Flutter UI)"]
     MAPA["lib/ui/mapa.dart\n(Mundos y álbum de 85 cromos)"]
     ZONA["lib/ui/zona.dart\n(Misiones del mundo)"]
-    JUEGO["lib/ui/juego.dart y módulos específicos\n(27 actividades · 81 combinaciones de actividad y nivel)"]
+    JUEGO["lib/ui/juego.dart y módulos específicos\n(28 actividades · 84 combinaciones de actividad y nivel)"]
     DIB["lib/ui/dibujos.dart y módulos de ilustración\n(CustomPainters e ilustraciones)"]
   end
 
@@ -195,7 +195,7 @@ flutter test
 
 - `flutter pub get`: descarga las dependencias declaradas en [`pubspec.yaml`](pubspec.yaml).
 - `dart analyze` / `flutter analyze`: comprueba el tipado estático y las reglas de estilo (`flutter_lints`).
-- `flutter test`: ejecuta las pruebas del catálogo y las reglas, los recorridos de cierre de las 27 actividades en sus tres niveles y los flujos de progreso, guardado y accesibilidad.
+- `flutter test`: ejecuta las pruebas del catálogo y las reglas, los recorridos de cierre de las 28 actividades en sus tres niveles y los flujos de progreso, guardado y accesibilidad.
 
 ### 2. Ejecutar la aplicación en local
 
@@ -284,4 +284,4 @@ Este comportamiento es obligatorio para todos los juegos y niveles, incluidos lo
 
 Al superar un nivel, la animación del check verde, el sonido y la vibración dan paso automáticamente a una pantalla de resultado. Muestra el resumen y mantiene visibles las opciones **Cambiar nivel**, **Otra vez** y **Volver al mundo**. El botón de cerrar permite seguir explorando las explicaciones y curiosidades del ejercicio.
 
-Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de las 27 actividades y el reto diario, además del guardado, la repetición y la accesibilidad del cierre.
+Las acciones esperan al guardado; si falla, se ofrece **Guardar de nuevo** sin repetir respuestas ni recompensas. El reto diario conserva su límite de una misión por día y ofrece **Volver al mapa** y **Armario de Natu**. Las pruebas recorren los tres niveles de las 28 actividades y el reto diario, además del guardado, la repetición y la accesibilidad del cierre.

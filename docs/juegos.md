@@ -234,6 +234,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### Zoom: de la célula al cuerpo
 - **Prioridad**: Extra.
+- **Estado**: implementado como «Linterna y microscopio» (`linterna`, tipo `linterna`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (Las partes del cuerpo; Huesos y articulaciones; Las partes de la célula) y textos en español e inglés. Modelo en `lib/modelo/linterna.dart`, reglas sin widgets en `lib/reglas/linterna.dart`, pantalla en `lib/ui/linterna.dart` y escenas en `lib/ui/dibujos_linterna.dart`. No cuenta para la medalla.
+- **Cómo se juega**: un dibujo a oscuras y una luz que se arrastra por él. Arriba, la lista de lo que hay que buscar, siempre en el mismo orden; se busca de uno en uno. Mover la luz no se evalúa: se toca el dibujo donde está lo que se pide. Lo encontrado se queda encendido y, al terminar la escena, se enciende la luz entera y se espera a **Continuar**. Tres escenas por nivel. La respuesta está cada vez en un sitio distinto del dibujo, así que no cae siempre en el mismo hueco.
+- **Niveles**: Fácil (1º-2º, partes grandes del cuerpo) con una linterna: cabeza, tronco, brazos y piernas; cuello, manos y pies; ojos, nariz, boca y orejas. Medio (3º-4º) con rayos X: cráneo, costillas y columna; hombro, codo y rodilla; cerebro, corazón y pulmones, y qué hueso los protege. Difícil (5º-6º, la célula) con un microscopio: membrana, citoplasma y núcleo de una célula animal; pared celular, cloroplastos, vacuola y núcleo de una célula vegetal; y célula, tejido, órgano y aparato.
+- **Si no acierta (lo que hay en la app)**: tocar donde no hay nada de la lista no cuenta y Natu pide seguir buscando. Tocar otra cosa de la lista cuenta como intento: Natu dice qué es («Eso es el tronco.») y a la segunda añade dónde buscar («Busca arriba del todo, encima del cuello.»).
 - **Mecánica**: pellizcando la pantalla se pasa de célula a tejido, órgano, aparato y cuerpo. Después, ordenar esos niveles.
 - **Niveles**: solo Difícil.
 

@@ -114,6 +114,55 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('el botón del curso cambia el mismo curso que los ajustes', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(360, 700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(const NaturalmenteApp(conBienvenida: false));
+    final mundo = find.byKey(const Key('zona-cuerpo'));
+    await _hasta(tester, mundo);
+    final progreso = Alcance.of(tester.element(mundo)).progreso;
+    final boton = find.byKey(const Key('abrir-curso-inicio'));
+    expect(find.byTooltip('Elige tu curso'), findsOneWidget);
+    expect(
+      find.descendant(of: boton, matching: find.text('?')),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, const Key('abrir-curso-inicio'));
+    expect(find.byKey(const Key('hoja-curso')), findsOneWidget);
+    await _tocar(tester, const Key('curso-3'));
+    await tester.pumpAndSettle();
+    expect(progreso.curso, 3);
+    expect(find.byKey(const Key('hoja-curso')), findsNothing);
+    expect(
+      find.descendant(of: boton, matching: find.text('3º')),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, const Key('selector-idioma'));
+    final enAjustes = tester.widget<Semantics>(
+      find
+          .descendant(
+            of: find.byKey(const Key('curso-3')),
+            matching: find.byType(Semantics),
+          )
+          .first,
+    );
+    expect(enAjustes.properties.selected, isTrue);
+    await _tocar(tester, const Key('curso-5'));
+    await tester.pumpAndSettle();
+    expect(progreso.curso, 5);
+    await _tocar(tester, const Key('cerrar-ajustes'));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(of: boton, matching: find.text('5º')),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('se puede fallar, seguir y no quedarse atascado', (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 700));
     addTearDown(() => tester.binding.setSurfaceSize(null));

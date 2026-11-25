@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/apariencia.dart';
+import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/tema.dart';
@@ -187,35 +188,15 @@ class _PanelAjustesState extends State<_PanelAjustes> {
                     if (progreso != null) ...[
                       const _TituloSeccion('Mi curso'),
                       const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          for (var curso = 1; curso <= 6; curso++) ...[
-                            if (curso > 1) const SizedBox(width: 6),
-                            Expanded(
-                              child: _OpcionAjuste(
-                                key: Key('curso-$curso'),
-                                etiqueta: '$cursoº',
-                                ayuda: '$cursoº de primaria',
-                                seleccionada: progreso.curso == curso,
-                                habilitada: !_guardando.contains('curso'),
-                                onTap: () {
-                                  if (progreso.curso == curso) return;
-                                  _guardar(
-                                    'curso',
-                                    () => progreso.guardarCurso(curso),
-                                    error: 'No se ha podido guardar el curso. Inténtalo de nuevo.',
-                                    sonidoSeleccion: true,
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 9),
-                      Texto(
-                        textoCursoRecomendado(progreso.curso),
-                        style: TextStyle(fontSize: 12.5, color: colores.tenue),
+                      _FilaCursos(
+                        curso: progreso.curso,
+                        habilitada: !_guardando.contains('curso'),
+                        onElegir: (curso) => _guardar(
+                          'curso',
+                          () => progreso.guardarCurso(curso),
+                          error: 'No se ha podido guardar el curso. Inténtalo de nuevo.',
+                          sonidoSeleccion: true,
+                        ),
                       ),
                       const SizedBox(height: 24),
                     ],
@@ -428,6 +409,127 @@ class _PanelAjustesState extends State<_PanelAjustes> {
       ),
     );
   }
+}
+
+/// Abre desde el inicio una hoja para cambiar el curso. Guarda en el mismo
+/// sitio que la fila «Mi curso» de los ajustes, así que ambos se ven igual.
+Future<void> mostrarSelectorCurso(BuildContext context) {
+  final progreso = Alcance.of(context).progreso;
+  return showModalBottomSheet<void>(
+    context: context,
+    showDragHandle: true,
+    backgroundColor: context.coloresNaturales.tarjeta,
+    builder: (_) => _HojaCurso(progreso: progreso),
+  );
+}
+
+class _HojaCurso extends StatefulWidget {
+  const _HojaCurso({required this.progreso});
+  final Progreso progreso;
+
+  @override
+  State<_HojaCurso> createState() => _HojaCursoState();
+}
+
+class _HojaCursoState extends State<_HojaCurso> {
+  bool _guardando = false;
+  String? _error;
+
+  Future<void> _elegir(int curso) async {
+    if (_guardando) return;
+    setState(() {
+      _guardando = true;
+      _error = null;
+    });
+    var guardado = false;
+    try {
+      guardado = await widget.progreso.guardarCurso(curso);
+    } catch (_) {
+      guardado = false;
+    }
+    if (!mounted) return;
+    if (guardado) {
+      context.sonidoSeleccion();
+      Navigator.of(context).pop();
+      return;
+    }
+    setState(() {
+      _guardando = false;
+      _error = 'No se ha podido guardar el curso. Inténtalo de nuevo.';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: widget.progreso,
+    builder: (context, _) => SafeArea(
+      child: Padding(
+        key: const Key('hoja-curso'),
+        padding: const EdgeInsets.fromLTRB(22, 0, 22, 22),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _TituloSeccion('Mi curso'),
+            const SizedBox(height: 10),
+            _FilaCursos(
+              curso: widget.progreso.curso,
+              habilitada: !_guardando,
+              onElegir: _elegir,
+            ),
+            if (_error case final error?) ...[
+              const SizedBox(height: 12),
+              _AvisoAjustes(error),
+            ],
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+/// Los seis cursos de primaria y la frase del nivel recomendado.
+class _FilaCursos extends StatelessWidget {
+  const _FilaCursos({
+    required this.curso,
+    required this.habilitada,
+    required this.onElegir,
+  });
+
+  final int? curso;
+  final bool habilitada;
+  final ValueChanged<int> onElegir;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Row(
+        children: [
+          for (var opcion = 1; opcion <= 6; opcion++) ...[
+            if (opcion > 1) const SizedBox(width: 6),
+            Expanded(
+              child: _OpcionAjuste(
+                key: Key('curso-$opcion'),
+                etiqueta: '$opcionº',
+                ayuda: '$opcionº de primaria',
+                seleccionada: curso == opcion,
+                habilitada: habilitada,
+                onTap: () {
+                  if (curso != opcion) onElegir(opcion);
+                },
+              ),
+            ),
+          ],
+        ],
+      ),
+      const SizedBox(height: 9),
+      Texto(
+        textoCursoRecomendado(curso),
+        style: TextStyle(fontSize: 12.5, color: context.coloresNaturales.tenue),
+      ),
+    ],
+  );
 }
 
 /// Frase corta que explica qué nivel se recomienda con el curso elegido.

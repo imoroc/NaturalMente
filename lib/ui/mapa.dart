@@ -76,13 +76,20 @@ class MapaPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Texto(
-                      'NaturalMente',
-                      style: TextStyle(
-                        color: colores.tinta,
-                        fontFamily: 'NunitoInicio',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
+                    // Con el curso y la racha al lado, el nombre se encoge
+                    // en pantallas estrechas en lugar de partirse en dos.
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Texto(
+                        'NaturalMente',
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: colores.tinta,
+                          fontFamily: 'NunitoInicio',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ),
@@ -110,6 +117,14 @@ class MapaPage extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(child: marca),
+                            const SizedBox(width: 8),
+                            _AccesoCurso(
+                              curso: progreso.curso,
+                              onTap: () {
+                                context.sonidoToque();
+                                mostrarSelectorCurso(context);
+                              },
+                            ),
                             const SizedBox(width: 8),
                             _AccesoRacha(
                               dias: diasRacha,
@@ -203,6 +218,57 @@ class MapaPage extends StatelessWidget {
                 ),
               );
             },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Muestra el curso elegido junto a la racha y abre la hoja para cambiarlo.
+class _AccesoCurso extends StatelessWidget {
+  const _AccesoCurso({required this.curso, required this.onTap});
+
+  final int? curso;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final actual = curso;
+    return Tooltip(
+      message: context.tr(
+        actual == null ? 'Elige tu curso' : '$actualº de primaria',
+      ),
+      child: _AccesoInicio(
+        key: const Key('abrir-curso-inicio'),
+        fondo: colores.superficie(const Color(0xFFE3F1FB)),
+        borde: colores.borde(const Color(0xFF4F9BD9)),
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 8),
+        onTap: onTap,
+        child: ExcludeSemantics(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 32,
+                child: Icon(
+                  Icons.school_rounded,
+                  size: 22,
+                  color: colores.contenido(const Color(0xFF2F78B7)),
+                ),
+              ),
+              const SizedBox(width: 3),
+              Text(
+                actual == null ? '?' : '$actualº',
+                style: TextStyle(
+                  color: colores.tinta,
+                  fontFamily: 'NunitoInicio',
+                  fontSize: 19,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
         ),
       ),

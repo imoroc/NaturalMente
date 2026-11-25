@@ -22,7 +22,7 @@ Cada juego de Aula usa `FeedbackAcierto` y `FinJuego` como el resto. Las semilla
 - **Llave mágica**: en «¿Quién juega?» → «Cambiar mi Natu» → «Crear mi llave». En otra tablet: «Tengo una llave de otra tablet», se elige el mote y se tocan los tres dibujos y el número.
 - **Sincronización**: al entrar en Aula se junta el progreso de todas las tablets del niño (`sincronizar_progreso`). Lo conseguido se suma y las semillas se cuentan por dispositivo, sin duplicar nada. La ropa y el curso siguen el último cambio. Las pruebas están en `test/datos/sincronizacion_test.dart` y en pgTAP.
 - **Pantallas adaptables**: en tablets apaisadas y en web, el juego pone la pregunta a un lado y las respuestas al otro, y Aula muestra los juegos en dos o tres columnas.
-- **Privacidad**: `web/privacidad.html`, publicada con el panel en `/privacidad.html`. Hay que poner el correo de contacto donde dice `[CORREO DE CONTACTO]`.
+- **Privacidad**: `web/privacidad.html`, publicada con el panel en `/privacidad.html`.
 
 ## Probarlo en local
 

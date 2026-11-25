@@ -11,6 +11,7 @@ import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/bienvenida.dart';
 import 'package:naturalmente/ui/mapa.dart';
 import 'package:naturalmente/ui/tema.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -72,7 +73,15 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
     _perfiles = perfiles;
     final repositorio =
         widget.repositorioAula ?? (widget.usarNube ? await Nube.abrir() : null);
-    final aula = Aula(repositorio: repositorio, perfiles: perfiles, prefs: prefs);
+    final aula = Aula(
+      repositorio: repositorio,
+      perfiles: perfiles,
+      prefs: prefs,
+      // Misma caché que usan las imágenes de Aula al mostrarse.
+      precargarImagen: repositorio is RepositorioAulaSupabase
+          ? (url) => DefaultCacheManager().downloadFile(url)
+          : null,
+    );
     _aula = aula;
     return _Carga(catalogo, perfiles, aula, idioma);
   }

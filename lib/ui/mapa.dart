@@ -7,6 +7,7 @@ import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/zona.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/aula/aula_page.dart';
+import 'package:naturalmente/ui/aula/ilustracion_aula.dart';
 import 'package:naturalmente/ui/expedicion_diaria.dart';
 import 'package:naturalmente/ui/perfiles/quien_juega.dart';
 import 'package:naturalmente/ui/selector_idioma.dart';
@@ -238,23 +239,7 @@ class MapaPage extends StatelessWidget {
                           onTap: () => abrir(const AulaPage()),
                           child: Row(
                             children: [
-                              Container(
-                                width: 76,
-                                height: 54,
-                                decoration: BoxDecoration(
-                                  color: colores.superficie(
-                                    const Color(0xFFE3F1FB),
-                                  ),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: Icon(
-                                  Icons.co_present_rounded,
-                                  size: 34,
-                                  color: colores.contenido(
-                                    const Color(0xFF2F78B7),
-                                  ),
-                                ),
-                              ),
+                              const IlustracionAula(),
                               const SizedBox(width: 12),
                               const Expanded(
                                 child: _TextoAcceso(

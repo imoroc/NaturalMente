@@ -19,7 +19,8 @@ void main() {
   for (final plantilla in PlantillaAula.values) {
     test('${plantilla.id}: guardar y volver a leer da el mismo juego', () {
       final juego = juegoDePrueba(plantilla: plantilla);
-      final fila = jsonDecode(jsonEncode(juego.toFila())) as Map<String, dynamic>;
+      final fila =
+          jsonDecode(jsonEncode(juego.toFila())) as Map<String, dynamic>;
       final leido = JuegoAula.desdeFila(fila)!;
       expect(leido.toFila(), juego.toFila());
       expect(leido.errores(), isEmpty);
@@ -34,7 +35,10 @@ void main() {
     expect(juego.preguntas[1].correcta, 1);
   });
 
-  Map<String, dynamic> fila(Map<String, dynamic> contenido, {List<int>? cursos}) => {
+  Map<String, dynamic> fila(
+    Map<String, dynamic> contenido, {
+    List<int>? cursos,
+  }) => {
     'id': 'x',
     'titulo': 'Prueba',
     'plantilla': 'opcion_multiple',
@@ -47,7 +51,10 @@ void main() {
   test('un juego mal guardado no se muestra en vez de romper Aula', () {
     expect(JuegoAula.desdeFila({'id': 'x'}), isNull);
     expect(
-      JuegoAula.desdeFila({...fila({'preguntas': []}), 'plantilla': 'otra'}),
+      JuegoAula.desdeFila({
+        ...fila({'preguntas': []}),
+        'plantilla': 'otra',
+      }),
       isNull,
     );
     expect(JuegoAula.desdeFila(fila({'preguntas': []})), isNull);
@@ -80,12 +87,18 @@ void main() {
       preguntas: [
         PreguntaAula(
           enunciado: '',
-          opciones: [OpcionAula(texto: 'Sí'), OpcionAula(texto: 'sí')],
+          opciones: [
+            OpcionAula(texto: 'Sí'),
+            OpcionAula(texto: 'sí'),
+          ],
           correcta: 0,
         ),
         PreguntaAula(
           enunciado: '¿Cuál?',
-          opciones: [OpcionAula(texto: 'A'), OpcionAula(texto: '')],
+          opciones: [
+            OpcionAula(texto: 'A'),
+            OpcionAula(texto: ''),
+          ],
           correcta: 3,
         ),
       ],
@@ -101,6 +114,11 @@ void main() {
   });
 
   test('solo se aceptan imágenes de la galería o subidas por https', () {
+    expect(
+      ImagenAula.desdeJson({'escena': 'selva'}),
+      const ImagenEscena('selva'),
+    );
+    expect(ImagenAula.desdeJson({'escena': 'planetas'}), isNull);
     expect(ImagenAula.desdeJson({'galeria': 'herbario'}), isA<ImagenGaleria>());
     expect(ImagenAula.desdeJson({'galeria': 'no-existe'}), isNull);
     expect(
@@ -108,6 +126,11 @@ void main() {
       isA<ImagenSubida>(),
     );
     expect(ImagenAula.desdeJson({'url': 'http://inseguro/a.png'}), isNull);
+    expect(
+      ImagenAula.desdeJson({'url': 'http://127.0.0.1:54321/a.jpg'}),
+      isA<ImagenSubida>(),
+      reason: 'el Supabase local de desarrollo',
+    );
     expect(ImagenAula.desdeJson('texto'), isNull);
   });
 }

@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
+import 'package:naturalmente/panel/imagenes_panel.dart';
 import 'package:naturalmente/panel/panel_app.dart' show miniaturaGaleria;
 import 'package:naturalmente/panel/repositorio_panel.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 import 'package:naturalmente/ui/aula/juego_aula_page.dart';
 
 /// Pregunta mientras el profesor la escribe.
@@ -17,6 +19,7 @@ class _PreguntaEditable {
     this.correcta = -1,
     this.pista = '',
     this.explicacion = '',
+    this.imagen,
   }) : opciones = opciones ?? ['', ''];
 
   factory _PreguntaEditable.desde(PreguntaAula p, int clave) =>
@@ -27,9 +30,11 @@ class _PreguntaEditable {
         correcta: p.correcta,
         pista: p.pista,
         explicacion: p.explicacion,
+        imagen: p.imagen,
       );
 
   final int clave;
+  ImagenAula? imagen;
   String enunciado;
   List<String> opciones;
 
@@ -45,10 +50,12 @@ class _PreguntaEditable {
     correcta: correcta,
     pista: pista,
     explicacion: explicacion,
+    imagen: imagen,
   );
 
   PreguntaAula aPregunta(PlantillaAula plantilla) => PreguntaAula(
     enunciado: enunciado.trim(),
+    imagen: imagen,
     opciones: plantilla == PlantillaAula.verdaderoFalso
         ? const [OpcionAula(texto: 'Verdadero'), OpcionAula(texto: 'Falso')]
         : [for (final o in opciones) OpcionAula(texto: o.trim())],
@@ -66,12 +73,16 @@ class EditorJuegoPage extends StatefulWidget {
     required this.repositorio,
     this.ficha,
     this.duplicar = false,
+    this.elegirImagen = elegirYSubirImagen,
     super.key,
   });
 
   final RepositorioPanel repositorio;
   final FichaJuego? ficha;
   final bool duplicar;
+
+  /// Elige, comprime y sube una foto. Las pruebas la sustituyen.
+  final Future<ImagenSubida?> Function(RepositorioPanel) elegirImagen;
 
   @override
   State<EditorJuegoPage> createState() => _EditorJuegoPageState();
@@ -83,7 +94,7 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
   String _titulo = '';
   String _intro = '';
   List<int> _cursos = [];
-  String? _fondo;
+  ImagenAula? _fondo = const ImagenEscena('pradera');
   bool _natu = true;
   final List<_PreguntaEditable> _preguntas = [];
   int _siguienteClave = 0;
@@ -91,7 +102,31 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
   _Guardado _guardado = _Guardado.guardado;
   Timer? _autoguardado;
   bool _intentoPublicar = false;
+  bool _subiendo = false;
   String? _mensaje;
+
+  /// Sube una foto y la devuelve, o `null` si se cancela o falla.
+  Future<ImagenSubida?> _subirImagen() async {
+    if (_subiendo) return null;
+    setState(() {
+      _subiendo = true;
+      _mensaje = null;
+    });
+    try {
+      return await widget.elegirImagen(widget.repositorio);
+    } on ErrorPanel catch (e) {
+      if (mounted) setState(() => _mensaje = e.mensaje);
+    } catch (_) {
+      if (mounted) {
+        setState(
+          () => _mensaje = 'No se ha podido subir la imagen. Prueba otra vez.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _subiendo = false);
+    }
+    return null;
+  }
 
   @override
   void initState() {
@@ -105,10 +140,7 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     _estado = widget.duplicar ? EstadoJuego.borrador : ficha.estado;
     _intro = juego.intro;
     _cursos = List.of(juego.cursos);
-    _fondo = switch (juego.fondo) {
-      ImagenGaleria(:final id) => id,
-      _ => null,
-    };
+    _fondo = juego.fondo;
     _natu = juego.mostrarNatu;
     for (final p in juego.preguntas) {
       _preguntas.add(_PreguntaEditable.desde(p, _siguienteClave++));
@@ -129,7 +161,7 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     version: 1,
     cursos: List.of(_cursos)..sort(),
     preguntas: [for (final p in _preguntas) p.aPregunta(_plantilla!)],
-    fondo: _fondo == null ? null : ImagenGaleria(_fondo!),
+    fondo: _fondo,
     mostrarNatu: _natu,
     intro: _intro.trim(),
   );
@@ -411,11 +443,38 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
               title: const Text('Que aparezca Natu'),
             ),
             Text('Fondo', style: estilo.titleMedium),
-            const SizedBox(height: 6),
+            const SizedBox(height: 4),
+            const Text('Dibujos que se adaptan a cualquier pantalla:'),
+            const SizedBox(height: 8),
+            Wrap(
+              runSpacing: 10,
+              children: [
+                for (final MapEntry(key: id, value: nombre)
+                    in escenasAula.entries)
+                  _OpcionFondo(
+                    key: Key('editor-escena-$id'),
+                    seleccionado: _fondo == ImagenEscena(id),
+                    tooltip: nombre,
+                    onTap: () => _cambio(() => _fondo = ImagenEscena(id)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        width: 96,
+                        height: 64,
+                        child: EscenaAula(id),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text('Fotos de la app:'),
+            const SizedBox(height: 8),
             Wrap(
               runSpacing: 10,
               children: [
                 _OpcionFondo(
+                  key: const Key('editor-sin-fondo'),
                   seleccionado: _fondo == null,
                   onTap: () => _cambio(() => _fondo = null),
                   child: Container(
@@ -432,11 +491,49 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
                 for (final id in galeriaAula.keys)
                   _OpcionFondo(
                     key: Key('editor-fondo-$id'),
-                    seleccionado: _fondo == id,
+                    seleccionado: _fondo == ImagenGaleria(id),
                     tooltip: galeriaAula[id]!.$2,
-                    onTap: () => _cambio(() => _fondo = id),
+                    onTap: () => _cambio(() => _fondo = ImagenGaleria(id)),
                     child: miniaturaGaleria(id),
                   ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              runSpacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                if (_fondo case final ImagenSubida foto)
+                  _OpcionFondo(
+                    key: const Key('editor-fondo-subido'),
+                    seleccionado: true,
+                    onTap: () {},
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        width: 96,
+                        height: 64,
+                        child: ImagenDeAula(foto, ajuste: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                OutlinedButton.icon(
+                  key: const Key('editor-subir-fondo'),
+                  onPressed: _subiendo
+                      ? null
+                      : () async {
+                          final foto = await _subirImagen();
+                          if (foto != null) _cambio(() => _fondo = foto);
+                        },
+                  icon: _subiendo
+                      ? const SizedBox.square(
+                          dimension: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.add_photo_alternate_rounded),
+                  label: const Text('Subir una foto mía'),
+                ),
               ],
             ),
           ],
@@ -473,6 +570,12 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
                 onBorrar: _preguntas.length == 1
                     ? null
                     : () => _cambio(() => _preguntas.removeAt(i)),
+                subiendo: _subiendo,
+                onSubirImagen: () async {
+                  final pregunta = _preguntas[i];
+                  final foto = await _subirImagen();
+                  if (foto != null) _cambio(() => pregunta.imagen = foto);
+                },
               ),
             if (_preguntas.length < JuegoAula.maxPreguntas)
               OutlinedButton.icon(
@@ -586,9 +689,13 @@ class _EditorPregunta extends StatelessWidget {
     required this.onBajar,
     required this.onDuplicar,
     required this.onBorrar,
+    required this.subiendo,
+    required this.onSubirImagen,
     super.key,
   });
 
+  final bool subiendo;
+  final VoidCallback onSubirImagen;
   final int numero;
   final PlantillaAula plantilla;
   final _PreguntaEditable pregunta;
@@ -662,6 +769,38 @@ class _EditorPregunta extends StatelessWidget {
               ),
               onChanged: (v) => onCambio(() => p.enunciado = v),
             ),
+            const SizedBox(height: 8),
+            if (p.imagen case final imagen?)
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox(
+                      key: Key('editor-imagen-$numero'),
+                      width: 160,
+                      height: 100,
+                      child: ImagenDeAula(imagen, ajuste: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  TextButton.icon(
+                    key: Key('editor-quitar-imagen-$numero'),
+                    onPressed: () => onCambio(() => p.imagen = null),
+                    icon: const Icon(Icons.close_rounded),
+                    label: const Text('Quitar imagen'),
+                  ),
+                ],
+              )
+            else
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  key: Key('editor-anadir-imagen-$numero'),
+                  onPressed: subiendo ? null : onSubirImagen,
+                  icon: const Icon(Icons.add_photo_alternate_rounded),
+                  label: const Text('Añadir una imagen (opcional)'),
+                ),
+              ),
             const SizedBox(height: 12),
             if (plantilla == PlantillaAula.verdaderoFalso)
               Row(

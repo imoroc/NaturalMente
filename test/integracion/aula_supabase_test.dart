@@ -110,10 +110,41 @@ void main() {
       final fila = ranking.singleWhere((f) => f.esMio);
       expect(fila.perfil.mote('es'), 'Nutria Tenaz');
       expect((fila.traje, fila.pose, fila.puntos), ('explorador', 'feliz', 60));
+
+      // Otra tablet canjea la llave y las dos sincronizan su progreso.
+      final otra = RepositorioAulaSupabase(SupabaseClient(url, anon));
+      expect(
+        await otra.canjearLlave('nutria', 'tenaz', 'sol-sol-sol-00'),
+        isNull,
+      );
+      final canjeado = await otra.canjearLlave('nutria', 'tenaz', nube.llave);
+      expect(canjeado?.id, nube.id);
+      expect(canjeado?.perfil.color, 'turquesa');
+      await repo.sincronizar(nube.id, {
+        'hechos': ['hogar/facil/completo'],
+        'ganadas': 30,
+        'gastadas': 0,
+      });
+      final juntos = await otra.sincronizar(nube.id, {
+        'hechos': ['ficha/camello'],
+        'ganadas': 5,
+        'gastadas': 12,
+      });
+      expect(juntos['semillas'], 23);
+      expect((juntos['hechos'] as List).toSet(), {
+        'hogar/facil/completo',
+        'ficha/camello',
+      });
+
+      // Cambiar la llave deja fuera a la otra tablet.
+      final nueva = await repo.cambiarLlave(nube.id);
+      expect(nueva, isNot(nube.llave));
+      await expectLater(
+        otra.sincronizar(nube.id, const {}),
+        throwsA(isA<PostgrestException>()),
+      );
       await admin.from('perfiles').delete().eq('id', nube.id);
     },
-    skip: configurado
-        ? false
-        : 'Define SUPABASE_PRUEBAS_URL, _ANON y _SERVICE para probar contra Supabase.',
+    skip: configurado ? false : 'Define SUPABASE_PRUEBAS_URL, _ANON y _SERVICE para probar contra Supabase.',
   );
 }

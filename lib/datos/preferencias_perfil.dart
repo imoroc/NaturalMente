@@ -6,7 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// que existen otros perfiles: lee y escribe las mismas claves de siempre.
 class PreferenciasConPrefijo implements SharedPreferences {
   PreferenciasConPrefijo(this._base, this.prefijo)
-    : assert(prefijo.isNotEmpty, 'El perfil principal usa las claves sin prefijo');
+    : assert(
+        prefijo.isNotEmpty,
+        'El perfil principal usa las claves sin prefijo',
+      );
 
   final SharedPreferences _base;
   final String prefijo;

@@ -32,4 +32,13 @@ class PreferenciasControladas extends Fake implements SharedPreferences {
   @override
   Future<bool> setStringList(String key, List<String> value) =>
       _escribir(key, List<String>.of(value));
+  @override
+  Future<bool> setBool(String key, bool value) => _escribir(key, value);
+  @override
+  Set<String> getKeys() => valores.keys.toSet();
+  @override
+  Future<bool> remove(String key) async {
+    valores.remove(key);
+    return true;
+  }
 }

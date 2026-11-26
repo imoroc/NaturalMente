@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -31,8 +31,42 @@
 
   <title>NaturalMente</title>
   <link rel="manifest" href="manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1F8A4C">
+  <style>
+    /* Pantalla de carga: se ve mientras se descarga la app la primera vez. */
+    html, body { margin: 0; height: 100%; background: #FAF5EC; }
+    #carga {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      font: 800 20px/1.3 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #1D3528; transition: opacity .3s ease;
+    }
+    #carga img { width: 120px; height: 120px; border-radius: 28px; animation: latido 1.4s ease-in-out infinite; }
+    #carga .barra { width: 180px; height: 8px; border-radius: 99px; background: #E3E8DC; overflow: hidden; }
+    #carga .barra i { display: block; width: 40%; height: 100%; border-radius: 99px; background: #2E9E57; animation: avance 1.2s ease-in-out infinite; }
+    @keyframes latido { 50% { transform: scale(1.06); } }
+    @keyframes avance { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+    @media (prefers-reduced-motion: reduce) { #carga img, #carga .barra i { animation: none; } }
+    @media (prefers-color-scheme: dark) { html, body { background: #101E19; } #carga { color: #ECF5EE; } #carga .barra { background: #24372D; } }
+  </style>
 </head>
 <body>
+  <div id="carga" role="status" aria-live="polite">
+    <img src="icons/Icon-192.png" alt="">
+    <div>Cargando NaturalMente…</div>
+    <div class="barra"><i></i></div>
+  </div>
+  <noscript>Para usar NaturalMente en el navegador hay que activar JavaScript.</noscript>
+  <script>
+    // Se quita en cuanto Flutter pinta su primera pantalla.
+    window.addEventListener('flutter-first-frame', function () {
+      var carga = document.getElementById('carga');
+      if (!carga) return;
+      carga.style.opacity = '0';
+      setTimeout(function () { carga.remove(); }, 350);
+    });
+  </script>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader

@@ -62,7 +62,7 @@ Comandos que salen en las diapositivas y que usamos de verdad:
 - `flutter build apk` genera un APK para instalar a mano.
 - `flutter build appbundle` es lo que se sube a Play. El APK no es el formato de la tienda.
 - `flutter build ipa` genera la app de iOS. Hace falta un Mac con Xcode. En Windows no sale.
-- `flutter build web` existe. Nosotros la web no la publicamos. Sirve para abrir la app en Chrome mientras programamos.
+- La app también se publica en el navegador (https://naturalmente.pages.dev) para usarla con el proyector, en ordenadores o en dispositivos que no son Android. Ver la decisión del 26 de noviembre en [decisiones.md](decisiones.md).
 
 Para Play hay que firmar la versión release con una clave nuestra. La clave no se sube a git (está ignorada: `*.jks`, `android/key.properties`). El alta de la cuenta de Google se paga una vez. La de Apple, cada año, y a veces tardan días en activarla.
 

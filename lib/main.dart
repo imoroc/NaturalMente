@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,11 +13,15 @@ import 'package:naturalmente/ui/bienvenida.dart';
 import 'package:naturalmente/ui/mapa.dart';
 import 'package:naturalmente/ui/perfiles/candado.dart';
 import 'package:naturalmente/ui/tema.dart';
+import 'package:naturalmente/web/audio_stub.dart'
+    if (dart.library.js_interop) 'package:naturalmente/web/audio_web.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // En el navegador, los efectos y la música suenan con Web Audio.
+  registrarAudioWeb();
   final apariencia = await Apariencia.abrir();
   runApp(NaturalmenteApp(apariencia: apariencia));
 }
@@ -79,7 +84,8 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
       perfiles: perfiles,
       prefs: prefs,
       // Misma caché que usan las imágenes de Aula al mostrarse.
-      precargarImagen: repositorio is RepositorioAulaSupabase
+      // En el navegador las fotos ya las guarda su propia caché.
+      precargarImagen: repositorio is RepositorioAulaSupabase && !kIsWeb
           ? (url) => DefaultCacheManager().downloadFile(url)
           : null,
     );

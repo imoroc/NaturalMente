@@ -24,7 +24,7 @@ naturalmente/
     ui/            pruebas de pantallas
   android/         identificador, icono, firma. No se reescribe aquí la app
   ios/             igual, para Apple
-  web/             solo para abrirla en Chrome. No se publica
+  web/             versión web (navegador y proyector), publicada en Cloudflare Pages
   docs/
     contexto.md    de qué va, la asignatura y el material de ciencias
     organizacion.md

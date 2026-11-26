@@ -214,6 +214,16 @@ void main() {
           actividad.linterna!.niveles.map((n) => n.id).toList(),
           ['facil', 'medio', 'dificil'],
         );
+      } else if (actividad.tipo == 'pelicula') {
+        expect(
+          actividad.pelicula!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
+      } else if (actividad.tipo == 'oscuras') {
+        expect(
+          actividad.oscuras!.niveles.map((n) => n.id).toList(),
+          ['facil', 'medio', 'dificil'],
+        );
       } else if (actividad.tipo == 'carrera') {
         expect(
           actividad.carrera!.niveles.map((n) => n.id).toList(),
@@ -287,10 +297,10 @@ void main() {
     }
   });
 
-  test('el álbum tiene 91 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
-    expect(catalogo.fichas.length, 91);
+  test('el álbum tiene 97 cromos y cada dificultad de cada juego desbloquea los suyos', () async {
+    expect(catalogo.fichas.length, 97);
     expect(catalogo.fichasDe('reserva').length, 32);
-    expect(catalogo.fichasDe('invernadero').length, 26);
+    expect(catalogo.fichasDe('invernadero').length, 32);
     expect(catalogo.fichasDe('cuerpo').length, 33);
 
     SharedPreferences.setMockInitialValues({});
@@ -410,6 +420,8 @@ void main() {
       ('quien-soy', ['pelo-plumas-escamas', 'como-viven-animales', 'vertebrados-invertebrados']),
       ('carrera', ['vuela-nada-anda', 'formas-de-moverse', 'cuerpo-movimiento']),
       ('linterna', ['partes-del-cuerpo', 'huesos-articulaciones', 'partes-de-la-celula']),
+      ('pelicula', ['semilla-brote-planta', 'ciclo-de-la-planta', 'de-semilla-a-semilla']),
+      ('oscuras', ['planta-y-luz', 'crece-hacia-la-luz', 'hoja-fabrica']),
     ]) {
       final juego = catalogo.actividades.firstWhere((a) => a.id == juegoId);
       await progreso.marcarNivelJuego(juego, 'facil');

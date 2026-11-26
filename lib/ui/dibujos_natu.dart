@@ -7358,6 +7358,72 @@ class DatosEnciclopedicosFicha {
             'El microscopio permitió ver las células por primera vez hace más de 350 años, en un trozo de corcho.',
         tipoMovimiento: 'pulso',
       ),
+      'semilla-brote-planta' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Cómo crece una planta',
+        habitatOSistema: 'La semilla en la tierra, con agua',
+        locomocionOFuncion:
+            'La semilla se abre y saca un brote que crece hacia la luz',
+        alimentacionOProceso:
+            'El brote echa hojas y se hace una planta',
+        datoCientifico:
+            'La semilla guarda una plantita dormida y comida para empezar a crecer.',
+        tipoMovimiento: 'paso',
+      ),
+      'ciclo-de-la-planta' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Ciclo de vida',
+        habitatOSistema: 'Semilla, germinación, planta, flor y fruto',
+        locomocionOFuncion:
+            'Al germinar, la semilla saca primero la raíz y después el tallo',
+        alimentacionOProceso:
+            'La flor se convierte en fruto y el fruto guarda las semillas nuevas',
+        datoCientifico:
+            'Una judía tarda unos dos meses en pasar de semilla a vaina con judías nuevas.',
+        tipoMovimiento: 'pulso',
+      ),
+      'de-semilla-a-semilla' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Reproducción',
+        habitatOSistema: 'Polinización y dispersión de las semillas',
+        locomocionOFuncion:
+            'El polen viaja de flor en flor con insectos o con el viento',
+        alimentacionOProceso:
+            'Las semillas viajan lejos con el viento, el agua o los animales',
+        datoCientifico:
+            'Las semillas del diente de león pueden volar varios kilómetros con su paracaídas de pelitos.',
+        tipoMovimiento: 'vuelo',
+      ),
+      'planta-y-luz' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Lo que necesitan',
+        habitatOSistema: 'Luz, agua, aire y tierra',
+        locomocionOFuncion:
+            'Con luz, las hojas están verdes y la planta crece fuerte',
+        alimentacionOProceso:
+            'A oscuras, la planta se estira, se pone pálida y se debilita',
+        datoCientifico:
+            'Si una planta pálida vuelve a la luz, en pocos días se pone verde otra vez.',
+        tipoMovimiento: 'pulso',
+      ),
+      'crece-hacia-la-luz' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Respuesta a la luz',
+        habitatOSistema: 'El tallo y las hojas buscan la luz',
+        locomocionOFuncion:
+            'El lado del tallo en sombra crece más y el tallo se dobla hacia la luz',
+        alimentacionOProceso:
+            'Así las hojas reciben más luz para fabricar alimento',
+        datoCientifico:
+            'Este movimiento hacia la luz se llama fototropismo.',
+        tipoMovimiento: 'salto',
+      ),
+      'hoja-fabrica' => const DatosEnciclopedicosFicha(
+        clasificacion: 'Plantas · Fotosíntesis',
+        habitatOSistema: 'La hoja: luz, agua y dióxido de carbono',
+        locomocionOFuncion:
+            'La clorofila de la hoja atrapa la energía de la luz',
+        alimentacionOProceso:
+            'La hoja fabrica azúcar y suelta oxígeno al aire',
+        datoCientifico:
+            'El azúcar que fabrica la hoja viaja con la savia elaborada a toda la planta.',
+        tipoMovimiento: 'pulso',
+      ),
       _ => const DatosEnciclopedicosFicha(
         clasificacion: 'Ciencias de la Naturaleza · Salud y Vida',
         habitatOSistema: 'Cuerpo humano y funciones vitales',

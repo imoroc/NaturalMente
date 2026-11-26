@@ -9,6 +9,8 @@ import 'package:naturalmente/modelo/nacimiento.dart';
 import 'package:naturalmente/modelo/rescate.dart';
 import 'package:naturalmente/modelo/carrera.dart';
 import 'package:naturalmente/modelo/linterna.dart';
+import 'package:naturalmente/modelo/oscuras.dart';
+import 'package:naturalmente/modelo/pelicula.dart';
 
 
 class Opcion {
@@ -217,6 +219,8 @@ class Actividad {
     this.rescate,
     this.carrera,
     this.linterna,
+    this.pelicula,
+    this.oscuras,
     this.memoria,
     this.adivinanza,
   });
@@ -247,6 +251,8 @@ class Actividad {
   final Rescate? rescate;
   final Carrera? carrera;
   final Linterna? linterna;
+  final Pelicula? pelicula;
+  final Oscuras? oscuras;
   final Memoria? memoria;
   final Adivinanza? adivinanza;
 
@@ -259,6 +265,8 @@ class Actividad {
     if (tipo == 'rescate') return rescate != null;
     if (tipo == 'carrera') return carrera != null;
     if (tipo == 'linterna') return linterna != null;
+    if (tipo == 'pelicula') return pelicula != null;
+    if (tipo == 'oscuras') return oscuras != null;
     if (tipo == 'memoria') return memoria != null;
     if (tipo == 'adivinanza') return adivinanza != null;
     if (tipo == 'lugar') {
@@ -317,6 +325,12 @@ class Actividad {
       linterna: mapa['linterna'] == null
           ? null
           : Linterna.desdeMapa(mapa['linterna'] as Map<String, dynamic>),
+      pelicula: mapa['pelicula'] == null
+          ? null
+          : Pelicula.desdeMapa(mapa['pelicula'] as Map<String, dynamic>),
+      oscuras: mapa['oscuras'] == null
+          ? null
+          : Oscuras.desdeMapa(mapa['oscuras'] as Map<String, dynamic>),
       memoria: mapa['memoria'] == null
           ? null
           : Memoria.desdeMapa(mapa['memoria'] as Map<String, dynamic>),
@@ -345,6 +359,8 @@ class Actividad {
       'rescate',
       'carrera',
       'linterna',
+      'pelicula',
+      'oscuras',
       'memoria',
       'adivinanza',
     ].contains(tipo)) {

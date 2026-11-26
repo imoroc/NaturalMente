@@ -20,6 +20,8 @@ import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
 import 'package:naturalmente/ui/carrera.dart';
 import 'package:naturalmente/ui/linterna.dart';
+import 'package:naturalmente/ui/oscuras.dart';
+import 'package:naturalmente/ui/pelicula.dart';
 import 'package:naturalmente/ui/adivinanza.dart';
 import 'package:naturalmente/ui/memoria.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -36,6 +38,8 @@ void abrirActividad(BuildContext context, Actividad actividad) {
         'rescate' => RescatePage(actividad: actividad),
         'carrera' => CarreraPage(actividad: actividad),
         'linterna' => LinternaPage(actividad: actividad),
+        'pelicula' => PeliculaPage(actividad: actividad),
+        'oscuras' => OscurasPage(actividad: actividad),
         'memoria' => MemoriaPage(actividad: actividad),
         'adivinanza' => AdivinanzaPage(actividad: actividad),
         _ => JuegoPage(actividad: actividad),

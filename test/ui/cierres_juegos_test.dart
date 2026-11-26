@@ -21,6 +21,8 @@ import 'package:naturalmente/ui/nacimiento.dart';
 import 'package:naturalmente/ui/rescate.dart';
 import 'package:naturalmente/ui/carrera.dart';
 import 'package:naturalmente/ui/linterna.dart';
+import 'package:naturalmente/ui/oscuras.dart';
+import 'package:naturalmente/ui/pelicula.dart';
 import 'package:naturalmente/ui/adivinanza.dart';
 import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +45,8 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   'rescate' => RescatePage(actividad: actividad),
   'carrera' => CarreraPage(actividad: actividad),
   'linterna' => LinternaPage(actividad: actividad),
+  'pelicula' => PeliculaPage(actividad: actividad),
+  'oscuras' => OscurasPage(actividad: actividad),
   'memoria' => MemoriaPage(actividad: actividad),
   'adivinanza' => AdivinanzaPage(actividad: actividad),
   _ => JuegoPage(actividad: actividad),
@@ -226,6 +230,41 @@ Future<void> _jugar(
           await _tocar(tester, 'zona-${objetivo.id}-0');
         }
         if (escena != nivel.escenas.last) {
+          expect(find.byType(FinJuego), findsNothing);
+          await _tocar(tester, 'continuar-paso');
+        }
+      }
+    case 'pelicula':
+      final nivel = actividad.pelicula!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final rollo in nivel.rollos) {
+        for (final fotograma in rollo.fotogramas) {
+          expect(find.byType(FinJuego), findsNothing);
+          await _tocar(tester, 'carta-${fotograma.id}');
+        }
+        if (rollo != nivel.rollos.last) {
+          expect(find.byType(FinJuego), findsNothing);
+          await _tocar(tester, 'continuar-paso');
+        }
+      }
+    case 'oscuras':
+      final nivel = actividad.oscuras!.niveles.firstWhere(
+        (n) => n.id == nivelId,
+      );
+      for (final reto in nivel.retos) {
+        expect(find.byType(FinJuego), findsNothing);
+        if (reto.tipo == 'fabricar') {
+          for (final ingrediente in reto.ingredientes) {
+            if (ingrediente.entra) {
+              await _tocar(tester, 'ingrediente-${ingrediente.id}');
+            }
+          }
+        } else {
+          await _tocar(tester, 'opcion-${reto.respuesta}');
+        }
+        await _tocar(tester, 'oscuras-probar');
+        if (reto != nivel.retos.last) {
           expect(find.byType(FinJuego), findsNothing);
           await _tocar(tester, 'continuar-paso');
         }

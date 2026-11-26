@@ -14,6 +14,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/datos/aula/repositorio_aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
+import 'package:naturalmente/modelo/aula/juego_aula.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
@@ -70,7 +71,7 @@ void main() {
       final juegos = await repo.juegosDeCurso(5);
       final mio = juegos.where((j) => j.titulo.endsWith(sufijo)).toList();
       expect(mio.map((j) => j.titulo), ['Integración $sufijo']);
-      expect(mio.single.preguntas.first.correcta, 0);
+      expect((mio.single.preguntas.first as PreguntaAula).correcta, 0);
 
       const perfil = Perfil(
         id: 'local',

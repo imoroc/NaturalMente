@@ -2,8 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
-import 'package:naturalmente/modelo/aula/juego_aula.dart';
-
 export 'package:naturalmente/modelo/aula/juego_aula.dart' show escenasAula;
 
 /// Una escena a pantalla completa (o en miniatura en el editor).

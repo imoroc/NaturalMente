@@ -135,7 +135,8 @@ class Perfiles extends ChangeNotifier {
   Perfiles._(this._prefs, this._lista, this._activoId, this._azar);
 
   static const idPrincipal = 'principal';
-  static const maximo = 8;
+  /// Una tablet de clase la comparten muchos niños.
+  static const maximo = 30;
   static const _claveLista = 'perfiles/lista';
   static const _claveActivo = 'perfiles/activo';
 

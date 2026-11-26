@@ -182,7 +182,7 @@ void main() {
       await tester.pumpAndSettle();
       await tocar(
         tester,
-        find.byKey(const Key('editor-plantilla-opcion_multiple')),
+        find.byKey(const Key('editor-tipo-opcion_multiple')),
       );
       await tester.pumpAndSettle();
 
@@ -259,8 +259,9 @@ void main() {
       final publicado = repo.juegos.values.single;
       expect(publicado.estado, EstadoJuego.publicado);
       expect(publicado.juego.cursos, [3]);
-      expect(publicado.juego.preguntas.single.correcta, 1);
-      expect(publicado.juego.preguntas.single.opciones.map((o) => o.texto), [
+      final pregunta = publicado.juego.preguntas.single as PreguntaAula;
+      expect(pregunta.correcta, 1);
+      expect(pregunta.opciones.map((o) => o.texto), [
         'Tiburón',
         'Delfín',
         'Pulpo',
@@ -289,7 +290,7 @@ void main() {
     await tester.pumpAndSettle();
     await tocar(
       tester,
-      find.byKey(const Key('editor-plantilla-verdadero_falso')),
+      find.byKey(const Key('editor-tipo-verdadero_falso')),
     );
     await tester.pumpAndSettle();
     await escribir(
@@ -314,9 +315,9 @@ void main() {
     await tester.pumpAndSettle();
     final juego = repo.juegos.values.single;
     expect(juego.estado, EstadoJuego.publicado);
-    expect(juego.juego.preguntas.single.correcta, 1);
+    expect((juego.juego.preguntas.single as PreguntaAula).correcta, 1);
     expect(juego.juego.contenidoJson()['preguntas'], [
-      {'enunciado': 'La ballena es un pez.', 'correcta': false},
+      {'tipo': 'verdadero_falso', 'enunciado': 'La ballena es un pez.', 'correcta': false},
     ]);
   });
 
@@ -423,14 +424,16 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.byKey(const Key('editor-plantilla-verdadero_falso')));
+    await tester.tap(find.byKey(const Key('editor-tipo-verdadero_falso')));
     await tester.pumpAndSettle();
     await tocar(tester, find.byKey(const Key('editor-subir-fondo')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('editor-fondo-subido')), findsOneWidget);
-    await tocar(tester, find.byKey(const Key('editor-anadir-imagen-1')));
+    await tocar(tester, find.byKey(const Key('editor-imagen-1-anadir')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('editor-imagen-1')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('imagen-subir')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('editor-imagen-1-miniatura')), findsOneWidget);
     expect(elegidas, 2);
 
     await escribir(tester, find.byKey(const Key('editor-titulo')), 'Con fotos');
@@ -447,6 +450,61 @@ void main() {
     final juego = repo.juegos.values.single.juego;
     expect(juego.fondo, isA<ImagenSubida>());
     expect(juego.preguntas.single.imagen, isA<ImagenSubida>());
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('un juego mezclado: ordenar, tocar en la imagen y completar la frase', (
+    tester,
+  ) async {
+    repo.sesion = 'Luis';
+    await abrirPanel(tester);
+    await tester.tap(find.byKey(const Key('panel-nuevo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('editor-tipo-ordenar')));
+    await tester.pumpAndSettle();
+    await escribir(tester, find.byKey(const Key('editor-titulo')), 'La rana');
+    await tocar(tester, find.byKey(const Key('editor-curso-2')));
+    for (final (i, paso) in ['Huevo', 'Renacuajo', 'Rana'].indexed) {
+      await escribir(tester, find.byKey(Key('editor-paso-1-$i')), paso);
+    }
+
+    // Segundo reto: tocar en una foto de la app.
+    await tocar(tester, find.byKey(const Key('editor-anadir-pregunta')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('editor-tipo-buscar')));
+    await tester.pumpAndSettle();
+    await escribir(tester, find.byKey(const Key('editor-enunciado-2')), 'Toca la planta');
+    await tocar(tester, find.byKey(const Key('editor-buscar-imagen-2')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('imagen-galeria-plantas')));
+    await tester.pumpAndSettle();
+    await tocar(tester, find.byKey(const Key('editor-zonas-2')));
+    await tester.pumpAndSettle();
+
+    // Tercero: completar la frase.
+    await tocar(tester, find.byKey(const Key('editor-anadir-pregunta')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('editor-tipo-huecos')));
+    await tester.pumpAndSettle();
+    await escribir(tester, find.byKey(const Key('editor-frase-3')), 'La rana es un [anfibio].');
+    await escribir(tester, find.byKey(const Key('editor-distractores-3')), 'pez, reptil');
+
+    await tocar(tester, find.byKey(const Key('editor-publicar')));
+    await tester.pumpAndSettle();
+    final ficha = repo.juegos.values.single;
+    expect(ficha.estado, EstadoJuego.publicado, reason: '${ficha.juego.errores()}');
+    expect(ficha.juego.plantilla, PlantillaAula.libre);
+    expect(ficha.juego.preguntas.map((r) => r.tipo), [
+      TipoReto.ordenar,
+      TipoReto.buscar,
+      TipoReto.huecos,
+    ]);
+    final buscar = ficha.juego.preguntas[1] as BuscarAula;
+    expect(buscar.imagen, const ImagenGaleria('plantas'));
+    expect(buscar.zonas, hasLength(1));
+    final huecos = ficha.juego.preguntas[2] as HuecosAula;
+    expect(huecos.respuestas, ['anfibio']);
+    expect(huecos.distractores, ['pez', 'reptil']);
     expect(tester.takeException(), isNull);
   });
 }

@@ -10,6 +10,7 @@ import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
 import 'package:naturalmente/ui/aula/escenas.dart';
+import 'package:naturalmente/ui/aula/retos_aula.dart';
 import 'package:naturalmente/ui/componentes_juego.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/feedback_acierto.dart';
@@ -43,8 +44,8 @@ class ImagenDeAula extends StatelessWidget {
   };
 }
 
-/// Juega un test del profesor (opción múltiple o verdadero/falso) con el
-/// feedback y el cierre comunes de todos los juegos.
+/// Juega un juego del profesor, con retos de cualquier tipo, con el feedback
+/// y el cierre comunes de todos los juegos.
 class JuegoAulaPage extends StatefulWidget {
   const JuegoAulaPage({
     required this.juego,
@@ -64,8 +65,6 @@ class JuegoAulaPage extends StatefulWidget {
 class _JuegoAulaPageState extends State<JuegoAulaPage>
     with FeedbackAcierto<JuegoAulaPage> {
   int _paso = 0;
-  int? _elegida;
-  final Set<int> _descartadas = {};
   bool _resuelto = false;
   bool _fallo = false;
   bool _completo = false;
@@ -78,7 +77,8 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
   bool _inicializado = false;
 
   JuegoAula get _juego => widget.juego;
-  PreguntaAula get _pregunta => _juego.preguntas[_paso];
+  RetoAula get _reto => _juego.preguntas[_paso];
+  bool get _ultimo => _paso + 1 >= _juego.preguntas.length;
   Progreso? get _progreso => Alcance.maybeOf(context)?.progreso;
 
   @override
@@ -93,8 +93,6 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
   void _prepararPartida() {
     final progreso = _progreso;
     _paso = 0;
-    _elegida = null;
-    _descartadas.clear();
     _resuelto = false;
     _fallo = false;
     _completo = false;
@@ -117,48 +115,64 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
     });
   }
 
-  void _elegir(int indice) {
-    if (_resuelto || _completo || _descartadas.contains(indice)) return;
-    if (!iniciarPasoEvaluado()) return;
-    final pregunta = _pregunta;
-    if (indice != pregunta.correcta) {
+  /// Un intento del niño en el reto actual. Ver [EvaluarReto].
+  bool _evaluar(bool correcto, {bool completa = true}) {
+    if (_resuelto || _completo || !iniciarPasoEvaluado()) return false;
+    if (!correcto) {
       if (_conSemillas) guardarPrecisionPaso(acierto: false);
       setState(() {
-        _elegida = indice;
-        _descartadas.add(indice);
         _fallo = true;
         _comboActual = 0;
       });
       terminarIntentoConPista();
       context.sonidoPista();
-      return;
+      return true;
+    }
+    if (!completa) {
+      // Una pareja de varias: se celebra y el reto sigue.
+      confirmarPaso(alContinuar: () {}, conservarTablero: true);
+      return true;
     }
     final aLaPrimera = !_fallo;
     if (_conSemillas) {
       final nuevoCombo = aLaPrimera ? (_progreso!.comboActual + 1) : 1;
-      final ganadas = guardarPrecisionPaso(
+      _semillasSesion += guardarPrecisionPaso(
         acierto: true,
         aLaPrimera: aLaPrimera,
         comboActual: nuevoCombo,
       );
-      _semillasSesion += ganadas;
       _comboActual = _progreso!.comboActual;
     } else {
       _comboActual = aLaPrimera ? _comboActual + 1 : 1;
     }
     setState(() {
-      _elegida = indice;
       _resuelto = true;
       _aLaPrimera.add(aLaPrimera);
       if (_comboActual > _mejorComboSesion) _mejorComboSesion = _comboActual;
     });
-    if (_paso + 1 < _juego.preguntas.length) {
+    if (!_ultimo) {
       confirmarPaso(
         alContinuar: _siguiente,
-        esperarContinuar: pregunta.explicacion.isNotEmpty,
+        esperarContinuar: _reto.explicacion.isNotEmpty,
       );
+      return true;
+    }
+    _terminar();
+    return true;
+  }
+
+  /// Tarjeta para leer: no se puntúa ni se celebra.
+  void _leido() {
+    if (_completo || pasoBloqueado) return;
+    context.sonidoToque();
+    if (_ultimo) {
+      _terminar();
       return;
     }
+    setState(_siguiente);
+  }
+
+  void _terminar() {
     setState(() => _completo = true);
     mostrarAcierto(finalDeNivel: true);
     _registrarGuardado();
@@ -166,8 +180,6 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
 
   void _siguiente() {
     _paso++;
-    _elegida = null;
-    _descartadas.clear();
     _resuelto = false;
     _fallo = false;
   }
@@ -188,7 +200,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
       juegoId: juego.id,
       version: juego.version,
       aciertos: _aLaPrimera.where((a) => a).length,
-      total: juego.preguntas.length,
+      total: juego.evaluables.length,
       jugado: DateTime.now(),
       respuestas: List.of(_aLaPrimera),
     );
@@ -215,7 +227,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
       nivel: 'Aula',
       resumen: ResumenPrecisionFinal(
         aciertosALaPrimera: _aLaPrimera.where((a) => a).length,
-        totalPasos: _juego.preguntas.length,
+        totalPasos: _juego.evaluables.length,
         mejorComboSesion: _mejorComboSesion,
         semillasGanadas: _semillasSesion,
       ),
@@ -231,11 +243,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
     final fondo = _juego.fondo;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _juego.titulo,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        title: Text(_juego.titulo, maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: [
           if (_conSemillas)
             InsigniaPrecisionAppBar(
@@ -254,9 +262,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
             ColoredBox(
               color: colores.oscuro
                   ? const Color(0x73000000)
-                  : (fondo is ImagenEscena
-                        ? const Color(0x00000000)
-                        : const Color(0x4DFFFFFF)),
+                  : (fondo is ImagenEscena ? const Color(0x00000000) : const Color(0x4DFFFFFF)),
             ),
           ],
           construirContenidoPaso(
@@ -265,29 +271,21 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
               child: LayoutBuilder(
                 builder: (context, medidas) {
                   // En tablets apaisadas y en el panel, la pregunta a un lado
-                  // y las respuestas al otro: todo cabe sin desplazar.
+                  // y las respuestas al otro.
                   final ancho = medidas.maxWidth >= 760;
                   return SingleChildScrollView(
                     key: ValueKey('aula-${_juego.id}-$_vuelta-$_paso'),
                     padding: EdgeInsets.all(medidas.maxWidth < 380 ? 12 : 20),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: ancho ? 1100 : 640,
-                        ),
+                        constraints: BoxConstraints(maxWidth: ancho ? 1100 : 640),
                         child: ancho
                             ? Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                    flex: 5,
-                                    child: _columnaPregunta(context, medidas),
-                                  ),
+                                  Expanded(flex: 5, child: _columnaPregunta(context, medidas)),
                                   const SizedBox(width: 24),
-                                  Expanded(
-                                    flex: 4,
-                                    child: _columnaRespuestas(context),
-                                  ),
+                                  Expanded(flex: 4, child: _columnaRespuestas()),
                                 ],
                               )
                             : Column(
@@ -295,7 +293,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                                 children: [
                                   _columnaPregunta(context, medidas),
                                   const SizedBox(height: 14),
-                                  _columnaRespuestas(context),
+                                  _columnaRespuestas(),
                                 ],
                               ),
                       ),
@@ -312,10 +310,11 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
 
   Widget _columnaPregunta(BuildContext context, BoxConstraints medidas) {
     final colores = context.coloresNaturales;
-    final pregunta = _pregunta;
+    final reto = _reto;
     final total = _juego.preguntas.length;
     final estilo = Theme.of(context).textTheme;
     final altoImagen = (medidas.maxHeight * 0.3).clamp(120.0, 260.0);
+    final lectura = reto is LecturaAula ? reto : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -342,10 +341,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                   const SizedBox(width: 10),
                   Text(
                     '${_paso + 1}/$total',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      color: colores.tinta,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w900, color: colores.tinta),
                   ),
                 ],
               ),
@@ -360,172 +356,85 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: colores.contorno, width: 2),
             boxShadow: const [
-              BoxShadow(
-                color: Color(0x22000000),
-                blurRadius: 12,
-                offset: Offset(0, 4),
-              ),
+              BoxShadow(color: Color(0x22000000), blurRadius: 12, offset: Offset(0, 4)),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_juego.mostrarNatu &&
-                  _paso == 0 &&
-                  _juego.intro.isNotEmpty) ...[
+              if (_juego.mostrarNatu && _paso == 0 && _juego.intro.isNotEmpty) ...[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const DibujoMascota(gesto: 'hola', tamano: 46),
                     const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(_juego.intro, style: estilo.bodyLarge),
-                    ),
+                    Expanded(child: Text(_juego.intro, style: estilo.bodyLarge)),
                   ],
                 ),
                 const SizedBox(height: 12),
               ],
-              if (pregunta.imagen case final imagen?) ...[
+              // En «tocar en la imagen» la imagen es el tablero de juego.
+              if (reto.imagen case final imagen? when reto is! BuscarAula) ...[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
-                  child: SizedBox(
-                    height: altoImagen,
-                    child: ImagenDeAula(imagen),
-                  ),
+                  child: SizedBox(height: altoImagen, child: ImagenDeAula(imagen)),
                 ),
                 const SizedBox(height: 12),
               ],
-              if (pregunta.enunciado.isNotEmpty)
+              if (reto.enunciado.isNotEmpty)
                 Text(
-                  pregunta.enunciado,
+                  reto.enunciado,
                   key: const Key('enunciado-aula'),
                   textAlign: TextAlign.center,
-                  style: estilo.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: estilo.titleLarge?.copyWith(fontWeight: FontWeight.w900),
                 ),
+              if (lectura != null && lectura.texto.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Text(
+                  lectura.texto,
+                  key: const Key('lectura-texto'),
+                  style: estilo.bodyLarge?.copyWith(fontSize: 18, height: 1.5),
+                ),
+              ],
             ],
           ),
         ),
-        if (_fallo && !_resuelto && _elegida != null) ...[
+        if (_fallo && !_resuelto) ...[
           const SizedBox(height: 12),
           _Aviso(
             key: const Key('pista-aula'),
             gesto: 'pista',
-            texto: pregunta.pista.isNotEmpty
-                ? pregunta.pista
-                : context.tr('Casi. Piénsalo otra vez.'),
+            texto: reto.pista.isNotEmpty ? reto.pista : context.tr('Casi. Piénsalo otra vez.'),
           ),
         ],
-        if (_resuelto && pregunta.explicacion.isNotEmpty) ...[
+        if (_resuelto && reto.explicacion.isNotEmpty) ...[
           const SizedBox(height: 12),
-          _Aviso(
-            key: const Key('explicacion-aula'),
-            gesto: 'feliz',
-            texto: pregunta.explicacion,
-          ),
+          _Aviso(key: const Key('explicacion-aula'), gesto: 'feliz', texto: reto.explicacion),
         ],
       ],
     );
   }
 
-  Widget _columnaRespuestas(BuildContext context) {
-    final pregunta = _pregunta;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (var i = 0; i < pregunta.opciones.length; i++) ...[
-          if (i > 0) const SizedBox(height: 10),
-          _BotonOpcion(
-            key: Key('opcion-aula-$i'),
-            opcion: pregunta.opciones[i],
-            traducir: _juego.plantilla == PlantillaAula.verdaderoFalso,
-            estado: _resuelto && i == pregunta.correcta
-                ? _EstadoOpcion.correcta
-                : (_descartadas.contains(i)
-                      ? _EstadoOpcion.descartada
-                      : _EstadoOpcion.normal),
-            onTap: () => _elegir(i),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-enum _EstadoOpcion { normal, correcta, descartada }
-
-class _BotonOpcion extends StatelessWidget {
-  const _BotonOpcion({
-    required this.opcion,
-    required this.estado,
-    required this.onTap,
-    required this.traducir,
-    super.key,
-  });
-
-  final OpcionAula opcion;
-  final _EstadoOpcion estado;
-  final VoidCallback onTap;
-
-  /// Solo «Verdadero» y «Falso» son nuestros; el resto lo escribe el profe.
-  final bool traducir;
-
-  @override
-  Widget build(BuildContext context) {
-    final colores = context.coloresNaturales;
-    final (fondo, borde, icono) = switch (estado) {
-      _EstadoOpcion.correcta => (
-        colores.fondoAcierto,
-        colores.acierto,
-        Icons.check_circle_rounded,
-      ),
-      _EstadoOpcion.descartada => (
-        colores.fondoPista,
-        colores.pista,
-        Icons.close_rounded,
-      ),
-      _EstadoOpcion.normal => (colores.tarjeta, colores.contorno, null),
-    };
-    final texto = traducir ? context.tr(opcion.texto) : opcion.texto;
-    return Semantics(
-      button: true,
-      selected: estado == _EstadoOpcion.correcta,
-      enabled: estado != _EstadoOpcion.descartada,
-      child: Material(
-        color: fondo,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: estado == _EstadoOpcion.descartada ? null : onTap,
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 56),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: borde, width: 2.5),
-            ),
-            child: Row(
-              children: [
-                if (opcion.imagen case final imagen?) ...[
-                  SizedBox(width: 64, height: 64, child: ImagenDeAula(imagen)),
-                  const SizedBox(width: 12),
-                ],
-                Expanded(
-                  child: Text(
-                    texto,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-                if (icono != null) Icon(icono, color: borde),
-              ],
-            ),
-          ),
+  Widget _columnaRespuestas() {
+    final reto = _reto;
+    if (reto is LecturaAula) {
+      return FilledButton.icon(
+        key: const Key('lectura-continuar'),
+        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+        onPressed: _completo ? null : _leido,
+        icon: const Icon(Icons.arrow_forward_rounded),
+        label: Text(
+          context.tr(_ultimo ? '¡Terminado!' : '¡Entendido!'),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
         ),
-      ),
+      );
+    }
+    return VistaReto(
+      key: ValueKey('reto-$_vuelta-$_paso'),
+      reto: reto,
+      resuelto: _resuelto,
+      evaluar: _evaluar,
+      semilla: _juego.id.hashCode ^ (_paso * 131) ^ (_vuelta * 7919),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
+import 'package:naturalmente/datos/aula/llave.dart';
 import 'package:naturalmente/ui/perfiles/llave_page.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -380,6 +381,56 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
     });
   }
 
+  Future<void> _quitar() async {
+    final perfil = widget.perfil;
+    final aula = AulaScope.maybeOf(context);
+    if (perfil == null || aula == null) return;
+    final llave = Llave.leer(aula.perfilNube(perfil.id)?.llave ?? '');
+    final confirmado = await showDialog<bool>(
+      context: context,
+      builder: (dialogo) => AlertDialog(
+        title: Texto('¿Quitar a ${moteDe(context, perfil)} de esta tablet?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Texto(
+              'Su progreso sigue guardado. Para traerlo de nuevo hará falta su nombre y esta llave:',
+            ),
+            if (llave != null) ...[
+              const SizedBox(height: 12),
+              LlaveVisual(llave: llave, tamano: 48),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogo).pop(false),
+            child: const Texto('Cancelar'),
+          ),
+          TextButton(
+            key: const Key('confirmar-quitar-perfil'),
+            onPressed: () => Navigator.of(dialogo).pop(true),
+            child: const Texto('Quitar'),
+          ),
+        ],
+      ),
+    );
+    if (confirmado != true || !mounted) return;
+    setState(() => _guardando = true);
+    final resultado = await aula.quitarDeEsteDispositivo(perfil.id);
+    if (!mounted) return;
+    if (resultado == ResultadoQuitar.quitado) {
+      Navigator.of(context).pop();
+      return;
+    }
+    setState(() {
+      _guardando = false;
+      _aviso = resultado == ResultadoQuitar.pendientes
+          ? 'Tiene partidas sin enviar. Conéctate a internet y vuelve a intentarlo.'
+          : 'No se ha podido quitar. Inténtalo de nuevo.';
+    });
+  }
+
   Future<void> _borrar() async {
     final perfil = widget.perfil;
     if (perfil == null || perfil.principal) return;
@@ -593,11 +644,24 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
                 if (widget.perfil case final perfil?
                     when !perfil.principal) ...[
                   const SizedBox(height: 12),
+                  // Con llave, quitarlo de una tablet compartida no borra su
+                  // progreso de la nube: lo recupera con su llave.
+                  if (AulaScope.maybeOf(context)?.perfilNube(perfil.id) != null)
+                    OutlinedButton.icon(
+                      key: const Key('quitar-perfil'),
+                      onPressed: _guardando ? null : _quitar,
+                      icon: const Icon(Icons.logout_rounded),
+                      label: Texto('Quitar de esta tablet'),
+                    ),
                   TextButton.icon(
                     key: const Key('borrar-perfil'),
                     onPressed: _guardando ? null : _borrar,
                     icon: const Icon(Icons.delete_outline_rounded),
-                    label: Texto('Borrar este jugador'),
+                    label: Texto(
+                      AulaScope.maybeOf(context)?.perfilNube(perfil.id) != null
+                          ? 'Borrar para siempre'
+                          : 'Borrar este jugador',
+                    ),
                   ),
                 ],
               ],

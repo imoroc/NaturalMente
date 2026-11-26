@@ -11,9 +11,35 @@ La decisión y su alcance están en [decisiones.md](decisiones.md) (25 de noviem
 | Plantillas | `lib/modelo/aula/juego_aula.dart` | Opción múltiple y verdadero o falso. La validación es la misma en el panel y en la app. |
 | Panel del profe | `lib/main_panel.dart`, `lib/panel/` | Web en Flutter: entrar, crear, publicar, ver resultados y apagar el ranking. La vista previa es la pantalla real del juego. |
 | Base de datos | `supabase/migrations/` | Tablas, permisos (RLS), llave mágica y ranking. |
-| Pruebas de la base | `supabase/tests/aula_test.sql` | 54 comprobaciones de permisos, versiones, fotos y sincronización con pgTAP. |
+| Pruebas de la base | `supabase/tests/aula_test.sql` | 56 comprobaciones de permisos, versiones, fotos, vínculos y sincronización con pgTAP. |
 
 Cada juego de Aula usa `FeedbackAcierto` y `FinJuego` como el resto. Las semillas se dan solo la primera vez que se completa cada versión del juego. La versión solo sube cuando el profe cambia el contenido de un juego ya publicado: los autoguardados de un borrador no cuentan. Su recorrido de cierre está en `test/ui/cierres_juegos_test.dart` (grupo `aula`).
+
+## Tipos de reto
+
+Un juego es una serie de **retos**, de cualquier tipo y en el orden que quiera el profe (`lib/modelo/aula/juego_aula.dart`, pantallas en `lib/ui/aula/retos_aula.dart`, editor en `lib/panel/editor_retos.dart`):
+
+| Tipo | Qué hace el niño | Cómo se evalúa |
+| --- | --- | --- |
+| Elegir la respuesta | Toca una de 2 a 4 respuestas (texto o imagen) | Al tocar |
+| Verdadero o falso | Decide si la frase es verdad | Al tocar |
+| Clasificar en grupos | Lleva cada tarjeta (hasta 12) a su grupo (2 a 4) | Con «Comprobar» |
+| Ordenar | Toca los pasos (3 a 8) en orden | Con «Comprobar» |
+| Unir parejas | Une cada tarjeta con su pareja (2 a 8) | Cada pareja, al tocar |
+| Completar la frase | Rellena los huecos `[así]` con palabras, algunas de más | Con «Comprobar» |
+| Tocar en la imagen | Toca el sitio correcto de una foto (el profe marca hasta 5 zonas) | Al tocar |
+| Adivinar el número | Escribe un número con el teclado | Con «Comprobar» |
+| Formar la palabra | Ordena letras desordenadas | Con «Comprobar» |
+| Tarjeta para leer | Lee un texto o una imagen | No se puntúa |
+
+Todos usan `FeedbackAcierto`: mover piezas no es un acierto; fallar da la pista del profe sin avanzar; acertar muestra la explicación. Los juegos antiguos (opción múltiple o verdadero/falso) se leen igual.
+
+## Jugadores en tablets compartidas
+
+- Caben 30 jugadores por dispositivo.
+- **Quitar de esta tablet** (si tiene llave): se quita solo de esa tablet; su progreso sigue en la nube y se recupera con la llave. Antes envía las partidas pendientes.
+- **Borrar para siempre**: borra también sus datos de la nube.
+- Si su llave se cambia en otra tablet, esta lo detecta, guarda sus partidas sin enviar y pide la llave nueva, sin crear otro perfil en la nube.
 
 ## Fondos, fotos, llave y progreso en varios dispositivos
 

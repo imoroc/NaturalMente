@@ -327,7 +327,9 @@ class _TarjetaJuegoAula extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Texto(
-                      '${juego.plantilla.nombre} · ${juego.preguntas.length} preguntas',
+                      juego.plantilla == PlantillaAula.libre
+                          ? '${juego.preguntas.length} retos'
+                          : '${juego.plantilla.nombre} · ${juego.preguntas.length} preguntas',
                       style: TextStyle(color: colores.tenue, fontSize: 13),
                     ),
                     const SizedBox(height: 4),

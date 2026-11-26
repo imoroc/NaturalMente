@@ -1,7 +1,7 @@
 -- Pruebas de permisos y reglas de Aula. Se ejecutan con `supabase test db`.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(54);
+select plan(56);
 
 -- Identidades de prueba ----------------------------------------------------
 insert into auth.users (id, email) values
@@ -303,6 +303,18 @@ reset role;
 set local role anon;
 select is(public.correo_profesor(' Profe.Luis '), 'luis@colegio.es',
   'el panel traduce el nombre de usuario a su correo');
+
+-- Quitar un jugador de una tablet solo quita el vínculo de esa tablet --------
+reset role;
+insert into public.dispositivo_perfil (dispositivo_id, perfil_id)
+values ('00000000-0000-0000-0000-0000000000d2', (select valor::uuid from guardado where clave = 'perfil'))
+on conflict do nothing;
+select pg_temp.como('00000000-0000-0000-0000-0000000000d2');
+delete from public.dispositivo_perfil
+where perfil_id = (select valor::uuid from guardado where clave = 'perfil');
+select is((select count(*)::int from public.perfiles), 0, 'la tablet que lo quita deja de verlo');
+select pg_temp.como('00000000-0000-0000-0000-0000000000d1');
+select is((select count(*)::int from public.perfiles), 1, 'las demás tablets lo siguen teniendo');
 
 -- Imágenes: cada profesor sube solo a su carpeta -----------------------------
 reset role;

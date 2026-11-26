@@ -305,6 +305,8 @@ class Progreso extends ChangeNotifier {
     'quien-soy': ['facil', 'medio', 'dificil'],
     'carrera': ['facil', 'medio', 'dificil'],
     'linterna': ['facil', 'medio', 'dificil'],
+    'pelicula': ['facil', 'medio', 'dificil'],
+    'oscuras': ['facil', 'medio', 'dificil'],
   };
 
   static List<String> fichasDeNivel(String actividadId, String nivelId) {
@@ -397,6 +399,12 @@ class Progreso extends ChangeNotifier {
       ('linterna', 'facil') => const ['partes-del-cuerpo'],
       ('linterna', 'medio') => const ['huesos-articulaciones'],
       ('linterna', 'dificil') => const ['partes-de-la-celula'],
+      ('pelicula', 'facil') => const ['semilla-brote-planta'],
+      ('pelicula', 'medio') => const ['ciclo-de-la-planta'],
+      ('pelicula', 'dificil') => const ['de-semilla-a-semilla'],
+      ('oscuras', 'facil') => const ['planta-y-luz'],
+      ('oscuras', 'medio') => const ['crece-hacia-la-luz'],
+      ('oscuras', 'dificil') => const ['hoja-fabrica'],
       _ => const <String>[],
     };
   }
@@ -576,6 +584,18 @@ class Progreso extends ChangeNotifier {
         'Se consigue en «Linterna y microscopio» a partir del nivel Medio (3º-4º).',
       'partes-de-la-celula' =>
         'Se consigue en «Linterna y microscopio» en el nivel Difícil (5º-6º).',
+      'semilla-brote-planta' =>
+        'Se consigue en «La película de la planta» desde el nivel Fácil (1º-2º).',
+      'ciclo-de-la-planta' =>
+        'Se consigue en «La película de la planta» a partir del nivel Medio (3º-4º).',
+      'de-semilla-a-semilla' =>
+        'Se consigue en «La película de la planta» en el nivel Difícil (5º-6º).',
+      'planta-y-luz' =>
+        'Se consigue en «La planta a oscuras» desde el nivel Fácil (1º-2º).',
+      'crece-hacia-la-luz' =>
+        'Se consigue en «La planta a oscuras» a partir del nivel Medio (3º-4º).',
+      'hoja-fabrica' =>
+        'Se consigue en «La planta a oscuras» en el nivel Difícil (5º-6º).',
       _ => 'Sigue explorando las misiones con Natu para conseguir este cromo.',
     };
   }
@@ -690,6 +710,12 @@ class Progreso extends ChangeNotifier {
     'linterna' => [
       for (final n in actividad.linterna?.niveles ?? const []) n.id,
     ],
+    'pelicula' => [
+      for (final n in actividad.pelicula?.niveles ?? const []) n.id,
+    ],
+    'oscuras' => [
+      for (final n in actividad.oscuras?.niveles ?? const []) n.id,
+    ],
     'memoria' => [for (final n in actividad.memoria?.niveles ?? const []) n.id],
     'adivinanza' => [
       for (final n in actividad.adivinanza?.niveles ?? const []) n.id,
@@ -749,6 +775,8 @@ class Progreso extends ChangeNotifier {
       'rescate',
       'carrera',
       'linterna',
+      'pelicula',
+      'oscuras',
       'memoria',
       'adivinanza',
     }.contains(actividad.tipo)) {
@@ -779,6 +807,8 @@ class Progreso extends ChangeNotifier {
       'rescate',
       'carrera',
       'linterna',
+      'pelicula',
+      'oscuras',
       'memoria',
       'adivinanza',
     }.contains(actividad.tipo)) {

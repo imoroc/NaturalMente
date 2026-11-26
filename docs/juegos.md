@@ -112,6 +112,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 ### De semilla a semilla
 - **Prioridad**: MVP.
 - **Estado**: cubierto en parte por «Polen y semillas viajeras» (`polinizacion`, tipo `lugar`, en El invernadero). Fácil, partes de la flor (cáliz y corola, estambres, pistilo); Medio, cómo viajan las semillas (viento, agua, animales); Difícil, plantas con fruto, con piñas o con esporas, con pregunta extra. Cromos: Las partes de la flor, Semillas viajeras y Con flores, con piñas o con esporas. Falta ordenar el ciclo completo de semilla a semilla.
+- **Estado**: el ciclo ordenado está implementado como «La película de la planta» (`pelicula`, tipo `pelicula`) con los tres niveles, el cierre común (`FeedbackAcierto` y `FinJuego`), cromos por nivel (De semilla a planta; El ciclo de una planta; De semilla a semilla) y textos en español e inglés. Modelo en `lib/modelo/pelicula.dart`, reglas sin widgets en `lib/reglas/pelicula.dart`, pantalla en `lib/ui/pelicula.dart` y fotogramas en `lib/ui/dibujos_pelicula.dart`. No cuenta para la medalla.
+- **Cómo se juega**: una tira de fotogramas vacía y una bandeja de cartas. Se llena la tira de izquierda a derecha: se toca la carta del fotograma que brilla o se arrastra hasta él. Cada carta tiene su sitio fijo en la bandeja mientras dura el rollo; una carta puesta deja su hueco vacío. El sitio de la carta buena cambia de un rollo a otro. Al llenar la tira se proyecta la película en la pantalla y se espera a **Continuar**. Tres rollos por nivel.
+- **Niveles (lo que hay en la app)**: Fácil (1º-2º), semilla, brote y planta con la judía, el girasol y la tomatera. Medio (3º-4º), semilla, germina, brote, flor y fruto con semillas. Difícil (5º-6º), una rueda de seis fotogramas con el cerezo, el diente de león y el avellano: hay que elegir quién lleva el polen (abeja o viento) y cómo viaja la semilla (viento o un animal), con cartas que no van.
+- **Si no acierta (lo que hay en la app)**: la carta explica cuándo pasa lo suyo («La flor sale cuando la planta ya es grande y fuerte.») y a la segunda se añade la pista del fotograma («Antes del fruto tiene que haber una flor.»).
 - **Mecánica**: ordenar el ciclo de una planta (semilla, brote, planta, flor, fruto con semillas).
 - **Niveles**: Fácil, 3 pasos. Medio, 5 pasos. Difícil, se añade quién lleva el polen (abeja o viento).
 - **Si no acierta**: «Antes del fruto tiene que haber una flor».
@@ -130,6 +134,10 @@ Las reglas de alcance están en `docs/decisiones.md`. Los temas que cada juego t
 
 ### La planta a oscuras
 - **Prioridad**: Extra.
+- **Estado**: implementado como «La planta a oscuras» (`oscuras`, tipo `oscuras`) con los tres niveles, el cierre común, cromos por nivel (Las plantas necesitan luz; Crece hacia la luz; La hoja fabrica el alimento) y textos en español e inglés. Modelo en `lib/modelo/oscuras.dart`, reglas sin widgets en `lib/reglas/oscuras.dart`, pantalla en `lib/ui/oscuras.dart` y escenas en `lib/ui/dibujos_oscuras.dart`. No cuenta para la medalla.
+- **Cómo se juega**: un experimento. Se elige dónde va la maceta (o qué le pasará) y se pulsa **Pasan los días**: la judía crece según dónde esté. Elegir no se evalúa; se evalúa al pasar los días. Si no era lo que se pedía, la planta se queda como ha crecido para que se vea el porqué. Las opciones están siempre en el mismo sitio y la buena cambia de un reto a otro.
+- **Niveles (lo que hay en la app)**: Fácil (1º-2º), ventana o armario: verde y fuerte con luz, pálida y larguirucha sin ella. Medio (3º-4º), una caja con el agujero a la izquierda, arriba o a la derecha para que la planta crezca hacia la mariposa. Difícil (5º-6º), predecir cómo saldrá (verde y fuerte, pálida o doblada hacia la luz) y meter en la hoja lo que necesita para fabricar alimento: luz, agua y dióxido de carbono (sobran tierra, azúcar y oxígeno).
+- **Si no acierta (lo que hay en la app)**: Natu explica lo que se ve («Sin luz, la planta ha salido amarilla y flojita.») y a la segunda añade la pista. En la hoja, dice qué sobra o qué falta.
 - **Mecánica**: dos macetas, una con luz y otra en un armario. Se avanza el tiempo y se comparan.
 - **Niveles**: Fácil, mirar qué pasa. Difícil, predecirlo antes y explicar que la hoja fabrica alimento con la luz.
 

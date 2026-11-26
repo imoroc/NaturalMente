@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
 import 'package:naturalmente/datos/aula/repositorio_aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
@@ -14,6 +16,7 @@ class RepositorioAulaFalso implements RepositorioAula {
       nube = {},
       progresoNube = {},
       semillasNube = {},
+      vinculos = {},
       _intentos = [0],
       dispositivo = 'dispositivo-a';
 
@@ -28,6 +31,7 @@ class RepositorioAulaFalso implements RepositorioAula {
       nube = base.nube,
       progresoNube = base.progresoNube,
       semillasNube = base.semillasNube,
+      vinculos = base.vinculos,
       _intentos = base._intentos;
 
   final List<JuegoAula> juegos;
@@ -57,6 +61,7 @@ class RepositorioAulaFalso implements RepositorioAula {
     final id = 'nube-${perfilesCreados.length + 1}';
     perfilesCreados.add(id);
     nube[id] = (perfil, 'zorro-pino-nube-07', curso);
+    vinculos[id] = {dispositivo};
     return PerfilNube(id: id, llave: 'zorro-pino-nube-07');
   }
 
@@ -78,6 +83,18 @@ class RepositorioAulaFalso implements RepositorioAula {
   /// Semillas por perfil y dispositivo: (ganadas, gastadas).
   final Map<String, Map<String, (int, int)>> semillasNube;
 
+  /// Qué dispositivos tienen cada perfil, como `dispositivo_perfil`.
+  final Map<String, Set<String>> vinculos;
+
+  /// Como las reglas de la base de datos: un dispositivo sin el perfil no
+  /// puede tocarlo. Los perfiles creados a mano en una prueba no se comprueban.
+  void _exigirVinculo(String perfilNube) {
+    final con = vinculos[perfilNube];
+    if (con != null && !con.contains(dispositivo)) {
+      throw const PostgrestException(message: 'perfil_ajeno', code: '42501');
+    }
+  }
+
   /// Qué dispositivo llama: sus semillas se cuentan aparte.
   final String dispositivo;
   final List<int> _intentos;
@@ -95,6 +112,7 @@ class RepositorioAulaFalso implements RepositorioAula {
       if (perfil.animal == animal &&
           perfil.adjetivo == adjetivo &&
           clave == llave) {
+        vinculos.putIfAbsent(id, () => {}).add(dispositivo);
         return PerfilCanjeado(id: id, perfil: perfil, curso: curso);
       }
     }
@@ -108,6 +126,7 @@ class RepositorioAulaFalso implements RepositorioAula {
     final (perfil, _, curso) = nube[perfilNube]!;
     const nueva = 'sol-luna-gota-42';
     nube[perfilNube] = (perfil, nueva, curso);
+    vinculos[perfilNube] = {dispositivo};
     return nueva;
   }
 
@@ -117,6 +136,7 @@ class RepositorioAulaFalso implements RepositorioAula {
     Map<String, dynamic> local,
   ) async {
     _red();
+    _exigirVinculo(perfilNube);
     final g = progresoNube.putIfAbsent(
       perfilNube,
       () => {'hechos': <String>{}, 'mejorCombo': 0, 'equipados': <String>[]},
@@ -158,6 +178,12 @@ class RepositorioAulaFalso implements RepositorioAula {
   }
 
   @override
+  Future<void> desvincular(String perfilNube) async {
+    _red();
+    vinculos[perfilNube]?.remove(dispositivo);
+  }
+
+  @override
   Future<void> borrarPerfil(String perfilNube) async {
     _red();
     perfilesBorrados.add(perfilNube);
@@ -170,6 +196,7 @@ class RepositorioAulaFalso implements RepositorioAula {
     ResultadoAula resultado,
   ) async {
     _red();
+    _exigirVinculo(perfilNube);
     (recibidos[perfilNube] ??= {})[resultado.idLocal] = resultado;
   }
 

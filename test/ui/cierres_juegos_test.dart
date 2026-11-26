@@ -26,6 +26,7 @@ import 'package:naturalmente/ui/memoria.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../soporte/preferencias_controladas.dart';
+import '../soporte/jugar_aula.dart';
 import '../soporte/repositorio_aula_falso.dart';
 import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
@@ -1004,10 +1005,10 @@ void main() {
       );
 
       Future<void> responderBien(WidgetTester tester, JuegoAula juego) async {
-        for (final pregunta in juego.preguntas) {
+        for (final reto in juego.preguntas) {
           expect(find.byType(FinJuego), findsNothing);
-          await _tocar(tester, 'opcion-aula-${pregunta.correcta}');
-          if (pregunta.explicacion.isNotEmpty && pregunta != juego.preguntas.last) {
+          await resolverReto(tester, reto, (clave) => _tocar(tester, clave));
+          if (reto.explicacion.isNotEmpty && reto != juego.preguntas.last) {
             await _tocar(tester, 'continuar-paso');
           }
         }
@@ -1126,6 +1127,91 @@ void main() {
         expect(progreso.juegoAulaHecho(juego.id, juego.version), isFalse);
         expect(repositorio.totalRecibidos, 0);
         expect(find.text('Volver al editor'), findsOneWidget);
+      });
+
+      testWidgets('un juego con los 10 tipos de reto se juega entero y se cierra', (
+        tester,
+      ) async {
+        await tester.binding.setSurfaceSize(const Size(430, 1400));
+        final juego = juegoConTodosLosTipos();
+        await abrir(tester, pagina(juego), brillo);
+        await tester.binding.setSurfaceSize(const Size(430, 1400));
+        await tester.pumpAndSettle();
+        expect(find.byKey(const Key('lectura-texto')), findsOneWidget);
+        await responderBien(tester, juego);
+
+        expect(find.byType(FinJuego), findsOneWidget);
+        expect(find.byKey(const Key('check-acierto')), findsNothing);
+        expect(progreso.juegoAulaHecho(juego.id, juego.version), isTrue);
+        final enviado = repositorio.recibidos.values.single.values.single;
+        expect((enviado.aciertos, enviado.total), (9, 9),
+            reason: 'la tarjeta para leer no se puntúa');
+        expect(tester.takeException(), isNull);
+      });
+
+      testWidgets('los fallos en ordenar, número y parejas dan pista sin avanzar', (
+        tester,
+      ) async {
+        await tester.binding.setSurfaceSize(const Size(430, 1400));
+        const juego = JuegoAula(
+          id: 'fallos',
+          titulo: 'Fallos',
+          plantilla: PlantillaAula.libre,
+          version: 1,
+          cursos: [3],
+          preguntas: [
+            OrdenarAula(
+              enunciado: 'Ciclo de la rana',
+              pasos: [
+                OpcionAula(texto: 'Huevo'),
+                OpcionAula(texto: 'Renacuajo'),
+                OpcionAula(texto: 'Rana'),
+              ],
+              pista: 'Empieza por el huevo.',
+            ),
+            NumeroAula(enunciado: '¿Patas de una araña?', respuesta: 8),
+            ParejasAula(
+              enunciado: 'Une',
+              parejas: [
+                (OpcionAula(texto: 'Vaca'), OpcionAula(texto: 'Hierba')),
+                (OpcionAula(texto: 'León'), OpcionAula(texto: 'Carne')),
+              ],
+            ),
+          ],
+        );
+        await abrir(tester, pagina(juego), brillo);
+        await tester.binding.setSurfaceSize(const Size(430, 1400));
+        await tester.pumpAndSettle();
+
+        // Ordenar al revés: pista, sin check ni avance.
+        for (final i in [2, 1, 0]) {
+          await _tocar(tester, 'ordenar-paso-$i');
+        }
+        await _tocar(tester, 'comprobar-aula');
+        expect(find.text('Empieza por el huevo.'), findsOneWidget);
+        expect(find.byKey(const Key('check-acierto')), findsNothing);
+        expect(find.text('Ciclo de la rana'), findsOneWidget);
+        await _tocar(tester, 'ordenado-0');
+        await resolverReto(tester, juego.preguntas[0], (c) => _tocar(tester, c));
+
+        // Número equivocado y luego el bueno.
+        await _tocar(tester, 'numero-tecla-6');
+        await _tocar(tester, 'comprobar-aula');
+        expect(find.byKey(const Key('pista-aula')), findsOneWidget);
+        await _tocar(tester, 'numero-borrar');
+        await resolverReto(tester, juego.preguntas[1], (c) => _tocar(tester, c));
+
+        // Pareja equivocada.
+        await _tocar(tester, 'pareja-a-0');
+        await _tocar(tester, 'pareja-b-1');
+        expect(find.byKey(const Key('pista-aula')), findsOneWidget);
+        expect(find.byType(FinJuego), findsNothing);
+        await resolverReto(tester, juego.preguntas[2], (c) => _tocar(tester, c));
+
+        expect(find.byType(FinJuego), findsOneWidget);
+        final enviado = repositorio.recibidos.values.single.values.single;
+        expect(enviado.respuestas, [false, false, false]);
+        expect(tester.takeException(), isNull);
       });
     });
   }

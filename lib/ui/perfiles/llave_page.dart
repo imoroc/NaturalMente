@@ -150,6 +150,35 @@ class _SeccionMiLlaveState extends State<SeccionMiLlave> {
       builder: (context, _) {
         final nube = widget.aula.perfilNube(widget.perfilId);
         final llave = nube == null ? null : Llave.leer(nube.llave);
+        if (widget.aula.desvinculado(widget.perfilId)) {
+          return Container(
+            key: const Key('seccion-llave'),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colores.fondoPista,
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Texto(
+                  'La llave de este Natu ha cambiado en otra tablet. Escribe la nueva para seguir guardando su progreso y sus partidas.',
+                  key: const Key('llave-cambiada'),
+                  style: TextStyle(color: colores.tinta, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  key: const Key('escribir-llave-nueva'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (_) => CanjearLlavePage(aula: widget.aula)),
+                  ),
+                  icon: const Icon(Icons.key_rounded),
+                  label: const Texto('Escribir la llave nueva'),
+                ),
+              ],
+            ),
+          );
+        }
         return Container(
           key: const Key('seccion-llave'),
           padding: const EdgeInsets.all(16),
@@ -282,7 +311,7 @@ class _CanjearLlavePageState extends State<CanjearLlavePage> {
         ResultadoCanje.bloqueado =>
           'Has probado muchas veces. Espera una hora y vuelve a intentarlo.',
         ResultadoCanje.lleno =>
-          'En esta tablet ya hay 8 jugadores. Borra uno para traer tu Natu.',
+          'En esta tablet ya hay ${Perfiles.maximo} jugadores. Borra uno para traer tu Natu.',
         _ => 'Hace falta conexión para traer tu Natu. Inténtalo luego.',
       };
     });

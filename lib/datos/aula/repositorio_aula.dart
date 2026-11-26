@@ -133,6 +133,9 @@ abstract class RepositorioAula {
   /// Borra el perfil y, en cascada, todos sus resultados.
   Future<void> borrarPerfil(String perfilNube);
 
+  /// Este dispositivo deja de tener el perfil; en la nube sigue todo.
+  Future<void> desvincular(String perfilNube);
+
   /// Idempotente: reenviar el mismo [ResultadoAula.idLocal] no lo duplica.
   Future<void> enviarResultado(String perfilNube, ResultadoAula resultado);
 
@@ -218,8 +221,9 @@ class RepositorioAulaSupabase implements RepositorioAula {
         params: {'p_animal': animal, 'p_adjetivo': adjetivo, 'p_llave': llave},
       );
     } on PostgrestException catch (e) {
-      if (e.message.contains('demasiados_intentos'))
+      if (e.message.contains('demasiados_intentos')) {
         throw const LlaveBloqueada();
+      }
       rethrow;
     }
     if (filas.isEmpty) return null;
@@ -251,6 +255,13 @@ class RepositorioAulaSupabase implements RepositorioAula {
       params: {'p_perfil': perfilNube, 'p_local': local},
     );
     return Map<String, dynamic>.from(respuesta as Map);
+  }
+
+  @override
+  Future<void> desvincular(String perfilNube) async {
+    await _sesion();
+    // Las reglas solo dejan borrar los vínculos de este dispositivo.
+    await _cliente.from('dispositivo_perfil').delete().eq('perfil_id', perfilNube);
   }
 
   @override

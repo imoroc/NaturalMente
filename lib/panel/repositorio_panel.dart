@@ -237,15 +237,11 @@ class RepositorioPanelSupabase implements RepositorioPanel {
     return i < 0 ? null : Uri.decodeComponent(url.substring(i + marca.length));
   }
 
-  static Iterable<String> _urls(JuegoAula juego) sync* {
-    if (juego.fondo case ImagenSubida(:final url)) yield url;
-    for (final p in juego.preguntas) {
-      if (p.imagen case ImagenSubida(:final url)) yield url;
-      for (final o in p.opciones) {
-        if (o.imagen case ImagenSubida(:final url)) yield url;
-      }
-    }
-  }
+  static Iterable<String> _urls(JuegoAula juego) => [
+    for (final imagen in juego.imagenes)
+      if (imagen case ImagenSubida(:final url)) url,
+  ];
+
 
   @override
   Future<void> borrar(String juegoId) async {

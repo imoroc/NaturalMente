@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/aula/llave.dart';
+import 'package:naturalmente/datos/aula/repositorio_aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 
 import '../soporte/preferencias_controladas.dart';
@@ -175,5 +176,80 @@ void main() {
     expect(Llave.leer('zorro-pino-planeta-07'), isNull);
     expect(Llave.leer('zorro-pino-nube-100'), isNull);
     expect(dibujosLlave, hasLength(16));
+  });
+
+  test('si se cambia la llave en otra tablet, esta lo avisa y no duplica al niño', () async {
+    final clase = _Dispositivo('clase', nube, valores: {'economia/semillas': 10});
+    final perfil = clase.perfiles.activo;
+    final llave = Llave.leer((await clase.aula.crearLlave(perfil.id))!.llave)!;
+    final casa = _Dispositivo('casa', nube);
+    await casa.aula.canjearLlave(perfil.animal, perfil.adjetivo, llave);
+    final enCasa = casa.perfiles.activo.id;
+
+    // En clase cambian la llave: la tablet de casa pierde el acceso.
+    final nueva = await clase.aula.cambiarLlave(perfil.id);
+    expect(await casa.aula.sincronizar(enCasa), isFalse);
+    expect(casa.aula.desvinculado(enCasa), isTrue);
+
+    // Lo que juegue en casa espera, sin crear otro perfil en la nube.
+    await casa.aula.guardarResultado(
+      enCasa,
+      ResultadoAula(
+        idLocal: 'partida-casa',
+        juegoId: 'j',
+        version: 1,
+        aciertos: 1,
+        total: 1,
+        jugado: DateTime(2026, 11, 27),
+      ),
+    );
+    await casa.aula.enviarPendientes();
+    expect(nube.perfilesCreados, hasLength(1));
+    expect(casa.aula.pendientes(enCasa), hasLength(1));
+
+    // Con la llave nueva vuelve a su mismo Natu y se envía lo pendiente.
+    expect(
+      await casa.aula.canjearLlave(perfil.animal, perfil.adjetivo, Llave.leer(nueva!.llave)!),
+      ResultadoCanje.recuperado,
+    );
+    await casa.aula.enviarPendientes();
+    expect(casa.perfiles.lista, hasLength(2), reason: 'el mismo Natu, no uno nuevo');
+    expect(casa.aula.desvinculado(enCasa), isFalse);
+    expect(casa.aula.pendientes(enCasa), isEmpty);
+    expect(nube.totalRecibidos, 1);
+  });
+
+  test('quitar un jugador de una tablet no borra su progreso de la nube', () async {
+    final clase = _Dispositivo('clase', nube, valores: {'economia/semillas': 30});
+    final perfil = clase.perfiles.activo;
+    final llave = Llave.leer((await clase.aula.crearLlave(perfil.id))!.llave)!;
+    final tablet = _Dispositivo('tablet-cole', nube);
+    await tablet.aula.canjearLlave(perfil.animal, perfil.adjetivo, llave);
+    final enTablet = tablet.perfiles.activo.id;
+
+    expect(await tablet.aula.quitarDeEsteDispositivo(enTablet), ResultadoQuitar.quitado);
+    expect(tablet.perfiles.lista, hasLength(1));
+    expect(nube.perfilesBorrados, isEmpty);
+    // En la otra tablet sigue igual y esta puede volver a traerlo.
+    expect(await clase.aula.sincronizar(perfil.id), isTrue);
+    expect(clase.semillas, 30);
+    expect(
+      await tablet.aula.canjearLlave(perfil.animal, perfil.adjetivo, llave),
+      ResultadoCanje.recuperado,
+    );
+    expect(tablet.semillas, 30);
+  });
+
+  test('no se quita un jugador con partidas sin enviar', () async {
+    final clase = _Dispositivo('clase', nube);
+    final otro = await clase.perfiles.crear(animal: 'lobo', adjetivo: 'feliz', color: 'azul');
+    await clase.aula.crearLlave(otro!.id);
+    clase.repo.sinConexion = true;
+    await clase.aula.guardarResultado(
+      otro.id,
+      ResultadoAula(idLocal: 'p1', juegoId: 'j', version: 1, aciertos: 1, total: 1, jugado: DateTime(2026)),
+    );
+    expect(await clase.aula.quitarDeEsteDispositivo(otro.id), ResultadoQuitar.pendientes);
+    expect(clase.perfiles.lista, hasLength(2));
   });
 }

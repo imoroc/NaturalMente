@@ -4,66 +4,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
+import 'package:naturalmente/panel/editor_retos.dart';
 import 'package:naturalmente/panel/imagenes_panel.dart';
 import 'package:naturalmente/panel/panel_app.dart' show miniaturaGaleria;
 import 'package:naturalmente/panel/repositorio_panel.dart';
 import 'package:naturalmente/ui/aula/escenas.dart';
 import 'package:naturalmente/ui/aula/juego_aula_page.dart';
-
-/// Pregunta mientras el profesor la escribe.
-class _PreguntaEditable {
-  _PreguntaEditable({
-    required this.clave,
-    this.enunciado = '',
-    List<String>? opciones,
-    this.correcta = -1,
-    this.pista = '',
-    this.explicacion = '',
-    this.imagen,
-  }) : opciones = opciones ?? ['', ''];
-
-  factory _PreguntaEditable.desde(PreguntaAula p, int clave) =>
-      _PreguntaEditable(
-        clave: clave,
-        enunciado: p.enunciado,
-        opciones: [for (final o in p.opciones) o.texto],
-        correcta: p.correcta,
-        pista: p.pista,
-        explicacion: p.explicacion,
-        imagen: p.imagen,
-      );
-
-  final int clave;
-  ImagenAula? imagen;
-  String enunciado;
-  List<String> opciones;
-
-  /// En verdadero o falso: 0 verdadero, 1 falso.
-  int correcta;
-  String pista;
-  String explicacion;
-
-  _PreguntaEditable copia(int clave) => _PreguntaEditable(
-    clave: clave,
-    enunciado: enunciado,
-    opciones: List.of(opciones),
-    correcta: correcta,
-    pista: pista,
-    explicacion: explicacion,
-    imagen: imagen,
-  );
-
-  PreguntaAula aPregunta(PlantillaAula plantilla) => PreguntaAula(
-    enunciado: enunciado.trim(),
-    imagen: imagen,
-    opciones: plantilla == PlantillaAula.verdaderoFalso
-        ? const [OpcionAula(texto: 'Verdadero'), OpcionAula(texto: 'Falso')]
-        : [for (final o in opciones) OpcionAula(texto: o.trim())],
-    correcta: correcta,
-    pista: pista.trim(),
-    explicacion: explicacion.trim(),
-  );
-}
 
 enum _Guardado { guardado, pendiente, guardando, error }
 
@@ -96,7 +42,7 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
   List<int> _cursos = [];
   ImagenAula? _fondo = const ImagenEscena('pradera');
   bool _natu = true;
-  final List<_PreguntaEditable> _preguntas = [];
+  final List<RetoEditable> _preguntas = [];
   int _siguienteClave = 0;
   EstadoJuego _estado = EstadoJuego.borrador;
   _Guardado _guardado = _Guardado.guardado;
@@ -143,7 +89,7 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     _fondo = juego.fondo;
     _natu = juego.mostrarNatu;
     for (final p in juego.preguntas) {
-      _preguntas.add(_PreguntaEditable.desde(p, _siguienteClave++));
+      _preguntas.add(RetoEditable.desde(p, _siguienteClave++));
     }
     if (widget.duplicar) _guardado = _Guardado.pendiente;
   }
@@ -154,24 +100,43 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     super.dispose();
   }
 
+  /// Los juegos antiguos siguen con su plantilla mientras todos sus retos
+  /// sean de ese tipo; si se añade otro tipo, pasan a ser libres.
+  PlantillaAula get _plantillaGuardada {
+    final original = _plantilla!;
+    if (original == PlantillaAula.libre) return original;
+    return _preguntas.every((p) => p.tipo == original.tipoPorDefecto)
+        ? original
+        : PlantillaAula.libre;
+  }
+
   JuegoAula get _juego => JuegoAula(
     id: _id,
     titulo: _titulo.trim(),
-    plantilla: _plantilla!,
+    plantilla: _plantillaGuardada,
     version: 1,
     cursos: List.of(_cursos)..sort(),
-    preguntas: [for (final p in _preguntas) p.aPregunta(_plantilla!)],
+    preguntas: [for (final p in _preguntas) p.reto],
     fondo: _fondo,
     mostrarNatu: _natu,
     intro: _intro.trim(),
   );
 
-  void _elegirPlantilla(PlantillaAula plantilla) {
+  void _empezarCon(TipoReto tipo) {
     setState(() {
-      _plantilla = plantilla;
-      _preguntas.add(_PreguntaEditable(clave: _siguienteClave++));
+      _plantilla = PlantillaAula.libre;
+      _preguntas.add(RetoEditable(tipo, clave: _siguienteClave++));
     });
   }
+
+  Future<void> _anadirReto() async {
+    final tipo = await elegirTipoReto(context);
+    if (tipo == null || !mounted) return;
+    _cambio(() => _preguntas.add(RetoEditable(tipo, clave: _siguienteClave++)));
+  }
+
+  /// Hoja de imágenes: subir una foto o elegir una de la app.
+  Future<ImagenAula?> _elegirImagen() => elegirImagenAula(context, _subirImagen);
 
   /// Cada cambio se guarda solo en los borradores. Un juego publicado se
   /// guarda con su botón, para no crear una versión nueva a cada letra.
@@ -283,13 +248,31 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
           backgroundColor: const Color(0xFFFAF5EC),
           title: Text(
             plantilla == null
-                ? 'Nuevo juego: elige el tipo'
+                ? 'Nuevo juego: ¿con qué reto empezamos?'
                 : (_titulo.isEmpty ? 'Juego sin título' : _titulo),
           ),
           actions: [if (plantilla != null) _EstadoGuardado(_guardado)],
         ),
         body: plantilla == null
-            ? _ElegirPlantilla(onElegir: _elegirPlantilla)
+            ? SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1100),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          'Un juego es una serie de retos. Elige el primero; luego podrás añadir más, de cualquier tipo y en el orden que quieras.',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 16),
+                        RejillaTiposReto(onElegir: _empezarCon),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             : LayoutBuilder(
                 builder: (context, medidas) {
                   final ancho = medidas.maxWidth >= 1100;
@@ -539,57 +522,38 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
           ],
         ),
         _Seccion(
-          titulo: '2. Preguntas (${_preguntas.length})',
+          titulo: '2. Retos (${_preguntas.length})',
           children: [
             for (var i = 0; i < _preguntas.length; i++)
-              _EditorPregunta(
+              _TarjetaReto(
                 key: ValueKey(_preguntas[i].clave),
                 numero: i + 1,
-                plantilla: plantilla,
-                pregunta: _preguntas[i],
+                reto: _preguntas[i],
                 marcarErrores: _intentoPublicar,
                 onCambio: _cambio,
+                elegirImagen: _elegirImagen,
                 onSubir: i == 0
                     ? null
-                    : () => _cambio(
-                        () => _preguntas.insert(i - 1, _preguntas.removeAt(i)),
-                      ),
+                    : () => _cambio(() => _preguntas.insert(i - 1, _preguntas.removeAt(i))),
                 onBajar: i == _preguntas.length - 1
                     ? null
-                    : () => _cambio(
-                        () => _preguntas.insert(i + 1, _preguntas.removeAt(i)),
-                      ),
+                    : () => _cambio(() => _preguntas.insert(i + 1, _preguntas.removeAt(i))),
                 onDuplicar: _preguntas.length >= JuegoAula.maxPreguntas
                     ? null
                     : () => _cambio(
-                        () => _preguntas.insert(
-                          i + 1,
-                          _preguntas[i].copia(_siguienteClave++),
-                        ),
+                        () => _preguntas.insert(i + 1, _preguntas[i].copia(_siguienteClave++)),
                       ),
                 onBorrar: _preguntas.length == 1
                     ? null
                     : () => _cambio(() => _preguntas.removeAt(i)),
-                subiendo: _subiendo,
-                onSubirImagen: () async {
-                  final pregunta = _preguntas[i];
-                  final foto = await _subirImagen();
-                  if (foto != null) _cambio(() => pregunta.imagen = foto);
-                },
               ),
             if (_preguntas.length < JuegoAula.maxPreguntas)
               OutlinedButton.icon(
                 key: const Key('editor-anadir-pregunta'),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(52),
-                ),
-                onPressed: () => _cambio(
-                  () => _preguntas.add(
-                    _PreguntaEditable(clave: _siguienteClave++),
-                  ),
-                ),
+                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+                onPressed: _anadirReto,
                 icon: const Icon(Icons.add_rounded),
-                label: const Text('Añadir pregunta'),
+                label: const Text('Añadir reto', style: TextStyle(fontSize: 17)),
               ),
           ],
         ),
@@ -605,102 +569,26 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
   }
 }
 
-class _ElegirPlantilla extends StatelessWidget {
-  const _ElegirPlantilla({required this.onElegir});
-  final ValueChanged<PlantillaAula> onElegir;
-
-  static const _descripciones = {
-    PlantillaAula.opcionMultiple: (
-      Icons.quiz_rounded,
-      'Una pregunta y de 2 a 4 respuestas. El niño toca la correcta.',
-      '¿Qué animal es un mamífero?  Delfín · Tiburón · Pulpo',
-    ),
-    PlantillaAula.verdaderoFalso: (
-      Icons.rule_rounded,
-      'Una frase y el niño decide si es verdad o mentira.',
-      'La ballena es un pez.  Verdadero · Falso',
-    ),
-  };
-
-  @override
-  Widget build(BuildContext context) => Center(
-    child: SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Wrap(
-        spacing: 20,
-        runSpacing: 20,
-        alignment: WrapAlignment.center,
-        children: [
-          for (final plantilla in PlantillaAula.values)
-            SizedBox(
-              width: 340,
-              child: Card(
-                key: Key('editor-plantilla-${plantilla.id}'),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(12),
-                  onTap: () => onElegir(plantilla),
-                  child: Padding(
-                    padding: const EdgeInsets.all(22),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(_descripciones[plantilla]!.$1, size: 48),
-                        const SizedBox(height: 10),
-                        Text(
-                          plantilla.nombre,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          _descripciones[plantilla]!.$2,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Ejemplo: ${_descripciones[plantilla]!.$3}',
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
-class _EditorPregunta extends StatelessWidget {
-  const _EditorPregunta({
+/// Un reto en el editor: su tipo, el enunciado, sus campos y la ayuda.
+class _TarjetaReto extends StatelessWidget {
+  const _TarjetaReto({
     required this.numero,
-    required this.plantilla,
-    required this.pregunta,
+    required this.reto,
     required this.marcarErrores,
     required this.onCambio,
+    required this.elegirImagen,
     required this.onSubir,
     required this.onBajar,
     required this.onDuplicar,
     required this.onBorrar,
-    required this.subiendo,
-    required this.onSubirImagen,
     super.key,
   });
 
-  final bool subiendo;
-  final VoidCallback onSubirImagen;
   final int numero;
-  final PlantillaAula plantilla;
-  final _PreguntaEditable pregunta;
+  final RetoEditable reto;
   final bool marcarErrores;
   final void Function(VoidCallback) onCambio;
+  final Future<ImagenAula?> Function() elegirImagen;
   final VoidCallback? onSubir;
   final VoidCallback? onBajar;
   final VoidCallback? onDuplicar;
@@ -708,10 +596,20 @@ class _EditorPregunta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = pregunta;
-    final error = Theme.of(context).colorScheme.error;
-    final sinCorrecta =
-        marcarErrores && (p.correcta < 0 || p.correcta >= p.opciones.length);
+    final r = reto;
+    final n = numero;
+    final lectura = r.tipo == TipoReto.lectura;
+    final etiqueta = switch (r.tipo) {
+      TipoReto.verdaderoFalso => 'Frase',
+      TipoReto.lectura => 'Título (opcional)',
+      TipoReto.buscar => 'Qué hay que buscar (por ejemplo: Toca el corazón)',
+      TipoReto.clasificar || TipoReto.ordenar || TipoReto.parejas || TipoReto.huecos =>
+        'Instrucción (opcional, por ejemplo: Ordena el ciclo de la rana)',
+      _ => 'Pregunta',
+    };
+    final obligatorio = r.tipo == TipoReto.opcionMultiple ||
+        r.tipo == TipoReto.verdaderoFalso ||
+        r.tipo == TipoReto.buscar;
     return Card(
       margin: const EdgeInsets.only(bottom: 14),
       child: Padding(
@@ -721,32 +619,20 @@ class _EditorPregunta extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  'Pregunta $numero',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
+                Icon(iconoReto(r.tipo), color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '$n. ${r.tipo.nombre}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                   ),
                 ),
-                const Spacer(),
+                IconButton(tooltip: 'Subir', onPressed: onSubir, icon: const Icon(Icons.arrow_upward_rounded)),
+                IconButton(tooltip: 'Bajar', onPressed: onBajar, icon: const Icon(Icons.arrow_downward_rounded)),
+                IconButton(tooltip: 'Duplicar', onPressed: onDuplicar, icon: const Icon(Icons.copy_rounded)),
                 IconButton(
-                  tooltip: 'Subir',
-                  onPressed: onSubir,
-                  icon: const Icon(Icons.arrow_upward_rounded),
-                ),
-                IconButton(
-                  tooltip: 'Bajar',
-                  onPressed: onBajar,
-                  icon: const Icon(Icons.arrow_downward_rounded),
-                ),
-                IconButton(
-                  tooltip: 'Duplicar',
-                  onPressed: onDuplicar,
-                  icon: const Icon(Icons.copy_rounded),
-                ),
-                IconButton(
-                  key: Key('editor-borrar-pregunta-$numero'),
-                  tooltip: 'Borrar pregunta',
+                  key: Key('editor-borrar-pregunta-$n'),
+                  tooltip: 'Borrar reto',
                   onPressed: onBorrar,
                   icon: const Icon(Icons.delete_outline_rounded),
                 ),
@@ -754,176 +640,68 @@ class _EditorPregunta extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextFormField(
-              key: Key('editor-enunciado-$numero'),
-              initialValue: p.enunciado,
+              key: Key('editor-enunciado-$n'),
+              initialValue: r.enunciado,
               maxLines: null,
               style: const TextStyle(fontSize: 17),
               decoration: InputDecoration(
-                labelText: plantilla == PlantillaAula.verdaderoFalso
-                    ? 'Frase'
-                    : 'Pregunta',
+                labelText: etiqueta,
                 border: const OutlineInputBorder(),
-                errorText: marcarErrores && p.enunciado.trim().isEmpty
+                errorText: marcarErrores && obligatorio && r.enunciado.trim().isEmpty &&
+                        (r.imagen == null || r.tipo == TipoReto.buscar)
                     ? 'Escribe la pregunta'
                     : null,
               ),
-              onChanged: (v) => onCambio(() => p.enunciado = v),
+              onChanged: (v) => onCambio(() => r.enunciado = v),
             ),
-            const SizedBox(height: 8),
-            if (p.imagen case final imagen?)
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      key: Key('editor-imagen-$numero'),
-                      width: 160,
-                      height: 100,
-                      child: ImagenDeAula(imagen, ajuste: BoxFit.cover),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  TextButton.icon(
-                    key: Key('editor-quitar-imagen-$numero'),
-                    onPressed: () => onCambio(() => p.imagen = null),
-                    icon: const Icon(Icons.close_rounded),
-                    label: const Text('Quitar imagen'),
-                  ),
-                ],
-              )
-            else
+            if (r.tipo != TipoReto.buscar) ...[
+              const SizedBox(height: 6),
               Align(
                 alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  key: Key('editor-anadir-imagen-$numero'),
-                  onPressed: subiendo ? null : onSubirImagen,
-                  icon: const Icon(Icons.add_photo_alternate_rounded),
-                  label: const Text('Añadir una imagen (opcional)'),
+                child: CampoImagen(
+                  claveBase: 'editor-imagen-$n',
+                  texto: 'Añadir una imagen (opcional)',
+                  imagen: r.imagen,
+                  onElegir: () async {
+                    final imagen = await elegirImagen();
+                    if (imagen != null) onCambio(() => r.imagen = imagen);
+                  },
+                  onQuitar: () => onCambio(() => r.imagen = null),
                 ),
               ),
-            const SizedBox(height: 12),
-            if (plantilla == PlantillaAula.verdaderoFalso)
-              Row(
-                children: [
-                  const Text('Esta frase es: '),
-                  const SizedBox(width: 8),
-                  SegmentedButton<int>(
-                    key: Key('editor-vf-$numero'),
-                    emptySelectionAllowed: true,
-                    segments: const [
-                      ButtonSegment(value: 0, label: Text('Verdadera')),
-                      ButtonSegment(value: 1, label: Text('Falsa')),
-                    ],
-                    selected: {if (p.correcta >= 0) p.correcta},
-                    onSelectionChanged: (s) {
-                      if (s.isNotEmpty) onCambio(() => p.correcta = s.first);
-                    },
-                  ),
-                ],
-              )
-            else ...[
-              Text(
-                'Respuestas: marca el círculo de la correcta',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: sinCorrecta ? error : null,
-                ),
-              ),
-              RadioGroup<int>(
-                groupValue: p.correcta,
-                onChanged: (v) => onCambio(() => p.correcta = v ?? -1),
-                child: Column(
-                  children: [
-                    for (var j = 0; j < p.opciones.length; j++)
-                      Padding(
-                        key: ValueKey(
-                          'opcion-${p.clave}-$j-${p.opciones.length}',
-                        ),
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Row(
-                          children: [
-                            Radio<int>(
-                              key: Key('editor-correcta-$numero-$j'),
-                              value: j,
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                key: Key('editor-opcion-$numero-$j'),
-                                initialValue: p.opciones[j],
-                                decoration: InputDecoration(
-                                  labelText: 'Respuesta ${j + 1}',
-                                  border: const OutlineInputBorder(),
-                                  isDense: true,
-                                  errorText:
-                                      marcarErrores &&
-                                          p.opciones[j].trim().isEmpty
-                                      ? 'Escribe la respuesta'
-                                      : null,
-                                ),
-                                onChanged: (v) =>
-                                    onCambio(() => p.opciones[j] = v),
-                              ),
-                            ),
-                            IconButton(
-                              tooltip: 'Quitar respuesta',
-                              onPressed:
-                                  p.opciones.length <= JuegoAula.minOpciones
-                                  ? null
-                                  : () => onCambio(() {
-                                      p.opciones.removeAt(j);
-                                      if (p.correcta == j) {
-                                        p.correcta = -1;
-                                      } else if (p.correcta > j) {
-                                        p.correcta--;
-                                      }
-                                    }),
-                              icon: const Icon(Icons.close_rounded),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              if (p.opciones.length < JuegoAula.maxOpciones)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton.icon(
-                    key: Key('editor-anadir-opcion-$numero'),
-                    onPressed: () => onCambio(() => p.opciones.add('')),
-                    icon: const Icon(Icons.add_rounded),
-                    label: const Text('Añadir respuesta'),
-                  ),
-                ),
             ],
-            if (sinCorrecta && plantilla == PlantillaAula.verdaderoFalso)
-              Text(
-                'Elige si es verdadera o falsa',
-                style: TextStyle(color: error),
-              ),
-            const SizedBox(height: 12),
-            TextFormField(
-              key: Key('editor-pista-$numero'),
-              initialValue: p.pista,
-              decoration: const InputDecoration(
-                labelText: 'Pista si se equivoca (opcional)',
-                hintText: 'Ayúdale a pensar sin decirle la respuesta',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => onCambio(() => p.pista = v),
+            EditorCamposReto(
+              reto: r,
+              numero: n,
+              marcarErrores: marcarErrores,
+              onCambio: onCambio,
+              elegirImagen: elegirImagen,
             ),
-            const SizedBox(height: 10),
-            TextFormField(
-              key: Key('editor-explicacion-$numero'),
-              initialValue: p.explicacion,
-              maxLines: null,
-              decoration: const InputDecoration(
-                labelText: 'Explicación al acertar (opcional)',
-                hintText: 'Un dato para que aprenda algo más',
-                border: OutlineInputBorder(),
+            if (!lectura) ...[
+              const SizedBox(height: 12),
+              TextFormField(
+                key: Key('editor-pista-$n'),
+                initialValue: r.pista,
+                decoration: const InputDecoration(
+                  labelText: 'Pista si se equivoca (opcional)',
+                  hintText: 'Ayúdale a pensar sin decirle la respuesta',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (v) => onCambio(() => r.pista = v),
               ),
-              onChanged: (v) => onCambio(() => p.explicacion = v),
-            ),
+              const SizedBox(height: 10),
+              TextFormField(
+                key: Key('editor-explicacion-$n'),
+                initialValue: r.explicacion,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  labelText: 'Explicación al acertar (opcional)',
+                  hintText: 'Un dato para que aprenda algo más',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (v) => onCambio(() => r.explicacion = v),
+              ),
+            ],
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import 'package:naturalmente/datos/aula/llave.dart';
 import 'package:naturalmente/datos/aula/repositorio_aula.dart';
@@ -14,6 +15,8 @@ import 'package:naturalmente/modelo/aula/juego_aula.dart';
 enum EstadoAula { sinCargar, cargando, listo, sinConexion }
 
 enum ResultadoCanje { recuperado, noCoincide, bloqueado, sinConexion, lleno }
+
+enum ResultadoQuitar { quitado, pendientes, error }
 
 /// Juegos del profesor por curso, con caché para jugar sin conexión, y la
 /// cola de resultados que se envían cuando hay red.
@@ -96,14 +99,9 @@ class Aula extends ChangeNotifier {
     final precargar = precargarImagen;
     if (precargar == null) return;
     final urls = <String>{
-      for (final j in juegos) ...[
-        if (j.fondo case ImagenSubida(:final url)) url,
-        for (final p in j.preguntas) ...[
-          if (p.imagen case ImagenSubida(:final url)) url,
-          for (final o in p.opciones)
-            if (o.imagen case ImagenSubida(:final url)) url,
-        ],
-      ],
+      for (final j in juegos)
+        for (final imagen in j.imagenes)
+          if (imagen case ImagenSubida(:final url)) url,
     };
     for (final url in urls) {
       try {
@@ -222,6 +220,42 @@ class Aula extends ChangeNotifier {
   static const _claveGanadas = 'sync/ganadas';
   static const _claveGastadas = 'sync/gastadas';
   static const _claveUltimo = 'sync/ultimo';
+  static const _claveDesvinculado = 'aula/desvinculado';
+
+  /// La nube ya no deja a este dispositivo usar el perfil: se cambió su llave
+  /// en otra tablet o se borró. Hay que volver a escribir la llave.
+  bool desvinculado(String perfilId) =>
+      perfiles.preferenciasDe(perfilId).getBool(_claveDesvinculado) ?? false;
+
+  static bool _esPerfilAjeno(Object error) =>
+      error is PostgrestException && error.code == '42501';
+
+  Future<void> _marcarDesvinculado(String perfilId, bool valor) async {
+    try {
+      await perfiles.preferenciasDe(perfilId).setBool(_claveDesvinculado, valor);
+    } catch (_) {}
+    notifyListeners();
+  }
+
+  /// Quita el jugador de esta tablet sin tocar la nube: con su llave se
+  /// recupera. Antes envía lo pendiente para no perder ninguna partida.
+  Future<ResultadoQuitar> quitarDeEsteDispositivo(String perfilId) async {
+    if (pendientes(perfilId).isNotEmpty) await enviarPendientes();
+    if (pendientes(perfilId).isNotEmpty) return ResultadoQuitar.pendientes;
+    final nube = perfilNube(perfilId);
+    final repo = repositorio;
+    if (nube != null && repo != null) {
+      try {
+        await repo.desvincular(nube.id);
+      } catch (_) {
+        // Sin conexión el vínculo se queda en la nube, pero sin el perfil en
+        // este dispositivo no sirve para nada.
+      }
+    }
+    return await perfiles.eliminar(perfilId)
+        ? ResultadoQuitar.quitado
+        : ResultadoQuitar.error;
+  }
 
   /// Crea la llave del perfil (y su copia en la nube) y sube su progreso.
   Future<PerfilNube?> crearLlave(String perfilId) async {
@@ -279,7 +313,15 @@ class Aula extends ChangeNotifier {
         .where((p) => perfilNube(p.id)?.id == encontrado!.id)
         .firstOrNull;
     if (yaEsta != null) {
+      await _marcarDesvinculado(yaEsta.id, false);
+      await perfiles
+          .preferenciasDe(yaEsta.id)
+          .setString(
+            _claveNube,
+            jsonEncode(PerfilNube(id: encontrado.id, llave: llave.texto).toJson()),
+          );
       await sincronizar(yaEsta.id);
+      unawaited(enviarPendientes());
       await perfiles.elegir(yaEsta.id);
       return ResultadoCanje.recuperado;
     }
@@ -342,10 +384,12 @@ class Aula extends ChangeNotifier {
         'curso': '${progreso.curso}',
     };
 
+    if (desvinculado(perfilId)) return false;
     final Map<String, dynamic> respuesta;
     try {
       respuesta = await repo.sincronizar(nube.id, local);
-    } catch (_) {
+    } catch (e) {
+      if (_esPerfilAjeno(e)) await _marcarDesvinculado(perfilId, true);
       return false;
     }
 
@@ -432,7 +476,9 @@ class Aula extends ChangeNotifier {
   Future<void> _enviar(RepositorioAula repo) async {
     for (final perfil in perfiles.lista) {
       var lista = pendientes(perfil.id);
-      if (lista.isEmpty) continue;
+      // Sin acceso, crear otro perfil en la nube duplicaría al niño: sus
+      // partidas esperan a que vuelva a escribir su llave.
+      if (lista.isEmpty || desvinculado(perfil.id)) continue;
       try {
         final nube = await _asegurarPerfilNube(repo, perfil);
         while (lista.isNotEmpty) {
@@ -440,7 +486,8 @@ class Aula extends ChangeNotifier {
           lista = lista.sublist(1);
           if (!await _escribirPendientes(perfil.id, lista)) break;
         }
-      } catch (_) {
+      } catch (e) {
+        if (_esPerfilAjeno(e)) await _marcarDesvinculado(perfil.id, true);
         // Sin conexión: se reintentará al volver a abrir Aula.
       }
     }

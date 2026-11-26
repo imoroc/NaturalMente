@@ -600,7 +600,7 @@ class _TarjetaJuegoPanel extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '${juego.plantilla.nombre} · ${juego.preguntas.length} preguntas · '
+                      '${juego.plantilla == PlantillaAula.libre ? 'Juego libre' : juego.plantilla.nombre} · ${juego.preguntas.length} retos · '
                       '${juego.cursos.map((c) => '$cº').join(', ')} · '
                       'cambiado el ${fecha.day}/${fecha.month}/${fecha.year}',
                     ),

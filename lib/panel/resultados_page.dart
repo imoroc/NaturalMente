@@ -92,10 +92,12 @@ class _ResultadosPageState extends State<ResultadosPage> {
                         'Porcentaje de niños que la aciertan a la primera, en la versión actual.',
                       ),
                       const SizedBox(height: 10),
-                      for (var i = 0; i < juego.preguntas.length; i++)
+                      for (final (i, reto) in juego.evaluables.indexed)
                         _BarraPregunta(
                           numero: i + 1,
-                          enunciado: juego.preguntas[i].enunciado,
+                          enunciado: reto.enunciado.isNotEmpty
+                              ? reto.enunciado
+                              : reto.tipo.nombre,
                           porcentaje: resumen.porPregunta[i],
                         ),
                       const SizedBox(height: 28),
@@ -196,7 +198,8 @@ class ResumenResultados {
             .firstOrNull,
     ];
     final porPregunta = [
-      for (var i = 0; i < juego.preguntas.length; i++)
+      // Los resultados guardan un acierto por reto puntuable, en orden.
+      for (var i = 0; i < juego.evaluables.length; i++)
         () {
           final respuestas = [
             for (final p in primeras)

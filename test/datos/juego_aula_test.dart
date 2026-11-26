@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
 
+import '../soporte/jugar_aula.dart';
 import '../soporte/repositorio_aula_falso.dart';
 
 void main() {
@@ -32,7 +33,7 @@ void main() {
     final preguntas = juego.contenidoJson()['preguntas'] as List<dynamic>;
     expect((preguntas.first as Map)['correcta'], isTrue);
     expect((preguntas.first as Map).containsKey('opciones'), isFalse);
-    expect(juego.preguntas[1].correcta, 1);
+    expect((juego.preguntas[1] as PreguntaAula).correcta, 1);
   });
 
   Map<String, dynamic> fila(
@@ -132,5 +133,71 @@ void main() {
       reason: 'el Supabase local de desarrollo',
     );
     expect(ImagenAula.desdeJson('texto'), isNull);
+  });
+
+  test('un juego con los 10 tipos de reto se guarda y se lee igual', () {
+    final juego = juegoConTodosLosTipos();
+    expect(juego.errores(), isEmpty);
+    final fila = jsonDecode(jsonEncode(juego.toFila())) as Map<String, dynamic>;
+    final leido = JuegoAula.desdeFila(fila)!;
+    expect(leido.toFila(), juego.toFila());
+    expect(leido.preguntas.map((r) => r.tipo).toSet(), TipoReto.values.toSet());
+    expect(leido.evaluables, hasLength(9));
+    final huecos = leido.preguntas[6] as HuecosAula;
+    expect(huecos.respuestas, ['corazón', 'sangre']);
+    expect((leido.preguntas[9] as PalabraAula).letras.join(), 'CEREBRO');
+  });
+
+  test('los juegos antiguos (sin tipo en cada pregunta) se siguen leyendo', () {
+    final antiguo = JuegoAula.desdeFila({
+      'id': 'viejo',
+      'titulo': 'Viejo',
+      'plantilla': 'verdadero_falso',
+      'version': 3,
+      'cursos': [2],
+      'contenido': {
+        'preguntas': [
+          {'enunciado': 'Las ranas saltan.', 'correcta': true},
+        ],
+      },
+      'tema': <String, dynamic>{},
+    })!;
+    expect(antiguo.preguntas.single.tipo, TipoReto.verdaderoFalso);
+    expect((antiguo.preguntas.single as PreguntaAula).correcta, 0);
+    expect(
+      (antiguo.contenidoJson()['preguntas'] as List).single,
+      {'enunciado': 'Las ranas saltan.', 'correcta': true},
+      reason: 'se guarda igual que antes, sin versión nueva',
+    );
+  });
+
+  test('cada tipo explica qué le falta', () {
+    const vacios = <RetoAula>[
+      ClasificarAula(enunciado: '', grupos: [], elementos: []),
+      OrdenarAula(enunciado: '', pasos: [OpcionAula(texto: 'Uno')]),
+      ParejasAula(enunciado: '', parejas: []),
+      HuecosAula(enunciado: '', frase: 'Sin huecos'),
+      BuscarAula(enunciado: '', zonas: []),
+      NumeroAula(enunciado: '¿Cuántos?', respuesta: null),
+      PalabraAula(enunciado: 'Palabra', respuesta: 'a'),
+      LecturaAula(enunciado: '', texto: ''),
+    ];
+    for (final reto in vacios) {
+      expect(reto.errores(1), isNotEmpty, reason: reto.tipo.id);
+    }
+    expect(const ZonaAula(0.5, 0.5, 0.1).contiene(0.55, 0.5), isTrue);
+    expect(const ZonaAula(0.5, 0.5, 0.1).contiene(0.8, 0.5), isFalse);
+  });
+
+  test('un juego solo con tarjetas para leer no se puede publicar', () {
+    const juego = JuegoAula(
+      id: 'x',
+      titulo: 'Solo leer',
+      plantilla: PlantillaAula.libre,
+      version: 1,
+      cursos: [1],
+      preguntas: [LecturaAula(enunciado: 'Hola', texto: 'Texto')],
+    );
+    expect(juego.errores(), ['Añade al menos una pregunta: las tarjetas para leer no cuentan.']);
   });
 }

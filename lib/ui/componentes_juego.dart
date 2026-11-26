@@ -540,7 +540,7 @@ class CelebracionRachaDiariaDuolingo extends StatelessWidget {
                                   '¡Llama encendida hoy! Vuelve mañana para que siga creciendo.',
                                 )
                               : context.tr(
-                                  '¡Completa los 3 retos de hoy para encender tu llama diaria!',
+                                  '¡Completa los 5 retos de hoy para encender tu llama diaria!',
                                 ),
                           style: TextStyle(
                             fontSize: 12,

@@ -52,6 +52,20 @@ Widget _pagina(Actividad actividad) => switch (actividad.tipo) {
   _ => JuegoPage(actividad: actividad),
 };
 
+/// Resuelve un paso del reto diario según su formato.
+Future<void> _resolverPasoDiario(
+  WidgetTester tester,
+  PreguntaExpedicion pregunta,
+) async {
+  final indices = pregunta.tipo == FormatoRetoDiario.ordenar
+      ? pregunta.ordenCorrecto
+      : [pregunta.indiceCorrecto];
+  for (final i in indices) {
+    await tester.ensureVisible(find.byKey(Key('opcion-expedicion-$i')));
+    await _tocar(tester, 'opcion-expedicion-$i');
+  }
+}
+
 Future<void> _tocar(WidgetTester tester, String clave) async {
   final finder = find.byKey(Key(clave));
   if (finder.evaluate().isEmpty && clave.startsWith('paso-')) {
@@ -842,6 +856,8 @@ void main() {
           final respuesta = find.byKey(
             Key('opcion-expedicion-${mision.first.indiceCorrecto}'),
           );
+          await tester.ensureVisible(respuesta);
+          await tester.pump();
           await tester.tap(respuesta);
           await tester.tap(respuesta);
           await tester.pump();
@@ -855,10 +871,7 @@ void main() {
           expect(find.text(mision.first.pregunta), findsOneWidget);
           await _tocar(tester, 'continuar-paso');
           for (final pregunta in mision.skip(1)) {
-            await _tocar(
-              tester,
-              'opcion-expedicion-${pregunta.indiceCorrecto}',
-            );
+            await _resolverPasoDiario(tester, pregunta);
             if (pregunta != mision.last) await _tocar(tester, 'continuar-paso');
           }
           expect(find.byType(FinJuego), findsOneWidget);
@@ -869,7 +882,8 @@ void main() {
             isNull,
           );
           final total = progreso.semillas;
-          expect(total, 14);
+          // 8 del nivel + 8 de la pregunta sorpresa + 12 de los cinco pasos.
+          expect(total, 28);
           prefs.fallar = true;
           bloqueo.complete();
           await tester.pumpAndSettle();
@@ -900,10 +914,7 @@ void main() {
           );
           await _tocar(tester, 'dificultad-reto-facil');
           for (final pregunta in mision) {
-            await _tocar(
-              tester,
-              'opcion-expedicion-${pregunta.indiceCorrecto}',
-            );
+            await _resolverPasoDiario(tester, pregunta);
             if (pregunta != mision.last) await _tocar(tester, 'continuar-paso');
           }
           expect(progreso.expedicionHoyHecha(fecha), isFalse);
@@ -961,6 +972,75 @@ void main() {
         });
       }
 
+      testWidgets(
+        'reto diario: el curso marca el nivel, ordenar da pista sin perder lo colocado y la sorpresa paga doble',
+        (tester) async {
+          SharedPreferences.setMockInitialValues({
+            'sonido': false,
+            'vibracion': false,
+            'perfil/curso': 4,
+          });
+          progreso = await Progreso.abrir();
+          final fecha = DateTime(2026, 11, 16);
+          final mision = ExpedicionDiariaPage.generarMisionDelDia(
+            fecha,
+            'medio',
+          );
+          final pasoOrdenar = mision.indexWhere(
+            (p) => p.tipo == FormatoRetoDiario.ordenar,
+          );
+          expect(pasoOrdenar, isNot(-1));
+          await abrir(
+            tester,
+            ExpedicionDiariaPage(progreso: progreso, fechaReferencia: fecha),
+            brillo,
+          );
+          expect(find.byKey(const Key('tema-del-dia')), findsOneWidget);
+          await _tocar(tester, 'empezar-reto-recomendado');
+          expect(find.text('Reto 1 / 5'), findsOneWidget);
+          for (var paso = 0; paso < mision.length; paso++) {
+            final pregunta = mision[paso];
+            if (paso == pasoOrdenar) {
+              final orden = pregunta.ordenCorrecto;
+              await tester.ensureVisible(
+                find.byKey(Key('opcion-expedicion-${orden[0]}')),
+              );
+              await _tocar(tester, 'opcion-expedicion-${orden[0]}');
+              await tester.ensureVisible(
+                find.byKey(Key('opcion-expedicion-${orden[2]}')),
+              );
+              await _tocar(tester, 'opcion-expedicion-${orden[2]}');
+              expect(
+                find.text('¡Casi! Esa no va ahora. Piensa qué pasa antes.'),
+                findsOneWidget,
+              );
+              expect(find.text('1'), findsOneWidget);
+              for (final i in orden.skip(1)) {
+                await tester.ensureVisible(
+                  find.byKey(Key('opcion-expedicion-$i')),
+                );
+                await _tocar(tester, 'opcion-expedicion-$i');
+              }
+            } else {
+              if (pregunta.sorpresa) {
+                expect(
+                  find.byKey(const Key('pregunta-sorpresa')),
+                  findsOneWidget,
+                );
+              }
+              await _resolverPasoDiario(tester, pregunta);
+            }
+            if (find.byType(FinJuego).evaluate().isEmpty) {
+              await _tocar(tester, 'continuar-paso');
+            }
+          }
+          expect(find.byType(FinJuego), findsOneWidget);
+          expect(find.byKey(const Key('sorpresa-acertada')), findsOneWidget);
+          expect(progreso.dificultadExpedicionHoy(fecha), 'medio');
+          expect(progreso.aciertosExpedicionHoy(fecha), 4);
+        },
+      );
+
       for (final dificultad in ['facil', 'medio', 'dificil']) {
         testWidgets(
           'reto diario $dificultad: cierre sin repetir una misión ya guardada',
@@ -976,10 +1056,7 @@ void main() {
               fecha,
               dificultad,
             )) {
-              await _tocar(
-                tester,
-                'opcion-expedicion-${pregunta.indiceCorrecto}',
-              );
+              await _resolverPasoDiario(tester, pregunta);
               if (find.byType(FinJuego).evaluate().isEmpty) {
                 expect(find.byKey(const Key('continuar-paso')), findsOneWidget);
                 await _tocar(tester, 'continuar-paso');

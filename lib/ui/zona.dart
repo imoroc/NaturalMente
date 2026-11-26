@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/accion_natu.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -109,40 +110,7 @@ class _ZonaPageState extends State<ZonaPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            tooltip: MaterialLocalizations.of(context)
-                                .backButtonTooltip,
-                            onPressed: () => Navigator.maybePop(context),
-                            style: IconButton.styleFrom(
-                              backgroundColor: colores.fondoAcierto,
-                              foregroundColor: colores.acierto,
-                              side: BorderSide(
-                                color: colores.acierto,
-                                width: 1.5,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            icon: const Icon(
-                              Icons.arrow_back_rounded,
-                              size: 25,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Semantics(
-                              header: true,
-                              child: Texto(
-                                zona.nombre,
-                                style: _estiloMundo(colores.tinta, 34),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: CabeceraMundo(titulo: zona.nombre),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -194,6 +162,51 @@ class _ZonaPageState extends State<ZonaPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Navegación y rótulo de las pantallas de los mundos y de los cromos.
+class CabeceraMundo extends StatelessWidget {
+  const CabeceraMundo({
+    required this.titulo,
+    this.tamano = 34,
+    this.mostrarVolver = true,
+    super.key,
+  });
+
+  final String titulo;
+  final double tamano;
+  final bool mostrarVolver;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return Row(
+      children: [
+        if (mostrarVolver) ...[
+          IconButton(
+            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+            onPressed: () => Navigator.maybePop(context),
+            style: IconButton.styleFrom(
+              backgroundColor: colores.fondoAcierto,
+              foregroundColor: colores.acierto,
+              side: BorderSide(color: colores.acierto, width: 1.5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            icon: const Icon(Icons.arrow_back_rounded, size: 25),
+          ),
+          const SizedBox(width: 12),
+        ],
+        Expanded(
+          child: Semantics(
+            header: true,
+            child: Texto(titulo, style: _estiloMundo(colores.tinta, tamano)),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -650,6 +663,7 @@ void mostrarDetalleFicha(
                             : 'CROMO POR DESCUBRIR · ${ficha.curso.toUpperCase()}',
                         style: TextStyle(
                           fontSize: 11.5,
+                          fontFamily: 'NunitoInicio',
                           fontWeight: FontWeight.w900,
                           letterSpacing: 0.6,
                           color: context.coloresNaturales.contenido(
@@ -662,7 +676,7 @@ void mostrarDetalleFicha(
                       const SizedBox(height: 2),
                       Texto(
                         ficha.titulo,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: _estiloMundo(context.coloresNaturales.tinta, 26),
                       ),
                     ],
                   ),
@@ -724,13 +738,14 @@ void mostrarDetalleFicha(
                 gesto: 'pista',
               ),
             const SizedBox(height: 16),
-            FilledButton(
+            AccionNatu(
               key: const Key('cerrar-detalle-ficha'),
-              onPressed: () {
+              icono: Icons.check_rounded,
+              titulo: desbloqueada ? '¡Genial!' : '¡Voy a descubrirlo!',
+              onTap: () {
                 context.sonidoToque();
                 Navigator.of(context).pop();
               },
-              child: Texto(desbloqueada ? '¡Genial!' : '¡Voy a descubrirlo!'),
             ),
           ],
         ),

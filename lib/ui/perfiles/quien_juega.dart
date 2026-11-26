@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 
 import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/datos/aula/llave.dart';
+import 'package:naturalmente/ui/perfiles/candado.dart';
 import 'package:naturalmente/ui/perfiles/llave_page.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/texto.dart';
@@ -198,7 +200,7 @@ class _HojaQuienJuegaState extends State<_HojaQuienJuega> {
                             );
                           },
                     icon: const Text('🔑', style: TextStyle(fontSize: 18)),
-                    label: Texto('Tengo una llave de otra tablet'),
+                    label: Texto('Tengo una llave de otro dispositivo'),
                   ),
                 ],
               ],
@@ -389,7 +391,7 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
     final confirmado = await showDialog<bool>(
       context: context,
       builder: (dialogo) => AlertDialog(
-        title: Texto('¿Quitar a ${moteDe(context, perfil)} de esta tablet?'),
+        title: Texto('¿Quitar a ${moteDe(context, perfil)} de este dispositivo?'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -504,11 +506,12 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
         title: Texto(_nuevo ? 'Nuevo jugador' : 'Mi Natu'),
         backgroundColor: colores.fondo,
       ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 520),
-            child: ListView(
+      body: FondoEscena(
+        escena: 'jardin',
+        child: SafeArea(
+        child: TarjetaSobreEscena(
+          anchoMaximo: 600,
+          child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               children: [
                 Center(
@@ -636,6 +639,10 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
                     ),
                   ),
                 ),
+                if (widget.perfil case final perfil?) ...[
+                  const SizedBox(height: 26),
+                  SeccionCandado(perfiles: widget.perfiles, perfilId: perfil.id),
+                ],
                 if ((widget.perfil, AulaScope.maybeOf(context))
                     case (final perfil?, final aula?) when aula.disponible) ...[
                   const SizedBox(height: 26),
@@ -651,7 +658,7 @@ class _EditorPerfilPageState extends State<EditorPerfilPage> {
                       key: const Key('quitar-perfil'),
                       onPressed: _guardando ? null : _quitar,
                       icon: const Icon(Icons.logout_rounded),
-                      label: Texto('Quitar de esta tablet'),
+                      label: Texto('Quitar de este dispositivo'),
                     ),
                   TextButton.icon(
                     key: const Key('borrar-perfil'),

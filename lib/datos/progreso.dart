@@ -856,6 +856,8 @@ class Progreso extends ChangeNotifier {
     'maestro_cuerpo',
     'racha_fuego',
     'leyenda_natu',
+    'birrete_aula',
+    'medalla_aula',
   ];
 
   static const trajesPorLogro = <String>{
@@ -864,7 +866,15 @@ class Progreso extends ChangeNotifier {
     'maestro_cuerpo',
     'racha_fuego',
     'leyenda_natu',
+    'birrete_aula',
+    'medalla_aula',
   };
+
+  /// Juegos de Aula distintos que ha terminado (cualquier versión).
+  int get juegosAulaCompletados => {
+    for (final h in _hechos)
+      if (h.startsWith('aula/')) h.split('/')[1],
+  }.length;
 
   int get semillas => _semillasActuales;
 
@@ -930,12 +940,24 @@ class Progreso extends ChangeNotifier {
     };
   }
 
+  /// Logros que no dependen del catálogo de juegos.
+  bool _logroAula(String trajeId) => switch (trajeId) {
+    'birrete_aula' => juegosAulaCompletados >= 3,
+    'medalla_aula' => juegosAulaCompletados >= 10,
+    _ => false,
+  };
+
+  bool _logroCumplido(String trajeId, Iterable<Actividad> todasActividades) {
+    if (_logroAula(trajeId)) return true;
+    return logroTrajeCumplido(trajeId, todasActividades);
+  }
+
   Future<List<String>> sincronizarLogrosTrajes(
     Iterable<Actividad> todasActividades,
   ) async {
     final nuevos = <String>[];
     for (final id in trajesPorLogro) {
-      if (!hecho('traje/$id') && logroTrajeCumplido(id, todasActividades)) {
+      if (!hecho('traje/$id') && _logroCumplido(id, todasActividades)) {
         await _marcar('traje/$id');
         nuevos.add(id);
       }
@@ -952,14 +974,16 @@ class Progreso extends ChangeNotifier {
     'apicultor' ||
     'polar' ||
     'maestro_reserva' ||
-    'maestro_invernadero' =>
+    'maestro_invernadero' ||
+    'birrete_aula' =>
       'cabeza',
     'doctor' || 'marino' || 'aviador' || 'lupas' || 'maestro_cuerpo' => 'ojos',
     'guardian' ||
     'brujula' ||
     'herbarioro' ||
     'racha_fuego' ||
-    'leyenda_natu' =>
+    'leyenda_natu' ||
+    'medalla_aula' =>
       'insignia',
     _ => 'ninguno',
   };

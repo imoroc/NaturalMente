@@ -141,11 +141,14 @@ class MapaPage extends StatelessWidget {
                   MediaQuery.textScalerOf(context).scale(16) > 24;
               final compacto = espacio.maxWidth <= 360;
               final espacioTitulo = compacto ? 15.0 : 23.0;
+              final ancho = espacio.maxWidth >= 900;
 
               return Align(
                 alignment: Alignment.topCenter,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
+                  // En pantallas anchas (portátil, pizarra digital) se usan
+                  // dos columnas en vez de una estrecha con huecos a los lados.
+                  constraints: BoxConstraints(maxWidth: ancho ? 1240 : 560),
                   child: SingleChildScrollView(
                     padding: EdgeInsets.fromLTRB(
                       10,
@@ -153,9 +156,9 @@ class MapaPage extends StatelessWidget {
                       10,
                       24,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
+                    child: _Distribucion(
+                      ancho: ancho,
+                      principal: [
                         Row(
                           children: [
                             Expanded(child: marca),
@@ -197,7 +200,9 @@ class MapaPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                         ],
-                        SizedBox(height: compacto ? 16 : 22),
+                      ],
+                      secundaria: [
+                        SizedBox(height: ancho ? 8 : (compacto ? 16 : 22)),
                         _AccesoInicio(
                           key: const Key('abrir-expedicion-diaria'),
                           fondo: colores.tarjeta,
@@ -718,4 +723,52 @@ class _IlustracionInicio extends StatelessWidget {
     fit: BoxFit.contain,
     excludeFromSemantics: true,
   );
+}
+
+/// Una columna en el móvil; dos en pantallas anchas: los mundos a la
+/// izquierda y el reto, Aula y el resto a la derecha.
+class _Distribucion extends StatelessWidget {
+  const _Distribucion({
+    required this.ancho,
+    required this.principal,
+    required this.secundaria,
+  });
+
+  final bool ancho;
+  final List<Widget> principal;
+  final List<Widget> secundaria;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!ancho) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [...principal, ...secundaria],
+      );
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: principal,
+          ),
+        ),
+        const SizedBox(width: 32),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            // A la altura del título «¿A qué jugamos?».
+            padding: const EdgeInsets.only(top: 82),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: secundaria,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

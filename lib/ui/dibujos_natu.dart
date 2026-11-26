@@ -447,13 +447,16 @@ class PintorAccesorioNatu extends CustomPainter {
           id == 'apicultor' ||
           id == 'polar' ||
           id == 'maestro_reserva' ||
-          id == 'maestro_invernadero',
+          id == 'maestro_invernadero' ||
+          id == 'birrete_aula',
     );
 
     // 1. Insignia / Cuello (sobre el nudo del pañuelo naranja de Natu)
     _conTransformacionRanura(canvas, w, h, 'cuello', () {
       if (activos.contains('leyenda_natu')) {
         _pintarMantoLeyenda(canvas, w, h, conCorona: false);
+      } else if (activos.contains('medalla_aula')) {
+        _pintarMedallaAula(canvas, w, h);
       } else if (activos.contains('racha_fuego')) {
         _pintarEmblemaRachaFuego(canvas, w, h);
       } else if (activos.contains('herbarioro')) {
@@ -482,7 +485,9 @@ class PintorAccesorioNatu extends CustomPainter {
 
     // 3. Cabeza / Sombrero (sobre la coronilla de la tortuga Natu)
     _conTransformacionRanura(canvas, w, h, 'cabeza', () {
-      if (activos.contains('maestro_reserva')) {
+      if (activos.contains('birrete_aula')) {
+        _pintarBirreteAula(canvas, w, h);
+      } else if (activos.contains('maestro_reserva')) {
         _pintarSombreroMaestroReserva(canvas, w, h);
       } else if (activos.contains('maestro_invernadero')) {
         _pintarCoronaMaestroInvernadero(canvas, w, h);
@@ -502,6 +507,94 @@ class PintorAccesorioNatu extends CustomPainter {
         _pintarCoronaBotanica(canvas, w, h);
       }
     });
+  }
+
+  /// Birrete de graduado: tablero, gorro y borla dorada.
+  void _pintarBirreteAula(Canvas canvas, double w, double h) {
+    final trazo = Paint()
+      ..color = const Color(0xFF3B2314)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.022
+      ..strokeJoin = StrokeJoin.round;
+    final gorro = RRect.fromRectAndRadius(
+      Rect.fromLTRB(w * 0.30, h * 0.10, w * 0.70, h * 0.23),
+      Radius.circular(w * 0.04),
+    );
+    canvas.drawRRect(gorro, Paint()..color = const Color(0xFF2B3F66));
+    canvas.drawRRect(gorro, trazo);
+    final tablero = Path()
+      ..moveTo(w * 0.50, h * 0.00)
+      ..lineTo(w * 0.94, h * 0.085)
+      ..lineTo(w * 0.50, h * 0.17)
+      ..lineTo(w * 0.06, h * 0.085)
+      ..close();
+    canvas.drawPath(tablero, Paint()..color = const Color(0xFF1F2D4D));
+    canvas.drawPath(
+      Path()
+        ..moveTo(w * 0.50, h * 0.02)
+        ..lineTo(w * 0.80, h * 0.08)
+        ..lineTo(w * 0.50, h * 0.10)
+        ..close(),
+      Paint()..color = const Color(0x33FFFFFF),
+    );
+    canvas.drawPath(tablero, trazo);
+    final oro = Paint()
+      ..color = const Color(0xFFF5C518)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.022
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.50, h * 0.085), Offset(w * 0.86, h * 0.10), oro);
+    canvas.drawLine(Offset(w * 0.86, h * 0.10), Offset(w * 0.87, h * 0.24), oro);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(w * 0.87, h * 0.27), width: w * 0.06, height: h * 0.08),
+        Radius.circular(w * 0.02),
+      ),
+      Paint()..color = const Color(0xFFF5C518),
+    );
+    canvas.drawCircle(Offset(w * 0.50, h * 0.085), w * 0.03, Paint()..color = const Color(0xFFF5C518));
+  }
+
+  /// Medalla dorada con estrella, colgada de una cinta azul y roja.
+  void _pintarMedallaAula(Canvas canvas, double w, double h) {
+    final centro = Offset(w * 0.50, h * 0.84);
+    final r = w * 0.085;
+    canvas.drawPath(
+      Path()
+        ..moveTo(w * 0.40, h * 0.68)
+        ..lineTo(w * 0.47, h * 0.68)
+        ..lineTo(centro.dx, centro.dy - r * 0.6)
+        ..lineTo(centro.dx - r * 0.5, centro.dy - r * 0.6)
+        ..close(),
+      Paint()..color = const Color(0xFF3B82F6),
+    );
+    canvas.drawPath(
+      Path()
+        ..moveTo(w * 0.60, h * 0.68)
+        ..lineTo(w * 0.53, h * 0.68)
+        ..lineTo(centro.dx, centro.dy - r * 0.6)
+        ..lineTo(centro.dx + r * 0.5, centro.dy - r * 0.6)
+        ..close(),
+      Paint()..color = const Color(0xFFE5484D),
+    );
+    canvas.drawCircle(centro, r, Paint()..color = const Color(0xFFF5C518));
+    canvas.drawCircle(
+      centro,
+      r,
+      Paint()
+        ..color = const Color(0xFF3B2314)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = w * 0.018,
+    );
+    canvas.drawCircle(centro, r * 0.72, Paint()..color = const Color(0xFFFFE07A));
+    final estrella = Path();
+    for (var i = 0; i < 10; i++) {
+      final radio = i.isEven ? r * 0.55 : r * 0.24;
+      final a = -math.pi / 2 + i * math.pi / 5;
+      final p = centro + Offset(math.cos(a), math.sin(a)) * radio;
+      i == 0 ? estrella.moveTo(p.dx, p.dy) : estrella.lineTo(p.dx, p.dy);
+    }
+    canvas.drawPath(estrella..close(), Paint()..color = const Color(0xFFE08E0B));
   }
 
   void _pintarEstrellaDestello(Canvas canvas, Offset c, double r) {
@@ -1514,6 +1607,7 @@ class _PintorIconoAccesorio extends CustomPainter {
       case 'polar':
       case 'maestro_reserva':
       case 'maestro_invernadero':
+      case 'birrete_aula':
         canvas.translate(0, h * 0.28);
         canvas.scale(1.0, 1.15);
         PintorAccesorioNatu(
@@ -1537,6 +1631,7 @@ class _PintorIconoAccesorio extends CustomPainter {
       case 'herbarioro':
       case 'racha_fuego':
       case 'leyenda_natu':
+      case 'medalla_aula':
         canvas.translate(0, -h * 0.24);
         canvas.scale(1.0, 1.12);
         PintorAccesorioNatu(

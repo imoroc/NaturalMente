@@ -19,6 +19,7 @@ class EditorJuegoPage extends StatefulWidget {
     required this.repositorio,
     this.ficha,
     this.duplicar = false,
+    this.esEjemplo = false,
     this.elegirImagen = elegirYSubirImagen,
     super.key,
   });
@@ -26,6 +27,9 @@ class EditorJuegoPage extends StatefulWidget {
   final RepositorioPanel repositorio;
   final FichaJuego? ficha;
   final bool duplicar;
+
+  /// Copia de un juego de ejemplo: conserva su título tal cual.
+  final bool esEjemplo;
 
   /// Elige, comprime y sube una foto. Las pruebas la sustituyen.
   final Future<ImagenSubida?> Function(RepositorioPanel) elegirImagen;
@@ -40,6 +44,8 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
   String _titulo = '';
   String _intro = '';
   List<int> _cursos = [];
+  DateTime? _desde;
+  DateTime? _hasta;
   ImagenAula? _fondo = const ImagenEscena('pradera');
   bool _natu = true;
   final List<RetoEditable> _preguntas = [];
@@ -81,11 +87,17 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     if (ficha == null) return;
     final juego = ficha.juego;
     _plantilla = juego.plantilla;
-    _titulo = widget.duplicar ? '${juego.titulo} (copia)' : juego.titulo;
+    _titulo = widget.duplicar && !widget.esEjemplo
+        ? '${juego.titulo} (copia)'
+        : juego.titulo;
     _id = widget.duplicar ? '' : juego.id;
     _estado = widget.duplicar ? EstadoJuego.borrador : ficha.estado;
     _intro = juego.intro;
     _cursos = List.of(juego.cursos);
+    if (!widget.duplicar) {
+      _desde = ficha.desde;
+      _hasta = ficha.hasta;
+    }
     _fondo = juego.fondo;
     _natu = juego.mostrarNatu;
     for (final p in juego.preguntas) {
@@ -163,7 +175,12 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
     if (_guardado == _Guardado.guardando) return false;
     setState(() => _guardado = _Guardado.guardando);
     try {
-      final ficha = await widget.repositorio.guardar(_juego, estado);
+      final ficha = await widget.repositorio.guardar(
+        _juego,
+        estado,
+        desde: _desde,
+        hasta: _hasta,
+      );
       if (!mounted) return true;
       setState(() {
         _id = ficha.juego.id;
@@ -406,6 +423,34 @@ class _EditorJuegoPageState extends State<EditorJuegoPage> {
                         _cambio(() => si ? _cursos.add(c) : _cursos.remove(c)),
                   ),
               ],
+            ),
+            const SizedBox(height: 16),
+            Text('¿Cuándo se puede jugar? (opcional)', style: estilo.titleMedium),
+            const SizedBox(height: 6),
+            Wrap(
+              spacing: 10,
+              runSpacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                _BotonFecha(
+                  clave: 'editor-desde',
+                  texto: 'Desde',
+                  fecha: _desde,
+                  onElegir: (f) => _cambio(() => _desde = f),
+                ),
+                _BotonFecha(
+                  clave: 'editor-hasta',
+                  texto: 'Hasta',
+                  fecha: _hasta,
+                  primera: _desde,
+                  onElegir: (f) => _cambio(() => _hasta = f),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Sin fechas, los niños lo ven siempre que esté publicado. Con fechas, solo esos días (por ejemplo, la semana del tema).',
+              style: TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -705,6 +750,56 @@ class _TarjetaReto extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Elegir un día, o quitarlo.
+class _BotonFecha extends StatelessWidget {
+  const _BotonFecha({
+    required this.clave,
+    required this.texto,
+    required this.fecha,
+    required this.onElegir,
+    this.primera,
+  });
+
+  final String clave;
+  final String texto;
+  final DateTime? fecha;
+  final DateTime? primera;
+  final ValueChanged<DateTime?> onElegir;
+
+  @override
+  Widget build(BuildContext context) {
+    final f = fecha;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        OutlinedButton.icon(
+          key: Key(clave),
+          icon: const Icon(Icons.event_rounded),
+          label: Text(f == null ? '$texto: cuando sea' : '$texto: ${f.day}/${f.month}/${f.year}'),
+          onPressed: () async {
+            final hoy = DateTime.now();
+            final elegida = await showDatePicker(
+              context: context,
+              initialDate: f ?? primera ?? hoy,
+              firstDate: DateTime(hoy.year - 1),
+              lastDate: DateTime(hoy.year + 2),
+              locale: const Locale('es'),
+            );
+            if (elegida != null) onElegir(elegida);
+          },
+        ),
+        if (f != null)
+          IconButton(
+            key: Key('$clave-quitar'),
+            tooltip: 'Quitar fecha',
+            onPressed: () => onElegir(null),
+            icon: const Icon(Icons.close_rounded),
+          ),
+      ],
     );
   }
 }

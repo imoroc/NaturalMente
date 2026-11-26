@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
 import 'package:naturalmente/datos/aula/aula.dart';
@@ -60,10 +61,12 @@ class _AulaPageState extends State<AulaPage> {
         backgroundColor: colores.fondo,
         title: const Texto('Aula'),
       ),
-      body: SafeArea(
+      body: FondoEscena(
+        escena: 'bosque',
+        child: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1080),
+            constraints: const BoxConstraints(maxWidth: 1400),
             child: aula == null || !aula.disponible
                 ? const _Mensaje(
                     clave: 'aula-no-disponible',
@@ -131,6 +134,7 @@ class _AulaPageState extends State<AulaPage> {
                   ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -208,7 +212,7 @@ class _ListaJuegos extends StatelessWidget {
           // Una columna en el móvil; dos o tres en tablets y ordenadores.
           LayoutBuilder(
             builder: (context, medidas) {
-              final columnas = (medidas.maxWidth / 340).floor().clamp(1, 3);
+              final columnas = (medidas.maxWidth / 340).floor().clamp(1, 4);
               final ancho = (medidas.maxWidth - 12 * (columnas - 1)) / columnas;
               return Wrap(
                 spacing: 12,

@@ -4,8 +4,10 @@ import 'package:supabase_flutter/supabase_flutter.dart' show OAuthProvider;
 
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
 import 'package:naturalmente/panel/editor_juego.dart';
+import 'package:naturalmente/panel/ejemplos.dart';
 import 'package:naturalmente/panel/repositorio_panel.dart';
 import 'package:naturalmente/panel/resultados_page.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/ui/tema.dart';
 
@@ -157,7 +159,9 @@ class _PantallaEntrarState extends State<PantallaEntrar> {
     final estilo = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: const Color(0xFFFAF5EC),
-      body: Center(
+      body: FondoEscena(
+        escena: 'pradera',
+        child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
@@ -302,6 +306,7 @@ class _PantallaEntrarState extends State<PantallaEntrar> {
           ),
         ),
       ),
+      ),
     );
   }
 }
@@ -343,17 +348,58 @@ class _InicioPanelState extends State<InicioPanel> {
     });
   }
 
-  Future<void> _abrirEditor([FichaJuego? ficha, bool duplicar = false]) async {
+  Future<void> _abrirEditor([
+    FichaJuego? ficha,
+    bool duplicar = false,
+    bool esEjemplo = false,
+  ]) async {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => EditorJuegoPage(
           repositorio: widget.repositorio,
           ficha: ficha,
           duplicar: duplicar,
+          esEjemplo: esEjemplo,
         ),
       ),
     );
     _recargar();
+  }
+
+  Future<void> _elegirEjemplo() async {
+    final ejemplo = await showDialog<JuegoAula>(
+      context: context,
+      builder: (dialogo) => SimpleDialog(
+        title: const Text('Elige un ejemplo para cambiarlo a tu gusto'),
+        children: [
+          for (final (i, juego) in juegosDeEjemplo.indexed)
+            SimpleDialogOption(
+              key: Key('panel-ejemplo-$i'),
+              onPressed: () => Navigator.of(dialogo).pop(juego),
+              child: ListTile(
+                title: Text(juego.titulo, style: const TextStyle(fontWeight: FontWeight.w800)),
+                subtitle: Text(
+                  '${juego.cursos.map((c) => '$cº').join(', ')} · '
+                  '${juego.preguntas.map((r) => r.tipo.nombre.toLowerCase()).toSet().join(', ')}',
+                ),
+              ),
+            ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(24, 8, 24, 0),
+            child: Text(
+              'Se abre una copia como borrador: nadie la ve hasta que la publiques.',
+              style: TextStyle(color: Colors.black54),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (ejemplo == null || !mounted) return;
+    await _abrirEditor(
+      FichaJuego(juego: ejemplo, estado: EstadoJuego.borrador, actualizado: DateTime.now()),
+      true,
+      true,
+    );
   }
 
   Future<void> _borrar(FichaJuego ficha) async {
@@ -426,7 +472,7 @@ class _InicioPanelState extends State<InicioPanel> {
             children: [
               Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 900),
+                  constraints: const BoxConstraints(maxWidth: 1500),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -472,6 +518,17 @@ class _InicioPanelState extends State<InicioPanel> {
                             ),
                         ],
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          key: const Key('panel-ejemplo'),
+                          onPressed: _elegirEjemplo,
+                          icon: const Icon(Icons.lightbulb_outline_rounded),
+                          label: const Text('o empieza con un juego de ejemplo'),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _TarjetaEstado(repositorio: widget.repositorio),
                       const SizedBox(height: 28),
                       Text(
                         'Mis juegos',
@@ -507,21 +564,38 @@ class _InicioPanelState extends State<InicioPanel> {
                           ),
                         )
                       else
-                        for (final ficha in juegos)
-                          _TarjetaJuegoPanel(
-                            ficha: ficha,
-                            onEditar: () => _abrirEditor(ficha),
-                            onDuplicar: () => _abrirEditor(ficha, true),
-                            onBorrar: () => _borrar(ficha),
-                            onResultados: () => Navigator.of(context).push(
-                              MaterialPageRoute<void>(
-                                builder: (_) => ResultadosPage(
-                                  repositorio: widget.repositorio,
-                                  juego: ficha.juego,
-                                ),
-                              ),
-                            ),
-                          ),
+                        // En pantallas anchas (ordenador, pizarra digital) los
+                        // juegos se reparten en columnas.
+                        LayoutBuilder(
+                          builder: (context, medidas) {
+                            final columnas = (medidas.maxWidth / 560).floor().clamp(1, 3);
+                            final ancho = (medidas.maxWidth - 12 * (columnas - 1)) / columnas;
+                            return Wrap(
+                              spacing: 12,
+                              runSpacing: 12,
+                              children: [
+                                for (final ficha in juegos)
+                                  SizedBox(
+                                    width: ancho,
+                                    child: _TarjetaJuegoPanel(
+                                      ficha: ficha,
+                                      onEditar: () => _abrirEditor(ficha),
+                                      onDuplicar: () => _abrirEditor(ficha, true),
+                                      onBorrar: () => _borrar(ficha),
+                                      onResultados: () => Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                          builder: (_) => ResultadosPage(
+                                            repositorio: widget.repositorio,
+                                            juego: ficha.juego,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ),
@@ -556,7 +630,7 @@ class _TarjetaJuegoPanel extends StatelessWidget {
     final fecha = ficha.actualizado;
     return Card(
       key: Key('panel-juego-${juego.id}'),
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.zero,
       child: InkWell(
         onTap: onEditar,
         borderRadius: BorderRadius.circular(12),
@@ -604,6 +678,16 @@ class _TarjetaJuegoPanel extends StatelessWidget {
                       '${juego.cursos.map((c) => '$cº').join(', ')} · '
                       'cambiado el ${fecha.day}/${fecha.month}/${fecha.year}',
                     ),
+                    if (ficha.desde != null || ficha.hasta != null)
+                      Text(
+                        'Se ve ${ficha.desde == null ? '' : 'desde el ${ficha.desde!.day}/${ficha.desde!.month} '}'
+                        '${ficha.hasta == null ? 'en adelante' : 'hasta el ${ficha.hasta!.day}/${ficha.hasta!.month}'}'
+                        '${publicado && ficha.fueraDeFecha ? ' · ahora no lo ven los niños' : ''}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: publicado && ficha.fueraDeFecha ? const Color(0xFFB45309) : null,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -651,3 +735,124 @@ Widget miniaturaGaleria(String id, {double ancho = 96, double alto = 64}) =>
         child: Image.asset(galeriaAula[id]!.$1, fit: BoxFit.cover),
       ),
     );
+
+/// Espacio usado y actividad. Avisa antes de llegar a los límites gratuitos.
+class _TarjetaEstado extends StatefulWidget {
+  const _TarjetaEstado({required this.repositorio});
+  final RepositorioPanel repositorio;
+
+  @override
+  State<_TarjetaEstado> createState() => _TarjetaEstadoState();
+}
+
+class _TarjetaEstadoState extends State<_TarjetaEstado> {
+  late final Future<EstadoPanel> _estado = widget.repositorio.estado();
+
+  static String _mb(int bytes) => bytes < 1024 * 1024
+      ? '${(bytes / 1024).round()} KB'
+      : '${(bytes / (1024 * 1024)).toStringAsFixed(bytes < 100 * 1024 * 1024 ? 1 : 0)} MB';
+
+  Widget _barra(String titulo, double uso, String detalle, String clave) {
+    final color = uso >= 0.9
+        ? const Color(0xFFDC2626)
+        : uso >= 0.75
+        ? const Color(0xFFF59E0B)
+        : const Color(0xFF16A34A);
+    return SizedBox(
+      width: 320,
+      child: Column(
+        key: Key(clave),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(titulo, style: const TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(99),
+            child: LinearProgressIndicator(
+              value: uso.clamp(0, 1),
+              minHeight: 12,
+              color: color,
+              backgroundColor: const Color(0xFFE5E7EB),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(detalle),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<EstadoPanel>(
+    future: _estado,
+    builder: (context, snapshot) {
+      final e = snapshot.data;
+      if (e == null) return const SizedBox.shrink();
+      final avisos = [
+        if (e.fotosLlenas)
+          'El espacio para fotos está lleno: no se pueden subir más. Borra juegos antiguos con fotos o usa las imágenes de la app.'
+        else if (e.usoFotos >= 0.8)
+          'Queda poco espacio para fotos (${(e.usoFotos * 100).round()} % usado). Usa las imágenes de la app cuando puedas.',
+        if (e.usoDatos >= 0.8)
+          'La base de datos está al ${(e.usoDatos * 100).round()} %. Avisa al equipo de NaturalMente.',
+      ];
+      return Card(
+        key: const Key('panel-estado'),
+        child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Cómo va todo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+              const SizedBox(height: 12),
+              for (final aviso in avisos)
+                Container(
+                  key: const Key('panel-aviso'),
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFEF3C7),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.warning_amber_rounded, color: Color(0xFFB45309)),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(aviso, style: const TextStyle(fontWeight: FontWeight.w700))),
+                    ],
+                  ),
+                ),
+              Wrap(
+                spacing: 32,
+                runSpacing: 16,
+                children: [
+                  _barra(
+                    'Espacio para fotos',
+                    e.usoFotos,
+                    '${_mb(e.fotosBytes)} de ${_mb(e.fotosLimite)} · ${e.fotosNumero} fotos',
+                    'panel-estado-fotos',
+                  ),
+                  _barra(
+                    'Base de datos',
+                    e.usoDatos,
+                    '${_mb(e.datosBytes)} de ${_mb(e.datosLimite)}',
+                    'panel-estado-datos',
+                  ),
+                  SizedBox(
+                    width: 320,
+                    child: Text(
+                      'Esta semana han jugado ${e.ninosSemana} niños (${e.partidasSemana} partidas). '
+                      'Hay ${e.juegosPublicados} juegos publicados y ${e.ninosTotal} jugadores con llave.\n'
+                      'Los jugadores que pasan ${e.diasBorrado} días sin jugar se borran solos.',
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}

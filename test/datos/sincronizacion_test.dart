@@ -31,7 +31,7 @@ void main() {
   late RepositorioAulaFalso nube;
   setUp(() => nube = RepositorioAulaFalso());
 
-  test('el mismo niño en dos tablets, jugando sin conexión, no pierde ni duplica nada', () async {
+  test('el mismo niño en dos dispositivos, jugando sin conexión, no pierde ni duplica nada', () async {
     final clase = _Dispositivo(
       'clase',
       nube,
@@ -86,7 +86,7 @@ void main() {
     expect((clase.semillas, casa.semillas), (18, 18));
   });
 
-  test('la ropa elegida en una tablet llega a la otra', () async {
+  test('la ropa elegida en un dispositivo llega a la otra', () async {
     final clase = _Dispositivo(
       'clase',
       nube,
@@ -178,7 +178,7 @@ void main() {
     expect(dibujosLlave, hasLength(16));
   });
 
-  test('si se cambia la llave en otra tablet, esta lo avisa y no duplica al niño', () async {
+  test('si se cambia la llave en otro dispositivo, este lo avisa y no duplica al niño', () async {
     final clase = _Dispositivo('clase', nube, valores: {'economia/semillas': 10});
     final perfil = clase.perfiles.activo;
     final llave = Llave.leer((await clase.aula.crearLlave(perfil.id))!.llave)!;
@@ -219,7 +219,7 @@ void main() {
     expect(nube.totalRecibidos, 1);
   });
 
-  test('quitar un jugador de una tablet no borra su progreso de la nube', () async {
+  test('quitar un jugador de un dispositivo no borra su progreso de la nube', () async {
     final clase = _Dispositivo('clase', nube, valores: {'economia/semillas': 30});
     final perfil = clase.perfiles.activo;
     final llave = Llave.leer((await clase.aula.crearLlave(perfil.id))!.llave)!;

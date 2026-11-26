@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/aula/escenas.dart';
 
 import 'package:naturalmente/datos/aula/aula.dart';
 import 'package:naturalmente/datos/aula/llave.dart';
@@ -112,7 +113,7 @@ class _SeccionMiLlaveState extends State<SeccionMiLlave> {
       builder: (dialogo) => AlertDialog(
         title: const Texto('¿Cambiar la llave?'),
         content: const Texto(
-          'La llave de ahora dejará de servir y las otras tablets donde juegas tendrán que usar la nueva.',
+          'La llave de ahora dejará de servir y los otros dispositivos donde juegas tendrán que usar la nueva.',
         ),
         actions: [
           TextButton(
@@ -162,7 +163,7 @@ class _SeccionMiLlaveState extends State<SeccionMiLlave> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Texto(
-                  'La llave de este Natu ha cambiado en otra tablet. Escribe la nueva para seguir guardando su progreso y sus partidas.',
+                  'La llave de este Natu ha cambiado en otro dispositivo. Escribe la nueva para seguir guardando su progreso y sus partidas.',
                   key: const Key('llave-cambiada'),
                   style: TextStyle(color: colores.tinta, fontWeight: FontWeight.w700),
                 ),
@@ -208,7 +209,7 @@ class _SeccionMiLlaveState extends State<SeccionMiLlave> {
               const SizedBox(height: 8),
               if (llave != null) ...[
                 Texto(
-                  'Con tu nombre y esta llave juegas con tu Natu en otra tablet o en casa. Pide a un mayor que le haga una foto.',
+                  'Con tu nombre y esta llave juegas con tu Natu en otro móvil, tablet u ordenador. Pide a un mayor que le haga una foto.',
                   style: TextStyle(color: colores.tenue),
                 ),
                 const SizedBox(height: 14),
@@ -224,7 +225,7 @@ class _SeccionMiLlaveState extends State<SeccionMiLlave> {
                 ),
               ] else ...[
                 Texto(
-                  'Crea una llave para jugar con tu Natu en otra tablet o en casa sin perder nada.',
+                  'Crea una llave para jugar con tu Natu en otro móvil, tablet u ordenador sin perder nada.',
                   style: TextStyle(color: colores.tenue),
                 ),
                 const SizedBox(height: 12),
@@ -311,7 +312,7 @@ class _CanjearLlavePageState extends State<CanjearLlavePage> {
         ResultadoCanje.bloqueado =>
           'Has probado muchas veces. Espera una hora y vuelve a intentarlo.',
         ResultadoCanje.lleno =>
-          'En esta tablet ya hay ${Perfiles.maximo} jugadores. Borra uno para traer tu Natu.',
+          'En este dispositivo ya hay ${Perfiles.maximo} jugadores. Borra uno para traer tu Natu.',
         _ => 'Hace falta conexión para traer tu Natu. Inténtalo luego.',
       };
     });
@@ -357,11 +358,12 @@ class _CanjearLlavePageState extends State<CanjearLlavePage> {
         backgroundColor: colores.fondo,
         title: const Texto('Tengo una llave'),
       ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 640),
-            child: ListView(
+      body: FondoEscena(
+        escena: 'montana',
+        child: SafeArea(
+        child: TarjetaSobreEscena(
+          anchoMaximo: 720,
+          child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
               children: [
                 const Center(

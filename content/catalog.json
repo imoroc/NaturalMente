@@ -7782,18 +7782,6 @@
               }
             },
             {
-              "id": "plato-bollo",
-              "nombre": "El bollo de chocolate",
-              "pregunta": "¿El bollo de chocolate es para cada día o para de vez en cuando?",
-              "respuesta": "de-vez-en-cuando",
-              "pista": "Lleva mucho azúcar y grasa: da energía rápida, pero poco más.",
-              "curiosidad": "Un bollo de chocolate puede llevar tanto azúcar como cinco terrones.",
-              "frases": {
-                "de-vez-en-cuando": "¡Bien! El bollo está rico, pero lleva mucho azúcar. Mejor de vez en cuando.",
-                "cada-dia": "El bollo lleva mucho azúcar y grasa. Si lo comes cada día, tu cuerpo recibe demasiado."
-              }
-            },
-            {
               "id": "plato-yogur",
               "nombre": "El yogur natural",
               "pregunta": "¿El yogur natural es para cada día o para de vez en cuando?",
@@ -7806,15 +7794,15 @@
               }
             },
             {
-              "id": "plato-chuches",
-              "nombre": "Las chuches",
-              "pregunta": "¿Las chuches son para cada día o para de vez en cuando?",
+              "id": "plato-bollo",
+              "nombre": "El bollo de chocolate",
+              "pregunta": "¿El bollo de chocolate es para cada día o para de vez en cuando?",
               "respuesta": "de-vez-en-cuando",
-              "pista": "Son casi todo azúcar y colorantes, y se pegan a los dientes.",
-              "curiosidad": "Las chuches pegajosas se quedan en los dientes y los microbios se alimentan de su azúcar.",
+              "pista": "Lleva mucho azúcar y grasa: da energía rápida, pero poco más.",
+              "curiosidad": "Un bollo de chocolate puede llevar tanto azúcar como cinco terrones.",
               "frases": {
-                "de-vez-en-cuando": "¡Eso es! Las chuches son casi todo azúcar: solo de vez en cuando.",
-                "cada-dia": "Las chuches son casi todo azúcar y se pegan a los dientes. Mejor solo de vez en cuando."
+                "de-vez-en-cuando": "¡Bien! El bollo está rico, pero lleva mucho azúcar. Mejor de vez en cuando.",
+                "cada-dia": "El bollo lleva mucho azúcar y grasa. Si lo comes cada día, tu cuerpo recibe demasiado."
               }
             },
             {
@@ -7827,6 +7815,18 @@
               "frases": {
                 "cada-dia": "¡Sí! Pan y queso dan energía y calcio: una merienda que cuida.",
                 "de-vez-en-cuando": "El pan da energía para jugar y el queso cuida los huesos. Vale para cada día."
+              }
+            },
+            {
+              "id": "plato-chuches",
+              "nombre": "Las chuches",
+              "pregunta": "¿Las chuches son para cada día o para de vez en cuando?",
+              "respuesta": "de-vez-en-cuando",
+              "pista": "Son casi todo azúcar y colorantes, y se pegan a los dientes.",
+              "curiosidad": "Las chuches pegajosas se quedan en los dientes y los microbios se alimentan de su azúcar.",
+              "frases": {
+                "de-vez-en-cuando": "¡Eso es! Las chuches son casi todo azúcar: solo de vez en cuando.",
+                "cada-dia": "Las chuches son casi todo azúcar y se pegan a los dientes. Mejor solo de vez en cuando."
               }
             },
             {
@@ -7865,19 +7865,6 @@
           ],
           "retos": [
             {
-              "id": "plato-brocoli",
-              "nombre": "El brócoli",
-              "pregunta": "¿En qué parte del plato va el brócoli?",
-              "respuesta": "mitad-verdura",
-              "pista": "Un plato con solo pasta da mucha energía, pero no tiene verdura. ¿Qué le falta?",
-              "curiosidad": "El brócoli es una flor: lo que comemos son muchos capullos que todavía no se han abierto.",
-              "frases": {
-                "mitad-verdura": "¡Muy bien! El brócoli es una verdura: va en la mitad grande del plato.",
-                "cuarto-proteina": "El brócoli es una verdura. Las proteínas son legumbres, huevo, pescado o carne.",
-                "cuarto-cereal": "El brócoli no es un cereal como el arroz o el pan: es una verdura."
-              }
-            },
-            {
               "id": "plato-lentejas",
               "nombre": "Las lentejas",
               "pregunta": "¿En qué parte del plato van las lentejas?",
@@ -7891,6 +7878,19 @@
               }
             },
             {
+              "id": "plato-brocoli",
+              "nombre": "El brócoli",
+              "pregunta": "¿En qué parte del plato va el brócoli?",
+              "respuesta": "mitad-verdura",
+              "pista": "Un plato con solo pasta da mucha energía, pero no tiene verdura. ¿Qué le falta?",
+              "curiosidad": "El brócoli es una flor: lo que comemos son muchos capullos que todavía no se han abierto.",
+              "frases": {
+                "mitad-verdura": "¡Muy bien! El brócoli es una verdura: va en la mitad grande del plato.",
+                "cuarto-proteina": "El brócoli es una verdura. Las proteínas son legumbres, huevo, pescado o carne.",
+                "cuarto-cereal": "El brócoli no es un cereal como el arroz o el pan: es una verdura."
+              }
+            },
+            {
               "id": "plato-arroz",
               "nombre": "El arroz",
               "pregunta": "¿En qué parte del plato va el arroz?",
@@ -7901,6 +7901,19 @@
                 "cuarto-cereal": "¡Muy bien! El arroz es un cereal: da energía para todo el día.",
                 "mitad-verdura": "El arroz no es una verdura: es un cereal, como el trigo.",
                 "cuarto-proteina": "El arroz da sobre todo energía: es un cereal, no una proteína."
+              }
+            },
+            {
+              "id": "plato-pan",
+              "nombre": "El pan integral",
+              "pregunta": "¿En qué parte del plato va el pan integral?",
+              "respuesta": "cuarto-cereal",
+              "pista": "Se hace con harina de trigo, un cereal.",
+              "curiosidad": "El pan integral se hace con el grano entero de trigo y tiene más fibra.",
+              "frases": {
+                "cuarto-cereal": "¡Muy bien! El pan integral es un cereal y da energía.",
+                "mitad-verdura": "El pan se hace con harina de trigo: es un cereal.",
+                "cuarto-proteina": "El pan da sobre todo energía: va con los cereales."
               }
             },
             {
@@ -7927,19 +7940,6 @@
                 "cuarto-proteina": "¡Bien! El pescado da proteínas para crecer y reparar los músculos.",
                 "mitad-verdura": "El pescado no es una verdura: da proteínas para crecer.",
                 "cuarto-cereal": "El pescado no es un cereal: da proteínas para crecer."
-              }
-            },
-            {
-              "id": "plato-pan",
-              "nombre": "El pan integral",
-              "pregunta": "¿En qué parte del plato va el pan integral?",
-              "respuesta": "cuarto-cereal",
-              "pista": "Se hace con harina de trigo, un cereal.",
-              "curiosidad": "El pan integral se hace con el grano entero de trigo y tiene más fibra.",
-              "frases": {
-                "cuarto-cereal": "¡Muy bien! El pan integral es un cereal y da energía.",
-                "mitad-verdura": "El pan se hace con harina de trigo: es un cereal.",
-                "cuarto-proteina": "El pan da sobre todo energía: va con los cereales."
               }
             }
           ]
@@ -7969,80 +7969,6 @@
             }
           ],
           "retos": [
-            {
-              "id": "plato-cereales",
-              "nombre": "Cereales de colores",
-              "pregunta": "Etiqueta por cada 100 g: azúcar 35 g, sal 0,6 g, grasa 3 g. ¿Qué destaca?",
-              "respuesta": "etiqueta-azucar",
-              "pista": "Mira el azúcar: más de 15 g en 100 g ya es mucho.",
-              "curiosidad": "Los cereales de colores pueden llevar más de un tercio de su peso en azúcar.",
-              "frases": {
-                "etiqueta-azucar": "¡Muy bien! 35 g de azúcar en 100 g es mucho. Ahora compara.",
-                "etiqueta-sal": "0,6 g de sal no es mucho. Fíjate en el azúcar: 35 g.",
-                "etiqueta-grasa": "3 g de grasa es poco. Lo que destaca son los 35 g de azúcar.",
-                "etiqueta-equilibrada": "Fíjate en el azúcar: 35 g en 100 g es mucho."
-              },
-              "adaptacion": {
-                "enunciado": "Comparas con unos copos de avena: azúcar 1 g, sal 0 g, grasa 7 g. ¿Cuál elegirías para desayunar cada día?",
-                "opciones": [
-                  {
-                    "id": "dibujos",
-                    "nombre": "Los cereales de colores, porque la caja tiene dibujos"
-                  },
-                  {
-                    "id": "avena",
-                    "nombre": "Los copos de avena, porque tienen mucho menos azúcar"
-                  },
-                  {
-                    "id": "igual",
-                    "nombre": "Da igual, llevan lo mismo"
-                  }
-                ],
-                "respuesta": "avena",
-                "frases": {
-                  "avena": "¡Exacto! La avena casi no tiene azúcar y te da energía durante más tiempo.",
-                  "dibujos": "Los dibujos no alimentan. La avena tiene 1 g de azúcar frente a 35 g.",
-                  "igual": "Compara los números: 1 g de azúcar en la avena y 35 g en los cereales."
-                }
-              }
-            },
-            {
-              "id": "plato-galletitas",
-              "nombre": "Galletitas saladas",
-              "pregunta": "Etiqueta por cada 100 g: azúcar 4 g, sal 2,5 g, grasa 12 g. ¿Qué destaca?",
-              "respuesta": "etiqueta-sal",
-              "pista": "Mira la sal: más de 1,5 g en 100 g ya es mucho.",
-              "curiosidad": "Tomar mucha sal da sed y hace trabajar de más al corazón y a los riñones.",
-              "frases": {
-                "etiqueta-sal": "¡Eso es! 2,5 g de sal en 100 g es mucho. Ahora compara.",
-                "etiqueta-azucar": "4 g de azúcar es poco. Lo que destaca es la sal: 2,5 g.",
-                "etiqueta-grasa": "12 g de grasa no pasa de 20 g. Fíjate en la sal: 2,5 g.",
-                "etiqueta-equilibrada": "Fíjate en la sal: 2,5 g en 100 g es mucho."
-              },
-              "adaptacion": {
-                "enunciado": "Comparas con unas tostadas de pan sin sal añadida: azúcar 3 g, sal 0,1 g, grasa 6 g. ¿Cuál tiene menos sal?",
-                "opciones": [
-                  {
-                    "id": "galletitas",
-                    "nombre": "Las galletitas saladas"
-                  },
-                  {
-                    "id": "tostadas",
-                    "nombre": "Las tostadas sin sal añadida"
-                  },
-                  {
-                    "id": "misma",
-                    "nombre": "Las dos tienen la misma sal"
-                  }
-                ],
-                "respuesta": "tostadas",
-                "frases": {
-                  "tostadas": "¡Muy bien! 0,1 g de sal frente a 2,5 g: las tostadas tienen muchísima menos.",
-                  "galletitas": "Las galletitas tienen 2,5 g de sal. Las tostadas solo 0,1 g.",
-                  "misma": "Compara los números: 2,5 g de sal en las galletitas y 0,1 g en las tostadas."
-                }
-              }
-            },
             {
               "id": "plato-patatas",
               "nombre": "Patatas fritas de bolsa",
@@ -8118,6 +8044,43 @@
               }
             },
             {
+              "id": "plato-cereales",
+              "nombre": "Cereales de colores",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 35 g, sal 0,6 g, grasa 3 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-azucar",
+              "pista": "Mira el azúcar: más de 15 g en 100 g ya es mucho.",
+              "curiosidad": "Los cereales de colores pueden llevar más de un tercio de su peso en azúcar.",
+              "frases": {
+                "etiqueta-azucar": "¡Muy bien! 35 g de azúcar en 100 g es mucho. Ahora compara.",
+                "etiqueta-sal": "0,6 g de sal no es mucho. Fíjate en el azúcar: 35 g.",
+                "etiqueta-grasa": "3 g de grasa es poco. Lo que destaca son los 35 g de azúcar.",
+                "etiqueta-equilibrada": "Fíjate en el azúcar: 35 g en 100 g es mucho."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con unos copos de avena: azúcar 1 g, sal 0 g, grasa 7 g. ¿Cuál elegirías para desayunar cada día?",
+                "opciones": [
+                  {
+                    "id": "dibujos",
+                    "nombre": "Los cereales de colores, porque la caja tiene dibujos"
+                  },
+                  {
+                    "id": "avena",
+                    "nombre": "Los copos de avena, porque tienen mucho menos azúcar"
+                  },
+                  {
+                    "id": "igual",
+                    "nombre": "Da igual, llevan lo mismo"
+                  }
+                ],
+                "respuesta": "avena",
+                "frases": {
+                  "avena": "¡Exacto! La avena casi no tiene azúcar y te da energía durante más tiempo.",
+                  "dibujos": "Los dibujos no alimentan. La avena tiene 1 g de azúcar frente a 35 g.",
+                  "igual": "Compara los números: 1 g de azúcar en la avena y 35 g en los cereales."
+                }
+              }
+            },
+            {
               "id": "plato-lentejas-bote",
               "nombre": "Lentejas de bote",
               "pregunta": "Etiqueta por cada 100 g: azúcar 1 g, sal 0,6 g, grasa 0,5 g. ¿Qué destaca?",
@@ -8151,6 +8114,43 @@
                   "solas": "¡Exacto! Las de chorizo pasan de 1,5 g de sal. Las solas cuidan más.",
                   "chorizo": "El sabor no lo es todo: las de chorizo tienen 2 g de sal y 12 g de grasa.",
                   "ninguna": "Las legumbres alimentan mucho: dan proteínas. Las solas tienen menos sal y grasa."
+                }
+              }
+            },
+            {
+              "id": "plato-galletitas",
+              "nombre": "Galletitas saladas",
+              "pregunta": "Etiqueta por cada 100 g: azúcar 4 g, sal 2,5 g, grasa 12 g. ¿Qué destaca?",
+              "respuesta": "etiqueta-sal",
+              "pista": "Mira la sal: más de 1,5 g en 100 g ya es mucho.",
+              "curiosidad": "Tomar mucha sal da sed y hace trabajar de más al corazón y a los riñones.",
+              "frases": {
+                "etiqueta-sal": "¡Eso es! 2,5 g de sal en 100 g es mucho. Ahora compara.",
+                "etiqueta-azucar": "4 g de azúcar es poco. Lo que destaca es la sal: 2,5 g.",
+                "etiqueta-grasa": "12 g de grasa no pasa de 20 g. Fíjate en la sal: 2,5 g.",
+                "etiqueta-equilibrada": "Fíjate en la sal: 2,5 g en 100 g es mucho."
+              },
+              "adaptacion": {
+                "enunciado": "Comparas con unas tostadas de pan sin sal añadida: azúcar 3 g, sal 0,1 g, grasa 6 g. ¿Cuál tiene menos sal?",
+                "opciones": [
+                  {
+                    "id": "galletitas",
+                    "nombre": "Las galletitas saladas"
+                  },
+                  {
+                    "id": "tostadas",
+                    "nombre": "Las tostadas sin sal añadida"
+                  },
+                  {
+                    "id": "misma",
+                    "nombre": "Las dos tienen la misma sal"
+                  }
+                ],
+                "respuesta": "tostadas",
+                "frases": {
+                  "tostadas": "¡Muy bien! 0,1 g de sal frente a 2,5 g: las tostadas tienen muchísima menos.",
+                  "galletitas": "Las galletitas tienen 2,5 g de sal. Las tostadas solo 0,1 g.",
+                  "misma": "Compara los números: 2,5 g de sal en las galletitas y 0,1 g en las tostadas."
                 }
               }
             }
@@ -10106,21 +10106,21 @@
                 "id": "lince",
                 "nombre": "Lince ibérico",
                 "dibujo": "lince-cazador",
-                "presentacion": "Un felino que solo vive en la península ibérica. Se alimenta sobre todo de conejos.",
+                "presentacion": "Un felino con pinceles en las orejas que solo vive en la península ibérica.",
                 "amenaza": {
                   "enunciado": "¿Qué pone en peligro al lince?",
                   "opciones": [
                     {
                       "id": "nieve",
-                      "nombre": "La nieve del invierno"
+                      "nombre": "Que nieve mucho en invierno"
                     },
                     {
                       "id": "conejos",
-                      "nombre": "Que haya pocos conejos para comer"
+                      "nombre": "Que falten conejos para cazar"
                     },
                     {
                       "id": "arboles",
-                      "nombre": "Que haya demasiados árboles"
+                      "nombre": "Que crezcan demasiados árboles y matorrales"
                     }
                   ],
                   "respuesta": "conejos",
@@ -10135,7 +10135,7 @@
                   "opciones": [
                     {
                       "id": "casa",
-                      "nombre": "Llevarlo a vivir a una casa"
+                      "nombre": "Llevarlo a vivir a un zoo de la ciudad"
                     },
                     {
                       "id": "cortar",
@@ -10143,12 +10143,12 @@
                     },
                     {
                       "id": "monte",
-                      "nombre": "Cuidar su monte y que vuelvan los conejos"
+                      "nombre": "Cuidar su monte y sus conejos"
                     }
                   ],
                   "respuesta": "monte",
                   "frases": {
-                    "casa": "El lince es un animal salvaje: necesita su monte, no una casa.",
+                    "casa": "El lince es un animal salvaje: necesita su monte, no un zoo.",
                     "cortar": "Sin matorrales, el lince no tiene dónde esconderse ni criar.",
                     "monte": "¡Muy bien! Con monte y conejos, el lince puede vivir y criar."
                   }
@@ -10164,15 +10164,15 @@
                   "opciones": [
                     {
                       "id": "bosque",
-                      "nombre": "Perder su bosque por la tala y los incendios"
+                      "nombre": "Perder su bosque por talas e incendios"
                     },
                     {
                       "id": "fruta",
-                      "nombre": "Comer demasiada fruta"
+                      "nombre": "Comer muchas bayas, fruta y miel antes de dormir"
                     },
                     {
                       "id": "lluvia",
-                      "nombre": "Que llueva mucho"
+                      "nombre": "Que llueva mucho en primavera"
                     }
                   ],
                   "respuesta": "bosque",
@@ -10187,15 +10187,15 @@
                   "opciones": [
                     {
                       "id": "pistas",
-                      "nombre": "Abrir muchas pistas en el monte"
+                      "nombre": "Abrir muchas pistas y carreteras en el monte"
                     },
                     {
                       "id": "fuego",
-                      "nombre": "Proteger el bosque y no hacer fuego en el monte"
+                      "nombre": "Proteger su bosque del fuego"
                     },
                     {
                       "id": "comida",
-                      "nombre": "Darle de comer en la carretera"
+                      "nombre": "Darle comida cuando se acerca a la carretera"
                     }
                   ],
                   "respuesta": "fuego",
@@ -10209,22 +10209,22 @@
               {
                 "id": "aguila",
                 "nombre": "Águila imperial ibérica",
-                "dibujo": "aguila-real",
+                "dibujo": "aguila-imperial",
                 "presentacion": "Un ave rapaz que solo vive en la península ibérica. Hace su nido en árboles altos.",
                 "amenaza": {
                   "enunciado": "¿Qué pone en peligro al águila imperial?",
                   "opciones": [
                     {
                       "id": "alto",
-                      "nombre": "Volar demasiado alto"
+                      "nombre": "Volar demasiado alto cuando busca presas"
                     },
                     {
                       "id": "mariposas",
-                      "nombre": "Que haya mariposas en el campo"
+                      "nombre": "Que haya muchas mariposas y flores en el campo"
                     },
                     {
                       "id": "venenos",
-                      "nombre": "La caza y los venenos que se ponen en el campo"
+                      "nombre": "La caza y los venenos del campo"
                     }
                   ],
                   "respuesta": "venenos",
@@ -10243,11 +10243,11 @@
                     },
                     {
                       "id": "jaula",
-                      "nombre": "Tenerla en una jaula"
+                      "nombre": "Tenerla siempre en una jaula grande"
                     },
                     {
                       "id": "talar",
-                      "nombre": "Talar los árboles donde anida"
+                      "nombre": "Talar los árboles altos donde anida"
                     }
                   ],
                   "respuesta": "vigilar",
@@ -10262,21 +10262,21 @@
                 "id": "trucha",
                 "nombre": "Trucha común",
                 "dibujo": "trucha-arroyo",
-                "presentacion": "Un pez de los ríos de agua fría y limpia, como los de Castilla y León.",
+                "presentacion": "Un pez de río con pintas rojas y negras. Vive en Castilla y León.",
                 "amenaza": {
                   "enunciado": "¿Qué pone en peligro a la trucha?",
                   "opciones": [
                     {
                       "id": "piedras",
-                      "nombre": "Que el río tenga piedras"
+                      "nombre": "Que el río tenga piedras en el fondo"
                     },
                     {
                       "id": "contaminacion",
-                      "nombre": "La contaminación del agua del río"
+                      "nombre": "El agua sucia del río"
                     },
                     {
                       "id": "ranas",
-                      "nombre": "Que haya ranas en el río"
+                      "nombre": "Que vivan ranas en el mismo río"
                     }
                   ],
                   "respuesta": "contaminacion",
@@ -10291,7 +10291,7 @@
                   "opciones": [
                     {
                       "id": "basura",
-                      "nombre": "Echar la basura al río"
+                      "nombre": "Echar restos de comida al río"
                     },
                     {
                       "id": "secar",
@@ -10299,12 +10299,12 @@
                     },
                     {
                       "id": "depurar",
-                      "nombre": "Limpiar el agua antes de devolverla al río"
+                      "nombre": "Depurar las aguas sucias"
                     }
                   ],
                   "respuesta": "depurar",
                   "frases": {
-                    "basura": "La basura ensucia el agua y daña a todos los seres del río.",
+                    "basura": "Los restos ensucian el agua y dañan a todos los seres del río.",
                     "secar": "Si el río lleva poca agua, se calienta y la trucha sufre.",
                     "depurar": "¡Genial! Las depuradoras limpian el agua sucia antes de que vuelva al río."
                   }
@@ -10427,34 +10427,6 @@
           ],
           "retos": [
             {
-              "id": "cumpleanos",
-              "nombre": "Cumpleaños",
-              "pregunta": "Hoy es tu cumpleaños y tus amigos te dan una sorpresa.",
-              "respuesta": "alegria",
-              "pista": "Piensa en cómo te sientes cuando te hacen un regalo.",
-              "curiosidad": "Cuando estamos alegres sonreímos, y la sonrisa se contagia a los demás.",
-              "frases": {
-                "alegria": "¡Sí! Una sorpresa de tus amigos da mucha alegría.",
-                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
-                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
-                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
-              }
-            },
-            {
-              "id": "perro-perdido",
-              "nombre": "El perro perdido",
-              "pregunta": "Tu perro se ha escapado y no lo encuentras.",
-              "respuesta": "tristeza",
-              "pista": "Echas mucho de menos a tu perro.",
-              "curiosidad": "Llorar también ayuda: después de llorar, muchas veces nos sentimos un poco mejor.",
-              "frases": {
-                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
-                "tristeza": "Es normal sentir tristeza cuando perdemos a alguien que queremos.",
-                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
-                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
-              }
-            },
-            {
               "id": "columpio",
               "nombre": "El columpio",
               "pregunta": "Llevas un rato esperando tu turno y alguien se cuela en el columpio.",
@@ -10465,6 +10437,20 @@
                 "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
                 "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
                 "enfado": "¡Eso es! Es normal enfadarse cuando algo es injusto.",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
+              }
+            },
+            {
+              "id": "cumpleanos",
+              "nombre": "Cumpleaños",
+              "pregunta": "Hoy es tu cumpleaños y tus amigos te dan una sorpresa.",
+              "respuesta": "alegria",
+              "pista": "Piensa en cómo te sientes cuando te hacen un regalo.",
+              "curiosidad": "Cuando estamos alegres sonreímos, y la sonrisa se contagia a los demás.",
+              "frases": {
+                "alegria": "¡Sí! Una sorpresa de tus amigos da mucha alegría.",
+                "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
                 "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
               }
             },
@@ -10480,6 +10466,20 @@
                 "tristeza": "La tristeza aparece cuando perdemos algo o a alguien que queremos. Fíjate otra vez.",
                 "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
                 "miedo": "¡Sí! Los ruidos fuertes en la oscuridad pueden dar miedo."
+              }
+            },
+            {
+              "id": "perro-perdido",
+              "nombre": "El perro perdido",
+              "pregunta": "Tu perro se ha escapado y no lo encuentras.",
+              "respuesta": "tristeza",
+              "pista": "Echas mucho de menos a tu perro.",
+              "curiosidad": "Llorar también ayuda: después de llorar, muchas veces nos sentimos un poco mejor.",
+              "frases": {
+                "alegria": "La alegría llega con algo bonito, como una fiesta o un abrazo. ¿Es eso lo que pasa aquí?",
+                "tristeza": "Es normal sentir tristeza cuando perdemos a alguien que queremos.",
+                "enfado": "El enfado llega cuando algo nos parece injusto. ¿Es lo que pasa aquí?",
+                "miedo": "El miedo nos avisa de un peligro. ¿Ves algún peligro en esta situación?"
               }
             }
           ]
@@ -11799,9 +11799,9 @@
                     "pista": "Las plumas largas sirven para volar.",
                     "parte": "Alas con plumas largas",
                     "lupa": {
-                      "x": 0.15,
+                      "x": 0.2,
                       "y": 0.3,
-                      "zoom": 2.2
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11813,8 +11813,8 @@
                     "pista": "Las uñas curvas sirven para agarrarse.",
                     "parte": "Uñas curvas y afiladas",
                     "lupa": {
-                      "x": 0.42,
-                      "y": 0.76,
+                      "x": 0.47,
+                      "y": 0.79,
                       "zoom": 2.2
                     }
                   },
@@ -11827,9 +11827,9 @@
                     "pista": "Unas patas muy largas impulsan el cuerpo.",
                     "parte": "Patas traseras muy largas",
                     "lupa": {
-                      "x": 0.16,
-                      "y": 0.82,
-                      "zoom": 2.2
+                      "x": 0.2,
+                      "y": 0.8,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11841,9 +11841,9 @@
                     "pista": "Sin patas, el vientre es lo que toca el suelo.",
                     "parte": "Escamas en el vientre",
                     "lupa": {
-                      "x": 0.4,
-                      "y": 0.62,
-                      "zoom": 2.2
+                      "x": 0.36,
+                      "y": 0.64,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11855,9 +11855,9 @@
                     "pista": "Las aletas solo sirven dentro del agua.",
                     "parte": "Aletas y cola",
                     "lupa": {
-                      "x": 0.12,
+                      "x": 0.15,
                       "y": 0.42,
-                      "zoom": 2.2
+                      "zoom": 1.7
                     }
                   }
                 ]
@@ -11875,9 +11875,9 @@
                     "pista": "Es un ala, aunque no tenga plumas.",
                     "parte": "Alas de piel entre los dedos",
                     "lupa": {
-                      "x": 0.17,
-                      "y": 0.38,
-                      "zoom": 2.2
+                      "x": 0.18,
+                      "y": 0.4,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11889,9 +11889,9 @@
                     "pista": "Para subir por las rocas, lo importante es no resbalar.",
                     "parte": "Pezuñas con almohadilla",
                     "lupa": {
-                      "x": 0.3,
-                      "y": 0.66,
-                      "zoom": 2.2
+                      "x": 0.31,
+                      "y": 0.62,
+                      "zoom": 1.8
                     }
                   },
                   {
@@ -11903,9 +11903,9 @@
                     "pista": "Unas patas fuertes lanzan el cuerpo hacia arriba.",
                     "parte": "Patas traseras gruesas",
                     "lupa": {
-                      "x": 0.2,
-                      "y": 0.5,
-                      "zoom": 2.2
+                      "x": 0.22,
+                      "y": 0.45,
+                      "zoom": 1.6
                     }
                   },
                   {
@@ -11917,9 +11917,9 @@
                     "pista": "Es un cuerpo blando y sin patas.",
                     "parte": "Anillos con pelillos",
                     "lupa": {
-                      "x": 0.45,
-                      "y": 0.36,
-                      "zoom": 2.2
+                      "x": 0.42,
+                      "y": 0.4,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11931,9 +11931,9 @@
                     "pista": "Unas alas tan cortas no sirven para volar.",
                     "parte": "Alas cortas y duras",
                     "lupa": {
-                      "x": 0.16,
+                      "x": 0.14,
                       "y": 0.55,
-                      "zoom": 2.2
+                      "zoom": 1.7
                     }
                   }
                 ]
@@ -11951,9 +11951,9 @@
                     "pista": "Muchos insectos vuelan con alas transparentes.",
                     "parte": "Dos pares de alas finas",
                     "lupa": {
-                      "x": 0.48,
+                      "x": 0.47,
                       "y": 0.2,
-                      "zoom": 2.2
+                      "zoom": 1.8
                     }
                   },
                   {
@@ -11967,7 +11967,7 @@
                     "lupa": {
                       "x": 0.17,
                       "y": 0.58,
-                      "zoom": 2.2
+                      "zoom": 1.8
                     }
                   },
                   {
@@ -11979,9 +11979,9 @@
                     "pista": "Las patas traseras largas sirven para saltar.",
                     "parte": "Patas de atrás largas y peludas",
                     "lupa": {
-                      "x": 0.27,
-                      "y": 0.73,
-                      "zoom": 2.2
+                      "x": 0.3,
+                      "y": 0.8,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -11994,8 +11994,8 @@
                     "parte": "Un pie con baba",
                     "lupa": {
                       "x": 0.25,
-                      "y": 0.76,
-                      "zoom": 2.2
+                      "y": 0.78,
+                      "zoom": 1.7
                     }
                   },
                   {
@@ -12007,9 +12007,9 @@
                     "pista": "Una cola así solo empuja dentro del agua.",
                     "parte": "Cola que sube y baja",
                     "lupa": {
-                      "x": 0.13,
+                      "x": 0.12,
                       "y": 0.74,
-                      "zoom": 2.2
+                      "zoom": 1.7
                     }
                   }
                 ]

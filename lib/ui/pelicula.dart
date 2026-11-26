@@ -1010,7 +1010,10 @@ class _PeliculaPageState extends State<PeliculaPage>
     final colores = context.coloresNaturales;
     final puesta = partida.puesta(carta.id);
     final fallada = partida.fallada == carta.id;
-    final alto = lado + 34;
+    // Las cartas estrechas (cuatro por fila) tienen nombres largos, como
+    // «El viento lleva el polen»: les damos una línea más para que no se corten.
+    final lineas = lado < 100 ? 3 : 2;
+    final alto = lado + 8 + 13 * lineas;
     if (puesta) {
       return Semantics(
         label: context.traducir('Carta ya puesta'),
@@ -1057,7 +1060,7 @@ class _PeliculaPageState extends State<PeliculaPage>
               child: Texto(
                 carta.nombre,
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: lineas,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 11.5,

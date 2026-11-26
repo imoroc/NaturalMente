@@ -796,16 +796,22 @@ class _CarreraPageState extends State<CarreraPage>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _figura(partida, corredor, enPista ? 44 : 56),
+              _figura(
+                partida,
+                corredor,
+                _compacta(partida) ? (enPista ? 26 : 46) : (enPista ? 44 : 56),
+              ),
               const SizedBox(height: 2),
               Texto(
                 nombre,
                 textAlign: TextAlign.center,
-                maxLines: enPista && !partida.nivel.lupa ? 2 : 3,
+                maxLines: enPista && (!partida.nivel.lupa || _compacta(partida))
+                    ? 2
+                    : 3,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  fontSize: 12.5,
+                  fontSize: enPista && _compacta(partida) ? 11 : 12.5,
                   height: 1.1,
                 ),
               ),
@@ -815,6 +821,9 @@ class _CarreraPageState extends State<CarreraPage>
       ),
     );
   }
+
+  /// Los niveles con muchos tramos usan carriles y tarjetas más bajos.
+  bool _compacta(PartidaCarrera partida) => partida.nivel.tramos.length >= 5;
 
   /// Avance del relevo en el tramo [i], de 0 a 1.
   double _avance(int i, int tramos) {
@@ -839,7 +848,13 @@ class _CarreraPageState extends State<CarreraPage>
     final corredor = corriendo || (esAtasco && _relevo.value < 1)
         ? _enCarrera[tramo.id]
         : partida.enTramo(tramo.id);
-    final alto = partida.nivel.lupa ? 118.0 : 104.0;
+    // Con cinco tramos, los carriles son más bajos para que la bandeja, la
+    // pista y «¡Ya!» quepan casi enteros en un móvil.
+    final alto = _compacta(partida)
+        ? 84.0
+        : partida.nivel.lupa
+        ? 118.0
+        : 104.0;
     final borde = enMeta
         ? EstilosJuego.acierto
         : esAtasco
@@ -959,7 +974,7 @@ class _CarreraPageState extends State<CarreraPage>
     final elegido = partida.seleccionado != null;
     return Container(
       width: partida.nivel.lupa ? 104 : 88,
-      height: 80,
+      height: _compacta(partida) ? 68 : 80,
       decoration: BoxDecoration(
         color: colores.superficie(Colors.white).withValues(alpha: .55),
         borderRadius: BorderRadius.circular(18),

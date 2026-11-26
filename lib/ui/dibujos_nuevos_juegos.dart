@@ -50,6 +50,7 @@ const Set<String> idsNuevosJuegos = {
   'jabali-bosque',
   'oso-pardo',
   'aguila-real',
+  'aguila-imperial',
   'buho-nocturno',
   'garza-charca',
   'pato-cuchara',
@@ -237,6 +238,7 @@ String pistaRetoNuevoJuego(String id, [String? actividadId]) => switch (id) {
   'jabali-bosque' => 'Muelas resistentes: come bellotas, raíces y lombrices',
   'oso-pardo' => 'Come bayas, miel, brotes y también peces',
   'aguila-real' => 'Pico curvo en gancho y garras prensiles fuertes',
+  'aguila-imperial' => 'Pico curvo en gancho y garras prensiles fuertes',
   'buho-nocturno' => 'Rapaz nocturna con pico ganchudo y garras curvas',
   'garza-charca' => 'Pico largo y recto como pinza para pescar',
   'pato-cuchara' => 'Pico ancho y plano con laminillas para filtrar agua',
@@ -1137,10 +1139,39 @@ class _PintorNuevoJuego extends CustomPainter {
             ..close();
           c.drawPath(oreja, _fill(const Color(0xFFD97706)));
           c.drawPath(oreja, _stroke(const Color(0xFF451A03), 1.9));
-          c.drawLine(Offset(ox, 16), Offset(ox + 1, 8), _stroke(const Color(0xFF0F172A), 2.8));
+          // Pincel negro corto y espeso en la punta de la oreja.
+          final pincel = Path()
+            ..moveTo(ox - 1.6, 17)
+            ..lineTo(ox + .6, 10)
+            ..lineTo(ox + 2.2, 17)
+            ..close();
+          c.drawPath(pincel, _fill(const Color(0xFF0F172A)));
+        }
+        // Rayas oscuras en las patillas, como en el lince de verdad.
+        for (final (a, b) in [
+          (const Offset(50, 47), const Offset(55, 49.5)),
+          (const Offset(52, 51), const Offset(57, 52)),
+          (const Offset(76, 46), const Offset(72, 48.5)),
+          (const Offset(75, 50.5), const Offset(70, 51.5)),
+        ]) {
+          c.drawLine(a, b, _stroke(const Color(0xFF451A03), 1.5));
+        }
+        // Motas también en las patas.
+        for (final m in [
+          const Offset(34.5, 70),
+          const Offset(34.5, 77),
+          const Offset(61.5, 71),
+          const Offset(27.5, 68),
+          const Offset(55.5, 69),
+        ]) {
+          c.drawCircle(m, 1.5, _fill(const Color(0xFF451A03)));
         }
         _ojo(c, 67, 37, 2.8);
-        c.drawCircle(const Offset(75, 42), 2.6, _fill(const Color(0xFFBE123C)));
+        c.drawCircle(const Offset(75.5, 41.5), 2.0, _fill(const Color(0xFF7C2D12)));
+        final boca = Path()
+          ..moveTo(75.5, 43.5)
+          ..quadraticBezierTo(74, 46, 71, 45.5);
+        c.drawPath(boca, _stroke(const Color(0xFF451A03), 1.2));
         break;
 
       case 'huella-pezuna':
@@ -1366,6 +1397,17 @@ class _PintorNuevoJuego extends CustomPainter {
         _delegarAnimalDetallado(c, 'aguila');
         break;
 
+      case 'aguila-imperial':
+        // El águila imperial ibérica se reconoce por las manchas blancas de
+        // los hombros.
+        _delegarAnimalDetallado(c, 'aguila');
+        for (final x in [38.0, 62.0]) {
+          final hombro = Rect.fromCenter(center: Offset(x, 46), width: 9, height: 6);
+          c.drawOval(hombro, _fill(Colors.white));
+          c.drawOval(hombro, _stroke(const Color(0xFF451A03), 1.4));
+        }
+        break;
+
       case 'buho-nocturno':
         // Búho real detallado sobre rama con disco facial, penachos, plumaje moteado y grandes ojos ámbar
         c.drawRRect(
@@ -1525,6 +1567,14 @@ class _PintorNuevoJuego extends CustomPainter {
         c.drawOval(const Rect.fromLTWH(33, 44, 28, 34), _stroke(const Color(0xFF7C2D12), 2.1));
         c.drawOval(const Rect.fromLTWH(36, 72, 16, 9), _fill(const Color(0xFFEA580C)));
         c.drawOval(const Rect.fromLTWH(36, 72, 16, 9), _stroke(const Color(0xFF7C2D12), 1.9));
+        // Uñas curvas y afiladas para trepar (se ven con la lupa de la carrera).
+        for (var i = 0; i < 3; i++) {
+          final dx = 44.0 + i * 3.6;
+          final una = Path()
+            ..moveTo(dx, 79)
+            ..quadraticBezierTo(dx + 3.2, 82, dx + 1.4, 86.5);
+          c.drawPath(una, _stroke(const Color(0xFF1E293B), 1.5));
+        }
         c.drawCircle(
           const Offset(53, 35),
           12.0,

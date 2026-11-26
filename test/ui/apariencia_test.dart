@@ -496,12 +496,17 @@ void main() {
             .skip(1)) {
       await _tocar(tester, 'sitio-${reto.respuesta}');
     }
-    await tester.runAsync(() async {
-      final resultado = tester.element(find.byKey(const Key('fin-repetir')));
-      for (final id in ['natu-victoria', 'siguiente', 'repetir', 'volver']) {
-        await precacheImage(AssetImage('assets/cromos/$id.webp'), resultado);
-      }
-    });
+    final resultado = find.byKey(const Key('fin-juego'));
+    final contextoResultado = tester.element(resultado);
+    final arteResultado = find.descendant(of: resultado, matching: find.byType(Image))
+        .evaluate()
+        .map((elemento) => (elemento.widget as Image).image)
+        .toSet();
+    await tester.runAsync(
+      () => Future.wait(
+        arteResultado.map((arte) => precacheImage(arte, contextoResultado)),
+      ),
+    );
     await tester.pumpAndSettle();
     await _capturar(tester, 'resultado-oscuro');
     expect(tester.takeException(), isNull);

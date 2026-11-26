@@ -1,17 +1,50 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/modelo/actividad.dart';
+import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/reglas/resolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late Catalogo catalogo;
 
   setUpAll(() {
     catalogo = Catalogo.desdeTexto(File('content/catalog.json').readAsStringSync());
+  });
+
+  test('los 85 cromos tienen su propio arte incluido en la app', () async {
+    final camello = catalogo.fichas.firstWhere((ficha) => ficha.id == 'camello');
+    expect(camello.acabado, AcabadoCromo.laton);
+    expect(camello.arteCromo, isTrue);
+    final especiales = catalogo.fichas.where(
+      (ficha) => ficha.acabado == AcabadoCromo.nacar,
+    );
+    expect(
+      especiales.map((ficha) => ficha.id),
+      containsAll(['pulpo', 'fotosintesis', 'intestinos']),
+    );
+    final recursos = (await AssetManifest.loadFromAssetBundle(rootBundle))
+        .listAssets()
+        .toSet();
+    final cromosConWebp = catalogo.fichas.where((ficha) => ficha.arteCromo);
+    expect(cromosConWebp, hasLength(85));
+    for (final ficha in cromosConWebp) {
+      final ruta = 'assets/cromos/${ficha.id}.webp';
+      expect(recursos.contains(ruta), isTrue, reason: ruta);
+    }
+    for (final ficha in catalogo.fichas) {
+      expect(ficha.resumenCromo, hasLength(inInclusiveRange(1, 2)));
+    }
+    final pulpo = catalogo.fichas.firstWhere((ficha) => ficha.id == 'pulpo');
+    expect(
+      pulpo.resumenCromo.map((dato) => (dato.etiqueta, dato.valor)),
+      [(EtiquetaDatoCromo.grupo, 'Molusco'), (EtiquetaDatoCromo.habitat, 'Mar')],
+    );
   });
 
   test('cada actividad tiene tipo, curso y frases', () {

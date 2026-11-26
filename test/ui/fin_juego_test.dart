@@ -203,6 +203,13 @@ void main() {
           await tester.pumpAndSettle();
           expect(find.byType(AnimacionAcierto), findsNothing);
           expect(find.byType(FinJuego), findsOneWidget);
+          final zonaVisible = tester.getRect(find.byType(SingleChildScrollView));
+          final inicio = tester.getTopLeft(find.byType(Image).first).dy;
+          final fin = tester.getBottomLeft(find.byType(ExpansionTile)).dy;
+          final margenSuperior = inicio - zonaVisible.top;
+          final margenInferior = zonaVisible.bottom - fin;
+          expect(margenSuperior, greaterThan(8));
+          expect(margenSuperior, closeTo(margenInferior, 1));
           await tester.tap(find.byKey(const Key('fin-repetir')));
           await tester.pumpAndSettle();
           expect(find.byType(FinJuego), findsNothing);
@@ -362,7 +369,8 @@ void main() {
             );
             await completar(tester);
             expect(find.text('Level complete!'), findsOneWidget);
-            expect(find.text('Your progress is saved.'), findsOneWidget);
+            expect(find.text('Your progress is saved.'), findsNothing);
+            expect(find.text('What would you like to do?'), findsNothing);
             for (final key in ['fin-nivel', 'fin-repetir', 'fin-volver']) {
               final accion = find.byKey(Key(key));
               await tester.ensureVisible(accion);

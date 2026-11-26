@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/tema.dart';
 
@@ -6,9 +8,10 @@ import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/modelo/zona.dart';
-import 'package:naturalmente/ui/dibujos.dart';
 import 'package:naturalmente/modelo/actividad.dart';
+import 'package:naturalmente/ui/accion_natu.dart';
 import 'package:naturalmente/ui/carta_cromo.dart';
+import 'package:naturalmente/ui/cromo_coleccionable.dart';
 import 'package:naturalmente/ui/texto.dart';
 import 'package:naturalmente/ui/zona.dart';
 
@@ -197,7 +200,7 @@ class _Miniatura extends StatelessWidget {
         ),
       ),
       child: desbloqueada
-          ? IlustracionFicha(id: ficha.id, alto: 32)
+          ? IlustracionCromo(ficha, alto: 32)
           : Icon(
               Icons.lock_rounded,
               size: 18,
@@ -219,59 +222,55 @@ class AlbumPage extends StatelessWidget {
         .where((f) => progreso.fichaDesbloqueada(f.id))
         .length;
 
-    return Scaffold(
-      appBar: AppBar(title: const Texto('Mis cromos')),
-      body: SafeArea(
-        child: _PaginaAlbum(
-          child: Column(
-            children: [
-              Image.asset(
-                'assets/inicio/cromos.webp',
-                height: 78,
-                excludeFromSemantics: true,
-              ),
-              const SizedBox(height: 8),
-              Texto('Elige un mundo', style: _tituloAlbum(context, 28)),
-              const SizedBox(height: 4),
-              Texto(
-                'Cromos conseguidos: $conseguidos de ${catalogo.fichas.length}',
-              ),
-              const SizedBox(height: 15),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage('assets/cromos/libro-abierto.webp'),
-                    fit: BoxFit.fill,
-                    colorFilter: Theme.of(context).brightness == Brightness.dark
-                        ? const ColorFilter.mode(
-                            Color(0x88000000),
-                            BlendMode.srcATop,
-                          )
-                        : null,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 26, 18, 46),
-                  child: Column(
-                    children: [
-                      for (final zona in catalogo.zonas)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: _EntradaAlbum(
-                            zona: zona,
-                            total: catalogo
-                                .fichasDe(zona.id)
-                                .where((f) => progreso.fichaDesbloqueada(f.id))
-                                .length,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+    return _PantallaAlbum(
+      titulo: 'Mis cromos',
+      construir: (_) => Column(
+        children: [
+          Image.asset(
+            'assets/inicio/cromos.webp',
+            height: 78,
+            excludeFromSemantics: true,
           ),
-        ),
+          const SizedBox(height: 8),
+          Texto('Elige un mundo', style: _tituloAlbum(context, 28)),
+          const SizedBox(height: 4),
+          Texto(
+            'Cromos conseguidos: $conseguidos de ${catalogo.fichas.length}',
+          ),
+          const SizedBox(height: 15),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: const AssetImage('assets/cromos/libro-abierto.webp'),
+                fit: BoxFit.fill,
+                colorFilter: Theme.of(context).brightness == Brightness.dark
+                    ? const ColorFilter.mode(
+                        Color(0x88000000),
+                        BlendMode.srcATop,
+                      )
+                    : null,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(18, 26, 18, 46),
+              child: Column(
+                children: [
+                  for (final zona in catalogo.zonas)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: _EntradaAlbum(
+                        zona: zona,
+                        total: catalogo
+                            .fichasDe(zona.id)
+                            .where((f) => progreso.fichaDesbloqueada(f.id))
+                            .length,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -375,34 +374,30 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
         .toList();
     final primera = pendientes.firstOrNull;
 
-    return Scaffold(
-      appBar: AppBar(title: Texto(widget.zona.nombre)),
-      body: SafeArea(
-        child: _PaginaAlbum(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Texto(
-                '${conseguidas.length} de ${fichas.length} descubiertos',
-                style: _tituloAlbum(context, 25),
-              ),
-              const SizedBox(height: 14),
-              if (conseguidas.isEmpty && primera != null)
-                _PistaCromo(ficha: primera, primerCromo: true),
-              if (conseguidas.isNotEmpty) ...[
-                Texto('Conseguidos', style: _tituloAlbum(context, 21)),
-                const SizedBox(height: 8),
-                _rejilla(conseguidas, true),
-              ],
-              if (pendientes.isNotEmpty) ...[
-                const SizedBox(height: 18),
-                Texto('Por descubrir', style: _tituloAlbum(context, 21)),
-                const SizedBox(height: 8),
-                _rejilla(pendientes, false),
-              ],
-            ],
+    return _PantallaAlbum(
+      titulo: widget.zona.nombre,
+      construir: (_) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Texto(
+            '${conseguidas.length} de ${fichas.length} descubiertos',
+            style: _tituloAlbum(context, 25),
           ),
-        ),
+          const SizedBox(height: 14),
+          if (conseguidas.isEmpty && primera != null)
+            _PistaCromo(ficha: primera, primerCromo: true),
+          if (conseguidas.isNotEmpty) ...[
+            Texto('Conseguidos', style: _tituloAlbum(context, 21)),
+            const SizedBox(height: 8),
+            _rejilla(conseguidas, true),
+          ],
+          if (pendientes.isNotEmpty) ...[
+            const SizedBox(height: 18),
+            Texto('Por descubrir', style: _tituloAlbum(context, 21)),
+            const SizedBox(height: 8),
+            _rejilla(pendientes, false),
+          ],
+        ],
       ),
     );
   }
@@ -416,7 +411,6 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
       final ancho = dosColumnas
           ? (medidas.maxWidth - espacio) / 2
           : medidas.maxWidth;
-      final reducido = MediaQuery.disableAnimationsOf(context);
       return Wrap(
         spacing: espacio,
         runSpacing: espacio,
@@ -437,27 +431,11 @@ class _CromosZonaPageState extends State<CromosZonaPage> {
                         Navigator.of(context).push(
                           _rutaCromo(
                             context,
-                            _VistaCromo(
-                              ficha: ficha,
-                              conseguida: conseguidas,
-                              hero: !reducido,
-                            ),
+                            _VistaCromo(ficha: ficha, conseguida: conseguidas),
                           ),
                         );
                       },
-                      child: HeroMode(
-                        enabled: !reducido,
-                        child: Hero(
-                          tag: 'carta-${ficha.id}',
-                          flightShuttleBuilder: _vueloCarta,
-                          child: CartaCromo(
-                            ficha: ficha,
-                            conseguida: conseguidas,
-                            altoArte: 90,
-                            miniatura: true,
-                          ),
-                        ),
-                      ),
+                      child: CartaCromo(ficha: ficha, conseguida: conseguidas),
                     ),
                   ),
                   if (ficha.id == widget.destacado)
@@ -493,63 +471,228 @@ Future<void> abrirCelebracionCromos(BuildContext context, List<Ficha> fichas) {
 }
 
 class _VistaCromo extends StatelessWidget {
-  const _VistaCromo({
-    required this.ficha,
-    required this.conseguida,
-    required this.hero,
-  });
+  const _VistaCromo({required this.ficha, required this.conseguida});
+
   final Ficha ficha;
   final bool conseguida;
-  final bool hero;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Texto('Mis cromos')),
-    body: SafeArea(
-      child: _PaginaAlbum(
-        ancho: 390,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Texto(
-              conseguida ? 'Cromo conseguido' : 'Por descubrir',
-              textAlign: TextAlign.center,
-              style: _tituloAlbum(context, 28),
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final zona = Alcance.of(context).catalogo.zonas
+        .where((zona) => zona.id == ficha.zona)
+        .firstOrNull;
+    final reducido = MediaQuery.disableAnimationsOf(context);
+
+    return _PantallaAlbum(
+      titulo: 'Mis cromos',
+      anchoMaximo: 480,
+      construir: (medidas) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Material(
+            color: const Color(0xFF15392B),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+              side: BorderSide(
+                color: colores.borde(const Color(0xFF527862)),
+                width: 2,
+              ),
             ),
-            const SizedBox(height: 14),
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 304),
-                child: HeroMode(
-                  enabled: hero,
-                  child: Hero(
-                    tag: 'carta-${ficha.id}',
-                    flightShuttleBuilder: _vueloCarta,
-                    child: CartaCromo(
-                      ficha: ficha,
-                      conseguida: conseguida,
-                      altoArte: 235,
+            clipBehavior: Clip.antiAlias,
+            child: Stack(
+              children: [
+                if (zona != null)
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/mundos/paisaje-${zona.id}.webp',
+                      fit: BoxFit.cover,
+                      excludeFromSemantics: true,
+                    ),
+                  ),
+                const Positioned.fill(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: [0, .36, .76, 1],
+                        colors: [
+                          Color(0xCA15392B),
+                          Color(0x83173628),
+                          Color(0xC810291D),
+                          Color(0xFF10251D),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 26, 16, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: _anchoCarta(medidas),
+                          child: CromoColeccionable(
+                            ficha: ficha,
+                            conseguida: conseguida,
+                            mundo: zona?.nombre,
+                            inclinable: true,
+                          ),
+                        ),
+                        if (RotuloExteriorCromo.necesario(context))
+                          RotuloExteriorCromo(
+                            titulo: ficha.titulo,
+                            mundo: conseguida ? zona?.nombre : null,
+                            datos: conseguida ? ficha.resumenCromo : const [],
+                            color: Colors.white,
+                          ),
+                        if (conseguida && !reducido) ...[
+                          const SizedBox(height: 15),
+                          const Texto(
+                            'Arrastra para inclinar',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFFE0EEE5),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                        if (conseguida) ...[
+                          const SizedBox(height: 7),
+                          _EtiquetaAcabado(ficha.acabado),
+                        ] else ...[
+                          const SizedBox(height: 13),
+                          const ExcludeSemantics(
+                            child: Texto(
+                              'Por descubrir',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFFE0EEE5),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            if (conseguida)
-              FilledButton.tonalIcon(
-                key: const Key('sobre-este-cromo'),
-                onPressed: () =>
-                    mostrarDetalleFicha(context, ficha, desbloqueada: true),
-                icon: const Icon(Icons.menu_book_rounded),
-                label: const Texto('Sobre este cromo'),
-              )
-            else
-              _PistaCromo(ficha: ficha),
-          ],
+          ),
+          const SizedBox(height: 12),
+          if (conseguida)
+            AccionNatu(
+              key: const Key('sobre-este-cromo'),
+              arte: 'libro-abierto',
+              titulo: 'Sobre este cromo',
+              onTap: () =>
+                  mostrarDetalleFicha(context, ficha, desbloqueada: true),
+            )
+          else
+            _PistaCromo(ficha: ficha),
+        ],
+      ),
+    );
+  }
+}
+
+double _anchoCarta(BoxConstraints medidas) => math.min(
+  // La perspectiva necesita margen adicional respecto al panel.
+  math.max(0.0, medidas.maxWidth - 78),
+  (medidas.maxHeight * .48).clamp(252.0, 304.0),
+);
+
+class _PantallaAlbum extends StatelessWidget {
+  const _PantallaAlbum({
+    required this.titulo,
+    required this.construir,
+    this.anchoMaximo = 560,
+    super.key,
+  });
+
+  final String titulo;
+  final Widget Function(BoxConstraints medidas) construir;
+  final double anchoMaximo;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    return Scaffold(
+      backgroundColor: colores.oscuro ? colores.fondo : const Color(0xFFFAF5EC),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: anchoMaximo),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
+                  child: CabeceraMundo(
+                    titulo: titulo,
+                    tamano: 30,
+                    mostrarVolver: Navigator.canPop(context),
+                  ),
+                ),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, medidas) {
+                      return SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
+                        child: DefaultTextStyle.merge(
+                          style: const TextStyle(fontFamily: 'NunitoInicio'),
+                          child: construir(medidas),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
+}
+
+class _EtiquetaAcabado extends StatelessWidget {
+  const _EtiquetaAcabado(this.acabado);
+
+  final AcabadoCromo acabado;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = switch (acabado) {
+      AcabadoCromo.laton => const Color(0xFFFFEAB6),
+      AcabadoCromo.nacar => const Color(0xFFD9FFF0),
+    };
+    return ExcludeSemantics(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: .10),
+          border: Border.all(color: color.withValues(alpha: .50)),
+          borderRadius: BorderRadius.circular(99),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          child: Texto(
+            nombreAcabadoCromo(acabado),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w900,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _CelebracionCromos extends StatefulWidget {
@@ -576,106 +719,113 @@ class _CelebracionCromosState extends State<_CelebracionCromos> {
         .where((z) => z.id == ficha.zona)
         .firstOrNull;
     final reducido = MediaQuery.disableAnimationsOf(context);
-    return Scaffold(
+    final rotuloExterior = RotuloExteriorCromo.necesario(context);
+    final titulo = Semantics(
+      header: true,
+      child: Texto(
+        '¡Nuevo cromo!',
+        textAlign: TextAlign.center,
+        style: _tituloAlbum(
+          context,
+          26,
+        ).copyWith(color: rotuloExterior ? null : const Color(0xFF34421E)),
+      ),
+    );
+    return _PantallaAlbum(
+      titulo: 'Mis cromos',
+      anchoMaximo: 480,
       key: const Key('celebracion-cromos'),
-      appBar: AppBar(title: const Texto('Mis cromos')),
-      body: SafeArea(
-        child: _PaginaAlbum(
-          ancho: 390,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const ArteCromo('natu-victoria', alto: 96),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset(
-                    'assets/cromos/banda.webp',
-                    height: 73,
-                    width: 260,
-                    fit: BoxFit.fill,
-                    excludeFromSemantics: true,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(36, 8, 36, 24),
-                    child: Semantics(
-                      header: true,
-                      child: Texto(
-                        '¡Nuevo cromo!',
-                        textAlign: TextAlign.center,
-                        style: _tituloAlbum(
-                          context,
-                          26,
-                        ).copyWith(color: const Color(0xFF34421E)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 304),
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: reducido ? 1 : .91, end: 1),
-                    curve: Curves.easeOutCubic,
-                    duration: Duration(milliseconds: reducido ? 0 : 260),
-                    builder: (_, escala, child) =>
-                        Transform.scale(scale: escala, child: child),
-                    child: CartaCromo(
-                      ficha: ficha,
-                      conseguida: true,
-                      altoArte: 235,
-                      destacada: true,
-                    ),
-                  ),
+      construir: (medidas) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const ArteCromo('natu-victoria', alto: 74),
+          if (rotuloExterior)
+            Padding(padding: const EdgeInsets.only(bottom: 16), child: titulo)
+          else
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'assets/cromos/banda.webp',
+                  height: 64,
+                  width: 260,
+                  fit: BoxFit.fill,
+                  excludeFromSemantics: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(36, 8, 36, 24),
+                  child: titulo,
+                ),
+              ],
+            ),
+          Center(
+            child: SizedBox(
+              width: _anchoCarta(medidas),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: reducido ? 1 : .91, end: 1),
+                curve: Curves.easeOutCubic,
+                duration: Duration(milliseconds: reducido ? 0 : 260),
+                builder: (_, escala, child) =>
+                    Transform.scale(scale: escala, child: child),
+                child: CromoColeccionable(
+                  ficha: ficha,
+                  conseguida: true,
+                  mundo: zona?.nombre,
                 ),
               ),
-              if (total > 1)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      key: const Key('cromo-nuevo-anterior'),
-                      tooltip: context.tr('Cromo anterior'),
-                      onPressed: _indice > 0 ? () => _mover(-1) : null,
-                      icon: const Icon(Icons.chevron_left_rounded),
-                    ),
-                    Flexible(
-                      child: Semantics(
-                        liveRegion: true,
-                        child: Texto(
-                          'Cromo ${_indice + 1} de $total',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      key: const Key('cromo-nuevo-siguiente'),
-                      tooltip: context.tr('Siguiente cromo'),
-                      onPressed: _indice + 1 < total ? () => _mover(1) : null,
-                      icon: const Icon(Icons.chevron_right_rounded),
-                    ),
-                  ],
-                ),
-              const SizedBox(height: 14),
-              if (zona != null)
-                FilledButton.icon(
-                  key: const Key('celebracion-abrir-album'),
-                  onPressed: () {
-                    context.sonidoToque();
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) =>
-                            CromosZonaPage(zona: zona, destacado: ficha.id),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.auto_stories_rounded),
-                  label: const Texto('Ver en mi álbum'),
-                ),
-            ],
+            ),
           ),
-        ),
+          if (rotuloExterior)
+            RotuloExteriorCromo(
+              titulo: ficha.titulo,
+              mundo: zona?.nombre,
+              datos: ficha.resumenCromo,
+              color: context.coloresNaturales.tinta,
+            ),
+          if (total > 1)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  key: const Key('cromo-nuevo-anterior'),
+                  tooltip: context.tr('Cromo anterior'),
+                  onPressed: _indice > 0 ? () => _mover(-1) : null,
+                  icon: const Icon(Icons.chevron_left_rounded),
+                ),
+                Flexible(
+                  child: Semantics(
+                    liveRegion: true,
+                    child: Texto(
+                      'Cromo ${_indice + 1} de $total',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  key: const Key('cromo-nuevo-siguiente'),
+                  tooltip: context.tr('Siguiente cromo'),
+                  onPressed: _indice + 1 < total ? () => _mover(1) : null,
+                  icon: const Icon(Icons.chevron_right_rounded),
+                ),
+              ],
+            ),
+          const SizedBox(height: 14),
+          if (zona != null)
+            AccionNatu(
+              key: const Key('celebracion-abrir-album'),
+              onTap: () {
+                context.sonidoToque();
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) =>
+                        CromosZonaPage(zona: zona, destacado: ficha.id),
+                  ),
+                );
+              },
+              arte: 'libro-abierto',
+              titulo: 'Ver en mi álbum',
+            ),
+        ],
       ),
     );
   }
@@ -683,54 +833,59 @@ class _CelebracionCromosState extends State<_CelebracionCromos> {
 
 class _PistaCromo extends StatelessWidget {
   const _PistaCromo({required this.ficha, this.primerCromo = false});
+
   final Ficha ficha;
   final bool primerCromo;
 
   @override
   Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
     final catalogo = Alcance.of(context).catalogo;
     final actividad = catalogo
         .actividadesDe(ficha.zona)
         .where((a) => a.titulo == ficha.juego)
         .firstOrNull;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (primerCromo)
-              Texto('Tu próximo cromo', style: _tituloAlbum(context, 19)),
-            Texto(Progreso.pistaDesbloqueoFicha(ficha.id)),
-            if (actividad case final Actividad juego)
-              TextButton.icon(
-                onPressed: () => abrirActividad(context, juego),
-                icon: const Icon(Icons.play_arrow_rounded),
-                label: const Texto('Ir al juego'),
-              ),
-          ],
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(
+            color: colores.fondoPista,
+            border: Border.all(color: colores.borde(_ambar), width: 2),
+            borderRadius: BorderRadius.circular(19),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (primerCromo) ...[
+                  Texto('Tu próximo cromo', style: _tituloAlbum(context, 19)),
+                  const SizedBox(height: 5),
+                ],
+                Texto(
+                  Progreso.pistaDesbloqueoFicha(ficha.id),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: colores.pista,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (actividad case final Actividad juego) ...[
+          const SizedBox(height: 10),
+          AccionNatu(
+            arte: 'siguiente',
+            titulo: 'Ir al juego',
+            onTap: () => abrirActividad(context, juego),
+          ),
+        ],
+      ],
     );
   }
-}
-
-class _PaginaAlbum extends StatelessWidget {
-  const _PaginaAlbum({required this.child, this.ancho = 560});
-  final Widget child;
-  final double ancho;
-
-  @override
-  Widget build(BuildContext context) => Align(
-    alignment: Alignment.topCenter,
-    child: ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: ancho),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 24),
-        child: child,
-      ),
-    ),
-  );
 }
 
 TextStyle _tituloAlbum(BuildContext context, double tamano) => TextStyle(
@@ -740,15 +895,3 @@ TextStyle _tituloAlbum(BuildContext context, double tamano) => TextStyle(
   fontSize: tamano,
   height: 1.13,
 );
-
-Widget _vueloCarta(
-  BuildContext contexto,
-  Animation<double> animacion,
-  HeroFlightDirection direccion,
-  BuildContext origen,
-  BuildContext destino,
-) {
-  final grande =
-      (direccion == HeroFlightDirection.push ? destino : origen).widget as Hero;
-  return FittedBox(child: SizedBox(width: 344, child: grande.child));
-}

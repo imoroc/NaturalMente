@@ -8,9 +8,12 @@ import 'package:naturalmente/datos/catalogo.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
+import 'package:naturalmente/modelo/ficha.dart';
 import 'package:naturalmente/reglas/digestion.dart';
 import 'package:naturalmente/reglas/resolver.dart';
+import 'package:naturalmente/ui/carta_cromo.dart';
 import 'package:naturalmente/ui/digestion.dart';
+import 'package:naturalmente/ui/cromo_coleccionable.dart';
 import 'package:naturalmente/ui/ecosistema.dart';
 import 'package:naturalmente/ui/expedicion_diaria.dart';
 import 'package:naturalmente/ui/fin_juego.dart';
@@ -378,9 +381,24 @@ void main() {
     prefs.falloEnClave = null;
     await _tocar(tester, 'fin-guardar');
     final semillas = progreso.semillas;
+    final botonCromos = find.byKey(const Key('fin-cromos-nuevos'));
+    final miniaturas = find.descendant(
+      of: botonCromos,
+      matching: find.byType(IlustracionCromo),
+    );
+    expect(find.text('Ver tus nuevos cromos'), findsOneWidget);
+    expect(miniaturas, findsNWidgets(2));
+    expect(find.text('Tu progreso está guardado.'), findsNothing);
+    expect(find.text('¿Qué quieres hacer?'), findsNothing);
     await _tocar(tester, 'fin-cromos-nuevos');
     expect(find.text('¡Nuevo cromo!'), findsOneWidget);
     expect(find.text('Camello'), findsOneWidget);
+    expect(find.text('Mamífero'), findsOneWidget);
+    final marco = tester.widget<CromoColeccionable>(
+      find.byType(CromoColeccionable),
+    );
+    expect(marco.ficha.acabado, AcabadoCromo.laton);
+    expect(marco.inclinable, isFalse);
     await _tocar(tester, 'cromo-nuevo-siguiente');
     expect(find.text('Delfín'), findsOneWidget);
     await _tocar(tester, 'celebracion-abrir-album');
@@ -399,6 +417,30 @@ void main() {
     expect(find.byKey(const Key('nivel-medio')), findsNothing);
     expect(find.byKey(const Key('sitio-selva')), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('una recompensa muestra un solo cromo y el botón en singular', (
+    tester,
+  ) async {
+    final actividad = catalogo.actividades.firstWhere((a) => a.id == 'hogar');
+    for (final id in ['delfin', 'pinguino', 'oso']) {
+      await progreso.desbloquearFicha(id);
+    }
+    await abrir(tester, _pagina(actividad), Brightness.light);
+    await _tocar(tester, 'nivel-facil');
+    await _jugar(tester, actividad, 'facil');
+
+    final miniatura = find.descendant(
+      of: find.byKey(const Key('fin-cromos-nuevos')),
+      matching: find.byType(IlustracionCromo),
+    );
+    expect(find.text('Ver tu nuevo cromo'), findsOneWidget);
+    expect(find.text('Ver tus nuevos cromos'), findsNothing);
+    expect(miniatura, findsOneWidget);
+    expect(tester.widget<IlustracionCromo>(miniatura).ficha.id, 'camello');
+    await _tocar(tester, 'fin-cromos-nuevos');
+    expect(find.text('Camello'), findsOneWidget);
+    expect(find.byKey(const Key('cromo-nuevo-siguiente')), findsNothing);
   });
 
   for (final brillo in Brightness.values) {

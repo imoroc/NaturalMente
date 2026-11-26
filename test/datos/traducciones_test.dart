@@ -44,6 +44,7 @@ void main() {
       'fase',
       'montaje',
       'meta',
+      'acabado',
     };
 
     final sinTraduccion = <String>{};
@@ -156,6 +157,9 @@ void main() {
       File('content/en.json').readAsStringSync(),
     ) as Map<String, dynamic>;
     const textos = [
+      'Arrastra para inclinar',
+      'Latón',
+      'Nácar especial',
       'El reto diario se juega una vez al día. Si te equivocas de nivel antes de terminarlo, podrás volver atrás para cambiarlo.',
       'Semilla',
       'Semillas',

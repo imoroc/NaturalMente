@@ -1,4 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/accion_natu.dart';
+import 'package:naturalmente/ui/carta_cromo.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/idiomas/idioma.dart';
@@ -130,83 +134,87 @@ class _FinJuegoState extends State<FinJuego> {
                     ),
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-                      child: Column(
-                        children: [
-                          if (esPartida)
-                            Image.asset(
-                              'assets/cromos/natu-victoria.webp',
-                              height: 118,
-                              fit: BoxFit.contain,
-                              excludeFromSemantics: true,
-                            )
-                          else
-                            const DibujoMascota(gesto: 'feliz', tamano: 76),
-                          const SizedBox(height: 12),
-                          Semantics(
-                            header: true,
-                            child: Texto(
-                              datos.titulo,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: esPartida ? 'NunitoInicio' : null,
-                                fontSize: 28,
-                                fontWeight: FontWeight.w900,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFF157347),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Texto(
-                            datos.actividad,
+                    child: _ContenidoFinJuego(
+                      centrar: esPartida,
+                      children: [
+                        if (esPartida)
+                          Image.asset(
+                            'assets/cromos/natu-victoria.webp',
+                            height: 118,
+                            fit: BoxFit.contain,
+                            excludeFromSemantics: true,
+                          )
+                        else
+                          const DibujoMascota(gesto: 'feliz', tamano: 76),
+                        const SizedBox(height: 12),
+                        Semantics(
+                          header: true,
+                          child: Texto(
+                            datos.titulo,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: TextStyle(
+                              fontFamily: esPartida ? 'NunitoInicio' : null,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w900,
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF157347),
+                              ),
+                            ),
                           ),
-                          if (datos.nivel.isNotEmpty) ...[
-                            const SizedBox(height: 10),
-                            Chip(
-                              avatar: Icon(
-                                Icons.check_circle_rounded,
-                                color: context.coloresNaturales.contenido(
-                                  Color(0xFF16864B),
-                                ),
-                                size: 20,
+                        ),
+                        const SizedBox(height: 8),
+                        Texto(
+                          datos.actividad,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        if (datos.nivel.isNotEmpty) ...[
+                          const SizedBox(height: 10),
+                          Chip(
+                            avatar: Icon(
+                              Icons.check_circle_rounded,
+                              color: context.coloresNaturales.contenido(
+                                Color(0xFF16864B),
                               ),
-                              label: Texto(datos.nivel),
-                              backgroundColor: context.coloresNaturales
-                                  .superficie(const Color(0xFFDCF5E4)),
-                              side: BorderSide.none,
+                              size: 20,
                             ),
-                          ],
-                          const SizedBox(height: 18),
-                          if (nuevos.isNotEmpty) ...[
-                            FilledButton.tonalIcon(
-                              key: const Key('fin-cromos-nuevos'),
-                              icon: const Icon(Icons.auto_awesome_rounded),
-                              label: Texto(
-                                nuevos.length == 1
-                                    ? 'Ver tu nuevo cromo'
-                                    : 'Ver tus nuevos cromos',
+                            label: Texto(datos.nivel),
+                            backgroundColor: context.coloresNaturales
+                                .superficie(const Color(0xFFDCF5E4)),
+                            side: BorderSide.none,
+                          ),
+                        ],
+                        const SizedBox(height: 18),
+                        if (nuevos.isNotEmpty) ...[
+                          FilledButton.tonalIcon(
+                            key: const Key('fin-cromos-nuevos'),
+                            style: FilledButton.styleFrom(
+                              minimumSize: const Size(64, 56),
+                            ),
+                            icon: _IconoCromosNuevos(fichas: nuevos),
+                            label: Texto(
+                              nuevos.length == 1
+                                  ? 'Ver tu nuevo cromo'
+                                  : 'Ver tus nuevos cromos',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: 'NunitoInicio',
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
                               ),
-                              onPressed: () =>
-                                  abrirCelebracionCromos(context, nuevos),
                             ),
-                            const SizedBox(height: 6),
-                          ],
-                          if (!esPartida) datos.resumen,
+                            onPressed: () =>
+                                abrirCelebracionCromos(context, nuevos),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                        if (!esPartida) datos.resumen,
+                        if (!habilitado) ...[
                           const SizedBox(height: 12),
                           if (_guardando)
                             Semantics(
                               liveRegion: true,
                               child: const Texto('Guardando tu progreso…'),
-                            )
-                          else if (_guardado)
-                            const Texto(
-                              'Tu progreso está guardado.',
-                              textAlign: TextAlign.center,
                             )
                           else ...[
                             Semantics(
@@ -226,87 +234,76 @@ class _FinJuegoState extends State<FinJuego> {
                               label: const Texto('Guardar de nuevo'),
                             ),
                           ],
-                          if (esPartida) ...[
-                            const SizedBox(height: 14),
-                            Texto(
-                              '¿Qué quieres hacer?',
-                              style: TextStyle(
-                                fontFamily: 'NunitoInicio',
-                                fontSize: 24,
-                                fontWeight: FontWeight.w900,
-                                color: context.coloresNaturales.tinta,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                if (siguiente != null) ...[
-                                  _TarjetaFin(
-                                    key: const Key('fin-siguiente'),
-                                    arte: 'siguiente',
-                                    titulo: 'Probar el siguiente nivel',
-                                    detalle: siguiente.nombre,
-                                    fondo: const Color(0xFFE5F5D8),
-                                    borde: const Color(0xFF24A85D),
-                                    onTap: habilitado
-                                        ? () =>
-                                              _elegir(AccionFinJuego.siguiente)
-                                        : null,
-                                  ),
-                                  const SizedBox(height: 9),
-                                ] else if (datos.onCambiarNivel != null) ...[
-                                  _TarjetaFin(
-                                    key: const Key('fin-nivel'),
-                                    arte: 'siguiente',
-                                    titulo: 'Elegir nivel',
-                                    fondo: const Color(0xFFE5F5D8),
-                                    borde: const Color(0xFF24A85D),
-                                    onTap: habilitado
-                                        ? () => _elegir(AccionFinJuego.nivel)
-                                        : null,
-                                  ),
-                                  const SizedBox(height: 9),
-                                ],
-                                _TarjetaFin(
-                                  key: const Key('fin-repetir'),
-                                  arte: 'repetir',
-                                  titulo: 'Jugar otra vez',
-                                  fondo: const Color(0xFFFFEAD0),
-                                  borde: const Color(0xFFE49029),
+                          if (esPartida) const SizedBox(height: 14),
+                        ],
+                        if (esPartida) ...[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (siguiente != null) ...[
+                                AccionNatu(
+                                  key: const Key('fin-siguiente'),
+                                  arte: 'siguiente',
+                                  titulo: 'Probar el siguiente nivel',
+                                  detalle: siguiente.nombre,
+                                  fondo: const Color(0xFFE5F5D8),
+                                  borde: const Color(0xFF24A85D),
                                   onTap: habilitado
-                                      ? () => _elegir(AccionFinJuego.repetir)
+                                      ? () => _elegir(AccionFinJuego.siguiente)
                                       : null,
                                 ),
                                 const SizedBox(height: 9),
-                                _TarjetaFin(
-                                  key: const Key('fin-volver'),
-                                  arte: 'volver',
-                                  titulo: datos.textoVolver,
-                                  fondo: const Color(0xFFDDF2FC),
-                                  borde: const Color(0xFF249ACD),
+                              ] else if (datos.onCambiarNivel != null) ...[
+                                AccionNatu(
+                                  key: const Key('fin-nivel'),
+                                  arte: 'siguiente',
+                                  titulo: 'Elegir nivel',
+                                  fondo: const Color(0xFFE5F5D8),
+                                  borde: const Color(0xFF24A85D),
                                   onTap: habilitado
-                                      ? () => _elegir(AccionFinJuego.volver)
+                                      ? () => _elegir(AccionFinJuego.nivel)
                                       : null,
                                 ),
-                                if (siguiente != null &&
-                                    datos.onCambiarNivel != null)
-                                  TextButton(
-                                    key: const Key('fin-nivel'),
-                                    onPressed: habilitado
-                                        ? () => _elegir(AccionFinJuego.nivel)
-                                        : null,
-                                    child: const Texto('Elegir nivel'),
-                                  ),
+                                const SizedBox(height: 9),
                               ],
-                            ),
-                            ExpansionTile(
-                              title: const Texto('Resumen de la partida'),
-                              children: [datos.resumen],
-                            ),
-                          ],
+                              AccionNatu(
+                                key: const Key('fin-repetir'),
+                                arte: 'repetir',
+                                titulo: 'Jugar otra vez',
+                                fondo: const Color(0xFFFFEAD0),
+                                borde: const Color(0xFFE49029),
+                                onTap: habilitado
+                                    ? () => _elegir(AccionFinJuego.repetir)
+                                    : null,
+                              ),
+                              const SizedBox(height: 9),
+                              AccionNatu(
+                                key: const Key('fin-volver'),
+                                arte: 'volver',
+                                titulo: datos.textoVolver,
+                                fondo: const Color(0xFFDDF2FC),
+                                borde: const Color(0xFF249ACD),
+                                onTap: habilitado
+                                    ? () => _elegir(AccionFinJuego.volver)
+                                    : null,
+                              ),
+                              if (siguiente != null &&
+                                  datos.onCambiarNivel != null)
+                                TextButton(
+                                  key: const Key('fin-nivel'),
+                                  onPressed: habilitado
+                                      ? () => _elegir(AccionFinJuego.nivel)
+                                      : null,
+                                  child: const Texto('Elegir nivel'),
+                                ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: const Texto('Resumen de la partida'),
+                            children: [datos.resumen],
+                          ),
                         ],
-                      ),
+                      ],
                     ),
                   ),
                   if (!esPartida)
@@ -378,86 +375,120 @@ class _FinJuegoState extends State<FinJuego> {
   }
 }
 
-class _TarjetaFin extends StatelessWidget {
-  const _TarjetaFin({
-    required this.arte,
-    required this.titulo,
-    required this.fondo,
-    required this.borde,
-    required this.onTap,
-    this.detalle,
-    super.key,
-  });
+class _ContenidoFinJuego extends StatelessWidget {
+  const _ContenidoFinJuego({required this.centrar, required this.children});
 
-  final String arte;
-  final String titulo;
-  final String? detalle;
-  final Color fondo;
-  final Color borde;
-  final VoidCallback? onTap;
+  final bool centrar;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    final colores = context.coloresNaturales;
-    final radio = BorderRadius.circular(19);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colores.sombra(borde),
-        borderRadius: radio,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 3),
-        child: Material(
-          color: colores.superficie(fondo),
-          shape: RoundedRectangleBorder(
-            borderRadius: radio,
-            side: BorderSide(color: colores.borde(borde), width: 2),
+    final margen = centrar
+        ? const EdgeInsets.fromLTRB(24, 8, 24, 8)
+        : const EdgeInsets.fromLTRB(24, 0, 24, 16);
+    return LayoutBuilder(
+      builder: (context, medidas) => SingleChildScrollView(
+        padding: margen,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: centrar
+                ? math.max(0, medidas.maxHeight - margen.vertical)
+                : 0,
           ),
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: onTap,
-            child: Opacity(
-              opacity: onTap == null ? .55 : 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 5,
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/cromos/$arte.webp',
-                      width: 62,
-                      height: 49,
-                      excludeFromSemantics: true,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Texto(
-                            titulo,
-                            style: TextStyle(
-                              fontFamily: 'NunitoInicio',
-                              color: colores.tinta,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                            ),
-                          ),
-                          if (detalle case final nivel?)
-                            Texto(
-                              nivel,
-                              style: TextStyle(color: colores.tenue),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
+          child: Column(
+            mainAxisAlignment: centrar
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            children: children,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _IconoCromosNuevos extends StatelessWidget {
+  const _IconoCromosNuevos({required this.fichas});
+
+  final List<Ficha> fichas;
+
+  @override
+  Widget build(BuildContext context) {
+    final varios = fichas.length > 1;
+    return ExcludeSemantics(
+      child: SizedBox(
+        width: varios ? 48 : 38,
+        height: 44,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (varios)
+              Positioned(
+                right: 4,
+                child: Transform.rotate(
+                  angle: math.pi / 18,
+                  child: _CromoEnBoton(ficha: fichas[1]),
                 ),
               ),
+            Positioned(
+              left: varios ? 4 : 5,
+              child: Transform.rotate(
+                angle: varios ? -math.pi / 14 : -math.pi / 26,
+                child: _CromoEnBoton(ficha: fichas.first),
+              ),
             ),
-          ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CromoEnBoton extends StatelessWidget {
+  const _CromoEnBoton({required this.ficha});
+
+  final Ficha ficha;
+
+  @override
+  Widget build(BuildContext context) {
+    final (borde, metal) = switch (ficha.acabado) {
+      AcabadoCromo.laton => (
+        const Color(0xFF9A702C),
+        const [Color(0xFFFFE8A6), Color(0xFFC89142), Color(0xFFFFE5A4)],
+      ),
+      AcabadoCromo.nacar => (
+        const Color(0xFF638B84),
+        const [Color(0xFFC0ECDA), Color(0xFFF2BFD6), Color(0xFFFFF2D1)],
+      ),
+    };
+    return Container(
+      width: 28,
+      height: 38,
+      padding: const EdgeInsets.all(2.5),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: metal,
+        ),
+        border: Border.all(color: borde),
+        borderRadius: BorderRadius.circular(4),
+        boxShadow: const [
+          BoxShadow(color: Color(0x55412D18), offset: Offset(1, 1)),
+        ],
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF8E5),
+          borderRadius: BorderRadius.circular(2),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IlustracionCromo(ficha, alto: 19),
+            const SizedBox(height: 2),
+            SizedBox(width: 9, height: 1, child: ColoredBox(color: borde)),
+          ],
         ),
       ),
     );

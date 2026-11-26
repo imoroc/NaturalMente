@@ -1,6 +1,6 @@
 # Procedencia de los recursos
 
-Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 18 de noviembre de 2026.
+Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 26 de noviembre de 2026.
 
 ## Ilustraciones dibujadas con código
 
@@ -33,7 +33,10 @@ Las ilustraciones vectoriales de Natu, los juegos y las fichas se dibujaron expr
 | `assets/mundos/linterna.webp` | 25 de noviembre de 2026 | Portada de «Linterna y microscopio» montada sobre el libro abierto de `carrera.webp`: se taparon las páginas y se pusieron dos escenas de `lib/ui/dibujos_linterna.dart` (el niño con la linterna y la célula con el microscopio). |
 | `assets/mundos/pelicula.webp` | 26 de noviembre de 2026 | Portada de «La película de la planta» montada sobre el libro abierto de `linterna.webp`: se taparon las páginas con dos fotogramas del girasol de `lib/ui/dibujos_pelicula.dart`. |
 | `assets/mundos/oscuras.webp` | 26 de noviembre de 2026 | Portada de «La planta a oscuras» montada sobre el libro abierto de `linterna.webp`: se taparon las páginas con el armario y la ventana de `lib/ui/dibujos_oscuras.dart`. |
+| `assets/mundos/explorar.webp` | 26 de noviembre de 2026 | OpenAI ImageGen recompuso los prismáticos y los destellos del icono original. Se exportó con margen transparente para la pestaña de los mundos. |
 | `assets/cromos/*.webp` | 23 de noviembre de 2026 | Arte de OpenAI ImageGen, generado o recortado de los bocetos seleccionados para el cierre, la portada del álbum y el cromo del camello. |
+| `assets/cromos/{pulpo,fotosintesis,intestinos}.webp` | 25 de noviembre de 2026 | Ilustraciones de OpenAI ImageGen generadas con el Camello de NaturalMente como referencia de estilo. Exportadas a WebP con fondo transparente para el álbum. |
+| Otras 81 ilustraciones de ficha en `assets/cromos/` | 25 de noviembre de 2026 | OpenAI ImageGen generó las ilustraciones en nueve láminas con el Camello original como referencia de estilo. Se revisaron por tema y se exportaron como WebP individuales con transparencia. Los IDs que las usan están en [el catálogo](catalog.json). |
 | `assets/sonidos/*.mp3` (acierto, celebracion, descubrimiento, musica, paso1 a paso6, pista, quitar, seleccion, toque) | 23 y 26 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
 | `assets/inicio/*.webp` | 18 de noviembre de 2026 | Ilustraciones creadas con OpenAI ImageGen a partir del boceto aprobado de NaturalMente, incluida la llama de racha. Siluetas recortadas y exportadas a WebP con transparencia para ambos temas. |
 | `assets/fuentes/Nunito-*.ttf` | 18 de noviembre de 2026 | Nunito, descargada del repositorio Google Fonts y convertida en pesos estáticos 600 y 900 para el inicio. SIL Open Font License 1.1, incluida en [Nunito-OFL.txt](../assets/fuentes/Nunito-OFL.txt). |

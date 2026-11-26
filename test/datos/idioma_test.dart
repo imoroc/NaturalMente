@@ -87,6 +87,7 @@ void main() {
       'fase',
       'montaje',
       'meta',
+      'acabado',
     };
     void comprobar(Object? valor, [String campo = '']) {
       if (valor is Map) {

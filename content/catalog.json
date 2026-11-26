@@ -786,6 +786,60 @@
       "curiosidad": "Algunas flores tienen colores que nosotros no vemos, pero las abejas sí."
     },
     {
+      "id": "semilla-brote-planta",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "La película de la planta",
+      "titulo": "De semilla a planta",
+      "frase": "Una semilla en la tierra, con agua, se abre, saca un brote y crece hasta hacerse planta.",
+      "curiosidad": "Las pipas que comes son semillas de girasol."
+    },
+    {
+      "id": "ciclo-de-la-planta",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "La película de la planta",
+      "titulo": "El ciclo de una planta",
+      "frase": "La semilla germina, la planta crece y florece, y la flor se convierte en fruto con semillas nuevas.",
+      "curiosidad": "Los tomates, los pimientos y las judías verdes son frutos: guardan semillas dentro."
+    },
+    {
+      "id": "de-semilla-a-semilla",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "La película de la planta",
+      "titulo": "De semilla a semilla",
+      "frase": "Para que la flor dé fruto, el polen tiene que llegar al pistilo. Después, las semillas viajan para crecer lejos.",
+      "curiosidad": "El polen viaja con insectos o con el viento, y las semillas con el viento, el agua o los animales."
+    },
+    {
+      "id": "planta-y-luz",
+      "zona": "invernadero",
+      "curso": "1º-2º",
+      "juego": "La planta a oscuras",
+      "titulo": "Las plantas necesitan luz",
+      "frase": "Con luz, la planta crece verde y fuerte. A oscuras se queda pálida, amarilla y flojita.",
+      "curiosidad": "Los espárragos blancos son blancos porque crecen tapados con tierra, sin luz."
+    },
+    {
+      "id": "crece-hacia-la-luz",
+      "zona": "invernadero",
+      "curso": "3º-4º",
+      "juego": "La planta a oscuras",
+      "titulo": "Crece hacia la luz",
+      "frase": "El tallo se dobla hacia el sitio por donde entra la luz. Así sus hojas reciben más.",
+      "curiosidad": "Si giras una maceta en la ventana, en unos días la planta se vuelve a doblar hacia el cristal."
+    },
+    {
+      "id": "hoja-fabrica",
+      "zona": "invernadero",
+      "curso": "5º-6º",
+      "juego": "La planta a oscuras",
+      "titulo": "La hoja fabrica el alimento",
+      "frase": "Con la energía de la luz, la hoja une agua y dióxido de carbono y fabrica azúcar. Además, suelta oxígeno.",
+      "curiosidad": "El color verde de las hojas viene de la clorofila, que es la que atrapa la luz."
+    },
+    {
       "id": "pelo-plumas-escamas",
       "zona": "reserva",
       "curso": "1º-2º",
@@ -12639,6 +12693,885 @@
                     ]
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pelicula",
+      "zona": "invernadero",
+      "tipo": "pelicula",
+      "titulo": "La película de la planta",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Pon cada fotograma en su sitio y mira la película de la planta.",
+      "pelicula": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Tres fotogramas: semilla, brote y planta.",
+            "intro": "Toca la carta que va en el fotograma que brilla, o arrástrala hasta él.",
+            "curiosidad": "Dentro de cada semilla hay una plantita dormida y comida para cuando despierte.",
+            "despedida": "¡Fin! Ya sabes cómo una semilla se hace planta.",
+            "rollos": [
+              {
+                "id": "facil-judia",
+                "planta": "judia",
+                "titulo": "La judía",
+                "bien": "¡Acción! La judía se ha hecho una planta.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "¡Eso es! Primero, la judía en la tierra.",
+                    "pista": "Busca la carta más pequeña: lo que se planta en la tierra."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "¡Bien! De la judía sale un brote pequeño.",
+                    "pista": "Busca la plantita que acaba de asomar con dos hojitas."
+                  },
+                  {
+                    "id": "planta",
+                    "como": "¡Muy bien! El brote crece y se hace una planta.",
+                    "pista": "Ahora va la planta grande, con muchas hojas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale de la semilla: primero tiene que estar la semilla."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla va al principio: de ella sale todo."
+                  },
+                  {
+                    "id": "planta",
+                    "nombre": "Planta",
+                    "fase": "planta",
+                    "aviso": "La planta crece del brote: aún es pronto para ella."
+                  }
+                ]
+              },
+              {
+                "id": "facil-girasol",
+                "planta": "girasol",
+                "titulo": "El girasol",
+                "bien": "¡Acción! La pipa se ha hecho un girasol.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "¡Eso es! Primero, la pipa en la tierra.",
+                    "pista": "Busca la carta más pequeña: lo que se planta en la tierra."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "¡Bien! De la pipa sale un brote con dos hojitas.",
+                    "pista": "Busca la plantita que acaba de asomar con dos hojitas."
+                  },
+                  {
+                    "id": "planta",
+                    "como": "¡Muy bien! El brote crece y crece hasta hacerse un girasol.",
+                    "pista": "Ahora va la planta grande, con muchas hojas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "planta",
+                    "nombre": "Planta",
+                    "fase": "planta",
+                    "aviso": "La planta crece del brote: aún es pronto para ella."
+                  },
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale de la semilla: primero tiene que estar la semilla."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla va al principio: de ella sale todo."
+                  }
+                ]
+              },
+              {
+                "id": "facil-tomatera",
+                "planta": "tomatera",
+                "titulo": "La tomatera",
+                "bien": "¡Acción! La semilla se ha hecho una tomatera.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "¡Eso es! Primero, la semilla de tomate en la tierra.",
+                    "pista": "Busca la carta más pequeña: lo que se planta en la tierra."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "¡Bien! Asoma un brote verde.",
+                    "pista": "Busca la plantita que acaba de asomar con dos hojitas."
+                  },
+                  {
+                    "id": "planta",
+                    "como": "¡Muy bien! El brote se ha hecho una tomatera.",
+                    "pista": "Ahora va la planta grande, con muchas hojas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla va al principio: de ella sale todo."
+                  },
+                  {
+                    "id": "planta",
+                    "nombre": "Planta",
+                    "fase": "planta",
+                    "aviso": "La planta crece del brote: aún es pronto para ella."
+                  },
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale de la semilla: primero tiene que estar la semilla."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Cinco fotogramas: la semilla germina, crece, florece y da fruto.",
+            "intro": "Llena la tira en orden. Si dudas, piensa qué tiene que pasar antes.",
+            "curiosidad": "Una sola tomatera puede dar más de cien tomates en un verano, y cada tomate lleva dentro muchas semillas.",
+            "despedida": "¡Fin! Ya sabes el ciclo de una planta con flor.",
+            "rollos": [
+              {
+                "id": "medio-judia",
+                "planta": "judia",
+                "titulo": "La judía",
+                "bien": "¡Acción! Las judías de la vaina son semillas nuevas.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "La judía está bajo tierra, esperando el agua.",
+                    "pista": "Empieza por lo más pequeño: lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! La judía se abre y saca la raíz.",
+                    "pista": "Ahora la semilla se abre y asoma una raíz hacia abajo."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "El brote sale de la tierra buscando la luz.",
+                    "pista": "Después de la raíz, el tallo asoma con sus primeras hojas."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "La planta ya es grande y salen flores blancas.",
+                    "pista": "Antes del fruto tiene que haber una flor."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "Cada flor se hace una vaina con judías dentro.",
+                    "pista": "Lo último es lo que guarda las semillas nuevas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale después de que la semilla germine y eche raíz."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla es el principio de todo: va la primera."
+                  },
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto con semillas",
+                    "fase": "fruto",
+                    "aviso": "El fruto llega al final: crece donde antes había una flor."
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Germinar es abrirse y sacar la raíz: pasa justo después de plantar la semilla."
+                  },
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es grande y fuerte."
+                  }
+                ]
+              },
+              {
+                "id": "medio-tomatera",
+                "planta": "tomatera",
+                "titulo": "La tomatera",
+                "bien": "¡Acción! Dentro de cada tomate hay semillas para otra tomatera.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "La semilla de tomate está en la tierra húmeda.",
+                    "pista": "Empieza por lo más pequeño: lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! Asoma una raíz finita.",
+                    "pista": "Ahora la semilla se abre y asoma una raíz hacia abajo."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "Aparece el brote con dos hojitas.",
+                    "pista": "Después de la raíz, el tallo asoma con sus primeras hojas."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "La tomatera crece y salen flores amarillas.",
+                    "pista": "Antes del fruto tiene que haber una flor."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "Las flores se hacen tomates llenos de semillas.",
+                    "pista": "Lo último es lo que guarda las semillas nuevas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto con semillas",
+                    "fase": "fruto",
+                    "aviso": "El fruto llega al final: crece donde antes había una flor."
+                  },
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es grande y fuerte."
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Germinar es abrirse y sacar la raíz: pasa justo después de plantar la semilla."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla es el principio de todo: va la primera."
+                  },
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale después de que la semilla germine y eche raíz."
+                  }
+                ]
+              },
+              {
+                "id": "medio-girasol",
+                "planta": "girasol",
+                "titulo": "El girasol",
+                "bien": "¡Acción! Cada pipa nueva puede ser otro girasol.",
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "La pipa es la semilla del girasol.",
+                    "pista": "Empieza por lo más pequeño: lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! La pipa se abre y echa raíz.",
+                    "pista": "Ahora la semilla se abre y asoma una raíz hacia abajo."
+                  },
+                  {
+                    "id": "brote",
+                    "como": "El brote crece muy deprisa hacia el sol.",
+                    "pista": "Después de la raíz, el tallo asoma con sus primeras hojas."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "Se abre una flor amarilla enorme.",
+                    "pista": "Antes del fruto tiene que haber una flor."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "En el centro de la flor maduran cientos de pipas.",
+                    "pista": "Lo último es lo que guarda las semillas nuevas."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Germinar es abrirse y sacar la raíz: pasa justo después de plantar la semilla."
+                  },
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto con semillas",
+                    "fase": "fruto",
+                    "aviso": "El fruto llega al final: crece donde antes había una flor."
+                  },
+                  {
+                    "id": "brote",
+                    "nombre": "Brote",
+                    "fase": "brote",
+                    "aviso": "El brote sale después de que la semilla germine y eche raíz."
+                  },
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es grande y fuerte."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla es el principio de todo: va la primera."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Una rueda de seis fotogramas: quién lleva el polen y cómo viajan las semillas.",
+            "intro": "La película es una rueda: termina donde empieza. Elige bien quién lleva el polen y cómo viaja la semilla.",
+            "curiosidad": "Las ardillas entierran más avellanas de las que recuerdan. Las que olvidan se convierten en avellanos nuevos.",
+            "despedida": "¡Fin! De semilla a semilla: así continúa la vida de las plantas.",
+            "rollos": [
+              {
+                "id": "dificil-cerezo",
+                "planta": "cerezo",
+                "titulo": "El cerezo",
+                "bien": "¡Acción! El hueso cae lejos y la rueda vuelve a empezar: de semilla a semilla.",
+                "rueda": true,
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "El hueso de la cereza guarda la semilla.",
+                    "pista": "Empieza por lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! Con agua y calor, el hueso se abre y echa raíz.",
+                    "pista": "Ahora la semilla se abre y saca la raíz."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "El cerezo crece y en primavera se llena de flores blancas.",
+                    "pista": "Antes del polen tiene que haber una flor."
+                  },
+                  {
+                    "id": "polen-abeja",
+                    "como": "La abeja busca néctar y lleva el polen de una flor a otra.",
+                    "pista": "Mira la flor del cerezo: tiene pétalos y néctar, y eso atrae a un insecto."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "Con el polen, la flor se convierte en una cereza.",
+                    "pista": "Cuando el polen llega a la flor, esta se convierte en fruto."
+                  },
+                  {
+                    "id": "semilla-animal",
+                    "como": "El pájaro se come la cereza y suelta el hueso lejos del árbol.",
+                    "pista": "La cereza es dulce y roja: algún animal se la come y suelta el hueso lejos."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es adulta: antes tiene que germinar y crecer."
+                  },
+                  {
+                    "id": "polen-viento",
+                    "nombre": "El viento lleva el polen",
+                    "fase": "viento-polen",
+                    "aviso": "El cerezo tiene flores blancas con néctar: no espera al viento, lo visitan las abejas."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla abre la película: de ella nace todo."
+                  },
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto",
+                    "fase": "fruto",
+                    "aviso": "El fruto se forma cuando el polen llega al pistilo: antes hace falta la polinización."
+                  },
+                  {
+                    "id": "semilla-viento",
+                    "nombre": "El viento lleva las semillas",
+                    "fase": "viento-semillas",
+                    "aviso": "La cereza pesa mucho para volar: su hueso viaja dentro de un pájaro."
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Para germinar, la semilla necesita agua, aire y calor: va justo después de la semilla."
+                  },
+                  {
+                    "id": "polen-abeja",
+                    "nombre": "Una abeja lleva el polen",
+                    "fase": "abeja",
+                    "aviso": "La abeja lleva polen de flor en flor: primero tiene que haber flores."
+                  },
+                  {
+                    "id": "semilla-animal",
+                    "nombre": "Un pájaro se come la cereza",
+                    "fase": "pajaro",
+                    "aviso": "Las semillas viajan al final, cuando el fruto ya está maduro."
+                  }
+                ]
+              },
+              {
+                "id": "dificil-diente-leon",
+                "planta": "diente-leon",
+                "titulo": "El diente de león",
+                "bien": "¡Acción! Las semillas aterrizan lejos y la rueda vuelve a empezar: de semilla a semilla.",
+                "rueda": true,
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "La semilla del diente de león cae en la tierra.",
+                    "pista": "Empieza por lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! Saca una raíz larga hacia abajo.",
+                    "pista": "Ahora la semilla se abre y saca la raíz."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "Sale una flor amarilla llena de néctar.",
+                    "pista": "Antes del polen tiene que haber una flor."
+                  },
+                  {
+                    "id": "polen-abeja",
+                    "como": "La abeja se mancha de polen y lo lleva a otra flor.",
+                    "pista": "Su flor amarilla y llena de néctar atrae a los insectos."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "La flor se cierra y se abre como una bola blanca de frutos.",
+                    "pista": "Cuando el polen llega a la flor, esta se convierte en fruto."
+                  },
+                  {
+                    "id": "semilla-viento",
+                    "como": "¡Sopla el viento! Cada semilla vuela con su paracaídas.",
+                    "pista": "Mira el fruto: cada semilla lleva un paracaídas de pelitos."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "semilla-animal",
+                    "nombre": "Un pájaro se come las semillas",
+                    "fase": "pajaro",
+                    "aviso": "Algún pájaro se come semillas, pero las del diente de león llevan paracaídas: las reparte el viento."
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Para germinar, la semilla necesita agua, aire y calor: va justo después de la semilla."
+                  },
+                  {
+                    "id": "polen-abeja",
+                    "nombre": "Una abeja lleva el polen",
+                    "fase": "abeja",
+                    "aviso": "La abeja lleva polen de flor en flor: primero tiene que haber flores."
+                  },
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es adulta: antes tiene que germinar y crecer."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla abre la película: de ella nace todo."
+                  },
+                  {
+                    "id": "semilla-viento",
+                    "nombre": "El viento lleva las semillas",
+                    "fase": "viento-semillas",
+                    "aviso": "Las semillas viajan al final, cuando el fruto ya está maduro."
+                  },
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto",
+                    "fase": "fruto",
+                    "aviso": "El fruto se forma cuando el polen llega al pistilo: antes hace falta la polinización."
+                  },
+                  {
+                    "id": "polen-viento",
+                    "nombre": "El viento lleva el polen",
+                    "fase": "viento-polen",
+                    "aviso": "Su flor amarilla atrae a abejas y mariposas: son ellas las que llevan el polen."
+                  }
+                ]
+              },
+              {
+                "id": "dificil-avellano",
+                "planta": "avellano",
+                "titulo": "El avellano",
+                "bien": "¡Acción! De la avellana olvidada nace otro avellano y la rueda vuelve a empezar.",
+                "rueda": true,
+                "fotogramas": [
+                  {
+                    "id": "semilla",
+                    "como": "La semilla del avellano está dentro de la avellana.",
+                    "pista": "Empieza por lo que se mete en la tierra."
+                  },
+                  {
+                    "id": "germina",
+                    "como": "¡Germina! La avellana se abre y echa raíz.",
+                    "pista": "Ahora la semilla se abre y saca la raíz."
+                  },
+                  {
+                    "id": "flor",
+                    "como": "El avellano crece y le cuelgan flores sin pétalos.",
+                    "pista": "Antes del polen tiene que haber una flor."
+                  },
+                  {
+                    "id": "polen-viento",
+                    "como": "El viento sacude las flores y lleva el polen a otros avellanos.",
+                    "pista": "Mira las flores del avellano: cuelgan sin pétalos y sueltan el polen al aire."
+                  },
+                  {
+                    "id": "fruto",
+                    "como": "Con el polen, la flor se convierte en una avellana.",
+                    "pista": "Cuando el polen llega a la flor, esta se convierte en fruto."
+                  },
+                  {
+                    "id": "semilla-animal",
+                    "como": "La ardilla entierra la avellana para el invierno y se olvida de ella.",
+                    "pista": "La avellana es dura y nutritiva: un animal la guarda bajo tierra."
+                  }
+                ],
+                "bandeja": [
+                  {
+                    "id": "polen-abeja",
+                    "nombre": "Una abeja lleva el polen",
+                    "fase": "abeja",
+                    "aviso": "Las flores del avellano no tienen pétalos de colores ni néctar: su polen lo lleva el viento."
+                  },
+                  {
+                    "id": "fruto",
+                    "nombre": "Fruto",
+                    "fase": "fruto",
+                    "aviso": "El fruto se forma cuando el polen llega al pistilo: antes hace falta la polinización."
+                  },
+                  {
+                    "id": "semilla-viento",
+                    "nombre": "El viento lleva las semillas",
+                    "fase": "viento-semillas",
+                    "aviso": "La avellana es dura y pesada: no vuela, la entierra una ardilla."
+                  },
+                  {
+                    "id": "semilla-animal",
+                    "nombre": "Una ardilla entierra la avellana",
+                    "fase": "ardilla",
+                    "aviso": "Las semillas viajan al final, cuando el fruto ya está maduro."
+                  },
+                  {
+                    "id": "germina",
+                    "nombre": "Germina",
+                    "fase": "germina",
+                    "aviso": "Para germinar, la semilla necesita agua, aire y calor: va justo después de la semilla."
+                  },
+                  {
+                    "id": "polen-viento",
+                    "nombre": "El viento lleva el polen",
+                    "fase": "viento-polen",
+                    "aviso": "El viento lleva el polen de flor en flor: primero tiene que haber flores."
+                  },
+                  {
+                    "id": "flor",
+                    "nombre": "Flor",
+                    "fase": "flor",
+                    "aviso": "La flor sale cuando la planta ya es adulta: antes tiene que germinar y crecer."
+                  },
+                  {
+                    "id": "semilla",
+                    "nombre": "Semilla",
+                    "fase": "semilla",
+                    "aviso": "La semilla abre la película: de ella nace todo."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "oscuras",
+      "zona": "invernadero",
+      "tipo": "oscuras",
+      "titulo": "La planta a oscuras",
+      "curso": "1º-6º, según el nivel",
+      "medalla": false,
+      "quien": "Natu dice",
+      "intro": "Elige un nivel. Coloca la maceta, deja pasar los días y mira qué le pasa a la planta.",
+      "oscuras": {
+        "niveles": [
+          {
+            "id": "facil",
+            "nombre": "Fácil",
+            "curso": "1º-2º",
+            "resumen": "Ventana o armario: mira qué le pasa a la planta con luz y sin luz.",
+            "intro": "Toca dónde pones la maceta y pulsa «Pasan los días».",
+            "curiosidad": "Una planta que lleva días a oscuras se pone amarilla, pero si vuelve a la luz se pone verde otra vez.",
+            "despedida": "¡Experimento terminado! Las plantas necesitan luz para crecer verdes.",
+            "opciones": [
+              {
+                "id": "ventana",
+                "nombre": "Junto a la ventana"
+              },
+              {
+                "id": "armario",
+                "nombre": "Dentro del armario"
+              }
+            ],
+            "retos": [
+              {
+                "id": "f-verde",
+                "tipo": "montar",
+                "pregunta": "Natu quiere que su judía crezca verde y fuerte. ¿Dónde pones la maceta?",
+                "respuesta": "ventana",
+                "frases": {
+                  "ventana": "¡Mira qué verde! Con la luz de la ventana, la planta crece fuerte.",
+                  "armario": "Sin luz, la planta ha salido amarilla y flojita. Así no crece bien."
+                },
+                "pista": "Las plantas necesitan luz: busca el sitio por donde entra el sol."
+              },
+              {
+                "id": "f-sin-luz",
+                "tipo": "montar",
+                "pregunta": "Ahora vamos a probar qué pasa sin luz. ¿Dónde pones esta maceta?",
+                "respuesta": "armario",
+                "frases": {
+                  "armario": "¡Eso es! En el armario no hay luz: la planta sale pálida y larguirucha.",
+                  "ventana": "En la ventana hay luz, y queríamos ver qué pasa sin ella."
+                },
+                "pista": "Busca el sitio donde no entra nada de luz."
+              },
+              {
+                "id": "f-viaje",
+                "tipo": "montar",
+                "pregunta": "Natu se va de viaje una semana y quiere encontrar la planta verde al volver. ¿Dónde la deja?",
+                "respuesta": "ventana",
+                "frases": {
+                  "ventana": "¡Qué bien! Al volver, la planta está verde y más alta.",
+                  "armario": "¡Vaya! Una semana a oscuras y la planta está pálida."
+                },
+                "pista": "Lo que la planta necesita para estar verde entra por la ventana."
+              }
+            ]
+          },
+          {
+            "id": "medio",
+            "nombre": "Medio",
+            "curso": "3º-4º",
+            "resumen": "Una caja con un agujero: la planta crece hacia la luz.",
+            "intro": "Elige por dónde entra la luz en la caja y pulsa «Pasan los días».",
+            "curiosidad": "Los girasoles jóvenes giran la cabeza siguiendo al sol durante el día.",
+            "despedida": "¡Experimento terminado! El tallo crece buscando la luz.",
+            "opciones": [
+              {
+                "id": "caja-izquierda",
+                "nombre": "Agujero a la izquierda"
+              },
+              {
+                "id": "caja-arriba",
+                "nombre": "Agujero arriba"
+              },
+              {
+                "id": "caja-derecha",
+                "nombre": "Agujero a la derecha"
+              }
+            ],
+            "retos": [
+              {
+                "id": "m-derecha",
+                "tipo": "montar",
+                "pregunta": "La mariposa está a la derecha de la caja. Haz que la planta crezca hacia ella.",
+                "respuesta": "caja-derecha",
+                "frases": {
+                  "caja-izquierda": "La planta se ha doblado hacia la izquierda, hacia el agujero: crece buscando la luz.",
+                  "caja-arriba": "Con el agujero arriba, la planta ha crecido recta hacia arriba.",
+                  "caja-derecha": "¡Llegó a la mariposa! El tallo se dobla hacia donde entra la luz."
+                },
+                "pista": "El tallo se dobla hacia el sitio por donde entra la luz.",
+                "meta": "derecha"
+              },
+              {
+                "id": "m-arriba",
+                "tipo": "montar",
+                "pregunta": "Ahora la mariposa está encima de la caja. Haz que la planta crezca recta hacia ella.",
+                "respuesta": "caja-arriba",
+                "frases": {
+                  "caja-izquierda": "Se ha doblado hacia la izquierda, hacia la luz, y no llega arriba.",
+                  "caja-arriba": "¡Recta hasta arriba! La luz entraba por encima y el tallo la ha seguido.",
+                  "caja-derecha": "Se ha doblado hacia la derecha, hacia la luz, y no llega arriba."
+                },
+                "pista": "El tallo se dobla hacia el sitio por donde entra la luz.",
+                "meta": "arriba"
+              },
+              {
+                "id": "m-izquierda",
+                "tipo": "montar",
+                "pregunta": "La mariposa se ha ido a la izquierda. Haz que la planta crezca hacia ella.",
+                "respuesta": "caja-izquierda",
+                "frases": {
+                  "caja-izquierda": "¡Allí está! El tallo se ha doblado hacia el agujero de la izquierda.",
+                  "caja-arriba": "Con la luz arriba, la planta crece recta y no se acerca a la izquierda.",
+                  "caja-derecha": "Se ha doblado hacia la derecha, hacia el agujero, justo al lado contrario."
+                },
+                "pista": "El tallo se dobla hacia el sitio por donde entra la luz.",
+                "meta": "izquierda"
+              }
+            ]
+          },
+          {
+            "id": "dificil",
+            "nombre": "Difícil",
+            "curso": "5º-6º",
+            "resumen": "Predice cómo saldrá la planta y descubre cómo fabrica su alimento la hoja.",
+            "intro": "Elige qué crees que pasará y pulsa «Pasan los días». Al final, mete en la hoja lo que necesita.",
+            "curiosidad": "Más o menos la mitad del oxígeno del aire lo fabrican algas diminutas que viven en el mar.",
+            "despedida": "¡Experimento terminado! La luz es la energía con la que la hoja fabrica el alimento de la planta.",
+            "opciones": [
+              {
+                "id": "sana",
+                "nombre": "Verde y fuerte"
+              },
+              {
+                "id": "palida",
+                "nombre": "Pálida y larguirucha"
+              },
+              {
+                "id": "doblada",
+                "nombre": "Doblada hacia la luz"
+              }
+            ],
+            "retos": [
+              {
+                "id": "d-armario",
+                "tipo": "predecir",
+                "pregunta": "Esta maceta pasará diez días dentro del armario. ¿Cómo crees que saldrá?",
+                "montaje": "armario",
+                "respuesta": "palida",
+                "frases": {
+                  "sana": "No ha salido verde: sin luz, la hoja no puede fabricar alimento.",
+                  "palida": "¡Predicción acertada! Sin luz, la planta gasta sus reservas en estirarse y se queda pálida.",
+                  "doblada": "No se ha doblado: en el armario no entra luz por ningún lado."
+                },
+                "pista": "Piensa qué necesita la hoja para fabricar alimento y si en el armario lo tiene."
+              },
+              {
+                "id": "d-caja",
+                "tipo": "predecir",
+                "pregunta": "La caja tiene un agujero a la izquierda. ¿Cómo crees que saldrá la planta?",
+                "montaje": "caja-izquierda",
+                "respuesta": "doblada",
+                "frases": {
+                  "sana": "No ha crecido recta: la luz solo entraba por un lado.",
+                  "palida": "No está pálida: le llega luz por el agujero, así que puede fabricar alimento.",
+                  "doblada": "¡Predicción acertada! El lado del tallo que está en sombra crece más y la planta se dobla hacia la luz."
+                },
+                "pista": "La planta recibe luz, pero solo por un lado."
+              },
+              {
+                "id": "d-ventana",
+                "tipo": "predecir",
+                "pregunta": "Esta maceta pasará diez días en la ventana, con riego. ¿Cómo crees que saldrá?",
+                "montaje": "ventana",
+                "respuesta": "sana",
+                "frases": {
+                  "sana": "¡Predicción acertada! Con luz, agua y aire, la hoja fabrica alimento y la planta crece verde.",
+                  "palida": "No está pálida: con tanta luz, sus hojas fabrican mucho alimento.",
+                  "doblada": "Apenas se ha doblado: le llega mucha luz y no tiene que estirarse para buscarla."
+                },
+                "pista": "Esta planta tiene todo lo que necesita: luz, agua y aire."
+              },
+              {
+                "id": "d-hoja",
+                "tipo": "fabricar",
+                "pregunta": "La hoja es una fábrica de alimento. Toca lo que tiene que entrar en ella y pulsa «Fabricar».",
+                "pista": "Entran tres cosas: una llega del sol, otra sube por la raíz y otra está en el aire.",
+                "ingredientes": [
+                  {
+                    "id": "tierra",
+                    "nombre": "Tierra",
+                    "entra": false,
+                    "aviso": "La tierra no entra en la hoja: la raíz solo toma de ella agua y sales minerales."
+                  },
+                  {
+                    "id": "luz",
+                    "nombre": "Luz del sol",
+                    "entra": true,
+                    "aviso": "Sin luz no hay fábrica: la luz es la energía que usa la hoja."
+                  },
+                  {
+                    "id": "azucar",
+                    "nombre": "Azúcar",
+                    "entra": false,
+                    "aviso": "El azúcar no entra: es lo que fabrica la hoja, el alimento de la planta."
+                  },
+                  {
+                    "id": "agua",
+                    "nombre": "Agua",
+                    "entra": true,
+                    "aviso": "Falta el agua: sube desde la raíz por el tallo hasta la hoja."
+                  },
+                  {
+                    "id": "aire",
+                    "nombre": "Dióxido de carbono",
+                    "entra": true,
+                    "aviso": "Falta algo del aire: la hoja toma dióxido de carbono por unos poros diminutos."
+                  },
+                  {
+                    "id": "oxigeno",
+                    "nombre": "Oxígeno",
+                    "entra": false,
+                    "aviso": "El oxígeno no hace falta para fabricar: la hoja lo suelta al aire."
+                  }
+                ],
+                "como": "¡La fábrica funciona! Con luz, agua y dióxido de carbono, la hoja fabrica azúcar y suelta oxígeno: es la fotosíntesis."
               }
             ]
           }

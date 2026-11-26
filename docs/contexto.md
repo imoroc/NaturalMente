@@ -12,7 +12,7 @@ Se publica en Google Play y en la App Store en diciembre de 2026. Una sola base 
 
 Antes de cada juego el niño elige nivel: Fácil (pensado para 1º-2º), Medio (3º-4º) o Difícil (5º-6º). Las preguntas y la mecánica cambian con el nivel. No cierra nada: se puede jugar a cualquier nivel.
 
-El catálogo actual contiene 28 actividades y todas ofrecen selector y contenido diferenciado para los tres niveles. Entre ellas están Monta el ecosistema, ¿Vivo o no vivo?, Un plato que cuida, Cuida la reserva, ¿Cómo me siento?, Memoria de las plantas, ¿Quién soy?, Carrera de relevos y Linterna y microscopio.
+El catálogo actual contiene 30 actividades y todas ofrecen selector y contenido diferenciado para los tres niveles. Entre ellas están Monta el ecosistema, ¿Vivo o no vivo?, Un plato que cuida, Cuida la reserva, ¿Cómo me siento?, Memoria de las plantas, ¿Quién soy?, Carrera de relevos, Linterna y microscopio, La película de la planta y La planta a oscuras.
 
 ## Cómo llegamos aquí
 
@@ -196,7 +196,7 @@ Al abrir se ven los tres mundos: Animales, Plantas y Mi cuerpo. Cada tarjeta lle
 | El invernadero | Plantas | La planta |
 | Dentro de mí | Cuerpo | El cuerpo |
 
-En cada sitio hay fichas (nombre, una frase, una curiosidad y curso orientativo) y actividades. El catálogo reúne 28 actividades, todas disponibles en los niveles Fácil, Medio y Difícil. La interfaz reutiliza pantallas compartidas cuando la mecánica encaja y cuenta con módulos específicos para recorridos como germinación, nacimiento, herbario, ecosistema, digestión, rescate, memoria, adivinanzas, la carrera de relevos y la búsqueda con linterna.
+En cada sitio hay fichas (nombre, una frase, una curiosidad y curso orientativo) y actividades. El catálogo reúne 30 actividades, todas disponibles en los niveles Fácil, Medio y Difícil. La interfaz reutiliza pantallas compartidas cuando la mecánica encaja y cuenta con módulos específicos para recorridos como germinación, nacimiento, herbario, ecosistema, digestión, rescate, memoria, adivinanzas, la carrera de relevos, la búsqueda con linterna, la película de la planta y el experimento de la planta a oscuras.
 
 Juegos que tienen que estar para diciembre:
 

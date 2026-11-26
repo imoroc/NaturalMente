@@ -16,6 +16,8 @@ import 'package:naturalmente/ui/dibujos_plato.dart';
 import 'package:naturalmente/ui/dibujos_rescate.dart';
 import 'package:naturalmente/ui/dibujos_vivo.dart';
 import 'package:naturalmente/ui/dibujos_linterna.dart';
+import 'package:naturalmente/ui/dibujos_oscuras.dart';
+import 'package:naturalmente/ui/dibujos_pelicula.dart';
 import 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 export 'package:naturalmente/ui/dibujos_nuevos_juegos.dart';
 export 'package:naturalmente/ui/dibujos_plato.dart';
@@ -4306,6 +4308,12 @@ class SpriteEspecieSantuario extends StatelessWidget {
     if (corredor != null) return DibujoNuevoJuego(id: corredor, tamano: t);
     final escena = cromosLinterna[id];
     if (escena != null) return MiniaturaLinterna(dibujo: escena, alto: t);
+    if (cromosPelicula.containsKey(id)) {
+      return MiniaturaPelicula(cromo: id, alto: t);
+    }
+    if (cromosOscuras.containsKey(id)) {
+      return MiniaturaOscuras(cromo: id, alto: t);
+    }
     if (idsNuevosJuegos.contains(id)) {
       return DibujoNuevoJuego(id: id, tamano: t);
     }
@@ -4383,6 +4391,13 @@ class IlustracionFicha extends StatelessWidget {
           'huesos-articulaciones' ||
           'partes-de-la-celula':
         return MiniaturaLinterna(dibujo: cromosLinterna[id]!, alto: alto);
+      // Cromos de «La película de la planta» y «La planta a oscuras».
+      case 'semilla-brote-planta' ||
+          'ciclo-de-la-planta' ||
+          'de-semilla-a-semilla':
+        return MiniaturaPelicula(cromo: id, alto: alto);
+      case 'planta-y-luz' || 'crece-hacia-la-luz' || 'hoja-fabrica':
+        return MiniaturaOscuras(cromo: id, alto: alto);
     }
     // Cromos de «¿Cómo me siento?».
     final emocion = switch (id) {

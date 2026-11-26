@@ -33,9 +33,9 @@ El juego principal de la zona es «Cada uno a su hogar».
 | Árbol, arbusto y hierba | 1º-2º | Árbol, arbusto o hierba | plantas; encina, romero |
 | Cultivadas y silvestres | 3º-4º | Árbol, arbusto o hierba (Difícil) | plantas; trigo |
 | Huerto | 3º-4º | Del huerto a la mesa | huerta; huerta-organos, partes-comestibles, recursos-plantas |
-| La luz y el alimento de la planta | 3º-4º | | |
+| La luz y el alimento de la planta | 3º-4º | La planta a oscuras: con luz y sin luz (Fácil), crece hacia la luz (Medio), predicción y la hoja que fabrica alimento (Difícil) | oscuras; planta-y-luz, crece-hacia-la-luz, hoja-fabrica |
 | Hojas distintas | 3º-4º | Los árboles y las estaciones | estaciones; hoja-caduca, formas-hoja, bosque-clima |
-| De la semilla a una planta que deja semillas | 5º-6º | Polen y semillas viajeras (flor, polen y semillas; falta el ciclo ordenado) | polinizacion; abeja-polen, semilla-viajera, helecho-espora |
+| De la semilla a una planta que deja semillas | 5º-6º | Polen y semillas viajeras (flor, polen y semillas). La película de la planta: el ciclo ordenado en 3, 5 y 6 fotogramas, con quién lleva el polen y cómo viaja la semilla en Difícil | polinizacion; abeja-polen, semilla-viajera, helecho-espora. pelicula; semilla-brote-planta, ciclo-de-la-planta, de-semilla-a-semilla |
 
 El juego principal es «Laboratorio de germinación». La luz como energía y el agua como materia se dicen dentro de ese juego, no en otra zona.
 

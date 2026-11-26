@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
@@ -731,6 +733,9 @@ class _TarjetaTrajeNatu extends StatelessWidget {
   }
 }
 
+/// Formatos de reto que se mezclan en el reto diario.
+enum FormatoRetoDiario { test, verdaderoFalso, intruso, ordenar }
+
 class PreguntaExpedicion {
   const PreguntaExpedicion({
     required this.id,
@@ -738,17 +743,100 @@ class PreguntaExpedicion {
     required this.fichaIlustracion,
     required this.pregunta,
     required this.opciones,
-    required this.indiceCorrecto,
     required this.explicacion,
+    this.indiceCorrecto = 0,
+    this.tipo = FormatoRetoDiario.test,
+    this.secuencia = const [],
+    this.sorpresa = false,
   });
 
   final String id;
   final String zonaNombre;
   final String fichaIlustracion;
   final String pregunta;
+
+  /// En «ordenar», el banco las escribe ya en el orden correcto.
   final List<String> opciones;
   final int indiceCorrecto;
   final String explicacion;
+  final FormatoRetoDiario tipo;
+
+  /// Solo en «ordenar»: índices de [opciones] en el orden correcto.
+  final List<int> secuencia;
+
+  /// La última pregunta del día da semillas dobles si se acierta a la primera.
+  final bool sorpresa;
+
+  List<int> get ordenCorrecto => secuencia.isEmpty
+      ? List<int>.generate(opciones.length, (i) => i)
+      : secuencia;
+}
+
+/// Tema que rota cada día de la semana. El domingo se mezclan los tres mundos.
+class TemaDelDia {
+  const TemaDelDia({
+    required this.zona,
+    required this.titulo,
+    required this.descripcion,
+    required this.color,
+    required this.fondo,
+    required this.icono,
+  });
+
+  /// Zona del banco que protagoniza el día; `null` es mezcla.
+  final String? zona;
+  final String titulo;
+  final String descripcion;
+  final Color color;
+  final Color fondo;
+  final IconData icono;
+
+  static const animales = TemaDelDia(
+    zona: 'Reserva de Animales',
+    titulo: 'Reserva de Animales',
+    descripcion: 'Hoy la mayoría de retos son de animales.',
+    color: Color(0xFFC2410C),
+    fondo: Color(0xFFFFF7ED),
+    icono: Icons.pets_rounded,
+  );
+  static const plantas = TemaDelDia(
+    zona: 'Invernadero Botánico',
+    titulo: 'Invernadero Botánico',
+    descripcion: 'Hoy la mayoría de retos son de plantas.',
+    color: Color(0xFF15803D),
+    fondo: Color(0xFFF0FDF4),
+    icono: Icons.local_florist_rounded,
+  );
+  static const cuerpo = TemaDelDia(
+    zona: 'Nuestro Cuerpo',
+    titulo: 'Nuestro Cuerpo',
+    descripcion: 'Hoy la mayoría de retos son del cuerpo humano.',
+    color: Color(0xFFBE123C),
+    fondo: Color(0xFFFFF1F2),
+    icono: Icons.favorite_rounded,
+  );
+  static const mezcla = TemaDelDia(
+    zona: null,
+    titulo: 'Mezcla de todo',
+    descripcion: 'Hoy hay retos de todos los mundos.',
+    color: Color(0xFF6D28D9),
+    fondo: Color(0xFFF5F3FF),
+    icono: Icons.auto_awesome_rounded,
+  );
+
+  static TemaDelDia deFecha(DateTime fecha) => switch (fecha.weekday) {
+    DateTime.monday || DateTime.thursday => animales,
+    DateTime.tuesday || DateTime.friday => plantas,
+    DateTime.wednesday || DateTime.saturday => cuerpo,
+    _ => mezcla,
+  };
+
+  static TemaDelDia deZona(String zona) => switch (zona) {
+    'Reserva de Animales' => animales,
+    'Invernadero Botánico' => plantas,
+    'Nuestro Cuerpo' => cuerpo,
+    _ => mezcla,
+  };
 }
 
 const _bancoFacil = <PreguntaExpedicion>[
@@ -1514,6 +1602,392 @@ const _bancoDificil = <PreguntaExpedicion>[
   ),
 ];
 
+const _retosFacil = <PreguntaExpedicion>[
+  PreguntaExpedicion(
+    id: 'f-vf-ballena',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'delfin',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'La ballena es un pez.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Bien visto! La ballena es un mamífero: respira con pulmones y da de mamar a sus crías.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vf-renacuajo',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'renacuajo',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'La rana empieza su vida como renacuajo dentro del agua.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Exacto! La rana nace de un huevo en el agua, es renacuajo y luego se convierte en rana.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-intruso-huevo',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'huevo',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres nacen de un huevo y uno no. ¿Cuál es?',
+    opciones: ['Gallina', 'Tortuga', 'Pato', 'Perro'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! El perro nace de la barriga de su madre: es vivíparo. Los demás son ovíparos.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-ordenar-mariposa',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'mariposa',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena la vida de la mariposa.',
+    opciones: ['Huevo', 'Oruga', 'Crisálida', 'Mariposa'],
+    explicacion: '¡Genial! La mariposa pasa por huevo, oruga y crisálida antes de volar.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vf-luz',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'huerto',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Las plantas necesitan agua, luz y aire para vivir.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Muy bien! Sin agua, luz y aire las plantas no pueden crecer.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vf-flores',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'helecho-espora',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Todas las plantas tienen flores.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Correcto! Los helechos y los musgos no tienen flores.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-intruso-partes',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'raiz',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son partes de una planta y uno no. ¿Cuál es?',
+    opciones: ['Raíz', 'Tallo', 'Hoja', 'Ala'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! Raíz, tallo y hoja son partes de la planta. Las alas son de las aves y los insectos.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-ordenar-planta',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'semilla',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena cómo crece una planta.',
+    opciones: [
+      'Semilla',
+      'Brote pequeño',
+      'Planta con hojas',
+      'Planta con flores',
+    ],
+    explicacion: '¡Genial! De la semilla sale un brote que crece, echa hojas y después flores.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vf-nariz',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'sentidos',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Vemos con los ojos y oímos con la nariz.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Correcto! Oímos con los oídos. Con la nariz olemos.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-vf-manos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'higiene',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Lavarse las manos antes de comer nos ayuda a no enfermar.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion:
+        '¡Muy bien! El agua y el jabón quitan los microbios de las manos.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-intruso-sentidos',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'sentidos',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son sentidos y uno no. ¿Cuál es?',
+    opciones: ['Vista', 'Oído', 'Tacto', 'Correr'],
+    indiceCorrecto: 3,
+    explicacion:
+        '¡Eso es! Vista, oído y tacto son sentidos. Correr es un movimiento.',
+  ),
+  PreguntaExpedicion(
+    id: 'f-ordenar-vida',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'etapas-vida',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena las etapas de la vida.',
+    opciones: ['Bebé', 'Niño', 'Adulto', 'Anciano'],
+    explicacion: '¡Genial! Nacemos bebés, crecemos como niños, somos adultos y luego ancianos.',
+  ),
+];
+
+const _retosMedio = <PreguntaExpedicion>[
+  PreguntaExpedicion(
+    id: 'm-vf-insectos',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'artropodo',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los insectos tienen seis patas.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Exacto! Los insectos son artrópodos con seis patas y el cuerpo en cabeza, tórax y abdomen.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-vf-anfibios',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'anfibio',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los anfibios respiran siempre por branquias.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Bien! De pequeños respiran por branquias, pero de adultos respiran por pulmones y por la piel.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-intruso-vertebrados',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'vertebrado',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son vertebrados y uno no. ¿Cuál es?',
+    opciones: ['Águila', 'Lagarto', 'Salmón', 'Caracol'],
+    indiceCorrecto: 3,
+    explicacion:
+        '¡Eso es! El caracol es invertebrado: no tiene columna vertebral.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-ordenar-rana',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'rana',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena la metamorfosis de la rana.',
+    opciones: ['Huevo', 'Renacuajo', 'Renacuajo con patas', 'Rana adulta'],
+    explicacion: '¡Genial! El renacuajo echa patas, pierde la cola y se convierte en rana.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-vf-hojas',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'fotosintesis',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Las hojas fabrican el alimento de la planta con la luz del sol.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Muy bien! Con la luz del sol, las hojas fabrican el alimento: es la fotosíntesis.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-vf-caduca',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'hoja-caduca',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los árboles de hoja caduca mantienen sus hojas todo el año.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Correcto! Los de hoja caduca pierden las hojas en otoño. Los de hoja perenne las mantienen.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-intruso-frutos',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'partes-comestibles',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son frutos y uno no. ¿Cuál es?',
+    opciones: ['Manzana', 'Tomate', 'Pera', 'Zanahoria'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! La zanahoria es una raíz. Manzana, tomate y pera son frutos con semillas.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-ordenar-fruto',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'abeja-polen',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena cómo se forma un fruto.',
+    opciones: [
+      'La abeja lleva el polen a otra flor',
+      'La flor queda fecundada',
+      'Crece el fruto con semillas',
+      'La semilla cae y germina',
+    ],
+    explicacion: '¡Genial! Tras la polinización, la flor se convierte en fruto y sus semillas darán nuevas plantas.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-vf-pulmones',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'pulmones',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los pulmones toman el oxígeno del aire.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Exacto! En los pulmones el oxígeno pasa a la sangre y sale el dióxido de carbono.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-vf-digestion',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'intestinos',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'La digestión termina en el estómago.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Muy bien! Después del estómago, el intestino delgado absorbe los nutrientes y el grueso forma los desechos.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-intruso-digestivo',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'aparato-digestivo',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son del aparato digestivo y uno no. ¿Cuál es?',
+    opciones: ['Boca', 'Estómago', 'Intestino', 'Pulmón'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! El pulmón es del aparato respiratorio.',
+  ),
+  PreguntaExpedicion(
+    id: 'm-ordenar-comida',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'aparato-digestivo',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena el viaje de la comida.',
+    opciones: ['Boca', 'Esófago', 'Estómago', 'Intestino'],
+    explicacion: '¡Genial! La comida se mastica en la boca, baja por el esófago, se mezcla en el estómago y se absorbe en el intestino.',
+  ),
+];
+
+const _retosDificil = <PreguntaExpedicion>[
+  PreguntaExpedicion(
+    id: 'd-vf-productores',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'claro-bosque',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'En una cadena alimentaria, las plantas son los productores.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Exacto! Las plantas fabrican su alimento y son el primer eslabón de la cadena.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-vf-sangre',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'pinguino',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los mamíferos son los únicos vertebrados de sangre caliente.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Bien! Las aves también mantienen su temperatura constante, como los mamíferos.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-intruso-artropodos',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'artropodo',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son artrópodos y uno no. ¿Cuál es?',
+    opciones: ['Araña', 'Cangrejo', 'Hormiga', 'Lombriz'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! La lombriz es un gusano: no tiene patas articuladas ni esqueleto externo.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-ordenar-cadena',
+    zonaNombre: 'Reserva de Animales',
+    fichaIlustracion: 'rana',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta:
+        'Ordena esta cadena alimentaria, del productor al último consumidor.',
+    opciones: ['Hierba', 'Saltamontes', 'Rana', 'Culebra'],
+    explicacion: '¡Genial! La hierba es el productor; el saltamontes, la rana y la culebra son consumidores.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-vf-fotosintesis',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'fotosintesis',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'En la fotosíntesis la planta toma dióxido de carbono y expulsa oxígeno.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Muy bien! Por eso las plantas son tan importantes para el aire que respiramos.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-vf-helechos',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'helecho-espora',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Los helechos se reproducen por semillas.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Correcto! Los helechos se reproducen por esporas, que están bajo sus hojas.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-intruso-flor',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'flor',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres son partes de la flor y uno no. ¿Cuál es?',
+    opciones: ['Pétalo', 'Estambre', 'Pistilo', 'Raíz'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! La raíz está bajo tierra. Pétalos, estambres y pistilo forman la flor.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-ordenar-germinacion',
+    zonaNombre: 'Invernadero Botánico',
+    fichaIlustracion: 'semilla',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena la germinación de una semilla.',
+    opciones: [
+      'La semilla absorbe agua',
+      'Sale la raíz',
+      'El tallo crece hacia la luz',
+      'Aparecen las primeras hojas',
+    ],
+    explicacion: '¡Genial! Primero la semilla se hincha con agua, luego sale la raíz, después el tallo y las hojas.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-vf-neuronas',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'cerebro',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta: 'Las neuronas son las células del sistema nervioso.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 0,
+    explicacion: '¡Exacto! Las neuronas llevan los mensajes entre el cerebro y el resto del cuerpo.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-vf-reflejo',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'reflejo',
+    tipo: FormatoRetoDiario.verdaderoFalso,
+    pregunta:
+        'Los actos reflejos los piensa el cerebro con calma antes de actuar.',
+    opciones: ['Verdadero', 'Falso'],
+    indiceCorrecto: 1,
+    explicacion: '¡Correcto! Un acto reflejo es una respuesta rápida e involuntaria que coordina la médula espinal.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-intruso-circulatorio',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'corazon',
+    tipo: FormatoRetoDiario.intruso,
+    pregunta: 'Tres forman el aparato circulatorio y uno no. ¿Cuál es?',
+    opciones: ['Corazón', 'Arterias', 'Venas', 'Tráquea'],
+    indiceCorrecto: 3,
+    explicacion: '¡Eso es! La tráquea es del aparato respiratorio.',
+  ),
+  PreguntaExpedicion(
+    id: 'd-ordenar-estimulo',
+    zonaNombre: 'Nuestro Cuerpo',
+    fichaIlustracion: 'sentidos',
+    tipo: FormatoRetoDiario.ordenar,
+    pregunta: 'Ordena cómo respondemos a un estímulo.',
+    opciones: [
+      'Un sentido recibe el estímulo',
+      'Los nervios llevan el mensaje',
+      'El cerebro decide qué hacer',
+      'Los músculos responden',
+    ],
+    explicacion: '¡Genial! Los sentidos captan, los nervios transmiten, el cerebro decide y los músculos actúan.',
+  ),
+];
+
 class ExpedicionDiariaPage extends StatefulWidget {
   const ExpedicionDiariaPage({
     this.catalogo,
@@ -1526,23 +2000,105 @@ class ExpedicionDiariaPage extends StatefulWidget {
   final Progreso? progreso;
   final DateTime? fechaReferencia;
 
+  /// Pasos de cada reto diario. El último es la pregunta sorpresa.
+  static const pasosPorDia = 5;
+
+  static List<PreguntaExpedicion> bancoDe(String dificultad) =>
+      switch (dificultad) {
+        'medio' => const [..._bancoMedio, ..._retosMedio],
+        'dificil' => const [..._bancoDificil, ..._retosDificil],
+        _ => const [..._bancoFacil, ..._retosFacil],
+      };
+
+  /// Misma misión para la misma fecha y nivel: se puede reabrir y comprobar.
+  /// El tema del día pone tres pasos de su mundo y uno de cada uno de los
+  /// otros; se procura no repetir formato y las opciones salen barajadas.
   static List<PreguntaExpedicion> generarMisionDelDia([
     DateTime? fecha,
     String dificultad = 'facil',
   ]) {
-    final banco = switch (dificultad) {
-      'medio' => _bancoMedio,
-      'dificil' => _bancoDificil,
-      _ => _bancoFacil,
-    };
+    final banco = bancoDe(dificultad);
     final ref = fecha ?? DateTime.now();
     final semillaDia = ref.year * 372 + ref.month * 31 + ref.day;
-    final seleccion = <PreguntaExpedicion>[];
-    for (var i = 0; i < 3; i++) {
-      final idx = (semillaDia + i * 5) % banco.length;
-      seleccion.add(banco[idx]);
+    final azar = Random(
+      semillaDia * 7 +
+          switch (dificultad) {
+            'medio' => 1,
+            'dificil' => 2,
+            _ => 0,
+          },
+    );
+    final zonas = <String>{for (final p in banco) p.zonaNombre}.toList();
+    final porZona = {
+      for (final zona in zonas)
+        zona: [
+          for (final p in banco)
+            if (p.zonaNombre == zona) p,
+        ]..shuffle(azar),
+    };
+    final tema = TemaDelDia.deFecha(ref).zona;
+    final List<String> plan;
+    if (tema != null && porZona.containsKey(tema)) {
+      final otras = zonas.where((z) => z != tema).toList()..shuffle(azar);
+      plan = [tema, otras.first, tema, otras.last, tema];
+    } else {
+      final mezcla = [...zonas]..shuffle(azar);
+      plan = [for (var i = 0; i < pasosPorDia; i++) mezcla[i % mezcla.length]];
     }
-    return seleccion;
+    final usadas = <String>{};
+    final formatos = <FormatoRetoDiario>{};
+    final mision = <PreguntaExpedicion>[];
+    for (var paso = 0; paso < plan.length; paso++) {
+      final candidatas = porZona[plan[paso]]!
+          .where((p) => !usadas.contains(p.id))
+          .toList();
+      final elegida = candidatas.firstWhere(
+        (p) => !formatos.contains(p.tipo),
+        orElse: () => candidatas.first,
+      );
+      usadas.add(elegida.id);
+      formatos.add(elegida.tipo);
+      if (formatos.length == FormatoRetoDiario.values.length) formatos.clear();
+      mision.add(_barajar(elegida, azar, sorpresa: paso == plan.length - 1));
+    }
+    return mision;
+  }
+
+  static PreguntaExpedicion _barajar(
+    PreguntaExpedicion p,
+    Random azar, {
+    required bool sorpresa,
+  }) {
+    final orden = List<int>.generate(p.opciones.length, (i) => i);
+    // «Verdadero» va siempre primero; el resto se baraja cada día.
+    if (p.tipo != FormatoRetoDiario.verdaderoFalso) {
+      orden.shuffle(azar);
+      if (p.tipo == FormatoRetoDiario.ordenar && orden.length > 1) {
+        var intentos = 0;
+        while (intentos++ < 10 &&
+            [for (var i = 0; i < orden.length; i++) orden[i] == i]
+                .every((enSuSitio) => enSuSitio)) {
+          orden.shuffle(azar);
+        }
+      }
+    }
+    return PreguntaExpedicion(
+      id: p.id,
+      zonaNombre: p.zonaNombre,
+      fichaIlustracion: p.fichaIlustracion,
+      pregunta: p.pregunta,
+      opciones: [for (final i in orden) p.opciones[i]],
+      indiceCorrecto: orden.indexOf(p.indiceCorrecto),
+      explicacion: p.explicacion,
+      tipo: p.tipo,
+      secuencia: p.tipo == FormatoRetoDiario.ordenar
+          ? [
+              for (var paso = 0; paso < orden.length; paso++)
+                orden.indexOf(paso),
+            ]
+          : const [],
+      sorpresa: sorpresa,
+    );
   }
 
   @override
@@ -1566,7 +2122,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
   bool _completada = false;
   bool _completadaAlAbrir = false;
 
+  /// Tarjetas ya colocadas en un paso de «ordenar», por índice de opción.
+  final List<int> _ordenHecho = [];
+  int _bonoSorpresa = 0;
+
   Progreso get _progreso => widget.progreso ?? Alcance.of(context).progreso;
+
+  TemaDelDia get _tema =>
+      TemaDelDia.deFecha(widget.fechaReferencia ?? DateTime.now());
 
   @override
   void initState() {
@@ -1655,6 +2218,8 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       _mejorComboSesion = _comboActual;
       _aciertosALaPrimera = 0;
       _semillasSesion = 0;
+      _bonoSorpresa = 0;
+      _ordenHecho.clear();
       _completada = false;
     });
   }
@@ -1671,6 +2236,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       _opcionElegida = null;
       _pasoResuelto = false;
       _falloEnPasoActual = false;
+      _ordenHecho.clear();
     });
   }
 
@@ -1681,19 +2247,59 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
   };
 
   Future<void> _elegirOpcion(int indice) async {
-    if (_pasoResuelto || _completada || !iniciarPasoEvaluado()) return;
+    if (_pasoResuelto || _completada) return;
     final pregunta = _mision[_pasoActual];
-    if (indice != pregunta.indiceCorrecto) {
-      guardarPrecisionPaso(acierto: false, progreso: _progreso);
-      setState(() {
-        _opcionElegida = indice;
-        _falloEnPasoActual = true;
-        _comboActual = 0;
-      });
-      terminarIntentoConPista();
-      context.sonidoPista();
+    if (pregunta.tipo == FormatoRetoDiario.ordenar) {
+      await _colocarEnOrden(indice);
       return;
     }
+    if (!iniciarPasoEvaluado()) return;
+    if (indice != pregunta.indiceCorrecto) {
+      _registrarFallo(indice);
+      return;
+    }
+    setState(() => _opcionElegida = indice);
+    await _registrarAcierto();
+  }
+
+  /// Colocar una tarjeta en su sitio no es aún un acierto evaluado: el paso
+  /// solo se comprueba al completar el orden o al tocar una fuera de turno.
+  Future<void> _colocarEnOrden(int indice) async {
+    if (pasoBloqueado || _ordenHecho.contains(indice)) return;
+    final orden = _mision[_pasoActual].ordenCorrecto;
+    final esperado = orden[_ordenHecho.length];
+    if (indice == esperado && _ordenHecho.length + 1 < orden.length) {
+      setState(() {
+        _ordenHecho.add(indice);
+        _opcionElegida = null;
+      });
+      return;
+    }
+    if (!iniciarPasoEvaluado()) return;
+    if (indice != esperado) {
+      _registrarFallo(indice);
+      return;
+    }
+    setState(() {
+      _ordenHecho.add(indice);
+      _opcionElegida = indice;
+    });
+    await _registrarAcierto();
+  }
+
+  void _registrarFallo(int indice) {
+    guardarPrecisionPaso(acierto: false, progreso: _progreso);
+    setState(() {
+      _opcionElegida = indice;
+      _falloEnPasoActual = true;
+      _comboActual = 0;
+    });
+    terminarIntentoConPista();
+    context.sonidoPista();
+  }
+
+  Future<void> _registrarAcierto() async {
+    final pregunta = _mision[_pasoActual];
     final aLaPrimera = !_falloEnPasoActual;
     final nuevoCombo = aLaPrimera ? _progreso.comboActual + 1 : 1;
     final ganadas = guardarPrecisionPaso(
@@ -1703,12 +2309,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
       progreso: _progreso,
     );
     setState(() {
-      _opcionElegida = indice;
       _pasoResuelto = true;
       _comboActual = _progreso.comboActual;
       if (_comboActual > _mejorComboSesion) _mejorComboSesion = _comboActual;
       if (aLaPrimera) _aciertosALaPrimera++;
       _semillasSesion += ganadas;
+      if (pregunta.sorpresa && aLaPrimera) {
+        _bonoSorpresa = _premioBaseDificultad;
+      }
     });
     if (_pasoActual + 1 < _mision.length) {
       confirmarPaso(alContinuar: _siguientePaso, esperarContinuar: true);
@@ -1716,7 +2324,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
     }
     final cierre = _progreso.prepararExpedicionDiaria(
       fecha: widget.fechaReferencia,
-      semillasRecompensa: _premioBaseDificultad,
+      semillasRecompensa: _premioBaseDificultad + _bonoSorpresa,
       dificultad: _dificultad,
       aciertosALaPrimera: _aciertosALaPrimera,
       mejorComboSesion: _mejorComboSesion,
@@ -1738,6 +2346,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
     _opcionElegida = null;
     _pasoResuelto = false;
     _falloEnPasoActual = false;
+    _ordenHecho.clear();
   }
 
   @override
@@ -1763,6 +2372,14 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             mejorComboSesion: _mejorComboSesion,
             semillasGanadas: _semillasSesion,
           ),
+          if (_bonoSorpresa > 0) ...[
+            const SizedBox(height: 10),
+            _AvisoSorpresa(
+              key: const Key('sorpresa-acertada'),
+              texto: '¡Sorpresa acertada! Semillas extra:',
+              semillas: _bonoSorpresa,
+            ),
+          ],
           const SizedBox(height: 12),
           Text(
             context.tr(_mision.last.explicacion),
@@ -1875,6 +2492,18 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
         Color(0xFFFEF2F2),
       ),
     ];
+    // El curso elegido al empezar marca el nivel; los demás siguen abiertos.
+    final idRecomendado = _progreso.nivelRecomendado;
+    final recomendado = idRecomendado == null
+        ? null
+        : (
+            idRecomendado,
+            switch (idRecomendado) {
+              'dificil' => 'Difícil',
+              'medio' => 'Medio',
+              _ => 'Fácil',
+            },
+          );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -1885,6 +2514,8 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             rachaDias: rachaDias,
             completadoHoy: false,
           ),
+          const SizedBox(height: 16),
+          _TarjetaTemaDelDia(tema: _tema),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(18),
@@ -1937,6 +2568,49 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                   ],
                 ),
                 const SizedBox(height: 16),
+                if (recomendado != null) ...[
+                  FilledButton.icon(
+                    key: const Key('empezar-reto-recomendado'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: context.coloresNaturales.superficie(
+                        const Color(0xFF7C3AED),
+                      ),
+                      foregroundColor: context.coloresNaturales.contenido(
+                        Colors.white,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    onPressed: () => _iniciarConDificultad(recomendado.$1),
+                    icon: const Icon(Icons.play_arrow_rounded, size: 26),
+                    label: Text(
+                      '${context.tr('Empezar con mi nivel')} · '
+                      '${context.tr(recomendado.$2)}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    context.tr('O elige otro nivel:'),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: context.coloresNaturales.contenido(
+                        const Color(0xFF475569),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
                 for (final (id, titulo, desc, premio, color, fondo)
                     in opciones) ...[
                   Padding(
@@ -2111,36 +2785,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: context.coloresNaturales.superficie(
-                          const Color(0xFFECFDF5),
-                        ),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(
-                          color: context.coloresNaturales.borde(
-                            const Color(0xFF6EE7B7),
-                          ),
-                          width: 1.5,
-                        ),
-                      ),
-                      child: Text(
-                        context.tr(pregunta.zonaNombre),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w900,
-                          color: context.coloresNaturales.contenido(
-                            Color(0xFF065F46),
-                          ),
-                        ),
-                      ),
-                    ),
+                    _ChipTema(tema: TemaDelDia.deZona(pregunta.zonaNombre)),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -2187,6 +2832,17 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             ),
             child: Column(
               children: [
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _EtiquetaTipoReto(tipo: pregunta.tipo),
+                    if (pregunta.sorpresa)
+                      const _EtiquetaSorpresa(key: Key('pregunta-sorpresa')),
+                  ],
+                ),
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     DibujoMascota(
@@ -2238,18 +2894,7 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
             ),
           ),
           const SizedBox(height: 14),
-          for (var i = 0; i < pregunta.opciones.length; i++) ...[
-            _BotonOpcionExpedicion(
-              key: Key('opcion-expedicion-$i'),
-              texto: context.tr(pregunta.opciones[i]),
-              seleccionada: _opcionElegida == i,
-              esCorrecta: i == pregunta.indiceCorrecto,
-              mostrarResultado:
-                  _pasoResuelto || (_opcionElegida == i && _falloEnPasoActual),
-              alPulsar: () => _elegirOpcion(i),
-            ),
-            const SizedBox(height: 10),
-          ],
+          _construirOpciones(context, pregunta),
           if (_falloEnPasoActual && !_pasoResuelto)
             Container(
               padding: const EdgeInsets.all(12),
@@ -2267,7 +2912,9 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
               ),
               child: Text(
                 context.tr(
-                  '¡Casi! Fíjate bien en la ilustración y prueba con otra opción.',
+                  pregunta.tipo == FormatoRetoDiario.ordenar
+                      ? '¡Casi! Esa no va ahora. Piensa qué pasa antes.'
+                      : '¡Casi! Fíjate bien en la ilustración y prueba con otra opción.',
                 ),
                 style: TextStyle(
                   fontSize: 13.5,
@@ -2311,6 +2958,109 @@ class _ExpedicionDiariaPageState extends State<ExpedicionDiariaPage>
         ],
       ),
     );
+  }
+
+  Widget _construirOpciones(BuildContext context, PreguntaExpedicion pregunta) {
+    Widget boton(int i, {IconData? icono, bool centrado = false}) {
+      final colocada = _ordenHecho.indexOf(i);
+      final esOrdenar = pregunta.tipo == FormatoRetoDiario.ordenar;
+      return _BotonOpcionExpedicion(
+        key: Key('opcion-expedicion-$i'),
+        texto: context.tr(pregunta.opciones[i]),
+        seleccionada: _opcionElegida == i,
+        esCorrecta: esOrdenar ? colocada >= 0 : i == pregunta.indiceCorrecto,
+        mostrarResultado: esOrdenar
+            ? colocada >= 0 || (_opcionElegida == i && _falloEnPasoActual)
+            : _pasoResuelto || (_opcionElegida == i && _falloEnPasoActual),
+        numeroOrden: esOrdenar && colocada >= 0 ? colocada + 1 : null,
+        iconoBase: icono,
+        centrado: centrado,
+        alPulsar: () => _elegirOpcion(i),
+      );
+    }
+
+    switch (pregunta.tipo) {
+      case FormatoRetoDiario.verdaderoFalso:
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Row(
+            children: [
+              for (var i = 0; i < pregunta.opciones.length; i++) ...[
+                if (i > 0) const SizedBox(width: 10),
+                Expanded(
+                  child: boton(
+                    i,
+                    icono: i == 0
+                        ? Icons.thumb_up_alt_rounded
+                        : Icons.thumb_down_alt_rounded,
+                    centrado: true,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        );
+      case FormatoRetoDiario.intruso:
+        return Column(
+          children: [
+            for (var fila = 0; fila < pregunta.opciones.length; fila += 2)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (
+                        var i = fila;
+                        i < fila + 2 && i < pregunta.opciones.length;
+                        i++
+                      ) ...[
+                        if (i > fila) const SizedBox(width: 10),
+                        Expanded(child: boton(i, icono: Icons.search_rounded)),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        );
+      case FormatoRetoDiario.ordenar:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                context.tr(
+                  'Toca las tarjetas en orden, de la primera a la última.',
+                ),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w800,
+                  color: context.coloresNaturales.contenido(
+                    const Color(0xFF475569),
+                  ),
+                ),
+              ),
+            ),
+            for (var i = 0; i < pregunta.opciones.length; i++) ...[
+              boton(i, icono: Icons.touch_app_rounded),
+              const SizedBox(height: 10),
+            ],
+          ],
+        );
+      case FormatoRetoDiario.test:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < pregunta.opciones.length; i++) ...[
+              boton(i),
+              const SizedBox(height: 10),
+            ],
+          ],
+        );
+    }
   }
 
   Widget _construirPantallaFinal(BuildContext context) {
@@ -2440,6 +3190,9 @@ class _BotonOpcionExpedicion extends StatelessWidget {
     required this.esCorrecta,
     required this.mostrarResultado,
     required this.alPulsar,
+    this.numeroOrden,
+    this.iconoBase,
+    this.centrado = false,
     super.key,
   });
 
@@ -2449,12 +3202,17 @@ class _BotonOpcionExpedicion extends StatelessWidget {
   final bool mostrarResultado;
   final VoidCallback alPulsar;
 
+  /// Posición ya colocada en un reto de ordenar (1, 2, 3…).
+  final int? numeroOrden;
+  final IconData? iconoBase;
+  final bool centrado;
+
   @override
   Widget build(BuildContext context) {
     Color fondo = Colors.white;
     Color borde = const Color(0xFFCBD5E1);
     Color textoColor = const Color(0xFF1E293B);
-    IconData icono = Icons.circle_outlined;
+    IconData icono = iconoBase ?? Icons.circle_outlined;
 
     if (mostrarResultado) {
       if (esCorrecta) {
@@ -2495,14 +3253,37 @@ class _BotonOpcionExpedicion extends StatelessWidget {
             ],
           ),
           child: Row(
+            mainAxisAlignment: centrado
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
             children: [
-              Icon(
-                icono,
-                color: context.coloresNaturales.contenido(textoColor),
-                size: 22,
-              ),
+              if (numeroOrden != null)
+                Container(
+                  width: 26,
+                  height: 26,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: context.coloresNaturales.contenido(textoColor),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '$numeroOrden',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      color: context.coloresNaturales.superficie(fondo),
+                    ),
+                  ),
+                )
+              else
+                Icon(
+                  icono,
+                  color: context.coloresNaturales.contenido(textoColor),
+                  size: 22,
+                ),
               const SizedBox(width: 12),
-              Expanded(
+              Flexible(
+                fit: centrado ? FlexFit.loose : FlexFit.tight,
                 child: Text(
                   texto,
                   style: TextStyle(
@@ -2515,6 +3296,275 @@ class _BotonOpcionExpedicion extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _TarjetaTemaDelDia extends StatelessWidget {
+  const _TarjetaTemaDelDia({required this.tema});
+
+  final TemaDelDia tema;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final color = colores.contenido(tema.color);
+    return Container(
+      key: const Key('tema-del-dia'),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colores.superficie(tema.fondo),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: colores.borde(tema.color), width: 2.5),
+        boxShadow: [
+          BoxShadow(
+            color: colores.sombra(tema.color.withValues(alpha: 0.25)),
+            offset: const Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              color: colores.superficie(Colors.white),
+              shape: BoxShape.circle,
+              border: Border.all(color: colores.borde(tema.color), width: 2),
+            ),
+            child: Icon(tema.icono, color: color, size: 28),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr('Tema de hoy').toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    letterSpacing: 0.8,
+                    fontWeight: FontWeight.w900,
+                    color: color,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  context.tr(tema.titulo),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    color: color,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${context.tr(tema.descripcion)} '
+                  '${context.tr('Cinco retos cada día. El último es una pregunta sorpresa.')}',
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w700,
+                    height: 1.3,
+                    color: colores.contenido(const Color(0xFF475569)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ChipTema extends StatelessWidget {
+  const _ChipTema({required this.tema});
+
+  final TemaDelDia tema;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final color = colores.contenido(tema.color);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      decoration: BoxDecoration(
+        color: colores.superficie(tema.fondo),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: colores.borde(tema.color), width: 1.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(tema.icono, size: 13, color: color),
+          const SizedBox(width: 4),
+          Flexible(
+            child: Text(
+              context.tr(tema.titulo),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EtiquetaTipoReto extends StatelessWidget {
+  const _EtiquetaTipoReto({required this.tipo});
+
+  final FormatoRetoDiario tipo;
+
+  @override
+  Widget build(BuildContext context) {
+    final (texto, icono, base) = switch (tipo) {
+      FormatoRetoDiario.test => ('Pregunta', Icons.quiz_rounded, Color(0xFF0369A1)),
+      FormatoRetoDiario.verdaderoFalso => (
+        'Verdadero o falso',
+        Icons.rule_rounded,
+        Color(0xFF0F766E),
+      ),
+      FormatoRetoDiario.intruso => (
+        '¿Cuál es el intruso?',
+        Icons.search_rounded,
+        Color(0xFF7C3AED),
+      ),
+      FormatoRetoDiario.ordenar => (
+        'Ordena los pasos',
+        Icons.format_list_numbered_rounded,
+        Color(0xFFB45309),
+      ),
+    };
+    final colores = context.coloresNaturales;
+    final color = colores.contenido(base);
+    return Container(
+      key: Key('tipo-reto-${tipo.name}'),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      decoration: BoxDecoration(
+        color: colores.superficie(base.withValues(alpha: 0.10)),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: colores.borde(base), width: 1.8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icono, size: 16, color: color),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              context.tr(texto),
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EtiquetaSorpresa extends StatelessWidget {
+  const _EtiquetaSorpresa({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final color = colores.contenido(const Color(0xFFA16207));
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      decoration: BoxDecoration(
+        color: colores.superficie(const Color(0xFFFEF9C3)),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: colores.borde(const Color(0xFFEAB308)),
+          width: 1.8,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.star_rounded, size: 17, color: color),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              '${context.tr('Pregunta sorpresa')} · '
+              '${context.tr('¡Semillas dobles si aciertas a la primera!')}',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AvisoSorpresa extends StatelessWidget {
+  const _AvisoSorpresa({
+    required this.texto,
+    required this.semillas,
+    super.key,
+  });
+
+  final String texto;
+  final int semillas;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = context.coloresNaturales;
+    final color = colores.contenido(const Color(0xFFA16207));
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: colores.superficie(const Color(0xFFFEF9C3)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: colores.borde(const Color(0xFFEAB308)),
+          width: 2,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.star_rounded, size: 20, color: color),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              context.tr(texto),
+              style: TextStyle(
+                fontSize: 13.5,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
+          const IconoSemilla(tamano: 16),
+          const SizedBox(width: 3),
+          Text(
+            '+$semillas',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+              color: color,
+            ),
+          ),
+        ],
       ),
     );
   }

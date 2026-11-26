@@ -287,7 +287,7 @@ void main() {
     expect(repositorio.perfilesCreados, hasLength(1));
   });
 
-  testWidgets('traer un Natu de otra tablet con su nombre y su llave', (
+  testWidgets('traer un Natu de otro dispositivo con su nombre y su llave', (
     tester,
   ) async {
     final repositorio = RepositorioAulaFalso();
@@ -341,6 +341,21 @@ void main() {
     expect(perfiles.progreso.semillas, 37);
     expect(perfiles.progreso.curso, 5);
     expect(perfiles.progreso.hecho('hogar/facil/completo'), isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('con la voz activada, la pregunta tiene botón para escucharla', (tester) async {
+    await abrirAula(
+      tester,
+      repositorio: RepositorioAulaFalso(),
+      valores: {'perfil/curso': 3, 'voz/leer': true},
+    );
+    await tester.tap(find.byKey(const Key('juego-aula-juego-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('leer-en-voz')), findsOneWidget);
+    // Sin voz en el dispositivo (como en las pruebas) no pasa nada.
+    await tester.tap(find.byKey(const Key('leer-en-voz')));
+    await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });
 }

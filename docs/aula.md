@@ -34,12 +34,34 @@ Un juego es una serie de **retos**, de cualquier tipo y en el orden que quiera e
 
 Todos usan `FeedbackAcierto`: mover piezas no es un acierto; fallar da la pista del profe sin avanzar; acertar muestra la explicación. Los juegos antiguos (opción múltiple o verdadero/falso) se leen igual.
 
-## Jugadores en tablets compartidas
+## Jugadores en dispositivos compartidos
 
-- Caben 30 jugadores por dispositivo.
-- **Quitar de esta tablet** (si tiene llave): se quita solo de esa tablet; su progreso sigue en la nube y se recupera con la llave. Antes envía las partidas pendientes.
-- **Borrar para siempre**: borra también sus datos de la nube.
-- Si su llave se cambia en otra tablet, esta lo detecta, guarda sus partidas sin enviar y pide la llave nueva, sin crear otro perfil en la nube.
+- **Límite:** caben 30 jugadores por dispositivo (móvil, tablet u ordenador). En total no hay límite.
+- **Candado (opcional):** cada jugador puede poner en «Mi Natu» tres dibujos secretos (`lib/ui/perfiles/candado.dart`).
+  - Se piden al abrir la app, al cambiar a ese jugador y al volver tras 5 minutos fuera.
+  - La pantalla tapa toda la app sin cerrar la partida.
+  - Si se olvidan, un mayor lo quita resolviendo una multiplicación.
+  - El candado se guarda solo en ese dispositivo.
+- **Quitar de este dispositivo** (si tiene llave): su progreso sigue en la nube. **Borrar para siempre**: borra también la nube.
+- **Llave cambiada en otro dispositivo:** se detecta, sus partidas esperan y se pide la llave nueva, sin duplicar al niño.
+- **Inactivos:** cada noche se borran los jugadores que llevan un año sin jugar y los dispositivos anónimos sin uso (`pg_cron`, `private.borrar_inactivos`).
+- **Trajes de Aula:** «Birrete de la Clase» (3 juegos completados) y «Medalla del Aula» (10), por logro como los de los mundos.
+- **Leer en voz alta:** en los ajustes, desactivado por defecto. Usa la voz del sistema (`flutter_tts`). Si el dispositivo no tiene voz, no hace nada.
+
+## Panel: estado, fechas y ejemplos
+
+- **Cómo va todo:** espacio de fotos y de base de datos frente al plan gratuito, niños y partidas de la semana. Avisa desde el 80 % y, con las fotos llenas (97 %), no deja subir más.
+- **Fechas:** cada juego puede verse solo entre dos días. Las reglas de la base de datos ya los ocultan fuera de esas fechas.
+- **Ejemplos:** «o empieza con un juego de ejemplo» abre una copia en borrador de uno de tres juegos (`lib/panel/ejemplos.dart`).
+
+## Pantallas en cualquier tamaño
+
+En pantallas anchas (portátil, pizarra digital):
+- el inicio usa dos columnas;
+- Aula reparte los juegos en hasta 4 columnas;
+- el juego pone la pregunta y las respuestas lado a lado.
+
+Las pantallas de Aula, perfiles, candado y entrada del panel llevan una escena a pantalla completa, sin franjas vacías a los lados.
 
 ## Fondos, fotos, llave y progreso en varios dispositivos
 

@@ -13,7 +13,8 @@ class Idioma extends ChangeNotifier {
     : _codigo = _preferencias.getString('idioma') == 'en' ? 'en' : 'es',
       _sonido = _preferencias.getBool('sonido') ?? true,
       _musica = _preferencias.getBool('musica') ?? false,
-      _vibracion = _preferencias.getBool('vibracion') ?? true {
+      _vibracion = _preferencias.getBool('vibracion') ?? true,
+      _leerEnVoz = _preferencias.getBool('voz/leer') ?? false {
     if (_musica) {
       _SintetizadorMelodico.sincronizarMusica(true);
     }
@@ -31,6 +32,18 @@ class Idioma extends ChangeNotifier {
   bool get sonido => _sonido;
   bool get musica => _musica;
   bool get vibracion => _vibracion;
+
+  /// Leer en voz alta las preguntas de Aula. Desactivado al principio.
+  bool get leerEnVoz => _leerEnVoz;
+  bool _leerEnVoz;
+
+  Future<bool> cambiarLeerEnVoz(bool activa) async {
+    if (activa == _leerEnVoz) return true;
+    if (!await _preferencias.setBool('voz/leer', activa)) return false;
+    _leerEnVoz = activa;
+    notifyListeners();
+    return true;
+  }
 
   static Future<Idioma> abrir() async {
     final preferencias = await SharedPreferences.getInstance();

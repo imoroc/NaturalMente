@@ -87,7 +87,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('editar-perfil')));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('borrar-perfil')),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
     await tester.ensureVisible(find.byKey(const Key('borrar-perfil')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('borrar-perfil')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('cancelar-borrar-perfil')));
@@ -109,6 +115,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('editar-perfil')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('borrar-perfil')), findsNothing);
+    expect(find.byKey(const Key('borrar-perfil'), skipOffstage: false), findsNothing);
   });
 }

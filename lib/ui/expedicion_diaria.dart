@@ -163,6 +163,22 @@ const catalogoTrajesNatu = <InfoTrajeNatu>[
     coste: 0,
     logroRequerido: 'Completa el 100 % de los juegos y niveles de NaturalMente',
   ),
+  InfoTrajeNatu(
+    id: 'birrete_aula',
+    nombre: 'Birrete de la Clase',
+    descripcion: 'Gorro de graduado con borla dorada para quien aprende en el aula.',
+    slotEtiqueta: 'Logro · Cabeza',
+    coste: 0,
+    logroRequerido: 'Completa 3 juegos de Aula',
+  ),
+  InfoTrajeNatu(
+    id: 'medalla_aula',
+    nombre: 'Medalla del Aula',
+    descripcion: 'Medalla dorada con estrella y cinta de colores.',
+    slotEtiqueta: 'Logro · Emblema',
+    coste: 0,
+    logroRequerido: 'Completa 10 juegos de Aula',
+  ),
 ];
 
 Future<void> mostrarArmarioNatu(BuildContext context, [Progreso? progreso]) {

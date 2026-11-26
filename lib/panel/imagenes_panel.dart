@@ -55,6 +55,18 @@ Uint8List comprimirImagen(Uint8List original) {
 /// Abre el selector de archivos, comprime la foto elegida y la sube.
 /// Devuelve `null` si el profesor cancela.
 Future<ImagenSubida?> elegirYSubirImagen(RepositorioPanel repositorio) async {
+  // Antes de elegir la foto: si el espacio está lleno no se sube nada.
+  try {
+    if ((await repositorio.estado()).fotosLlenas) {
+      throw const ErrorPanel(
+        'El espacio para fotos está lleno. Borra juegos antiguos con fotos o usa las imágenes de la app.',
+      );
+    }
+  } on ErrorPanel {
+    rethrow;
+  } catch (_) {
+    // Si no se puede consultar, se intenta igual: Supabase lo rechazará si no cabe.
+  }
   final elegidas = await FilePicker.pickFiles(type: FileType.image);
   if (elegidas.isEmpty) return null;
   final original = await elegidas.first.readAsBytes();

@@ -10,6 +10,7 @@ import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/ui/bienvenida.dart';
 import 'package:naturalmente/ui/mapa.dart';
+import 'package:naturalmente/ui/perfiles/candado.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,6 +135,13 @@ class _NaturalmenteAppState extends State<NaturalmenteApp> {
                     : kThemeAnimationDuration,
                 builder: (context, child) {
                   Widget contenido = child!;
+                  if (carga != null) {
+                    // El candado de cada jugador tapa toda la app.
+                    contenido = GuardiaCandado(
+                      perfiles: carga.perfiles,
+                      child: contenido,
+                    );
+                  }
                   if (_idioma != null) {
                     contenido = IdiomaScope(idioma: _idioma!, child: contenido);
                   }

@@ -8,6 +8,7 @@ import 'package:naturalmente/datos/aula/repositorio_aula.dart';
 import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
+import 'package:naturalmente/idiomas/voz.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
 import 'package:naturalmente/ui/aula/escenas.dart';
 import 'package:naturalmente/ui/aula/retos_aula.dart';
@@ -75,6 +76,38 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
   int _mejorComboSesion = 0;
   int _vuelta = 0;
   bool _inicializado = false;
+  String? _retoLeido;
+
+  bool get _leerEnVoz => IdiomaScope.of(context)?.leerEnVoz ?? false;
+
+  String get _textoParaLeer {
+    final reto = _reto;
+    return [
+      reto.enunciado,
+      if (reto is LecturaAula) reto.texto,
+      if (reto is PreguntaAula && reto.tipo == TipoReto.opcionMultiple)
+        for (final o in reto.opciones) o.texto,
+    ].where((t) => t.isNotEmpty).join('. ');
+  }
+
+  void _leer() => Voz.decir(_textoParaLeer, IdiomaScope.of(context)?.codigo ?? 'es');
+
+  /// Con la opción activa, cada reto se lee una vez al aparecer.
+  void _leerSiToca() {
+    if (!_leerEnVoz) return;
+    final clave = '$_vuelta-$_paso';
+    if (_retoLeido == clave) return;
+    _retoLeido = clave;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _leer();
+    });
+  }
+
+  @override
+  void dispose() {
+    Voz.parar();
+    super.dispose();
+  }
 
   JuegoAula get _juego => widget.juego;
   RetoAula get _reto => _juego.preguntas[_paso];
@@ -241,6 +274,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
   Widget build(BuildContext context) {
     final colores = context.coloresNaturales;
     final fondo = _juego.fondo;
+    _leerSiToca();
     return Scaffold(
       appBar: AppBar(
         title: Text(_juego.titulo, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -278,7 +312,7 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                     padding: EdgeInsets.all(medidas.maxWidth < 380 ? 12 : 20),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: ancho ? 1100 : 640),
+                        constraints: BoxConstraints(maxWidth: ancho ? 1400 : 640),
                         child: ancho
                             ? Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -387,6 +421,15 @@ class _JuegoAulaPageState extends State<JuegoAulaPage>
                   key: const Key('enunciado-aula'),
                   textAlign: TextAlign.center,
                   style: estilo.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+                ),
+              if (_leerEnVoz)
+                Align(
+                  child: IconButton.filledTonal(
+                    key: const Key('leer-en-voz'),
+                    tooltip: context.tr('Escuchar otra vez'),
+                    onPressed: _leer,
+                    icon: const Icon(Icons.volume_up_rounded),
+                  ),
                 ),
               if (lectura != null && lectura.texto.isNotEmpty) ...[
                 const SizedBox(height: 10),

@@ -1,7 +1,7 @@
 -- Pruebas de permisos y reglas de Aula. Se ejecutan con `supabase test db`.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(56);
+select plan(61);
 
 -- Identidades de prueba ----------------------------------------------------
 insert into auth.users (id, email) values
@@ -334,6 +334,33 @@ select throws_ok($$
   values ('imagenes', '00000000-0000-0000-0000-0000000000d1/1.jpg',
           '00000000-0000-0000-0000-0000000000d1')
 $$, '42501', null, 'un dispositivo no sube imágenes');
+
+-- Estado del panel y borrado de inactivos -------------------------------------
+reset role;
+select pg_temp.como('00000000-0000-0000-0000-0000000000a1');
+select ok(
+  (public.estado_panel() ->> 'fotos_limite')::bigint = 1073741824
+  and (public.estado_panel() ->> 'ninos_total')::int >= 1,
+  'el profesor ve el espacio usado y cuántos niños hay'
+);
+select pg_temp.como('00000000-0000-0000-0000-0000000000d1');
+select throws_ok($$ select public.estado_panel() $$, '42501', null,
+  'un dispositivo no ve el estado del panel');
+reset role;
+insert into public.perfiles (id, animal, adjetivo, color, llave_hash, ultima_actividad)
+values ('00000000-0000-0000-0000-00000000aaaa', 'oso', 'libre', 'azul', 'x', now() - interval '400 days');
+select is(
+  (select perfiles from private.borrar_inactivos()), 1,
+  'se borra el jugador que lleva más de un año sin jugar'
+);
+select ok(
+  exists (select 1 from public.perfiles where id = (select valor::uuid from guardado where clave = 'perfil')),
+  'y no los que juegan'
+);
+select is(
+  (select count(*)::int from cron.job where jobname = 'borrar-jugadores-inactivos'), 1,
+  'el borrado está programado cada noche'
+);
 
 -- Cambiar la llave expulsa a los demás dispositivos -------------------------
 reset role;

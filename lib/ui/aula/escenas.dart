@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 export 'package:naturalmente/modelo/aula/juego_aula.dart' show escenasAula;
 
@@ -967,5 +967,55 @@ class _Dibujo {
       c.drawCircle(p, 1.8 * u, _p(const Color(0x33FFF59D)));
       c.drawCircle(p, 0.6 * u, _p(const Color(0xFFFFF59D)));
     }
+  }
+}
+
+/// Una escena a pantalla completa detrás del contenido. En pantallas anchas
+/// rellena los lados, sin franjas vacías, y en modo oscuro se atenúa.
+class FondoEscena extends StatelessWidget {
+  const FondoEscena({required this.escena, required this.child, super.key});
+
+  final String escena;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final oscuro = Theme.of(context).brightness == Brightness.dark;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ExcludeSemantics(child: EscenaAula(escena)),
+        ColoredBox(color: oscuro ? const Color(0x8C000000) : const Color(0x33FFFFFF)),
+        child,
+      ],
+    );
+  }
+}
+
+/// Tarjeta para leer bien el contenido encima de una escena.
+class TarjetaSobreEscena extends StatelessWidget {
+  const TarjetaSobreEscena({required this.child, this.anchoMaximo = 640, super.key});
+
+  final Widget child;
+  final double anchoMaximo;
+
+  @override
+  Widget build(BuildContext context) {
+    final oscuro = Theme.of(context).brightness == Brightness.dark;
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: anchoMaximo),
+        child: Container(
+          margin: const EdgeInsets.all(12),
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: (oscuro ? const Color(0xFF18291F) : const Color(0xFFFFFDF7)).withValues(alpha: 0.96),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 18, offset: Offset(0, 6))],
+          ),
+          child: child,
+        ),
+      ),
+    );
   }
 }

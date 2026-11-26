@@ -21,11 +21,64 @@ class FichaJuego {
     required this.juego,
     required this.estado,
     required this.actualizado,
+    this.desde,
+    this.hasta,
   });
 
   final JuegoAula juego;
   final EstadoJuego estado;
   final DateTime actualizado;
+
+  /// Días en que los niños lo ven (opcional). [hasta] es el último día.
+  final DateTime? desde;
+  final DateTime? hasta;
+
+  /// Publicado, pero fuera de sus fechas.
+  bool get fueraDeFecha {
+    final ahora = DateTime.now();
+    return (desde != null && ahora.isBefore(desde!)) ||
+        (hasta != null && ahora.isAfter(hasta!.add(const Duration(days: 1))));
+  }
+}
+
+/// Espacio usado y actividad, para avisar al profe antes de llegar al límite.
+class EstadoPanel {
+  const EstadoPanel({
+    required this.fotosBytes,
+    required this.fotosLimite,
+    required this.fotosNumero,
+    required this.datosBytes,
+    required this.datosLimite,
+    required this.ninosSemana,
+    required this.partidasSemana,
+    required this.ninosTotal,
+    required this.juegosPublicados,
+    required this.diasBorrado,
+  });
+
+  factory EstadoPanel.desdeJson(Map<String, dynamic> j) => EstadoPanel(
+    fotosBytes: (j['fotos_bytes'] as num).toInt(),
+    fotosLimite: (j['fotos_limite'] as num).toInt(),
+    fotosNumero: (j['fotos_numero'] as num).toInt(),
+    datosBytes: (j['datos_bytes'] as num).toInt(),
+    datosLimite: (j['datos_limite'] as num).toInt(),
+    ninosSemana: (j['ninos_semana'] as num).toInt(),
+    partidasSemana: (j['partidas_semana'] as num).toInt(),
+    ninosTotal: (j['ninos_total'] as num).toInt(),
+    juegosPublicados: (j['juegos_publicados'] as num).toInt(),
+    diasBorrado: (j['borrado_inactivos_dias'] as num).toInt(),
+  );
+
+  final int fotosBytes, fotosLimite, fotosNumero;
+  final int datosBytes, datosLimite;
+  final int ninosSemana, partidasSemana, ninosTotal, juegosPublicados;
+  final int diasBorrado;
+
+  double get usoFotos => fotosLimite == 0 ? 0 : fotosBytes / fotosLimite;
+  double get usoDatos => datosLimite == 0 ? 0 : datosBytes / datosLimite;
+
+  /// Con las fotos casi llenas no se dejan subir más.
+  bool get fotosLlenas => usoFotos >= 0.97;
 }
 
 /// Una partida de un niño a un juego, vista desde el panel.
@@ -63,7 +116,14 @@ abstract class RepositorioPanel {
   Future<List<FichaJuego>> misJuegos();
 
   /// Crea el juego si su id está vacío. Devuelve la ficha guardada.
-  Future<FichaJuego> guardar(JuegoAula juego, EstadoJuego estado);
+  Future<FichaJuego> guardar(
+    JuegoAula juego,
+    EstadoJuego estado, {
+    DateTime? desde,
+    DateTime? hasta,
+  });
+
+  Future<EstadoPanel> estado();
 
   /// Borra el juego y las fotos suyas que no use ningún otro juego.
   Future<void> borrar(String juegoId);
@@ -84,7 +144,7 @@ class RepositorioPanelSupabase implements RepositorioPanel {
   final SupabaseClient _cliente;
 
   static const _columnas =
-      'id, titulo, plantilla, version, cursos, contenido, tema, estado, actualizado';
+      'id, titulo, plantilla, version, cursos, contenido, tema, estado, actualizado, disponible_desde, disponible_hasta';
 
   @override
   Future<String?> profesorActual() async {
@@ -160,6 +220,20 @@ class RepositorioPanelSupabase implements RepositorioPanel {
         ? EstadoJuego.publicado
         : EstadoJuego.borrador,
     actualizado: DateTime.parse(fila['actualizado'] as String).toLocal(),
+    desde: _dia(fila['disponible_desde']),
+    // Se guarda el instante en que deja de verse: el día siguiente a «hasta».
+    hasta: _dia(fila['disponible_hasta'])?.subtract(const Duration(days: 1)),
+  );
+
+  static DateTime? _dia(Object? valor) {
+    if (valor is! String) return null;
+    final local = DateTime.parse(valor).toLocal();
+    return DateTime(local.year, local.month, local.day);
+  }
+
+  @override
+  Future<EstadoPanel> estado() async => EstadoPanel.desdeJson(
+    Map<String, dynamic>.from(await _cliente.rpc<dynamic>('estado_panel') as Map),
   );
 
   @override
@@ -175,7 +249,15 @@ class RepositorioPanelSupabase implements RepositorioPanel {
   }
 
   @override
-  Future<FichaJuego> guardar(JuegoAula juego, EstadoJuego estado) async {
+  Future<FichaJuego> guardar(
+    JuegoAula juego,
+    EstadoJuego estado, {
+    DateTime? desde,
+    DateTime? hasta,
+  }) async {
+    if (desde != null && hasta != null && hasta.isBefore(desde)) {
+      throw const ErrorPanel('La fecha de fin es anterior a la de inicio.');
+    }
     if (estado == EstadoJuego.publicado) {
       final errores = juego.errores();
       if (errores.isNotEmpty) throw ErrorPanel(errores.first);
@@ -189,6 +271,14 @@ class RepositorioPanelSupabase implements RepositorioPanel {
       'contenido': juego.contenidoJson(),
       'tema': juego.temaJson(),
       'estado': estado.name,
+      // Días completos en la hora del profe: desde las 0:00 del primero hasta
+      // las 0:00 del día siguiente al último.
+      'disponible_desde': desde == null
+          ? null
+          : DateTime(desde.year, desde.month, desde.day).toUtc().toIso8601String(),
+      'disponible_hasta': hasta == null
+          ? null
+          : DateTime(hasta.year, hasta.month, hasta.day + 1).toUtc().toIso8601String(),
     };
     final fila = juego.id.isEmpty
         ? await _cliente.from('juegos').insert(datos).select(_columnas).single()

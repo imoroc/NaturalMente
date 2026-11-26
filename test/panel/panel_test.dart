@@ -6,6 +6,7 @@ import 'package:naturalmente/datos/perfiles.dart';
 import 'package:naturalmente/modelo/aula/juego_aula.dart';
 import 'package:image/image.dart' as img;
 import 'package:naturalmente/panel/editor_juego.dart';
+import 'package:naturalmente/panel/ejemplos.dart';
 import 'package:naturalmente/panel/imagenes_panel.dart';
 import 'package:naturalmente/panel/panel_app.dart';
 import 'package:naturalmente/panel/repositorio_panel.dart';
@@ -46,7 +47,12 @@ class _PanelFalso implements RepositorioPanel {
   Future<List<FichaJuego>> misJuegos() async => juegos.values.toList();
 
   @override
-  Future<FichaJuego> guardar(JuegoAula juego, EstadoJuego estado) async {
+  Future<FichaJuego> guardar(
+    JuegoAula juego,
+    EstadoJuego estado, {
+    DateTime? desde,
+    DateTime? hasta,
+  }) async {
     if (estado == EstadoJuego.publicado && juego.errores().isNotEmpty) {
       throw ErrorPanel(juego.errores().first);
     }
@@ -63,8 +69,26 @@ class _PanelFalso implements RepositorioPanel {
       juego: juego.copiar(id: id, version: version),
       estado: estado,
       actualizado: DateTime(2026, 11, 25),
+      desde: desde,
+      hasta: hasta,
     );
   }
+
+  int fotosBytes = 1024 * 1024;
+
+  @override
+  Future<EstadoPanel> estado() async => EstadoPanel(
+    fotosBytes: fotosBytes,
+    fotosLimite: 1073741824,
+    fotosNumero: 3,
+    datosBytes: 20 * 1024 * 1024,
+    datosLimite: 524288000,
+    ninosSemana: 12,
+    partidasSemana: 40,
+    ninosTotal: 25,
+    juegosPublicados: juegos.length,
+    diasBorrado: 365,
+  );
 
   @override
   Future<void> borrar(String juegoId) async => juegos.remove(juegoId);
@@ -506,5 +530,70 @@ void main() {
     expect(huecos.respuestas, ['anfibio']);
     expect(huecos.distractores, ['pez', 'reptil']);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('el panel avisa cuando se acaba el espacio para fotos', (tester) async {
+    repo
+      ..sesion = 'Luis'
+      ..fotosBytes = (1073741824 * 0.85).round();
+    await abrirPanel(tester);
+    expect(find.byKey(const Key('panel-estado')), findsOneWidget);
+    expect(find.textContaining('Queda poco espacio para fotos'), findsOneWidget);
+    expect(find.textContaining('Esta semana han jugado 12 niños'), findsOneWidget);
+
+    repo.fotosBytes = 1073741824;
+    await tester.pumpWidget(const SizedBox());
+    await abrirPanel(tester);
+    expect(find.textContaining('El espacio para fotos está lleno'), findsOneWidget);
+    expect(
+      EstadoPanel(
+        fotosBytes: 1073741824,
+        fotosLimite: 1073741824,
+        fotosNumero: 1,
+        datosBytes: 0,
+        datosLimite: 1,
+        ninosSemana: 0,
+        partidasSemana: 0,
+        ninosTotal: 0,
+        juegosPublicados: 0,
+        diasBorrado: 365,
+      ).fotosLlenas,
+      isTrue,
+    );
+  });
+
+  testWidgets('un ejemplo se abre como borrador con su título y se puede publicar', (
+    tester,
+  ) async {
+    repo.sesion = 'Luis';
+    await abrirPanel(tester);
+    await tester.tap(find.byKey(const Key('panel-ejemplo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('panel-ejemplo-1')));
+    await tester.pumpAndSettle();
+    expect(find.text(juegosDeEjemplo[1].titulo), findsWidgets);
+    await tocar(tester, find.byKey(const Key('editor-publicar')));
+    await tester.pumpAndSettle();
+    final ficha = repo.juegos.values.single;
+    expect(ficha.estado, EstadoJuego.publicado, reason: '${ficha.juego.errores()}');
+    expect(ficha.juego.titulo, juegosDeEjemplo[1].titulo);
+    for (final ejemplo in juegosDeEjemplo) {
+      expect(ejemplo.errores(), isEmpty, reason: ejemplo.titulo);
+    }
+  });
+
+  test('las fechas indican si un juego publicado se ve ahora', () {
+    final hoy = DateTime.now();
+    FichaJuego ficha(DateTime? desde, DateTime? hasta) => FichaJuego(
+      juego: juegoDePrueba(),
+      estado: EstadoJuego.publicado,
+      actualizado: hoy,
+      desde: desde,
+      hasta: hasta,
+    );
+    expect(ficha(null, null).fueraDeFecha, isFalse);
+    expect(ficha(hoy.subtract(const Duration(days: 1)), hoy).fueraDeFecha, isFalse);
+    expect(ficha(hoy.add(const Duration(days: 2)), null).fueraDeFecha, isTrue);
+    expect(ficha(null, hoy.subtract(const Duration(days: 3))).fueraDeFecha, isTrue);
   });
 }

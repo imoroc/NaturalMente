@@ -207,6 +207,59 @@ class Perfiles extends ChangeNotifier {
       ? _prefs
       : PreferenciasConPrefijo(_prefs, 'perfiles/$id/');
 
+  // --- Candado: tres dibujos secretos para que nadie juegue por otro -------
+
+  static const _claveCandado = 'perfil/candado';
+
+  /// Jugadores que ya han abierto su candado en esta sesión.
+  final Set<String> _desbloqueados = {};
+
+  /// Los tres dibujos del candado, o `null` si el jugador no tiene.
+  List<String>? candado(String id) {
+    final texto = _preferenciasDe(id).getString(_claveCandado);
+    if (texto == null) return null;
+    final dibujos = texto.split('-');
+    return dibujos.length == 3 ? dibujos : null;
+  }
+
+  /// Hay que abrir el candado antes de jugar con este perfil.
+  bool necesitaCandado(String id) =>
+      candado(id) != null && !_desbloqueados.contains(id);
+
+  /// Pone o quita ([dibujos] a `null`) el candado. Queda abierto.
+  Future<bool> fijarCandado(String id, List<String>? dibujos) async {
+    try {
+      final prefs = _preferenciasDe(id);
+      final ok = dibujos == null
+          ? await prefs.remove(_claveCandado)
+          : await prefs.setString(_claveCandado, dibujos.join('-'));
+      if (!ok) return false;
+    } catch (_) {
+      return false;
+    }
+    _desbloqueados.add(id);
+    notifyListeners();
+    return true;
+  }
+
+  /// Comprueba los dibujos; si son los buenos, abre el candado.
+  bool abrirCandado(String id, List<String> intento) {
+    final secreto = candado(id);
+    if (secreto == null || secreto.join('-') == intento.join('-')) {
+      _desbloqueados.add(id);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  /// Vuelve a cerrar todos los candados (por ejemplo, tras un rato fuera).
+  void cerrarCandados() {
+    if (_desbloqueados.isEmpty) return;
+    _desbloqueados.clear();
+    notifyListeners();
+  }
+
   /// Un mote que no repite el de otro perfil de este dispositivo.
   (String, String) proponerMote() =>
       _moteAlAzar(_azar, {for (final p in _lista) (p.animal, p.adjetivo)});
@@ -256,6 +309,7 @@ class Perfiles extends ChangeNotifier {
     // El curso y la bienvenida se eligen al crear el perfil.
     await progreso.marcarBienvenidaVista();
     if (curso != null) await progreso.guardarCurso(curso);
+    _desbloqueados.add(id);
     await elegir(id);
     return perfil;
   }

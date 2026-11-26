@@ -54,6 +54,15 @@ Todos usan `FeedbackAcierto`: mover piezas no es un acierto; fallar da la pista 
 - **Fechas:** cada juego puede verse solo entre dos días. Las reglas de la base de datos ya los ocultan fuera de esas fechas.
 - **Ejemplos:** «o empieza con un juego de ejemplo» abre una copia en borrador de uno de tres juegos (`lib/panel/ejemplos.dart`).
 
+## Versión web
+
+- **App para los niños:** https://naturalmente.pages.dev. **Panel del profe:** https://naturalmente-profe.pages.dev.
+- **Publicación:** se publican solas al fusionar en `main` (`.github/workflows/web.yml`). Hacen falta los secretos `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID`.
+- **Compilación:** la app se compila con WebAssembly, y si el navegador no lo admite, usa JavaScript.
+- **Primera carga:** son unos 10 MB, que se guardan para las visitas siguientes. Mientras tanto se ve a Natu con «Cargando…» (`web/index.html`).
+- **Sonido:** en web usa Web Audio (`lib/web/audio_web.dart`), con el mismo canal `naturalmente/audio` que Android. Los navegadores solo dejan sonar después del primer toque.
+- **Fotos de Aula:** en web no se precargan con la caché del móvil; las guarda la caché del propio navegador.
+
 ## Pantallas en cualquier tamaño
 
 En pantallas anchas (portátil, pizarra digital):

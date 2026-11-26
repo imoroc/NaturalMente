@@ -1,0 +1,54 @@
+name: Web
+
+# Publica en Cloudflare Pages, al fusionar en main:
+#   - la app para los niños  → https://naturalmente.pages.dev
+#   - el panel del profe     → https://naturalmente-profe.pages.dev
+# Necesita los secretos CLOUDFLARE_API_TOKEN y CLOUDFLARE_ACCOUNT_ID y las
+# variables SUPABASE_URL y SUPABASE_ANON_KEY del repositorio.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Publicar app y panel
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: App para los niños (WebAssembly, con JavaScript de reserva)
+        run: >
+          flutter build web --release --wasm -o build/app_web
+          --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL }}
+          --dart-define=SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
+      - name: Panel del profe
+        run: >
+          flutter build web --release -t lib/main_panel.dart -o build/panel
+          --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL }}
+          --dart-define=SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
+      - name: Subir a Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::warning::Faltan los secretos de Cloudflare: no se publica nada."
+            exit 0
+          fi
+          # La primera vez crea el proyecto de la app; si ya existe, sigue.
+          npx --yes wrangler@4 pages project create naturalmente --production-branch main || true
+          npx --yes wrangler@4 pages deploy build/app_web --project-name naturalmente --branch main --commit-dirty=true
+          npx --yes wrangler@4 pages deploy build/panel --project-name naturalmente-profe --branch main --commit-dirty=true

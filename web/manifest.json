@@ -3,10 +3,10 @@
     "short_name": "NaturalMente",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#F7F4EB",
+    "background_color": "#FAF5EC",
     "theme_color": "#1F8A4C",
     "description": "Ciencias de la naturaleza para primaria.",
-    "orientation": "portrait-primary",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
@@ -31,5 +31,6 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ]
+    ],
+    "lang": "es"
 }

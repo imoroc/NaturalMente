@@ -316,29 +316,88 @@ class PintorHojaFabrica extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.save();
     canvas.scale(size.width / 100, size.height / 60);
+    // El rabillo (peciolo) sale por la izquierda y la punta queda a la
+    // derecha, un poco levantada, como una hoja de judía vista de cerca.
+    const base = Offset(14, 32);
+    const punta = Offset(95, 26);
+    canvas.drawPath(
+      Path()
+        ..moveTo(1, 38)
+        ..quadraticBezierTo(8, 35, base.dx, base.dy),
+      _trazo(const Color(0xFF3F7D2C), 2.6),
+    );
     final hoja = Path()
-      ..moveTo(6, 30)
-      ..cubicTo(24, 2, 70, 0, 94, 30)
-      ..cubicTo(70, 60, 24, 58, 6, 30)
+      ..moveTo(base.dx, base.dy)
+      ..cubicTo(18, 12, 46, 3, 70, 8)
+      ..cubicTo(84, 11, 91, 19, punta.dx, punta.dy)
+      ..cubicTo(90, 36, 78, 48, 60, 52)
+      ..cubicTo(40, 56, 20, 50, base.dx, base.dy)
       ..close();
+    final clara = encendida ? const Color(0xFF6EE7A0) : const Color(0xFF4CC46E);
+    final oscura = encendida
+        ? const Color(0xFF22A05A)
+        : const Color(0xFF1F8A4C);
     canvas.drawPath(
       hoja,
-      _relleno(encendida ? const Color(0xFF34D399) : const Color(0xFF22A05A)),
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [clara, oscura],
+        ).createShader(const Rect.fromLTWH(0, 4, 100, 52)),
     );
     if (encendida) {
       canvas.drawPath(
         hoja,
         Paint()
-          ..color = const Color(0x66FDE047)
+          ..color = const Color(0x55FDE047)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
       );
     }
-    final nervio = _trazo(const Color(0xFF14532D), 1.4);
-    canvas.drawLine(const Offset(2, 30), const Offset(90, 30), nervio);
-    for (final x in const [24.0, 40.0, 56.0, 72.0]) {
-      canvas.drawLine(Offset(x, 30), Offset(x + 10, 16), nervio);
-      canvas.drawLine(Offset(x, 30), Offset(x + 10, 44), nervio);
+    // El nervio central se curva con la hoja y se estrecha hacia la punta.
+    Offset central(double t) {
+      const c = Offset(56, 26);
+      final u = 1 - t;
+      return base * (u * u) + c * (2 * u * t) + punta * (t * t);
     }
+
+    final nervioCentral = Path()..moveTo(base.dx, base.dy);
+    for (var i = 1; i <= 20; i++) {
+      final p = central(i / 20 * .96);
+      nervioCentral.lineTo(p.dx, p.dy);
+    }
+    final colorNervio = encendida
+        ? const Color(0xFFD9F99D)
+        : const Color(0xFFBBF7D0);
+    canvas.drawPath(nervioCentral, _trazo(colorNervio, 1.6));
+    // Los nervios secundarios salen alternos y se curvan hacia la punta.
+    final nervio = _trazo(colorNervio.withValues(alpha: .85), .8);
+    for (var i = 0; i < 6; i++) {
+      final t = .14 + i * .13;
+      final arranque = central(t);
+      final largo = 18 * (1 - t * .65);
+      for (final lado in const [-1.0, 1.0]) {
+        final desfase = lado < 0 ? 0.0 : .05;
+        final o = central(t + desfase);
+        final fin = o + Offset(largo * .85, lado * largo * .6);
+        final control = o + Offset(largo * .3, lado * largo * .42);
+        canvas.drawPath(
+          Path()
+            ..moveTo(o.dx, o.dy)
+            ..quadraticBezierTo(control.dx, control.dy, fin.dx, fin.dy),
+          nervio,
+        );
+      }
+      if (arranque.dx > 90) break;
+    }
+    // Un brillo suave arriba y el borde un poco más oscuro.
+    canvas.drawPath(
+      Path()
+        ..moveTo(24, 20)
+        ..quadraticBezierTo(42, 9, 62, 10),
+      _trazo(Colors.white.withValues(alpha: .35), 2.2),
+    );
+    canvas.drawPath(hoja, _trazo(Color.lerp(oscura, Colors.black, .3)!, 1.1));
     canvas.restore();
   }
 

@@ -24,14 +24,14 @@ const _iconosCarta = <String, (IconData, Color)>{
   'agua': (Icons.water_drop_rounded, Color(0xFF0284C7)),
   'sol': (Icons.wb_sunny_rounded, Color(0xFFF59E0B)),
   'semillas': (Icons.grain_rounded, Color(0xFF92400E)),
-  'polen': (Icons.local_florist_rounded, Color(0xFFDB2777)),
+  'polen': (Icons.bubble_chart_rounded, Color(0xFFD97706)),
   'otono': (Icons.eco_rounded, Color(0xFFEA580C)),
   'savia': (Icons.swap_vert_rounded, Color(0xFF16A34A)),
   'bellota': (Icons.park_rounded, Color(0xFF15803D)),
-  'harina': (Icons.bakery_dining_rounded, Color(0xFFB45309)),
+  'harina': (Icons.breakfast_dining_rounded, Color(0xFFB45309)),
   'campo': (Icons.grass_rounded, Color(0xFF65A30D)),
   'fotosintesis': (Icons.light_mode_rounded, Color(0xFF16A34A)),
-  'sales': (Icons.science_rounded, Color(0xFF7C3AED)),
+  'sales': (Icons.water_drop_rounded, Color(0xFF0284C7)),
 };
 
 /// Dibujo de una carta: una parte de la planta, una planta, un dibujo de los
@@ -146,7 +146,8 @@ class _MemoriaPageState extends State<MemoriaPage>
   Widget construirJuego(BuildContext context, double ancho) {
     final partida = _partida!;
     final nivel = partida.nivel;
-    final columnas = ancho >= 560 ? 4 : 3;
+    // Con más de nueve cartas, cuatro columnas para que quepan sin bajar.
+    final columnas = ancho >= 560 || _orden.length > 9 ? 4 : 3;
     final textoGrande = MediaQuery.textScalerOf(context).scale(14) > 18;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

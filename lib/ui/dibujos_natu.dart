@@ -4551,7 +4551,7 @@ class PintorAnimalDetallado extends CustomPainter {
       canvas.drawPath(ala, pBorde);
     }
 
-    // Cuerpo robusto, garras amarillas y cabeza blanca/dorada con pico ganchudo
+    // Cuerpo robusto, garras amarillas y cabeza dorada con pico ganchudo
     final cuerpo = Rect.fromCenter(
       center: Offset(cx, h * 0.56),
       width: w * 0.30,
@@ -4570,7 +4570,8 @@ class PintorAnimalDetallado extends CustomPainter {
       canvas.drawCircle(Offset(cx + s * w * 0.08, h * 0.74), 3.2, pBorde);
     }
 
-    // Capucha blanca-dorada del águila
+    // Cabeza parda con la nuca dorada, como las águilas de la península
+    // (la cabeza blanca es del pigargo americano).
     final cabeza = Path()
       ..moveTo(cx - w * 0.14, h * 0.40)
       ..quadraticBezierTo(cx - w * 0.16, h * 0.18, cx, h * 0.18)
@@ -4579,7 +4580,15 @@ class PintorAnimalDetallado extends CustomPainter {
       ..lineTo(cx, h * 0.41)
       ..lineTo(cx - w * 0.08, h * 0.44)
       ..close();
-    canvas.drawPath(cabeza, Paint()..color = const Color(0xFFFEF3C7));
+    canvas.drawPath(
+      cabeza,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFF2C46D), Color(0xFFB7791F)],
+        ).createShader(cabeza.getBounds()),
+    );
     canvas.drawPath(cabeza, pBorde);
 
     // Pico rapaz curvado amarillo intenso

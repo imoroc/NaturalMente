@@ -681,10 +681,12 @@ class OscuridadLinternaPintor extends CustomPainter {
   /// Zonas de lo encontrado, que se quedan encendidas.
   final List<ZonaLinterna> encendidas;
 
+  // Casi opaca: el dibujo solo se adivina, así que hay que usar la luz para
+  // encontrar cada parte.
   Color get _oscuridad => switch (herramienta) {
-    'rayos' => const Color(0xF2020817),
-    'microscopio' => const Color(0xF0111111),
-    _ => const Color(0xEB0F172A),
+    'rayos' => const Color(0xF9020817),
+    'microscopio' => const Color(0xF6111111),
+    _ => const Color(0xF70F172A),
   };
 
   Color get _aro => switch (herramienta) {

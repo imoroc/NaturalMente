@@ -57,11 +57,13 @@ class DibujoPlato extends StatelessWidget {
   Widget build(BuildContext context) {
     // Cada sitio se dibuja con un ejemplo claro de lo que guarda.
     final dibujo = switch (id) {
-      'cada-dia' => 'plato-manzana',
-      'de-vez-en-cuando' => 'plato-bollo',
-      'mitad-verdura' => 'plato-brocoli',
-      'cuarto-proteina' => 'plato-pescado',
-      'cuarto-cereal' => 'plato-pan',
+      // Ninguno es un alimento que se pregunte en ese nivel, para no regalar
+      // la respuesta.
+      'cada-dia' => 'plato-tomate',
+      'de-vez-en-cuando' => 'plato-galletitas',
+      'mitad-verdura' => 'plato-manzana',
+      'cuarto-proteina' => 'plato-lentejas-bote',
+      'cuarto-cereal' => 'plato-cereales',
       final otro => cromosPlato[otro] ?? otro,
     };
     return SizedBox(
@@ -77,8 +79,8 @@ String? subtituloSitioPlato(String id) => switch (id) {
   'cada-dia' => 'Fruta, lácteos y pan',
   'de-vez-en-cuando' => 'Mucho azúcar o grasa',
   'mitad-verdura' => 'La mitad del plato',
-  'cuarto-proteina' => 'Un cuarto: legumbres, huevo, pescado',
-  'cuarto-cereal' => 'Un cuarto: pan, arroz, pasta',
+  'cuarto-proteina' => 'Legumbres, huevo, pescado',
+  'cuarto-cereal' => 'Pan, arroz, pasta',
   'etiqueta-azucar' => 'Más de 15 g en 100 g',
   'etiqueta-sal' => 'Más de 1,5 g en 100 g',
   'etiqueta-grasa' => 'Más de 20 g en 100 g',

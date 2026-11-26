@@ -118,7 +118,8 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
     final partida = _partida!;
     final nivel = partida.nivel;
     final ronda = partida.ronda;
-    final columnas = ancho >= 560 ? 3 : 2;
+    // Con seis animales, tres columnas para que todos quepan sin bajar.
+    final columnas = ancho >= 560 || (ronda?.opciones.length ?? 0) > 4 ? 3 : 2;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -235,7 +236,7 @@ class _AdivinanzaPageState extends State<AdivinanzaPage>
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
-            childAspectRatio: 1,
+            childAspectRatio: columnas == 3 ? .9 : 1,
             children: [
               for (final id in _opciones[ronda.id] ?? ronda.opciones)
                 _OpcionAnimal(

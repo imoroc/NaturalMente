@@ -57,8 +57,12 @@ void main() {
         }
         if (nivel != 'facil') {
           expect(
-            find.text('Descubrimientos: 3 de ${nivel == 'medio' ? 5 : 7}'),
-            findsOneWidget,
+            t
+                .widget<LinearProgressIndicator>(
+                  find.byType(LinearProgressIndicator),
+                )
+                .value,
+            3 / (nivel == 'medio' ? 5 : 7),
           );
           final context = t.element(find.byType(Scaffold).last);
           await IdiomaScope.of(context)!.elegir('en');
@@ -139,7 +143,12 @@ void main() {
 
     await activar('eco-pieza-hierba');
     await activar('eco-destino-hierba');
-    expect(find.text('Descubrimientos: 1 de 3'), findsOneWidget);
+    expect(
+      t
+          .widget<LinearProgressIndicator>(find.byType(LinearProgressIndicator))
+          .value,
+      1 / 3,
+    );
   });
   for (final size in [
     const Size(320, 568),

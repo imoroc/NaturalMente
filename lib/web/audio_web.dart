@@ -22,6 +22,8 @@ class _AudioWeb {
   web.AudioContext? _contexto;
   final Map<String, web.AudioBuffer> _decodificados = {};
   web.AudioBufferSourceNode? _musica;
+  web.GainNode? _gananciaMusica;
+  double _volumenMusica = 1;
 
   web.AudioContext get _ctx => _contexto ??= web.AudioContext();
 
@@ -31,19 +33,24 @@ class _AudioWeb {
       switch (llamada.method) {
         case 'reproducirArchivo':
           final buffer = await _archivo(args['id']! as String, args['bytes']! as Uint8List);
-          _sonar(buffer, volumen: 1);
+          _sonar(buffer, volumen: _volumen(args));
         case 'reproducirPcm':
           final clave = 'pcm-${args['id']}';
           final buffer = _decodificados[clave] ??=
               _pcm(args['pcm']! as Uint8List, args['sampleRate']! as int);
-          _sonar(buffer, volumen: 1);
+          _sonar(buffer, volumen: _volumen(args));
         case 'iniciarMusicaArchivo':
           final buffer = await _archivo('musica', args['bytes']! as Uint8List);
+          _volumenMusica = _volumen(args);
           _iniciarMusica(buffer);
         case 'iniciarMusicaPcm':
           final buffer = _decodificados['musica-pcm'] ??=
               _pcm(args['pcm']! as Uint8List, args['sampleRate']! as int);
+          _volumenMusica = _volumen(args);
           _iniciarMusica(buffer);
+        case 'volumenMusica':
+          _volumenMusica = _volumen(args);
+          _gananciaMusica?.gain.value = 0.35 * _volumenMusica;
         case 'detenerMusicaPcm':
           _detenerMusica();
       }
@@ -52,6 +59,9 @@ class _AudioWeb {
     }
     return null;
   }
+
+  double _volumen(Map<String, Object?> args) =>
+      ((args['volumen'] as num?)?.toDouble() ?? 1).clamp(0.0, 1.0);
 
   Future<web.AudioBuffer> _archivo(String id, Uint8List bytes) async {
     final guardado = _decodificados[id];
@@ -93,11 +103,12 @@ class _AudioWeb {
     final fuente = ctx.createBufferSource()
       ..buffer = buffer
       ..loop = true;
-    final ganancia = ctx.createGain()..gain.value = 0.35;
+    final ganancia = ctx.createGain()..gain.value = 0.35 * _volumenMusica;
     fuente.connect(ganancia);
     ganancia.connect(ctx.destination);
     fuente.start();
     _musica = fuente;
+    _gananciaMusica = ganancia;
   }
 
   void _detenerMusica() {
@@ -105,5 +116,6 @@ class _AudioWeb {
       _musica?.stop();
     } catch (_) {}
     _musica = null;
+    _gananciaMusica = null;
   }
 }

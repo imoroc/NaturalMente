@@ -5,6 +5,7 @@ import 'package:naturalmente/ui/nivel_recomendado.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
+import 'package:naturalmente/datos/progreso.dart';
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
 import 'package:naturalmente/modelo/ecosistema.dart';
@@ -45,7 +46,7 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   Duration _duracion(int ms) =>
       Duration(milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : ms);
 
-  static const _ordenBandeja = ['conejo', 'zorro', 'hierba'];
+  static const _ordenBandeja = ['hierba', 'conejo', 'zorro'];
 
   static String _puestoTitulo(String id) => switch (id) {
     'hierba' => '1 · Suelo al sol',
@@ -391,7 +392,11 @@ class _EcosistemaPageState extends State<EcosistemaPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Texto(widget.actividad.titulo),
+          title: Texto(
+            p == null || p.completa
+                ? widget.actividad.titulo
+                : '${widget.actividad.titulo} · ${math.min(p.pasos + 1, p.total)} de ${p.total}',
+          ),
           leading: BackButton(onPressed: _salir),
           actions: [
             InsigniaPrecisionAppBar(
@@ -421,97 +426,168 @@ class _EcosistemaPageState extends State<EcosistemaPage>
   }
 
   Widget _selector() {
-    final progreso = Alcance.of(context).progreso;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 440),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: const AspectRatio(
-                aspectRatio: 2,
-                child: DibujoEcosistema(),
-              ),
-            ),
+    final alcance = Alcance.of(context);
+    final progreso = alcance.progreso;
+    final fichasCatalogo = {
+      for (final f in alcance.catalogo.fichas) f.id: f.titulo,
+    };
+    final colores = context.coloresNaturales;
+    return ListenableBuilder(
+      listenable: progreso,
+      builder: (context, _) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Burbuja(
+            quien: widget.actividad.quien,
+            frase:
+                'Elige un nivel. Cada dificultad enseña nuevos retos y desbloquea sus propios cromos del cuaderno.',
+            gesto: 'hola',
           ),
-        ),
-        const SizedBox(height: 16),
-        Burbuja(
-          quien: widget.actividad.quien,
-          frase: widget.actividad.intro,
-          gesto: 'hola',
-        ),
-        const SizedBox(height: 20),
-        Texto(
-          'Elige un nivel',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const SizedBox(height: 6),
-        const Texto(
-          'Puedes jugar a cualquiera. Cada nivel descubre algo nuevo.',
-        ),
-        const SizedBox(height: 16),
-        for (final nivel in _ecosistema.niveles) ...[
-          TarjetaJuego(
-            claveAccion: Key('nivel-${nivel.id}'),
-            borde: context.coloresNaturales.borde(
-              progreso.nivelEcosistemaHecho(widget.actividad, nivel.id)
-                  ? EstilosJuego.acierto
-                  : const Color(0xFF38BDF8),
-            ),
-            onTap: () => _empezar(nivel),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 52,
-                    height: 60,
-                    child: DibujoEcosistema(
-                      elemento: nivel.id == 'facil'
-                          ? 'hierba'
-                          : nivel.id == 'medio'
-                          ? 'conejo'
-                          : 'zorro',
-                    ),
+          const SizedBox(height: 16),
+          for (var i = 0; i < _ecosistema.niveles.length; i++) ...[
+            Builder(
+              builder: (context) {
+                final nivel = _ecosistema.niveles[i];
+                final hecho = progreso.nivelEcosistemaHecho(
+                  widget.actividad,
+                  nivel.id,
+                );
+                return TarjetaJuego(
+                  claveAccion: Key('nivel-${nivel.id}'),
+                  borde: colores.borde(
+                    hecho ? EstilosJuego.acierto : const Color(0xFF38BDF8),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
+                  sombra: colores.sombra(
+                    hecho ? const Color(0xFF239E56) : const Color(0xFF0284C7),
+                  ),
+                  radio: 20,
+                  onTap: () => _empezar(nivel),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Texto(
-                          nivel.nombre,
-                          style: Theme.of(context).textTheme.titleLarge,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Texto(
+                                nivel.nombre,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16,
+                                  color: colores.contenido(
+                                    const Color(0xFF1B3022),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var s = 0; s <= i; s++)
+                                  Icon(
+                                    Icons.star_rounded,
+                                    size: 18,
+                                    color: colores.contenido(
+                                      hecho
+                                          ? const Color(0xFFF59E0B)
+                                          : const Color(0xFFCBD5E1),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
                         ),
                         Texto('Pensado para ${nivel.curso}'),
                         EtiquetaRecomendado(nivelId: nivel.id),
-                        const SizedBox(height: 6),
-                        Texto(nivel.resumen),
-                        if (progreso.ultimoNivelEcosistema == nivel.id)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 6),
-                            child: Texto('Tu último nivel'),
+                        if (nivel.resumen.isNotEmpty) ...[
+                          const SizedBox(height: 4),
+                          Texto(nivel.resumen),
+                        ],
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: [
+                            for (final fichaId in Progreso.fichasDeNivel(
+                              widget.actividad.id,
+                              nivel.id,
+                            ))
+                              _etiquetaCromo(
+                                progreso.fichaDesbloqueada(fichaId),
+                                fichasCatalogo[fichaId] ?? fichaId,
+                              ),
+                          ],
+                        ),
+                        if (progreso.ultimoNivelEcosistema == nivel.id) ...[
+                          const SizedBox(height: 6),
+                          const Texto('Tu último nivel'),
+                        ],
+                        if (hecho) ...[
+                          const SizedBox(height: 6),
+                          Texto(
+                            '✓ Nivel superado',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: colores.contenido(const Color(0xFF15803D)),
+                            ),
                           ),
-                        if (progreso.nivelEcosistemaHecho(
-                          widget.actividad,
-                          nivel.id,
-                        ))
-                          const Texto('✓ Nivel superado'),
+                        ],
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.chevron_right_rounded),
-                ],
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _etiquetaCromo(bool conseguido, String titulo) {
+    final colores = context.coloresNaturales;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+      decoration: BoxDecoration(
+        color: colores.superficie(
+          conseguido ? const Color(0xFFFEF3C7) : const Color(0xFFF1F5F9),
+        ),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: colores.borde(
+            conseguido ? const Color(0xFFF59E0B) : const Color(0xFFCBD5E1),
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            conseguido ? Icons.auto_stories_rounded : Icons.lock_outline_rounded,
+            size: 13,
+            color: colores.contenido(
+              conseguido ? const Color(0xFFB45309) : const Color(0xFF64748B),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Flexible(
+            child: Texto(
+              'Cromo: $titulo',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w800,
+                color: colores.contenido(
+                  conseguido ? const Color(0xFF92400E) : const Color(0xFF475569),
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 14),
         ],
-      ],
+      ),
     );
   }
 
@@ -526,24 +602,8 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 12,
-          children: [
-            Texto(
-              '${p.nivel.nombre} · ${p.nivel.curso}',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            TextButton.icon(
-              key: const Key('eco-ayuda'),
-              style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-              onPressed: _ayuda,
-              icon: const Icon(Icons.help_outline_rounded),
-              label: const Texto('Ver cómo'),
-            ),
-          ],
-        ),
+        _cabeceraNivel(p),
+        const SizedBox(height: 4),
         Semantics(
           label: context.traducir('Descubrimientos: ${p.pasos} de ${p.total}'),
           child: ProgresoPaso(
@@ -554,17 +614,9 @@ class _EcosistemaPageState extends State<EcosistemaPage>
             ),
           ),
         ),
-        const SizedBox(height: 8),
-        Texto('Descubrimientos: ${p.pasos} de ${p.total}'),
+        const SizedBox(height: 10),
+        _tarjetaReto(p, instruccion),
         const SizedBox(height: 12),
-        Semantics(
-          header: true,
-          child: Texto(
-            instruccion,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-        const SizedBox(height: 14),
         LayoutBuilder(
           builder: (context, constraints) {
             final escena = _escena(p);
@@ -586,15 +638,156 @@ class _EcosistemaPageState extends State<EcosistemaPage>
             );
           },
         ),
-        if (!p.completa) ...[
-          const SizedBox(height: 14),
-          TextButton(
-            key: const Key('eco-cambiar-nivel'),
-            onPressed: _cambiarNivel,
-            child: const Texto('Cambiar nivel'),
-          ),
-        ],
       ],
+    );
+  }
+
+  Widget _cabeceraNivel(PartidaEcosistema p) {
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Texto(
+          '${p.nivel.nombre} · Pensado para ${p.nivel.curso}. Puedes jugarlo igual.',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: context.coloresNaturales.contenido(const Color(0xFF64748B)),
+          ),
+        ),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            IconButton(
+              key: const Key('eco-ayuda'),
+              tooltip: context.traducir('Ver cómo'),
+              onPressed: _ayuda,
+              icon: const Icon(Icons.help_outline_rounded, size: 20),
+            ),
+            if (!p.completa)
+              TextButton.icon(
+                key: const Key('eco-cambiar-nivel'),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  minimumSize: const Size(0, 32),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: _cambiarNivel,
+                icon: const Icon(Icons.swap_horiz_rounded, size: 16),
+                label: const Texto(
+                  'Cambiar nivel',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _tarjetaReto(PartidaEcosistema p, String instruccion) {
+    final colores = context.coloresNaturales;
+    final bien = p.completa || (p.confirmado && p.acierto == true);
+    final paso = math.min(p.pasos + 1, p.total);
+    return AnuncioPaso(
+      anunciar: p.acierto != false,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        decoration: BoxDecoration(
+          color: colores.superficie(
+            bien ? const Color(0xFFF0FDF4) : Colors.white,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: colores.borde(
+              bien ? const Color(0xFF22C55E) : const Color(0xFFE2DEC9),
+            ),
+            width: 2.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: colores.sombra(
+                bien ? const Color(0xFF86EFAC) : const Color(0xFFD6CFC0),
+              ),
+              offset: const Offset(0, 3),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: colores.superficie(
+                  bien ? const Color(0xFFDCFCE7) : const Color(0xFFF8FAFC),
+                ),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: colores.borde(
+                    bien ? const Color(0xFF4ADE80) : const Color(0xFFE2E8F0),
+                  ),
+                ),
+              ),
+              child: Icon(
+                bien ? Icons.check_circle_rounded : Icons.forest_rounded,
+                size: 30,
+                color: colores.contenido(
+                  bien ? const Color(0xFF15803D) : const Color(0xFF1F8A4C),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colores.superficie(
+                        bien ? const Color(0xFFDCFCE7) : const Color(0xFFE0F2FE),
+                      ),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Texto(
+                      bien
+                          ? '✓ ¡Muy bien! · ${p.nivel.nombre}'
+                          : 'Reto $paso de ${p.total} · ${p.nivel.nombre}',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w900,
+                        color: colores.contenido(
+                          bien ? const Color(0xFF15803D) : const Color(0xFF0369A1),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Semantics(
+                    header: true,
+                    child: Texto(
+                      instruccion,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        height: 1.15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -1087,10 +1280,6 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       if (!p.completa && p.montando && !p.confirmado) ...[
-        const Texto(
-          'Toca un dibujo y después su lugar. También puedes arrastrarlo.',
-        ),
-        const SizedBox(height: 10),
         LayoutBuilder(
           builder: (context, c) => Wrap(
             spacing: 10,
@@ -1107,6 +1296,12 @@ class _EcosistemaPageState extends State<EcosistemaPage>
           ),
         ),
         const SizedBox(height: 14),
+        if (p.frase == null)
+          Burbuja(
+            quien: widget.actividad.quien,
+            frase: 'Toca un dibujo y después su lugar. También puedes arrastrarlo.',
+            gesto: 'pensando',
+          ),
       ],
       if (!p.completa &&
           !p.montando &&
@@ -1238,17 +1433,29 @@ class _EcosistemaPageState extends State<EcosistemaPage>
     );
   }
 
+  /// Solo se puede coger la pieza que toca ahora (hierba, conejo, zorro).
+  /// Las demás se ven en gris, con candado, y no responden.
+  static const _filtroGris = ColorFilter.matrix(<double>[
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0, 0, 0, 1, 0, //
+  ]);
+
   Widget _pieza(PartidaEcosistema p, ElementoEcosistema e) {
+    final bloqueada = p.elementoActual?.id != e.id;
     final tarjeta = TarjetaJuego(
       claveAccion: Key('eco-pieza-${e.id}'),
       borde: context.coloresNaturales.borde(
         p.seleccion == e.id ? const Color(0xFF1F8A4C) : EstilosJuego.borde,
       ),
       destacada: p.seleccion == e.id,
-      onTap: () {
-        context.sonidoSeleccion();
-        if (!pasoBloqueado) setState(() => p.seleccionar(e.id));
-      },
+      onTap: bloqueada
+          ? null
+          : () {
+              context.sonidoSeleccion();
+              if (!pasoBloqueado) setState(() => p.seleccionar(e.id));
+            },
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -1259,7 +1466,15 @@ class _EcosistemaPageState extends State<EcosistemaPage>
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.w800),
             ),
-            if (p.seleccion == e.id)
+            if (bloqueada)
+              Icon(
+                Icons.lock_outline_rounded,
+                size: 20,
+                color: context.coloresNaturales.contenido(
+                  const Color(0xFF64748B),
+                ),
+              )
+            else if (p.seleccion == e.id)
               Icon(
                 Icons.check_circle_rounded,
                 size: 20,
@@ -1269,6 +1484,15 @@ class _EcosistemaPageState extends State<EcosistemaPage>
         ),
       ),
     );
+    if (bloqueada) {
+      return Semantics(
+        enabled: false,
+        child: ColorFiltered(
+          colorFilter: _filtroGris,
+          child: Opacity(opacity: .5, child: tarjeta),
+        ),
+      );
+    }
     return Semantics(
       selected: p.seleccion == e.id,
       child: Draggable<String>(

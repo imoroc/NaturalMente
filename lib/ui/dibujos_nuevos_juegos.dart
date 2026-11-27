@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/tema.dart';
+import 'package:naturalmente/ui/arte_webp.dart';
 
 import 'package:naturalmente/idiomas/idioma.dart';
 import 'package:naturalmente/modelo/actividad.dart';
@@ -488,6 +489,7 @@ class DibujoNuevoJuego extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hayCromoWebp(id)) return arteWebp(id, ancho: tamano, alto: tamano);
     return SizedBox(
       width: tamano,
       height: tamano,

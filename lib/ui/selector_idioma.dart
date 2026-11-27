@@ -100,6 +100,8 @@ class _PanelAjustes extends StatefulWidget {
 class _PanelAjustesState extends State<_PanelAjustes> {
   final Set<String> _guardando = {};
   String? _error;
+  double? _volumenEfectosArrastre;
+  double? _volumenMusicaArrastre;
 
   Future<void> _guardar(
     String grupo,
@@ -304,6 +306,25 @@ class _PanelAjustesState extends State<_PanelAjustes> {
                               Icons.volume_off_rounded,
                               widget.idioma.cambiarSonido,
                             ),
+                            _deslizador(
+                              id: 'volumen-efectos',
+                              titulo: 'Volumen de los efectos',
+                              valor:
+                                  _volumenEfectosArrastre ??
+                                  widget.idioma.volumenEfectos,
+                              activo: widget.idioma.sonido,
+                              alMover: (v) =>
+                                  setState(() => _volumenEfectosArrastre = v),
+                              alSoltar: (v) async {
+                                await _guardar(
+                                  'volumen-efectos',
+                                  () => widget.idioma.cambiarVolumenEfectos(v),
+                                );
+                                if (mounted) {
+                                  setState(() => _volumenEfectosArrastre = null);
+                                }
+                              },
+                            ),
                             Divider(
                               height: 1,
                               indent: 52,
@@ -317,6 +338,27 @@ class _PanelAjustesState extends State<_PanelAjustes> {
                               Icons.music_note_rounded,
                               Icons.music_off_rounded,
                               widget.idioma.cambiarMusica,
+                            ),
+                            _deslizador(
+                              id: 'volumen-musica',
+                              titulo: 'Volumen de la música',
+                              valor:
+                                  _volumenMusicaArrastre ??
+                                  widget.idioma.volumenMusica,
+                              activo: widget.idioma.musica,
+                              alMover: (v) {
+                                widget.idioma.previsualizarVolumenMusica(v);
+                                setState(() => _volumenMusicaArrastre = v);
+                              },
+                              alSoltar: (v) async {
+                                await _guardar(
+                                  'volumen-musica',
+                                  () => widget.idioma.cambiarVolumenMusica(v),
+                                );
+                                if (mounted) {
+                                  setState(() => _volumenMusicaArrastre = null);
+                                }
+                              },
                             ),
                             Divider(
                               height: 1,
@@ -385,6 +427,49 @@ class _PanelAjustesState extends State<_PanelAjustes> {
       );
     },
   );
+
+  Widget _deslizador({
+    required String id,
+    required String titulo,
+    required double valor,
+    required bool activo,
+    required ValueChanged<double> alMover,
+    required ValueChanged<double> alSoltar,
+  }) {
+    final colores = context.coloresNaturales;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(52, 0, 8, 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: Slider(
+              key: Key('ajuste-$id'),
+              value: valor.clamp(0.0, 1.0),
+              divisions: 10,
+              label: '${(valor * 100).round()} %',
+              semanticFormatterCallback: (v) =>
+                  '${context.traducir(titulo)}: ${(v * 100).round()} %',
+              activeColor: activo ? colores.acierto : colores.tenue,
+              onChanged: activo ? alMover : null,
+              onChangeEnd: activo ? alSoltar : null,
+            ),
+          ),
+          SizedBox(
+            width: 44,
+            child: Texto(
+              '${(valor * 100).round()} %',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                color: colores.tenue,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _interruptor(
     String id,

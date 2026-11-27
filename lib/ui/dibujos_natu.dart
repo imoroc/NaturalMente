@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/arte_webp.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/ui/texto.dart';
@@ -3257,6 +3258,13 @@ class DibujoAnimalDetallado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hayArteWebp(id)) {
+      return SizedBox(
+        width: ancho,
+        height: alto,
+        child: arteWebp(id, ancho: ancho, alto: alto),
+      );
+    }
     return SizedBox(
       width: ancho,
       height: alto,

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/arte_webp.dart';
 
@@ -45,7 +46,11 @@ class DibujoNacimiento extends StatelessWidget {
       padding: EdgeInsets.all(tamano * .07),
       child: webp
           ? arteWebp(id, ancho: tamano, alto: tamano)
-          : CustomPaint(painter: _PintorNacimiento(id)),
+          : IlustracionEstatica(
+              grupo: 'nacimiento',
+              id: id,
+              respaldo: CustomPaint(painter: _PintorNacimiento(id)),
+            ),
     );
   }
 }

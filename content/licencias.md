@@ -1,6 +1,6 @@
 # Procedencia de los recursos
 
-Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 26 de noviembre de 2026.
+Inventario de lo que la app muestra o hace sonar y de dónde sale. Actualizado el 27 de noviembre de 2026.
 
 ## Ilustraciones dibujadas con código
 
@@ -39,6 +39,7 @@ Las ilustraciones vectoriales de Natu, los juegos y las fichas se dibujaron expr
 | Otras 81 ilustraciones de ficha en `assets/cromos/` | 25 de noviembre de 2026 | OpenAI ImageGen generó las ilustraciones en nueve láminas con el Camello original como referencia de estilo. Se revisaron por tema y se exportaron como WebP individuales con transparencia. Los IDs que las usan están en [el catálogo](catalog.json). |
 | `assets/sonidos/*.mp3` (acierto, celebracion, descubrimiento, musica, paso1 a paso6, pista, quitar, seleccion, toque) | 23 y 26 de octubre de 2026 (Iván) | Pendiente de confirmar origen y licencia |
 | `assets/inicio/*.webp` | 18 de noviembre de 2026 | Ilustraciones creadas con OpenAI ImageGen a partir del boceto aprobado de NaturalMente, incluida la llama de racha. Siluetas recortadas y exportadas a WebP con transparencia para ambos temas. |
+| `assets/ilustraciones/*/*.webp` | 27 de noviembre de 2026 | Ilustraciones estáticas de OpenAI ImageGen con los cromos de NaturalMente como referencia de estilo y los dibujos Flutter como guía de contenido. Revisadas y exportadas a WebP con transparencia para los minijuegos. |
 | `assets/fuentes/Nunito-*.ttf` | 18 de noviembre de 2026 | Nunito, descargada del repositorio Google Fonts y convertida en pesos estáticos 600 y 900 para el inicio. SIL Open Font License 1.1, incluida en [Nunito-OFL.txt](../assets/fuentes/Nunito-OFL.txt). |
 
 Antes de subir la app a las tiendas hay que completar las dos filas pendientes: de dónde salen el icono y los sonidos, con qué licencia y si piden atribución.

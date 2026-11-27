@@ -47,6 +47,21 @@ flutter:
     - assets/mundos/
     - assets/cromos/
     - assets/inicio/
+    - assets/ilustraciones/accesorios/
+    - assets/ilustraciones/animales/
+    - assets/ilustraciones/animales-sin-fondo/
+    - assets/ilustraciones/bocados/
+    - assets/ilustraciones/contenedores/
+    - assets/ilustraciones/emociones/
+    - assets/ilustraciones/habitos/
+    - assets/ilustraciones/nacimiento/
+    - assets/ilustraciones/paradas/
+    - assets/ilustraciones/plantas/
+    - assets/ilustraciones/plato/
+    - assets/ilustraciones/residuos/
+    - assets/ilustraciones/retos/
+    - assets/ilustraciones/sentidos/
+    - assets/ilustraciones/vivo/
     - assets/fuentes/Nunito-OFL.txt
   fonts:
     - family: NunitoInicio

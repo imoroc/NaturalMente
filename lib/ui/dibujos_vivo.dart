@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 
 /// Tarjetas de «¿Vivo o no vivo?».
 const idsVivo = <String>{
@@ -63,7 +64,11 @@ class DibujoVivo extends StatelessWidget {
       key: ValueKey('dibujo-vivo-$id'),
       width: tamano,
       height: tamano,
-      child: CustomPaint(painter: _PintorVivo(dibujo)),
+      child: IlustracionEstatica(
+        grupo: 'vivo',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorVivo(dibujo)),
+      ),
     );
   }
 }

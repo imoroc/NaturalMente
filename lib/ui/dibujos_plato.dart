@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/modelo/actividad.dart';
@@ -70,7 +71,11 @@ class DibujoPlato extends StatelessWidget {
       key: ValueKey('dibujo-plato-$id'),
       width: tamano,
       height: tamano,
-      child: CustomPaint(painter: _PintorPlato(dibujo)),
+      child: IlustracionEstatica(
+        grupo: 'plato',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorPlato(dibujo)),
+      ),
     );
   }
 }

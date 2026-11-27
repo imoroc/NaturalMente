@@ -459,6 +459,45 @@ void main() {
 
   for (final brillo in Brightness.values) {
     group(brillo.name, () {
+      testWidgets('vivo: carga el WebP en la partida y al repetir', (
+        tester,
+      ) async {
+        const ruta = 'assets/ilustraciones/vivo/vivo-gato.webp';
+        final actividad = catalogo.actividades.firstWhere((a) => a.id == 'vivo');
+        await abrir(tester, _pagina(actividad), brillo);
+
+        Future<void> comprobarIlustracion() async {
+          final tarjeta = find.byKey(const ValueKey('dibujo-vivo-vivo-gato'));
+          expect(tarjeta, findsOneWidget);
+          await tester.runAsync(() async {
+            await precacheImage(const AssetImage(ruta), tester.element(tarjeta));
+          });
+          await tester.pumpAndSettle();
+          final imagen = find.descendant(
+            of: tarjeta,
+            matching: find.byWidgetPredicate(
+              (widget) =>
+                  widget is Image &&
+                  widget.image is AssetImage &&
+                  (widget.image as AssetImage).assetName == ruta,
+            ),
+          );
+          expect(imagen, findsOneWidget);
+          final fotograma = find.descendant(
+            of: imagen,
+            matching: find.byType(RawImage),
+          );
+          expect(tester.widget<RawImage>(fotograma).image, isNotNull);
+        }
+
+        await _tocar(tester, 'nivel-facil');
+        await comprobarIlustracion();
+        await _jugar(tester, actividad, 'facil');
+        expect(find.byType(FinJuego), findsOneWidget);
+        await _tocar(tester, 'fin-repetir');
+        await comprobarIlustracion();
+      });
+
       for (final actividad in catalogo.actividades) {
         testWidgets(
           '${actividad.id}: cierre automático y acciones en los tres niveles',

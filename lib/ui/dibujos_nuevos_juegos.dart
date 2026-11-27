@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 import 'package:naturalmente/ui/arte_webp.dart';
 
@@ -493,7 +494,11 @@ class DibujoNuevoJuego extends StatelessWidget {
     return SizedBox(
       width: tamano,
       height: tamano,
-      child: CustomPaint(painter: _PintorNuevoJuego(id)),
+      child: IlustracionEstatica(
+        grupo: 'retos',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorNuevoJuego(id)),
+      ),
     );
   }
 }

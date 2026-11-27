@@ -3,6 +3,7 @@ import 'package:naturalmente/ui/atencion_paso.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/datos/alcance.dart';
@@ -360,9 +361,15 @@ class Criatura extends StatelessWidget {
                   color: context.coloresNaturales.contenido(costumbre.$2),
                 ),
               ),
-              CustomPaint(
-                size: const Size(68, 68),
-                painter: PintorHabitoCartoon(id: id, color: costumbre.$2),
+              SizedBox.square(
+                dimension: 68,
+                child: IlustracionEstatica(
+                  grupo: 'habitos',
+                  id: id,
+                  respaldo: CustomPaint(
+                    painter: PintorHabitoCartoon(id: id, color: costumbre.$2),
+                  ),
+                ),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 // Dibujos de «El viaje de la comida». El cuerpo se pinta sobre un lienzo de
@@ -591,7 +592,11 @@ class DibujoBocado extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamano,
-    child: CustomPaint(painter: _PintorBocado(estado)),
+    child: IlustracionEstatica(
+        grupo: 'bocados',
+        id: estado,
+        respaldo: CustomPaint(painter: _PintorBocado(estado)),
+      ),
   );
 }
 
@@ -647,7 +652,11 @@ class IconoParada extends StatelessWidget {
               ),
       ),
       padding: sinFondo ? EdgeInsets.zero : EdgeInsets.all(tamano * .08),
-      child: CustomPaint(painter: _PintorIconoParada(id)),
+      child: IlustracionEstatica(
+        grupo: 'paradas',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorIconoParada(id)),
+      ),
     );
   }
 }

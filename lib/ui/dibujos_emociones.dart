@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 
 // Dibujos de «¿Cómo me siento?»: una cara por emoción y un icono por
 // situación. Las caras se pintan con el mismo borde blanco de pegatina que
@@ -47,7 +48,11 @@ class DibujoEmocion extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamano,
-    child: CustomPaint(painter: _PintorCara(id)),
+    child: IlustracionEstatica(
+        grupo: 'emociones',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorCara(id)),
+      ),
   );
 }
 

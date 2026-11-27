@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:naturalmente/ui/arte_webp.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 import 'package:naturalmente/ui/tema.dart';
 
 import 'package:naturalmente/ui/texto.dart';
@@ -1566,7 +1567,7 @@ class PintorAccesorioNatu extends CustomPainter {
       oldDelegate.gesto != gesto;
 }
 
-/// Vista previa vectorial nítida y centrada de cada accesorio para las tarjetas del Armario.
+/// Vista previa centrada de cada accesorio para las tarjetas del Armario.
 class IconoAccesorioNatu extends StatelessWidget {
   const IconoAccesorioNatu({required this.id, this.tamano = 64, super.key});
 
@@ -1578,7 +1579,11 @@ class IconoAccesorioNatu extends StatelessWidget {
     return SizedBox(
       width: tamano,
       height: tamano,
-      child: CustomPaint(painter: _PintorIconoAccesorio(id: id)),
+      child: IlustracionEstatica(
+        grupo: 'accesorios',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorIconoAccesorio(id: id)),
+      ),
     );
   }
 }
@@ -3268,8 +3273,12 @@ class DibujoAnimalDetallado extends StatelessWidget {
     return SizedBox(
       width: ancho,
       height: alto,
-      child: CustomPaint(
-        painter: PintorAnimalDetallado(id: id, sinFondo: sinFondo),
+      child: IlustracionEstatica(
+        grupo: sinFondo ? 'animales-sin-fondo' : 'animales',
+        id: id,
+        respaldo: CustomPaint(
+          painter: PintorAnimalDetallado(id: id, sinFondo: sinFondo),
+        ),
       ),
     );
   }

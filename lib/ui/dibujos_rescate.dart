@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 
 /// Fondo de «Cuida la reserva»: cielo, montes, árboles y un río.
 class EscenaReserva extends StatelessWidget {
@@ -117,7 +118,11 @@ class DibujoContenedor extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamano,
-    child: CustomPaint(painter: _PintorContenedor(id)),
+    child: IlustracionEstatica(
+        grupo: 'contenedores',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorContenedor(id)),
+      ),
   );
 }
 
@@ -200,7 +205,11 @@ class DibujoResiduo extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamano,
-    child: CustomPaint(painter: _PintorResiduo(id)),
+    child: IlustracionEstatica(
+        grupo: 'residuos',
+        id: id,
+        respaldo: CustomPaint(painter: _PintorResiduo(id)),
+      ),
   );
 }
 

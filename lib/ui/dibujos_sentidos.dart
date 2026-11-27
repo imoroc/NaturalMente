@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/ilustracion_estatica.dart';
 
 const idsSentidos = <String>{
   'vista',
@@ -52,64 +53,24 @@ class DibujoSentido extends StatelessWidget {
       _ => id,
     };
 
-    return construirDibujoSentidos(
-      id: idNormalizado,
-      color: const Color(0xFF1E293B),
-      tamano: tamano,
+    const color = Color(0xFF1E293B);
+    final pintor = switch (idNormalizado) {
+      'ojos' => _Ojos(color),
+      'orejas' => _Oreja(color),
+      'nariz' => _Nariz(color),
+      'lengua' => _Lengua(color),
+      'piel' => _Mano(color),
+      _ => _PintorSituacionSentido(idNormalizado, color),
+    };
+    return SizedBox.square(
       key: ValueKey('dibujo-sentido-$id'),
+      dimension: tamano,
+      child: IlustracionEstatica(
+        grupo: 'sentidos',
+        id: id,
+        respaldo: CustomPaint(painter: pintor),
+      ),
     );
-  }
-}
-
-Widget construirDibujoSentidos({
-  required String id,
-  required Color color,
-  required double tamano,
-  required Key key,
-}) {
-  switch (id) {
-    case 'ojos':
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _Ojos(color)),
-      );
-    case 'orejas':
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _Oreja(color)),
-      );
-    case 'nariz':
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _Nariz(color)),
-      );
-    case 'lengua':
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _Lengua(color)),
-      );
-    case 'piel':
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _Mano(color)),
-      );
-    default:
-      return SizedBox(
-        key: key,
-        width: tamano,
-        height: tamano,
-        child: CustomPaint(painter: _PintorSituacionSentido(id, color)),
-      );
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/arte_webp.dart';
 import 'package:naturalmente/ui/atencion_paso.dart';
 import 'dart:math' as math;
 
@@ -228,7 +229,9 @@ class IconoParte extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: size,
-    child: CustomPaint(painter: _PartePainter(id)),
+    child: hayArteWebp(id)
+        ? arteWebp(id, ancho: size, alto: size)
+        : CustomPaint(painter: _PartePainter(id)),
   );
 }
 

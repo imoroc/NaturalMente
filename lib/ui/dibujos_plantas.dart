@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:naturalmente/ui/arte_webp.dart';
 
 // Plantas del entorno para «Árbol, arbusto o hierba» y juegos del Invernadero.
 // Se pintan sobre un lienzo de 100×100 con el suelo en la base para comparar
@@ -31,7 +32,9 @@ class DibujoPlanta extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamano,
-    child: CustomPaint(painter: _PintorPlanta(id)),
+    child: hayArteWebp(id)
+        ? arteWebp(id, ancho: tamano, alto: tamano)
+        : CustomPaint(painter: _PintorPlanta(id)),
   );
 }
 

@@ -14,7 +14,13 @@ class Idioma extends ChangeNotifier {
       _sonido = _preferencias.getBool('sonido') ?? true,
       _musica = _preferencias.getBool('musica') ?? false,
       _vibracion = _preferencias.getBool('vibracion') ?? true,
+      _volumenEfectos = (_preferencias.getDouble('volumen/efectos') ?? 1.0)
+          .clamp(0.0, 1.0),
+      _volumenMusica = (_preferencias.getDouble('volumen/musica') ?? 1.0)
+          .clamp(0.0, 1.0),
       _leerEnVoz = _preferencias.getBool('voz/leer') ?? false {
+    _SintetizadorMelodico.volumenEfectos = _volumenEfectos;
+    _SintetizadorMelodico.volumenMusica = _volumenMusica;
     if (_musica) {
       _SintetizadorMelodico.sincronizarMusica(true);
     }
@@ -26,12 +32,18 @@ class Idioma extends ChangeNotifier {
   bool _sonido;
   bool _musica;
   bool _vibracion;
+  double _volumenEfectos;
+  double _volumenMusica;
 
   String get codigo => _codigo;
   Locale get locale => Locale(_codigo);
   bool get sonido => _sonido;
   bool get musica => _musica;
   bool get vibracion => _vibracion;
+
+  /// Volumen de los efectos y de la música, de 0 (mudo) a 1 (el de siempre).
+  double get volumenEfectos => _volumenEfectos;
+  double get volumenMusica => _volumenMusica;
 
   /// Leer en voz alta las preguntas de Aula. Desactivado al principio.
   bool get leerEnVoz => _leerEnVoz;
@@ -85,6 +97,31 @@ class Idioma extends ChangeNotifier {
     if (_sonido) {
       reproducirToque();
     }
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> cambiarVolumenEfectos(double volumen) async {
+    final nuevo = volumen.clamp(0.0, 1.0);
+    if (nuevo == _volumenEfectos) return true;
+    if (!await _preferencias.setDouble('volumen/efectos', nuevo)) return false;
+    _volumenEfectos = nuevo;
+    _SintetizadorMelodico.volumenEfectos = nuevo;
+    if (_sonido) reproducirToque();
+    notifyListeners();
+    return true;
+  }
+
+  /// Mientras se arrastra el deslizador: la música cambia al momento sin
+  /// guardar todavía.
+  void previsualizarVolumenMusica(double volumen) =>
+      _SintetizadorMelodico.ajustarVolumenMusica(volumen.clamp(0.0, 1.0));
+
+  Future<bool> cambiarVolumenMusica(double volumen) async {
+    final nuevo = volumen.clamp(0.0, 1.0);
+    if (!await _preferencias.setDouble('volumen/musica', nuevo)) return false;
+    _volumenMusica = nuevo;
+    _SintetizadorMelodico.ajustarVolumenMusica(nuevo);
     notifyListeners();
     return true;
   }
@@ -385,6 +422,17 @@ class _NotaMelodica {
 /// de combos, «ba-DING» de acierto y fanfarria de victoria).
 class _SintetizadorMelodico {
   static const MethodChannel _canal = MethodChannel('naturalmente/audio');
+  static double volumenEfectos = 1.0;
+  static double volumenMusica = 1.0;
+
+  static void ajustarVolumenMusica(double volumen) {
+    volumenMusica = volumen;
+    _canal
+        .invokeMethod<void>('volumenMusica', <String, Object>{
+          'volumen': volumen,
+        })
+        .catchError((_) {});
+  }
   static const int _frecuenciaMuestreo = 44100;
   static final Map<_EfectoSonoro, Uint8List> _cache = {};
   static final Map<String, (Uint8List, String)?> _cacheArchivos = {};
@@ -454,6 +502,7 @@ class _SintetizadorMelodico {
             'id': efecto.name,
             'bytes': personalizado.$1,
             'ext': personalizado.$2,
+            'volumen': volumenEfectos,
           })
           .catchError((_) {});
       return;
@@ -464,6 +513,7 @@ class _SintetizadorMelodico {
           'id': efecto.name,
           'pcm': pcm,
           'sampleRate': _frecuenciaMuestreo,
+          'volumen': volumenEfectos,
         })
         .catchError((_) {});
   }
@@ -483,6 +533,7 @@ class _SintetizadorMelodico {
           .invokeMethod<void>('iniciarMusicaArchivo', <String, Object>{
             'bytes': personalizado.$1,
             'ext': personalizado.$2,
+            'volumen': volumenMusica,
           })
           .catchError((_) {});
       return;
@@ -492,6 +543,7 @@ class _SintetizadorMelodico {
         .invokeMethod<void>('iniciarMusicaPcm', <String, Object>{
           'pcm': pcm,
           'sampleRate': _frecuenciaMuestreo,
+          'volumen': volumenMusica,
         })
         .catchError((_) {});
   }

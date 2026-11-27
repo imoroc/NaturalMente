@@ -1,3 +1,4 @@
+import 'package:naturalmente/ui/arte_webp.dart';
 import 'package:naturalmente/ui/atencion_paso.dart';
 import 'dart:math' as math;
 
@@ -2268,6 +2269,12 @@ class IconoOrgano extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hayArteWebp(id)) {
+      return SizedBox.square(
+        dimension: size,
+        child: arteWebp(id, ancho: size, alto: size),
+      );
+    }
     return SizedBox.square(
       dimension: size,
       child: CustomPaint(painter: _OrganoPainter(id: id)),
@@ -4249,6 +4256,7 @@ class SpriteEspecieSantuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = alto ?? tamano;
+    if (hayCromoWebp(id)) return arteWebp(id, ancho: t, alto: t);
     if (_animales.contains(id)) {
       return DibujoAnimalDetallado(
         id: id,
@@ -4365,6 +4373,8 @@ class IlustracionFicha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Si el cromo ya tiene su ilustración, se enseña la misma que en el álbum.
+    if (hayCromoWebp(id)) return arteWebp(id, ancho: alto, alto: alto);
     // Cromos de «Memoria de las plantas» y «¿Quién soy?».
     switch (id) {
       case 'cada-parte-su-trabajo':
